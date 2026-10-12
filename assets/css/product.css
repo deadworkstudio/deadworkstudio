@@ -124,7 +124,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
      (author styles beat UA styles at equal specificity), so the grid would stay visible even
      while JS sets the hidden attribute to swap in the checkout panel. */
   display: none;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
@@ -133,10 +133,10 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .pricing-grid:not([hidden]) { display: grid; }
 @media (min-width: 640px) {
-  .pricing-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 980px) {
-  .pricing-grid { grid-template-columns: repeat(4, 1fr); }
+  .pricing-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 .pricing-card {
   display: flex;
@@ -144,6 +144,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   gap: 14px;
   padding: 28px 24px 24px;
   background: var(--ink);
+  min-width: 0;
 }
 .pricing-card-recommended {
   background: var(--ink-raised);
