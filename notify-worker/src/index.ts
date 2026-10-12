@@ -1,8 +1,8 @@
 // DEADWORK — notify-worker
 //
 // A tiny, standalone Cloudflare Worker that powers the inline "Notify me" email capture forms on
-// the deadwork-site marketing site's in-development product pages (Scene Lock, Set Control,
-// Loadout, Handoff, Sound Driver). Deliberately separate from the Stock Shredder payments Worker
+// the deadwork-site marketing site's in-development product pages. Deliberately separate from the
+// Stock Shredder payments Worker
 // (`footage-curator/worker`) — that one is scoped to paying customers (Stripe, activation keys,
 // iPhone pairing); this one just wants a public, low-stakes email address + which product someone
 // is interested in. Mixing the two would mean every future change to one risks the other.
@@ -23,9 +23,10 @@ const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Headers': 'Content-Type'
 }
 
-// Keep in sync with the product slugs used on deadwork-site's product pages
-// (deadwork-site/products/<slug>/index.html) — only the 5 in-development tools get a notify form.
-const VALID_PRODUCTS = new Set(['scene-lock', 'set-control', 'loadout', 'handoff', 'sound-driver'])
+// Keep in sync with the product slugs actually linked on the live site — Scene Lock, Set Control,
+// Handoff, and Sound Driver are unpublished for now (pages still exist, just unlinked), so their
+// slugs are deliberately not accepted here even though the pages' own notify forms still exist.
+const VALID_PRODUCTS = new Set(['loadout'])
 
 // Deliberately simple/server-side only: good enough to reject typos and garbage, not meant to be
 // an exhaustive RFC 5322 validator. The point is "don't trust client-side validation alone."
