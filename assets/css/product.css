@@ -68,92 +68,49 @@ html[data-product="stock-shredder"] .product-hero h1 {
 .download-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
 .download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
 
-/* ---------- Scene Lock, Set Control, Loadout, Handoff: smaller hero + tighter section spacing
-   so these pages need minimal internal scroll (none of them have an interface shot or cross-sell
-   competing for the same viewport that Stock Shredder/Sound Driver do). Scoped via <html
-   data-product="..."> so Stock Shredder and Sound Driver are unaffected. ---------- */
-html[data-product="scene-lock"] .product-hero,
-html[data-product="set-control"] .product-hero,
-html[data-product="loadout"] .product-hero,
-html[data-product="handoff"] .product-hero {
+/* ---------- All 6 product pages: smaller hero + tighter section spacing so these pages need
+   minimal internal scroll. Scoped via <html data-product="..."> (every product page sets this)
+   so the home/about/join pages keep their own spacing. ---------- */
+html[data-product] .product-hero {
   padding-block: clamp(16px, 2vw, 28px) clamp(8px, 1vw, 14px);
 }
-html[data-product="scene-lock"] .product-hero h1,
-html[data-product="set-control"] .product-hero h1,
-html[data-product="loadout"] .product-hero h1,
-html[data-product="handoff"] .product-hero h1 {
+html[data-product] .product-hero h1 {
   font-size: clamp(24px, 3.8vw, 56px);
   margin-bottom: clamp(8px, 1vw, 14px);
 }
-html[data-product="scene-lock"] .product-hero .lede,
-html[data-product="set-control"] .product-hero .lede,
-html[data-product="loadout"] .product-hero .lede,
-html[data-product="handoff"] .product-hero .lede {
+html[data-product] .product-hero .lede {
   max-width: none;
   margin-bottom: clamp(8px, 1vw, 14px);
 }
-html[data-product="scene-lock"] .split p,
-html[data-product="set-control"] .split p,
-html[data-product="loadout"] .split p,
-html[data-product="handoff"] .split p {
+html[data-product] .split p {
   max-width: none;
 }
-html[data-product="scene-lock"] .notify-follow,
-html[data-product="set-control"] .notify-follow,
-html[data-product="loadout"] .notify-follow,
-html[data-product="handoff"] .notify-follow {
+html[data-product] .notify-follow {
   margin-top: 6px;
 }
-html[data-product="scene-lock"] .split,
-html[data-product="scene-lock"] .spec,
-html[data-product="set-control"] .split,
-html[data-product="set-control"] .spec,
-html[data-product="loadout"] .split,
-html[data-product="loadout"] .spec,
-html[data-product="loadout"] .cross-sell,
-html[data-product="handoff"] .split,
-html[data-product="handoff"] .spec {
+html[data-product] .split,
+html[data-product] .spec,
+html[data-product] .cross-sell {
   padding-block: clamp(6px, 0.8vw, 12px);
 }
-html[data-product="scene-lock"] .split,
-html[data-product="set-control"] .split,
-html[data-product="loadout"] .split,
-html[data-product="handoff"] .split {
+html[data-product] .split {
   gap: 16px;
 }
-html[data-product="scene-lock"] .split h2,
-html[data-product="set-control"] .split h2,
-html[data-product="loadout"] .split h2,
-html[data-product="handoff"] .split h2 {
+html[data-product] .split h2 {
   margin-bottom: 6px;
 }
-html[data-product="scene-lock"] .split p,
-html[data-product="set-control"] .split p,
-html[data-product="loadout"] .split p,
-html[data-product="handoff"] .split p {
+html[data-product] .split p {
   font-size: 14px;
   line-height: 1.4;
 }
-html[data-product="scene-lock"] .split p + p,
-html[data-product="set-control"] .split p + p,
-html[data-product="loadout"] .split p + p,
-html[data-product="handoff"] .split p + p {
+html[data-product] .split p + p {
   margin-top: 6px;
 }
-html[data-product="scene-lock"] .spec h2,
-html[data-product="set-control"] .spec h2,
-html[data-product="loadout"] .spec h2,
-html[data-product="handoff"] .spec h2 {
+html[data-product] .spec h2 {
   margin-bottom: 8px;
 }
-html[data-product="scene-lock"] .spec-table th,
-html[data-product="scene-lock"] .spec-table td,
-html[data-product="set-control"] .spec-table th,
-html[data-product="set-control"] .spec-table td,
-html[data-product="loadout"] .spec-table th,
-html[data-product="loadout"] .spec-table td,
-html[data-product="handoff"] .spec-table th,
-html[data-product="handoff"] .spec-table td {
+html[data-product] .spec-table th,
+html[data-product] .spec-table td {
   padding: 4px 0;
 }
 html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px); }
@@ -163,7 +120,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 .artist-avatars img {
   width: 36px;
@@ -178,7 +135,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 
 /* ---------- Pricing (Stock Shredder only, for now) ---------- */
 .pricing {
-  padding-block: var(--space-block);
+  padding-block: clamp(12px, 1.5vw, 20px);
   border-top: 1px solid var(--line);
 }
 .pricing h2 {
@@ -187,7 +144,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--bone-3);
-  margin-bottom: 40px;
+  margin-bottom: 16px;
 }
 .pricing-status {
   font-family: var(--font-mono);
@@ -346,7 +303,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 
 /* ---------- Interface screenshot (temporary — real app captures, swap for final marketing shots later) ---------- */
-.interface-shot { margin: 0 0 var(--space-block); }
+.interface-shot { margin: 0 0 clamp(12px, 1.5vw, 20px); }
 .interface-shot img {
   display: block;
   width: 100%;
