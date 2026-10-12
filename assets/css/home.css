@@ -117,3 +117,22 @@
   .poster-lede { grid-column: 5 / 13; }
   .poster-strip { display: none; }
 }
+
+/* ---------- Scene Lock, Set Control, Loadout, Handoff: give the content panel the empty
+   track the nav column doesn't need (its words never come close to filling 4/12 columns) so
+   paragraphs wrap to fewer lines and these pages need less vertical space. Scoped via
+   <html data-product="..."> so every other page keeps the standard 4/8 split. ---------- */
+@media (min-width: 720px) and (min-height: 640px) {
+  html[data-product="scene-lock"] .poster-index,
+  html[data-product="set-control"] .poster-index,
+  html[data-product="loadout"] .poster-index,
+  html[data-product="handoff"] .poster-index {
+    grid-column: 1 / 4;
+  }
+  html[data-product="scene-lock"] .poster-panel,
+  html[data-product="set-control"] .poster-panel,
+  html[data-product="loadout"] .poster-panel,
+  html[data-product="handoff"] .poster-panel {
+    grid-column: 4 / 13;
+  }
+}

@@ -89,7 +89,14 @@ html[data-product="scene-lock"] .product-hero .lede,
 html[data-product="set-control"] .product-hero .lede,
 html[data-product="loadout"] .product-hero .lede,
 html[data-product="handoff"] .product-hero .lede {
+  max-width: none;
   margin-bottom: clamp(8px, 1vw, 14px);
+}
+html[data-product="scene-lock"] .split p,
+html[data-product="set-control"] .split p,
+html[data-product="loadout"] .split p,
+html[data-product="handoff"] .split p {
+  max-width: none;
 }
 html[data-product="scene-lock"] .notify-follow,
 html[data-product="set-control"] .notify-follow,
