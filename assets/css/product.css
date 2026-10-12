@@ -387,6 +387,17 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   transition: opacity 0.18s var(--ease);
 }
 .client-logo-grid img:hover { opacity: 1; }
+/* Circular/badge marks (BMW, NFL, Spitfire Audio) read far smaller than the wordmarks next to
+   them at the same pixel height — a circle or shield has much less width/ink than a wordmark of
+   equal height, so matching height alone leaves them looking tiny. Bump these so their visual
+   weight in the grid matches, not just their height. */
+.client-logo-grid img[src$="bmw.png"],
+.client-logo-grid img[src$="spitfire-audio.png"] {
+  height: 46px;
+}
+.client-logo-grid img[src$="nfl.png"] {
+  height: 54px;
+}
 .client-logo-text {
   font-family: var(--font-mono);
   font-size: 13px;
