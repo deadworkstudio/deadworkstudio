@@ -28,7 +28,7 @@
   --wrap-max: 1320px;
   --gutter: clamp(24px, 4vw, 56px);
   --space-section: clamp(120px, 14vw, 208px);
-  --space-block: clamp(80px, 9vw, 128px);
+  --space-block: clamp(32px, 4vw, 56px);
 
   /* surfaces */
   --ink: #0a0a09;
