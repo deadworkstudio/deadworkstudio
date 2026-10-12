@@ -41,6 +41,34 @@
    width, which makes the input+button wrap onto separate lines even with plenty of room. */
 .product-hero-actions .notify-form { flex: 1 1 420px; max-width: 480px; }
 
+/* ---------- Loadout: smaller hero + tighter section spacing so the page needs minimal internal
+   scroll (it has no interface shot or problem/solution split competing for the same viewport that
+   the other product pages do). Scoped via the <html data-product="loadout"> so no other page is
+   affected. ---------- */
+html[data-product="loadout"] .product-hero {
+  padding-block: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 40px);
+}
+html[data-product="loadout"] .product-hero h1 {
+  font-size: clamp(40px, 7.5vw, 110px);
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+html[data-product="loadout"] .product-hero .lede {
+  margin-bottom: 0;
+}
+html[data-product="loadout"] .split,
+html[data-product="loadout"] .spec,
+html[data-product="loadout"] .cross-sell {
+  padding-block: clamp(16px, 2vw, 28px);
+}
+html[data-product="loadout"] .split { gap: 24px; }
+html[data-product="loadout"] .split h2 { margin-bottom: 12px; }
+html[data-product="loadout"] .split p { font-size: 15px; }
+html[data-product="loadout"] .split p + p { margin-top: 8px; }
+html[data-product="loadout"] .spec h2 { margin-bottom: 16px; }
+html[data-product="loadout"] .spec-table th,
+html[data-product="loadout"] .spec-table td { padding: 10px 0; }
+html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px); }
+
 /* ---------- Artist avatars (Sound Driver only, for now) ---------- */
 .artist-avatars {
   display: flex;
