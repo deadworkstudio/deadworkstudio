@@ -180,13 +180,18 @@ button { font: inherit; }
   white-space: nowrap;
 }
 .badge-beta {
-  background: var(--bone);
+  background: var(--beta-green);
   color: var(--ink);
 }
 .badge-dev {
   background: transparent;
-  color: var(--bone);
-  border: 1px solid var(--line-strong);
+  color: var(--dev-yellow);
+  border: 1px solid var(--dev-yellow);
+}
+.badge-teaser {
+  background: transparent;
+  color: var(--bone-2);
+  border: 1px solid var(--bone-2);
 }
 .badge-icon {
   display: inline-block;
