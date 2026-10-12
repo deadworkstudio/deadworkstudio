@@ -72,17 +72,20 @@
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 
-/* Per-product accents, set on <html data-product="slug"> or a wrapping element. */
-[data-product='scene-lock']   { --acc: #8b9eb6; }
-[data-product='set-control']  { --acc: #bb9b5f; }
-[data-product='loadout']      { --acc: #b6714e; }
-[data-product='handoff']      { --acc: #9cc697; }
-[data-product='sound-driver'] { --acc: #70a29a; }
-[data-product='stock-shredder'] { --acc: #c8201a; }
+/* Per-product accents, set on <html data-product="slug"> or a wrapping element. Colors are
+   limited to the site's visual system (black/bone/grey neutrals + red/yellow/green status
+   colors) — no per-product rainbow. Every in-development product matches its own "IN
+   DEVELOPMENT" badge (yellow); Stock Shredder, the one beta/shipping product, matches its
+   "BETA" badge (green) instead of its old one-off blood red. */
+[data-product='scene-lock']     { --acc: var(--dev-yellow); }
+[data-product='set-control']    { --acc: var(--dev-yellow); }
+[data-product='loadout']        { --acc: var(--dev-yellow); }
+[data-product='handoff']        { --acc: var(--dev-yellow); }
+[data-product='sound-driver']   { --acc: var(--dev-yellow); }
+[data-product='stock-shredder'] { --acc: var(--beta-green); }
 
 /* --acc-text must be re-declared wherever --acc is re-set: a custom property that references
    another is resolved on the element that declares it (:root), then inherited as a fixed value.
-   Stock Shredder's blood red measures 3.47:1 on ink — fills/rules only, never small text — so its
-   text accent swaps to signal red (4.98:1). Must stay AFTER the generic [data-product] rule. */
+   Both yellow and green clear AA contrast at small sizes on their own, so no swap is needed here
+   the way the old blood-red accent required. */
 [data-product] { --acc-text: var(--acc); }
-[data-product='stock-shredder'] { --acc-text: var(--signal); }
