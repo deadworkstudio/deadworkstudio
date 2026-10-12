@@ -87,6 +87,29 @@ html[data-product="loadout"] .spec-table th,
 html[data-product="loadout"] .spec-table td { padding: 10px 0; }
 html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px); }
 
+/* ---------- Scene Lock: same tightening as Loadout above, so the page needs minimal internal
+   scroll. Scoped via <html data-product="scene-lock">. ---------- */
+html[data-product="scene-lock"] .product-hero {
+  padding-block: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 40px);
+}
+html[data-product="scene-lock"] .product-hero h1 {
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+html[data-product="scene-lock"] .product-hero .lede {
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+html[data-product="scene-lock"] .split,
+html[data-product="scene-lock"] .spec {
+  padding-block: clamp(16px, 2vw, 28px);
+}
+html[data-product="scene-lock"] .split { gap: 24px; }
+html[data-product="scene-lock"] .split h2 { margin-bottom: 12px; }
+html[data-product="scene-lock"] .split p { font-size: 15px; }
+html[data-product="scene-lock"] .split p + p { margin-top: 8px; }
+html[data-product="scene-lock"] .spec h2 { margin-bottom: 16px; }
+html[data-product="scene-lock"] .spec-table th,
+html[data-product="scene-lock"] .spec-table td { padding: 10px 0; }
+
 /* ---------- Artist avatars (Sound Driver only, for now) ---------- */
 .artist-avatars {
   display: flex;
