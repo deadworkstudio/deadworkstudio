@@ -45,11 +45,18 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 async function handleNotify(request: Request, env: Env): Promise<Response> {
-  let payload: { email?: unknown; product?: unknown }
+  let payload: { email?: unknown; product?: unknown; company?: unknown }
   try {
     payload = await request.json()
   } catch {
     return jsonResponse({ ok: false, error: 'Invalid JSON body.' }, 400)
+  }
+
+  // Honeypot: "company" is a field real visitors never see or fill (hidden via CSS on the form).
+  // A non-empty value means whatever submitted this skipped the page's styling — almost certainly a
+  // bot. Report success without writing anything, so the bot doesn't learn to look elsewhere.
+  if (typeof payload.company === 'string' && payload.company.trim()) {
+    return jsonResponse({ ok: true })
   }
 
   const email = typeof payload.email === 'string' ? payload.email.trim().toLowerCase() : ''

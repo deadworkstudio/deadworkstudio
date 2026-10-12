@@ -560,6 +560,15 @@ button { font: inherit; }
   letter-spacing: 0.02em;
 }
 .notify-input::placeholder { color: var(--bone-3); }
+/* Honeypot: present in the DOM for bots that auto-fill every field, invisible and unreachable
+   (off-screen + unfocusable) for real visitors and screen readers alike. */
+.notify-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .notify-input:hover { border-color: var(--bone-2); }
 .notify-input:disabled { opacity: 0.6; }
 .notify-submit { flex: 0 0 auto; }

@@ -11,6 +11,7 @@
     var input = form.querySelector('[data-notify-email]');
     var button = form.querySelector('[data-notify-submit]');
     var status = form.querySelector('[data-notify-status]');
+    var honeypot = form.querySelector('[data-notify-hp]');
     if (!product || !input || !button || !status) return; // malformed markup — don't half-wire it
 
     var defaultLabel = button.textContent;
@@ -30,6 +31,15 @@
 
     form.addEventListener('submit', function (evt) {
       evt.preventDefault();
+
+      // Honeypot: a field hidden from real visitors via CSS. Bots that fill out every field in the
+      // DOM trip it; real users never see or touch it. Pretend success without ever calling the API.
+      if (honeypot && honeypot.value) {
+        form.reset();
+        showStatus("You're on the list.", 'good');
+        return;
+      }
+
       var email = (input.value || '').trim();
       if (!EMAIL_RE.test(email)) {
         showStatus("That doesn't look like a valid email address.", 'bad');
@@ -43,7 +53,7 @@
       fetch(WORKER_URL + '/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, product: product })
+        body: JSON.stringify({ email: email, product: product, company: honeypot ? honeypot.value : '' })
       })
         .then(function (res) {
           if (!res.ok) throw new Error('Notify request failed: ' + res.status);
