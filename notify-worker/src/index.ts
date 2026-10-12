@@ -23,11 +23,9 @@ const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Headers': 'Content-Type'
 }
 
-// Keep in sync with the product slugs actually linked on the live site — Scene Lock, Set Control,
-// Handoff, and Sound Driver are unpublished for now (pages still exist, just unlinked), so their
-// slugs are deliberately not accepted here even though the pages' own notify forms still exist.
-// 'general' is the site-wide Join page signup — not tied to a specific product.
-const VALID_PRODUCTS = new Set(['loadout', 'general'])
+// Keep in sync with the product slugs actually linked on the live site. 'general' is the
+// site-wide Join page signup — not tied to a specific product.
+const VALID_PRODUCTS = new Set(['scene-lock', 'set-control', 'loadout', 'handoff', 'sound-driver', 'general'])
 
 // Deliberately simple/server-side only: good enough to reject typos and garbage, not meant to be
 // an exhaustive RFC 5322 validator. The point is "don't trust client-side validation alone."
