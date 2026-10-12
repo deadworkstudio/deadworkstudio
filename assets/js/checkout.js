@@ -2,11 +2,12 @@
 //
 // Reuses the already-deployed payment Worker (stock-shredder-payments.stockshredder.workers.dev)
 // that the Electron app's CheckoutPanel.tsx already talks to — same /checkout and /verify
-// endpoints, same test-mode Stripe key. No backend changes needed; the Worker's CORS is wide
-// open for this.
+// endpoints, same live Stripe key as footage-curator/src/shared/stripe.ts (the Worker's secret
+// key is live-mode, so this publishable key must match or Stripe.js rejects the session outright).
+// No backend changes needed; the Worker's CORS is wide open for this.
 (function () {
   var WORKER_URL = 'https://stock-shredder-payments.stockshredder.workers.dev';
-  var STRIPE_PUBLISHABLE_KEY = 'pk_test_51UIwxREHfnNaW3GQ913S4kWMAxlgqjxZXMHiKrQYgJ7xK2GtFWkMknQum3EI2BID71pORSQGtQPOFM7QPY0CtLjS00JsMgXnmj';
+  var STRIPE_PUBLISHABLE_KEY = 'pk_live_51UIwxREHfnNaW3GQg8edd5eoY1Y3hQJDOKAZvbJiH2xLLjvoyIUdBTXiO55w31LCjPLcwozvcZIn10AlQkBCEh3h00gjfoagZc';
 
   var PLANS = {
     starter: { name: 'Starter', price: 25 },

@@ -171,7 +171,7 @@
       <code data-activation-key></code>
       <button type="button" class="btn btn-secondary" data-copy-key>Copy</button>
     </div>
-    <a href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.4.4/Stock-Shredder-0.4.4-universal.dmg" class="btn btn-primary">Download Stock Shredder</a>
+    <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.1/Stock-Shredder-0.6.1-universal.dmg" class="btn btn-primary">Download Stock Shredder</a>
     <p class="checkout-success-note">Paste this activation key when it asks — full instructions are in the app.</p>
   </div>
 </section>
@@ -187,7 +187,7 @@
   <h2>Spec sheet</h2>
   <table class="spec-table">
     <tbody>
-        <tr><th>Platform</th><td>macOS — Intel &amp; Apple Silicon. Windows in development.</td></tr>
+        <tr><th>Platform</th><td>macOS (Intel &amp; Apple Silicon) and Windows</td></tr>
         <tr><th>Works with</th><td>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks</td></tr>
         <tr><th>Formats</th><td>MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV, plus Blackmagic RAW, RED R3D, CinemaDNG, and ARRIRAW with the relevant vendor tools installed</td></tr>
     </tbody>
@@ -219,9 +219,10 @@
 <script src="../../assets/js/checkout.js"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
-// failed fetch below — this finds whatever the actual latest release is and points both download
-// buttons there instead, mirroring the same script on stockshredder.com, so this page never goes
-// stale just because a new build shipped there.
+// failed fetch below — this finds whatever the actual latest release is and points every download
+// button there instead (including the post-checkout success link, previously hardcoded to an old
+// version and missed by this script entirely), so this page never goes stale just because a new
+// build shipped.
 fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releases/latest')
   .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
   .then(function (release) {
@@ -229,6 +230,7 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     var dmg = assets.find(function (a) { return a.name.endsWith('.dmg'); });
     var exe = assets.find(function (a) { return a.name.endsWith('.exe'); });
     if (dmg) document.getElementById('download-mac').href = dmg.browser_download_url;
+    if (dmg) document.getElementById('download-success').href = dmg.browser_download_url;
     if (exe) document.getElementById('download-win').href = exe.browser_download_url;
     if (release.tag_name) document.getElementById('version-note').textContent = 'Version ' + release.tag_name.replace(/^v/, '');
   })
