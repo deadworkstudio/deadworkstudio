@@ -66,9 +66,15 @@
 .index-word[aria-current] { text-decoration-color: var(--acc); text-decoration-thickness: 2px; }
 .poster-index.has-active .index-word:not([aria-current]) { color: var(--bone-2); }
 .poster-panel { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); container-type: inline-size; min-width: 0; }
+/* display:none (not visibility:hidden) on inactive panels: CSS Grid still sizes a row to fit a
+   visibility:hidden child even though it's invisible, which meant .poster-panel's height — and
+   therefore whether the page needed to scroll at all — was always set by the TALLEST of all 8
+   panels (Stock Shredder's pricing grid), even while showing the short default panel. display:none
+   removes a panel from layout entirely, so the container sizes to whichever panel is actually
+   showing. */
 .panel-stack { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
-.panel { grid-area: 1 / 1; visibility: hidden; min-width: 0; }
-.panel.is-active { visibility: visible; animation: panel-in .14s var(--ease); }
+.panel { grid-area: 1 / 1; display: none; min-width: 0; }
+.panel.is-active { display: block; animation: panel-in .14s var(--ease); }
 @keyframes panel-in { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .panel.is-active { animation: none; } }
 .panel[data-product]::before { content: ''; display: block; width: 48px; height: 2px; background: var(--acc); margin-bottom: 20px; }
