@@ -1,6 +1,8 @@
 // DEADWORK site — shared, dependency-free behavior for every page:
 // 1) toggles the sticky header from transparent to solid ink after a small scroll
 // 2) opens/closes the full-screen mobile nav overlay (with focus handling for keyboard users)
+// 3) in the fixed "poster" layout, the content panel is the only scrollable element — forwards
+//    the mouse wheel to it even when the cursor is over the nav or background, not just the panel
 (function () {
   var header = document.querySelector('[data-header]');
   if (header) {
@@ -69,6 +71,18 @@
     };
     if (desktop.addEventListener) desktop.addEventListener('change', onBreakpoint);
     else if (desktop.addListener) desktop.addListener(onBreakpoint);
+  }
+
+  var panel = document.querySelector('.poster-panel');
+  if (panel) {
+    var fixedLayout = window.matchMedia('(min-width: 720px) and (min-height: 640px)');
+    document.addEventListener('wheel', function (e) {
+      if (!fixedLayout.matches) return;
+      if (panel.contains(e.target)) return; // cursor's already over the box — let it scroll natively
+      if (panel.scrollHeight <= panel.clientHeight) return; // nothing to scroll
+      panel.scrollTop += e.deltaY;
+      e.preventDefault();
+    }, { passive: false });
   }
 
   // Surface any copy still awaiting the owner's sign-off in the local dev console only —
