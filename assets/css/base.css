@@ -120,6 +120,7 @@ button { font: inherit; }
   border: 1px solid transparent;
 }
 .btn:active { transform: translateY(1px); }
+.btn-icon { display: block; flex-shrink: 0; }
 
 .btn-primary {
   background: var(--bone);
