@@ -138,6 +138,13 @@ button { font: inherit; }
 }
 .btn-secondary:hover { border-bottom-color: var(--bone); background: none; }
 
+.btn-outline {
+  background: none;
+  color: var(--bone);
+  border-color: var(--line-strong);
+}
+.btn-outline:hover { border-color: var(--bone); }
+
 .btn-tertiary {
   display: inline-flex;
   align-items: center;

@@ -75,7 +75,12 @@
   </div>
   <p class="lede">Automates the selection, trimming, organization, export and keywords of stock footage for marketplaces. Allowing freedom of time to pursue other things without avoiding income.</p>
   <div class="product-hero-actions">
-    <a href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.4.4/Stock-Shredder-0.4.4-universal.dmg" class="btn btn-primary">Download free<span class="sr-only"> — 25 clips, no card required</span></a>
+    <div class="download-group">
+      <a id="download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.1/Stock-Shredder-0.6.1-universal.dmg">Start Free — Download for Mac</a>
+      <p class="download-note">25 clips, no card required &middot; macOS &middot; Intel &amp; Apple Silicon</p>
+      <p class="download-version" id="version-note">Version 0.6.1</p>
+      <a id="download-win" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.1/Stock-Shredder-Setup-0.6.1.exe">Download for Windows</a>
+    </div>
     <a class="btn-tertiary" href="#pricing"><span class="label">See plans</span><span class="arrow" aria-hidden="true">&rarr;</span></a>
   </div>
 </section>
@@ -190,6 +195,23 @@
 </div>
 <script src="../../assets/js/main.js"></script>
 <script src="../../assets/js/checkout.js"></script>
+<script>
+// The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
+// failed fetch below — this finds whatever the actual latest release is and points both download
+// buttons there instead, mirroring the same script on stockshredder.com, so this page never goes
+// stale just because a new build shipped there.
+fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releases/latest')
+  .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+  .then(function (release) {
+    var assets = release.assets || [];
+    var dmg = assets.find(function (a) { return a.name.endsWith('.dmg'); });
+    var exe = assets.find(function (a) { return a.name.endsWith('.exe'); });
+    if (dmg) document.getElementById('download-mac').href = dmg.browser_download_url;
+    if (exe) document.getElementById('download-win').href = exe.browser_download_url;
+    if (release.tag_name) document.getElementById('version-note').textContent = 'Version ' + release.tag_name.replace(/^v/, '');
+  })
+  .catch(function () {}); // the hardcoded fallback above still works either way
+</script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

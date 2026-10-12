@@ -60,6 +60,14 @@ html[data-product="stock-shredder"] .product-hero h1 {
    width, which makes the input+button wrap onto separate lines even with plenty of room. */
 .product-hero-actions .notify-form { flex: 1 1 420px; max-width: 480px; }
 
+/* ---------- Download group (Stock Shredder only) — Mac/Windows installer buttons, real file
+   links kept in sync with stockshredder.com's own dynamic release-fetch script below. ---------- */
+.download-group { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.product-hero-actions:has(.download-group) { align-items: flex-start; }
+.product-hero-actions:has(.download-group) .btn-tertiary { margin-top: 14px; }
+.download-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
+.download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
+
 /* ---------- Loadout: smaller hero + tighter section spacing so the page needs minimal internal
    scroll (it has no interface shot or problem/solution split competing for the same viewport that
    the other product pages do). Scoped via the <html data-product="loadout"> so no other page is
