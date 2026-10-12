@@ -10,6 +10,17 @@
   font-display: swap;
 }
 
+/* Stock Shredder's own brand mark font — free font by Chad Savage (sinisterfonts.com), see
+   assets/fonts/SwampWitch-ReadMe.txt. Used only on the Stock Shredder product page title,
+   never site-wide — every other page stays on Anton. */
+@font-face {
+  font-family: 'Swamp Witch';
+  src: url('../fonts/swampwitch.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 

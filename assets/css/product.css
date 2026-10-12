@@ -44,6 +44,14 @@
   line-height: 0.92;
   margin-bottom: 0;
 }
+/* Stock Shredder only — its own jagged brand mark font instead of Anton. Needs a touch more
+   line-height (its strokes/serifs are taller and more irregular than Anton's blocky glyphs)
+   and a little letter-spacing so the torn-edge details don't crowd each other at small sizes. */
+html[data-product="stock-shredder"] .product-hero h1 {
+  font-family: 'Swamp Witch', var(--font-display);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
 .product-hero .lede { max-width: 44ch; margin-bottom: 32px; }
 .product-hero-actions { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
 /* .notify-form is itself a flex container, nested inside this flex row — without an explicit
