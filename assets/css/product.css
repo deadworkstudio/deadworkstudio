@@ -23,6 +23,13 @@
   padding-block: clamp(40px, 5vw, 80px) var(--space-block);
   border-top: 3px solid var(--acc);
 }
+/* The CTA (download/notify buttons) sits in its own section now, after the problem/what-it-does
+   split — same padding rhythm as .product-hero but a plain hairline instead of the accent bar,
+   since the accent bar marks the top of the hero block, not a mid-page section. */
+.product-hero-cta {
+  padding-block: clamp(40px, 5vw, 80px);
+  border-top: 1px solid var(--line);
+}
 /* Title + badge share one row so the badge sits to the right of the name instead of
    stacked above it — also saves a full row of vertical space. justify-content stays
    flex-start (not space-between): on wide viewports the row's available width is much
@@ -72,7 +79,7 @@ html[data-product="stock-shredder"] .product-hero h1 {
    minimal internal scroll. Scoped via <html data-product="..."> (every product page sets this)
    so the home/about/join pages keep their own spacing. ---------- */
 html[data-product] .product-hero {
-  padding-block: clamp(16px, 2vw, 28px) clamp(8px, 1vw, 14px);
+  padding-block: clamp(16px, 2vw, 28px) 0;
 }
 html[data-product] .product-hero h1 {
   font-size: clamp(24px, 3.8vw, 56px);
@@ -80,7 +87,7 @@ html[data-product] .product-hero h1 {
 }
 html[data-product] .product-hero .lede {
   max-width: none;
-  margin-bottom: clamp(8px, 1vw, 14px);
+  margin-bottom: 0;
 }
 html[data-product] .split p {
   max-width: none;
@@ -90,7 +97,8 @@ html[data-product] .notify-follow {
 }
 html[data-product] .split,
 html[data-product] .spec,
-html[data-product] .cross-sell {
+html[data-product] .cross-sell,
+html[data-product] .product-hero-cta {
   padding-block: clamp(6px, 0.8vw, 12px);
 }
 html[data-product] .split {
