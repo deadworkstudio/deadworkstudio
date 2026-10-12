@@ -53,7 +53,7 @@ html[data-product="stock-shredder"] .product-hero h1 {
   line-height: 1.05;
   letter-spacing: 0.01em;
 }
-.product-hero .lede { max-width: 44ch; margin-bottom: 32px; }
+.product-hero .lede { max-width: 60ch; margin-bottom: 32px; }
 .product-hero-actions { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
 /* .notify-form is itself a flex container, nested inside this flex row — without an explicit
    basis it shrink-wraps to its children's min-content instead of using the row's real available
@@ -353,7 +353,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   color: var(--acc-text); /* text: never raw --acc (blood red fails contrast at 12px) */
   margin-bottom: 24px;
 }
-.split p { color: rgba(230, 224, 211, 0.8); font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; max-width: 44ch; }
+.split p { color: rgba(230, 224, 211, 0.8); font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; max-width: 60ch; }
 .split p + p { margin-top: 14px; }
 
 /* ---------- Spec sheet ---------- */

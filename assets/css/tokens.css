@@ -25,7 +25,7 @@
   color-scheme: dark;
 
   /* layout rhythm — editorial-scale wrap width, gutters, and section/block spacing */
-  --wrap-max: 1320px;
+  --wrap-max: 1600px;
   --gutter: clamp(24px, 4vw, 56px);
   --space-section: clamp(120px, 14vw, 208px);
   --space-block: clamp(32px, 4vw, 56px);

@@ -75,7 +75,7 @@
 .panel-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: clamp(16px, 3svh, 32px); }
 .panel-name { font-size: min(15.5cqi, 16svh); margin-bottom: clamp(16px, 3svh, 32px); }
 .panel-headline { font-size: min(12cqi, 14svh); max-width: 14ch; }
-.panel-oneliner { font-size: clamp(16px, 1.25vw, 19px); line-height: 1.6; color: rgba(230,224,211,.8); max-width: 52ch; margin-bottom: clamp(24px, 4svh, 40px); }
+.panel-oneliner { font-size: clamp(16px, 1.25vw, 19px); line-height: 1.6; color: rgba(230,224,211,.8); max-width: 64ch; margin-bottom: clamp(24px, 4svh, 40px); }
 .panel-email { font-family: var(--font-display); font-size: clamp(22px, 5.2cqi, 48px); line-height: 1.1; text-decoration: none; overflow-wrap: anywhere; display: inline-block; max-width: 100%; margin-bottom: 8px; }
 
 .poster-foot { margin-top: 64px; padding: 24px 0 32px; border-top: 1px solid var(--line); display: grid; gap: 4px; font: 12px/1.5 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
@@ -96,7 +96,7 @@
   .poster-head, .poster-foot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; }
   .poster-head { padding-top: clamp(24px, 4svh, 40px); }
   .poster-brand { grid-column: 1 / 5; }
-  .poster-lede  { grid-column: 5 / 10; margin: 0; font-size: 15px; max-width: 44ch; }
+  .poster-lede  { grid-column: 5 / 10; margin: 0; font-size: 15px; max-width: 60ch; }
   .poster-strip { display: block; grid-column: 10 / 13; text-align: right; font: 11px/1.6 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
   .poster-index { grid-column: 1 / 5; grid-row: 2; margin: 0; padding-block: clamp(24px, 5svh, 64px) clamp(24px, 4svh, 40px); display: flex; flex-direction: column; gap: clamp(16px, 3svh, 28px); }
   .index-group--studio { margin-top: auto; }
