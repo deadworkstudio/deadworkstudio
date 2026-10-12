@@ -188,11 +188,6 @@ button { font: inherit; }
   color: var(--dev-yellow);
   border: 1px solid var(--dev-yellow);
 }
-.badge-teaser {
-  background: transparent;
-  color: var(--bone-2);
-  border: 1px solid var(--bone-2);
-}
 .badge-icon {
   display: inline-block;
   width: 8px;
