@@ -54,8 +54,11 @@
 }
 /* Stock Shredder only — its own jagged brand mark font instead of Anton. Needs a touch more
    line-height (its strokes/serifs are taller and more irregular than Anton's blocky glyphs)
-   and a little letter-spacing so the torn-edge details don't crowd each other at small sizes. */
-html[data-product="stock-shredder"] .product-hero h1 {
+   and a little letter-spacing so the torn-edge details don't crowd each other at small sizes.
+   Scoped two ways: by <html data-product> on the standalone product page, and by [data-panel]
+   on the home page's teaser card, since the hub page's <html> doesn't carry data-product. */
+html[data-product="stock-shredder"] .product-hero h1,
+[data-panel="stock-shredder"] .panel-name {
   font-family: 'Swamp Witch', var(--font-display);
   line-height: 1.05;
   letter-spacing: 0.01em;
