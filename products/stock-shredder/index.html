@@ -13,6 +13,10 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
+<!-- Starts the Swamp Witch font downloading immediately instead of waiting for the CSS to be
+     parsed and the h1 to need it — without this, the fallback font flashes briefly before the
+     swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
+<link rel="preload" href="../../assets/fonts/swampwitch.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/tokens.css" />
 <link rel="stylesheet" href="../../assets/css/base.css" />
 <link rel="stylesheet" href="../../assets/css/home.css" />
