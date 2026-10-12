@@ -11,6 +11,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://deadworkstudio.com/about/values/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/about/commitments/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://deadworkstudio.com/products/loadout/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

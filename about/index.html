@@ -54,9 +54,9 @@
       <h2 class="sr-only">Studio</h2>
       <ul>
         <li><a class="index-word" href="index.html" aria-current="true">Mission</a></li>
-        <li><a class="index-word index-subword" href="#origin" data-scroll-to="origin">Origin</a></li>
-        <li><a class="index-word index-subword" href="#values" data-scroll-to="values">Values</a></li>
-        <li><a class="index-word index-subword" href="#commitments" data-scroll-to="commitments">Commitments</a></li>
+        <li><a class="index-word index-subword" href="index.html">Origin</a></li>
+        <li><a class="index-word index-subword" href="values/index.html">Values</a></li>
+        <li><a class="index-word index-subword" href="commitments/index.html">Commitments</a></li>
         <li><a class="index-word" href="../join/index.html">Join</a></li>
         <li><a class="index-word" href="mailto:deadworkstudio@gmail.com" data-panel-target="contact">Contact</a></li>
       </ul>
@@ -67,61 +67,12 @@
     <p class="sr-only" aria-live="polite" data-panel-status></p>
     <div class="panel-stack">
       <article class="panel is-active panel-origin" data-panel="default" data-title="Mission">
-        <section id="origin">
+        <section>
           <h2 class="panel-kicker">By artists. For artists.</h2>
           <h2 class="panel-headline display">CREATE MORE. MANAGE LESS.</h2>
           <p class="panel-oneliner">Most people who want to create more spend their time juggling software, managing files, organizing projects, and fighting through complicated workflows.</p>
           <p class="panel-oneliner">The problem is that most creative tools add more complexity instead of removing it — leading to wasted time, creative burnout, unfinished projects, and less energy for the work that actually matters.</p>
           <p class="panel-oneliner">We believe technology should serve creativity, not get in its way. Because the less time artists spend managing the process, the more time they have to create something worth remembering.</p>
-        </section>
-
-        <section id="values" class="mission-section">
-          <h2 class="panel-kicker">Values</h2>
-          <ol class="compact-list">
-            <li class="compact-item">
-              <span class="compact-index">01</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Kill the tedious work, not the people doing it.</h3>
-                <p class="compact-text">Software removes the repetitive production work so creatives can spend their time creating.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">02</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Idea. Execution. Completion.</h3>
-                <p class="compact-text">The human owns all three. DEADWORK removes the friction between them.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">03</span>
-              <div class="compact-body">
-                <h3 class="compact-title">We don't want AI making the art for us.</h3>
-                <p class="compact-text">We want it doing the tasks that waste time.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">04</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Honest about what's ready.</h3>
-                <p class="compact-text">We label what's shipping and what's still in progress — no polish over a product that isn't there yet.</p>
-              </div>
-            </li>
-          </ol>
-        </section>
-
-        <section id="commitments" class="mission-section">
-          <h2 class="panel-kicker">Commitments</h2>
-          <ul class="compact-list">
-            <li class="compact-item compact-item--plain">
-              <p class="compact-text"><strong>We pay artists for every sound.</strong> Sound Driver sources real sound design from real artists, and every artist gets paid for the sounds we use — not a flat licensing buyout that cuts them out later.</p>
-            </li>
-            <li class="compact-item compact-item--plain" data-owner-review="footage privacy commitment">
-              <p class="compact-text"><strong>Your footage stays yours.</strong> Footage and production data you run through our tools is yours. We don't sell it, train on it without asking, or hold it hostage behind a subscription.</p>
-            </li>
-            <li class="compact-item compact-item--plain" data-owner-review="no fake numbers commitment">
-              <p class="compact-text"><strong>No fake numbers.</strong> We don't publish invented customer counts, made-up reviews, or screenshots of products that don't exist yet.</p>
-            </li>
-          </ul>
         </section>
       </article>
 
@@ -140,20 +91,6 @@
 </div>
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/home.js" defer></script>
-<script defer>
-(function () {
-  document.querySelectorAll('[data-scroll-to]').forEach(function (link) {
-    link.addEventListener('click', function () {
-      var target = document.getElementById(link.dataset.scrollTo);
-      if (!target) return;
-      // Wait a tick for home.js to switch the panel to "default" first (if coming from Contact).
-      setTimeout(function () {
-        target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      }, 20);
-    });
-  });
-})();
-</script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
