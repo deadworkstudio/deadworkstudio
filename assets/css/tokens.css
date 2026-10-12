@@ -39,6 +39,10 @@
   --blood: #c8201a;
   --signal: #e5463d;
 
+  /* status badges — "in development" vs "beta", shape-coded AND color-coded */
+  --dev-yellow: #e3b23d;
+  --beta-green: #7ec97e;
+
   /* per-product accent — overridden by [data-product="slug"] below; defaults to bone
      so any page without a product context (home, about) still renders sane rules/CTAs. */
   --acc: var(--bone);
