@@ -65,6 +65,10 @@
 @media (hover: hover) { .index-word:hover { text-decoration-color: var(--acc); text-decoration-thickness: 1px; } }
 .index-word[aria-current] { text-decoration-color: var(--acc); text-decoration-thickness: 2px; }
 .poster-index.has-active .index-word:not([aria-current]) { color: var(--bone-2); }
+/* Sub-items nested under a top-level word (e.g. Mission's Origin/Values/Commitments jump links) —
+   smaller, indented, and dimmer so they read as children of the word above them, not peers. */
+.index-subword { min-height: 32px; font-size: 14px; padding-left: 16px; color: var(--bone-2); }
+.index-subword:hover { color: var(--bone); }
 
 .poster-panel { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); container-type: inline-size; min-width: 0; }
 .panel-stack { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }

@@ -7,18 +7,6 @@
    this page (taller than the compact Values/Commitments lists below) — tighten the rhythm
    between them so the panel fits the fixed viewport at 720x640 without the .poster-panel
    falling back to internal scroll. */
-.mission-subnav {
-  display: flex;
-  gap: 20px;
-  margin-bottom: clamp(16px, 2.4svh, 28px);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.mission-subnav a { color: var(--bone-2); text-decoration: underline; text-underline-offset: 3px; }
-.mission-subnav a:hover { color: var(--bone); }
-
 .panel-origin .panel-headline { margin-bottom: clamp(8px, 1.4svh, 14px); }
 .panel-origin .panel-oneliner {
   margin-top: 0;
