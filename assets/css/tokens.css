@@ -75,11 +75,11 @@
 /* Per-product accents, set on <html data-product="slug"> or a wrapping element. Colors are
    limited to the site's visual system (black/bone/grey neutrals + red/yellow/green status
    colors) — no per-product rainbow. Every in-development product matches its own "IN
-   DEVELOPMENT" badge (yellow); Stock Shredder, the one beta/shipping product, matches its
-   "BETA" badge (green) instead of its old one-off blood red. */
+   DEVELOPMENT" badge (yellow); Loadout and Stock Shredder, the beta products, match their
+   "BETA" badge (green) instead. */
 [data-product='scene-lock']     { --acc: var(--dev-yellow); }
 [data-product='set-control']    { --acc: var(--dev-yellow); }
-[data-product='loadout']        { --acc: var(--dev-yellow); }
+[data-product='loadout']        { --acc: var(--beta-green); }
 [data-product='handoff']        { --acc: var(--dev-yellow); }
 [data-product='sound-driver']   { --acc: var(--dev-yellow); }
 [data-product='stock-shredder'] { --acc: var(--beta-green); }
