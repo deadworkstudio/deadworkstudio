@@ -104,9 +104,12 @@ html[data-product="stock-shredder"] .poster-media::after {
    grid section since this sits directly under the lede, not its own page section. */
 /* Grid instead of flex-wrap: fixed 3-per-row regardless of available width, rather than
    however many happen to fit before wrapping. Width is set from JS (see main.js) to match the
-   headline's own rendered width, with the 3 columns spaced to fill it edge-to-edge — centering
-   alone wasn't enough since this row is naturally much narrower than "MANAGE LESS.". */
-.home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); margin-inline: auto; }
+   headline's own rendered width. Equal-width (1fr) columns with each logo centered in its own
+   slot, rather than auto-sized columns spread with space-between — auto columns hug each
+   logo's own (very different) natural width, so space-between left wildly uneven gaps between
+   a narrow mark like Scene Lock and a wide one like Set Control. Equal columns give every logo
+   the same amount of breathing room, which reads as one balanced row instead of scattered marks. */
+.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); margin-inline: auto; }
 /* Scoped to :has(img) only — applying line-height:0 to every .home-logos a (including the
    Stock Shredder text link) collapsed its line box to zero height, which was throwing off the
    row's vertical alignment against the other five image logos. */
