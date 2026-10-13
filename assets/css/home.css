@@ -104,7 +104,7 @@ html[data-product="stock-shredder"] .poster-media::after {
    grid section since this sits directly under the lede, not its own page section. */
 /* Grid instead of flex-wrap: fixed 3-per-row regardless of available width, rather than
    however many happen to fit before wrapping. */
-.home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(16px, 2.5svh, 26px); margin-top: clamp(28px, 4svh, 44px); }
+.home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(16px, 2.5svh, 26px); margin-top: clamp(28px, 4svh, 44px); }
 .home-logos a { display: block; line-height: 0; }
 .home-logos img {
   display: block;
