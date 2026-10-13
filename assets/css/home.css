@@ -23,6 +23,13 @@
   width: 100vw;
   height: 100vh;
   height: 100svh;
+  /* Separate iOS Safari bug from the sizing one above: a fixed element can fail to repaint at its
+     correct size until a scroll forces a layout recalculation, showing briefly as a smaller box
+     (black space around it) that then "catches up" once scrolling starts — exactly what forcing
+     the element onto its own GPU compositing layer is the standard fix for. */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
   z-index: 0;
   pointer-events: none;
 }
