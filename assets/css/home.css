@@ -15,6 +15,14 @@
 .poster-media {
   position: fixed;
   inset: 0;
+  /* iOS Safari resizes the visual viewport as its address bar shows/hides during scroll, but a
+     position:fixed element sized purely by inset:0 doesn't reliably track that — same issue the
+     fixed "poster" layout below already works around with the 100vh/100svh fallback pair. Mobile
+     scroll mode needs the same fix: without it, this can show a gap or freeze near the bottom of
+     a long page on an actual iPhone (doesn't reproduce in desktop browser testing). */
+  width: 100vw;
+  height: 100vh;
+  height: 100svh;
   z-index: 0;
   pointer-events: none;
 }
