@@ -428,6 +428,26 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .spec-table td { color: var(--bone); }
 .spec-tbd { color: var(--bone-3); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; }
 
+/* ---------- Earn (Stock Shredder's in-app referral program, mirrored here) ---------- */
+.earn { padding-block: var(--space-block); border-top: 1px solid var(--line); }
+.earn-eyebrow { color: var(--signal); margin-bottom: 20px; }
+.earn-headline { font-size: clamp(28px, 4.5vw, 52px); margin-bottom: 16px; }
+.earn-sub { color: var(--bone-2); margin-bottom: 40px; }
+.earn-list { list-style: none; border-top: 1px solid var(--line); }
+.earn-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  color: var(--bone);
+}
+.earn-amount { font-weight: 600; color: var(--signal); white-space: nowrap; }
+.earn-cta { margin-top: 32px; color: var(--bone-2); }
+.earn-cta strong { color: var(--bone); font-weight: 500; }
+
 /* ---------- Cross-sell strip ---------- */
 .cross-sell {
   padding-block: var(--space-block) var(--space-section);
