@@ -16,6 +16,7 @@
 <!-- Starts the Swamp Witch font (Stock Shredder's card title) downloading immediately instead
      of waiting until that teaser panel is switched to, same fix as the product page itself. -->
 <link rel="preload" href="assets/fonts/swampwitch.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" href="assets/img/hero/poster.jpg" />
 <link rel="stylesheet" href="assets/css/tokens.css" />
 <link rel="stylesheet" href="assets/css/base.css" />
 <link rel="stylesheet" href="assets/css/home.css" />
@@ -24,7 +25,7 @@
 <body class="home">
 <div class="poster">
   <div class="poster-media" aria-hidden="true">
-    <img src="assets/img/hero/poster.jpg" alt="" width="640" height="360" />
+    <img src="assets/img/hero/poster.jpg" alt="" width="640" height="360" fetchpriority="high" />
     <video autoplay muted loop playsinline preload="metadata" poster="assets/img/hero/poster.jpg">
       <source src="assets/video/hero.mp4" type="video/mp4" />
     </video>

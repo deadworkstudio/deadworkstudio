@@ -17,6 +17,7 @@
      parsed and the h1 to need it — without this, the fallback font flashes briefly before the
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/swampwitch.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/bg.jpg" />
 <link rel="stylesheet" href="../../assets/css/tokens.css" />
 <link rel="stylesheet" href="../../assets/css/base.css" />
 <link rel="stylesheet" href="../../assets/css/home.css" />
@@ -26,7 +27,7 @@
 <body>
 <div class="poster">
   <div class="poster-media" aria-hidden="true">
-    <img src="../../assets/img/products/stock-shredder/bg.jpg" alt="" />
+    <img src="../../assets/img/products/stock-shredder/bg.jpg" alt="" fetchpriority="high" />
   </div>
   <header class="poster-head">
     <h1 class="poster-brand"><a href="../../index.html"><img src="../../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
