@@ -199,6 +199,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .pricing-card-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
@@ -229,6 +230,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 
 /* ---------- Embedded checkout panel (replaces the plan grid in place, no navigation) ---------- */
 .checkout-panel {
+  background: var(--ink);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
   padding: 32px clamp(20px, 3vw, 32px);
