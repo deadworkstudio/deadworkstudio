@@ -107,7 +107,10 @@ html[data-product="stock-shredder"] .poster-media::after {
    headline's own rendered width, with the 3 columns spaced to fill it edge-to-edge — centering
    alone wasn't enough since this row is naturally much narrower than "MANAGE LESS.". */
 .home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); margin-inline: auto; }
-.home-logos a { display: block; line-height: 0; }
+/* Scoped to :has(img) only — applying line-height:0 to every .home-logos a (including the
+   Stock Shredder text link) collapsed its line box to zero height, which was throwing off the
+   row's vertical alignment against the other five image logos. */
+.home-logos a:has(img) { display: block; line-height: 0; }
 .home-logos img {
   display: block;
   height: clamp(20px, 2.7vw, 32px);
