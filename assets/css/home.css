@@ -170,19 +170,24 @@ html[data-product="stock-shredder"] .poster-media::after {
 
 /* Phones (below the fixed "poster" layout's 720px floor): the footer's email and copyright
    lines were left-aligned by default, out of step with the already-centered follow-us note and
-   social icons — center the whole block to match. On the home page specifically, put the hero
-   headline ("the words") ahead of the tool index ("the tabs") in reading order, swapping the
-   divider line from above the headline to above the index to match. */
+   social icons — center the whole block to match. On the home page and every product page, put
+   the actual page content ahead of the tool index ("the tabs") in reading order — otherwise a
+   visitor has to scroll past the entire 10-link site nav before seeing anything about the page
+   they're actually on. Swaps the divider line from above the content to above the index to match. */
 @media (max-width: 719px) {
   /* .poster-foot is a CSS grid, which stretches each item to the full column width by default
      (justify-items: stretch) — text-align alone can't center a box that's already full-width;
      justify-items: center lets each row shrink to its own content first, so centering actually
      has somewhere to go. */
   .poster-foot { text-align: center; justify-items: center; }
-  body.home .poster { display: flex; flex-direction: column; }
-  body.home .poster-panel { order: 1; margin-top: 40px; padding-top: 0; border-top: 0; }
-  body.home .poster-index { order: 2; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
-  body.home .poster-foot { order: 3; }
+  body.home .poster,
+  html[data-product] .poster { display: flex; flex-direction: column; }
+  body.home .poster-panel,
+  html[data-product] .poster-panel { order: 1; margin-top: 40px; padding-top: 0; border-top: 0; }
+  body.home .poster-index,
+  html[data-product] .poster-index { order: 2; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  body.home .poster-foot,
+  html[data-product] .poster-foot { order: 3; }
 }
 
 @media (min-width: 720px) { .poster-index { grid-template-columns: repeat(4, 1fr); } }
