@@ -26,6 +26,10 @@
   if (billingToggle) {
     Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (btn) {
       btn.addEventListener('click', function () {
+        // Switching Monthly/Annual mid-checkout used to silently update prices behind the open
+        // checkout panel, with no visible effect — back out to the pricing grid instead, same as
+        // clicking Cancel, so the toggle actually does something the person can see.
+        if (!panel.hidden) showGrid('');
         currentInterval = btn.getAttribute('data-billing');
         Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (b) {
           b.classList.toggle('is-active', b === btn);
