@@ -52,6 +52,17 @@
   line-height: 0.92;
   margin-bottom: 0;
 }
+/* Scene Lock, Set Control, Loadout, Handoff, Sound Driver — real logo marks (icon + wordmark)
+   instead of plain text. The h1 stays in the DOM for semantics/SEO; the image carries the
+   product name as alt text. Height-constrained only, since each mark has its own natural
+   proportions (Set Control's wordmark is much wider than Handoff's stacked-diamond icon). */
+.product-hero-logo-wrap { line-height: 0; }
+.product-hero-logo {
+  display: block;
+  height: clamp(56px, 9vw, 96px);
+  width: auto;
+  max-width: 100%;
+}
 /* Stock Shredder only — its own jagged brand mark font instead of Anton. Needs a touch more
    line-height (its strokes/serifs are taller and more irregular than Anton's blocky glyphs)
    and a little letter-spacing so the torn-edge details don't crowd each other at small sizes.
