@@ -50,6 +50,22 @@ This redeploys to the same `deadwork-notify` Worker at the URL above — no new 
 
 ## Reading stored signups
 
+The easy way — a password-protected page listing every signup, newest first, with a
+"Download CSV" link for pulling the list into a spreadsheet or CRM to follow up:
+
+```
+https://deadwork-notify.stockshredder.workers.dev/admin/signups?key=YOUR_ADMIN_KEY
+```
+
+This needs a one-time setup to set the password (skip if already done):
+
+```bash
+npx wrangler secret put ADMIN_KEY
+# paste any password you want when prompted — this becomes the ?key= value above
+```
+
+The CLI way (for one email, or scripting):
+
 ```bash
 # List every email that's signed up:
 npx wrangler kv key list --namespace-id d42c89327ebd493c838f9a60142ae615

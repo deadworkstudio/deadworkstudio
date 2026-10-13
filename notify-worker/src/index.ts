@@ -15,6 +15,7 @@
 
 export interface Env {
   NOTIFY_SIGNUPS: KVNamespace
+  ADMIN_KEY: string
 }
 
 const CORS_HEADERS: Record<string, string> = {
@@ -79,6 +80,98 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
   return jsonResponse({ ok: true })
 }
 
+interface Signup {
+  email: string
+  entries: SignupEntry[]
+}
+
+// KV's list() is paginated (1000 keys max per call) — loop with the cursor until it's exhausted.
+// Fine at the scale this list will realistically reach; worth revisiting if it ever gets huge.
+async function getAllSignups(env: Env): Promise<Signup[]> {
+  const signups: Signup[] = []
+  let cursor: string | undefined
+  do {
+    const page = await env.NOTIFY_SIGNUPS.list({ cursor })
+    for (const key of page.keys) {
+      const raw = await env.NOTIFY_SIGNUPS.get(key.name)
+      if (!raw) continue
+      signups.push({ email: key.name, entries: JSON.parse(raw) })
+    }
+    cursor = page.list_complete ? undefined : page.cursor
+  } while (cursor)
+
+  // Most recent signup first — that's who you'd want to follow up with first.
+  signups.sort((a, b) => latestTimestamp(b.entries).localeCompare(latestTimestamp(a.entries)))
+  return signups
+}
+
+function latestTimestamp(entries: SignupEntry[]): string {
+  return entries.reduce((latest, e) => (e.timestamp > latest ? e.timestamp : latest), '')
+}
+
+function checkAdminKey(request: Request, env: Env): boolean {
+  if (!env.ADMIN_KEY) return false
+  const url = new URL(request.url)
+  return url.searchParams.get('key') === env.ADMIN_KEY
+}
+
+function csvEscape(value: string): string {
+  return /[",\n]/.test(value) ? '"' + value.replace(/"/g, '""') + '"' : value
+}
+
+function toCsv(signups: Signup[]): string {
+  const rows = ['email,products,first_signup,last_signup']
+  for (const s of signups) {
+    const products = s.entries.map((e) => e.product).join('; ')
+    const timestamps = s.entries.map((e) => e.timestamp).sort()
+    rows.push(
+      [s.email, products, timestamps[0] ?? '', timestamps[timestamps.length - 1] ?? '']
+        .map(csvEscape)
+        .join(',')
+    )
+  }
+  return rows.join('\n')
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function toHtml(signups: Signup[], key: string): string {
+  const rows = signups
+    .map((s) => {
+      const products = s.entries.map((e) => escapeHtml(e.product)).join(', ')
+      const latest = latestTimestamp(s.entries).slice(0, 10)
+      return `<tr><td>${escapeHtml(s.email)}</td><td>${products}</td><td>${latest}</td></tr>`
+    })
+    .join('\n')
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>DEADWORK — Notify signups</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; background: #141210; color: #e6e0d3; padding: 32px; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  p { color: #9a9488; font-size: 13px; margin-top: 0; }
+  a.download { color: #e6e0d3; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid rgba(230,224,211,0.15); }
+  th { color: #9a9488; font-weight: 500; text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+  <h1>Notify signups (${signups.length})</h1>
+  <p>Most recent first. <a class="download" href="/admin/signups.csv?key=${encodeURIComponent(key)}">Download CSV</a></p>
+  <table>
+    <thead><tr><th>Email</th><th>Product(s)</th><th>Last signup</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+</body>
+</html>`
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     if (request.method === 'OPTIONS') return new Response(null, { headers: CORS_HEADERS })
@@ -86,6 +179,25 @@ export default {
     const url = new URL(request.url)
     if (url.pathname === '/notify' && request.method === 'POST') {
       return handleNotify(request, env)
+    }
+
+    if (url.pathname === '/admin/signups' && request.method === 'GET') {
+      if (!checkAdminKey(request, env)) return new Response('Not found.', { status: 404 })
+      const signups = await getAllSignups(env)
+      return new Response(toHtml(signups, url.searchParams.get('key') ?? ''), {
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      })
+    }
+
+    if (url.pathname === '/admin/signups.csv' && request.method === 'GET') {
+      if (!checkAdminKey(request, env)) return new Response('Not found.', { status: 404 })
+      const signups = await getAllSignups(env)
+      return new Response(toCsv(signups), {
+        headers: {
+          'Content-Type': 'text/csv; charset=utf-8',
+          'Content-Disposition': 'attachment; filename="deadwork-notify-signups.csv"'
+        }
+      })
     }
 
     return jsonResponse({ ok: false, error: 'Not found.' }, 404)
