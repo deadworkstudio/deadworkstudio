@@ -109,7 +109,11 @@ html[data-product="stock-shredder"] .poster-media::after {
    logo's own (very different) natural width, so space-between left wildly uneven gaps between
    a narrow mark like Scene Lock and a wide one like Set Control. Equal columns give every logo
    the same amount of breathing room, which reads as one balanced row instead of scattered marks. */
-.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); margin-inline: auto; }
+/* No margin-inline:auto here on purpose — the headline is left-aligned, not centered, so
+   centering a width-matched box within the much-wider panel (at wide viewports especially) would
+   shift it right of the headline's own left edge instead of sitting flush under it. Static
+   positioning (the block default) keeps both edges aligned with the headline exactly. */
+.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); }
 /* Scoped to :has(img) only — applying line-height:0 to every .home-logos a (including the
    Stock Shredder text link) collapsed its line box to zero height, which was throwing off the
    row's vertical alignment against the other five image logos. */
