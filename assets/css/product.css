@@ -37,7 +37,7 @@
    space on the far right, nowhere near the name it's describing. */
 .product-hero-title-row {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: clamp(16px, 2vw, 24px);
