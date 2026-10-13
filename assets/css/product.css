@@ -103,7 +103,16 @@ html[data-product="stock-shredder"] .product-hero h1,
 .download-group .btn { justify-content: center; }
 .download-row { display: flex; gap: 12px; }
 .download-row .btn { flex: 1 1 0; min-width: 0; }
-@media (max-width: 480px) {
+/* "Start Free - Download for Windows" is just long enough to wrap "Windows" onto its own line
+   at half this row's width — tightening the tracking slightly (rather than shrinking the font,
+   which would look mismatched next to Mac's button) brings it back to one line. */
+#download-win .label { letter-spacing: 0.06em; }
+/* Even with the tighter tracking above, "Windows" still wraps once the row gets much narrower
+   than ~800px — a container query (keyed to .poster-panel's own inline-size, set up in
+   home.css) tracks the actual space available to these buttons far more accurately than a
+   viewport media query would, since the content column's width isn't a fixed fraction of the
+   viewport once the nav column is accounted for. */
+@container (max-width: 800px) {
   .download-row { flex-direction: column; }
 }
 /* "More info" used to be pinned near the top of the row (align-items:flex-start), leaving a
