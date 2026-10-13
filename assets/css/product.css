@@ -96,7 +96,11 @@ html[data-product="stock-shredder"] .product-hero h1,
 
 /* ---------- Download group (Stock Shredder only) — Mac/Windows installer buttons, real file
    links kept in sync with stockshredder.com's own dynamic release-fetch script below. ---------- */
-.download-group { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+/* align-items:stretch makes Windows and More info match the Mac button's width — Mac has the
+   longest label ("Start Free — Download for..."), so it's naturally the widest and the other
+   two stretch to meet it. */
+.download-group { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.download-group .btn { justify-content: center; }
 /* "More info" used to be pinned near the top of the row (align-items:flex-start), leaving a
    tall dead gap below it since the 4-item download stack beside it is much taller. Centering it
    against the full height of that stack instead reads far more balanced. */
