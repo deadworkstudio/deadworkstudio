@@ -99,6 +99,40 @@ html[data-product="stock-shredder"] .poster-media::after {
 .panel-oneliner { font-size: clamp(16px, 1.25vw, 19px); line-height: 1.6; color: rgba(230,224,211,.8); max-width: 64ch; margin-bottom: clamp(24px, 4svh, 40px); }
 .panel-email { font-family: var(--font-display); font-size: clamp(22px, 5.2cqi, 48px); line-height: 1.1; text-decoration: none; overflow-wrap: anywhere; display: inline-block; max-width: 100%; margin-bottom: 8px; }
 
+/* Home page only — the six product marks under the headline, same quiet credit-strip treatment
+   (dim until hovered) as .client-logo-grid on the product pages, just inline instead of a full
+   grid section since this sits directly under the lede, not its own page section. */
+.home-logos { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(22px, 3vw, 40px); margin-top: clamp(28px, 4svh, 44px); }
+.home-logos a { display: block; line-height: 0; }
+.home-logos img {
+  display: block;
+  height: clamp(16px, 2.1vw, 25px);
+  width: auto;
+  max-width: 100%;
+  opacity: 0.65;
+  transition: opacity 0.18s var(--ease);
+}
+.home-logos a:hover img { opacity: 1; }
+/* Same visual-weight balancing as the product hero logos (.product-hero-logo in product.css):
+   Handoff's icon is near-square and reads small at a shared height, Set Control's wordmark is
+   very wide and reads oversized. */
+.home-logos img[src$="handoff.png"] { height: clamp(23px, 3.1vw, 37px); }
+.home-logos img[src$="set-control.png"] { height: clamp(11px, 1.5vw, 18px); }
+/* Stock Shredder has no logo file — like its product hero, it's set in its own brand font
+   instead of a wordmark image. */
+.home-logo-text {
+  display: block;
+  font-family: 'Swamp Witch', var(--font-display);
+  font-size: clamp(15px, 2.1vw, 25px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--bone);
+  opacity: 0.65;
+  text-decoration: none;
+  transition: opacity 0.18s var(--ease);
+}
+.home-logo-text:hover { opacity: 1; }
+
 .poster-foot { margin-top: 64px; padding: 24px 0 32px; border-top: 1px solid var(--line); display: grid; gap: 4px; font: 12px/1.5 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .foot-email { text-transform: none; letter-spacing: .06em; color: var(--bone-2); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
 .foot-note { text-align: center; }
