@@ -204,9 +204,21 @@ html[data-product="stock-shredder"] .poster-media::after {
      with no more space or distinction than any two tool categories get, reading as if it were
      part of Production rather than its own thing — .index-group--studio's desktop treatment
      (margin-top:auto, pushed to the bottom of a flex column) doesn't exist in this 2-column grid
-     layout. Give it a real label (same styling as "I — Pre-production" etc., unhidden from
-     sr-only) and extra breathing room above it so it reads as a distinct fourth group. */
-  .index-group--studio { margin-top: 20px; }
+     layout. A label plus extra margin (tried first) still read as "the next item in the same
+     grid" rather than a clearly separate thing, since it was still sharing column 2 with
+     "II — Production" right above it — moving it to span both columns as its own block below
+     everything else, with its own divider, is a stronger, unambiguous separation. */
+  .index-group--studio {
+    grid-column: 1 / -1;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .index-group--studio ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px var(--col-gap);
+  }
   .index-group--studio h2 {
     position: static;
     width: auto;
