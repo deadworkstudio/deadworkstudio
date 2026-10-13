@@ -110,7 +110,11 @@ html[data-product] .product-hero {
 }
 html[data-product] .product-hero h1 {
   font-size: clamp(24px, 3.8vw, 56px);
-  margin-bottom: clamp(8px, 1vw, 14px);
+  /* No margin-bottom here — it's a flex child of .product-hero-title-row alongside the badge,
+     and a child's own margin-bottom inflates the flex container's height, pushing the badge
+     down with it via align-items:flex-end. The row's own margin-bottom already provides the
+     gap to the lede below, so this would just double it up (and break alignment). */
+  margin-bottom: 0;
 }
 html[data-product] .product-hero .lede {
   max-width: none;
