@@ -32,9 +32,13 @@
   content: '';
   position: absolute;
   inset: 0;
+  /* The horizontal stop used to fade to 0 by 55% width, leaving the right half of the content
+     column (now wider than it used to be) with no horizontal darkening at all — just the
+     vertical gradient. Deepened both and pushed the horizontal fade further right so text stays
+     legible across the full content width instead of just its left edge. */
   background:
-    linear-gradient(90deg, rgba(10,10,9,.5) 0%, rgba(10,10,9,.2) 34%, rgba(10,10,9,0) 55%),
-    linear-gradient(180deg, rgba(10,10,9,.65) 0%, rgba(10,10,9,.52) 40%, rgba(10,10,9,.7) 100%),
+    linear-gradient(90deg, rgba(10,10,9,.62) 0%, rgba(10,10,9,.38) 40%, rgba(10,10,9,.12) 72%),
+    linear-gradient(180deg, rgba(10,10,9,.72) 0%, rgba(10,10,9,.6) 40%, rgba(10,10,9,.78) 100%),
     var(--grain);
   background-size: auto, auto, 180px 180px;
   opacity: 1;
