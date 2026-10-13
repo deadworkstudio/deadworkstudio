@@ -102,7 +102,9 @@ html[data-product="stock-shredder"] .poster-media::after {
 /* Home page only — the six product marks under the headline, same quiet credit-strip treatment
    (dim until hovered) as .client-logo-grid on the product pages, just inline instead of a full
    grid section since this sits directly under the lede, not its own page section. */
-.home-logos { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(22px, 3vw, 40px); margin-top: clamp(28px, 4svh, 44px); }
+/* Grid instead of flex-wrap: fixed 3-per-row regardless of available width, rather than
+   however many happen to fit before wrapping. */
+.home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(16px, 2.5svh, 26px); margin-top: clamp(28px, 4svh, 44px); }
 .home-logos a { display: block; line-height: 0; }
 .home-logos img {
   display: block;
