@@ -79,7 +79,7 @@
    "BETA" badge (green) instead. */
 [data-product='scene-lock']     { --acc: var(--dev-yellow); }
 [data-product='set-control']    { --acc: var(--dev-yellow); }
-[data-product='loadout']        { --acc: var(--beta-green); }
+[data-product='loadout']        { --acc: var(--dev-yellow); }
 [data-product='handoff']        { --acc: var(--dev-yellow); }
 [data-product='sound-driver']   { --acc: var(--dev-yellow); }
 [data-product='stock-shredder'] { --acc: var(--beta-green); }
