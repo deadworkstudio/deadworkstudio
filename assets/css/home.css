@@ -195,14 +195,15 @@ html[data-product="stock-shredder"] .poster-media::after {
      justify-items: center lets each row shrink to its own content first, so centering actually
      has somewhere to go. */
   .poster-foot { text-align: center; justify-items: center; }
-  body.home .poster,
-  html[data-product] .poster { display: flex; flex-direction: column; }
-  body.home .poster-panel,
-  html[data-product] .poster-panel { order: 1; margin-top: 40px; padding-top: 0; border-top: 0; }
-  body.home .poster-index,
-  html[data-product] .poster-index { order: 2; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
-  body.home .poster-foot,
-  html[data-product] .poster-foot { order: 3; }
+  /* Applies to every page built on this layout (home, all 6 products, Mission, Values, Join,
+     Contact) — previously scoped to just body.home and html[data-product], which missed the four
+     Studio pages entirely, leaving the full nav sitting above their content on mobile. Legal
+     pages use a different, simpler layout with no .poster-index at all, so this has no effect
+     there. */
+  .poster { display: flex; flex-direction: column; }
+  .poster-panel { order: 1; margin-top: 40px; padding-top: 0; border-top: 0; }
+  .poster-index { order: 2; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .poster-foot { order: 3; }
   /* "Mission / Values / Join / Contact" (the Studio group) sat directly under "II — Production"
      with no more space or distinction than any two tool categories get, reading as if it were
      part of Production rather than its own thing — .index-group--studio's desktop treatment
