@@ -302,7 +302,6 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   text-transform: uppercase;
   color: var(--bone-2);
 }
-.pricing-card-recommended .pricing-name { color: var(--acc-text); }
 .pricing-price {
   font-family: var(--font-display);
   font-size: clamp(32px, 3.2vw, 44px);
