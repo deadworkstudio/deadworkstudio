@@ -34,6 +34,18 @@
           var amount = currentInterval === 'year' ? priceEl.getAttribute('data-annual') : priceEl.getAttribute('data-monthly');
           var suffix = currentInterval === 'year' ? '/yr' : '/mo';
           priceEl.innerHTML = '<span class="num">$' + Number(amount).toLocaleString('en-US') + '</span>' + suffix;
+
+          var saveEl = priceEl.nextElementSibling;
+          if (saveEl && saveEl.hasAttribute('data-pricing-save')) {
+            if (currentInterval === 'year') {
+              var monthly = Number(priceEl.getAttribute('data-monthly'));
+              var annual = Number(priceEl.getAttribute('data-annual'));
+              saveEl.textContent = 'Save $' + (monthly * 12 - annual).toLocaleString('en-US') + '/yr';
+              saveEl.hidden = false;
+            } else {
+              saveEl.hidden = true;
+            }
+          }
         });
       });
     });

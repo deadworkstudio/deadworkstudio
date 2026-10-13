@@ -310,6 +310,12 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   color: var(--bone);
 }
 .pricing-price .num { font-variant-numeric: tabular-nums; }
+.pricing-save {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--acc-text);
+}
 .pricing-clips {
   font-family: var(--font-mono);
   font-size: 12px;
