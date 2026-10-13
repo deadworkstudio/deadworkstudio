@@ -235,6 +235,19 @@
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/home.js" defer></script>
 <script src="../assets/js/notify.js" defer></script>
+<!-- Sizes the logo row to match the headline's own rendered width (it's naturally much narrower
+     than "MANAGE LESS." otherwise, and ch/vw units can't reference another element's box). -->
+<script>
+(function () {
+  var headline = document.querySelector('.panel-headline');
+  var logos = document.querySelector('.home-logos');
+  if (!headline || !logos) return;
+  var sync = function () { logos.style.width = headline.getBoundingClientRect().width + 'px'; };
+  sync();
+  addEventListener('resize', sync);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+})();
+</script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

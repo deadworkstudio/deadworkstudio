@@ -103,12 +103,14 @@ html[data-product="stock-shredder"] .poster-media::after {
    (dim until hovered) as .client-logo-grid on the product pages, just inline instead of a full
    grid section since this sits directly under the lede, not its own page section. */
 /* Grid instead of flex-wrap: fixed 3-per-row regardless of available width, rather than
-   however many happen to fit before wrapping. */
-.home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(16px, 2.5svh, 26px); margin-top: clamp(28px, 4svh, 44px); }
+   however many happen to fit before wrapping. Width is set from JS (see main.js) to match the
+   headline's own rendered width, with the 3 columns spaced to fill it edge-to-edge — centering
+   alone wasn't enough since this row is naturally much narrower than "MANAGE LESS.". */
+.home-logos { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); margin-inline: auto; }
 .home-logos a { display: block; line-height: 0; }
 .home-logos img {
   display: block;
-  height: clamp(16px, 2.1vw, 25px);
+  height: clamp(20px, 2.7vw, 32px);
   width: auto;
   max-width: 100%;
   opacity: 0.65;
@@ -118,14 +120,14 @@ html[data-product="stock-shredder"] .poster-media::after {
 /* Same visual-weight balancing as the product hero logos (.product-hero-logo in product.css):
    Handoff's icon is near-square and reads small at a shared height, Set Control's wordmark is
    very wide and reads oversized. */
-.home-logos img[src$="handoff.png"] { height: clamp(23px, 3.1vw, 37px); }
-.home-logos img[src$="set-control.png"] { height: clamp(11px, 1.5vw, 18px); }
+.home-logos img[src$="handoff.png"] { height: clamp(29px, 4vw, 47px); }
+.home-logos img[src$="set-control.png"] { height: clamp(14px, 1.9vw, 23px); }
 /* Stock Shredder has no logo file — like its product hero, it's set in its own brand font
    instead of a wordmark image. */
 .home-logo-text {
   display: block;
   font-family: 'Swamp Witch', var(--font-display);
-  font-size: clamp(15px, 2.1vw, 25px);
+  font-size: clamp(19px, 2.7vw, 32px);
   line-height: 1;
   letter-spacing: 0.01em;
   color: var(--bone);
