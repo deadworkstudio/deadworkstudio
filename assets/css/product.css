@@ -101,6 +101,11 @@ html[data-product="stock-shredder"] .product-hero h1,
    two stretch to meet it. */
 .download-group { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
 .download-group .btn { justify-content: center; }
+.download-row { display: flex; gap: 12px; }
+.download-row .btn { flex: 1 1 0; min-width: 0; }
+@media (max-width: 480px) {
+  .download-row { flex-direction: column; }
+}
 /* "More info" used to be pinned near the top of the row (align-items:flex-start), leaving a
    tall dead gap below it since the 4-item download stack beside it is much taller. Centering it
    against the full height of that stack instead reads far more balanced. */
