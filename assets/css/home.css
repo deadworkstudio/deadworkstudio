@@ -49,6 +49,17 @@
   opacity: 0.05;
   mix-blend-mode: overlay;
 }
+/* Loadout and Stock Shredder's background photos are busier/higher-frequency than the others
+   (forest clutter, a dense film-strip grid) and read as messy under the standard overlay —
+   darken it further on just these two so the photo calms down without swapping the image. */
+html[data-product="loadout"] .poster-media::after,
+html[data-product="stock-shredder"] .poster-media::after {
+  background:
+    linear-gradient(90deg, rgba(10,10,9,.68) 0%, rgba(10,10,9,.42) 34%, rgba(10,10,9,.18) 55%),
+    linear-gradient(180deg, rgba(10,10,9,.8) 0%, rgba(10,10,9,.7) 40%, rgba(10,10,9,.85) 100%),
+    var(--grain);
+  background-size: auto, auto, 180px 180px;
+}
 @media (prefers-reduced-motion: reduce) {
   .poster-media video { display: none; }
 }
