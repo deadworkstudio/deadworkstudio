@@ -46,18 +46,25 @@ const KIT_API_BASE = 'https://api.kit.com/v4'
 // truth for the admin CSV export. Best-effort: if Kit is down or the key is wrong, the visitor's
 // signup still succeeds (it's already saved to KV) and we just skip the Kit sync for this one.
 async function syncToKit(env: Env, email: string, product: string): Promise<void> {
-  if (!env.KIT_API_KEY) return
+  if (!env.KIT_API_KEY) {
+    console.log('syncToKit: no KIT_API_KEY set, skipping')
+    return
+  }
 
   const headers = {
     'X-Kit-Api-Key': env.KIT_API_KEY,
     'Content-Type': 'application/json'
   }
 
-  await fetch(`${KIT_API_BASE}/subscribers`, {
+  const subRes = await fetch(`${KIT_API_BASE}/subscribers`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ email_address: email })
   })
+  if (!subRes.ok) {
+    console.log('syncToKit: create subscriber failed', subRes.status, await subRes.text())
+    return
+  }
 
   const tagName = PRODUCT_LABELS[product] ?? product
   const tagRes = await fetch(`${KIT_API_BASE}/tags`, {
@@ -65,16 +72,27 @@ async function syncToKit(env: Env, email: string, product: string): Promise<void
     headers,
     body: JSON.stringify({ name: tagName })
   })
-  if (!tagRes.ok) return
+  if (!tagRes.ok) {
+    console.log('syncToKit: create tag failed', tagRes.status, await tagRes.text())
+    return
+  }
   const tagData: { tag?: { id?: number } } = await tagRes.json()
   const tagId = tagData.tag?.id
-  if (!tagId) return
+  if (!tagId) {
+    console.log('syncToKit: tag response had no id', JSON.stringify(tagData))
+    return
+  }
 
-  await fetch(`${KIT_API_BASE}/tags/${tagId}/subscribers`, {
+  const applyRes = await fetch(`${KIT_API_BASE}/tags/${tagId}/subscribers`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ email_address: email })
   })
+  if (!applyRes.ok) {
+    console.log('syncToKit: apply tag failed', applyRes.status, await applyRes.text())
+    return
+  }
+  console.log('syncToKit: success for', email, tagName)
 }
 
 // Deliberately simple/server-side only: good enough to reject typos and garbage, not meant to be
@@ -128,9 +146,10 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
 
   try {
     await syncToKit(env, email, product)
-  } catch {
+  } catch (err) {
     // KV already has it (the admin CSV export is unaffected either way) — don't fail the
     // visitor's signup just because Kit's API had a bad moment.
+    console.log('syncToKit threw', err instanceof Error ? err.message : String(err))
   }
 
   return jsonResponse({ ok: true })
