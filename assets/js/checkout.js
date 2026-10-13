@@ -21,7 +21,6 @@
   var success = document.querySelector('[data-checkout-success]');
   if (!grid || !panel || !success) return; // this page doesn't have the pricing section
 
-  var planLabel = panel.querySelector('[data-checkout-plan-label]');
   var frame = document.getElementById('checkout-frame');
   var statusEl = panel.querySelector('[data-checkout-status]');
   var retryBtn = panel.querySelector('[data-checkout-retry]');
@@ -156,7 +155,6 @@
     showPricingError('');
     showStatus('', false);
     if (retryBtn) retryBtn.hidden = true;
-    if (planLabel) planLabel.textContent = plan.name + ' — $' + plan.price + '/mo';
 
     grid.hidden = true;
     success.hidden = true;

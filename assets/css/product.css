@@ -233,24 +233,12 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   border-radius: 2px;
   padding: 32px clamp(20px, 3vw, 32px);
 }
-.checkout-panel-head {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 20px;
-}
 .checkout-panel-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--bone-3);
-}
-.checkout-panel-plan {
-  font-family: var(--font-display);
-  font-size: clamp(24px, 3vw, 32px);
-  text-transform: uppercase;
-  color: var(--bone);
 }
 .checkout-status {
   font-family: var(--font-mono);
