@@ -125,7 +125,7 @@ html[data-product="stock-shredder"] .product-hero h1,
 /* "More info" used to be pinned near the top of the row (align-items:flex-start), leaving a
    tall dead gap below it since the 4-item download stack beside it is much taller. Centering it
    against the full height of that stack instead reads far more balanced. */
-.product-hero-actions:has(.download-group) { align-items: center; }
+.product-hero-actions:has(.download-group) { align-items: center; justify-content: center; }
 .download-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
 .download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
 
