@@ -31,6 +31,24 @@ Content-Type: application/json
   invalid input.
 - CORS is wide open (`Access-Control-Allow-Origin: *`) since this is a public marketing-site form,
   matching the pattern already used by `footage-curator/worker`.
+- Also mirrors the signup into Kit (formerly ConvertKit) as a real subscriber, tagged by which
+  product they want (e.g. "Scene Lock"), so a real person can follow up and sell — see "Syncing
+  signups to Kit" below. This is best-effort: if Kit's API is down or the key is wrong, the
+  visitor's signup still succeeds (it's already in KV either way).
+
+## Syncing signups to Kit
+
+One-time setup, from this folder:
+
+```bash
+npx wrangler secret put KIT_API_KEY
+# paste the Kit V4 API key when prompted (Kit: Settings -> Developer -> API Keys)
+npm run deploy
+```
+
+Once set, every new signup also creates/updates the subscriber in Kit and tags them with the
+product name. No code change needed to turn it off — just don't set the secret (or remove it with
+`npx wrangler secret delete KIT_API_KEY`) and the sync is silently skipped.
 
 ## Local development
 

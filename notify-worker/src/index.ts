@@ -16,6 +16,7 @@
 export interface Env {
   NOTIFY_SIGNUPS: KVNamespace
   ADMIN_KEY: string
+  KIT_API_KEY: string
 }
 
 const CORS_HEADERS: Record<string, string> = {
@@ -27,6 +28,54 @@ const CORS_HEADERS: Record<string, string> = {
 // Keep in sync with the product slugs actually linked on the live site. 'general' is the
 // site-wide Join page signup — not tied to a specific product.
 const VALID_PRODUCTS = new Set(['scene-lock', 'set-control', 'loadout', 'handoff', 'sound-driver', 'general'])
+
+// Display names for the Kit tags — nicer to read in the Kit dashboard than the raw slug.
+const PRODUCT_LABELS: Record<string, string> = {
+  'scene-lock': 'Scene Lock',
+  'set-control': 'Set Control',
+  loadout: 'Loadout',
+  handoff: 'Handoff',
+  'sound-driver': 'Sound Driver',
+  general: 'General (Join page)'
+}
+
+const KIT_API_BASE = 'https://api.kit.com/v4'
+
+// Mirrors the site's own signup in Kit, tagged by which product they're interested in, so a real
+// person can follow up and sell — separate from the KV store above, which stays the source of
+// truth for the admin CSV export. Best-effort: if Kit is down or the key is wrong, the visitor's
+// signup still succeeds (it's already saved to KV) and we just skip the Kit sync for this one.
+async function syncToKit(env: Env, email: string, product: string): Promise<void> {
+  if (!env.KIT_API_KEY) return
+
+  const headers = {
+    'X-Kit-Api-Key': env.KIT_API_KEY,
+    'Content-Type': 'application/json'
+  }
+
+  await fetch(`${KIT_API_BASE}/subscribers`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ email_address: email })
+  })
+
+  const tagName = PRODUCT_LABELS[product] ?? product
+  const tagRes = await fetch(`${KIT_API_BASE}/tags`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ name: tagName })
+  })
+  if (!tagRes.ok) return
+  const tagData: { tag?: { id?: number } } = await tagRes.json()
+  const tagId = tagData.tag?.id
+  if (!tagId) return
+
+  await fetch(`${KIT_API_BASE}/tags/${tagId}/subscribers`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ email_address: email })
+  })
+}
 
 // Deliberately simple/server-side only: good enough to reject typos and garbage, not meant to be
 // an exhaustive RFC 5322 validator. The point is "don't trust client-side validation alone."
@@ -75,6 +124,13 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
   if (!existing.some((entry) => entry.product === product)) {
     existing.push({ product, timestamp: new Date().toISOString() })
     await env.NOTIFY_SIGNUPS.put(email, JSON.stringify(existing))
+  }
+
+  try {
+    await syncToKit(env, email, product)
+  } catch {
+    // KV already has it (the admin CSV export is unaffected either way) — don't fail the
+    // visitor's signup just because Kit's API had a bad moment.
   }
 
   return jsonResponse({ ok: true })
