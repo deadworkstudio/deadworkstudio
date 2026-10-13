@@ -72,11 +72,12 @@
   margin-bottom: 4px;
 }
 
+/* No max-width here (unlike .panel-oneliner's long paragraphs): each of these is a single short
+   line meant to read on one row, not wrap — a width cap was forcing an unnecessary break. */
 .compact-text {
   font-size: clamp(14px, 1vw, 15.5px);
   line-height: 1.45;
   color: rgba(230, 224, 211, .8);
-  max-width: 60ch;
 }
 .compact-text strong { color: var(--bone); }
 
