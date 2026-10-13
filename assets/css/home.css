@@ -11,25 +11,21 @@
 }
 
 /* Background footage — real BTS video, dimmed heavily behind everything so text stays readable.
-   Fixed behind the viewport in poster mode; an ordinary backdrop in scroll mode. */
+   This comment always said "fixed behind the viewport in poster mode; an ordinary backdrop in
+   scroll mode" — but the rule below was position:fixed unconditionally, with no mobile-specific
+   override anywhere in this file. That mismatch was the actual bug behind every "black space at
+   the top/bottom on mobile" report: position:fixed on a long SCROLLING page (mobile's layout,
+   totally different from desktop's single-viewport fixed "poster") is exactly the situation iOS
+   Safari's fixed-position/dynamic-toolbar quirks break on — no amount of viewport-unit or
+   GPU-layer patching fixes a fixed element on a page it was never supposed to be fixed on.
+   position:absolute + inset:0 against .poster (position:relative, height = full page content)
+   makes this stretch to cover the ENTIRE scrollable page and scroll normally with it — no
+   viewport-tracking involved at all, so the whole bug class can't happen. Only actually fixed
+   inside the real single-viewport poster mode below (>=720w and >=640h), where .poster itself is
+   height:100svh and there's no scrolling for a fixed element to need to track. */
 .poster-media {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  /* iOS Safari resizes the visual viewport as its address bar shows/hides during scroll, but a
-     position:fixed element sized purely by inset:0 doesn't reliably track that — same issue the
-     fixed "poster" layout below already works around with the 100vh/100svh fallback pair. Mobile
-     scroll mode needs the same fix: without it, this can show a gap or freeze near the bottom of
-     a long page on an actual iPhone (doesn't reproduce in desktop browser testing). */
-  width: 100vw;
-  height: 100vh;
-  height: 100svh;
-  /* Separate iOS Safari bug from the sizing one above: a fixed element can fail to repaint at its
-     correct size until a scroll forces a layout recalculation, showing briefly as a smaller box
-     (black space around it) that then "catches up" once scrolling starts — exactly what forcing
-     the element onto its own GPU compositing layer is the standard fix for. */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
   z-index: 0;
   pointer-events: none;
 }
@@ -232,6 +228,11 @@ html[data-product="stock-shredder"] .poster-media::after {
 @media (min-width: 720px) and (min-height: 640px) {
   html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
   .poster { height: 100vh; height: 100svh; padding: 0 var(--gutter); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto minmax(0, 1fr) auto; column-gap: var(--col-gap); }
+  /* The real single-viewport "poster" mode — .poster itself is exactly one viewport tall and
+     never scrolls, so position:fixed here is both safe and correct (restoring the original
+     "fixed behind the viewport in poster mode" intent); position:absolute (the base rule,
+     for every other layout) would just sit still while .poster-panel scrolls internally instead. */
+  .poster-media { position: fixed; }
   .poster-head, .poster-foot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; }
   .poster-head { padding-top: clamp(24px, 4svh, 40px); }
   .poster-brand { grid-column: 1 / 5; }
