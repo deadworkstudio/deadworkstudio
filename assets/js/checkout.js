@@ -51,6 +51,16 @@
             }
           }
         });
+        // "100 clips / mo" next to an annual price is a unit mismatch — show the yearly total
+        // instead so the clip count actually matches the billing period being shown.
+        Array.prototype.forEach.call(grid.querySelectorAll('.pricing-clips'), function (clipsEl) {
+          var monthlyClips = Number(clipsEl.getAttribute('data-clips-monthly'));
+          if (currentInterval === 'year') {
+            clipsEl.textContent = (monthlyClips * 12).toLocaleString('en-US') + ' clips / yr';
+          } else {
+            clipsEl.textContent = monthlyClips.toLocaleString('en-US') + ' clips / mo';
+          }
+        });
       });
     });
   }
