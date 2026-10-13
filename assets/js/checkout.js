@@ -21,6 +21,24 @@
   var success = document.querySelector('[data-checkout-success]');
   if (!grid || !panel || !success) return; // this page doesn't have the pricing section
 
+  var billingToggle = document.querySelector('[data-billing-toggle]');
+  var currentInterval = 'month';
+  if (billingToggle) {
+    Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (btn) {
+      btn.addEventListener('click', function () {
+        currentInterval = btn.getAttribute('data-billing');
+        Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+        Array.prototype.forEach.call(grid.querySelectorAll('.pricing-price'), function (priceEl) {
+          var amount = currentInterval === 'year' ? priceEl.getAttribute('data-annual') : priceEl.getAttribute('data-monthly');
+          var suffix = currentInterval === 'year' ? '/yr' : '/mo';
+          priceEl.innerHTML = '<span class="num">$' + Number(amount).toLocaleString('en-US') + '</span>' + suffix;
+        });
+      });
+    });
+  }
+
   var frame = document.getElementById('checkout-frame');
   var statusEl = panel.querySelector('[data-checkout-status]');
   var retryBtn = panel.querySelector('[data-checkout-retry]');
@@ -38,6 +56,7 @@
   var embeddedCheckout = null; // the mounted Stripe EmbeddedCheckout instance, so we can destroy it cleanly
   var sessionId = null; // the current Checkout Session id — reused by "Try again" so we never start a second session for one charge
   var currentPlanId = null;
+  var currentPlanInterval = 'month'; // snapshotted from currentInterval when "Buy now" is clicked, so toggling the (now-hidden) grid mid-checkout can't change an in-flight session
 
   function showPricingError(message) {
     if (!pricingError) return;
@@ -87,7 +106,7 @@
     return fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ planId: currentPlanId })
+      body: JSON.stringify({ planId: currentPlanId, interval: currentPlanInterval })
     })
       .then(function (res) {
         if (!res.ok) throw new Error('Checkout request failed: ' + res.status);
@@ -151,6 +170,7 @@
     if (!plan || !frame) return;
 
     currentPlanId = planId;
+    currentPlanInterval = currentInterval;
     sessionId = null;
     showPricingError('');
     showStatus('', false);

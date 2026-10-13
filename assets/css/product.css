@@ -227,6 +227,24 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .pricing-status-bad { color: var(--signal); border-color: var(--signal); }
 
+.billing-toggle { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 24px; }
+.billing-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--bone-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.billing-toggle-btn.is-active { background: var(--ink-raised); border-color: var(--acc); color: var(--acc-text); }
+.billing-toggle-save { margin-left: 6px; color: var(--acc-text); }
+
 .pricing-grid {
   /* :not([hidden]) — a bare `display: grid` here would out-specificity the UA [hidden] rule
      (author styles beat UA styles at equal specificity), so the grid would stay visible even
