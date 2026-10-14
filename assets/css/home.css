@@ -106,7 +106,10 @@ html[data-product="stock-shredder"] .poster-media::after {
 .panel[data-product]::before { content: ''; display: block; width: 48px; height: 2px; background: var(--acc); margin-bottom: 20px; }
 .panel-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: clamp(16px, 3svh, 32px); }
 .panel-name { font-size: min(15.5cqi, 16svh); margin-bottom: clamp(16px, 3svh, 32px); }
-.panel-headline { font-size: min(12cqi, 14svh); max-width: 14ch; }
+/* width:fit-content makes the box hug the actual rendered glyphs instead of filling out to the
+   max-width cap — the logo row below measures this box's width via JS, and without fit-content
+   it was matching an invisible wider box rather than the visible letters. */
+.panel-headline { font-size: min(12cqi, 14svh); max-width: 14ch; width: fit-content; }
 .panel-oneliner { font-size: clamp(16px, 1.25vw, 19px); line-height: 1.6; color: rgba(230,224,211,.8); max-width: 64ch; margin-bottom: clamp(24px, 4svh, 40px); }
 .panel-email { font-family: var(--font-display); font-size: clamp(22px, 5.2cqi, 48px); line-height: 1.1; text-decoration: none; overflow-wrap: anywhere; display: inline-block; max-width: 100%; margin-bottom: 8px; }
 
