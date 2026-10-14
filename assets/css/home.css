@@ -127,7 +127,12 @@ html[data-product="stock-shredder"] .poster-media::after {
    centering a width-matched box within the much-wider panel (at wide viewports especially) would
    shift it right of the headline's own left edge instead of sitting flush under it. Static
    positioning (the block default) keeps both edges aligned with the headline exactly. */
-.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); }
+/* align-items: end, not center — five of these six are a single flat image with its product
+   name baked into the bottom of the art; Stock Shredder is one line of live text with no caption
+   underneath. Centering them mathematically aligns their MIDPOINTS, but what the eye reads as
+   "in line" is the row of product names along the bottom, which only lines up with every item's
+   bottom edge anchored to the same row baseline instead. */
+.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: end; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); }
 /* justify-items:center above centers every logo within its OWN column — fine for the middle
    column, but it insets the first and last logo in each row from the grid's true left/right
    edges (which are set to match the headline's own edges), so the visible row reads narrower
