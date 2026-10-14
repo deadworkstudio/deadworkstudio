@@ -569,6 +569,37 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .earn-cta { margin-top: 32px; color: var(--bone-2); }
 .earn-cta strong { color: var(--bone); font-weight: 500; }
 
+/* ---------- FAQ ---------- */
+.faq { padding-block: var(--space-block); border-top: 1px solid var(--line); }
+.faq-list { border-top: 1px solid var(--line); max-width: 760px; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: 0;
+  padding: 22px 0;
+  font: inherit;
+  font-size: 16px;
+  color: var(--bone);
+  text-align: left;
+  cursor: pointer;
+}
+.faq-question:hover { color: var(--acc-text); }
+.faq-icon { flex-shrink: 0; font-size: 18px; color: var(--acc-text); width: 18px; text-align: center; }
+.faq-answer {
+  display: none;
+  padding: 0 28px 22px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--bone-2);
+}
+.faq-answer p + p { margin-top: 12px; }
+.faq-item.open .faq-answer { display: block; }
+
 /* ---------- Cross-sell strip ---------- */
 .cross-sell {
   padding-block: var(--space-block) var(--space-section);

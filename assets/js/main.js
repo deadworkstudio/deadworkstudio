@@ -85,6 +85,25 @@
     }, { passive: false });
   }
 
+  var faqItems = document.querySelectorAll('.faq-item');
+  if (faqItems.length) {
+    faqItems.forEach(function (item) {
+      var button = item.querySelector('.faq-question');
+      var icon = item.querySelector('.faq-icon');
+      button.addEventListener('click', function () {
+        var nowOpen = !item.classList.contains('open');
+        faqItems.forEach(function (other) {
+          other.classList.remove('open');
+          other.querySelector('.faq-icon').textContent = '+';
+        });
+        if (nowOpen) {
+          item.classList.add('open');
+          icon.textContent = '−';
+        }
+      });
+    });
+  }
+
   // Surface any copy still awaiting the owner's sign-off in the local dev console only —
   // never in front of a real site visitor.
   if (/^(localhost|127\.0\.0\.1|)$/.test(location.hostname)) {
