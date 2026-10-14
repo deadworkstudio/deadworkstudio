@@ -227,7 +227,13 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .pricing-status-bad { color: var(--signal); border-color: var(--signal); }
 
-.billing-toggle { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 24px; }
+.billing-toggle { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 12px; }
+.pricing-reset-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--bone-3);
+  margin-bottom: 24px;
+}
 .billing-toggle-btn {
   background: transparent;
   border: 1px solid var(--line-strong);
