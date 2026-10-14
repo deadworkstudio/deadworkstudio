@@ -127,26 +127,33 @@ html[data-product="stock-shredder"] .poster-media::after {
    centering a width-matched box within the much-wider panel (at wide viewports especially) would
    shift it right of the headline's own left edge instead of sitting flush under it. Static
    positioning (the block default) keeps both edges aligned with the headline exactly. */
-/* Plain tracked uppercase text instead of each product's own logo mark — the six marks were
-   built independently (thin line art, a gradient wordmark, plain circles, a stacked icon, a bold
-   monogram, a horror-metal font) with no shared stroke weight or style, so no amount of
-   size/alignment/contrast tuning ever made them read as one cohesive row. This reuses the exact
-   same typographic treatment as the sidebar nav (.index-word), which already looks clean and
-   consistent in the same screenshot — one font, one weight, nothing to visually reconcile. */
-.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(14px, 2.4svh, 22px); margin-top: clamp(28px, 4svh, 44px); }
+/* Back to each product's own logo mark, now re-exported onto a shared canvas size and recolored
+   bone-on-transparent. Re-applying the same per-mark height tuning as before anyway — a uniform
+   export canvas doesn't mean uniform ink coverage inside it (Scene Lock's content bbox is still
+   only ~39% of its canvas height vs. Handoff's ~56%), so the stroke-weight mismatch is still real
+   and still needs compensating, not just alignment/contrast. align-items: end keeps every mark's
+   own baked-in product-name line on one shared baseline; the drop-shadow is what keeps each mark
+   legible landing on a bright patch of the BTS photo without a visible backing panel. */
+.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: end; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); }
 .home-logos a:nth-child(3n+1) { justify-self: start; }
 .home-logos a:nth-child(3n) { justify-self: end; }
-.home-logos a {
-  font: 400 clamp(14px, 1.6vw, 18px) / 1.4 var(--font-mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bone);
-  opacity: 0.85;
-  text-decoration: none;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 10px rgba(0, 0, 0, 0.6);
+.home-logos a { display: block; line-height: 0; }
+.home-logos img {
+  display: block;
+  height: clamp(20px, 2.7vw, 32px);
+  width: auto;
+  max-width: 100%;
+  opacity: 0.92;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
   transition: opacity 0.18s var(--ease);
 }
-.home-logos a:hover { opacity: 1; }
+.home-logos a:hover img { opacity: 1; }
+/* Visual-weight balancing, tuned from each mark's actual ink coverage inside its own bounding
+   box, not just its aspect ratio — a thin outline mark (Scene Lock) needs to run meaningfully
+   bigger than a solid lettermark (Sound Driver) to read as the same weight at a glance. */
+.home-logos img[src$="scene-lock.png"] { height: clamp(32px, 4.6vw, 52px); }
+.home-logos img[src$="set-control.png"] { height: clamp(18px, 2.4vw, 29px); }
+.home-logos img[src$="handoff.png"] { height: clamp(29px, 4vw, 47px); }
 
 .poster-foot { margin-top: 64px; padding: 24px 0 32px; border-top: 1px solid var(--line); display: grid; gap: 4px; font: 12px/1.5 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .foot-email { text-transform: none; letter-spacing: .06em; color: var(--bone-2); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
