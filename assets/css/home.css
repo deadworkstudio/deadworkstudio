@@ -127,7 +127,23 @@ html[data-product="stock-shredder"] .poster-media::after {
    centering a width-matched box within the much-wider panel (at wide viewports especially) would
    shift it right of the headline's own left edge instead of sitting flush under it. Static
    positioning (the block default) keeps both edges aligned with the headline exactly. */
-.home-logos { display: grid; grid-template-columns: repeat(3, 1fr); justify-items: center; align-items: center; column-gap: clamp(22px, 3vw, 40px); row-gap: clamp(18px, 3svh, 30px); margin-top: clamp(28px, 4svh, 44px); }
+/* A flat dark backing bar (sharp corners, same language as the badge chips elsewhere) guarantees
+   contrast against the BTS photo regardless of what's directly behind it — before this, a logo
+   landing over a bright patch of the photo (a wall, a light) could read as nearly invisible no
+   matter how its own size/opacity was tuned. Negative margin cancels the padding's own visual
+   indent so the bar's content still lines up flush with the headline above it, like before. */
+.home-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  column-gap: clamp(22px, 3vw, 40px);
+  row-gap: clamp(18px, 3svh, 30px);
+  margin-top: clamp(28px, 4svh, 44px);
+  padding: clamp(14px, 2.4svh, 22px) clamp(16px, 2.4vw, 28px);
+  margin-inline: clamp(-16px, -2.4vw, -28px);
+  background: rgba(6, 6, 5, 0.6);
+}
 /* justify-items:center above centers every logo within its OWN column — fine for the middle
    column, but it insets the first and last logo in each row from the grid's true left/right
    edges (which are set to match the headline's own edges), so the visible row reads narrower
@@ -145,15 +161,19 @@ html[data-product="stock-shredder"] .poster-media::after {
   height: clamp(20px, 2.7vw, 32px);
   width: auto;
   max-width: 100%;
-  opacity: 0.65;
+  opacity: 0.92;
   transition: opacity 0.18s var(--ease);
 }
 .home-logos a:hover img { opacity: 1; }
-/* Same visual-weight balancing as the product hero logos (.product-hero-logo in product.css):
-   Handoff's icon is near-square and reads small at a shared height, Set Control's wordmark is
-   very wide and reads oversized. */
+/* Visual-weight balancing (same idea as .product-hero-logo in product.css), tuned from each
+   mark's actual ink coverage, not just its raw file aspect ratio — a thin outline mark (Scene
+   Lock) needs to run meaningfully bigger than a solid lettermark (Sound Driver) to read as the
+   same weight at a glance, no matter how much its opacity is raised. Handoff's near-square icon
+   and Set Control's very wide wordmark both read small/oversized at a shared height for the same
+   reason. */
+.home-logos img[src$="scene-lock.png"] { height: clamp(32px, 4.6vw, 52px); }
+.home-logos img[src$="set-control.png"] { height: clamp(18px, 2.4vw, 29px); }
 .home-logos img[src$="handoff.png"] { height: clamp(29px, 4vw, 47px); }
-.home-logos img[src$="set-control.png"] { height: clamp(14px, 1.9vw, 23px); }
 /* Stock Shredder has no logo file — like its product hero, it's set in its own brand font
    instead of a wordmark image. */
 .home-logo-text {
@@ -163,7 +183,7 @@ html[data-product="stock-shredder"] .poster-media::after {
   line-height: 1;
   letter-spacing: 0.01em;
   color: var(--bone);
-  opacity: 0.65;
+  opacity: 0.92;
   text-decoration: none;
   transition: opacity 0.18s var(--ease);
 }
