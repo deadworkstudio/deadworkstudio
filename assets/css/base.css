@@ -229,7 +229,7 @@ button { font: inherit; }
   gap: 20px;
 }
 .header-logo { display: flex; align-items: center; min-height: 44px; }
-.header-logo img { height: 20px; width: auto; transition: opacity 0.2s var(--ease); }
+.header-logo img { height: 32px; width: auto; transition: opacity 0.2s var(--ease); }
 
 .header-nav {
   display: none;
