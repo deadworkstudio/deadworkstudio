@@ -161,10 +161,15 @@ html[data-product="stock-shredder"] .poster-media::after {
     padding-top: 24px;
     border-top: 1px solid var(--line);
   }
+  /* Row-gap is 0, not the 32px the outer .poster-index grid uses — every other group's items
+     (Scene Lock/Set Control, Loadout/Handoff, etc.) are plain stacked <li>s with no gap of their
+     own, relying purely on .index-word's 44px min-height for spacing. A 32px row-gap here nearly
+     doubled that, reading as mismatched with the groups right above it and leaving noticeably more
+     empty space before the footer than anywhere else on the page. */
   .index-group--studio ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px var(--col-gap);
+    gap: 0 var(--col-gap);
   }
   .index-group--studio h2 {
     position: static;
