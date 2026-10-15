@@ -147,6 +147,10 @@ html[data-product="stock-shredder"] .poster-media::after {
   .poster-panel { order: 1; margin-top: 40px; padding-top: 0; border-top: 0; }
   .poster-index { order: 2; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
   .poster-foot { order: 3; }
+  /* Social icons read as the most "findable" thing in the footer — moved to the very top of the
+     block (above the email line) on mobile only, so they're the first thing seen rather than the
+     last. Desktop keeps its own subgrid-based column layout untouched (see the 720px+ rule below). */
+  .foot-social { order: -1; }
   /* "Mission / Values / Join / Contact" (the Studio group) sat directly under "II — Production"
      with no more space or distinction than any two tool categories get, reading as if it were
      part of Production rather than its own thing — .index-group--studio's desktop treatment
