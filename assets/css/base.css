@@ -494,6 +494,15 @@ button { font: inherit; }
 }
 .closing h2 { font-size: clamp(44px, 8vw, 120px); margin-bottom: clamp(40px, 4vw, 56px); }
 
+/* Tawk.to's chat launcher ships its own iframe and doesn't know this is a dark site — left alone,
+   that iframe paints with the browser's own default background instead of ours, showing up as a
+   mismatched block behind the bubble (worst on mobile, where it reserves more space). Force it
+   transparent so only the bubble itself is visible, not its container. */
+iframe[title='chat widget'],
+#tawkchat-container,
+#tawkchat-minified-wrapper,
+.tawk-min-container { background: transparent !important; }
+
 /* ---------- Footer ---------- */
 .site-footer {
   background: var(--ink);
