@@ -66,16 +66,6 @@
   width: auto;
   max-width: 100%;
 }
-/* Matching every logo to the same HEIGHT doesn't mean the same visual weight — Handoff's mark
-   is a compact near-square icon (barely wider than it is tall) while Set Control's wordmark
-   stretches over 5x wider than tall, so at equal height Handoff reads small and Set Control
-   reads oversized. Nudge each toward a shared footprint instead of a shared height. */
-html[data-product="handoff"] .product-hero-logo {
-  height: clamp(37px, 5.9vw, 87px);
-}
-html[data-product="set-control"] .product-hero-logo {
-  height: clamp(18px, 2.85vw, 42px);
-}
 /* Stock Shredder only — its own jagged brand mark font instead of Anton. Needs a touch more
    line-height (its strokes/serifs are taller and more irregular than Anton's blocky glyphs)
    and a little letter-spacing so the torn-edge details don't crowd each other at small sizes.
