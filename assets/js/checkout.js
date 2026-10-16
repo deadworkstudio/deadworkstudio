@@ -51,15 +51,24 @@
             }
           }
         });
-        // "100 clips / mo" next to an annual price is a unit mismatch — show the yearly total
-        // instead so the clip count actually matches the billing period being shown.
-        Array.prototype.forEach.call(grid.querySelectorAll('.pricing-clips'), function (clipsEl) {
+        // Clips are always granted monthly regardless of billing cycle — switching this to a
+        // yearly total (e.g. "1,200 clips / yr") read like the whole year's worth lands upfront,
+        // which contradicts the "clips reset on the 1st" note right above the grid. Left as a
+        // flat monthly figure no matter which billing interval is selected.
+        //
+        // Cost-per-clip DOES change with billing interval (annual is cheaper per clip since the
+        // same clip allowance costs less over the year) — recompute it from each card's own
+        // price and clip data instead of leaving it fixed at the monthly rate.
+        Array.prototype.forEach.call(grid.querySelectorAll('.pricing-card'), function (card) {
+          var priceEl = card.querySelector('.pricing-price');
+          var clipsEl = card.querySelector('.pricing-clips');
+          var perClipEl = card.querySelector('.pricing-per-clip');
+          if (!priceEl || !clipsEl || !perClipEl) return;
           var monthlyClips = Number(clipsEl.getAttribute('data-clips-monthly'));
-          if (currentInterval === 'year') {
-            clipsEl.textContent = (monthlyClips * 12).toLocaleString('en-US') + ' clips / yr';
-          } else {
-            clipsEl.textContent = monthlyClips.toLocaleString('en-US') + ' clips / mo';
-          }
+          var costPerClip = currentInterval === 'year'
+            ? Number(priceEl.getAttribute('data-annual')) / (monthlyClips * 12)
+            : Number(priceEl.getAttribute('data-monthly')) / monthlyClips;
+          perClipEl.textContent = '$' + costPerClip.toFixed(2) + ' / clip';
         });
       });
     });
