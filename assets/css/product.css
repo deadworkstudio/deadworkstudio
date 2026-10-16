@@ -38,12 +38,20 @@
 .product-hero-title-row {
   display: flex;
   align-items: flex-end;
-  flex-wrap: wrap;
+  /* nowrap, not wrap — the badge row used to drop to its own line below the logo once the two
+     together got too wide for the row (Sound Driver's two badges plus the taller logo from the
+     size bump above pushed this over in practice), reading as a separate block with a big gap
+     instead of sitting right next to the logo like Stock Shredder's text wordmark does (its
+     own text is just narrow enough to never hit this). The logo keeps its full size
+     (flex-shrink: 0) and the badge row wraps its own individual badges onto a second line
+     instead, if it's ever truly that tight, so logo+badge(s) always stay visually attached. */
+  flex-wrap: nowrap;
   gap: 16px;
   margin-bottom: clamp(16px, 2vw, 24px);
 }
 .product-hero-badge-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
 }
@@ -56,7 +64,7 @@
    instead of plain text. The h1 stays in the DOM for semantics/SEO; the image carries the
    product name as alt text. Height-constrained only, since each mark has its own natural
    proportions (Set Control's wordmark is much wider than Handoff's stacked-diamond icon). */
-.product-hero-logo-wrap { line-height: 0; }
+.product-hero-logo-wrap { line-height: 0; flex-shrink: 0; }
 .product-hero-logo {
   display: block;
   /* Matching Stock Shredder's literal rendered title height (clamp(25px, 4vw, 59px), its old
