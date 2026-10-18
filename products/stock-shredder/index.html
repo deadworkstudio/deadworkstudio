@@ -23,10 +23,11 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261016c" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261018d" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
+<a class="earn-tab" href="#earn" aria-label="Jump to the Earn section">Earn</a>
 <div class="poster">
   <div class="poster-media" aria-hidden="true">
     <img src="../../assets/img/products/stock-shredder/bg.jpg" alt="" fetchpriority="high" />
@@ -100,11 +101,11 @@
   <div class="product-hero-actions">
     <div class="download-group">
       <div class="download-row">
-        <a id="download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.1/Stock-Shredder-0.6.1-universal.dmg">
+        <a id="download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg">
           <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
           <span class="label">Start Free — Download for Mac</span>
         </a>
-        <a id="download-win" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.1/Stock-Shredder-Setup-0.6.1.exe">
+        <a id="download-win" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Setup-0.6.3.exe">
           <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>
           <span class="label">Start Free — Download for Windows</span>
         </a>
@@ -186,16 +187,22 @@
       <code data-activation-key></code>
       <button type="button" class="btn btn-secondary" data-copy-key>Copy</button>
     </div>
-    <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.1/Stock-Shredder-0.6.1-universal.dmg" class="btn btn-primary">Download Stock Shredder</a>
+    <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg" class="btn btn-primary">Download Stock Shredder</a>
     <p class="checkout-success-note">Paste this activation key when it asks — full instructions are in the app.</p>
   </div>
 </section>
 
 <section class="wrap interface-shot">
-  <figure>
-    <img src="../../assets/img/products/stock-shredder/interface-temp.png" alt="Stock Shredder's Import screen, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1600" height="893" loading="lazy" />
-    <figcaption>Real app screenshot — temporary, will be replaced with a final marketing capture</figcaption>
-  </figure>
+  <div class="interface-shot-grid">
+    <figure>
+      <img src="../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="lazy" />
+      <figcaption>Dark mode</figcaption>
+    </figure>
+    <figure>
+      <img src="../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
+      <figcaption>Light mode</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section class="wrap spec">
@@ -203,13 +210,13 @@
   <table class="spec-table">
     <tbody>
         <tr><th>Platform</th><td>macOS (Intel &amp; Apple Silicon) and Windows</td></tr>
-        <tr><th>Works with</th><td>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks, Blackbox, iStock, Getty Images, Motion Array, Envato Elements, Filmsupply</td></tr>
+        <tr><th>Works with</th><td>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks, Blackbox, iStock, Getty Images, Motion Array, Envato Elements, Filmsupply, and more</td></tr>
         <tr><th>Formats</th><td>MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV, plus Blackmagic RAW, RED R3D, CinemaDNG, and ARRIRAW with the relevant vendor tools installed</td></tr>
     </tbody>
   </table>
 </section>
 
-<section class="wrap earn">
+<section class="wrap earn" id="earn">
   <p class="eyebrow earn-eyebrow">Earn</p>
   <h2 class="earn-headline display">Help other filmmakers find us.<br>Get paid in clips.</h2>
   <p class="earn-sub">No ad budget here. Just filmmakers telling filmmakers.</p>
@@ -230,7 +237,7 @@
         <span>Do unused clips expire?</span>
         <span class="faq-icon">+</span>
       </button>
-      <div class="faq-answer">No. If you don't use all your clips in a given month, the unused ones roll over into the next month automatically — no cap, and they never expire. Once you've paid for them, they're yours to use whenever you're ready.</div>
+      <div class="faq-answer">No. If you don't use all your clips in a given month, the unused ones roll over into the next month automatically. Once you've paid for them, they're yours to use whenever you're ready.</div>
     </div>
     <div class="faq-item">
       <button class="faq-question" type="button">

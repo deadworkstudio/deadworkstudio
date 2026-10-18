@@ -433,6 +433,16 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 
 /* ---------- Interface screenshot (temporary — real app captures, swap for final marketing shots later) ---------- */
 .interface-shot { margin: 0 0 clamp(12px, 1.5vw, 20px); }
+/* Direct report 2026-10-18: show the app has both a dark and a light mode — two real captures,
+   not one stale placeholder. Side by side on desktop, stacked on narrow screens. */
+.interface-shot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+}
+@media (max-width: 760px) {
+  .interface-shot-grid { grid-template-columns: 1fr; }
+}
 .interface-shot img {
   display: block;
   width: 100%;
@@ -442,6 +452,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .interface-shot figcaption {
   margin-top: 12px;
+  text-align: center;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -575,6 +586,34 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .earn-amount { font-weight: 600; color: var(--signal); white-space: nowrap; }
 .earn-cta { margin-top: 32px; color: var(--bone-2); }
 .earn-cta strong { color: var(--bone); font-weight: 500; }
+
+/* Floating tab that jumps straight to .earn below — --acc is the brand green on this page
+   (tokens.css: [data-product='stock-shredder'] { --acc: var(--beta-green) }), not the red
+   --signal the rest of this section uses for amounts, on purpose: a 2026-10-18 reference
+   screenshot showed a red version of this tab, asked for in green instead. Direct report
+   2026-10-18: "turn the EARN word sideways" — rotated text via writing-mode, same as
+   stockshredder.com's own earn-tab, instead of stacking each letter on its own line. */
+.earn-tab {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 150;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  padding: 18px 9px;
+  border-radius: 8px 0 0 8px;
+  background: var(--acc);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: padding-right 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+.earn-tab:hover { padding-right: 13px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45); }
 
 /* ---------- FAQ ---------- */
 .faq { padding-block: var(--space-block); border-top: 1px solid var(--line); }
