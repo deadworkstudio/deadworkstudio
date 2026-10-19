@@ -255,7 +255,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid var(--line-strong);
+  border: 2px solid var(--bone);
   background: var(--ink-raised);
 }
 .artist-avatars img + img { margin-left: -14px; }
