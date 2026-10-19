@@ -210,6 +210,11 @@ html[data-product="stock-shredder"] .poster-media::after {
   .index-group--studio { margin-top: auto; }
   .index-word { min-height: 32px; font-size: clamp(18px, 1.5vw, 22px); }
   .poster-panel { grid-column: 5 / 13; grid-row: 2; margin: 0; border: 0; padding-block: clamp(24px, 5svh, 64px) clamp(24px, 4svh, 40px); min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+  /* Stock Shredder's own grids (download, reviews, FAQ, earn) run wider/denser than any other
+     product page's content -- overflow-x was never declared here at all, so if any of them ever
+     push even a pixel past the panel's edge the whole panel becomes sideways-draggable/scrollable
+     with it. Locked down explicitly rather than relying on every grid being perfectly safe. */
+  html[data-product="stock-shredder"] .poster-panel { overflow-x: hidden; }
   .poster-foot { grid-row: 3; grid-template-rows: auto auto; row-gap: 10px; margin: 0; padding: 20px 0 24px; }
   /* Social icons get their own full-width row on top, same "most findable thing" reasoning the
      mobile order:-1 rule already uses -- "By artists..." moves down to share the email/copyright
