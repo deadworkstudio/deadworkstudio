@@ -707,17 +707,9 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .earn-eyebrow { color: var(--signal); margin-bottom: 20px; }
 .earn-headline { font-size: clamp(28px, 4.5vw, 52px); margin-bottom: 16px; }
 .earn-sub { color: var(--bone-2); margin-bottom: 40px; }
-/* Side by side instead of one item per full-width row -- two real columns share the row (not
-   just two <li>s stacked), so four rewards take up half the vertical space they used to. */
 .earn-list {
   list-style: none;
   border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(20px, 4vw, 48px);
-}
-@media (max-width: 479px) {
-  .earn-list { grid-template-columns: 1fr; }
 }
 .earn-list li {
   display: flex;
@@ -974,7 +966,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .review-star:hover, .review-star:focus-visible { color: var(--beta-green); }
 .review-star.is-active { color: var(--beta-green); }
-.review-form-foot { text-align: center; }
+.review-form-foot { text-align: center; margin-bottom: 16px; }
 
 @media (max-width: 639px) {
   /* Body copy must never read smaller than 16px on mobile. These MUST live here, not in base.css:
