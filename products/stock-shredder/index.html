@@ -22,8 +22,8 @@
 <link rel="preload" as="image" href="../../assets/img/brand/deadwork-wordmark-bone.png" />
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
-<link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019o" />
+<link rel="stylesheet" href="../../assets/css/home.css?v=20261019a" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019p" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -119,6 +119,7 @@
 </section>
 
 <section class="wrap product-hero-cta" data-product="stock-shredder">
+  <p class="eyebrow download-eyebrow">Download</p>
   <div class="product-hero-actions">
     <div class="download-group">
       <!-- 2x2 grid: Mac/iPhone on top, Windows/Android below. No more per-button captions --
@@ -232,15 +233,24 @@
 <section class="wrap interface-shot">
   <div class="interface-shot-grid">
     <figure>
-      <img src="../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="lazy" />
+      <button type="button" class="lightbox-trigger" data-lightbox-trigger>
+        <img src="../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="lazy" />
+      </button>
       <figcaption>Dark mode</figcaption>
     </figure>
     <figure>
-      <img src="../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
+      <button type="button" class="lightbox-trigger" data-lightbox-trigger>
+        <img src="../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
+      </button>
       <figcaption>Light mode</figcaption>
     </figure>
   </div>
 </section>
+
+<!-- Click-anywhere-to-close lightbox, shared by every .lightbox-trigger above. -->
+<div class="lightbox-overlay" data-lightbox-overlay hidden>
+  <img class="lightbox-image" data-lightbox-image src="" alt="" />
+</div>
 
 <section class="wrap world-map" data-world-map hidden>
   <p class="eyebrow">Where shredders are</p>
@@ -687,6 +697,36 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
       .then(function () {
         setBusy(false);
       });
+  });
+})();
+
+// Image lightbox: click a trigger to see its image full-screen, click anywhere (including the
+// image itself, since the click bubbles up to the overlay) or press Escape to close.
+(function () {
+  var overlay = document.querySelector('[data-lightbox-overlay]');
+  var overlayImg = overlay ? overlay.querySelector('[data-lightbox-image]') : null;
+  var triggers = document.querySelectorAll('[data-lightbox-trigger]');
+  if (!overlay || !overlayImg || !triggers.length) return;
+
+  function openLightbox(src, alt) {
+    overlayImg.src = src;
+    overlayImg.alt = alt || '';
+    overlay.hidden = false;
+  }
+  function closeLightbox() {
+    overlay.hidden = true;
+    overlayImg.src = '';
+  }
+
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var img = trigger.querySelector('img');
+      if (img) openLightbox(img.src, img.alt);
+    });
+  });
+  overlay.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !overlay.hidden) closeLightbox();
   });
 })();
 </script>

@@ -211,11 +211,13 @@ html[data-product="stock-shredder"] .poster-media::after {
   .index-word { min-height: 32px; font-size: clamp(18px, 1.5vw, 22px); }
   .poster-panel { grid-column: 5 / 13; grid-row: 2; margin: 0; border: 0; padding-block: clamp(24px, 5svh, 64px) clamp(24px, 4svh, 40px); min-height: 0; overflow-y: auto; scrollbar-width: thin; }
   .poster-foot { grid-row: 3; grid-template-rows: auto auto; row-gap: 10px; margin: 0; padding: 20px 0 24px; }
-  .foot-note  { grid-column: 1 / -1; grid-row: 1; }
+  /* Social icons get their own full-width row on top, same "most findable thing" reasoning the
+     mobile order:-1 rule already uses -- "By artists..." moves down to share the email/copyright
+     row instead, centered between them. Pages without .foot-social (the two legal pages) are
+     unaffected by either rule. */
+  .foot-social { grid-column: 1 / -1; grid-row: 1; }
   .foot-email { grid-column: 1 / 5; grid-row: 2; min-height: 0; }
-  /* Social icons share the email/copyright row, centered between them, instead of getting
-     their own row. Pages without .foot-social (the two legal pages) are unaffected. */
-  .foot-social { grid-column: 5 / 9; grid-row: 2; }
+  .foot-note  { grid-column: 5 / 9; grid-row: 2; }
   .foot-copy  { grid-column: 9 / 13; grid-row: 2; text-align: right; }
 }
 @media (min-width: 720px) and (max-width: 1023px) and (min-height: 640px) {
