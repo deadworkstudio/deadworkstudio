@@ -672,7 +672,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .earn-amount { font-weight: 600; color: var(--signal); white-space: nowrap; }
 .earn-cta { margin-top: 12px; color: var(--bone-2); }
 .earn-cta strong { color: var(--bone); font-weight: 500; }
-.earn-submit { margin-top: 32px; }
+.earn-submit { margin-top: 32px; text-align: center; }
 
 /* ---------- Submit-your-link modal — same /earn-submission Worker endpoint stockshredder.com's
    own modal posts to, just styled with this site's own tokens. Direct report 2026-10-19: port
