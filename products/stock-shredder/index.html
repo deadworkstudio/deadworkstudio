@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019f" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019g" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -93,6 +93,29 @@
   <div>
     <h2>The solution</h2>
     <p>Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other things without avoiding income.</p>
+  </div>
+</section>
+
+<section class="wrap steps">
+  <div class="step">
+    <div class="step-num">I</div>
+    <div class="step-title">Select</div>
+    <p class="step-desc">Import your folder</p>
+  </div>
+  <div class="step">
+    <div class="step-num">II</div>
+    <div class="step-title">Shred</div>
+    <p class="step-desc">Review your selections</p>
+  </div>
+  <div class="step">
+    <div class="step-num">III</div>
+    <div class="step-title">Send</div>
+    <p class="step-desc">Export your clips</p>
+  </div>
+  <div class="step">
+    <div class="step-num">IV</div>
+    <div class="step-title">Share</div>
+    <p class="step-desc">Receive created keywords</p>
   </div>
 </section>
 
@@ -288,8 +311,28 @@
     <li><span>Record a YouTube review and walkthrough</span><span class="earn-amount">1,000 clips</span></li>
     <li><span>Refer a friend</span><span class="earn-amount">750 clips each</span></li>
   </ul>
-  <p class="earn-cta">Email <strong>deadworkstudio@gmail.com</strong> with your link. Once approved, you'll get an access code to add the clips to your account.</p>
+  <div class="earn-submit">
+    <button class="btn btn-primary" type="button" data-earn-submit-open>Submit your link</button>
+    <p class="earn-cta">Once it's approved, you'll get an access code to add the clips to your account.</p>
+  </div>
 </section>
+
+<div class="earn-modal-overlay" data-earn-modal-overlay hidden>
+  <div class="earn-modal" role="dialog" aria-modal="true" aria-label="Submit your link">
+    <button class="earn-modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
+    <p class="checkout-panel-eyebrow">Earn</p>
+    <h3 class="earn-modal-title">Submit your link</h3>
+    <div data-earn-modal-body>
+      <p class="earn-modal-note">Share where you posted about Stock Shredder so we can take a look.</p>
+      <p class="earn-modal-error" data-earn-modal-error hidden></p>
+      <input class="earn-modal-input" type="email" placeholder="Your email" data-earn-email />
+      <input class="earn-modal-input" type="text" placeholder="TikTok link" data-earn-tiktok />
+      <input class="earn-modal-input" type="text" placeholder="YouTube link" data-earn-youtube />
+      <input class="earn-modal-input" type="text" placeholder="Instagram link" data-earn-instagram />
+      <button class="btn btn-primary earn-modal-submit" type="button" data-earn-submit-btn>Submit</button>
+    </div>
+  </div>
+</div>
 
 <section class="wrap faq" id="faq">
   <h2>FAQ</h2>
@@ -454,6 +497,66 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
     section.hidden = false;
   })
   .catch(function () {}); // stays hidden if the fetch fails
+
+// "Submit your link" — same /earn-submission endpoint stockshredder.com's own modal posts to.
+(function () {
+  var EARN_API = 'https://stock-shredder-payments.stockshredder.workers.dev';
+  var openBtn = document.querySelector('[data-earn-submit-open]');
+  var overlay = document.querySelector('[data-earn-modal-overlay]');
+  if (!openBtn || !overlay) return;
+  var closeBtn = overlay.querySelector('[data-earn-modal-close]');
+  var body = overlay.querySelector('[data-earn-modal-body]');
+  var errorEl = overlay.querySelector('[data-earn-modal-error]');
+  var submitBtn = overlay.querySelector('[data-earn-submit-btn]');
+
+  function closeModal() { overlay.hidden = true; }
+  openBtn.addEventListener('click', function () { overlay.hidden = false; });
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+
+  submitBtn.addEventListener('click', function () {
+    errorEl.hidden = true;
+    var email = overlay.querySelector('[data-earn-email]').value.trim();
+    var tiktok = overlay.querySelector('[data-earn-tiktok]').value.trim();
+    var youtube = overlay.querySelector('[data-earn-youtube]').value.trim();
+    var instagram = overlay.querySelector('[data-earn-instagram]').value.trim();
+    if (!email) {
+      errorEl.textContent = 'Your email is required.';
+      errorEl.hidden = false;
+      return;
+    }
+    if (!tiktok && !youtube && !instagram) {
+      errorEl.textContent = 'Add at least one link.';
+      errorEl.hidden = false;
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+    fetch(EARN_API + '/earn-submission', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, tiktok: tiktok, youtube: youtube, instagram: instagram })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+          errorEl.textContent = (result.data && result.data.error) || 'Could not submit — try again in a moment.';
+          errorEl.hidden = false;
+          return;
+        }
+        body.innerHTML = '<p class="earn-modal-note">Thanks! Once it’s approved, you’ll get an access code to add the clips to your account.</p>';
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+        errorEl.textContent = 'Could not reach the server — try again in a moment.';
+        errorEl.hidden = false;
+      });
+  });
+})();
 </script>
 <script>
 // Reviews: approved-review grid (GET /reviews) + the submission form (POST /reviews). New

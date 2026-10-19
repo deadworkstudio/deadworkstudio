@@ -584,6 +584,43 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .split p { color: rgba(230, 224, 211, 0.8); font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; max-width: 60ch; }
 .split p + p { margin-top: 14px; }
 
+/* ---------- Step rail (Select/Shred/Send/Share) — same I/II/III/IV grid stockshredder.com's
+   own hero uses, mirrored here with this site's tokens instead of that page's hardcoded colors.
+   Direct report 2026-10-19: add it below the problem/solution split. ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 720px) {
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+.step {
+  text-align: center;
+  padding: 28px 16px;
+  border-left: 1px solid var(--line);
+}
+.step:first-child { border-left: none; }
+@media (max-width: 720px) {
+  .step:nth-child(2n+1) { border-left: none; }
+}
+.step-num {
+  font-family: 'Swamp Witch', 'Impact', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--bone);
+  margin-bottom: 10px;
+}
+.step-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bone-2);
+}
+.step-desc { margin-top: 8px; font-size: 13px; color: var(--bone-3); }
+
 /* ---------- Spec sheet ---------- */
 .spec { padding-block: var(--space-block); border-top: 1px solid var(--line); }
 .spec h2 {
@@ -633,8 +670,64 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   color: var(--bone);
 }
 .earn-amount { font-weight: 600; color: var(--signal); white-space: nowrap; }
-.earn-cta { margin-top: 32px; color: var(--bone-2); }
+.earn-cta { margin-top: 12px; color: var(--bone-2); }
 .earn-cta strong { color: var(--bone); font-weight: 500; }
+.earn-submit { margin-top: 32px; }
+
+/* ---------- Submit-your-link modal — same /earn-submission Worker endpoint stockshredder.com's
+   own modal posts to, just styled with this site's own tokens. Direct report 2026-10-19: port
+   the real submission flow over instead of the plain "email us" instruction it replaces. ---------- */
+.earn-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 10, 9, 0.72);
+}
+.earn-modal {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--ink-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  padding: 32px clamp(20px, 3vw, 32px);
+}
+.earn-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: 0;
+  color: var(--bone-3);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.earn-modal-close:hover { color: var(--bone); }
+.earn-modal-title { font-size: clamp(22px, 2.5vw, 28px); margin-bottom: 16px; }
+.earn-modal-note { color: var(--bone-2); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+.earn-modal-error { color: var(--signal); font-size: 13px; margin-bottom: 16px; }
+.earn-modal-input {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  margin-bottom: 12px;
+  background: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+.earn-modal-input::placeholder { color: var(--bone-3); }
+.earn-modal-submit { width: 100%; justify-content: center; margin-top: 8px; }
 
 /* Floating tab that jumps straight to .earn below — --acc is the brand green on this page
    (tokens.css: [data-product='stock-shredder'] { --acc: var(--beta-green) }), not the red
