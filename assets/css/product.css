@@ -130,6 +130,13 @@
   width: auto;
   max-width: 100%;
 }
+/* Set Control's wordmark is far wider relative to its height (4.7:1) than the other marks
+   (1.3-2.9:1), so the shared height-only sizing above renders it much wider on screen even
+   at an identical height. Scaled its height down so the rendered width lines up with the
+   others instead of dwarfing them. */
+html[data-product="set-control"] .product-hero-logo {
+  height: clamp(28px, 4.5vw, 66px);
+}
 /* Stock Shredder only — its own jagged brand mark font instead of Anton. Needs a touch more
    line-height (its strokes/serifs are taller and more irregular than Anton's blocky glyphs)
    and a little letter-spacing so the torn-edge details don't crowd each other at small sizes.
