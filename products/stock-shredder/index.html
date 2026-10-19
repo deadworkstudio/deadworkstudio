@@ -162,36 +162,6 @@
   </div>
 </section>
 
-<section class="wrap reviews" id="reviews">
-  <p class="eyebrow">Reviews</p>
-  <h2 class="display">What people are saying</h2>
-  <p class="reviews-count" data-reviews-count hidden></p>
-
-  <div class="reviews-list" data-reviews-list hidden></div>
-  <p class="reviews-empty" data-reviews-empty hidden>No reviews yet — be the first.</p>
-
-  <form class="review-form" data-review-form novalidate>
-    <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
-      <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
-    </div>
-    <label class="sr-only" for="review-name">Your name</label>
-    <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
-    <label class="sr-only" for="review-email">Your email</label>
-    <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
-    <label class="sr-only" for="review-body">What's your experience been like?</label>
-    <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
-    <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
-    <div class="review-form-foot">
-      <button class="btn btn-primary" type="submit" data-review-submit>Submit review</button>
-    </div>
-    <p class="notify-status" data-review-status hidden></p>
-  </form>
-</section>
-
 <section class="wrap pricing" id="pricing">
   <p class="eyebrow pricing-eyebrow">Pricing</p>
   <p class="pricing-status pricing-status-bad" data-pricing-error hidden></p>
@@ -310,6 +280,36 @@
         <tr><th>Formats</th><td>MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV, plus Blackmagic RAW, RED R3D, CinemaDNG, and ARRIRAW with the relevant vendor tools installed</td></tr>
     </tbody>
   </table>
+</section>
+
+<section class="wrap reviews" id="reviews">
+  <p class="eyebrow">Reviews</p>
+  <h2 class="display">What people are saying</h2>
+  <p class="reviews-count" data-reviews-count hidden></p>
+
+  <div class="reviews-list" data-reviews-list hidden></div>
+  <p class="reviews-empty" data-reviews-empty hidden>No reviews yet — be the first.</p>
+
+  <form class="review-form" data-review-form novalidate>
+    <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
+      <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
+    </div>
+    <label class="sr-only" for="review-name">Your name</label>
+    <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
+    <label class="sr-only" for="review-email">Your email</label>
+    <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
+    <label class="sr-only" for="review-body">What's your experience been like?</label>
+    <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
+    <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
+    <div class="review-form-foot">
+      <button class="btn btn-primary" type="submit" data-review-submit>Submit review</button>
+    </div>
+    <p class="notify-status" data-review-status hidden></p>
+  </form>
 </section>
 
 <section class="wrap earn" id="earn">
