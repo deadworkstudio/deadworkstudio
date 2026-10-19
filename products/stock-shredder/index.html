@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019h" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019i" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -167,6 +167,7 @@
 <section class="wrap reviews" id="reviews">
   <p class="eyebrow">Reviews</p>
   <h2 class="display">What people are saying</h2>
+  <p class="reviews-count" data-reviews-count hidden></p>
 
   <div class="reviews-list" data-reviews-list hidden></div>
   <p class="reviews-empty" data-reviews-empty hidden>No reviews yet — be the first.</p>
@@ -180,13 +181,15 @@
       <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
     </div>
     <label class="sr-only" for="review-name">Your name</label>
-    <input class="notify-input review-input" type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
+    <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
     <label class="sr-only" for="review-email">Your email</label>
-    <input class="notify-input review-input" type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
+    <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
     <label class="sr-only" for="review-body">What's your experience been like?</label>
-    <textarea class="notify-input review-textarea" id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
+    <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
     <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
-    <button class="btn btn-primary" type="submit" data-review-submit>Submit review</button>
+    <div class="review-form-foot">
+      <button class="btn btn-primary" type="submit" data-review-submit>Submit review</button>
+    </div>
     <p class="notify-status" data-review-status hidden></p>
   </form>
 </section>
@@ -588,10 +591,16 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
     .then(function (reviews) {
       var listEl = document.querySelector('[data-reviews-list]');
       var emptyEl = document.querySelector('[data-reviews-empty]');
+      var countEl = document.querySelector('[data-reviews-count]');
       if (!listEl || !emptyEl) return;
       if (!reviews || !reviews.length) {
         emptyEl.hidden = false;
         return;
+      }
+      if (countEl) {
+        var avg = reviews.reduce(function (sum, r) { return sum + r.rating; }, 0) / reviews.length;
+        countEl.textContent = avg.toFixed(1) + '★ average · ' + reviews.length + ' review' + (reviews.length === 1 ? '' : 's');
+        countEl.hidden = false;
       }
       listEl.innerHTML = reviews.map(function (r) {
         var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
