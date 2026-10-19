@@ -137,6 +137,12 @@
 html[data-product="set-control"] .product-hero-logo {
   height: clamp(28px, 4.5vw, 66px);
 }
+/* Loadout's mark stacks four large circles above a small wordmark, so most of its height
+   budget goes to the circles — at the shared height they read as oversized next to the
+   other logos' badges. Scaled down to bring it back in line. */
+html[data-product="loadout"] .product-hero-logo {
+  height: clamp(32px, 5.1vw, 75px);
+}
 /* Stock Shredder only — its own jagged brand mark font instead of Anton. Needs a touch more
    line-height (its strokes/serifs are taller and more irregular than Anton's blocky glyphs)
    and a little letter-spacing so the torn-edge details don't crowd each other at small sizes.
