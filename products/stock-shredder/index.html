@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019a" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019b" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -206,6 +206,26 @@
   </div>
 </section>
 
+<section class="wrap world-map" data-world-map hidden>
+  <p class="eyebrow">Where shredders are</p>
+  <h2 class="world-map-headline display">Signups from around the world</h2>
+  <div class="world-map-frame">
+    <svg class="world-map-grid" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <line x1="0" y1="83" x2="1000" y2="83" /><line x1="0" y1="167" x2="1000" y2="167" />
+      <line x1="0" y1="250" x2="1000" y2="250" /><line x1="0" y1="333" x2="1000" y2="333" />
+      <line x1="0" y1="417" x2="1000" y2="417" />
+      <line x1="83" y1="0" x2="83" y2="500" /><line x1="167" y1="0" x2="167" y2="500" />
+      <line x1="250" y1="0" x2="250" y2="500" /><line x1="333" y1="0" x2="333" y2="500" />
+      <line x1="417" y1="0" x2="417" y2="500" /><line x1="500" y1="0" x2="500" y2="500" />
+      <line x1="583" y1="0" x2="583" y2="500" /><line x1="667" y1="0" x2="667" y2="500" />
+      <line x1="750" y1="0" x2="750" y2="500" /><line x1="833" y1="0" x2="833" y2="500" />
+      <line x1="917" y1="0" x2="917" y2="500" />
+    </svg>
+    <div class="world-map-dots" data-world-map-dots></div>
+  </div>
+  <ul class="world-map-legend" data-world-map-legend></ul>
+</section>
+
 <section class="wrap spec">
   <h2>Spec sheet</h2>
   <table class="spec-table">
@@ -375,6 +395,48 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/clips-shr
     requestAnimationFrame(tick);
   })
   .catch(function () {}); // stays hidden if the fetch fails — no broken-looking zero
+
+// World map of real signup locations — city-level counts only (see the Worker's
+// listLeadLocations for why no name/email ever leaves the database). Plotted on a plain lat/long
+// graticule rather than real landmass art, equirectangular projection (x from longitude, y from
+// latitude) since that's the one projection where "percent across" and "percent down" map
+// directly to lon/lat with no distortion math needed. Stays hidden until there's at least one
+// real location — an empty map reads as broken, not "early."
+fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
+  .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+  .then(function (data) {
+    var locations = (data && data.locations) || [];
+    if (!locations.length) return;
+    var section = document.querySelector('[data-world-map]');
+    var dotsEl = document.querySelector('[data-world-map-dots]');
+    var legendEl = document.querySelector('[data-world-map-legend]');
+    if (!section || !dotsEl || !legendEl) return;
+
+    var maxCount = locations.reduce(function (m, loc) { return Math.max(m, loc.count); }, 1);
+
+    locations.forEach(function (loc) {
+      var dot = document.createElement('div');
+      dot.className = 'world-map-dot';
+      dot.style.left = ((loc.longitude + 180) / 360 * 100) + '%';
+      dot.style.top = ((90 - loc.latitude) / 180 * 100) + '%';
+      // Scaled by share of the busiest city, not raw count, so one outlier city can't shrink
+      // every other dot down to an invisible speck — 6px floor, 22px ceiling.
+      var size = 6 + (loc.count / maxCount) * 16;
+      dot.style.width = size + 'px';
+      dot.style.height = size + 'px';
+      dot.title = loc.city + ', ' + loc.country + ' — ' + loc.count + (loc.count === 1 ? ' signup' : ' signups');
+      dotsEl.appendChild(dot);
+    });
+
+    locations.slice(0, 8).forEach(function (loc) {
+      var li = document.createElement('li');
+      li.innerHTML = loc.city + ', ' + loc.country + ' <span>' + loc.count + '</span>';
+      legendEl.appendChild(li);
+    });
+
+    section.hidden = false;
+  })
+  .catch(function () {}); // stays hidden if the fetch fails
 </script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">

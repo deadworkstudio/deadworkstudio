@@ -37,6 +37,44 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- World map — real signup locations, no literal landmass art (a lat/long graticule
+   stands in for one), each dot sized by how many signups came from that city. Starts `hidden`
+   in markup and only revealed once real data actually arrives (see the inline script), same
+   "never show an empty/broken-looking state" rule as the clips counter above. ---------- */
+.world-map { text-align: center; }
+.world-map-headline { margin-bottom: 40px; }
+.world-map-frame {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 2 / 1;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  background: var(--ink-raised);
+}
+.world-map-grid { position: absolute; inset: 0; width: 100%; height: 100%; }
+.world-map-grid line { stroke: var(--line); stroke-width: 1; }
+.world-map-dots { position: absolute; inset: 0; }
+.world-map-dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--acc) 70%, transparent);
+}
+.world-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--bone-2);
+}
+.world-map-legend li span { color: var(--acc); font-weight: 600; }
 /* The CTA (download/notify buttons) sits in its own section now, after the problem/what-it-does
    split — same padding rhythm as .product-hero but a plain hairline instead of the accent bar,
    since the accent bar marks the top of the hero block, not a mid-page section. */
