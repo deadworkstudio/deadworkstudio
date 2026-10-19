@@ -23,6 +23,20 @@
   padding-block: clamp(40px, 5vw, 80px) var(--space-block);
   border-top: 3px solid var(--acc);
 }
+/* "X clips shredded so far" — real usage count from the Worker, animated counting up on load.
+   Starts `hidden` in markup until the real number arrives, so there's never a flash of "0". */
+.clips-counter {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--bone-3);
+}
+.clips-counter-num {
+  color: var(--acc);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 /* The CTA (download/notify buttons) sits in its own section now, after the problem/what-it-does
    split — same padding rhythm as .product-hero but a plain hairline instead of the accent bar,
    since the accent bar marks the top of the hero block, not a mid-page section. */
