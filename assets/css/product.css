@@ -140,36 +140,21 @@ html[data-product="stock-shredder"] .product-hero h1,
 /* align-items:stretch makes Windows and More info match the Mac button's width — Mac has the
    longest label ("Start Free — Download for..."), so it's naturally the widest and the other
    two stretch to meet it. */
-.download-group { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.download-group { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
 .download-group .btn { justify-content: center; }
-.download-row { display: flex; gap: 12px; }
-.download-row .btn { flex: 1 1 0; min-width: 0; }
-/* Without an explicit width, .download-group shrink-wraps to its own content — which, combined
-   with flex-basis:0 on the buttons above, creates a feedback loop: tightening the label text
-   shrinks the group, which shrinks the buttons right back down to the same proportion, undoing
-   the fix. Giving the row a real width (capped so it doesn't look oversized on wide screens)
-   breaks that loop so the tracking below has actual fixed room to fit into. */
-.download-group { width: min(100%, 740px); }
-/* "Start Free — Download for Windows" is just long enough to wrap "Windows" onto its own line
-   at half this row's width — tightening both labels evenly (rather than shrinking the font,
-   which would look mismatched, or tightening only one, which just shifts the overflow to the
-   other) keeps each on one line without the two looking out of sync. */
-.download-row .btn .label { letter-spacing: 0.06em; }
-/* Even with the tighter tracking above, these still wrap once the row gets much narrower than
-   ~800px — a container query (keyed to .poster-panel's own inline-size, set up in home.css)
-   tracks the actual space available to these buttons far more accurately than a viewport media
-   query would, since the content column's width isn't a fixed fraction of the viewport once the
-   nav column is accounted for. */
-@container (max-width: 800px) {
-  .download-row { flex-direction: column; }
-}
+/* Without an explicit width, .download-group shrink-wraps to its own content, which looks
+   oversized on wide screens once every button is full-width instead of sharing a row. */
+.download-group { width: min(100%, 420px); }
+.download-group .btn .label { letter-spacing: 0.06em; }
+/* Button + its own one-line caption, stacked tight together as a unit; the 16px gap on
+   .download-group above is what actually separates one platform's block from the next. */
+.download-platform { display: flex; flex-direction: column; gap: 6px; }
 /* "More info" used to be pinned near the top of the row (align-items:flex-start), leaving a
    tall dead gap below it since the 4-item download stack beside it is much taller. Centering it
    against the full height of that stack instead reads far more balanced. */
 .product-hero-actions:has(.download-group) { align-items: center; justify-content: center; }
 .download-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
 .download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
-.download-row-phones { margin-top: 12px; }
 /* Same shape as a real download button so the row doesn't visually reflow once TestFlight is
    ready and this becomes a real link -- just muted and inert in the meantime. */
 .btn-unavailable {
