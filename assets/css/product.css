@@ -195,7 +195,7 @@ html[data-product="stock-shredder"] .product-hero h1,
    minimal internal scroll. Scoped via <html data-product="..."> (every product page sets this)
    so the home/about/join pages keep their own spacing. ---------- */
 html[data-product] .product-hero {
-  padding-block: clamp(8px, 1vw, 16px) 0;
+  padding-block: clamp(4px, 0.5vw, 8px) 0;
 }
 html[data-product] .product-hero h1 {
   font-size: clamp(24px, 3.8vw, 56px);
