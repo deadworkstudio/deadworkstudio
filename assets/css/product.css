@@ -21,6 +21,18 @@
      would wipe .wrap's 24px side gutters (flush-to-edge text on phones). Same for the
      sections below that are written as class="wrap <section>". */
   padding-block: clamp(40px, 5vw, 80px) var(--space-block);
+  position: relative;
+}
+/* A plain border-top here sits on .wrap itself, so it's capped at --wrap-max (1600px) and
+   centered -- on anything wider than that it reads as a line with a visible gap on both sides
+   instead of a true top-of-page accent. ::before breaks it out to the full viewport width. */
+.product-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
   border-top: 3px solid var(--acc);
 }
 /* "X clips shredded so far" — real usage count from the Worker, animated counting up on load.
