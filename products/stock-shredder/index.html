@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019c" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019d" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -82,7 +82,6 @@
     </div>
   </div>
   <p class="lede">Accelerate the selection, trimming, organization, export and keywords of stock footage for marketplaces. Allowing freedom of time to pursue other things without avoiding income.</p>
-  <p class="clips-counter" data-clips-counter aria-live="polite" hidden><span class="clips-counter-num" data-clips-counter-num>0</span> clips shredded so far</p>
 </section>
 
 <section class="wrap split">
@@ -115,6 +114,7 @@
     </div>
   </div>
 </section>
+
 
 <section class="wrap pricing" id="pricing">
   <p class="eyebrow pricing-eyebrow">Pricing</p>
@@ -206,6 +206,10 @@
   </div>
 </section>
 
+<section class="wrap world-map-stats">
+  <p class="clips-counter" data-clips-counter aria-live="polite" hidden><span class="clips-counter-num" data-clips-counter-num>0</span> clips shredded so far</p>
+</section>
+
 <section class="wrap world-map" data-world-map hidden>
   <p class="eyebrow">Where shredders are</p>
   <h2 class="world-map-headline display">Signups from around the world</h2>
@@ -223,7 +227,6 @@
     </svg>
     <div class="world-map-dots" data-world-map-dots></div>
   </div>
-  <ul class="world-map-legend" data-world-map-legend></ul>
 </section>
 
 <section class="wrap spec">
@@ -413,8 +416,7 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
     if (totalSignups < WORLD_MAP_MIN_SIGNUPS) return;
     var section = document.querySelector('[data-world-map]');
     var dotsEl = document.querySelector('[data-world-map-dots]');
-    var legendEl = document.querySelector('[data-world-map-legend]');
-    if (!section || !dotsEl || !legendEl) return;
+    if (!section || !dotsEl) return;
 
     var maxCount = locations.reduce(function (m, loc) { return Math.max(m, loc.count); }, 1);
 
@@ -430,12 +432,6 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
       dot.style.height = size + 'px';
       dot.title = loc.city + ', ' + loc.country + ' — ' + loc.count + (loc.count === 1 ? ' signup' : ' signups');
       dotsEl.appendChild(dot);
-    });
-
-    locations.slice(0, 8).forEach(function (loc) {
-      var li = document.createElement('li');
-      li.innerHTML = loc.city + ', ' + loc.country + ' <span>' + loc.count + '</span>';
-      legendEl.appendChild(li);
     });
 
     section.hidden = false;
