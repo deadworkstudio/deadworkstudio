@@ -139,11 +139,11 @@ html[data-product="stock-shredder"] .product-hero h1,
    links kept in sync with stockshredder.com's own dynamic release-fetch script below. 2x2 grid:
    Mac/Windows on top, Android/iPhone below, collapsing to one column once the content column gets
    too narrow for two buttons side by side. ---------- */
-.download-group { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+/* Full width of the content column, same as the Select/Shred/Send/Share step rail right above it
+   (.steps), rather than its own capped width -- the two rows of buttons read as matching that
+   4-up table above them instead of a narrower, separate block. */
+.download-group { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; width: 100%; }
 .download-group .btn { justify-content: center; width: 100%; }
-/* Without an explicit width, .download-group shrink-wraps to its own content, which looks
-   oversized on wide screens once it's two real columns instead of one stacked column. */
-.download-group { width: min(100%, 560px); }
 .download-group .btn .label { letter-spacing: 0.06em; }
 /* Button + its own one-line caption, stacked tight together as a unit within its grid cell; the
    16px row-gap on .download-group above is what separates one platform's block from the next. */
