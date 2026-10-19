@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019b" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019c" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -401,12 +401,16 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/clips-shr
 // graticule rather than real landmass art, equirectangular projection (x from longitude, y from
 // latitude) since that's the one projection where "percent across" and "percent down" map
 // directly to lon/lat with no distortion math needed. Stays hidden until there's at least one
-// real location — an empty map reads as broken, not "early."
+// real location — an empty map reads as broken, not "early." Direct report 2026-10-19: wait
+// for 10 real signups total (not 10 distinct cities) before showing it at all, so the map's
+// debut has enough spread on it to read as "a real community," not three dots.
+var WORLD_MAP_MIN_SIGNUPS = 10;
 fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
   .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
   .then(function (data) {
     var locations = (data && data.locations) || [];
-    if (!locations.length) return;
+    var totalSignups = locations.reduce(function (sum, loc) { return sum + loc.count; }, 0);
+    if (totalSignups < WORLD_MAP_MIN_SIGNUPS) return;
     var section = document.querySelector('[data-world-map]');
     var dotsEl = document.querySelector('[data-world-map-dots]');
     var legendEl = document.querySelector('[data-world-map-legend]');
