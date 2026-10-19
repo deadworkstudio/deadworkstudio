@@ -485,7 +485,12 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 
 /* ---------- Interface screenshot (temporary — real app captures, swap for final marketing shots later) ---------- */
-.interface-shot { margin: 0 0 clamp(12px, 1.5vw, 20px); }
+.interface-shot {
+  margin: 0 0 clamp(12px, 1.5vw, 20px);
+  padding-top: var(--space-block);
+  border-top: 1px solid var(--line);
+}
+.interface-shot-eyebrow { text-align: center; margin-bottom: 32px; }
 /* Direct report 2026-10-18: show the app has both a dark and a light mode — two real captures,
    not one stale placeholder. Side by side on desktop, stacked on narrow screens. */
 .interface-shot-grid {
