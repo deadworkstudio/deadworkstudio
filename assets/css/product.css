@@ -154,6 +154,11 @@ html[data-product="stock-shredder"] .product-hero h1,
   text-align: center;
   display: flex;
   flex-direction: column;
+  /* align-items default (stretch) fights .checkout-success-note's own max-width: 44ch -- the
+     paragraph can't stretch to the full flex width, so it fell back to sitting at the flex
+     start (left) instead of being centered as a box, even with text-align: center on its own
+     text. align-items: center positions each child's own (capped) box in the middle instead. */
+  align-items: center;
   gap: 6px;
 }
 .download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
