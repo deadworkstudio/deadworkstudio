@@ -169,6 +169,14 @@ html[data-product="stock-shredder"] .product-hero h1,
 .product-hero-actions:has(.download-group) { align-items: center; justify-content: center; }
 .download-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
 .download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
+.download-row-phones { margin-top: 12px; }
+/* Same shape as a real download button so the row doesn't visually reflow once TestFlight is
+   ready and this becomes a real link -- just muted and inert in the meantime. */
+.btn-unavailable {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
 
 /* ---------- All 6 product pages: smaller hero + tighter section spacing so these pages need
    minimal internal scroll. Scoped via <html data-product="..."> (every product page sets this)
@@ -734,6 +742,54 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   padding: 96px 24px;
 }
 .not-found p.display { font-size: clamp(60px, 16vw, 160px); color: var(--bone-3); }
+
+/* ---------- Reviews: approved-review grid + the submission form beneath it. Only wired up on
+   Stock Shredder's page for now (the one product with real users), left unscoped by product so
+   any future page can reuse it the same way .pricing-note already does. ---------- */
+.reviews-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 24px 0 var(--space-block);
+}
+.review-card {
+  padding: 20px;
+  background: var(--ink-raised);
+  border: 1px solid var(--line);
+}
+.review-card-stars { color: var(--beta-green); font-size: 14px; letter-spacing: 0.1em; }
+.review-card-body { margin: 10px 0 0; color: var(--bone); line-height: 1.6; }
+.review-card-name { margin: 12px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
+.reviews-empty { margin: 24px 0 var(--space-block); color: var(--bone-3); }
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 520px;
+}
+.review-stars { display: flex; gap: 6px; }
+.review-star {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--bone-3);
+  cursor: pointer;
+  transition: color 0.15s var(--ease);
+}
+.review-star:hover, .review-star:focus-visible { color: var(--beta-green); }
+.review-star.is-active { color: var(--beta-green); }
+.review-form .notify-input { width: 100%; }
+.review-textarea {
+  min-height: 120px;
+  padding: 14px 16px;
+  resize: vertical;
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
 
 @media (max-width: 639px) {
   /* Body copy must never read smaller than 16px on mobile. These MUST live here, not in base.css:
