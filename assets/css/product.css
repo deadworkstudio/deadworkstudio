@@ -688,7 +688,18 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .earn-eyebrow { color: var(--signal); margin-bottom: 20px; }
 .earn-headline { font-size: clamp(28px, 4.5vw, 52px); margin-bottom: 16px; }
 .earn-sub { color: var(--bone-2); margin-bottom: 40px; }
-.earn-list { list-style: none; border-top: 1px solid var(--line); }
+/* Side by side instead of one item per full-width row -- two real columns share the row (not
+   just two <li>s stacked), so four rewards take up half the vertical space they used to. */
+.earn-list {
+  list-style: none;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(20px, 4vw, 48px);
+}
+@media (max-width: 479px) {
+  .earn-list { grid-template-columns: 1fr; }
+}
 .earn-list li {
   display: flex;
   justify-content: space-between;
@@ -903,11 +914,11 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 .review-card-stars { color: var(--beta-green); font-size: 15px; letter-spacing: 2px; margin-bottom: 10px; }
 .review-card-body { font-size: 15px; line-height: 1.6; color: var(--bone); margin-bottom: 14px; }
 .review-card-name { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-3); }
-.reviews-empty { margin: 24px 0 var(--space-block); text-align: center; color: var(--bone-3); }
+.reviews-empty { margin: 24px 0; text-align: center; color: var(--bone-3); }
 
 .review-form {
   max-width: 480px;
-  margin: 48px auto 0;
+  margin: 24px auto 0;
   text-align: left;
 }
 .review-form input,
