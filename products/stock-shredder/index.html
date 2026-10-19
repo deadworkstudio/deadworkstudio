@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019e" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019f" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -109,29 +109,53 @@
           <span class="label">Start Free — Download for Windows</span>
         </a>
       </div>
-      <a class="btn btn-outline" href="https://stockshredder.com" target="_blank" rel="noopener">More info<span class="sr-only"> (opens in a new tab)</span></a>
+      <p class="checkout-success-note">25 clips, no card required &middot; macOS (Intel &amp; Apple Silicon) &middot; Windows</p>
+
+      <!-- Phone companions: same release, one row down, so the page reads as "every platform
+           this product runs on" instead of two separate pitches stacked on top of each other. -->
+      <div class="download-row download-row-phones">
+        <a id="download-android" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk">
+          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+          <span class="label">Download the Remote for Android</span>
+        </a>
+        <span class="btn btn-outline btn-unavailable" aria-disabled="true">
+          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
+          <span class="label">Remote for iPhone — TestFlight coming soon</span>
+        </span>
+      </div>
+      <p class="checkout-success-note">Android: direct download, not on the Play Store yet — your
+        phone may warn about installing from outside the Play Store; open the file and tap "Install
+        anyway" / "Allow from this source" when asked. iPhone: on the way via TestFlight.</p>
+      <p class="download-version" id="download-version">Version 0.6.3</p>
     </div>
   </div>
 </section>
 
-<section class="wrap product-hero-cta">
-  <div class="product-hero-actions">
-    <div class="download-group">
-      <div class="download-row">
-        <!-- Android companion app, direct APK download -- not on the Play Store yet, so this is
-             the only distribution path for now. The in-app pairing/review/export flow has been
-             verified end to end against the real Mac app; this is a straight sideload, not a
-             Play Store install, so the note below matters. -->
-        <a id="download-android" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk">
-          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
-          <span class="label">Download Stock Shredder Remote for Android</span>
-        </a>
-      </div>
-      <p class="checkout-success-note">Direct download, not on the Play Store yet. Your phone may warn
-        about installing from outside the Play Store — open the downloaded file and tap
-        "Install anyway" / "Allow from this source" when asked.</p>
+<section class="wrap reviews" id="reviews">
+  <p class="eyebrow">Reviews</p>
+  <h2 class="display">What people are saying</h2>
+
+  <div class="reviews-list" data-reviews-list hidden></div>
+  <p class="reviews-empty" data-reviews-empty hidden>No reviews yet — be the first.</p>
+
+  <form class="review-form" data-review-form novalidate>
+    <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
+      <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
+      <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
     </div>
-  </div>
+    <label class="sr-only" for="review-name">Your name</label>
+    <input class="notify-input review-input" type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
+    <label class="sr-only" for="review-email">Your email</label>
+    <input class="notify-input review-input" type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
+    <label class="sr-only" for="review-body">What's your experience been like?</label>
+    <textarea class="notify-input review-textarea" id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
+    <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
+    <button class="btn btn-primary" type="submit" data-review-submit>Submit review</button>
+    <p class="notify-status" data-review-status hidden></p>
+  </form>
 </section>
 
 <section class="wrap pricing" id="pricing">
@@ -387,6 +411,8 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     if (dmg) document.getElementById('download-success').href = dmg.browser_download_url;
     if (exe) document.getElementById('download-win').href = exe.browser_download_url;
     if (apk) document.getElementById('download-android').href = apk.browser_download_url;
+    var versionEl = document.getElementById('download-version');
+    if (versionEl && release.tag_name) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
   })
   .catch(function () {}); // the hardcoded fallback above still works either way
 
@@ -428,6 +454,131 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
     section.hidden = false;
   })
   .catch(function () {}); // stays hidden if the fetch fails
+</script>
+<script>
+// Reviews: approved-review grid (GET /reviews) + the submission form (POST /reviews). New
+// submissions always land as "pending" server-side (see reviews.ts) -- nothing posted here shows
+// up publicly until an admin approves it in the Worker's own moderation page, so the success
+// message below says "pending," not "posted."
+(function () {
+  var REVIEWS_URL = 'https://stock-shredder-payments.stockshredder.workers.dev/reviews';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  fetch(REVIEWS_URL)
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (reviews) {
+      var listEl = document.querySelector('[data-reviews-list]');
+      var emptyEl = document.querySelector('[data-reviews-empty]');
+      if (!listEl || !emptyEl) return;
+      if (!reviews || !reviews.length) {
+        emptyEl.hidden = false;
+        return;
+      }
+      listEl.innerHTML = reviews.map(function (r) {
+        var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return '<div class="review-card">' +
+          '<div class="review-card-stars" aria-label="' + r.rating + ' out of 5 stars">' + stars + '</div>' +
+          '<p class="review-card-body">' + escapeHtml(r.body) + '</p>' +
+          '<p class="review-card-name">— ' + escapeHtml(r.name) + '</p>' +
+          '</div>';
+      }).join('');
+      listEl.hidden = false;
+    })
+    .catch(function () {}); // reviews-list just stays hidden if this fails -- no broken-looking gap
+
+  var form = document.querySelector('[data-review-form]');
+  if (!form) return;
+  var starsWrap = form.querySelector('[data-review-stars]');
+  var stars = Array.prototype.slice.call(form.querySelectorAll('[data-review-star]'));
+  var nameInput = form.querySelector('[data-review-name]');
+  var emailInput = form.querySelector('[data-review-email]');
+  var bodyInput = form.querySelector('[data-review-body]');
+  var honeypot = form.querySelector('[data-review-hp]');
+  var submitBtn = form.querySelector('[data-review-submit]');
+  var status = form.querySelector('[data-review-status]');
+  var rating = 0;
+  var defaultLabel = submitBtn.textContent;
+
+  function paintStars(upTo) {
+    stars.forEach(function (star) {
+      var val = Number(star.getAttribute('data-review-star'));
+      star.classList.toggle('is-active', val <= upTo);
+      star.setAttribute('aria-pressed', val <= rating ? 'true' : 'false');
+    });
+  }
+
+  stars.forEach(function (star) {
+    var val = Number(star.getAttribute('data-review-star'));
+    star.addEventListener('click', function () {
+      rating = val;
+      paintStars(rating);
+    });
+    star.addEventListener('mouseenter', function () { paintStars(val); });
+  });
+  if (starsWrap) starsWrap.addEventListener('mouseleave', function () { paintStars(rating); });
+
+  function showStatus(message, tone) {
+    status.textContent = message || '';
+    status.hidden = !message;
+    status.classList.remove('notify-status-bad', 'notify-status-good');
+    if (tone) status.classList.add('notify-status-' + tone);
+  }
+
+  function setBusy(isBusy) {
+    submitBtn.disabled = isBusy;
+    submitBtn.textContent = isBusy ? 'Sending…' : defaultLabel;
+  }
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    if (honeypot && honeypot.value) {
+      form.reset();
+      rating = 0;
+      paintStars(0);
+      showStatus('Thanks for the review!', 'good');
+      return;
+    }
+
+    var name = (nameInput.value || '').trim();
+    var email = (emailInput.value || '').trim();
+    var body = (bodyInput.value || '').trim();
+
+    if (!rating) { showStatus('Pick a star rating first.', 'bad'); return; }
+    if (!name) { showStatus('Your name is required.', 'bad'); nameInput.focus(); return; }
+    if (!EMAIL_RE.test(email)) { showStatus("That doesn't look like a valid email address.", 'bad'); emailInput.focus(); return; }
+    if (!body) { showStatus("Tell us what your experience has been like.", 'bad'); bodyInput.focus(); return; }
+
+    setBusy(true);
+    showStatus('', null);
+
+    fetch(REVIEWS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, rating: rating, body: body })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) throw new Error((result.data && result.data.error) || 'Review submission failed');
+        form.reset();
+        rating = 0;
+        paintStars(0);
+        showStatus('Thanks — your review is in, pending a quick approval.', 'good');
+      })
+      .catch(function (err) {
+        showStatus((err && err.message) || 'Something went wrong — please try again.', 'bad');
+      })
+      .then(function () {
+        setBusy(false);
+      });
+  });
+})();
 </script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
