@@ -672,6 +672,12 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   padding: 24px;
   background: rgba(10, 10, 9, 0.72);
 }
+/* display:flex above has higher specificity than the UA stylesheet's own [hidden] { display:
+   none }, so it silently wins and keeps the overlay visible -- full-screen, blocking the whole
+   page -- even while JS has the hidden attribute correctly set. This is why it was stuck open. */
+.earn-modal-overlay[hidden] {
+  display: none;
+}
 .earn-modal {
   position: relative;
   width: 100%;
