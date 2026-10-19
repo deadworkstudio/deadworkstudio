@@ -112,8 +112,9 @@
      heights were identical — a mark's bounding box carries internal negative space (Scene Lock's
      open reticle brackets, Sound Driver's open counters) that solid bold text doesn't have, so
      equal height isn't equal visual weight. Sized up ~35% to actually match by eye instead of by
-     number. */
-  height: clamp(34px, 5.4vw, 80px);
+     number, then another ~25% after the bottom/right padding crop still read smaller side by
+     side with Stock Shredder's own wordmark. */
+  height: clamp(42px, 6.8vw, 100px);
   width: auto;
   max-width: 100%;
 }
