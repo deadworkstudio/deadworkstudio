@@ -115,6 +115,25 @@
   </div>
 </section>
 
+<section class="wrap product-hero-cta">
+  <div class="product-hero-actions">
+    <div class="download-group">
+      <div class="download-row">
+        <!-- Android companion app, direct APK download -- not on the Play Store yet, so this is
+             the only distribution path for now. The in-app pairing/review/export flow has been
+             verified end to end against the real Mac app; this is a straight sideload, not a
+             Play Store install, so the note below matters. -->
+        <a id="download-android" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk">
+          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+          <span class="label">Download Stock Shredder Remote for Android</span>
+        </a>
+      </div>
+      <p class="checkout-success-note">Direct download, not on the Play Store yet. Your phone may warn
+        about installing from outside the Play Store — open the downloaded file and tap
+        "Install anyway" / "Allow from this source" when asked.</p>
+    </div>
+  </div>
+</section>
 
 <section class="wrap pricing" id="pricing">
   <p class="eyebrow pricing-eyebrow">Pricing</p>
@@ -368,9 +387,11 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     var assets = release.assets || [];
     var dmg = assets.find(function (a) { return a.name.endsWith('.dmg'); });
     var exe = assets.find(function (a) { return a.name.endsWith('.exe'); });
+    var apk = assets.find(function (a) { return a.name.endsWith('.apk'); });
     if (dmg) document.getElementById('download-mac').href = dmg.browser_download_url;
     if (dmg) document.getElementById('download-success').href = dmg.browser_download_url;
     if (exe) document.getElementById('download-win').href = exe.browser_download_url;
+    if (apk) document.getElementById('download-android').href = apk.browser_download_url;
   })
   .catch(function () {}); // the hardcoded fallback above still works either way
 
