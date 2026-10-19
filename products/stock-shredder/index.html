@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019l" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019m" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -121,42 +121,34 @@
 <section class="wrap product-hero-cta" data-product="stock-shredder">
   <div class="product-hero-actions">
     <div class="download-group">
-      <!-- 2x2 grid: Mac/Windows on top, Android/iPhone below. Each cell is a button plus its own
-           caption directly under it -- each download's fine print is specific to that one
-           platform, not a shared sentence covering two at once. -->
-      <div class="download-platform">
-        <a id="download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg">
-          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
-          <span class="label">Start Free — Download for Mac</span>
-        </a>
-        <p class="checkout-success-note">25 clips, no card required &middot; macOS (Intel &amp; Apple Silicon)</p>
-      </div>
+      <!-- 2x2 grid: Mac/Windows on top, Android/iPhone below. No more per-button captions --
+           platform/pricing detail that used to repeat per button now lives once, centered, below
+           the whole grid (.download-footnote). -->
+      <a id="download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg">
+        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
+        <span class="label">Start Free — Download for Mac (Intel &amp; Apple Silicon)</span>
+      </a>
 
-      <div class="download-platform">
-        <a id="download-win" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Setup-0.6.3.exe">
-          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>
-          <span class="label">Start Free — Download for Windows</span>
-        </a>
-        <p class="checkout-success-note">25 clips, no card required &middot; Windows</p>
-      </div>
+      <a id="download-win" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Setup-0.6.3.exe">
+        <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>
+        <span class="label">Start Free — Download for Windows</span>
+      </a>
 
-      <div class="download-platform">
-        <a id="download-android" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk">
-          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
-          <span class="label">Download the Remote for Android</span>
-        </a>
-        <p class="checkout-success-note">Direct download. Your phone may warn about installing from
-          outside the Play Store. Open the file and tap "Install anyway" / "Allow from this source".</p>
-      </div>
+      <a id="download-android" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk">
+        <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+        <span class="label">Download the Remote for Android</span>
+      </a>
 
-      <div class="download-platform">
-        <span class="btn btn-outline btn-unavailable" aria-disabled="true">
-          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
-          <span class="label">Remote for iPhone — TestFlight coming soon</span>
-        </span>
-      </div>
+      <span class="btn btn-outline btn-unavailable" aria-disabled="true">
+        <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
+        <span class="label">Remote for iPhone — TestFlight coming soon</span>
+      </span>
 
-      <p class="download-version" id="download-version">Version 0.6.3</p>
+      <div class="download-footnote">
+        <p class="checkout-success-note">25 clips, no card required.</p>
+        <p class="checkout-success-note">Direct download for Android. Your phone may warn about installing outside the Play Store — open the file and tap "Install anyway" / "Allow from this source".</p>
+        <p class="download-version" id="download-version">Version 0.6.3</p>
+      </div>
     </div>
   </div>
 </section>

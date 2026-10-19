@@ -145,12 +145,18 @@ html[data-product="stock-shredder"] .product-hero h1,
 .download-group { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; width: 100%; }
 .download-group .btn { justify-content: center; width: 100%; }
 .download-group .btn .label { letter-spacing: 0.06em; }
-/* Button + its own one-line caption, stacked tight together as a unit within its grid cell; the
-   16px row-gap on .download-group above is what separates one platform's block from the next. */
-.download-platform { display: flex; flex-direction: column; gap: 6px; }
 .product-hero-actions:has(.download-group) { align-items: center; justify-content: center; }
 .download-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); }
-.download-version { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
+/* Everything that used to repeat once per button (pricing, platform detail, the Android install
+   warning) now lives here once instead, centered below the whole 2x2 grid. */
+.download-footnote {
+  grid-column: 1 / -1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.download-version { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--bone-3); margin-top: 4px; }
 /* Two real columns need real room — "Start Free — Download for Windows" is the longest label and
    is the thing that actually breaks first. Same container query this section already used before
    (keyed to .poster-panel's own inline-size, set up in home.css) rather than a viewport media
