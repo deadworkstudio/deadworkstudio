@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261019a" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261019q" />
+<link rel="stylesheet" href="../../assets/css/product.css?v=20261019r" />
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -249,6 +249,7 @@
 
 <!-- Click-anywhere-to-close lightbox, shared by every .lightbox-trigger above. -->
 <div class="lightbox-overlay" data-lightbox-overlay hidden>
+  <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
   <img class="lightbox-image" data-lightbox-image src="" alt="" />
 </div>
 
@@ -712,10 +713,12 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
     overlayImg.src = src;
     overlayImg.alt = alt || '';
     overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
   }
   function closeLightbox() {
     overlay.hidden = true;
     overlayImg.src = '';
+    document.body.style.overflow = '';
   }
 
   triggers.forEach(function (trigger) {
