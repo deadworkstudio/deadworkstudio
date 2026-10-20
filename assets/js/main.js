@@ -73,12 +73,8 @@
     else if (desktop.addListener) desktop.addListener(onBreakpoint);
   }
 
-  // Stock Shredder's page is far longer than every other poster-panel page (11 sections vs. a
-  // handful) — forwarding wheel scroll from the nav/background onto it reads as the whole page
-  // moving around under the cursor instead of a deliberate scroll. Opted out there; every other
-  // page keeps the forwarding behavior.
   var panel = document.querySelector('.poster-panel');
-  if (panel && document.documentElement.dataset.product !== 'stock-shredder') {
+  if (panel) {
     var fixedLayout = window.matchMedia('(min-width: 720px) and (min-height: 640px)');
     document.addEventListener('wheel', function (e) {
       if (!fixedLayout.matches) return;
