@@ -43,7 +43,7 @@
    itself doesn't — this is scoped to html[data-product], never bare .poster-media). Cut 10% off
    the photo's own visibility so the text reads more clearly against it. */
 html[data-product] .poster-media img {
-  opacity: 0.8;
+  opacity: 0.75;
 }
 .poster-media::after {
   content: '';
