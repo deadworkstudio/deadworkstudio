@@ -91,9 +91,6 @@ html[data-product="stock-shredder"] .poster-media::after {
 html[data-product="scene-lock"] .poster-media img {
   object-position: center 48%;
 }
-html[data-product="sound-driver"] .poster-media img {
-  object-position: 65% center;
-}
 @media (prefers-reduced-motion: reduce) {
   .poster-media video { display: none; }
 }
