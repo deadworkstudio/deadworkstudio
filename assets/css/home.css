@@ -75,13 +75,6 @@ html[data-product="stock-shredder"] .poster-media::after {
     var(--grain);
   background-size: auto, auto, 180px 180px;
 }
-/* Scene Lock's photo (NASA Mercury Mission Control) has its one dramatic element — the glowing
-   tracking-map screen — in the upper third, not dead center. object-fit:cover's default center
-   crop clips it out entirely on wide/short viewports, leaving just the plain console desks below
-   it visible. Biasing the crop toward the top keeps the screen in frame. */
-html[data-product="scene-lock"] .poster-media img {
-  object-position: center 40%;
-}
 @media (prefers-reduced-motion: reduce) {
   .poster-media video { display: none; }
 }
