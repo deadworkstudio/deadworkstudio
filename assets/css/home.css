@@ -83,7 +83,7 @@ html[data-product="stock-shredder"] .poster-media::after {
    header (too high, the NASA banner itself ends up behind the title) or cut off at the edge
    (too low, the default center crop). */
 html[data-product="scene-lock"] .poster-media img {
-  object-position: center 55%;
+  object-position: center 48%;
 }
 @media (prefers-reduced-motion: reduce) {
   .poster-media video { display: none; }
