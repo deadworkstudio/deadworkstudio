@@ -1,9 +1,10 @@
 // DEADWORK — inline "Notify me" email capture for the 5 in-development product pages (and their
-// home-page panel equivalents). Replaces the old mailto: links — posts straight to the notify-worker
-// and shows inline success/error feedback, no page navigation, no alert() popups. Same shape as
-// checkout.js's Worker-calling pattern (loading/error/success states swapped inline) for consistency.
+// home-page panel equivalents). Replaces the old mailto: links — posts straight to DEADWORK HQ
+// (deadwork-site/deadwork-hq, the shared signups Worker for all 6 products) and shows inline
+// success/error feedback, no page navigation, no alert() popups. Same shape as checkout.js's
+// Worker-calling pattern (loading/error/success states swapped inline) for consistency.
 (function () {
-  var WORKER_URL = 'https://deadwork-notify.stockshredder.workers.dev';
+  var WORKER_URL = 'https://deadwork-hq.stockshredder.workers.dev';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-notify-form]'), function (form) {
@@ -50,10 +51,19 @@
       setBusy(true);
       showStatus('', null);
 
+      // Lead-source tracking: where someone came from, captured automatically — no new field for
+      // the visitor to fill in. Deliberately simple: the raw referrer (or 'direct' when there
+      // isn't one) and the page path the form lived on, not real UTM-parameter parsing.
       fetch(WORKER_URL + '/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, product: product, company: honeypot ? honeypot.value : '' })
+        body: JSON.stringify({
+          email: email,
+          product: product,
+          company: honeypot ? honeypot.value : '',
+          source: document.referrer || 'direct',
+          page: location.pathname
+        })
       })
         .then(function (res) {
           if (!res.ok) throw new Error('Notify request failed: ' + res.status);

@@ -1,7 +1,0 @@
-name = "deadwork-notify"
-main = "src/index.ts"
-compatibility_date = "2025-07-18"
-
-[[kv_namespaces]]
-binding = "NOTIFY_SIGNUPS"
-id = "d42c89327ebd493c838f9a60142ae615"

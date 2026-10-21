@@ -1,0 +1,28 @@
+name = "deadwork-hq"
+main = "src/index.ts"
+compatibility_date = "2025-07-18"
+
+# Legacy store from before this Worker had a real database — kept bound, read-only in practice,
+# solely so POST /admin/migrate-kv can still read every signup that was ever written here and copy
+# it into D1 (see migrations/0001_signups.sql). Never written to again after that one-time call.
+[[kv_namespaces]]
+binding = "NOTIFY_SIGNUPS"
+id = "d42c89327ebd493c838f9a60142ae615"
+
+# Follows the exact same binding shape footage-curator/worker/wrangler.toml already uses for its
+# own D1 database (CUSTOMERS_DB) — see that file for precedent. This database does not exist yet;
+# the owner creates it with `wrangler d1 create deadwork-hq-signups` and pastes the printed
+# database_id below before the first deploy.
+[[d1_databases]]
+binding = "SIGNUPS_DB"
+database_name = "deadwork-hq-signups"
+database_id = "d87c997e-f2e4-4570-add9-607e8fcb2dd1"
+migrations_dir = "migrations"
+
+# Daily digest email (see src/digest.ts) — summarizes new signups since the last run, broken down
+# by product, and emails it to deadworkstudio@gmail.com instead of sending nothing at all. 14:00
+# UTC is mid-morning US time, a reasonable default the owner can change later (just edit this cron
+# expression and redeploy — no code change needed). Needs GMAIL_USER/GMAIL_APP_PASSWORD set via
+# `wrangler secret put` before it can actually send mail — see Env's own doc comment in index.ts.
+[triggers]
+crons = ["0 14 * * *"]

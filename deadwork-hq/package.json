@@ -1,0 +1,21 @@
+{
+  "name": "deadwork-hq",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "DEADWORK HQ — the shared Cloudflare Worker that collects every email signup across all 6 DEADWORK products (plus the site's general /join page) into one D1 database, with a real admin dashboard.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node test-notify.mjs && node test-admin.mjs && node test-migrate-kv.mjs && node test-digest-logic.mjs && node test-digest.mjs"
+  },
+  "dependencies": {
+    "worker-mailer": "^1.2.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250718.0",
+    "esbuild": "^0.17.19",
+    "typescript": "^5.5.0",
+    "wrangler": "^3.114.17"
+  }
+}
