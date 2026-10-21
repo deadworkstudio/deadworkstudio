@@ -39,6 +39,12 @@
   object-fit: cover;
   filter: grayscale(1) contrast(1.05);
 }
+/* Each of the 6 product pages carries a real background photo behind its copy (the home page
+   itself doesn't — this is scoped to html[data-product], never bare .poster-media). Cut 10% off
+   the photo's own visibility so the text reads more clearly against it. */
+html[data-product] .poster-media img {
+  opacity: 0.9;
+}
 .poster-media::after {
   content: '';
   position: absolute;
