@@ -256,6 +256,75 @@ html[data-product] .spec-table td {
 }
 html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px); }
 
+/* ---------- Stock Shredder only: refinement pass, 2026-10-21 ---------- */
+/* Every section here is BOTH inside .poster-panel (which already sits inset by .poster's own
+   gutter, see home.css) AND wrapped in its own .wrap (which pads by the same gutter again) — the
+   two stack, so this page's actual copy/buttons/cards started a full extra gutter (~56px at wide
+   viewports) to the right of the accent bar, section hairlines, and footer, none of which are
+   ever double-padded. .wrap's own max-width/margin:auto are harmless no-ops here (the content is
+   already narrower than --wrap-max by the time it reaches this nesting), so only the padding
+   needs removing to re-align everything to one edge. */
+html[data-product="stock-shredder"] .poster-panel .wrap {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* The shared product-page h1 size (set above) clamps down to just 24px on mobile — badly
+   undersized for this page's own hero treatment. Placed after the shared rule so it wins at
+   equal selector specificity, without touching that rule (the other 5 product pages still use
+   it as-is). */
+html[data-product="stock-shredder"] .product-hero h1 {
+  font-size: clamp(40px, 5.6vw, 84px);
+}
+/* New value-prop sentence between the slogan and the download CTA (added to the HTML directly
+   below the slogan) — reuses base.css's own .lede styling, just needs a little top gap since
+   .lede itself carries no margin. */
+html[data-product="stock-shredder"] .product-hero .lede {
+  margin-top: 12px;
+}
+/* The shared tight section rhythm above (clamp(6px,.8vw,12px), meant to keep every product page
+   scroll-free in one viewport) reads as cramped now that this page carries more content —
+   loosened on Stock Shredder only; the other 5 product pages keep the tight rhythm. */
+html[data-product="stock-shredder"] .split,
+html[data-product="stock-shredder"] .spec,
+html[data-product="stock-shredder"] .cross-sell,
+html[data-product="stock-shredder"] .product-hero-cta {
+  padding-block: clamp(24px, 3vw, 40px);
+}
+/* Problem/Solution body copy was fixed at 14px/1.4 at every viewport, below this site's own
+   16px mobile floor (see product.css's own 639px-and-under comment further down) — bumped here
+   rather than in the shared rule above so the other 5 pages are untouched. */
+html[data-product="stock-shredder"] .split p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ---------- Hero screenshot (Stock Shredder only) — promotes the real dark-mode app capture to
+   a prominent spot right after the download CTA and before Problem/Solution, framed with real
+   shadow/depth instead of the plain thin border used for the smaller secondary light-mode shot
+   further down in the Modes section (below). Direct report 2026-10-21: lead with the real UI. */
+html[data-product="stock-shredder"] .hero-screenshot {
+  padding-block: clamp(24px, 3vw, 40px);
+  text-align: center;
+}
+html[data-product="stock-shredder"] .hero-screenshot img {
+  display: inline-block;
+  width: 100%;
+  max-width: 1120px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(230, 224, 211, .10),
+    0 40px 100px -30px rgba(0, 0, 0, .85),
+    0 12px 32px -12px rgba(0, 0, 0, .6);
+}
+/* Secondary light-mode shot (what's left of the old two-up Modes grid after the dark capture
+   moved to the hero spot above) — smaller and centered so it still reads as a deliberate
+   secondary view, not an afterthought. */
+html[data-product="stock-shredder"] .interface-shot-secondary {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
 /* ---------- Artist avatars (Sound Driver only, for now) ---------- */
 .artist-avatars {
   display: flex;
@@ -289,7 +358,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 }
 .pricing-eyebrow {
   text-align: center;
-  color: var(--signal);
+  color: var(--acc-text);
   margin-bottom: 16px;
 }
 .download-eyebrow {
@@ -735,7 +804,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
 
 /* ---------- Earn (Stock Shredder's in-app referral program, mirrored here) ---------- */
 .earn { padding-block: var(--space-block); border-top: 1px solid var(--line); }
-.earn-eyebrow { color: var(--signal); margin-bottom: 20px; }
+.earn-eyebrow { color: var(--acc-text); margin-bottom: 20px; }
 .earn-headline { font-size: clamp(28px, 4.5vw, 52px); margin-bottom: 16px; }
 .earn-sub { color: var(--bone-2); margin-bottom: 40px; }
 .earn-list {
@@ -752,7 +821,7 @@ html[data-product="loadout"] .cross-sell-name { font-size: clamp(28px, 4vw, 56px
   font-size: 15px;
   color: var(--bone);
 }
-.earn-amount { font-weight: 600; color: var(--signal); white-space: nowrap; }
+.earn-amount { font-weight: 600; color: var(--acc-text); white-space: nowrap; }
 .earn-cta { margin-top: 12px; color: var(--bone-2); }
 .earn-cta strong { color: var(--bone); font-weight: 500; }
 .earn-submit { margin-top: 32px; text-align: center; }

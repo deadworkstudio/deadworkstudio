@@ -70,16 +70,26 @@ html[data-product] .poster-media img {
   opacity: 0.05;
   mix-blend-mode: overlay;
 }
-/* Loadout and Stock Shredder's background photos are busier/higher-frequency than the others
-   (forest clutter, a dense film-strip grid) and read as messy under the standard overlay —
-   darken it further on just these two so the photo calms down without swapping the image. */
-html[data-product="loadout"] .poster-media::after,
-html[data-product="stock-shredder"] .poster-media::after {
+/* Loadout's background photo is busier/higher-frequency than the others (forest clutter) and
+   reads as messy under the standard overlay — darken it further on just this one so the photo
+   calms down without swapping the image. (Stock Shredder used to share this rule too, for a
+   "dense film-strip grid" photo that no longer exists — its background was replaced 2026-10-21
+   with a new engine-bay shot, so it now uses the standard overlay below plus its own
+   grayscale/contrast treatment right underneath.) */
+html[data-product="loadout"] .poster-media::after {
   background:
     linear-gradient(90deg, rgba(10,10,9,.68) 0%, rgba(10,10,9,.42) 34%, rgba(10,10,9,.18) 55%),
     linear-gradient(180deg, rgba(10,10,9,.8) 0%, rgba(10,10,9,.7) 40%, rgba(10,10,9,.85) 100%),
     var(--grain);
   background-size: auto, auto, 180px 180px;
+}
+/* Stock Shredder's new engine-bay photo (2026-10-21) needs deeper blacks/brighter highlights
+   than the shared contrast(1.05) to read as cinematic rather than flat under the standard
+   overlay above, and its interesting detail (the engine) sits roughly a third down the frame,
+   not dead center — object-position biases the crop there. Scoped to this page only. */
+html[data-product="stock-shredder"] .poster-media img {
+  filter: grayscale(1) contrast(1.2);
+  object-position: center 30%;
 }
 /* Scene Lock's photo (NASA Mercury Mission Control) has its one dramatic element — the glowing
    tracking-map screen — in the upper third, not dead center. object-fit:cover's default center
@@ -97,7 +107,14 @@ html[data-product="scene-lock"] .poster-media img {
 /* .poster's own children (head/index/panel/foot) already sit in normal flow above this
    fixed, negative-z-index backdrop — no per-child z-index needed. */
 
-.poster-brand img { height: 18px; width: auto; }
+/* margin:0 auto — base.css sets every <img> to display:block for layout-shift reservation, which
+   also makes the browser wrap this image's enclosing <a> in an anonymous block box spanning the
+   full width of .poster-brand. That leaves text-align:center on .poster-brand (the mobile layout
+   below 720px, see the base rule above) with nothing to center — text-align only affects inline
+   content, not a block-level image. Centering the image itself via auto side margins works
+   regardless of the parent's own alignment mechanism, so it's harmless at the 720px+ breakpoint
+   too (justify-self:center there already centers the whole box). */
+.poster-brand img { height: 18px; width: auto; margin: 0 auto; }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
 
 /* The header is the positioning context for each tab's own dropdown panel (see .nav-tab-panel) —
