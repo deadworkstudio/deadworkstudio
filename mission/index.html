@@ -19,7 +19,7 @@
 <link rel="preload" href="../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../assets/css/base.css?v=20261015e" />
-<link rel="stylesheet" href="../assets/css/home.css?v=20261021a" />
+<link rel="stylesheet" href="../assets/css/home.css?v=20261021b" />
 <link rel="stylesheet" href="../assets/css/mission.css?v=20261016c" />
 <!-- Contact used to live as an in-page panel here (#contact) — it's now its own page. Catch any
      old deep link still pointing at the hash and send it straight there. -->
@@ -32,42 +32,50 @@
     <img src="../assets/img/mission/bg.jpg" alt="" fetchpriority="high" />
   </div>
   <header class="poster-head">
-    <h1 class="poster-brand"><a href="../home/"><img src="../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
-    <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-trigger>
-      <span data-nav-trigger-label>Menu</span>
-    </button>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="nav-panel-pre" data-nav-trigger>Pre-Production</button>
+        <div class="nav-tab-panel" id="nav-panel-pre" data-nav-panel>
+          <ul>
+            <li><a class="index-word" href="../products/scene-lock/">Scene Lock</a></li>
+            <li><a class="index-word" href="../products/set-control/">Set Control</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="nav-panel-production" data-nav-trigger>Production</button>
+        <div class="nav-tab-panel" id="nav-panel-production" data-nav-panel>
+          <ul>
+            <li><a class="index-word" href="../products/loadout/">Loadout</a></li>
+            <li><a class="index-word" href="../products/handoff/">Handoff</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-    <nav class="poster-index" aria-label="Tools and studio" id="site-nav" data-index>
-      <p class="index-meta">Est. Los Angeles<br>06 tools</p>
-      <div class="index-group">
-        <h2 class="index-label">I — Pre-Production</h2>
-        <ul>
-          <li><a class="index-word" href="../products/scene-lock/">Scene Lock</a></li>
-          <li><a class="index-word" href="../products/set-control/">Set Control</a></li>
-        </ul>
+    <h1 class="poster-brand"><a href="../home/"><img src="../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="nav-panel-post" data-nav-trigger>Post-Production</button>
+        <div class="nav-tab-panel" id="nav-panel-post" data-nav-panel>
+          <ul>
+            <li><a class="index-word" href="../products/sound-driver/">Sound Driver</a></li>
+            <li><a class="index-word" href="../products/stock-shredder/">Stock Shredder</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="index-group">
-        <h2 class="index-label">II — Production</h2>
-        <ul>
-          <li><a class="index-word" href="../products/loadout/">Loadout</a></li>
-          <li><a class="index-word" href="../products/handoff/">Handoff</a></li>
-        </ul>
-      </div>
-      <div class="index-group">
-        <h2 class="index-label">III — Post</h2>
-        <ul>
-          <li><a class="index-word" href="../products/sound-driver/">Sound Driver</a></li>
-          <li><a class="index-word" href="../products/stock-shredder/">Stock Shredder</a></li>
-        </ul>
-      </div>
-      <div class="index-group index-group--studio">
-        <h2 class="sr-only">Studio</h2>
-        <ul>
-          <li><a class="index-word" href="./" data-panel-target="default">Mission</a></li>
-          <li><a class="index-word" href="../values/">Values</a></li>
-          <li><a class="index-word" href="../join/">Join</a></li>
-          <li><a class="index-word" href="../contact/">Contact</a></li>
-        </ul>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="nav-panel-studio" data-nav-trigger>Studio</button>
+        <div class="nav-tab-panel" id="nav-panel-studio" data-nav-panel data-index>
+          <p class="index-meta">Est. Los Angeles<br>06 tools</p>
+          <ul>
+            <li><a class="index-word" href="./" data-panel-target="default">Mission</a></li>
+            <li><a class="index-word" href="../values/">Values</a></li>
+            <li><a class="index-word" href="../join/">Join</a></li>
+            <li><a class="index-word" href="../contact/">Contact</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
   </header>

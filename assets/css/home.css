@@ -29,7 +29,7 @@
   z-index: 0;
   pointer-events: none;
 }
-.poster-head, .poster-index, .poster-panel, .poster-foot { position: relative; z-index: 1; }
+.poster-head, .nav-tab-panel, .poster-panel, .poster-foot { position: relative; z-index: 1; }
 .poster-media video,
 .poster-media img {
   position: absolute;
@@ -100,16 +100,26 @@ html[data-product="scene-lock"] .poster-media img {
 .poster-brand img { height: 18px; width: auto; }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
 
-/* The header is the positioning context for the dropdown below (see .poster-index) — it needs
-   its own stacking order raised above .poster-panel/.poster-foot, since they share the same
-   z-index:1 (set in the blanket ".poster-head, .poster-index, .poster-panel, .poster-foot" rule
-   above) and come later in paint order, which would otherwise paint the dropdown's content
-   (nested inside .poster-head) underneath the panel. */
-.poster-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 50; }
+/* The header is the positioning context for each tab's own dropdown panel (see .nav-tab-panel) —
+   it needs its own stacking order raised above .poster-panel/.poster-foot, since they share the
+   same z-index:1 (set in the blanket ".poster-head, .poster-index, .poster-panel, .poster-foot"
+   rule above) and come later in paint order, which would otherwise paint a dropdown's content
+   (nested inside .poster-head) underneath the panel.
+   Mobile-default layout: wordmark on its own full-width row, both tab groups together on the row
+   below it (wrapping further if they don't fit one line) — four tabs plus a centered logo in one
+   row doesn't work at phone widths, see the 720px+ override below for the real desktop layout. */
+.poster-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 16px; position: relative; z-index: 50; }
+.poster-brand { order: -1; flex: 1 0 100%; text-align: center; }
 
-/* "MENU" / "CLOSE" — a plain text trigger (Fear of God's pattern) rather than a hamburger icon,
-   living where .poster-strip used to sit (top-right of the header, brand stays top-left). */
-.nav-trigger {
+/* Each side of the logo is its own two-tab group (Pre-Production + Production on the left,
+   Post-Production + Studio on the right); kept as two separate flex containers rather than one
+   so the 720px+ grid below can place them in the columns flanking the centered wordmark. */
+.nav-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
+.nav-tab { position: relative; }
+
+/* A plain text trigger per tab (Fear of God's pattern) rather than a hamburger icon or single
+   combined "Menu" button — replaces the old one-button-opens-everything dropdown. */
+.nav-tab-trigger {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -124,69 +134,50 @@ html[data-product="scene-lock"] .poster-media img {
   text-decoration: underline 2px transparent;
   text-underline-offset: 6px;
   transition: color .15s var(--ease), text-decoration-color .15s var(--ease);
+  white-space: nowrap;
 }
-@media (hover: hover) { .nav-trigger:hover { text-decoration-color: var(--acc); } }
-.nav-trigger[aria-expanded='true'] { color: var(--acc); text-decoration-color: var(--acc); }
+@media (hover: hover) { .nav-tab-trigger:hover { text-decoration-color: var(--acc); } }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--acc); text-decoration-color: var(--acc); }
 
-/* The dropdown itself. Nested inside .poster-head in the markup (not a sibling) so top:100%
-   anchors it directly under the header's own box — brand + trigger height, whatever that is at
-   any breakpoint — with no JS measurement needed. Hidden by default via opacity/visibility (not
-   display:none) so the close transition can play; pointer-events:none while closed keeps it from
-   intercepting clicks/tab stops it visually isn't showing. */
-.poster-index {
+/* Each tab's own dropdown — anchored under its own button (top:100% of the .nav-tab wrapper, not
+   the whole header) so opening one never affects any other tab's layout. Hidden by default via
+   opacity/visibility (not display:none) so the close transition can play; pointer-events:none
+   while closed keeps it from intercepting clicks/tab stops it visually isn't showing. Sized to
+   its own short link list rather than the old full-width 4-column panel. */
+.nav-tab-panel {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
   z-index: 1;
   margin: 12px 0 0;
-  padding: 24px var(--gutter) 28px;
+  padding: 20px 24px 24px;
+  min-width: 200px;
   background: var(--ink);
   border: 1px solid var(--line);
-  border-top: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  max-height: 80vh;
-  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
   transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s linear .18s;
   pointer-events: none;
 }
-.poster-index.is-open {
+.nav-tab-panel.is-open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
   transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s;
 }
-.index-meta { grid-column: 1 / -1; margin: 0 0 4px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
+/* Post-Production and Studio sit on the right-hand side of the header, close to (or past) the
+   right edge at narrower widths — right-align their panels so they open inward instead of
+   clipping off-screen. */
+.nav-tabs--post .nav-tab-panel { left: auto; right: 0; }
+
+.index-meta { margin: 0 0 16px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); white-space: nowrap; }
 .index-label { margin-bottom: 4px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
-.index-word { display: inline-flex; align-items: center; min-height: 44px; font-size: 18px; line-height: 1.3; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); }
+.index-word { display: inline-flex; align-items: center; min-height: 44px; font-size: 18px; line-height: 1.3; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); white-space: nowrap; }
 @media (hover: hover) { .index-word:hover { text-decoration-color: var(--acc); text-decoration-thickness: 1px; } }
 .index-word[aria-current] { text-decoration-color: var(--acc); text-decoration-thickness: 2px; }
-.poster-index.has-active .index-word:not([aria-current]) { color: var(--bone-2); }
-/* The Studio group's own heading is markup-level sr-only (its content — Mission, Values, Join,
-   Contact — doesn't share one real-world category name the way "Pre-Production"/"Production"/
-   "Post" do) — shown here with the same mono label treatment as the other three groups' real
-   <h2>s so the dropdown reads as four visually consistent columns/blocks instead of three
-   labelled groups plus one unlabeled one. */
-.index-group--studio h2 {
-  position: static;
-  width: auto;
-  height: auto;
-  padding: 0;
-  margin: 0 0 4px;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-  font: 400 11px/1.4 var(--font-mono);
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--bone-3);
-}
+[data-index].has-active .index-word:not([aria-current]) { color: var(--bone-2); }
 /* No permanent sidebar reserving a grid track anymore (see the 720px+ rules below) — the content
    panel now opens with a plain top border/space same as every other breakpoint. */
 .poster-panel { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--line); container-type: inline-size; min-width: 0; }
@@ -232,16 +223,7 @@ html[data-product="scene-lock"] .poster-media img {
 
 /* Phones (below the fixed "poster" layout's 720px floor): the footer's email and copyright
    lines were left-aligned by default, out of step with the already-centered follow-us note and
-   social icons — center the whole block to match. On the home page and every product page, put
-   the actual page content ahead of the tool index ("the tabs") in reading order — otherwise a
-   visitor has to scroll past the entire 10-link site nav before seeing anything about the page
-   they're actually on. Swaps the divider line from above the content to above the index to match. */
-/* "Mission / Values / Join / Contact" gets a hairline + extra top space ahead of it so it reads
-   as its own group rather than a continuation of "III — Post" above it, at every width — the
-   dropdown is a single column by default (see .poster-index below) and becomes one column among
-   four at 720px+ (see that rule), where the rule still reads fine as a small decorative top
-   border on just that one column. */
-.index-group--studio { margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--line); }
+   social icons — center the whole block to match. */
 
 @media (max-width: 719px) {
   /* .poster-foot is a CSS grid, which stretches each item to the full column width by default
@@ -253,13 +235,31 @@ html[data-product="scene-lock"] .poster-media img {
      block (above the email line) on mobile only, so they're the first thing seen rather than the
      last. Desktop keeps its own subgrid-based column layout untouched (see the 720px+ rule below). */
   .foot-social { order: -1; }
+  /* Below 720px the two tab groups wrap onto their own row(s) under the logo (see .poster-head
+     above) — an open dropdown positioned absolute (the 720px+ behavior) would float on top of
+     whichever tab row comes after it rather than just the hero content beneath the whole header,
+     since on this narrow layout another row of tabs is often what's directly underneath it.
+     position:static makes an open panel push that following row down instead of covering it.
+     display:none while closed (rather than the 720px+ behavior's opacity/visibility, which still
+     reserves box space once the panel is no longer taken out of flow by position:absolute) keeps
+     a closed panel's own link list from silently widening its tab and wrapping the row early —
+     no close transition to preserve here since nothing needs to animate while display:none. */
+  .nav-tab-panel { display: none; position: static; margin: 10px 0 0; min-width: 0; padding: 16px 20px 20px; }
+  .nav-tab-panel.is-open { display: block; }
+  .nav-tabs { align-items: flex-start; }
 }
 
+/* Tablet width and up: four separate tabs plus a centered wordmark, laid out left-to-right as
+   Pre-Production, Production, LOGO, Post-Production, Studio. The logo sits in a middle grid track
+   flanked by two equal (minmax(0,1fr)) tracks holding the two tab groups — equal flanking tracks
+   is what makes the wordmark land dead-center regardless of how wide either tab group's own
+   content happens to be, with no JS measurement needed. justify-content pushes each group's tabs
+   in toward the logo rather than out toward the header's outer edges. */
 @media (min-width: 720px) {
-  .poster-index { grid-template-columns: repeat(4, 1fr); }
-  /* Cancels the mobile-only separator above — in the 4-column dropdown each group (including
-     Studio) is already its own column, so the extra hairline is redundant there. */
-  .index-group--studio { margin-top: 0; padding-top: 0; border-top: 0; }
+  .poster-head { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; }
+  .poster-brand { order: 0; grid-column: 2; justify-self: center; }
+  .nav-tabs--pre { grid-column: 1; justify-content: flex-end; }
+  .nav-tabs--post { grid-column: 3; justify-content: flex-start; }
 }
 
 @media (min-width: 720px) and (min-height: 640px) {
@@ -272,13 +272,15 @@ html[data-product="scene-lock"] .poster-media img {
   .poster-media { position: fixed; }
   .poster-head, .poster-foot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; }
   .poster-head { padding-top: clamp(24px, 4svh, 40px); }
-  .poster-brand { grid-column: 1 / 5; }
+  /* Same equal-flanking-tracks centering trick as the 720px-only rule above, now expressed against
+     the 12-column poster subgrid: 5 columns either side of a 2-column middle slot for the
+     wordmark (5 + 2 + 5 = 12), so the logo still lands exactly on the grid's own center line. */
+  .nav-tabs--pre { grid-column: 1 / 6; justify-content: flex-end; }
+  .poster-brand { grid-column: 6 / 8; justify-self: center; }
+  .nav-tabs--post { grid-column: 8 / 13; justify-content: flex-start; }
   .poster-lede  { grid-column: 5 / 10; margin: 0; font-size: 15px; max-width: 60ch; }
-  /* Sits where .poster-strip used to (top-right of the header); .poster-strip's own text now
-     lives inside the dropdown as .index-meta instead (see the base rules above). */
-  .nav-trigger { grid-column: 10 / 13; justify-self: end; align-self: center; }
-  /* The dropdown's own 4-column layout (set at 720px+ in the base rules above) needs more
-     breathing room per column at this scale — bumped from .index-word's base 18px. */
+  /* Each tab's own dropdown (set at 720px+ in the base rules above) needs more breathing room per
+     link at this scale — bumped from .index-word's base 18px. */
   .index-word { min-height: 32px; font-size: clamp(18px, 1.5vw, 22px); }
   /* overflow-x: hidden -- was never declared at all before, so if any page's own grid content
      ever pushed even a pixel past the panel's edge the whole panel became sideways-draggable/
