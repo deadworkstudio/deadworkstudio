@@ -259,16 +259,6 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
-/* Sound Driver's motorcycle photo: black panel sits left of the photo's own horizontal center,
-   so no vertical-only position gets the mark truly centered on it — a 1.4x zoom could fix that
-   geometrically, but reads worse overall (softer grain, loses the surrounding engine context).
-   Left as a plain vertical nudge; revisit with a source photo cropped for this directly (see
-   chat) if revisited again. (Briefly swapped with Stock Shredder 2026-10-22, swapped back same
-   day — these two rules follow whichever photo is live on each page.) */
-a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
-/* Stock Shredder's engine-bay photo: the bracket's own clean surface is a touch narrower than
-   the full wordmark at native scale — same tradeoff as above, left as-is rather than zoomed. */
-a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
 /* Scene Lock: the first fix (61%) centered the mark ON the console row itself, overlapping the
    switches. Pulled back up to 54%, where the full crosshair+text mark instead hovers in the dark
    gap right above the desk's top edge — sitting on top of it, not down in the switches. */
@@ -289,6 +279,18 @@ a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
   height: 58%;
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, 0) 72%);
   pointer-events: none;
+}
+/* Sound Driver and Stock Shredder don't use the floating-overlay logo below (see card.jpg,
+   referenced directly from each page's own markup) — their marks are composited directly into
+   a dedicated crop of the source photo instead, framed and shadowed by hand around the exact
+   physical surface (the black panel / the engine bracket) they sit on. That reads as part of
+   the photography itself rather than a graphic placed on top of it, and stays correctly
+   positioned at any card width since it's baked into the image's own pixels rather than
+   centered against the card's box. The generic centered scrim above isn't needed for either,
+   since it has nothing to protect once the mark is in the photo. */
+a[href$="sound-driver/"] .mega-menu-card-img::after,
+a[href$="stock-shredder/"] .mega-menu-card-img::after {
+  display: none;
 }
 /* Each product's own logo mark (same transparent-background files used on its hero) sits
    directly on its photo, bottom-left, instead of only as plain text below. */
