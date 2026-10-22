@@ -302,14 +302,44 @@ a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .65));
 }
 /* Set Control's wordmark reads better flat against its console photo — the shared drop-shadow
-   looked muddy on its particular mix of fine lines and light background. */
-a[href$="set-control/"] .mega-menu-card-logo { filter: none; }
-/* Sound Driver and Stock Shredder: kept noticeably smaller than the shared size above — these
-   two read best as a subtle mark secondary to the (wider, more detailed) machinery photo behind
-   them, not a dominant graphic competing with it. */
-a[href$="sound-driver/"] .mega-menu-card-logo,
+   looked muddy on its particular mix of fine lines and light background. Sized up slightly from
+   the shared default for a touch more separation from the busy panel detail behind it — no
+   shadow/glow/scrim added back in, size is the only lever used here. */
+a[href$="set-control/"] .mega-menu-card-logo { filter: none; height: clamp(36px, 3.6vw, 62px); }
+/* Sound Driver: up ~45% from its previous subtle size — still clearly smaller than the shared
+   default (this mark reads best secondary to the wider machinery photo), just no longer reading
+   as too quiet against the black panel it sits in. */
+a[href$="sound-driver/"] .mega-menu-card-logo {
+  height: clamp(26px, 2.6vw, 41px);
+}
+/* Stock Shredder: up ~25% from its previous size, same reasoning as Sound Driver above but a
+   smaller bump — the engine bracket it sits on is a touch more forgiving than Sound Driver's
+   tighter black gap. */
 a[href$="stock-shredder/"] .mega-menu-card-logo {
-  height: clamp(18px, 1.8vw, 28px);
+  height: clamp(23px, 2.3vw, 35px);
+}
+/* Handoff: the shared default read as too small against this particular rack photo's level of
+   detail — sized up clearly past the shared default so it's comfortably readable, not just
+   technically present. */
+a[href$="handoff/"] .mega-menu-card-logo {
+  height: clamp(52px, 5.2vw, 90px);
+}
+/* Loadout: the shared scrim wasn't quite enough separation — its logo's own white circles can
+   still read close in tone to similar round shapes in the photo behind it. Strengthened just for
+   this card rather than resizing the mark or touching the photo itself. */
+a[href$="loadout/"] .mega-menu-card-img::after {
+  /* An ellipse doesn't fit a wordmark+icon's own roughly-rectangular footprint well — its
+     corners reach further than its edge midpoints, so the logo's actual text row (wide and
+     short) fell partly outside the dark area while the gradient still looked generous on-paper.
+     A soft-edged rectangle covers the measured logo bounding box (164x56 at this viewport, with
+     margin) evenly along its whole width instead. */
+  width: 34%;
+  height: 34%;
+  max-width: 320px;
+  max-height: 110px;
+  background: rgba(0, 0, 0, .62);
+  border-radius: 10px;
+  filter: blur(14px);
 }
 .mega-menu-card-caption { display: block; margin-top: 14px; text-align: center; }
 .mega-menu-card-name { display: block; font: 400 15px/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
