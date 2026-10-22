@@ -259,6 +259,14 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
+/* Sound Driver's motorcycle photo: the black panel behind the mark sits roughly here, a touch
+   left of the photo's own horizontal center (no real fix for that without cropping tighter,
+   which was tried and reverted — see chat, 2026-10-22 — for showing noticeably less of the
+   machinery than wanted). */
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
+/* Stock Shredder's engine-bay photo: lands the bracket roughly behind the mark, same tradeoff
+   as above. */
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
 /* Scene Lock: the first fix (61%) centered the mark ON the console row itself, overlapping the
    switches. Pulled back up to 54%, where the full crosshair+text mark instead hovers in the dark
    gap right above the desk's top edge — sitting on top of it, not down in the switches. */
@@ -280,18 +288,6 @@ a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, 0) 72%);
   pointer-events: none;
 }
-/* Sound Driver and Stock Shredder don't use the floating-overlay logo below (see card.jpg,
-   referenced directly from each page's own markup) — their marks are composited directly into
-   a dedicated crop of the source photo instead, framed and shadowed by hand around the exact
-   physical surface (the black panel / the engine bracket) they sit on. That reads as part of
-   the photography itself rather than a graphic placed on top of it, and stays correctly
-   positioned at any card width since it's baked into the image's own pixels rather than
-   centered against the card's box. The generic centered scrim above isn't needed for either,
-   since it has nothing to protect once the mark is in the photo. */
-a[href$="sound-driver/"] .mega-menu-card-img::after,
-a[href$="stock-shredder/"] .mega-menu-card-img::after {
-  display: none;
-}
 /* Each product's own logo mark (same transparent-background files used on its hero) sits
    directly on its photo, bottom-left, instead of only as plain text below. */
 .mega-menu-card-logo {
@@ -308,6 +304,13 @@ a[href$="stock-shredder/"] .mega-menu-card-img::after {
 /* Set Control's wordmark reads better flat against its console photo — the shared drop-shadow
    looked muddy on its particular mix of fine lines and light background. */
 a[href$="set-control/"] .mega-menu-card-logo { filter: none; }
+/* Sound Driver and Stock Shredder: kept noticeably smaller than the shared size above — these
+   two read best as a subtle mark secondary to the (wider, more detailed) machinery photo behind
+   them, not a dominant graphic competing with it. */
+a[href$="sound-driver/"] .mega-menu-card-logo,
+a[href$="stock-shredder/"] .mega-menu-card-logo {
+  height: clamp(18px, 1.8vw, 28px);
+}
 .mega-menu-card-caption { display: block; margin-top: 14px; text-align: center; }
 .mega-menu-card-name { display: block; font: 400 15px/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
 .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); }
