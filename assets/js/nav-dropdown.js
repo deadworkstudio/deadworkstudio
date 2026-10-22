@@ -1,88 +1,97 @@
 // DEADWORK site — shared on every page. Drives the four header tabs (Pre-Production, Production,
-// Post-Production, Studio), each its own independent toggle over its own [data-nav-tab] wrapper
-// (button + dropdown panel). Opening one tab's panel closes any other tab's panel that's
-// currently open — standard single-open-at-a-time tab behavior. Closes on: toggle click, outside
-// click, Escape, or clicking any link inside an open panel (including the home page's panel-swap
-// words — this runs independently of assets/js/home.js, so it closes the dropdown regardless of
-// whether the click also swaps a panel in place or triggers a real page navigation).
+// Post-Production, Studio) against ONE shared full-width mega-menu panel (not four separate
+// per-tab panels) — opening any tab shows the same panel element in the same place, just with
+// that tab's own content (.mega-menu-group[data-mega-group]) swapped to active. Opening one tab
+// always implies closing/replacing whichever other tab was open, since there's only one panel.
+// Closes on: toggle click, outside click, Escape, or clicking any link inside the open panel
+// (including the home page's panel-swap words — this runs independently of assets/js/home.js, so
+// it closes the menu regardless of whether the click also swaps a panel in place or triggers a
+// real page navigation).
 (function () {
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-nav-tab]'));
-  if (!tabs.length) return;
+  var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-nav-trigger]'));
+  var menu = document.querySelector('[data-mega-menu]');
+  if (!triggers.length || !menu) return;
 
-  function triggerOf(tab) { return tab.querySelector('[data-nav-trigger]'); }
-  function panelOf(tab) { return tab.querySelector('[data-nav-panel]'); }
+  var groups = {};
+  Array.prototype.slice.call(menu.querySelectorAll('[data-mega-group]')).forEach(function (g) {
+    groups[g.dataset.megaGroup] = g;
+  });
 
-  function isOpen(tab) {
-    var trigger = triggerOf(tab);
-    return !!trigger && trigger.getAttribute('aria-expanded') === 'true';
+  var openGroupKey = null;
+
+  function isOpen() { return menu.classList.contains('is-open'); }
+
+  // Swapping which group is active while the panel stays open is an instant swap, not a timed
+  // cross-fade — simpler, and avoids any chance of both groups being visible mid-transition.
+  function setActiveGroup(key) {
+    Object.keys(groups).forEach(function (k) {
+      groups[k].classList.toggle('is-active', k === key);
+    });
+    triggers.forEach(function (t) {
+      t.setAttribute('aria-expanded', t.dataset.megaGroup === key ? 'true' : 'false');
+    });
   }
 
-  function close(tab, returnFocus) {
-    if (!isOpen(tab)) return;
-    var trigger = triggerOf(tab), panel = panelOf(tab);
-    trigger.setAttribute('aria-expanded', 'false');
-    panel.classList.remove('is-open');
-    if (returnFocus) trigger.focus();
+  function open(key) {
+    openGroupKey = key;
+    setActiveGroup(key);
+    menu.classList.add('is-open');
   }
 
-  function closeOthers(tab) {
-    tabs.forEach(function (t) { if (t !== tab) close(t, false); });
+  function close(returnFocusTrigger) {
+    openGroupKey = null;
+    menu.classList.remove('is-open');
+    triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+    if (returnFocusTrigger) returnFocusTrigger.focus();
   }
 
-  function open(tab) {
-    closeOthers(tab);
-    triggerOf(tab).setAttribute('aria-expanded', 'true');
-    panelOf(tab).classList.add('is-open');
-  }
+  triggers.forEach(function (trigger) {
+    var key = trigger.dataset.megaGroup;
+    trigger.addEventListener('click', function () {
+      if (isOpen() && openGroupKey === key) close(null);
+      else open(key);
+    });
+  });
 
   // Real mouse (not touch, which reports a kind of fake "hover" on tap in some browsers) opens on
-  // hover, like Fear of God's own nav — closing is delayed slightly so moving the pointer from the
-  // trigger down into the panel itself doesn't close it mid-move.
+  // hover, like Fear of God's own nav. The close is delayed slightly, and shared across every
+  // trigger and the panel itself, so moving the pointer from a trigger down into the panel (or
+  // sideways into another trigger) never closes the menu mid-move.
   var canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
   var closeTimer = null;
 
-  tabs.forEach(function (tab) {
-    var trigger = triggerOf(tab), panel = panelOf(tab);
-    if (!trigger || !panel) return;
-
-    trigger.addEventListener('click', function () {
-      if (isOpen(tab)) close(tab, false);
-      else open(tab);
-    });
-
-    // Any link inside this tab's panel closes every tab — before navigation happens for a real
-    // link, and alongside whatever other click handler (e.g. home.js's panel swap) also fires.
-    panel.addEventListener('click', function (e) {
-      if (e.target.closest('a')) tabs.forEach(function (t) { close(t, false); });
-    });
-
-    if (canHover) {
-      tab.addEventListener('mouseenter', function () {
+  if (canHover) {
+    var hoverables = triggers.concat([menu]);
+    hoverables.forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
         clearTimeout(closeTimer);
-        open(tab);
+        if (el.hasAttribute('data-nav-trigger')) open(el.dataset.megaGroup);
       });
-      tab.addEventListener('mouseleave', function () {
-        closeTimer = setTimeout(function () { close(tab, false); }, 150);
+      el.addEventListener('mouseleave', function () {
+        closeTimer = setTimeout(function () { close(null); }, 150);
       });
-    }
+    });
+  }
+
+  // Any link inside the panel closes the menu — before navigation happens for a real link, and
+  // alongside whatever other click handler (e.g. home.js's panel swap) also fires.
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest('a')) close(null);
   });
 
-  // Outside click: anything that isn't inside any currently-open tab (its trigger or its panel).
   document.addEventListener('click', function (e) {
-    tabs.forEach(function (tab) {
-      if (!isOpen(tab)) return;
-      if (tab.contains(e.target)) return;
-      close(tab, false);
-    });
+    if (!isOpen()) return;
+    var withinTrigger = triggers.some(function (t) { return t.contains(e.target); });
+    if (withinTrigger || menu.contains(e.target)) return;
+    close(null);
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    tabs.forEach(function (tab) { if (isOpen(tab)) close(tab, true); });
+    if (e.key !== 'Escape' || !isOpen()) return;
+    var activeTrigger = triggers.filter(function (t) { return t.dataset.megaGroup === openGroupKey; })[0];
+    close(activeTrigger || null);
   });
 
-  // Resize past/under a breakpoint shouldn't strand a dropdown open with stale layout.
-  window.addEventListener('resize', function () {
-    tabs.forEach(function (tab) { close(tab, false); });
-  });
+  // Resize past/under a breakpoint shouldn't strand the menu open with stale layout.
+  window.addEventListener('resize', function () { close(null); });
 })();

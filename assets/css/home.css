@@ -29,7 +29,7 @@
   z-index: 0;
   pointer-events: none;
 }
-.poster-head, .nav-tab-panel, .poster-panel, .poster-foot { position: relative; z-index: 1; }
+.poster-head, .mega-menu, .poster-panel, .poster-foot { position: relative; z-index: 1; }
 .poster-media video,
 .poster-media img {
   position: absolute;
@@ -121,10 +121,10 @@ html[data-product="scene-lock"] .poster-media img {
 .poster-brand img { height: 22px; width: auto; margin: 0 auto; transform: translateY(-4.6px); }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
 
-/* The header is the positioning context for each tab's own dropdown panel (see .nav-tab-panel) —
-   it needs its own stacking order raised above .poster-panel/.poster-foot, since they share the
-   same z-index:1 (set in the blanket ".poster-head, .poster-index, .poster-panel, .poster-foot"
-   rule above) and come later in paint order, which would otherwise paint a dropdown's content
+/* The header is the positioning context for the shared mega-menu panel (see .mega-menu) — it
+   needs its own stacking order raised above .poster-panel/.poster-foot, since they share the
+   same z-index:1 (set in the blanket ".poster-head, .mega-menu, .poster-panel, .poster-foot"
+   rule above) and come later in paint order, which would otherwise paint the mega-menu's content
    (nested inside .poster-head) underneath the panel.
    Mobile-default layout: wordmark on its own full-width row, both tab groups together on the row
    below it (wrapping further if they don't fit one line) — four tabs plus a centered logo in one
@@ -135,12 +135,6 @@ html[data-product="scene-lock"] .poster-media img {
 /* Each side of the logo is its own two-tab group (Pre-Production + Production on the left,
    Post-Production + Studio on the right); kept as two separate flex containers rather than one
    so the 720px+ grid below can place them in the columns flanking the centered wordmark. */
-/* position:relative lives on the GROUP, not each individual .nav-tab — a panel anchors to its
-   whole group's own outer edge (left group → the group's left edge, right group → the group's
-   right edge) consistently, regardless of which of the two tabs within that group triggered it.
-   Anchoring each panel to its own individual trigger instead (the previous approach) made
-   Post-Production's panel — not actually the rightmost tab, Studio is — drift oddly left of its
-   own label when right-aligned to its own narrow width rather than the group's real boundary. */
 .nav-tabs { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
 .nav-tab { position: static; }
 
@@ -183,22 +177,21 @@ html[data-product="scene-lock"] .poster-media img {
   .nav-tab-trigger::after { transition: none; }
 }
 
-/* Each tab's own dropdown — anchored under its own button (top:100% of the .nav-tab wrapper, not
-   the whole header) so opening one never affects any other tab's layout. Hidden by default via
+/* The mega-menu — ONE shared full-width panel living inside .poster-head (which is already the
+   positioning context, see its own comment above), rather than four small panels each anchored
+   under their own tab group. Same position/size regardless of which of the 4 tabs opened it —
+   only its CONTENT (which .mega-menu-group has .is-active) changes. Hidden by default via
    opacity/visibility (not display:none) so the close transition can play; pointer-events:none
-   while closed keeps it from intercepting clicks/tab stops it visually isn't showing. Sized to
-   its own short link list rather than the old full-width 4-column panel. */
-.nav-tab-panel {
+   while closed keeps it from intercepting clicks/tab stops it visually isn't showing. Reuses the
+   same shadow the old small dropdown used, for the same sense of depth. */
+.mega-menu {
   position: absolute;
   top: 100%;
   left: 0;
+  right: 0;
   z-index: 1;
-  margin: 14px 0 0;
-  padding: 18px 22px 20px;
-  min-width: 190px;
   background: var(--ink);
-  border: 1px solid var(--line);
-  border-top: 2px solid var(--acc);
+  border-bottom: 1px solid var(--line);
   box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .85), 0 8px 20px -8px rgba(0, 0, 0, .7);
   opacity: 0;
   visibility: hidden;
@@ -206,8 +199,7 @@ html[data-product="scene-lock"] .poster-media img {
   transition: opacity var(--duration-close) var(--ease), transform var(--duration-close) var(--ease), visibility 0s linear var(--duration-close);
   pointer-events: none;
 }
-.nav-tab-panel ul { display: flex; flex-direction: column; gap: 2px; }
-.nav-tab-panel.is-open {
+.mega-menu.is-open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -215,12 +207,44 @@ html[data-product="scene-lock"] .poster-media img {
   transition: opacity var(--duration-open) var(--ease), transform var(--duration-open) var(--ease), visibility 0s;
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav-tab-panel, .nav-tab-panel.is-open { transition-duration: 1ms; transform: none; }
+  .mega-menu, .mega-menu.is-open { transition-duration: 1ms; transform: none; }
 }
-/* Post-Production and Studio sit on the right-hand side of the header, close to (or past) the
-   right edge at narrower widths — right-align their panels so they open inward instead of
-   clipping off-screen. */
-.nav-tabs--post .nav-tab-panel { left: auto; right: 0; }
+/* Only the active group's content is in flow at all — an instant swap (rather than a timed
+   cross-fade) while the panel stays open, which reads as smooth without risking either group
+   being visible at once mid-transition. */
+.mega-menu-group { display: none; padding: 36px 0 40px; gap: 48px; }
+.mega-menu-group.is-active { display: flex; }
+
+/* Left column: the active group's own eyebrow + its links. A hairline on the right separates it
+   from the image cards — Studio has no second column, so it drops the hairline and widens itself
+   instead of sitting there looking like half a panel. */
+.mega-menu-links { flex: 0 0 260px; padding-right: 32px; border-right: 1px solid var(--line); min-width: 0; }
+.mega-menu-group--studio .mega-menu-links { flex-basis: 360px; padding-right: 0; border-right: 0; }
+.mega-menu-eyebrow { margin: 0 0 18px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
+.mega-menu-links ul { display: flex; flex-direction: column; gap: 2px; }
+
+/* Right column: the group's own products as image cards, side by side. flex-wrap lets them stack
+   cleanly rather than squeezing at tablet widths where two 280px+ cards plus the left column
+   genuinely don't fit. */
+.mega-menu-cards { display: flex; flex: 1; flex-wrap: wrap; gap: 24px; min-width: 0; }
+.mega-menu-card { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; text-decoration: none; }
+.mega-menu-card-img { display: block; width: 100%; height: 300px; overflow: hidden; background: var(--ink-raised); }
+.mega-menu-card-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  transition: transform var(--duration-hover) var(--ease);
+}
+@media (hover: hover) { .mega-menu-card:hover .mega-menu-card-img img { transform: scale(1.03); } }
+.mega-menu-card-caption { display: block; margin-top: 14px; }
+.mega-menu-card-name { display: block; font: 400 11px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
+.mega-menu-card:hover .mega-menu-card-name { color: var(--acc); }
+.mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--bone-2); }
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu-card-img img { transition: none; }
+}
 
 .index-meta { margin: 0 0 16px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); white-space: nowrap; }
 
@@ -325,16 +349,24 @@ body.home .panel-headline-lede { text-align: center; }
      last. Desktop keeps its own subgrid-based column layout untouched (see the 720px+ rule below). */
   .foot-social { order: -1; }
   /* Below 720px the two tab groups wrap onto their own row(s) under the logo (see .poster-head
-     above) — an open dropdown positioned absolute (the 720px+ behavior) would float on top of
+     above) — an open mega-menu positioned absolute (the 720px+ behavior) would float on top of
      whichever tab row comes after it rather than just the hero content beneath the whole header,
      since on this narrow layout another row of tabs is often what's directly underneath it.
      position:static makes an open panel push that following row down instead of covering it.
      display:none while closed (rather than the 720px+ behavior's opacity/visibility, which still
      reserves box space once the panel is no longer taken out of flow by position:absolute) keeps
-     a closed panel's own link list from silently widening its tab and wrapping the row early —
-     no close transition to preserve here since nothing needs to animate while display:none. */
-  .nav-tab-panel { display: none; position: static; margin: 10px 0 0; min-width: 0; padding: 16px 20px 20px; }
-  .nav-tab-panel.is-open { display: block; }
+     a closed panel from silently widening its tab and wrapping the row early — no close
+     transition to preserve here since nothing needs to animate while display:none.
+     The full-width image-card treatment doesn't make sense at phone widths (no room for a photo
+     next to its own caption, let alone two side by side) — mobile drops to the same simple
+     text-only link list the small dropdown always used, images and all. */
+  .mega-menu { display: none; position: static; margin: 10px 0 0; box-shadow: none; }
+  .mega-menu.is-open { display: block; }
+  .mega-menu-group.is-active { display: block; }
+  .mega-menu-group { padding: 16px 20px 20px; }
+  .mega-menu-links { flex: none; width: 100%; padding-right: 0; border-right: 0; }
+  .mega-menu-group--studio .mega-menu-links { flex-basis: auto; }
+  .mega-menu-cards { display: none; }
   .nav-tabs { align-items: flex-start; }
 }
 
