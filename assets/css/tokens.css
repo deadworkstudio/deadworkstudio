@@ -67,6 +67,13 @@
 
   --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
 
+  /* One shared timing scale instead of each rule hardcoding its own .15s/.18s/.2s/.22s/.28s —
+     same curve everywhere already (--ease above), now the same small set of durations too. */
+  --duration-hover: 160ms;      /* link/button color, underline, simple state changes */
+  --duration-open: 220ms;       /* a dropdown/menu/panel appearing */
+  --duration-close: 180ms;      /* closing is a touch snappier than opening */
+  --duration-entrance: 400ms;   /* content fading/rising into view */
+
   /* film-stock grain — same SVG-noise technique as the Footage Curator app's tokens.css,
      applied at low opacity so it reads as texture, not noise. */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");

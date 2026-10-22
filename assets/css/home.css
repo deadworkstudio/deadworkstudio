@@ -147,6 +147,7 @@ html[data-product="scene-lock"] .poster-media img {
 /* A plain text trigger per tab (Fear of God's pattern) rather than a hamburger icon or single
    combined "Menu" button — replaces the old one-button-opens-everything dropdown. */
 .nav-tab-trigger {
+  position: relative;
   display: inline-flex;
   align-items: flex-end;
   min-height: 44px;
@@ -158,13 +159,29 @@ html[data-product="scene-lock"] .poster-media img {
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--bone);
-  text-decoration: underline 2px transparent;
-  text-underline-offset: 6px;
-  transition: color .15s var(--ease), text-decoration-color .15s var(--ease);
+  transition: color var(--duration-hover) var(--ease);
   white-space: nowrap;
 }
-@media (hover: hover) { .nav-tab-trigger:hover { text-decoration-color: var(--acc); } }
-.nav-tab-trigger[aria-expanded='true'] { color: var(--acc); text-decoration-color: var(--acc); }
+/* A real underline draw-in (a bar scaling from 0 to full width) instead of a plain color fade on
+   a static underline — reads as a considered, deliberate reveal rather than just a color swap. */
+.nav-tab-trigger::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: -6px;
+  height: 2px;
+  background: var(--acc);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-hover) var(--ease);
+}
+@media (hover: hover) { .nav-tab-trigger:hover::after { transform: scaleX(1); } }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--acc); }
+.nav-tab-trigger[aria-expanded='true']::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .nav-tab-trigger::after { transition: none; }
+}
 
 /* Each tab's own dropdown — anchored under its own button (top:100% of the .nav-tab wrapper, not
    the whole header) so opening one never affects any other tab's layout. Hidden by default via
@@ -186,7 +203,7 @@ html[data-product="scene-lock"] .poster-media img {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
-  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s linear .18s;
+  transition: opacity var(--duration-close) var(--ease), transform var(--duration-close) var(--ease), visibility 0s linear var(--duration-close);
   pointer-events: none;
 }
 .nav-tab-panel ul { display: flex; flex-direction: column; gap: 2px; }
@@ -195,7 +212,10 @@ html[data-product="scene-lock"] .poster-media img {
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
-  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s;
+  transition: opacity var(--duration-open) var(--ease), transform var(--duration-open) var(--ease), visibility 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-tab-panel, .nav-tab-panel.is-open { transition-duration: 1ms; transform: none; }
 }
 /* Post-Production and Studio sit on the right-hand side of the header, close to (or past) the
    right edge at narrower widths — right-align their panels so they open inward instead of
@@ -231,7 +251,7 @@ html[data-product="scene-lock"] .poster-media img {
    a large plain sentence-case list (left over from the old permanent sidebar, where that read
    fine as a long scannable column), which now clashes against the tight tracked tab label right
    above it inside this much smaller dropdown. */
-.index-word { display: inline-flex; align-items: center; min-height: 36px; font: 400 12px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); white-space: nowrap; }
+.index-word { display: inline-flex; align-items: center; min-height: 36px; font: 400 12px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color var(--duration-hover) var(--ease), text-decoration-color var(--duration-hover) var(--ease); white-space: nowrap; }
 @media (hover: hover) { .index-word:hover { text-decoration-color: var(--acc); text-decoration-thickness: 1px; } }
 .index-word[aria-current] { text-decoration-color: var(--acc); text-decoration-thickness: 2px; }
 [data-index].has-active .index-word:not([aria-current]) { color: var(--bone-2); }
