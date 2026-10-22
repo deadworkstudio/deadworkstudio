@@ -135,8 +135,14 @@ html[data-product="scene-lock"] .poster-media img {
 /* Each side of the logo is its own two-tab group (Pre-Production + Production on the left,
    Post-Production + Studio on the right); kept as two separate flex containers rather than one
    so the 720px+ grid below can place them in the columns flanking the centered wordmark. */
-.nav-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
-.nav-tab { position: relative; }
+/* position:relative lives on the GROUP, not each individual .nav-tab — a panel anchors to its
+   whole group's own outer edge (left group → the group's left edge, right group → the group's
+   right edge) consistently, regardless of which of the two tabs within that group triggered it.
+   Anchoring each panel to its own individual trigger instead (the previous approach) made
+   Post-Production's panel — not actually the rightmost tab, Studio is — drift oddly left of its
+   own label when right-aligned to its own narrow width rather than the group's real boundary. */
+.nav-tabs { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
+.nav-tab { position: static; }
 
 /* A plain text trigger per tab (Fear of God's pattern) rather than a hamburger icon or single
    combined "Menu" button — replaces the old one-button-opens-everything dropdown. */
