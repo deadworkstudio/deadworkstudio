@@ -19,7 +19,7 @@
 <link rel="preload" href="../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../assets/css/tokens.css?v=20261016c" />
 <link rel="stylesheet" href="../assets/css/base.css?v=20261015e" />
-<link rel="stylesheet" href="../assets/css/home.css?v=20261019c" />
+<link rel="stylesheet" href="../assets/css/home.css?v=20261021a" />
 <link rel="stylesheet" href="../assets/css/mission.css?v=20261016c" />
 <!-- Contact used to live as an in-page panel here (#contact) — it's now its own page. Catch any
      old deep link still pointing at the hash and send it straight there. -->
@@ -33,41 +33,44 @@
   </div>
   <header class="poster-head">
     <h1 class="poster-brand"><a href="../home/"><img src="../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
-    <p class="poster-strip">Est. Los Angeles<br>06 tools</p>
-  </header>
+    <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-trigger>
+      <span data-nav-trigger-label>Menu</span>
+    </button>
 
-  <nav class="poster-index" aria-label="Tools and studio" data-index>
-    <div class="index-group">
-      <h2 class="index-label">I — Pre-Production</h2>
-      <ul>
-        <li><a class="index-word" href="../products/scene-lock/">Scene Lock</a></li>
-        <li><a class="index-word" href="../products/set-control/">Set Control</a></li>
-      </ul>
-    </div>
-    <div class="index-group">
-      <h2 class="index-label">II — Production</h2>
-      <ul>
-        <li><a class="index-word" href="../products/loadout/">Loadout</a></li>
-        <li><a class="index-word" href="../products/handoff/">Handoff</a></li>
-      </ul>
-    </div>
-    <div class="index-group">
-      <h2 class="index-label">III — Post</h2>
-      <ul>
-        <li><a class="index-word" href="../products/sound-driver/">Sound Driver</a></li>
-        <li><a class="index-word" href="../products/stock-shredder/">Stock Shredder</a></li>
-      </ul>
-    </div>
-    <div class="index-group index-group--studio">
-      <h2 class="sr-only">Studio</h2>
-      <ul>
-        <li><a class="index-word" href="./" data-panel-target="default">Mission</a></li>
-        <li><a class="index-word" href="../values/">Values</a></li>
-        <li><a class="index-word" href="../join/">Join</a></li>
-        <li><a class="index-word" href="../contact/">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="poster-index" aria-label="Tools and studio" id="site-nav" data-index>
+      <p class="index-meta">Est. Los Angeles<br>06 tools</p>
+      <div class="index-group">
+        <h2 class="index-label">I — Pre-Production</h2>
+        <ul>
+          <li><a class="index-word" href="../products/scene-lock/">Scene Lock</a></li>
+          <li><a class="index-word" href="../products/set-control/">Set Control</a></li>
+        </ul>
+      </div>
+      <div class="index-group">
+        <h2 class="index-label">II — Production</h2>
+        <ul>
+          <li><a class="index-word" href="../products/loadout/">Loadout</a></li>
+          <li><a class="index-word" href="../products/handoff/">Handoff</a></li>
+        </ul>
+      </div>
+      <div class="index-group">
+        <h2 class="index-label">III — Post</h2>
+        <ul>
+          <li><a class="index-word" href="../products/sound-driver/">Sound Driver</a></li>
+          <li><a class="index-word" href="../products/stock-shredder/">Stock Shredder</a></li>
+        </ul>
+      </div>
+      <div class="index-group index-group--studio">
+        <h2 class="sr-only">Studio</h2>
+        <ul>
+          <li><a class="index-word" href="./" data-panel-target="default">Mission</a></li>
+          <li><a class="index-word" href="../values/">Values</a></li>
+          <li><a class="index-word" href="../join/">Join</a></li>
+          <li><a class="index-word" href="../contact/">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
   <main class="poster-panel" data-panels>
     <div class="panel-stack">
@@ -101,6 +104,7 @@
   </footer>
 </div>
 <script src="../assets/js/main.js"></script>
+<script src="../assets/js/nav-dropdown.js"></script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

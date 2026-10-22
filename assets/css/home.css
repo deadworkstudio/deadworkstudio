@@ -99,15 +99,97 @@ html[data-product="scene-lock"] .poster-media img {
 
 .poster-brand img { height: 18px; width: auto; }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
-.poster-strip { display: none; }
 
-.poster-index { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px var(--col-gap); }
+/* The header is the positioning context for the dropdown below (see .poster-index) — it needs
+   its own stacking order raised above .poster-panel/.poster-foot, since they share the same
+   z-index:1 (set in the blanket ".poster-head, .poster-index, .poster-panel, .poster-foot" rule
+   above) and come later in paint order, which would otherwise paint the dropdown's content
+   (nested inside .poster-head) underneath the panel. */
+.poster-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 50; }
+
+/* "MENU" / "CLOSE" — a plain text trigger (Fear of God's pattern) rather than a hamburger icon,
+   living where .poster-strip used to sit (top-right of the header, brand stays top-left). */
+.nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: 400 11px/1.4 var(--font-mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--bone);
+  text-decoration: underline 2px transparent;
+  text-underline-offset: 6px;
+  transition: color .15s var(--ease), text-decoration-color .15s var(--ease);
+}
+@media (hover: hover) { .nav-trigger:hover { text-decoration-color: var(--acc); } }
+.nav-trigger[aria-expanded='true'] { color: var(--acc); text-decoration-color: var(--acc); }
+
+/* The dropdown itself. Nested inside .poster-head in the markup (not a sibling) so top:100%
+   anchors it directly under the header's own box — brand + trigger height, whatever that is at
+   any breakpoint — with no JS measurement needed. Hidden by default via opacity/visibility (not
+   display:none) so the close transition can play; pointer-events:none while closed keeps it from
+   intercepting clicks/tab stops it visually isn't showing. */
+.poster-index {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 12px 0 0;
+  padding: 24px var(--gutter) 28px;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  border-top: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-height: 80vh;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s linear .18s;
+  pointer-events: none;
+}
+.poster-index.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s;
+}
+.index-meta { grid-column: 1 / -1; margin: 0 0 4px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .index-label { margin-bottom: 4px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .index-word { display: inline-flex; align-items: center; min-height: 44px; font-size: 18px; line-height: 1.3; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); }
 @media (hover: hover) { .index-word:hover { text-decoration-color: var(--acc); text-decoration-thickness: 1px; } }
 .index-word[aria-current] { text-decoration-color: var(--acc); text-decoration-thickness: 2px; }
 .poster-index.has-active .index-word:not([aria-current]) { color: var(--bone-2); }
-.poster-panel { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); container-type: inline-size; min-width: 0; }
+/* The Studio group's own heading is markup-level sr-only (its content — Mission, Values, Join,
+   Contact — doesn't share one real-world category name the way "Pre-Production"/"Production"/
+   "Post" do) — shown here with the same mono label treatment as the other three groups' real
+   <h2>s so the dropdown reads as four visually consistent columns/blocks instead of three
+   labelled groups plus one unlabeled one. */
+.index-group--studio h2 {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 0 4px;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  font: 400 11px/1.4 var(--font-mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--bone-3);
+}
+/* No permanent sidebar reserving a grid track anymore (see the 720px+ rules below) — the content
+   panel now opens with a plain top border/space same as every other breakpoint. */
+.poster-panel { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--line); container-type: inline-size; min-width: 0; }
 /* display:none (not visibility:hidden) on inactive panels: CSS Grid still sizes a row to fit a
    visibility:hidden child even though it's invisible, which meant .poster-panel's height — and
    therefore whether the page needed to scroll at all — was always set by the TALLEST of all 8
@@ -154,66 +236,31 @@ html[data-product="scene-lock"] .poster-media img {
    the actual page content ahead of the tool index ("the tabs") in reading order — otherwise a
    visitor has to scroll past the entire 10-link site nav before seeing anything about the page
    they're actually on. Swaps the divider line from above the content to above the index to match. */
+/* "Mission / Values / Join / Contact" gets a hairline + extra top space ahead of it so it reads
+   as its own group rather than a continuation of "III — Post" above it, at every width — the
+   dropdown is a single column by default (see .poster-index below) and becomes one column among
+   four at 720px+ (see that rule), where the rule still reads fine as a small decorative top
+   border on just that one column. */
+.index-group--studio { margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--line); }
+
 @media (max-width: 719px) {
   /* .poster-foot is a CSS grid, which stretches each item to the full column width by default
      (justify-items: stretch) — text-align alone can't center a box that's already full-width;
      justify-items: center lets each row shrink to its own content first, so centering actually
      has somewhere to go. */
   .poster-foot { text-align: center; justify-items: center; }
-  /* Applies to every page built on this layout (home, all 6 products, Mission, Values, Join,
-     Contact) — previously scoped to just body.home and html[data-product], which missed the four
-     Studio pages entirely, leaving the full nav sitting above their content on mobile. Legal
-     pages use a different, simpler layout with no .poster-index at all, so this has no effect
-     there. */
-  .poster { display: flex; flex-direction: column; }
-  .poster-panel { order: 1; margin-top: 40px; padding-top: 0; border-top: 0; }
-  .poster-index { order: 2; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
-  .poster-foot { order: 3; }
   /* Social icons read as the most "findable" thing in the footer — moved to the very top of the
      block (above the email line) on mobile only, so they're the first thing seen rather than the
      last. Desktop keeps its own subgrid-based column layout untouched (see the 720px+ rule below). */
   .foot-social { order: -1; }
-  /* "Mission / Values / Join / Contact" (the Studio group) sat directly under "II — Production"
-     with no more space or distinction than any two tool categories get, reading as if it were
-     part of Production rather than its own thing — .index-group--studio's desktop treatment
-     (margin-top:auto, pushed to the bottom of a flex column) doesn't exist in this 2-column grid
-     layout. A label plus extra margin (tried first) still read as "the next item in the same
-     grid" rather than a clearly separate thing, since it was still sharing column 2 with
-     "II — Production" right above it — moving it to span both columns as its own block below
-     everything else, with its own divider, is a stronger, unambiguous separation. */
-  .index-group--studio {
-    grid-column: 1 / -1;
-    margin-top: 28px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-  }
-  /* Row-gap is 0, not the 32px the outer .poster-index grid uses — every other group's items
-     (Scene Lock/Set Control, Loadout/Handoff, etc.) are plain stacked <li>s with no gap of their
-     own, relying purely on .index-word's 44px min-height for spacing. A 32px row-gap here nearly
-     doubled that, reading as mismatched with the groups right above it and leaving noticeably more
-     empty space before the footer than anywhere else on the page. */
-  .index-group--studio ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 var(--col-gap);
-  }
-  .index-group--studio h2 {
-    position: static;
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0 0 4px;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-    font: 400 11px/1.4 var(--font-mono);
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--bone-3);
-  }
 }
 
-@media (min-width: 720px) { .poster-index { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 720px) {
+  .poster-index { grid-template-columns: repeat(4, 1fr); }
+  /* Cancels the mobile-only separator above — in the 4-column dropdown each group (including
+     Studio) is already its own column, so the extra hairline is redundant there. */
+  .index-group--studio { margin-top: 0; padding-top: 0; border-top: 0; }
+}
 
 @media (min-width: 720px) and (min-height: 640px) {
   html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
@@ -227,15 +274,19 @@ html[data-product="scene-lock"] .poster-media img {
   .poster-head { padding-top: clamp(24px, 4svh, 40px); }
   .poster-brand { grid-column: 1 / 5; }
   .poster-lede  { grid-column: 5 / 10; margin: 0; font-size: 15px; max-width: 60ch; }
-  .poster-strip { display: block; grid-column: 10 / 13; text-align: right; font: 11px/1.6 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
-  .poster-index { grid-column: 1 / 5; grid-row: 2; margin: 0; padding-block: clamp(24px, 5svh, 64px) clamp(24px, 4svh, 40px); display: flex; flex-direction: column; gap: clamp(16px, 3svh, 28px); }
-  .index-group--studio { margin-top: auto; }
+  /* Sits where .poster-strip used to (top-right of the header); .poster-strip's own text now
+     lives inside the dropdown as .index-meta instead (see the base rules above). */
+  .nav-trigger { grid-column: 10 / 13; justify-self: end; align-self: center; }
+  /* The dropdown's own 4-column layout (set at 720px+ in the base rules above) needs more
+     breathing room per column at this scale — bumped from .index-word's base 18px. */
   .index-word { min-height: 32px; font-size: clamp(18px, 1.5vw, 22px); }
   /* overflow-x: hidden -- was never declared at all before, so if any page's own grid content
      ever pushed even a pixel past the panel's edge the whole panel became sideways-draggable/
      scrollable with it. Was Stock-Shredder-only at first (its grids run widest); applied to every
-     poster-panel page now rather than waiting for the same bug to show up elsewhere. */
-  .poster-panel { grid-column: 5 / 13; grid-row: 2; margin: 0; border: 0; padding-block: clamp(24px, 5svh, 64px) clamp(24px, 4svh, 40px); min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
+     poster-panel page now rather than waiting for the same bug to show up elsewhere.
+     grid-column widened to 1/13 (full width) now that nothing permanently reserves columns 1–4/5
+     for a sidebar — the dropdown overlays on top instead of sitting beside the content. */
+  .poster-panel { grid-column: 1 / 13; grid-row: 2; margin: 0; border: 0; padding-block: clamp(24px, 5svh, 64px) clamp(24px, 4svh, 40px); min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
   .poster-foot { grid-row: 3; grid-template-rows: auto auto; row-gap: 10px; margin: 0; padding: 20px 0 24px; }
   /* Social icons get their own full-width row on top, same "most findable thing" reasoning the
      mobile order:-1 rule already uses -- "By artists..." moves down to share the email/copyright
@@ -248,18 +299,4 @@ html[data-product="scene-lock"] .poster-media img {
 }
 @media (min-width: 720px) and (max-width: 1023px) and (min-height: 640px) {
   .poster-lede { grid-column: 5 / 13; }
-  .poster-strip { display: none; }
-}
-
-/* ---------- All 6 product pages: give the content panel the empty track the nav column
-   doesn't need (its words never come close to filling 4/12 columns) so paragraphs wrap to
-   fewer lines and pages need less vertical space. Scoped via <html data-product="..."> (every
-   product page sets this) so the home/about/join pages keep the standard 4/8 split. ---------- */
-@media (min-width: 720px) and (min-height: 640px) {
-  html[data-product] .poster-index {
-    grid-column: 1 / 4;
-  }
-  html[data-product] .poster-panel {
-    grid-column: 4 / 13;
-  }
 }
