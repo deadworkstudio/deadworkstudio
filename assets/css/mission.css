@@ -7,7 +7,14 @@
    this page (taller than the compact Values/Commitments lists below) — tighten the rhythm
    between them so the panel fits the fixed viewport at 720x640 without the .poster-panel
    falling back to internal scroll. */
-.panel-origin .panel-headline { margin-bottom: clamp(8px, 1.4svh, 14px); }
+/* Default .panel-headline caps at 14ch/fit-content for short single-word headlines like "Join"
+   or "Contact" — too narrow for this page's own 25-character headline, which wrapped onto two
+   lines instead of reading as one. Widened to fit it on one line. Deliberately not nowrap: that
+   forced one line even where the column was too narrow to actually fit it, clipping text off
+   the edge of the screen instead of shrinking or wrapping. Plain width + normal wrapping means
+   it sits on one line wherever there's room and falls back to two lines safely if there isn't,
+   with no viewport-width breakpoint to maintain. */
+.panel-origin .panel-headline { margin-bottom: clamp(8px, 1.4svh, 14px); max-width: 26ch; width: fit-content; }
 .panel-origin .panel-oneliner {
   margin-top: 0;
   margin-bottom: 0;
