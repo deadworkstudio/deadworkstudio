@@ -209,6 +209,12 @@ html[data-product="scene-lock"] .poster-media img {
 @media (prefers-reduced-motion: reduce) {
   .mega-menu, .mega-menu.is-open { transition-duration: 1ms; transform: none; }
 }
+/* Studio is the one group with no photo cards (just its own link list) — at the shared full
+   panel width that left a large dead black void next to a narrow column of links. Shrinks the
+   whole panel to hug just that column instead, only while Studio is the active group. */
+@media (min-width: 720px) {
+  .mega-menu:has(.mega-menu-group--studio.is-active) { right: auto; width: 420px; }
+}
 /* Only the active group's content is in flow at all — an instant swap (rather than a timed
    cross-fade) while the panel stays open, which reads as smooth without risking either group
    being visible at once mid-transition. */
