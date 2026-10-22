@@ -256,10 +256,10 @@ a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
    where it tapers inward, so the text crossed the sloped edges again on both sides. Pulled back
    up to 53%, right below the bolts where the bracket is still at its full width. */
 a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
-/* Scene Lock's default center crop landed the logo half on the dark tracking-map screen and
-   half dipping into the console row below — shifted down to center the whole mark on that
-   console/desk row instead, where it reads cleanly against its own darker gaps. */
-a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 61%; }
+/* Scene Lock: the first fix (61%) centered the mark ON the console row itself, overlapping the
+   switches. Pulled back up to 54%, where the full crosshair+text mark instead hovers in the dark
+   gap right above the desk's top edge — sitting on top of it, not down in the switches. */
+a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
 /* A soft dark scrim sits behind the centered logo, independent of whatever the photo underneath
    actually shows — without it, a light-colored mark (Loadout's circles, Handoff's diamond) can
    disappear into bright/busy regions of some photos (confirmed: both nearly vanished against
