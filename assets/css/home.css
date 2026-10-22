@@ -118,7 +118,7 @@ html[data-product="scene-lock"] .poster-media img {
    leaves descender space below the visible glyphs) — the logo image has no such slack, so even
    with both boxes bottom-aligned the image's own bottom pixel hangs lower than the text's visible
    baseline. Nudged up by the measured gap so they actually share one visible line. */
-.poster-brand img { height: 22px; width: auto; margin: 0 auto; transform: translateY(-3px); }
+.poster-brand img { height: 22px; width: auto; margin: 0 auto; transform: translateY(-4.6px); }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
 
 /* The header is the positioning context for each tab's own dropdown panel (see .nav-tab-panel) —
