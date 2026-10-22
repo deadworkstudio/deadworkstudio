@@ -247,10 +247,11 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
-/* Sound Driver's default center crop put the logo's bottom edge right at the top of the
-   perforated tube below the engine's fork gap — shifted up to land fully inside the dark gap
-   between the fork prongs instead, clear of the tube entirely. */
-a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 39%; }
+/* Sound Driver: the first attempt (39%) cleared the perforated tube but landed the mark on the
+   grey fork metal, not genuine black — moved back down to 48%, where the solid black panel just
+   below the forks (not the lighter triangular gaps between them, which still show texture) sits
+   behind "SOUND DRIVER", and the "SD" icon lands on the shadowed point where the forks meet. */
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
 /* Stock Shredder's default center crop landed the logo right at the bracket's narrower, angled
    top edge, overflowing onto the engine parts on either side — shifted down to the bracket's
    widest point (just below its mounting bolts), where the logo now sits fully on the metal. */
