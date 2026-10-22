@@ -68,6 +68,12 @@
         if (el.hasAttribute('data-nav-trigger')) open(el.dataset.megaGroup);
       });
       el.addEventListener('mouseleave', function () {
+        // Clear any already-pending close before scheduling a new one — without this, sweeping
+        // the pointer across more than one trigger in a row (each firing its own mouseleave)
+        // leaves earlier timers orphaned: closeTimer only ever remembers the LATEST id, so an
+        // ENTER's clearTimeout can cancel that one but not timers scheduled before it, and an
+        // orphaned one firing later closes a menu you've since correctly reopened.
+        clearTimeout(closeTimer);
         closeTimer = setTimeout(function () { close(null); }, 150);
       });
     });
