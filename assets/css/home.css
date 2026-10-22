@@ -251,6 +251,10 @@ html[data-product="scene-lock"] .poster-media img {
    perforated tube below the engine's fork gap — shifted up to land fully inside the dark gap
    between the fork prongs instead, clear of the tube entirely. */
 a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 39%; }
+/* Stock Shredder's default center crop landed the logo right at the bracket's narrower, angled
+   top edge, overflowing onto the engine parts on either side — shifted down to the bracket's
+   widest point (just below its mounting bolts), where the logo now sits fully on the metal. */
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 56%; }
 /* A soft dark scrim sits behind the centered logo, independent of whatever the photo underneath
    actually shows — without it, a light-colored mark (Loadout's circles, Handoff's diamond) can
    disappear into bright/busy regions of some photos (confirmed: both nearly vanished against
