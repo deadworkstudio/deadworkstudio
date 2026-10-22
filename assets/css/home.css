@@ -221,18 +221,15 @@ html[data-product="scene-lock"] .poster-media img {
 .mega-menu-group { display: none; flex-direction: column; padding: 36px 0 40px; gap: 18px; }
 .mega-menu-group.is-active { display: flex; }
 
-/* Studio is still links-only (Mission/Values/Join/Contact, no photos yet) — at the shared full
-   panel width that leaves a large dead black void next to a narrow column of links, so it keeps
-   its own hug-content panel width. Pre/Production/Post got photo cards (see .mega-menu-cards
-   below) and dropped this treatment entirely. */
-@media (min-width: 720px) {
-  .mega-menu:has(.mega-menu-group--studio.is-active) { right: auto; width: 420px; }
-}
-.mega-menu-group--studio .mega-menu-links { flex: 0 0 360px; min-width: 0; }
-.mega-menu-links ul { display: flex; flex-direction: column; gap: 2px; }
-
 .mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
-.mega-menu-links .mega-menu-eyebrow { margin-bottom: 18px; }
+
+/* Studio (Mission/Values/Join/Contact) is a 2x2 grid of its own cards rather than the single
+   row the product groups use — same card markup, just laid out two-by-two since there are 4
+   items, not 2. Each card is shorter (160px) than a product card (300px): these are simple
+   section links, not hero-grade product photography. All four currently share the one existing
+   generic site photo (no dedicated photography per section yet, unlike the 6 products). */
+.mega-menu-group--studio .mega-menu-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.mega-menu-group--studio .mega-menu-card-img { height: 160px; }
 
 /* The group's own products as image cards, side by side, filling the full panel width.
    flex-wrap lets them stack cleanly at tablet widths where two 280px+ cards don't fit side by
@@ -381,17 +378,14 @@ body.home .panel-headline-lede { text-align: center; }
      reserves box space once the panel is no longer taken out of flow by position:absolute) keeps
      a closed panel from silently widening its tab and wrapping the row early — no close
      transition to preserve here since nothing needs to animate while display:none.
-     The full-width image-card treatment doesn't make sense at phone widths — mobile drops
-     Pre/Production/Post to the same simple text-only stacked link list Studio's own
-     .mega-menu-links always used, built from each card's own name rather than a separate links
-     block. */
+     The full-width image-card (or Studio's 2x2 grid) treatment doesn't make sense at phone
+     widths — mobile drops every group to the same simple text-only stacked link list, built
+     from each card's own name rather than a separate links block. */
   .mega-menu { display: none; position: static; margin: 10px 0 0; box-shadow: none; }
   .mega-menu.is-open { display: block; }
   .mega-menu-group.is-active { display: block; }
   .mega-menu-group { padding: 16px 20px 20px; }
-  .mega-menu-links { flex: none; width: 100%; padding-right: 0; border-right: 0; }
-  .mega-menu-group--studio .mega-menu-links { flex-basis: auto; }
-  .mega-menu-cards { display: flex; flex-direction: column; gap: 2px; }
+  .mega-menu-cards, .mega-menu-group--studio .mega-menu-cards { display: flex; flex-direction: column; gap: 2px; }
   /* Reset the desktop row sizing (flex: 1 1 240px) — in this column layout its 240px flex-basis
      became a height, and flex-grow:1 stretched a card open to fill the dropdown's leftover
      vertical space. */
