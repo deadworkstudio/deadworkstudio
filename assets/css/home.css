@@ -247,15 +247,26 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
-/* Sound Driver: the first attempt (39%) cleared the perforated tube but landed the mark on the
-   grey fork metal, not genuine black — moved back down to 48%, where the solid black panel just
-   below the forks (not the lighter triangular gaps between them, which still show texture) sits
-   behind "SOUND DRIVER", and the "SD" icon lands on the shadowed point where the forks meet. */
-a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
-/* Stock Shredder: the first fix (56%) moved past the bracket's full bolt-to-bolt width into
-   where it tapers inward, so the text crossed the sloped edges again on both sides. Pulled back
-   up to 53%, right below the bolts where the bracket is still at its full width. */
-a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
+/* Sound Driver: vertical-only nudges (39%, then 48%) could land the mark in the dark gap but
+   never centered on it, because the black panel itself sits well left of the photo's own
+   horizontal center — and object-position-x has zero effect at the default scale, since cover
+   already stretches the image to exactly the box's width with no horizontal slack to pan
+   within. Scaled up 1.4x to create that slack, then panned to 40% so the (now wider-looking)
+   panel sits centered behind the mark on both axes. Hover's shared scale(1.03) would otherwise
+   reset this zoom back to 1x on :hover (same property, higher-specificity selector wins) — the
+   rule below compounds the two instead of replacing one with the other. */
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 40% 48%; transform: scale(1.4); }
+@media (hover: hover) {
+  a.mega-menu-card[href$="sound-driver/"]:hover .mega-menu-card-photo { transform: scale(1.442); }
+}
+/* Stock Shredder: even at the bracket's full bolt-to-bolt width (53%), the bracket's own clean
+   metal surface wasn't quite wide enough for the full text — the letters at each end still
+   reached the mounting-bolt hardware. Scaled up 1.3x (position unchanged, the bracket is already
+   centered) so the same surface reads wider relative to the text's fixed size. */
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; transform: scale(1.3); }
+@media (hover: hover) {
+  a.mega-menu-card[href$="stock-shredder/"]:hover .mega-menu-card-photo { transform: scale(1.339); }
+}
 /* Scene Lock: the first fix (61%) centered the mark ON the console row itself, overlapping the
    switches. Pulled back up to 54%, where the full crosshair+text mark instead hovers in the dark
    gap right above the desk's top edge — sitting on top of it, not down in the switches. */
