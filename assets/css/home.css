@@ -215,21 +215,26 @@ html[data-product="scene-lock"] .poster-media img {
 .mega-menu-group { display: none; padding: 36px 0 40px; gap: 48px; }
 .mega-menu-group.is-active { display: flex; }
 
-/* Left column: the active group's own eyebrow + its links. A hairline on the right separates it
-   from the image cards — Studio has no second column, so it drops the hairline and widens itself
-   instead of sitting there looking like half a panel. */
-.mega-menu-links { flex: 0 0 260px; padding-right: 32px; border-right: 1px solid var(--line); min-width: 0; }
-.mega-menu-group--studio .mega-menu-links { flex-basis: 360px; padding-right: 0; border-right: 0; }
+/* Studio is links-only (Mission/Values/Join/Contact) — it never had product photos to pair
+   with, so it keeps its own eyebrow + link list at full width. Pre/Production/Post dropped this
+   column entirely: the same info (group name, product name) now lives on the cards themselves —
+   the group name above the left-most card, the product name/logo on the cards. */
+.mega-menu-group--studio .mega-menu-links { flex: 0 0 360px; min-width: 0; }
 .mega-menu-eyebrow { margin: 0 0 18px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .mega-menu-links ul { display: flex; flex-direction: column; gap: 2px; }
 
-/* Right column: the group's own products as image cards, side by side. flex-wrap lets them stack
-   cleanly rather than squeezing at tablet widths where two 280px+ cards plus the left column
-   genuinely don't fit. */
+/* The group's own products as image cards, side by side, now filling the full panel width.
+   flex-wrap lets them stack cleanly at tablet widths where two 280px+ cards don't fit side by
+   side. The left-most card sits in its own column alongside the group's eyebrow label — the
+   other card(s) have no label above them, an intentional asymmetry (matches the reference
+   mega-menus) rather than a centered heading over the whole row. */
 .mega-menu-cards { display: flex; flex: 1; flex-wrap: wrap; gap: 24px; min-width: 0; }
+.mega-menu-card-col { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; }
+.mega-menu-card-col .mega-menu-card { flex: 1 1 auto; min-width: 0; }
+.mega-menu-card-col .mega-menu-eyebrow { margin: 0 0 14px; }
 .mega-menu-card { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; text-decoration: none; }
-.mega-menu-card-img { display: block; width: 100%; height: 300px; overflow: hidden; background: var(--ink-raised); }
-.mega-menu-card-img img {
+.mega-menu-card-img { position: relative; display: block; width: 100%; height: 300px; overflow: hidden; background: var(--ink-raised); }
+.mega-menu-card-photo {
   display: block;
   width: 100%;
   height: 100%;
@@ -237,13 +242,25 @@ html[data-product="scene-lock"] .poster-media img {
   filter: grayscale(1) contrast(1.1);
   transition: transform var(--duration-hover) var(--ease);
 }
-@media (hover: hover) { .mega-menu-card:hover .mega-menu-card-img img { transform: scale(1.03); } }
+@media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
+/* Each product's own logo mark (same transparent-background files used on its hero) sits
+   directly on its photo, bottom-left, instead of only as plain text below. */
+.mega-menu-card-logo {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  height: clamp(24px, 2.4vw, 36px);
+  width: auto;
+  max-width: calc(100% - 40px);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .65));
+}
 .mega-menu-card-caption { display: block; margin-top: 14px; }
 .mega-menu-card-name { display: block; font: 400 11px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
 .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); }
+.mega-menu-card[aria-current] .mega-menu-card-name { color: var(--acc); }
 .mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--bone-2); }
 @media (prefers-reduced-motion: reduce) {
-  .mega-menu-card-img img { transition: none; }
+  .mega-menu-card-photo { transition: none; }
 }
 
 .index-meta { margin: 0 0 16px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); white-space: nowrap; }
@@ -359,14 +376,27 @@ body.home .panel-headline-lede { text-align: center; }
      transition to preserve here since nothing needs to animate while display:none.
      The full-width image-card treatment doesn't make sense at phone widths (no room for a photo
      next to its own caption, let alone two side by side) — mobile drops to the same simple
-     text-only link list the small dropdown always used, images and all. */
+     text-only link list the small dropdown always used. Studio still gets this from its own
+     untouched .mega-menu-links; Pre/Production/Post no longer have that column at all (removed
+     site-wide — see .mega-menu-cards above), so their .mega-menu-cards itself is restyled here
+     into the same plain stacked-link look instead, using the product name each card already
+     carries rather than duplicating it in a second list. */
   .mega-menu { display: none; position: static; margin: 10px 0 0; box-shadow: none; }
   .mega-menu.is-open { display: block; }
   .mega-menu-group.is-active { display: block; }
   .mega-menu-group { padding: 16px 20px 20px; }
   .mega-menu-links { flex: none; width: 100%; padding-right: 0; border-right: 0; }
   .mega-menu-group--studio .mega-menu-links { flex-basis: auto; }
-  .mega-menu-cards { display: none; }
+  .mega-menu-cards { display: flex; flex-direction: column; gap: 2px; }
+  /* Reset the desktop row sizing (flex: 1 1 240px) — in this column layout its 240px flex-basis
+     became a height, and flex-grow:1 stretched the left-most card's column to fill the dropdown's
+     leftover vertical space, opening a large gap above "Set Control". */
+  .mega-menu-card-col { flex: none; }
+  .mega-menu-cards .mega-menu-card { flex: none; }
+  .mega-menu-card-img { display: none; }
+  .mega-menu-card-caption { margin-top: 0; }
+  .mega-menu-card-name { min-height: 36px; display: flex; align-items: center; }
+  .mega-menu-card-desc { display: none; }
   .nav-tabs { align-items: flex-start; }
 }
 
