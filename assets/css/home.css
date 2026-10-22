@@ -94,12 +94,12 @@ html[data-product="loadout"] .poster-media::after {
     var(--grain);
   background-size: auto, auto, 180px 180px;
 }
-/* The engine-bay photo (now Sound Driver's, swapped with Stock Shredder 2026-10-22) needs
-   deeper blacks/brighter highlights than the shared contrast(1.05) to read as cinematic rather
-   than flat under the standard overlay above, and its interesting detail (the engine) sits
-   roughly a third down the frame, not dead center — object-position biases the crop there.
-   Scoped to this page only; this rule follows the photo, not the product name. */
-html[data-product="sound-driver"] .poster-media img {
+/* Stock Shredder's engine-bay photo needs deeper blacks/brighter highlights than the shared
+   contrast(1.05) to read as cinematic rather than flat under the standard overlay above, and its
+   interesting detail (the engine) sits roughly a third down the frame, not dead center —
+   object-position biases the crop there. Scoped to this page only. (Briefly swapped with Sound
+   Driver 2026-10-22, swapped back same day — this rule follows whichever photo is live here.) */
+html[data-product="stock-shredder"] .poster-media img {
   filter: grayscale(1) contrast(1.2);
   object-position: center 30%;
 }
@@ -259,17 +259,16 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
-/* These two products swapped photos 2026-10-22 (motorcycle <-> engine bay) — each crop position
-   follows its photo's own content, not the product name, so they swapped too.
-   Motorcycle (now Stock Shredder's): black panel sits left of the photo's own horizontal
-   center, so no vertical-only position gets the mark truly centered on it — a 1.4x zoom could
-   fix that geometrically, but reads worse overall (softer grain, loses the surrounding engine
-   context). Left as a plain vertical nudge; revisit with a source photo cropped for this
-   directly (see chat) if revisited again. */
-a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 48%; }
-/* Engine bay (now Sound Driver's): the bracket's own clean surface is a touch narrower than the
-   full wordmark at native scale — same tradeoff as above, left as-is rather than zoomed. */
-a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 53%; }
+/* Sound Driver's motorcycle photo: black panel sits left of the photo's own horizontal center,
+   so no vertical-only position gets the mark truly centered on it — a 1.4x zoom could fix that
+   geometrically, but reads worse overall (softer grain, loses the surrounding engine context).
+   Left as a plain vertical nudge; revisit with a source photo cropped for this directly (see
+   chat) if revisited again. (Briefly swapped with Stock Shredder 2026-10-22, swapped back same
+   day — these two rules follow whichever photo is live on each page.) */
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
+/* Stock Shredder's engine-bay photo: the bracket's own clean surface is a touch narrower than
+   the full wordmark at native scale — same tradeoff as above, left as-is rather than zoomed. */
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
 /* Scene Lock: the first fix (61%) centered the mark ON the console row itself, overlapping the
    switches. Pulled back up to 54%, where the full crosshair+text mark instead hovers in the dark
    gap right above the desk's top edge — sitting on top of it, not down in the switches. */
