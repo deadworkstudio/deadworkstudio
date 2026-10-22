@@ -252,10 +252,10 @@ html[data-product="scene-lock"] .poster-media img {
    below the forks (not the lighter triangular gaps between them, which still show texture) sits
    behind "SOUND DRIVER", and the "SD" icon lands on the shadowed point where the forks meet. */
 a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
-/* Stock Shredder's default center crop landed the logo right at the bracket's narrower, angled
-   top edge, overflowing onto the engine parts on either side — shifted down to the bracket's
-   widest point (just below its mounting bolts), where the logo now sits fully on the metal. */
-a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 56%; }
+/* Stock Shredder: the first fix (56%) moved past the bracket's full bolt-to-bolt width into
+   where it tapers inward, so the text crossed the sloped edges again on both sides. Pulled back
+   up to 53%, right below the bolts where the bracket is still at its full width. */
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
 /* Scene Lock's default center crop landed the logo half on the dark tracking-map screen and
    half dipping into the console row below — shifted down to center the whole mark on that
    console/desk row instead, where it reads cleanly against its own darker gaps. */
