@@ -190,6 +190,30 @@ html[data-product="scene-lock"] .poster-media img {
 .nav-tabs--post .nav-tab-panel { left: auto; right: 0; }
 
 .index-meta { margin: 0 0 16px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); white-space: nowrap; }
+
+/* "06 Tools" / "Est. Los Angeles" — pinned to the outer edges of the header (Fear of God's own
+   pattern: utility text flanking the nav, not tucked inside a menu). Hidden below 720px, where
+   the tabs themselves wrap under the logo and there's no spare width at the edges for this. */
+.poster-meta-left,
+.poster-meta-right {
+  display: none;
+}
+@media (min-width: 720px) {
+  .poster-meta-left,
+  .poster-meta-right {
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font: 400 11px/1.4 var(--font-mono);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--bone-3);
+    white-space: nowrap;
+  }
+  .poster-meta-left { left: 0; }
+  .poster-meta-right { right: 0; }
+}
 .index-label { margin-bottom: 4px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .index-word { display: inline-flex; align-items: center; min-height: 44px; font-size: 18px; line-height: 1.3; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); white-space: nowrap; }
 @media (hover: hover) { .index-word:hover { text-decoration-color: var(--acc); text-decoration-thickness: 1px; } }
