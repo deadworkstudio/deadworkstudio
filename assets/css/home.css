@@ -253,11 +253,12 @@ html[data-product="scene-lock"] .poster-media img {
    directly on its photo, bottom-left, instead of only as plain text below. */
 .mega-menu-card-logo {
   position: absolute;
-  left: 20px;
-  bottom: 18px;
-  height: clamp(24px, 2.4vw, 36px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: clamp(16px, 1.3vw, 22px);
   width: auto;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 48px);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .65));
 }
 .mega-menu-card-caption { display: block; margin-top: 14px; }
