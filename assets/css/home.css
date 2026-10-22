@@ -170,17 +170,20 @@ html[data-product="scene-lock"] .poster-media img {
   top: 100%;
   left: 0;
   z-index: 1;
-  margin: 12px 0 0;
-  padding: 20px 24px 24px;
-  min-width: 200px;
+  margin: 14px 0 0;
+  padding: 18px 22px 20px;
+  min-width: 190px;
   background: var(--ink);
   border: 1px solid var(--line);
+  border-top: 2px solid var(--acc);
+  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .85), 0 8px 20px -8px rgba(0, 0, 0, .7);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
   transition: opacity .18s var(--ease), transform .18s var(--ease), visibility 0s linear .18s;
   pointer-events: none;
 }
+.nav-tab-panel ul { display: flex; flex-direction: column; gap: 2px; }
 .nav-tab-panel.is-open {
   opacity: 1;
   visibility: visible;
@@ -218,7 +221,11 @@ html[data-product="scene-lock"] .poster-media img {
   .poster-meta-right { right: 0; }
 }
 .index-label { margin-bottom: 4px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
-.index-word { display: inline-flex; align-items: center; min-height: 44px; font-size: 18px; line-height: 1.3; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); white-space: nowrap; }
+/* Matches .nav-tab-trigger's own tracked-mono-caps treatment directly above it — these used to be
+   a large plain sentence-case list (left over from the old permanent sidebar, where that read
+   fine as a long scannable column), which now clashes against the tight tracked tab label right
+   above it inside this much smaller dropdown. */
+.index-word { display: inline-flex; align-items: center; min-height: 36px; font: 400 12px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone); text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: color .15s var(--ease), text-decoration-color .15s var(--ease); white-space: nowrap; }
 @media (hover: hover) { .index-word:hover { text-decoration-color: var(--acc); text-decoration-thickness: 1px; } }
 .index-word[aria-current] { text-decoration-color: var(--acc); text-decoration-thickness: 2px; }
 [data-index].has-active .index-word:not([aria-current]) { color: var(--bone-2); }
@@ -325,9 +332,6 @@ html[data-product="scene-lock"] .poster-media img {
   .poster-brand { grid-column: 6 / 8; justify-self: center; }
   .nav-tabs--post { grid-column: 8 / 13; justify-content: flex-start; }
   .poster-lede  { grid-column: 5 / 10; margin: 0; font-size: 15px; max-width: 60ch; }
-  /* Each tab's own dropdown (set at 720px+ in the base rules above) needs more breathing room per
-     link at this scale — bumped from .index-word's base 18px. */
-  .index-word { min-height: 32px; font-size: clamp(18px, 1.5vw, 22px); }
   /* overflow-x: hidden -- was never declared at all before, so if any page's own grid content
      ever pushed even a pixel past the panel's edge the whole panel became sideways-draggable/
      scrollable with it. Was Stock-Shredder-only at first (its grids run widest); applied to every
