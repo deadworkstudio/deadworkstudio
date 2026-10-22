@@ -26,6 +26,17 @@
 .poster-media {
   position: absolute;
   inset: 0;
+  /* Spanning the full page (not just the viewport — see comment above) means this box's own
+     height is however tall the page's content makes it, which on a long product page can run to
+     5000px+. object-fit:cover on the <img> inside has to zoom in enough to fully cover whatever
+     height it's given — on a box that tall, that's an extreme zoom showing only a tiny, zoomed-
+     past-recognition sliver of the photo (reported as "no background" — a solid-looking blur/
+     noise texture reads as nothing, not as a dim photo). Capped at a height well above any real
+     poster/viewport height (this is a no-op in fixed poster mode, where .poster itself is never
+     taller than the viewport) so object-fit:cover never has more than a sane box to cover. The
+     image just doesn't extend past that point on a long scrolling page — fine, since by then the
+     heavy dark overlay already reads as solid anyway. */
+  max-height: 1600px;
   z-index: 0;
   pointer-events: none;
 }
