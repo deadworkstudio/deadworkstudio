@@ -415,6 +415,16 @@ body.home .panel-headline-lede { text-align: center; }
      block (above the email line) on mobile only, so they're the first thing seen rather than the
      last. Desktop keeps its own subgrid-based column layout untouched (see the 720px+ rule below). */
   .foot-social { order: -1; }
+  /* The hero video/poster is a 16:9 landscape clip (854x480) — on a 9:16 phone screen,
+     object-fit:cover has to scale it up by height, which leaves only about a quarter of its
+     width in frame. Centered (the default), that quarter cut the car's lit front end — the
+     actual subject of the shot — mostly out, showing more of its plain rear half instead.
+     Biased left to keep the lit headlights/smoke in frame. Scoped to the home page only (every
+     other page's .poster-media holds that page's own product photo, not this video). */
+  body.home .poster-media video,
+  body.home .poster-media img {
+    object-position: 35% 50%;
+  }
   /* Below 720px the two tab groups wrap onto their own row(s) under the logo (see .poster-head
      above) — an open mega-menu positioned absolute (the 720px+ behavior) would float on top of
      whichever tab row comes after it rather than just the hero content beneath the whole header,
@@ -424,22 +434,20 @@ body.home .panel-headline-lede { text-align: center; }
      reserves box space once the panel is no longer taken out of flow by position:absolute) keeps
      a closed panel from silently widening its tab and wrapping the row early — no close
      transition to preserve here since nothing needs to animate while display:none.
-     The full-width image-card (or Studio's 2x2 grid) treatment doesn't make sense at phone
-     widths — mobile drops every group to the same simple text-only stacked link list, built
-     from each card's own name rather than a separate links block. */
+     The side-by-side row (or Studio's 2x2 grid) doesn't fit at phone widths, so cards stack
+     full-width instead — one per row rather than two/four across — but keep their photos: these
+     are the same images tuned carefully earlier this session, worth showing here too rather than
+     falling back to a bare text list. */
   .mega-menu { display: none; position: static; margin: 10px 0 0; box-shadow: none; }
   .mega-menu.is-open { display: block; }
   .mega-menu-group.is-active { display: block; }
   .mega-menu-group { padding: 16px 20px 20px; }
-  .mega-menu-cards, .mega-menu-group--studio .mega-menu-cards { display: flex; flex-direction: column; gap: 2px; }
+  .mega-menu-cards, .mega-menu-group--studio .mega-menu-cards { display: flex; flex-direction: column; gap: 20px; }
   /* Reset the desktop row sizing (flex: 1 1 240px) — in this column layout its 240px flex-basis
      became a height, and flex-grow:1 stretched a card open to fill the dropdown's leftover
      vertical space. */
   .mega-menu-cards .mega-menu-card { flex: none; }
-  .mega-menu-card-img { display: none; }
-  .mega-menu-card-caption { margin-top: 0; }
-  .mega-menu-card-name { min-height: 36px; display: flex; align-items: center; }
-  .mega-menu-card-desc { display: none; }
+  .mega-menu-card-img { height: 180px; }
   .nav-tabs { align-items: flex-start; }
 }
 
