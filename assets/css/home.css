@@ -304,7 +304,7 @@ a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
   max-width: calc(100% - 48px);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .65));
 }
-.mega-menu-card-caption { display: block; margin-top: 14px; }
+.mega-menu-card-caption { display: block; margin-top: 14px; text-align: center; }
 .mega-menu-card-name { display: block; font: 400 11px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
 .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); }
 .mega-menu-card[aria-current] .mega-menu-card-name { color: var(--acc); }
