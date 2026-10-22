@@ -35,6 +35,12 @@
     panelOf(tab).classList.add('is-open');
   }
 
+  // Real mouse (not touch, which reports a kind of fake "hover" on tap in some browsers) opens on
+  // hover, like Fear of God's own nav — closing is delayed slightly so moving the pointer from the
+  // trigger down into the panel itself doesn't close it mid-move.
+  var canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var closeTimer = null;
+
   tabs.forEach(function (tab) {
     var trigger = triggerOf(tab), panel = panelOf(tab);
     if (!trigger || !panel) return;
@@ -49,6 +55,16 @@
     panel.addEventListener('click', function (e) {
       if (e.target.closest('a')) tabs.forEach(function (t) { close(t, false); });
     });
+
+    if (canHover) {
+      tab.addEventListener('mouseenter', function () {
+        clearTimeout(closeTimer);
+        open(tab);
+      });
+      tab.addEventListener('mouseleave', function () {
+        closeTimer = setTimeout(function () { close(tab, false); }, 150);
+      });
+    }
   });
 
   // Outside click: anything that isn't inside any currently-open tab (its trigger or its panel).
