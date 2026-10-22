@@ -247,6 +247,23 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
+/* A soft dark scrim sits behind the centered logo, independent of whatever the photo underneath
+   actually shows — without it, a light-colored mark (Loadout's circles, Handoff's diamond) can
+   disappear into bright/busy regions of some photos (confirmed: both nearly vanished against
+   their latest background swap) with no reliable fix possible from the drop-shadow alone, since
+   that contours to the mark's own shape rather than guaranteeing contrast. Sized to comfortably
+   clear each mark's own bounding box, not tied to any specific photo's content. */
+.mega-menu-card-img::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(70%, 280px);
+  height: 58%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, 0) 72%);
+  pointer-events: none;
+}
 /* Each product's own logo mark (same transparent-background files used on its hero) sits
    directly on its photo, bottom-left, instead of only as plain text below. */
 .mega-menu-card-logo {
@@ -254,6 +271,7 @@ html[data-product="scene-lock"] .poster-media img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1;
   height: clamp(32px, 3.2vw, 56px);
   width: auto;
   max-width: calc(100% - 48px);
