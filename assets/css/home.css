@@ -114,7 +114,7 @@ html[data-product="scene-lock"] .poster-media img {
    content, not a block-level image. Centering the image itself via auto side margins works
    regardless of the parent's own alignment mechanism, so it's harmless at the 720px+ breakpoint
    too (justify-self:center there already centers the whole box). */
-.poster-brand img { height: 18px; width: auto; margin: 0 auto; }
+.poster-brand img { height: 22px; width: auto; margin: 0 auto; }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
 
 /* The header is the positioning context for each tab's own dropdown panel (see .nav-tab-panel) —
@@ -125,7 +125,7 @@ html[data-product="scene-lock"] .poster-media img {
    Mobile-default layout: wordmark on its own full-width row, both tab groups together on the row
    below it (wrapping further if they don't fit one line) — four tabs plus a centered logo in one
    row doesn't work at phone widths, see the 720px+ override below for the real desktop layout. */
-.poster-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 16px; position: relative; z-index: 50; }
+.poster-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 10px 16px; position: relative; z-index: 50; }
 .poster-brand { order: -1; flex: 1 0 100%; text-align: center; }
 
 /* Each side of the logo is its own two-tab group (Pre-Production + Production on the left,
@@ -138,7 +138,7 @@ html[data-product="scene-lock"] .poster-media img {
    combined "Menu" button — replaces the old one-button-opens-everything dropdown. */
 .nav-tab-trigger {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   min-height: 44px;
   padding: 0 2px;
   border: 0;
@@ -203,8 +203,7 @@ html[data-product="scene-lock"] .poster-media img {
   .poster-meta-right {
     display: block;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 0;
     font: 400 11px/1.4 var(--font-mono);
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -297,7 +296,7 @@ html[data-product="scene-lock"] .poster-media img {
    content happens to be, with no JS measurement needed. justify-content pushes each group's tabs
    in toward the logo rather than out toward the header's outer edges. */
 @media (min-width: 720px) {
-  .poster-head { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; }
+  .poster-head { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px; }
   .poster-brand { order: 0; grid-column: 2; justify-self: center; }
   .nav-tabs--pre { grid-column: 1; justify-content: flex-end; }
   .nav-tabs--post { grid-column: 3; justify-content: flex-start; }
@@ -312,7 +311,9 @@ html[data-product="scene-lock"] .poster-media img {
      for every other layout) would just sit still while .poster-panel scrolls internally instead. */
   .poster-media { position: fixed; }
   .poster-head, .poster-foot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; }
-  .poster-head { padding-top: clamp(24px, 4svh, 40px); }
+  /* Bottom-align the header's own items (logo + both tab groups) so they read as sitting on one
+     shelf together, rather than inheriting the top-align the footer still wants. */
+  .poster-head { align-items: end; padding-top: clamp(24px, 4svh, 40px); }
   /* Same equal-flanking-tracks centering trick as the 720px-only rule above, now expressed against
      the 12-column poster subgrid: 5 columns either side of a 2-column middle slot for the
      wordmark (5 + 2 + 5 = 12), so the logo still lands exactly on the grid's own center line. */
