@@ -247,6 +247,10 @@ html[data-product="scene-lock"] .poster-media img {
   transition: transform var(--duration-hover) var(--ease);
 }
 @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
+/* Sound Driver's default center crop put the logo's bottom edge right at the top of the
+   perforated tube below the engine's fork gap — shifted up to land fully inside the dark gap
+   between the fork prongs instead, clear of the tube entirely. */
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 39%; }
 /* A soft dark scrim sits behind the centered logo, independent of whatever the photo underneath
    actually shows — without it, a light-colored mark (Loadout's circles, Handoff's diamond) can
    disappear into bright/busy regions of some photos (confirmed: both nearly vanished against
