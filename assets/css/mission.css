@@ -15,10 +15,14 @@
    it sits on one line wherever there's room and falls back to two lines safely if there isn't,
    with no viewport-width breakpoint to maintain. */
 .panel-origin .panel-headline { margin-bottom: clamp(8px, 1.4svh, 14px); max-width: 26ch; width: fit-content; }
+/* Default .panel-oneliner caps at 64ch for normal body-copy readability — narrower than the
+   headline above it now reads at (one line, full column width), so the paragraphs looked
+   noticeably narrower than the headline they sit under. Matched to the same column width. */
 .panel-origin .panel-oneliner {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 1.5;
+  max-width: none;
 }
 .panel-origin .panel-oneliner + .panel-oneliner { margin-top: clamp(6px, 1svh, 10px); }
 
