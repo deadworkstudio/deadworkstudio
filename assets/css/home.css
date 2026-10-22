@@ -209,35 +209,35 @@ html[data-product="scene-lock"] .poster-media img {
 @media (prefers-reduced-motion: reduce) {
   .mega-menu, .mega-menu.is-open { transition-duration: 1ms; transform: none; }
 }
-/* Studio is the one group with no photo cards (just its own link list) — at the shared full
-   panel width that left a large dead black void next to a narrow column of links. Shrinks the
-   whole panel to hug just that column instead, only while Studio is the active group. */
+/* Only the active group's content is in flow at all — an instant swap (rather than a timed
+   cross-fade) while the panel stays open, which reads as smooth without risking either group
+   being visible at once mid-transition. Column direction: the group's own eyebrow sits in its
+   own row above .mega-menu-cards, rather than living inside the left-most card's own box — an
+   earlier version nested it in a wrapper around just that one card, which pushed only that
+   card's photo down and left the two cards visibly misaligned/different-looking even though
+   they were exactly the same rendered width. Left-aligned text in a full-width row still reads
+   as "above the left card" (there's nothing above the card(s) to its right), without that
+   misalignment risk. */
+.mega-menu-group { display: none; flex-direction: column; padding: 36px 0 40px; gap: 18px; }
+.mega-menu-group.is-active { display: flex; }
+
+/* Studio is still links-only (Mission/Values/Join/Contact, no photos yet) — at the shared full
+   panel width that leaves a large dead black void next to a narrow column of links, so it keeps
+   its own hug-content panel width. Pre/Production/Post got photo cards (see .mega-menu-cards
+   below) and dropped this treatment entirely. */
 @media (min-width: 720px) {
   .mega-menu:has(.mega-menu-group--studio.is-active) { right: auto; width: 420px; }
 }
-/* Only the active group's content is in flow at all — an instant swap (rather than a timed
-   cross-fade) while the panel stays open, which reads as smooth without risking either group
-   being visible at once mid-transition. */
-.mega-menu-group { display: none; padding: 36px 0 40px; gap: 48px; }
-.mega-menu-group.is-active { display: flex; }
-
-/* Studio is links-only (Mission/Values/Join/Contact) — it never had product photos to pair
-   with, so it keeps its own eyebrow + link list at full width. Pre/Production/Post dropped this
-   column entirely: the same info (group name, product name) now lives on the cards themselves —
-   the group name above the left-most card, the product name/logo on the cards. */
 .mega-menu-group--studio .mega-menu-links { flex: 0 0 360px; min-width: 0; }
-.mega-menu-eyebrow { margin: 0 0 18px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
 .mega-menu-links ul { display: flex; flex-direction: column; gap: 2px; }
 
-/* The group's own products as image cards, side by side, now filling the full panel width.
+.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
+.mega-menu-links .mega-menu-eyebrow { margin-bottom: 18px; }
+
+/* The group's own products as image cards, side by side, filling the full panel width.
    flex-wrap lets them stack cleanly at tablet widths where two 280px+ cards don't fit side by
-   side. The left-most card sits in its own column alongside the group's eyebrow label — the
-   other card(s) have no label above them, an intentional asymmetry (matches the reference
-   mega-menus) rather than a centered heading over the whole row. */
+   side. */
 .mega-menu-cards { display: flex; flex: 1; flex-wrap: wrap; gap: 24px; min-width: 0; }
-.mega-menu-card-col { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; }
-.mega-menu-card-col .mega-menu-card { flex: 1 1 auto; min-width: 0; }
-.mega-menu-card-col .mega-menu-eyebrow { margin: 0 0 14px; }
 .mega-menu-card { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; text-decoration: none; }
 .mega-menu-card-img { position: relative; display: block; width: 100%; height: 300px; overflow: hidden; background: var(--ink-raised); }
 .mega-menu-card-photo {
@@ -381,13 +381,10 @@ body.home .panel-headline-lede { text-align: center; }
      reserves box space once the panel is no longer taken out of flow by position:absolute) keeps
      a closed panel from silently widening its tab and wrapping the row early — no close
      transition to preserve here since nothing needs to animate while display:none.
-     The full-width image-card treatment doesn't make sense at phone widths (no room for a photo
-     next to its own caption, let alone two side by side) — mobile drops to the same simple
-     text-only link list the small dropdown always used. Studio still gets this from its own
-     untouched .mega-menu-links; Pre/Production/Post no longer have that column at all (removed
-     site-wide — see .mega-menu-cards above), so their .mega-menu-cards itself is restyled here
-     into the same plain stacked-link look instead, using the product name each card already
-     carries rather than duplicating it in a second list. */
+     The full-width image-card treatment doesn't make sense at phone widths — mobile drops
+     Pre/Production/Post to the same simple text-only stacked link list Studio's own
+     .mega-menu-links always used, built from each card's own name rather than a separate links
+     block. */
   .mega-menu { display: none; position: static; margin: 10px 0 0; box-shadow: none; }
   .mega-menu.is-open { display: block; }
   .mega-menu-group.is-active { display: block; }
@@ -396,9 +393,8 @@ body.home .panel-headline-lede { text-align: center; }
   .mega-menu-group--studio .mega-menu-links { flex-basis: auto; }
   .mega-menu-cards { display: flex; flex-direction: column; gap: 2px; }
   /* Reset the desktop row sizing (flex: 1 1 240px) — in this column layout its 240px flex-basis
-     became a height, and flex-grow:1 stretched the left-most card's column to fill the dropdown's
-     leftover vertical space, opening a large gap above "Set Control". */
-  .mega-menu-card-col { flex: none; }
+     became a height, and flex-grow:1 stretched a card open to fill the dropdown's leftover
+     vertical space. */
   .mega-menu-cards .mega-menu-card { flex: none; }
   .mega-menu-card-img { display: none; }
   .mega-menu-card-caption { margin-top: 0; }
