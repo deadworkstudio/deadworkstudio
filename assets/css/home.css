@@ -114,7 +114,11 @@ html[data-product="scene-lock"] .poster-media img {
    content, not a block-level image. Centering the image itself via auto side margins works
    regardless of the parent's own alignment mechanism, so it's harmless at the 720px+ breakpoint
    too (justify-self:center there already centers the whole box). */
-.poster-brand img { height: 22px; width: auto; margin: 0 auto; }
+/* The nav tab text sits a few px above its own box's bottom edge (ordinary font line-height
+   leaves descender space below the visible glyphs) — the logo image has no such slack, so even
+   with both boxes bottom-aligned the image's own bottom pixel hangs lower than the text's visible
+   baseline. Nudged up by the measured gap so they actually share one visible line. */
+.poster-brand img { height: 22px; width: auto; margin: 0 auto; transform: translateY(-3px); }
 .poster-lede { margin-top: 16px; font-size: 16px; line-height: 1.55; color: var(--bone-2); max-width: 40ch; }
 
 /* The header is the positioning context for each tab's own dropdown panel (see .nav-tab-panel) —
