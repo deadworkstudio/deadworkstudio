@@ -288,7 +288,10 @@ html[data-product="scene-lock"] .poster-media img {
    spare vertical room: going big there pushed their body copy below the fold and broke the
    fixed single-viewport "poster" layout into needing a scroll it never needed before. Scoped to
    body.home only, so only the real homepage gets the oversized centered version. */
-body.home .panel-headline { font-size: min(17cqi, 20svh); text-align: center; }
+/* Bigger font-size at the same 0.9 line-height ratio still grows the absolute gap between the
+   two lines proportionally - tightened both line-height and letter-spacing here so it reads as
+   big-but-tight (closer to how the smaller original felt) rather than big-and-sprawling. */
+body.home .panel-headline { font-size: min(17cqi, 20svh); line-height: 0.82; letter-spacing: -0.015em; text-align: center; }
 body.home .panel-headline-group { margin-inline: auto; text-align: center; }
 body.home .panel-headline-lede { text-align: center; }
 .panel-oneliner { font-size: clamp(16px, 1.25vw, 19px); line-height: 1.6; color: rgba(230,224,211,.8); max-width: 64ch; margin-bottom: clamp(24px, 4svh, 40px); }
