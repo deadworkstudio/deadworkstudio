@@ -78,6 +78,7 @@ ul, ol { padding: 0; list-style: none; }
   .ph-nav a:not([data-keep]) { display: none; }
   .ph-meta { display: none; }
   .pb { min-height: 50px; padding: 0 22px; }
+  .proto-switch { top: auto; bottom: 12px; right: 12px; transform: scale(.85); transform-origin: bottom right; }
 }
 
 @media (prefers-reduced-motion: reduce) {
