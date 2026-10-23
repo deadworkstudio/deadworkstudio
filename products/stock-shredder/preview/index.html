@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en" data-product="stock-shredder" data-preview>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0a0a09" />
+<title>Stock Shredder — Preview (Hero + Showcase) | DEADWORK</title>
+<!-- Working preview for the owner only -- a sketch of a cinematic hero + software showcase for
+     Stock Shredder, built as its own standalone page so the live product page is never touched.
+     Not a real, finished page: not in the sitemap, not linked from the live nav, and blocked from
+     indexing below. -->
+<meta name="robots" content="noindex,nofollow" />
+<link rel="icon" href="../../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../../assets/img/brand/apple-touch-icon.png" />
+<!-- Same font-preload trick the live page uses -- starts the Swamp Witch/Anton downloads
+     immediately instead of waiting on CSS parse, so the fallback font doesn't flash in first. -->
+<link rel="preload" href="../../../assets/fonts/swampwitch.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" href="../../../assets/img/products/stock-shredder/bg.jpg?v=20261022n" />
+<link rel="stylesheet" href="../../../assets/css/tokens.css?v=20261016c" />
+<link rel="stylesheet" href="../../../assets/css/base.css?v=20261015e" />
+<link rel="stylesheet" href="../../../assets/css/home.css?v=20261022t" />
+<link rel="stylesheet" href="../../../assets/css/product.css?v=20261021a" />
+<!-- Preview-only, additive stylesheet. Loaded last so it can override the fixed single-viewport
+     "poster" layout for this page alone -- see its own header comment for why. Nothing in here
+     removes or edits a rule the other 5 product pages (or the home page) depend on. -->
+<link rel="stylesheet" href="preview.css" />
+</head>
+<body>
+<div class="poster">
+  <div class="poster-media" aria-hidden="true">
+    <img src="../../../assets/img/products/stock-shredder/bg.jpg?v=20261022n" alt="" fetchpriority="high" />
+  </div>
+
+  <!-- ===================== Real site header/nav -- reused, unmodified ===================== -->
+  <header class="poster-head">
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <h1 class="poster-brand"><a href="../../../home/"><img src="../../../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I — Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card" href="../../../products/scene-lock/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/scene-lock/bg.jpg?v=20261022h" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/scene-lock.png" alt="" loading="lazy" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Scene Lock</span>
+                <span class="mega-menu-card-desc">Plan smarter. Execute better.</span>
+              </span>
+            </a>
+            <a class="mega-menu-card" href="../../../products/set-control/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/set-control/bg.jpg?v=20261022" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/set-control.png" alt="" loading="lazy" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Set Control</span>
+                <span class="mega-menu-card-desc">Every crew. Every detail. In sync.</span>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II — Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card" href="../../../products/loadout/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/loadout/bg.jpg?v=20261022o" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/loadout.png" alt="" loading="lazy" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Loadout</span>
+                <span class="mega-menu-card-desc">Never leave gear behind.</span>
+              </span>
+            </a>
+            <a class="mega-menu-card" href="../../../products/handoff/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/handoff/bg.jpg?v=20261022u" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/handoff.png" alt="" loading="lazy" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Handoff</span>
+                <span class="mega-menu-card-desc">Every file. Verified.</span>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III — Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card" href="../../../products/sound-driver/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/sound-driver/bg.jpg?v=20261022s" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/sound-driver.png" alt="" loading="lazy" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Sound Driver</span>
+                <span class="mega-menu-card-desc">Real designers. Real sounds.</span>
+              </span>
+            </a>
+            <a class="mega-menu-card" href="../../../products/stock-shredder/" aria-current="true">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/stock-shredder/bg.jpg?v=20261022s" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/stock-shredder.png" alt="" loading="lazy" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Stock Shredder</span>
+                <span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span>
+              </span>
+            </a>
+          </div>
+        </div>
+    </div>
+  </header>
+
+  <main class="poster-panel" data-panels>
+    <div class="panel-stack">
+      <article class="panel is-active" data-panel="default">
+
+<!-- ===================== Preview Section 1: cinematic hero ===================== -->
+<section class="preview-hero" data-preview-hero>
+  <div class="preview-hero-media" aria-hidden="true">
+    <img src="../../../assets/img/products/stock-shredder/bg.jpg?v=20261022n" alt="" />
+    <!-- Designer's note, not production copy -- see the "Hard constraints" note in the brief:
+         this backdrop is the real existing brand photo standing in temporarily. The tag below
+         marks it as a placeholder for the real mechanical b-roll clip, same way a film editor
+         annotates a temp slug in a cut. -->
+    <div class="preview-placeholder-tag">
+      <span class="preview-placeholder-corner preview-placeholder-corner--tl"></span>
+      <span class="preview-placeholder-corner preview-placeholder-corner--tr"></span>
+      <span class="preview-placeholder-corner preview-placeholder-corner--bl"></span>
+      <span class="preview-placeholder-corner preview-placeholder-corner--br"></span>
+      <pre class="preview-placeholder-label">STOCK_SHREDDER_HERO_BROLL
+TYPE: Mechanical macro B-roll (video)
+ASPECT: 16:9 · DELIVER 1920×1080 (shoot 2560×1440+)
+LOOP: yes, 8–12s seamless · AUTOPLAY: yes, muted
+MOBILE: separate 9:16 crop, 1080×1920</pre>
+    </div>
+  </div>
+
+  <div class="wrap preview-hero-content">
+    <div class="preview-hero-stagger">
+      <div class="preview-hero-badge-row">
+        <span class="badge badge-beta"><span class="badge-icon badge-icon--filled"></span>BETA</span>
+      </div>
+      <h1 class="display preview-hero-title">Stock Shredder</h1>
+      <div class="preview-hero-text">
+        <p class="eyebrow">Raw footage into stock-ready clips.</p>
+        <p class="lede">Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload.</p>
+      </div>
+      <div class="preview-hero-actions">
+        <a id="preview-download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg">
+          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
+          <span class="label">Mac</span>
+        </a>
+        <a class="btn-tertiary preview-hero-all-link" href="#preview-showcase">
+          <span class="label">All platforms</span>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Preview Section 2: software showcase ===================== -->
+<section class="wrap preview-showcase" id="preview-showcase" data-preview-showcase>
+  <input type="checkbox" id="preview-daynight" class="preview-toggle-input" />
+
+  <div class="preview-showcase-head">
+    <p class="eyebrow">Also available in light mode</p>
+    <label for="preview-daynight" class="preview-toggle-label">
+      <span class="preview-toggle-option preview-toggle-option--night">Night</span>
+      <span class="preview-toggle-option preview-toggle-option--day">Day</span>
+    </label>
+  </div>
+
+  <div class="preview-showcase-frame" data-preview-reveal>
+    <span class="preview-showcase-devtag">SCREEN RECORDING — COMING SOON</span>
+    <!-- When a real screen recording exists, swap these two <img>s for one <video> (muted,
+         loop, autoplay) in the same spot -- the frame/border/shadow/devtag wrapper above needs
+         no other change. -->
+    <img class="preview-showcase-img preview-showcase-img--night" src="../../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="eager" fetchpriority="high" />
+    <img class="preview-showcase-img preview-showcase-img--day" src="../../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
+  </div>
+</section>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- ===================== Real site footer -- reused, unmodified ===================== -->
+  <footer class="poster-foot">
+    <p class="foot-email">deadworkstudio@gmail.com</p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="foot-note">By artists. For artists. Thank you.</p>
+    <p class="foot-copy">&copy; 2026 DEADWORK STUDIO&reg;</p>
+  </footer>
+</div>
+<script src="../../../assets/js/main.js"></script>
+<script src="../../../assets/js/nav-dropdown.js?v=20261021b"></script>
+<!-- Preview-only JS, kept as small as possible: just the "reveal the showcase once it scrolls
+     into view" trigger (see preview.css for why this can't be pure CSS -- a scroll-driven
+     animation would re-trigger on every scroll past the section, not play once). The Night/Day
+     toggle above needs no JS at all -- it's a plain checkbox + label, styled in preview.css. -->
+<script src="preview.js"></script>
+</body>
+</html>
