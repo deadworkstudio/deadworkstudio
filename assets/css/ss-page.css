@@ -116,9 +116,10 @@ main > section > h2.section-head { margin-bottom: 22px; }
    window height left over after the header and the text block (--hero-text), times the
    screenshot's own aspect ratio (2000x1255). */
 .hero { --hero-text: clamp(360px, 41vh, 430px); padding-top: calc(var(--sh-h) + clamp(20px, 3.4vh, 40px)) !important; padding-bottom: 64px !important; }
-.hero-logo { display: block; height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; filter: brightness(0); }
+.hero-logo { display: block; height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; }
 .hero h1 { margin-top: 14px; font: 600 clamp(36px, min(3.9vw, 6.4vh), 58px)/1.05 var(--sans); letter-spacing: -.03em; }
-.hero-lede { margin: 12px auto 0; max-width: 62ch; font-size: clamp(16px, 1.2vw, 18px); line-height: 1.45; color: var(--ink-2); }
+.hero-lede { margin: 12px auto 0; max-width: none; font-size: clamp(15px, 1.15vw, 18px); line-height: 1.45; color: var(--ink-2); }
+@media (min-width: 900px) { .hero-lede { white-space: nowrap; } }
 .shot { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .shot img { width: 100%; border-radius: 8px; box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 30px 60px -24px rgba(20,20,18,.45), 0 12px 24px -12px rgba(20,20,18,.3); }
 .shot-hero { width: min(100%, 1180px, calc((100vh - var(--hero-text)) * 1.594)); width: min(100%, 1180px, calc((100svh - var(--hero-text)) * 1.594)); margin: clamp(18px, 3vh, 32px) auto 0; }
