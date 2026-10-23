@@ -72,12 +72,15 @@ main > section > h2.mono { margin-bottom: 18px; }
 .pill.is-disabled:hover { background: transparent; color: var(--ink-3); }
 
 /* ---- hero ---- */
-.hero { padding-top: calc(var(--sh-h) + 56px) !important; padding-bottom: 64px !important; }
-.hero h1 { margin-top: 18px; font: 600 clamp(36px, 3.9vw, 58px)/1.05 var(--sans); letter-spacing: -.03em; }
-.hero-lede { margin: 16px auto 0; max-width: 46ch; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.45; color: var(--ink-2); }
+/* The whole Import screenshot fits in the first screen, uncropped: its width is derived from the
+   window height left over after the header and the text block (--hero-text), times the
+   screenshot's own aspect ratio (2000x1255). */
+.hero { --hero-text: clamp(300px, 34vh, 360px); padding-top: calc(var(--sh-h) + clamp(20px, 3.4vh, 40px)) !important; padding-bottom: 64px !important; }
+.hero h1 { margin-top: 12px; font: 600 clamp(36px, min(3.9vw, 6.4vh), 58px)/1.05 var(--sans); letter-spacing: -.03em; }
+.hero-lede { margin: 12px auto 0; max-width: 62ch; font-size: clamp(16px, 1.2vw, 18px); line-height: 1.45; color: var(--ink-2); }
 .shot { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .shot img { width: 100%; border-radius: 8px; box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 30px 60px -24px rgba(20,20,18,.45), 0 12px 24px -12px rgba(20,20,18,.3); }
-.shot-hero { max-width: 1180px; margin: 40px auto 0; }
+.shot-hero { width: min(100%, 1180px, calc((100vh - var(--hero-text)) * 1.594)); width: min(100%, 1180px, calc((100svh - var(--hero-text)) * 1.594)); margin: clamp(18px, 3vh, 32px) auto 0; }
 .downloads { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 14px; margin-top: 44px; }
 .downloads-note { margin-top: 18px; color: var(--ink-3); }
 
@@ -263,7 +266,7 @@ main > section > h2.mono { margin-bottom: 18px; }
   main > section { padding: 56px 20px; }
   .hero { padding-top: calc(var(--sh-h) + 36px) !important; }
   .hero h1 { font-size: clamp(32px, 9vw, 40px); }
-  .shot-hero { margin-top: 28px; }
+  .shot-hero { width: 100%; margin-top: 28px; }
   .shot img { border-radius: 6px; }
   .downloads { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: 360px; margin: 32px auto 0; }
   .split { grid-template-columns: 1fr; }
