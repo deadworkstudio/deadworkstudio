@@ -18,9 +18,8 @@
      parsed and the h1 to need it — without this, the fallback font flashes briefly before the
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/screen-import.jpg" />
-<script>if(/[?&]hero=strip\b/.test(location.search))document.documentElement.classList.add("hero-strip");</script>
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023u" />
+<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023v" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -134,13 +133,6 @@
     <div class="hero-brand"><img class="hero-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" /><span class="beta-tag"><span class="beta-sq" aria-hidden="true"></span>Beta</span></div>
     <h1>Raw footage into stock-ready clips.</h1>
     <p class="hero-lede">Reviews, selects and trims usable moments, exports, then writes keywords ready for immediate upload.</p>
-    <button type="button" class="shot shot-hero mbp lightbox-trigger" data-lightbox-trigger aria-label="Enlarge the Import screen">
-      <span class="mbp-lid">
-        <span class="mbp-screen"><img src="../../assets/img/products/stock-shredder/screen-import.jpg" alt="Stock Shredder's Import screen: drop footage or a folder, set clip length, choose files, and the Select, Shred, Send, Share steps." width="2000" height="1255" fetchpriority="high" /></span>
-        <span class="mbp-notch" aria-hidden="true"></span>
-      </span>
-      <span class="mbp-base" aria-hidden="true"><span class="mbp-lip"></span></span>
-    </button>
     <figure class="strip" data-strip aria-label="A single take of raw behind-the-scenes footage shreds into six separate clips.">
       <canvas class="strip-canvas" data-strip-canvas aria-hidden="true"></canvas>
       <video class="strip-src" muted loop playsinline preload="auto" poster="../../assets/img/products/stock-shredder/strip-poster.jpg" data-strip-video aria-hidden="true"><source src="../../assets/img/products/stock-shredder/strip.mp4" type="video/mp4" /></video>
@@ -435,8 +427,6 @@
     <p class="foot-copy">2026 DEADWORK STUDIO</p>
   </footer>
 
-<nav class="hero-switch" aria-label="Hero option (review aid)" data-hero-switch hidden><span>Hero</span><a href="?" data-hero-opt="laptop">Laptop</a><a href="?hero=strip" data-hero-opt="strip">Shredded strip</a></nav>
-
 <div class="lightbox-overlay" data-lightbox-overlay hidden>
   <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
   <img class="lightbox-image" data-lightbox-image src="" alt="" />
@@ -444,7 +434,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
-<script src="../../assets/js/ss-page.js?v=20261023h"></script>
+<script src="../../assets/js/ss-page.js?v=20261023i"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
