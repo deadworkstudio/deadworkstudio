@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/screen-import.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023e" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023f" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -130,7 +130,7 @@
 
 <main id="main">
   <section class="hero">
-    <p class="mono">DW&ndash;06 &middot; Stock Shredder</p>
+    <img class="hero-logo" src="../../assets/img/brand/product-logos/stock-shredder.png" alt="Stock Shredder" width="2048" height="697" />
     <h1>Raw footage into stock-ready clips.</h1>
     <p class="hero-lede">Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload.</p>
     <button type="button" class="shot shot-hero lightbox-trigger" data-lightbox-trigger>
@@ -145,6 +145,16 @@
     <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.3</span> (Beta)</p>
   </section>
 
+  <section class="workflow" aria-labelledby="workflow-title">
+    <h2 class="mono" id="workflow-title">The workflow</h2>
+    <ol class="steps">
+      <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Select</span><span class="step-d">Import your folder</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Review your selections</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Send</span><span class="step-d">Export your clips</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Share</span><span class="step-d">Receive created keywords</span></li>
+    </ol>
+  </section>
+
   <section class="split" aria-label="The problem and the solution">
     <div>
       <h2 class="mono">The problem</h2>
@@ -154,16 +164,6 @@
       <h2 class="mono">The solution</h2>
       <p>Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income.</p>
     </div>
-  </section>
-
-  <section class="workflow" aria-labelledby="workflow-title">
-    <h2 class="mono" id="workflow-title">The workflow</h2>
-    <ol class="steps">
-      <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Select</span><span class="step-d">Import your folder</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Review your selections</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Send</span><span class="step-d">Export your clips</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Share</span><span class="step-d">Receive created keywords</span></li>
-    </ol>
   </section>
 
   <section class="interface" aria-labelledby="interface-title">
@@ -215,7 +215,6 @@
 
   <section class="reviews" id="reviews" aria-labelledby="reviews-title">
     <h2 class="mono" id="reviews-title">Reviews</h2>
-    <p class="section-title">What people are saying</p>
     <p class="reviews-count" data-reviews-count hidden></p>
     <div class="reviews-list" data-reviews-list hidden></div>
     <p class="reviews-empty" data-reviews-empty hidden></p>
@@ -256,7 +255,6 @@
         <span class="pricing-name">Starter</span>
         <p class="pricing-price" data-monthly="25" data-annual="250"><span class="num">$25</span>/mo</p>
         <p class="pricing-save" data-pricing-save hidden></p>
-        <p class="pricing-level" aria-hidden="true"><span class="on">$</span><span class="">$</span><span class="">$</span><span class="">$</span></p>
         <p class="pricing-clips" data-clips-monthly="100">100 clips / mo</p>
         <p class="pricing-per-clip">$0.25 / clip</p>
         
@@ -266,7 +264,6 @@
         <span class="pricing-name">Creator</span>
         <p class="pricing-price" data-monthly="59" data-annual="590"><span class="num">$59</span>/mo</p>
         <p class="pricing-save" data-pricing-save hidden></p>
-        <p class="pricing-level" aria-hidden="true"><span class="on">$</span><span class="on">$</span><span class="">$</span><span class="">$</span></p>
         <p class="pricing-clips" data-clips-monthly="400">400 clips / mo</p>
         <p class="pricing-per-clip">$0.15 / clip</p>
         
@@ -276,7 +273,6 @@
         <span class="pricing-name">Pro</span>
         <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
         <p class="pricing-save" data-pricing-save hidden></p>
-        <p class="pricing-level" aria-hidden="true"><span class="on">$</span><span class="on">$</span><span class="on">$</span><span class="">$</span></p>
         <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
         <p class="pricing-per-clip">$0.11 / clip</p>
         <p class="pricing-note">Creates copy-paste keywords.</p>
@@ -286,7 +282,6 @@
         <span class="pricing-name">Studio</span>
         <p class="pricing-price" data-monthly="199" data-annual="1990"><span class="num">$199</span>/mo</p>
         <p class="pricing-save" data-pricing-save hidden></p>
-        <p class="pricing-level" aria-hidden="true"><span class="on">$</span><span class="on">$</span><span class="on">$</span><span class="on">$</span></p>
         <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
         <p class="pricing-per-clip">$0.10 / clip</p>
         <p class="pricing-note">Creates copy-paste keywords.</p><p class="pricing-note">Approve clips remotely via phone.</p>
@@ -405,7 +400,7 @@
       </a>
     </div>
     <p class="foot-note">By artists. For artists. Thank you.</p>
-    <p class="foot-copy">&copy; 2026 DEADWORK STUDIO&reg;</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO</p>
   </footer>
 
 <div class="lightbox-overlay" data-lightbox-overlay hidden>
