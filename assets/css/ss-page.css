@@ -375,8 +375,8 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 /* ---- one block per screen (desktop): every section fills the window, content centred,
    tall media scaled to the window height, and the page settles on each block. ---- */
 @media (min-width: 900px) and (min-height: 600px) {
-  main > section, main > .pair { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: calc(var(--sh-h) + 24px) !important; padding-bottom: 40px !important; }
-  main > .pair { padding: 0 !important; padding-top: var(--sh-h) !important; }
+  main > section, main > .pair { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: var(--sh-h) !important; padding-bottom: 15vh !important; }
+  main > .pair { padding: 0 !important; padding-top: var(--sh-h) !important; padding-bottom: 12vh !important; }
   main > .pair > section { padding-top: 40px; padding-bottom: 40px; }
   main > .pair > .split { padding-top: 0 !important; padding-bottom: 0 !important; }
   main > .pair > .split > div { padding-top: 40px; padding-bottom: 44px; }
@@ -385,18 +385,18 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
   .hero .downloads .pill { min-height: 44px; }
   .hero .downloads-note { margin-top: 12px; }
   /* interface: screenshot width follows the window height (2000x1299 image + labels below) */
-  .annot { width: min(1010px, calc(100% - 480px), calc((100svh - var(--sh-h) - 230px) * 1.565)); max-width: none; }
-  .interface { padding-bottom: 72px !important; }
+  .annot { width: min(1010px, calc(100% - 480px), calc((100svh - var(--sh-h) - 15vh - 150px) * 1.565)); max-width: none; }
+  .interface { padding-bottom: calc(15vh + 30px) !important; }
   /* remote: phone height follows the window height */
-  .phone { width: min(300px, calc((100svh - var(--sh-h) - 330px) * 0.47)); margin-top: 28px; }
+  .phone { width: min(300px, calc((100svh - var(--sh-h) - 15vh - 260px) * 0.47)); margin-top: 28px; }
   .remote-cta { margin-top: 24px; }
-  .world-map { width: min(100%, 1040px, calc((100svh - var(--sh-h) - 300px) * 2.69)); }
+  .world-map { width: min(100%, 1040px, calc((100svh - var(--sh-h) - 15vh - 230px) * 2.69)); }
   .faq-q { min-height: 40px; padding: 7px 0; }
   main > section > .pill, main > section > .shot { align-self: center; }
   .review-form, .faq-list, .checkout-panel, .checkout-success { width: 100%; }
 }
 @media (min-width: 900px) and (min-height: 600px) and (max-width: 1100px) {
-  .annot { width: min(100%, calc((100svh - var(--sh-h) - 300px) * 1.565)); margin-left: auto; margin-right: auto; }
+  .annot { width: min(100%, calc((100svh - var(--sh-h) - 15vh - 220px) * 1.565)); margin-left: auto; margin-right: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .poster-head, .will-reveal, .billing-switch-track, .billing-switch-track span, .faq-plus::after { transition: none !important; }
