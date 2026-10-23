@@ -74,7 +74,7 @@
   if (location.protocol !== 'file:') ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
 
   // ---- one quiet entrance per section ----
-  var els = document.querySelectorAll('main > section:not(.hero)');
+  var els = document.querySelectorAll('main > section:not(.hero), main > .pair');
   if (reduce || !('IntersectionObserver' in window)) return;
   els.forEach(function (el) { el.classList.add('will-reveal'); });
   var io = new IntersectionObserver(function (entries) {

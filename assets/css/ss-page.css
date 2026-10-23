@@ -91,10 +91,12 @@ a[href$="handoff/"] .mega-menu-card-logo { height: clamp(52px, 5.2vw, 90px); }
 .foot-copy { grid-column: 3; grid-row: 2; text-align: right; }
 
 /* ---- shared section rhythm ---- */
-main > section { padding: 72px var(--gutter); border-top: 1px solid var(--line); text-align: center; }
+main > section, .pair > section { padding: 72px var(--gutter); border-top: 1px solid var(--line); text-align: center; }
+.pair { border-top: 1px solid var(--line); }
+.pair > section.workflow { border-top: 0; }
 main > section.hero { border-top: 0; }
 main > section > h2.mono { margin-bottom: 18px; }
-main > section > h2.section-head { margin-bottom: 22px; }
+main > section > h2.section-head, .pair > section > h2.section-head { margin-bottom: 22px; }
 .section-head + .section-title { margin-top: -6px; color: var(--ink-2); }
 .section-title { font: 560 clamp(28px, 2.6vw, 38px)/1.1 var(--sans); letter-spacing: -.025em; color: var(--ink); }
 .section-sub { margin-top: 10px; font-size: 16px; color: var(--ink-2); }
@@ -337,7 +339,35 @@ main > section > h2.section-head { margin-bottom: 22px; }
   .poster-foot { grid-template-columns: 1fr; justify-items: center; text-align: center; }
   .foot-email, .foot-note, .foot-copy { grid-column: 1; grid-row: auto; text-align: center; }
 }
+/* ---- one block per screen (desktop): every section fills the window, content centred,
+   tall media scaled to the window height, and the page settles on each block. ---- */
+@media (min-width: 900px) and (min-height: 600px) {
+  html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+  main > section, main > .pair { min-height: 100vh; min-height: 100svh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; padding-top: calc(var(--sh-h) + 24px) !important; padding-bottom: 40px !important; }
+  main > .pair { padding: 0 !important; padding-top: var(--sh-h) !important; }
+  main > .pair > section { padding-top: 40px; padding-bottom: 40px; }
+  main > .pair > .split { padding-top: 0 !important; padding-bottom: 0 !important; }
+  main > .pair > .split > div { padding-top: 40px; padding-bottom: 44px; }
+  main > section.hero { --hero-text: clamp(470px, 50vh, 560px); padding-top: calc(var(--sh-h) + clamp(16px, 2.6vh, 32px)) !important; padding-bottom: 24px !important; justify-content: flex-start; }
+  .hero .downloads { margin-top: clamp(18px, 2.6vh, 30px); }
+  .hero .downloads .pill { min-height: 44px; }
+  .hero .downloads-note { margin-top: 12px; }
+  /* interface: screenshot width follows the window height (2000x1299 image + labels below) */
+  .annot { width: min(1010px, calc(100% - 480px), calc((100svh - var(--sh-h) - 230px) * 1.54)); max-width: none; }
+  .interface { padding-bottom: 72px !important; }
+  /* remote: phone height follows the window height */
+  .phone { width: min(300px, calc((100svh - var(--sh-h) - 330px) * 0.47)); margin-top: 28px; }
+  .remote-cta { margin-top: 24px; }
+  .world-map { width: min(1040px, calc((100svh - var(--sh-h) - 300px) * 2.69)); }
+  .faq-q { min-height: 40px; padding: 7px 0; }
+  main > section > .pill, main > section > .shot { align-self: center; }
+  .review-form, .faq-list, .checkout-panel, .checkout-success { width: 100%; }
+}
+@media (min-width: 900px) and (min-height: 600px) and (max-width: 1100px) {
+  .annot { width: min(100%, calc((100svh - var(--sh-h) - 300px) * 1.54)); margin-left: auto; margin-right: auto; }
+}
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-snap-type: none !important; }
   .poster-head, .will-reveal, .billing-switch-track, .billing-switch-track span, .faq-plus::after { transition: none !important; }
   .will-reveal { opacity: 1; transform: none; }
 }
