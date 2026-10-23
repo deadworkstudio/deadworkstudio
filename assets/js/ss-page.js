@@ -152,6 +152,16 @@
     var range = box.querySelector('[data-compare-range]');
     var set = function (v) { box.style.setProperty('--pos', v + '%'); };
     range.addEventListener('input', function () { set(range.value); });
+    // two recordings of the same playback (dark + light): play together while on screen, light kept in step with dark
+    var va = box.querySelector('[data-compare-a]'), vb = box.querySelector('[data-compare-b]');
+    if (va && vb && !reduce) {
+      var sync = function () { if (Math.abs(vb.currentTime - va.currentTime) > 0.06) vb.currentTime = va.currentTime; };
+      va.addEventListener('timeupdate', sync); va.addEventListener('seeked', sync);
+      va.addEventListener('play', function () { vb.currentTime = va.currentTime; var p = vb.play(); if (p && p.catch) p.catch(function () {}); });
+      va.addEventListener('pause', function () { vb.pause(); });
+      var vis = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { var p = va.play(); if (p && p.catch) p.catch(function () {}); } else va.pause(); }); }, { threshold: 0.25 });
+      vis.observe(box);
+    }
     // a gentle one-time sweep the first time it scrolls into view, so it's obvious it moves
     if (!reduce && 'IntersectionObserver' in window) {
       var seen = new IntersectionObserver(function (es) {

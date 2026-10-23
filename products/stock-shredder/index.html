@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/screen-import.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023o" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023p" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -178,12 +178,10 @@
       <div class="annot-img">
       <div class="compare" data-compare style="--pos:50%">
         <span class="compare-clip">
-        <img class="compare-img" src="../../assets/img/products/stock-shredder/review-dark.jpg" alt="Stock Shredder's Review screen in dark mode: a reel-to-reel tape deck clip with the clip list, LOG and GRADED tabs, trim, approve and deny, and the look and fine-tune settings." width="2000" height="1278" loading="lazy" />
-        <img class="compare-img compare-light" src="../../assets/img/products/stock-shredder/review-light.jpg" alt="The same Review screen in light mode." width="2000" height="1278" loading="lazy" />
+        <video class="compare-img" muted loop playsinline preload="metadata" poster="../../assets/img/products/stock-shredder/review-dark-poster.jpg" width="1600" height="1022" aria-label="Stock Shredder's Review screen in dark mode, playing a reel-to-reel tape deck clip with the clip list, LOG and GRADED tabs, trim, approve and deny, and the look and fine-tune settings." data-compare-a><source src="../../assets/img/products/stock-shredder/review-dark.mp4" type="video/mp4" /></video>
+        <video class="compare-img compare-light" muted loop playsinline preload="metadata" poster="../../assets/img/products/stock-shredder/review-light-poster.jpg" width="1600" height="1022" aria-hidden="true" data-compare-b><source src="../../assets/img/products/stock-shredder/review-light.mp4" type="video/mp4" /></video>
         <span class="compare-line" aria-hidden="true"><span class="compare-knob"></span></span>
         </span>
-        <span class="compare-tag compare-tag-l mono" aria-hidden="true">Dark</span>
-        <span class="compare-tag compare-tag-r mono" aria-hidden="true">Light</span>
         <input class="compare-range" type="range" min="0" max="100" value="50" step="0.5" aria-label="Drag to compare dark mode and light mode" data-compare-range />
       </div>
       <span class="ann ann-l" style="--x:10.2%;--y:23.5%" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
@@ -439,7 +437,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
-<script src="../../assets/js/ss-page.js?v=20261023f"></script>
+<script src="../../assets/js/ss-page.js?v=20261023g"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
