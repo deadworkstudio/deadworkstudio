@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023v" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023x" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -145,7 +145,12 @@
     <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.3</span> (Beta)</p>
   </section>
 
-  <div class="pair">
+  <section class="film tone-dark" aria-label="On set">
+    <video class="film-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/film-poster.jpg" data-film aria-hidden="true"><source src="../../assets/img/products/stock-shredder/film.mp4" type="video/mp4" /></video>
+    <p class="film-line mono">By artists. For artists.</p>
+  </section>
+
+  <div class="pair tone-alt">
   <section class="workflow" aria-labelledby="workflow-title">
     <h2 class="section-title section-head" id="workflow-title">THE WORKFLOW</h2>
     <ol class="steps">
@@ -168,7 +173,7 @@
   </section>
   </div>
 
-  <section class="interface" aria-labelledby="interface-title">
+  <section class="interface tone-dark" aria-labelledby="interface-title">
     <h2 class="section-title section-head" id="interface-title">The interface</h2>
     <figure class="annot">
       <div class="annot-img">
@@ -211,23 +216,35 @@
       </div>
     </figure>
     <div class="remote-cta">
-      <span class="pill pill-outline is-disabled" aria-disabled="true">Remote for iPhone &middot; Coming soon</span>
-      <a class="pill pill-outline" href="#download-android">Remote for Android</a>
+      <span class="pill pill-outline is-disabled" aria-disabled="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone &middot; Coming soon</span></span>
+      <a class="pill pill-outline" href="#download-android"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="spec-title">
+  <section class="spec tone-alt" aria-labelledby="spec-title">
     <h2 class="section-title section-head" id="spec-title">Spec sheet</h2>
-    <table>
-      <tbody>
-        <tr><th scope="row">Platform</th><td>macOS (Intel &amp; Apple Silicon) and Windows</td></tr>
-        <tr><th scope="row">Works with</th><td>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks, Blackbox, iStock, Getty Images, Motion Array, Envato Elements, Filmsupply, and more</td></tr>
-        <tr><th scope="row">Formats</th><td>MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV, plus Blackmagic RAW, RED R3D, CinemaDNG, and ARRIRAW with the relevant vendor tools installed</td></tr>
-      </tbody>
-    </table>
+    <div class="specs">
+      <div class="spec-row">
+        <p class="spec-k mono">Platform</p>
+        <div class="spec-v">
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg></span><span><strong>macOS</strong><br />Intel &amp; Apple Silicon</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></span><span><strong>Windows</strong></span></div>
+        </div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Works with</p>
+        <div class="spec-v"><ul class="tiles"><li>Artgrid</li><li>Shutterstock</li><li>Adobe Stock</li><li>Pond5</li><li>Storyblocks</li><li>Blackbox</li><li>iStock</li><li>Getty Images</li><li>Motion Array</li><li>Envato Elements</li><li>Filmsupply</li><li class="tile-more">and more</li></ul></div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Formats</p>
+        <div class="spec-v"><ul class="tiles tiles-mono"><li>MP4</li><li>MOV</li><li>MXF</li><li>MKV</li><li>AVI</li><li>M4V</li><li>MTS</li><li>M2TS</li><li>MPG</li><li>MPEG</li><li>WebM</li><li>3GP</li><li>WMV</li></ul>
+          <ul class="tiles tiles-raw"><li>Blackmagic RAW</li><li>RED R3D</li><li>CinemaDNG</li><li>ARRIRAW</li></ul>
+          <p class="spec-note">RAW formats need the camera maker's free tools installed.</p></div>
+      </div>
+    </div>
   </section>
 
-  <section class="world" data-world-map hidden aria-labelledby="world-title">
+  <section class="world tone-dark" data-world-map hidden aria-labelledby="world-title">
     <h2 class="section-title section-head" id="world-title">Clips <span class="shred-word">shredded</span> worldwide</h2>
     <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span><span class="world-count-note mono" data-shred-note>Preview only &middot; live server count, hidden on the real site until confirmed</span></p>
     <div class="world-map">
@@ -261,7 +278,7 @@
     </form>
   </section>
 
-  <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+  <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
     <h2 class="section-title section-head">Plans and pricing</h2>
     <p class="section-title" id="pricing-title">Simple pricing.</p>
     <p class="section-sub">Choose the plan that fits your workflow. Change plans anytime.</p>
@@ -331,39 +348,8 @@
     </div>
   </section>
 
-  <section class="earn" id="earn" aria-labelledby="earn-title">
-    <h2 class="section-title section-head">Earn</h2>
-    <p class="section-title" id="earn-title">Help other filmmakers find us. Get paid in clips.</p>
-    <ul class="earn-grid">
-      <li><span class="earn-amt">100 clips</span><span>Write a website review</span></li>
-      <li><span class="earn-amt">400 clips</span><span>Share about us on Instagram or TikTok</span></li>
-      <li><span class="earn-amt">1,000 clips</span><span>Record a YouTube review and walkthrough</span></li>
-      <li><span class="earn-amt">750 clips each</span><span>Refer a friend</span></li>
-    </ul>
-    <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
-    <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account.</p>
-  </section>
-
-  <div class="modal-overlay" data-earn-modal-overlay hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit your link">
-      <button class="modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
-      <p class="mono">Earn</p>
-      <h3>Submit your link</h3>
-      <div data-earn-modal-body>
-        <p class="earn-modal-note">Share where you posted about Stock Shredder so we can take a look.</p>
-        <p class="form-status form-status-bad" data-earn-modal-error hidden></p>
-        <input type="email" placeholder="Your email" data-earn-email />
-        <input type="text" placeholder="TikTok link" data-earn-tiktok />
-        <input type="text" placeholder="YouTube link" data-earn-youtube />
-        <input type="text" placeholder="Instagram link" data-earn-instagram />
-        <button class="pill pill-solid" type="button" data-earn-submit-btn>Submit</button>
-      </div>
-    </div>
-  </div>
-
   <section class="faq" id="faq" aria-labelledby="faq-title">
-    <h2 class="section-title section-head">FAQ</h2>
-    <p class="section-title" id="faq-title">Questions? We have answers.</p>
+    <h2 class="section-title section-head" id="faq-title">FAQ</h2>
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>Do unused clips expire?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -433,7 +419,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
-<script src="../../assets/js/ss-page.js?v=20261023j"></script>
+<script src="../../assets/js/ss-page.js?v=20261023k"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
@@ -511,65 +497,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   }
 })();
 
-// "Submit your link" — same /earn-submission endpoint stockshredder.com's own modal posts to.
-(function () {
-  var EARN_API = 'https://stock-shredder-payments.stockshredder.workers.dev';
-  var openBtn = document.querySelector('[data-earn-submit-open]');
-  var overlay = document.querySelector('[data-earn-modal-overlay]');
-  if (!openBtn || !overlay) return;
-  var closeBtn = overlay.querySelector('[data-earn-modal-close]');
-  var body = overlay.querySelector('[data-earn-modal-body]');
-  var errorEl = overlay.querySelector('[data-earn-modal-error]');
-  var submitBtn = overlay.querySelector('[data-earn-submit-btn]');
 
-  function closeModal() { overlay.hidden = true; }
-  openBtn.addEventListener('click', function () { overlay.hidden = false; });
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
-
-  submitBtn.addEventListener('click', function () {
-    errorEl.hidden = true;
-    var email = overlay.querySelector('[data-earn-email]').value.trim();
-    var tiktok = overlay.querySelector('[data-earn-tiktok]').value.trim();
-    var youtube = overlay.querySelector('[data-earn-youtube]').value.trim();
-    var instagram = overlay.querySelector('[data-earn-instagram]').value.trim();
-    if (!email) {
-      errorEl.textContent = 'Your email is required.';
-      errorEl.hidden = false;
-      return;
-    }
-    if (!tiktok && !youtube && !instagram) {
-      errorEl.textContent = 'Add at least one link.';
-      errorEl.hidden = false;
-      return;
-    }
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting…';
-    fetch(EARN_API + '/earn-submission', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, tiktok: tiktok, youtube: youtube, instagram: instagram })
-    })
-      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
-      .then(function (result) {
-        if (!result.ok) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
-          errorEl.textContent = (result.data && result.data.error) || 'Could not submit — try again in a moment.';
-          errorEl.hidden = false;
-          return;
-        }
-        body.innerHTML = '<p class="earn-modal-note">Thanks! Once it’s approved, you’ll get an access code to add the clips to your account.</p>';
-      })
-      .catch(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit';
-        errorEl.textContent = 'Could not reach the server — try again in a moment.';
-        errorEl.hidden = false;
-      });
-  });
-})();
 </script>
 <script>
 // Reviews: approved-review grid (GET /reviews) + the submission form (POST /reviews). New

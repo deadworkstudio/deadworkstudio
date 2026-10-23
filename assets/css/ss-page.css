@@ -173,6 +173,45 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .strip-src { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 @media (max-width: 719px) { .strip { width: 100%; padding: 8px; } }
 
+/* ---- block tones (TP-7 rhythm): light, darker light, black ---- */
+.tone-alt { --bg: #EAE5DA; background: var(--bg); }
+.tone-dark { --bg: #0E0E0D; --bg-2: #1A1A18; --ink: #F1ECE2; --ink-2: #A9A499; --ink-3: #8A867E; --line: rgba(241,236,226,.14); --line-2: rgba(241,236,226,.32); --green: #8FD687; background: var(--bg); color: var(--ink); }
+.tone-dark .mono { color: var(--ink-2); }
+main > section.tone-dark, main > .pair.tone-alt, main > section.tone-alt { border-top-color: transparent; }
+.tone-dark .world-map img { filter: invert(1); opacity: .9; }
+.tone-dark .shot img, .tone-dark .compare { box-shadow: 0 30px 60px -24px rgba(0,0,0,.8); }
+
+/* ---- full-block film moment ---- */
+main > section.film { position: relative; padding: 0 !important; min-height: 100vh; min-height: 100svh; overflow: hidden; }
+.film-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.film::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,14,13,.35) 0%, rgba(14,14,13,0) 30%, rgba(14,14,13,0) 70%, rgba(14,14,13,.55) 100%); pointer-events: none; }
+.film-line { position: absolute; left: 0; right: 0; bottom: clamp(28px, 6vh, 56px); z-index: 1; text-align: center; color: #F1ECE2 !important; letter-spacing: .3em; }
+
+/* ---- spec sheet with graphics ---- */
+.specs { max-width: 1040px; margin: 8px auto 0; border-top: 1px solid var(--line-2); text-align: left; }
+.spec-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line-2); align-items: start; }
+.spec-k { padding-top: 6px; }
+.spec-v { display: grid; gap: 12px; }
+.spec-v:has(.spec-plat) { grid-template-columns: repeat(2, minmax(0, 220px)); gap: 16px; }
+.spec-plat { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line-2); font-size: 14px; line-height: 1.35; color: var(--ink-2); }
+.spec-plat strong { color: var(--ink); font-weight: 600; font-size: 16px; }
+.spec-plat-ic { display: grid; place-items: center; width: 44px; height: 44px; color: var(--ink); }
+.tiles { display: flex; flex-wrap: wrap; gap: 8px; }
+.tiles li { padding: 8px 12px; border: 1px solid var(--line-2); font-size: 14px; color: var(--ink); background: rgba(255,255,255,.35); }
+.tiles .tile-more { border-style: dashed; color: var(--ink-3); background: none; }
+.tiles-mono li { font: 500 12px/1 var(--mono); letter-spacing: .1em; padding: 10px 12px; }
+.tiles-raw li { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 500; }
+.spec-note { font-size: 13px; color: var(--ink-3); }
+@media (max-width: 719px) { .spec-row { grid-template-columns: 1fr; gap: 12px; } .spec-v:has(.spec-plat) { grid-template-columns: 1fr 1fr; } }
+
+/* ---- world map: dots load in ---- */
+.world-map svg { display: block; width: 100%; height: auto; }
+.world-map svg circle { opacity: 0; transition: opacity 500ms ease; }
+.world-map.is-loaded svg circle { opacity: 1; }
+.tone-dark .world-map svg { color: #F1ECE2; fill-opacity: .34; }
+.world-map-dot { background: var(--green) !important; box-shadow: 0 0 0 4px rgba(143,214,135,.18), 0 0 14px rgba(143,214,135,.6); }
+.remote-cta .pill svg, .downloads .pill svg { flex: none; }
+
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
 .split > div { padding: 56px clamp(20px, 4vw, 64px) 60px; }
