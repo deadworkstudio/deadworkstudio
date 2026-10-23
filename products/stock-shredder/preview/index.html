@@ -198,11 +198,17 @@ MOBILE: separate 9:16 crop, 1080×1920</pre>
 
   <div class="preview-showcase-frame" data-preview-reveal>
     <span class="preview-showcase-devtag">SCREEN RECORDING — COMING SOON</span>
-    <!-- When a real screen recording exists, swap these two <img>s for one <video> (muted,
-         loop, autoplay) in the same spot -- the frame/border/shadow/devtag wrapper above needs
-         no other change. -->
-    <img class="preview-showcase-img preview-showcase-img--night" src="../../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="eager" fetchpriority="high" />
-    <img class="preview-showcase-img preview-showcase-img--day" src="../../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
+    <!-- The reveal's clip-path lives on this inner wrapper, never on .preview-showcase-frame
+         itself. IntersectionObserver watches the frame (data-preview-reveal); a clipped element
+         can't correctly observe its own intersection, so clipping the observed element directly
+         creates a deadlock where it can never detect itself scrolling into view. Observing an
+         unclipped outer element and clipping an inner child avoids that entirely. -->
+    <div class="preview-showcase-clip">
+      <!-- When a real screen recording exists, swap these two <img>s for one <video> (muted,
+           loop, autoplay) in the same spot -- nothing else here needs to change. -->
+      <img class="preview-showcase-img preview-showcase-img--night" src="../../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="eager" fetchpriority="high" />
+      <img class="preview-showcase-img preview-showcase-img--day" src="../../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
+    </div>
   </div>
 </section>
 

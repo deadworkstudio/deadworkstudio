@@ -318,6 +318,7 @@ html[data-preview] .preview-hero .preview-hero-content.wrap {
   box-shadow: 0 32px 64px -40px rgba(0, 0, 0, 0.55);
   overflow: hidden;
 }
+.preview-showcase-clip { display: block; position: relative; }
 .preview-showcase-img {
   display: block;
   width: 100%;
@@ -326,8 +327,20 @@ html[data-preview] .preview-hero .preview-hero-content.wrap {
 }
 .preview-showcase-img--night { transition: opacity 350ms var(--ease); }
 .preview-showcase-img--day {
+  /* inset:0 + width/height:100%, against .preview-showcase-clip (not frame's own padding box,
+     which would double-count frame's padding), so the two images share exactly the same box —
+     no separate inset math to drift out of sync with --night's natural (padding + width:100%)
+     sizing. A nonzero inset here combined with the inherited width:100% is a real, visible bug
+     on an absolutely-positioned replaced element (img): per spec, when left/right/width are all
+     non-auto, width wins and the browser recomputes one inset edge to match -- so a symmetric
+     nonzero inset plus width:100% doesn't center-pad the image, it pushes it past the right
+     edge by roughly twice the inset amount. inset:0 avoids the conflict entirely since the
+     numbers are already consistent (0 + 100% of the same box). */
   position: absolute;
-  inset: clamp(14px, 2vw, 26px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
   transition: opacity 350ms var(--ease);
 }
@@ -358,13 +371,24 @@ html[data-preview] .preview-hero .preview-hero-content.wrap {
    Gated behind html.preview-js-ready (set by that same script right before it starts observing)
    so a page with JS disabled, or where the script fails to load, never leaves the image clipped
    to nothing — the frame is fully visible by default, full stop, and this rule is the only thing
-   that's allowed to hide it first. */
+   that's allowed to hide it first.
+
+   The clip-path lives on .preview-showcase-clip (an inner, never-observed child), not on
+   .preview-showcase-frame (the element IntersectionObserver actually watches, via
+   data-preview-reveal). Clipping the observed element itself is a real deadlock in this engine:
+   a clip-path'd target reports zero intersection with the viewport, so it can never detect
+   itself scrolling into view, so it can never remove its own clip. Verified via
+   IntersectionObserver's entry.intersectionRect directly: with clip-path on the target,
+   intersectionRect collapses to a zero-area point at the target's own top-left corner even
+   while its boundingClientRect fully overlaps the viewport; removing clip-path from the target
+   restores normal intersection immediately. Clipping an inner child instead of the observed
+   element sidesteps this entirely. */
 @media (prefers-reduced-motion: no-preference) {
-  html.preview-js-ready .preview-showcase-frame {
+  html.preview-js-ready .preview-showcase-clip {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 700ms var(--ease);
   }
-  html.preview-js-ready .preview-showcase-frame.is-revealed {
+  html.preview-js-ready .preview-showcase-frame.is-revealed .preview-showcase-clip {
     clip-path: inset(0 0 0% 0);
   }
 }
