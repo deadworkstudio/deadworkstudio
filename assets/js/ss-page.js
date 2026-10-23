@@ -13,7 +13,7 @@
       var y = window.scrollY, dy = y - lastY;
       lastY = y; ticking = false;
       sh.classList.toggle('is-scrolled', y > 8);
-      if (document.body.classList.contains('sheet-open')) return;
+      if (document.querySelector('.mega-menu.is-open')) return;
       if (y <= HIDE_AFTER) { sh.classList.remove('is-hidden'); acc = 0; return; }
       if (dy > 0) { acc = Math.max(acc, 0) + dy; if (acc > THRESHOLD) sh.classList.add('is-hidden'); }
       else if (dy < 0) { acc = Math.min(acc, 0) + dy; if (-acc > THRESHOLD) sh.classList.remove('is-hidden'); }
