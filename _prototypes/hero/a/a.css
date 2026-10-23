@@ -1,0 +1,56 @@
+/* Prototype A — Industrial Cinema. Full-bleed footage (4K master re-encoded to 1080p / portrait),
+   film-slate text block bottom-left, status card bottom-right, the six tools as a slate strip. */
+.hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; overflow: hidden; background: var(--ink); isolation: isolate; }
+
+.hero-media { position: absolute; inset: 0; z-index: 0; }
+.hero-media img, .hero-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; filter: grayscale(1) contrast(1.08); }
+.hero-video { opacity: 0; transition: opacity 1200ms var(--ease); }
+.hero-video.is-playing { opacity: 1; }
+.hero-media::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,10,9,.62) 0%, rgba(10,10,9,.12) 30%, rgba(10,10,9,.18) 55%, rgba(10,10,9,.94) 100%),
+    linear-gradient(90deg, rgba(10,10,9,.5) 0%, rgba(10,10,9,0) 55%);
+}
+.hero-media::before { content: ''; position: absolute; inset: 0; z-index: 1; background-image: var(--grain); background-size: 180px 180px; opacity: .05; mix-blend-mode: overlay; }
+
+.slate { position: relative; z-index: 2; align-self: end; padding: 160px var(--pad) clamp(28px, 4vh, 48px); max-width: min(100%, 1040px); }
+.slate-eyebrow { color: var(--bone-2); }
+.eyebrow-short { display: none; }
+.slate-head { margin-top: 14px; font-family: var(--font-display); font-weight: 400; text-transform: uppercase; line-height: .9; letter-spacing: .004em; font-size: clamp(60px, 8.8vw, 136px); color: var(--bone); text-wrap: balance; }
+.slate-sub { margin-top: 22px; max-width: 46ch; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; font-weight: 300; color: rgba(230,224,211,.84); }
+.slate-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 32px; }
+
+.slate-status { position: absolute; right: var(--pad); bottom: calc(56px + 44px); z-index: 2; display: grid; gap: 7px; text-align: right; justify-items: end; }
+.slate-status strong { font-weight: 500; font-size: 20px; letter-spacing: -.01em; }
+
+.strip { position: relative; z-index: 2; height: 56px; border-top: 1px solid var(--line); background: rgba(10,10,9,.6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); overflow: hidden; display: flex; align-items: center; }
+.strip-track { display: flex; width: max-content; animation: strip-scroll 56s linear infinite; }
+.strip:hover .strip-track, .strip:focus-within .strip-track { animation-play-state: paused; }
+@keyframes strip-scroll { to { transform: translateX(-50%); } }
+.strip-item { display: inline-flex; align-items: baseline; gap: 14px; height: 56px; padding: 0 36px; border-right: 1px solid var(--line); text-decoration: none; white-space: nowrap; font: 400 11px/56px var(--font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--bone-2); }
+.strip-idx { color: var(--bone-3); }
+.strip-name { color: var(--bone); font-weight: 500; transition: color var(--duration-hover) var(--ease); }
+.strip-meta em { font-style: normal; }
+.strip-item:hover .strip-name { color: #fff; }
+
+.after { padding: 40px var(--pad); border-top: 1px solid var(--line); }
+
+@media (max-width: 719px) {
+  .hero { grid-template-rows: 1fr auto auto; }
+  .slate { padding: 120px 20px 20px; }
+  .eyebrow-long { display: none; }
+  .eyebrow-short { display: inline; }
+  .slate-head { font-size: clamp(56px, 17vw, 76px); }
+  .slate-sub { font-size: 16px; }
+  .slate-cta .pb-primary { width: 100%; }
+  .slate-status { position: relative; right: auto; bottom: auto; grid-row: 2; padding: 0 20px 22px; text-align: left; justify-items: start; }
+  .strip { grid-row: 3; }
+  .strip-item { padding: 0 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+  .strip-track { animation: none; }
+  .strip { overflow-x: auto; }
+}
