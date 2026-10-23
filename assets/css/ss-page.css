@@ -20,7 +20,8 @@
   color-scheme: light;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; overflow-x: clip; }
+body { overflow-x: clip; overscroll-behavior-x: none; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3, p, ul, ol, figure { margin: 0; }
@@ -100,8 +101,8 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .section-head + .section-title { margin-top: -6px; color: var(--ink-2); }
 .section-title { font: 560 clamp(28px, 2.6vw, 38px)/1.1 var(--sans); letter-spacing: -.025em; color: var(--ink); }
 .section-sub { margin-top: 10px; font-size: 16px; color: var(--ink-2); }
-.will-reveal { opacity: 0; transform: translateY(14px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
-.will-reveal.is-in { opacity: 1; transform: none; }
+.will-reveal { opacity: 0; transition: opacity 500ms var(--ease); }
+.will-reveal.is-in { opacity: 1; }
 
 /* ---- pills ---- */
 .pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--ink); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background 160ms var(--ease), color 160ms var(--ease), transform .08s; }
@@ -195,7 +196,8 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 /* ---- map + counter ---- */
 .world-count { display: grid; justify-items: center; gap: 6px; margin-top: 2px; }
 .world-count-num { font: 500 clamp(40px, 4vw, 56px)/1 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.world:not(.is-preview) .world-count { display: none; }
+.world:not(.is-preview) .world-count:not(.is-live) { display: none; }
+.world-count.is-live .world-count-note { display: none; }
 .world.is-preview .world-count-num { color: var(--ink-3); opacity: .45; }
 .world-count-note { color: var(--ink-3); }
 .world-map { position: relative; max-width: 1040px; margin: 32px auto 0; }
@@ -352,8 +354,7 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 /* ---- one block per screen (desktop): every section fills the window, content centred,
    tall media scaled to the window height, and the page settles on each block. ---- */
 @media (min-width: 900px) and (min-height: 600px) {
-  html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
-  main > section, main > .pair { min-height: 100vh; min-height: 100svh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; padding-top: calc(var(--sh-h) + 24px) !important; padding-bottom: 40px !important; }
+  main > section, main > .pair { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: calc(var(--sh-h) + 24px) !important; padding-bottom: 40px !important; }
   main > .pair { padding: 0 !important; padding-top: var(--sh-h) !important; }
   main > .pair > section { padding-top: 40px; padding-bottom: 40px; }
   main > .pair > .split { padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -368,7 +369,7 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
   /* remote: phone height follows the window height */
   .phone { width: min(300px, calc((100svh - var(--sh-h) - 330px) * 0.47)); margin-top: 28px; }
   .remote-cta { margin-top: 24px; }
-  .world-map { width: min(1040px, calc((100svh - var(--sh-h) - 300px) * 2.69)); }
+  .world-map { width: min(100%, 1040px, calc((100svh - var(--sh-h) - 300px) * 2.69)); }
   .faq-q { min-height: 40px; padding: 7px 0; }
   main > section > .pill, main > section > .shot { align-self: center; }
   .review-form, .faq-list, .checkout-panel, .checkout-success { width: 100%; }
@@ -377,7 +378,6 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
   .annot { width: min(100%, calc((100svh - var(--sh-h) - 300px) * 1.54)); margin-left: auto; margin-right: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-snap-type: none !important; }
   .poster-head, .will-reveal, .billing-switch-track, .billing-switch-track span, .faq-plus::after { transition: none !important; }
   .will-reveal { opacity: 1; transform: none; }
 }

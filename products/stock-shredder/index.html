@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/screen-import.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023k" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023m" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -228,7 +228,7 @@
 
   <section class="world" data-world-map hidden aria-labelledby="world-title">
     <h2 class="section-title section-head" id="world-title">Clips shredded worldwide</h2>
-    <p class="world-count" data-shred-count><span class="world-count-num">0,000,000</span><span class="world-count-note mono">Placeholder &middot; connects to the live count later</span></p>
+    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span><span class="world-count-note mono" data-shred-note>Preview only &middot; live server count, hidden on the real site until confirmed</span></p>
     <div class="world-map">
       <img src="../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
       <div class="world-map-dots" data-world-map-dots></div>
@@ -432,7 +432,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
-<script src="../../assets/js/ss-page.js?v=20261023c"></script>
+<script src="../../assets/js/ss-page.js?v=20261023d"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
@@ -489,6 +489,25 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
       section.hidden = false;
     })
     .catch(function () {});
+  // Clips-shredded counter: reads the real shared counter on the payments server (+1 per finished
+  // export, sent by the Mac app). Shown on the live site only once data-counter-live="true" is set,
+  // i.e. once Daniel has confirmed the number is real; in local preview it shows whatever the server says.
+  var countWrap = section.querySelector('[data-shred-count]');
+  var countLive = countWrap && countWrap.getAttribute('data-counter-live') === 'true';
+  if (countWrap && (countLive || preview)) {
+    fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/clips-shredded')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) {
+        var total = Number(d && d.total) || 0;
+        var el = countWrap.querySelector('[data-shred-num]');
+        if (!el || !total) return;
+        if (countLive) { section.hidden = false; countWrap.classList.add('is-live'); }
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, start = null, dur = 1200;
+        function step(ts) { if (start === null) start = ts; var p = Math.min(1, (ts - start) / dur); el.textContent = Math.round(total * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1) requestAnimationFrame(step); }
+        if (reduce) el.textContent = total.toLocaleString('en-US'); else requestAnimationFrame(step);
+      })
+      .catch(function () {});
+  }
 })();
 
 // "Submit your link" — same /earn-submission endpoint stockshredder.com's own modal posts to.

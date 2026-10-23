@@ -73,6 +73,80 @@
   }
   if (location.protocol !== 'file:') ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
 
+  // ---- one block per gesture (desktop, mouse or trackpad) ----
+  // CSS scroll-snap felt glitchy: a gentle swipe sprang back, a hard fling skipped blocks, and
+  // trackpad momentum kept nudging after landing. Instead: one wheel gesture = exactly one block,
+  // animated, with the rest of that gesture's momentum ignored. A block taller than the window
+  // (e.g. FAQ with answers open) scrolls normally inside itself before moving on. Off on touch
+  // screens, small windows and reduced motion, where the page just scrolls normally.
+  (function () {
+    var mq = matchMedia('(min-width: 900px) and (min-height: 600px) and (hover: hover) and (pointer: fine)');
+    if (reduce) return;
+    var blocks = function () { return Array.prototype.slice.call(document.querySelectorAll('main > section:not([hidden]), main > .pair')); };
+    var animating = false, gestureUsed = false, quietTimer = null, acc = 0, lastAbs = 0, lockedUntil = 0;
+    var GESTURE_GAP = 260, TRIGGER = 28, DURATION = 760, SETTLE = 220;
+    function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    function animateTo(y) {
+      var from = window.scrollY, dist = y - from, start = null;
+      if (Math.abs(dist) < 2) return;
+      animating = true;
+      function frame(ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / DURATION);
+        window.scrollTo(0, from + dist * ease(p));
+        if (p < 1) requestAnimationFrame(frame); else { animating = false; lockedUntil = performance.now() + SETTLE; }
+      }
+      requestAnimationFrame(frame);
+    }
+    function topOf(el) { return Math.round(el.getBoundingClientRect().top + window.scrollY); }
+    function currentIndex(list) {
+      var y = window.scrollY + 4, idx = 0;
+      list.forEach(function (b, i) { if (topOf(b) <= y) idx = i; });
+      return idx;
+    }
+    function go(dir) {
+      var list = blocks(); if (!list.length) return false;
+      var i = currentIndex(list), cur = list[i], vh = window.innerHeight;
+      var curBottom = topOf(cur) + cur.offsetHeight;
+      // tall block: let it scroll inside itself first
+      if (dir > 0 && curBottom - (window.scrollY + vh) > 4) return false;
+      if (dir < 0 && cur.offsetHeight > vh + 4 && window.scrollY - topOf(cur) > 4 && window.scrollY < topOf(cur) + cur.offsetHeight - vh + 4) return false;
+      if (dir > 0) {
+        if (i + 1 < list.length) animateTo(topOf(list[i + 1]));
+        else animateTo(document.documentElement.scrollHeight - vh); // last block: reveal the footer
+      } else {
+        if (window.scrollY > topOf(cur) + 4) animateTo(topOf(cur) + Math.max(0, cur.offsetHeight - vh) < window.scrollY - 4 ? topOf(cur) + Math.max(0, cur.offsetHeight - vh) : topOf(cur));
+        else if (i > 0) animateTo(topOf(list[i - 1]) + Math.max(0, list[i - 1].offsetHeight - vh));
+      }
+      return true;
+    }
+    window.addEventListener('wheel', function (e) {
+      if (!mq.matches || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (e.target.closest && e.target.closest('.mega-menu, .modal-overlay, .lightbox-overlay, .checkout-panel, textarea')) return;
+      if (document.querySelector('.modal-overlay:not([hidden]), .lightbox-overlay:not([hidden])')) return;
+      var abs = Math.abs(e.deltaY);
+      // momentum only ever fades; a clear jump in strength after a move means a NEW swipe
+      var freshSwipe = gestureUsed && !animating && performance.now() > lockedUntil && abs > 12 && abs > lastAbs * 2.2;
+      lastAbs = abs;
+      clearTimeout(quietTimer);
+      quietTimer = setTimeout(function () { gestureUsed = false; acc = 0; lastAbs = 0; }, GESTURE_GAP);
+      if (freshSwipe) { gestureUsed = false; acc = 0; }
+      if (animating || gestureUsed || performance.now() < lockedUntil) { e.preventDefault(); return; }
+      acc += e.deltaY;
+      if (Math.abs(acc) < TRIGGER) { e.preventDefault(); return; }
+      var dir = acc > 0 ? 1 : -1;
+      if (go(dir)) { e.preventDefault(); gestureUsed = true; }
+      acc = 0;
+    }, { passive: false });
+    document.addEventListener('keydown', function (e) {
+      if (!mq.matches || e.altKey || e.metaKey || e.ctrlKey) return;
+      var t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName))) return;
+      var dir = (e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) ? 1 : (e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) ? -1 : 0;
+      if (!dir || animating) { if (dir) e.preventDefault(); return; }
+      if (go(dir)) e.preventDefault();
+    });
+  })();
+
   // ---- one quiet entrance per section ----
   var els = document.querySelectorAll('main > section:not(.hero), main > .pair');
   if (reduce || !('IntersectionObserver' in window)) return;
