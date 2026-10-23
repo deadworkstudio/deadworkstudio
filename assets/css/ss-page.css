@@ -162,6 +162,14 @@ main > section > h2.mono { margin-bottom: 18px; }
 .annot-list { display: none; }
 .interface { padding-bottom: 104px !important; }
 
+/* ---- Stock Shredder Remote: real app screen in a drawn phone frame ---- */
+.remote .section-sub { max-width: 52ch; margin-left: auto; margin-right: auto; }
+.phone { width: min(300px, 74vw); margin: 44px auto 0; }
+.phone-body { position: relative; padding: 11px; border-radius: 48px; background: #0d0d0c; box-shadow: inset 0 0 0 2px #2a2a27, 0 1px 0 rgba(0,0,0,.1), 0 40px 70px -30px rgba(20,20,18,.55), 0 14px 28px -14px rgba(20,20,18,.35); }
+.phone-body img { width: 100%; border-radius: 38px; padding-top: 36px; background: #000; }
+.phone-island { position: absolute; top: 22px; left: 50%; width: 31%; height: 24px; transform: translateX(-50%); border-radius: 999px; background: #000; z-index: 1; }
+.remote-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+
 /* ---- spec sheet ---- */
 .spec { text-align: left !important; }
 .spec h2 { text-align: center; }
