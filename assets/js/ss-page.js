@@ -84,7 +84,7 @@
     if (reduce) return;
     var blocks = function () { return Array.prototype.slice.call(document.querySelectorAll('main > section:not([hidden]), main > .pair')); };
     var animating = false, gestureUsed = false, quietTimer = null, acc = 0, lastAbs = 0, lockedUntil = 0;
-    var GESTURE_GAP = 260, TRIGGER = 28, DURATION = 760, SETTLE = 220;
+    var GESTURE_GAP = 220, TRIGGER = 22, DURATION = 480, SETTLE = 140;
     function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
     function animateTo(y) {
       var from = window.scrollY, dist = y - from, start = null;
