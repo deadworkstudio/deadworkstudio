@@ -119,7 +119,7 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
    window height left over after the header and the text block (--hero-text), times the
    screenshot's own aspect ratio (2000x1255). */
 .hero { --hero-text: clamp(360px, 41vh, 430px); padding-top: calc(var(--sh-h) + clamp(20px, 3.4vh, 40px)) !important; padding-bottom: 64px !important; }
-.hero-logo { display: block; height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; }
+.hero-logo { display: block; margin: 0 !important; height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; }
 .hero h1 { margin-top: 14px; font: 600 clamp(36px, min(3.9vw, 6.4vh), 58px)/1.05 var(--sans); letter-spacing: -.03em; }
 .hero-lede { margin: 12px auto 0; max-width: none; font-size: clamp(15px, 1.15vw, 18px); line-height: 1.45; color: var(--ink-2); }
 @media (min-width: 900px) { .hero-lede { white-space: nowrap; } }
@@ -138,6 +138,28 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .mbp .mbp-base { position: relative; display: block; width: 113%; margin-left: -6.5%; height: 0; padding-bottom: 2.6%; border-radius: 0 0 46% 46% / 0 0 100% 100%; background: linear-gradient(180deg, #3a3a3d 0%, #26262a 38%, #141416 100%); box-shadow: 0 18px 30px -16px rgba(20,20,18,.55); }
 .mbp .mbp-base::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: #4a4a4e; }
 .mbp .mbp-lip { position: absolute; top: 0; left: 50%; width: 15%; height: 42%; transform: translateX(-50%); border-radius: 0 0 10px 10px; background: #1a1a1c; box-shadow: inset 0 1px 2px rgba(0,0,0,.6); }
+
+/* ---- hero brand row: logo + Beta tag ---- */
+.hero-brand { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 1.4vw, 18px); }
+.beta-tag { display: inline-flex; align-items: center; gap: 8px; height: clamp(26px, 3.4vh, 34px); padding: 0 12px; background: #A5D690; color: #141412; font: 500 clamp(11px, 1.4vh, 13px)/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
+.beta-sq { width: 9px; height: 9px; background: #141412; }
+
+/* ---- dark / light comparison slider ---- */
+.compare { --pos: 50%; position: relative; display: block; margin-top: 30px; }
+.compare-clip { position: relative; display: block; overflow: hidden; border-radius: 6px; box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 30px 60px -24px rgba(20,20,18,.45), 0 12px 24px -12px rgba(20,20,18,.3); user-select: none; -webkit-user-select: none; touch-action: pan-y; }
+.compare-img { display: block; width: 100%; height: auto; pointer-events: none; }
+.compare-light { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); }
+.compare-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: #F4F1EA; box-shadow: 0 0 0 1px rgba(20,20,18,.25); pointer-events: none; }
+.compare-knob { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; transform: translate(-50%, -50%); border-radius: 50%; background: #F4F1EA; box-shadow: 0 0 0 1px rgba(20,20,18,.3), 0 6px 16px rgba(0,0,0,.35); }
+.compare-knob::before, .compare-knob::after { content: ''; position: absolute; top: 50%; width: 0; height: 0; border: 5px solid transparent; transform: translateY(-50%); }
+.compare-knob::before { left: 7px; border-right-color: #141412; }
+.compare-knob::after { right: 7px; border-left-color: #141412; }
+.compare-tag { position: absolute; top: -26px; padding: 0; color: var(--ink-2); pointer-events: none; }
+.compare-tag-l { left: 0; }
+.compare-tag-r { right: 0; }
+.compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; }
+.compare-range:focus-visible + * , .compare:focus-within .compare-knob { outline: 2px solid #141412; outline-offset: 3px; }
+.annot .ann { z-index: 2; }
 
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -364,7 +386,7 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
   .hero .downloads .pill { min-height: 44px; }
   .hero .downloads-note { margin-top: 12px; }
   /* interface: screenshot width follows the window height (2000x1299 image + labels below) */
-  .annot { width: min(1010px, calc(100% - 480px), calc((100svh - var(--sh-h) - 230px) * 1.54)); max-width: none; }
+  .annot { width: min(1010px, calc(100% - 480px), calc((100svh - var(--sh-h) - 230px) * 1.565)); max-width: none; }
   .interface { padding-bottom: 72px !important; }
   /* remote: phone height follows the window height */
   .phone { width: min(300px, calc((100svh - var(--sh-h) - 330px) * 0.47)); margin-top: 28px; }
@@ -375,7 +397,7 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
   .review-form, .faq-list, .checkout-panel, .checkout-success { width: 100%; }
 }
 @media (min-width: 900px) and (min-height: 600px) and (max-width: 1100px) {
-  .annot { width: min(100%, calc((100svh - var(--sh-h) - 300px) * 1.54)); margin-left: auto; margin-right: auto; }
+  .annot { width: min(100%, calc((100svh - var(--sh-h) - 300px) * 1.565)); margin-left: auto; margin-right: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .poster-head, .will-reveal, .billing-switch-track, .billing-switch-track span, .faq-plus::after { transition: none !important; }

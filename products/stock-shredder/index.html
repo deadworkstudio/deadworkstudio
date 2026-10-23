@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/screen-import.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023m" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023o" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -130,7 +130,7 @@
 
 <main id="main">
   <section class="hero">
-    <img class="hero-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" />
+    <div class="hero-brand"><img class="hero-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" /><span class="beta-tag"><span class="beta-sq" aria-hidden="true"></span>Beta</span></div>
     <h1>Raw footage into stock-ready clips.</h1>
     <p class="hero-lede">Reviews raw footage, selects and trims usable moments, exports, then writes keywords ready for immediate upload.</p>
     <button type="button" class="shot shot-hero mbp lightbox-trigger" data-lightbox-trigger aria-label="Enlarge the Import screen">
@@ -176,15 +176,22 @@
     <h2 class="section-title section-head" id="interface-title">The interface</h2>
     <figure class="annot">
       <div class="annot-img">
-      <button type="button" class="shot lightbox-trigger" data-lightbox-trigger>
-        <img src="../../assets/img/products/stock-shredder/screen-review.jpg" alt="Stock Shredder's Review screen with a reel-to-reel tape deck clip: the clip list, the player with LOG and GRADED tabs, trim, approve and deny, and the export, look and fine-tune settings." width="2000" height="1299" />
-      </button>
-      <span class="ann ann-l" style="--x:7%;--y:23%" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
-      <span class="ann ann-r" style="--x:92%;--y:42.5%" data-n="2"><span class="ann-label">Add your own <strong>looks</strong></span></span>
-      <span class="ann ann-r" style="--x:92%;--y:60%" data-n="3"><span class="ann-label"><strong>Fine tune settings</strong></span></span>
-      <span class="ann ann-r" style="--x:92%;--y:91%" data-n="4"><span class="ann-label"><strong>Keyboard shortcuts</strong> for fast workflow</span></span>
-      <span class="ann ann-b" style="--x:21%;--y:83.5%" data-n="5"><span class="ann-label">Switch between <strong>looks</strong></span></span>
-      <span class="ann ann-b" style="--x:48.5%;--y:96.5%" data-n="6"><span class="ann-label"><strong>Approve</strong> or <strong>deny clips</strong> quickly</span></span>
+      <div class="compare" data-compare style="--pos:50%">
+        <span class="compare-clip">
+        <img class="compare-img" src="../../assets/img/products/stock-shredder/review-dark.jpg" alt="Stock Shredder's Review screen in dark mode: a reel-to-reel tape deck clip with the clip list, LOG and GRADED tabs, trim, approve and deny, and the look and fine-tune settings." width="2000" height="1278" loading="lazy" />
+        <img class="compare-img compare-light" src="../../assets/img/products/stock-shredder/review-light.jpg" alt="The same Review screen in light mode." width="2000" height="1278" loading="lazy" />
+        <span class="compare-line" aria-hidden="true"><span class="compare-knob"></span></span>
+        </span>
+        <span class="compare-tag compare-tag-l mono" aria-hidden="true">Dark</span>
+        <span class="compare-tag compare-tag-r mono" aria-hidden="true">Light</span>
+        <input class="compare-range" type="range" min="0" max="100" value="50" step="0.5" aria-label="Drag to compare dark mode and light mode" data-compare-range />
+      </div>
+      <span class="ann ann-l" style="--x:10.2%;--y:23.5%" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
+      <span class="ann ann-r" style="--x:89.8%;--y:46.1%" data-n="2"><span class="ann-label">Add your own <strong>looks</strong></span></span>
+      <span class="ann ann-r" style="--x:90.6%;--y:65.3%" data-n="3"><span class="ann-label"><strong>Fine tune settings</strong></span></span>
+      <span class="ann ann-r" style="--x:84.4%;--y:98.4%" data-n="4"><span class="ann-label"><strong>Keyboard shortcuts</strong> for fast workflow</span></span>
+      <span class="ann ann-b" style="--x:24.4%;--y:80.1%" data-n="5"><span class="ann-label">Switch between <strong>looks</strong></span></span>
+      <span class="ann ann-b" style="--x:48.4%;--y:96.1%" data-n="6"><span class="ann-label"><strong>Approve</strong> or <strong>deny clips</strong> quickly</span></span>
       </div>
       <figcaption class="annot-list">
         <ol>
@@ -432,7 +439,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
-<script src="../../assets/js/ss-page.js?v=20261023d"></script>
+<script src="../../assets/js/ss-page.js?v=20261023e"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download

@@ -147,6 +147,22 @@
     });
   })();
 
+  // ---- dark / light comparison slider ----
+  document.querySelectorAll('[data-compare]').forEach(function (box) {
+    var range = box.querySelector('[data-compare-range]');
+    var set = function (v) { box.style.setProperty('--pos', v + '%'); };
+    range.addEventListener('input', function () { set(range.value); });
+    // a gentle one-time sweep the first time it scrolls into view, so it's obvious it moves
+    if (!reduce && 'IntersectionObserver' in window) {
+      var seen = new IntersectionObserver(function (es) {
+        if (!es[0].isIntersecting) return; seen.disconnect();
+        var t0 = null, dur = 1600;
+        (function frame(ts) { if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur); var v = 50 + Math.sin(p * Math.PI * 2) * 22 * (1 - p); set(v); range.value = v; if (p < 1) requestAnimationFrame(frame); else { set(50); range.value = 50; } })(performance.now());
+      }, { threshold: 0.6 });
+      seen.observe(box);
+    }
+  });
+
   // ---- one quiet entrance per section ----
   var els = document.querySelectorAll('main > section:not(.hero), main > .pair');
   if (reduce || !('IntersectionObserver' in window)) return;
