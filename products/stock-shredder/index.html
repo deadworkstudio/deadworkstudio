@@ -19,7 +19,8 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/screen-import.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023r" />
+<script>if(/[?&]hero=strip\b/.test(location.search))document.documentElement.classList.add("hero-strip");</script>
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261023u" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -140,6 +141,10 @@
       </span>
       <span class="mbp-base" aria-hidden="true"><span class="mbp-lip"></span></span>
     </button>
+    <figure class="strip" data-strip aria-label="A single take of raw behind-the-scenes footage shreds into six separate clips.">
+      <canvas class="strip-canvas" data-strip-canvas aria-hidden="true"></canvas>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../../assets/img/products/stock-shredder/strip-poster.jpg" data-strip-video aria-hidden="true"><source src="../../assets/img/products/stock-shredder/strip.mp4" type="video/mp4" /></video>
+    </figure>
     <div class="downloads">
       <a id="download-mac" class="pill pill-solid" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Download for Mac</span></a>
       <a id="download-win" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Setup-0.6.3.exe"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg><span>Download for Windows</span></a>
@@ -232,7 +237,7 @@
   </section>
 
   <section class="world" data-world-map hidden aria-labelledby="world-title">
-    <h2 class="section-title section-head" id="world-title">Clips shredded worldwide</h2>
+    <h2 class="section-title section-head" id="world-title">Clips <span class="shred-word">shredded</span> worldwide</h2>
     <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span><span class="world-count-note mono" data-shred-note>Preview only &middot; live server count, hidden on the real site until confirmed</span></p>
     <div class="world-map">
       <img src="../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
@@ -297,7 +302,7 @@
         <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
       </div>
       <div class="pricing-card">
-        <span class="pricing-name">Pro</span>
+        <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
         <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
         <p class="pricing-save" data-pricing-save hidden></p>
         <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
@@ -430,6 +435,8 @@
     <p class="foot-copy">2026 DEADWORK STUDIO</p>
   </footer>
 
+<nav class="hero-switch" aria-label="Hero option (review aid)" data-hero-switch hidden><span>Hero</span><a href="?" data-hero-opt="laptop">Laptop</a><a href="?hero=strip" data-hero-opt="strip">Shredded strip</a></nav>
+
 <div class="lightbox-overlay" data-lightbox-overlay hidden>
   <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
   <img class="lightbox-image" data-lightbox-image src="" alt="" />
@@ -437,7 +444,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
-<script src="../../assets/js/ss-page.js?v=20261023g"></script>
+<script src="../../assets/js/ss-page.js?v=20261023h"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download

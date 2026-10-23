@@ -159,6 +159,29 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .compare-range:focus-visible + * , .compare:focus-within .compare-knob { outline: 2px solid #141412; outline-offset: 3px; }
 .annot .ann { z-index: 2; }
 
+/* ---- "shredded" in the Stock Shredder lettering ---- */
+@font-face { font-family: 'Swamp Witch'; src: url('../fonts/swampwitch.woff2') format('woff2'); font-display: swap; }
+.shred-word { font-family: 'Swamp Witch', var(--sans); font-weight: 400; letter-spacing: .01em; font-size: 1.12em; line-height: 1; }
+
+/* ---- Best value tag ---- */
+.pricing-card { position: relative; }
+.pricing-badge { position: absolute; top: 8px; left: calc(50% + 26px); white-space: nowrap; font: 600 9.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; padding: 5px 8px; background: #A5D690; color: #141412; }
+
+/* ---- hero option: shredded strip (shown with ?hero=strip) ---- */
+.strip { display: none; position: relative; margin: clamp(26px, 4vh, 48px) auto 0; perspective: 1700px; }
+html.hero-strip .shot-hero { display: none; }
+html.hero-strip .strip { display: block; width: min(100%, 1180px, calc((100svh - var(--hero-text)) * 2.15)); }
+.strip-canvas { display: block; width: 100%; height: auto; transform-origin: 50% 60%; transform: rotateX(16deg) rotateY(-20deg) rotateZ(4deg) scale(.92); transition: transform 1600ms cubic-bezier(.2,.8,.2,1); will-change: transform; }
+.strip.is-shredded .strip-canvas { transform: rotateX(9deg) rotateY(-9deg) rotateZ(1.5deg) scale(1); }
+.strip-src { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.hero-switch { position: fixed; left: 14px; bottom: 14px; z-index: 90; display: flex; align-items: center; gap: 2px; padding: 4px 4px 4px 12px; background: rgba(20,20,18,.88); border-radius: 999px; font: 500 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #94918a; }
+.hero-switch[hidden] { display: none; }
+.hero-switch span { margin-right: 6px; }
+.hero-switch a { padding: 8px 11px; border-radius: 999px; text-decoration: none; color: #e6e0d3; }
+.hero-switch a[aria-current] { background: #F4F1EA; color: #141412; }
+@media (max-width: 719px) { html.hero-strip .strip { width: 100%; } .hero-switch { left: 10px; bottom: 10px; } }
+@media (prefers-reduced-motion: reduce) { .strip-canvas { transition: none; transform: rotateX(9deg) rotateY(-9deg) rotateZ(1.5deg); } }
+
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
 .split > div { padding: 56px clamp(20px, 4vw, 64px) 60px; }

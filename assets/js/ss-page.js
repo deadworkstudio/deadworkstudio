@@ -173,6 +173,57 @@
     }
   });
 
+  // ---- hero option: the shredded strip ----
+  // One real take (black and white) plays as a single tilted slab, then slices into six clips that
+  // separate and settle, each labelled like an exported clip. Drawn on one canvas from one video.
+  (function () {
+    var fig = document.querySelector('[data-strip]'); if (!fig) return;
+    var preview = location.protocol === 'file:' || /[?&](preview|hero)=/.test(location.search);
+    var sw = document.querySelector('[data-hero-switch]');
+    if (sw && preview) { sw.hidden = false; var cur = document.documentElement.classList.contains('hero-strip') ? 'strip' : 'laptop'; sw.querySelectorAll('[data-hero-opt]').forEach(function (a) { if (a.dataset.heroOpt === cur) a.setAttribute('aria-current', 'true'); }); }
+    if (!document.documentElement.classList.contains('hero-strip')) return;
+    var cv = fig.querySelector('[data-strip-canvas]'), ctx = cv.getContext('2d'), vid = fig.querySelector('[data-strip-video]');
+    var poster = new Image(); poster.src = vid.getAttribute('poster');
+    var N = 6, RATIO = 2.39, p = reduce ? 1 : 0, start = null;
+    var labels = ['CLIP 01  0:00', 'CLIP 02  0:07', 'CLIP 03  0:15', 'CLIP 04  0:24', 'CLIP 05  0:31', 'CLIP 06  0:38'];
+    function size() { var w = cv.clientWidth || fig.clientWidth, dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * dpr); cv.height = Math.round(w / RATIO * 1.16 * dpr); }
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    function draw() {
+      var W = cv.width, H = cv.height, slabH = W / RATIO * 0.93, gapMax = W * 0.022;
+      var src = vid.readyState >= 2 ? vid : (poster.complete ? poster : null);
+      ctx.clearRect(0, 0, W, H);
+      if (!src) return;
+      var sw0 = src.videoWidth || src.naturalWidth, sh0 = src.videoHeight || src.naturalHeight; if (!sw0) return;
+      var gap = gapMax * p, sliceW = (W - gap * (N - 1)) / N, scaleY = slabH / sh0;
+      for (var i = 0; i < N; i++) {
+        var lift = (i % 2 ? -1 : 1) * W * 0.008 * p;
+        var x = i * (sliceW + gap), y = (H - slabH) / 2 - W * 0.02 + lift;
+        var sx = (i / N) * sw0, swid = sw0 / N;
+        ctx.save();
+        ctx.drawImage(src, sx, 0, swid, sh0, x, y, sliceW, slabH);
+        // a thin light edge on each cut, like a fresh slice
+        if (p > 0.02) { ctx.fillStyle = 'rgba(244,241,234,' + (0.55 * p) + ')'; ctx.fillRect(x, y, Math.max(1, W * 0.0012), slabH); }
+        ctx.restore();
+        if (p > 0.6) {
+          ctx.globalAlpha = Math.min(1, (p - 0.6) / 0.4);
+          ctx.fillStyle = '#141412'; ctx.font = '500 ' + Math.round(W * 0.0095) + 'px ui-monospace, SF Mono, Menlo, monospace';
+          ctx.fillText(labels[i], x, y + slabH + W * 0.022);
+          ctx.globalAlpha = 1;
+        }
+      }
+      // one soft light sweep across the slab, like the reference
+      var g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.48, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(255,255,255,' + (0.10 * (1 - p * 0.6)) + ')'); g.addColorStop(0.56, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g; ctx.globalCompositeOperation = 'source-atop'; ctx.fillRect(0, 0, W, H); ctx.globalCompositeOperation = 'source-over';
+    }
+    function frame(ts) {
+      if (!reduce) { if (start === null) start = ts; var t = (ts - start) / 1000; p = t < 1.1 ? 0 : ease(Math.min(1, (t - 1.1) / 1.3)); if (p > 0.05) fig.classList.add('is-shredded'); }
+      draw(); requestAnimationFrame(frame);
+    }
+    size(); window.addEventListener('resize', size);
+    if (!reduce) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); } else fig.classList.add('is-shredded');
+    requestAnimationFrame(frame);
+  })();
+
   // ---- one quiet entrance per section ----
   var els = document.querySelectorAll('main > section:not(.hero), main > .pair');
   if (reduce || !('IntersectionObserver' in window)) return;
