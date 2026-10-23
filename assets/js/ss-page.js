@@ -180,6 +180,7 @@
     var fig = document.querySelector('[data-strip]'); if (!fig) return;
     var cv = fig.querySelector('[data-strip-canvas]'), ctx = cv.getContext('2d'), vid = fig.querySelector('[data-strip-video]');
     var poster = new Image(); poster.src = vid.getAttribute('poster');
+    var LABELS = ['CLIP 01   0:00', 'CLIP 02   0:07', 'CLIP 03   0:15', 'CLIP 04   0:24', 'CLIP 05   0:31', 'CLIP 06   0:38'];
     var N = 6, RATIO = 2.39, LABEL = 0.09, p = reduce ? 1 : 0, start = null;
     function size() { var w = cv.clientWidth || fig.clientWidth, dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * dpr); cv.height = Math.round(w / RATIO * (1 + LABEL) * dpr); }
     function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
@@ -196,7 +197,7 @@
         if (p > 0.55) {
           ctx.globalAlpha = Math.min(1, (p - 0.55) / 0.45);
           ctx.fillStyle = '#4A4741'; ctx.font = '500 ' + Math.max(9, Math.round(W * 0.0105)) + 'px ui-monospace, SF Mono, Menlo, monospace';
-          ctx.fillText("CLIP 0" + (i + 1), x, slabH + W * 0.026);
+          ctx.fillText(LABELS[i], x, slabH + W * 0.026);
           ctx.globalAlpha = 1;
         }
       }
