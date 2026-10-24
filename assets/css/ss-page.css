@@ -230,6 +230,11 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 @media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } .tools-grid li:nth-child(3n) { border-right: 1px solid var(--line-2); } .tools-grid li:nth-child(2n) { border-right: 0; } }
 @media (max-width: 520px) { .tools-grid { grid-template-columns: 1fr; } .tools-grid li { border-right: 0 !important; } .tool { aspect-ratio: 1 / 0.6; padding: 22px 20px; } }
 
+/* ---- section headings in the DEADWORK wordmark style (Anton, caps) ---- */
+@font-face { font-family: 'Anton'; src: url('../fonts/anton.woff2') format('woff2'); font-display: swap; }
+.head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .005em !important; line-height: 1 !important; font-size: clamp(40px, 4.2vw, 64px) !important; }
+.head-dw .shred-word { font-size: 1.02em; text-transform: none; }
+
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
 .split > div { padding: 56px clamp(20px, 4vw, 64px) 60px; }
