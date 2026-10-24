@@ -97,6 +97,31 @@
     }).catch(function () {});
   })();
 
+  // ---- Earn amounts count up from zero, once, the first time they scroll into view ----
+  (function () {
+    var els = Array.prototype.slice.call(document.querySelectorAll('.earn-amt'));
+    if (!els.length) return;
+    var items = els.map(function (el) {
+      var m = el.textContent.match(/^([\d,]+)(.*)$/); if (!m) return null;
+      return { el: el, target: Number(m[1].replace(/,/g, '')), rest: m[2], final: el.textContent };
+    }).filter(Boolean);
+    if (reduce || !('IntersectionObserver' in window)) return;
+    // reserve each number's final width so the row doesn't shift while counting
+    items.forEach(function (it) { it.el.style.display = 'inline-block'; it.el.style.minWidth = it.el.getBoundingClientRect().width + 'px'; it.el.textContent = '0' + it.rest; });
+    var grid = els[0].closest('.earn-grid') || els[0].parentElement;
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return; io.disconnect();
+      var t0 = null, dur = 1400;
+      (function frame(ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+        items.forEach(function (it) { it.el.textContent = p < 1 ? Math.round(it.target * e).toLocaleString('en-US') + it.rest : it.final; });
+        if (p < 1) requestAnimationFrame(frame);
+      })(performance.now());
+    }, { threshold: 0.5 });
+    io.observe(grid);
+  })();
+
   // ---- dark / light comparison slider ----
   document.querySelectorAll('[data-compare]').forEach(function (box) {
     var range = box.querySelector('[data-compare-range]');
