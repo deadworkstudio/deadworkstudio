@@ -115,7 +115,10 @@
       }
       embeddedCheckout = null;
     }
-    if (frame) frame.innerHTML = '';
+    if (frame) {
+      frame.innerHTML = '';
+      frame.classList.remove('is-loading');
+    }
   }
 
   function showGrid(errorMessage) {
@@ -208,12 +211,19 @@
     currentPlanInterval = currentInterval;
     sessionId = null;
     showPricingError('');
-    showStatus('', false);
     if (retryBtn) retryBtn.hidden = true;
 
     grid.hidden = true;
     success.hidden = true;
     panel.hidden = false;
+
+    // Stripe's embedded form takes a second or two to fetch and render — without this the panel
+    // briefly shows nothing but the Cancel button. Show a loading state and the shimmer, and
+    // bring the (possibly off-screen, especially on phones) panel into view before the form shows up.
+    showStatus('Loading secure checkout…', false);
+    frame.classList.add('is-loading');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
 
     getStripe()
       .initEmbeddedCheckout({
@@ -229,6 +239,8 @@
           return;
         }
         embeddedCheckout = checkout;
+        frame.classList.remove('is-loading');
+        showStatus('', false);
         checkout.mount(frame);
       })
       .catch(function () {
