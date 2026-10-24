@@ -147,12 +147,23 @@
   var CHAT_PHONE_MAX = 719;
   function isChatPhone() { return window.matchMedia('(max-width: ' + CHAT_PHONE_MAX + 'px)').matches; }
   var chatLoaded = false, chatReady = false, chatOpenPending = false;
+  // Set the moment the visitor opens chat via the FAQ link, and held until Tawk reports the
+  // window's been minimized. While this (or Tawk's own isChatMaximized()) is true,
+  // syncChatVisibility() below must never hide the widget — otherwise an unrelated resize
+  // (Android keyboard opening, iOS address bar collapsing, rotating the phone) would yank an
+  // open conversation out from under the visitor mid-chat.
+  var chatOpenedViaLink = false;
+  function isChatOpenNow() {
+    return chatOpenedViaLink || !!(window.Tawk_API && window.Tawk_API.isChatMaximized && window.Tawk_API.isChatMaximized());
+  }
   function syncChatVisibility() {
     if (!chatReady || !window.Tawk_API) return;
+    if (isChatOpenNow()) return;
     if (isChatPhone()) { if (window.Tawk_API.hideWidget) window.Tawk_API.hideWidget(); }
     else if (window.Tawk_API.showWidget) window.Tawk_API.showWidget();
   }
   function openChat() {
+    chatOpenedViaLink = true;
     if (!chatReady) { chatOpenPending = true; loadChat(); return; }
     if (window.Tawk_API.showWidget) window.Tawk_API.showWidget();
     if (window.Tawk_API.maximize) window.Tawk_API.maximize();
@@ -162,6 +173,14 @@
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.removeEventListener(ev, loadChat); });
     window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
     window.Tawk_API.customStyle = { visibility: { desktop: { position: 'br', xOffset: 20, yOffset: 24 }, mobile: { position: 'br', xOffset: 10, yOffset: 16 } } };
+    // Hide the bubble as early as possible on phones — before Tawk even finishes rendering it —
+    // so there's no flash of a bubble that syncChatVisibility()'s onLoad-time hide would
+    // otherwise leave visible for a beat. Desktop is untouched.
+    var priorOnBeforeLoad = window.Tawk_API.onBeforeLoad;
+    window.Tawk_API.onBeforeLoad = function () {
+      if (isChatPhone() && window.Tawk_API.hideWidget) window.Tawk_API.hideWidget();
+      if (typeof priorOnBeforeLoad === 'function') priorOnBeforeLoad();
+    };
     var priorOnLoad = window.Tawk_API.onLoad;
     window.Tawk_API.onLoad = function () {
       chatReady = true;
@@ -171,6 +190,7 @@
     };
     var priorOnMinimized = window.Tawk_API.onChatMinimized;
     window.Tawk_API.onChatMinimized = function () {
+      chatOpenedViaLink = false;
       syncChatVisibility();
       if (typeof priorOnMinimized === 'function') priorOnMinimized();
     };
@@ -180,17 +200,36 @@
   }
   if (location.protocol !== 'file:') ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
   // Re-sync on resize/orientation change (e.g. rotating a phone past the breakpoint, or a
-  // desktop window resized narrow) — debounced so it only runs once the size settles.
-  var chatResizeTimer = null;
-  function scheduleChatSync() { clearTimeout(chatResizeTimer); chatResizeTimer = setTimeout(syncChatVisibility, 150); }
+  // desktop window resized narrow) — debounced so it only runs once the size settles, and only
+  // when the WIDTH actually changed. A height-only resize (Android keyboard opening, iOS
+  // address bar showing/hiding) fires this same event but isn't a real breakpoint crossing, and
+  // isChatOpenNow() above is the real guard against closing an open chat either way.
+  var chatResizeTimer = null, lastChatWidth = window.innerWidth;
+  function scheduleChatSync() {
+    clearTimeout(chatResizeTimer);
+    chatResizeTimer = setTimeout(function () {
+      var w = window.innerWidth;
+      if (w === lastChatWidth) return;
+      lastChatWidth = w;
+      syncChatVisibility();
+    }, 150);
+  }
   window.addEventListener('resize', scheduleChatSync);
-  window.addEventListener('orientationchange', function () { setTimeout(syncChatVisibility, 300); });
+  window.addEventListener('orientationchange', function () { setTimeout(function () { lastChatWidth = window.innerWidth; syncChatVisibility(); }, 300); });
 
   // ---- "Chat with us" link at the end of the FAQ — the only way to reach chat on phones, where
-  // the floating bubble stays hidden; works just as well on desktop. ----
+  // the floating bubble stays hidden; works just as well on desktop. Real href (a mailto: to the
+  // studio inbox) so the click is never a dead end if Tawk can't load (ad blocker, outage): we
+  // only take over the click once chat is actually ready, otherwise we give it a real chance to
+  // load and fall back to the mailto if it still isn't ready a couple seconds later.
   var faqChatLink = document.querySelector('[data-faq-chat-open]');
   if (faqChatLink) {
-    faqChatLink.addEventListener('click', function (e) { e.preventDefault(); openChat(); });
+    faqChatLink.addEventListener('click', function (e) {
+      if (chatReady && window.Tawk_API) { e.preventDefault(); openChat(); return; }
+      e.preventDefault();
+      openChat();
+      setTimeout(function () { if (!chatReady) window.location.href = faqChatLink.href; }, 2500);
+    });
   }
 
   // ---- full-block film: plays only while on screen ----
