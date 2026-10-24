@@ -168,10 +168,10 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .pricing-badge { position: absolute; top: 8px; left: calc(50% + 26px); white-space: nowrap; font: 600 9.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; padding: 5px 8px; background: #A5D690; color: #141412; }
 
 /* ---- hero: the shredded strip (flat, centred, framed) ---- */
-.strip { position: relative; display: block; width: min(100%, 1120px, calc((100svh - var(--hero-text)) * 2.3)); margin: clamp(22px, 3.4vh, 40px) auto 0; padding: clamp(10px, 1.2vw, 16px); border: 1px solid var(--line-2); }
+.strip { position: relative; display: block; width: min(100%, 1120px, calc((100svh - var(--hero-text)) * 2.3)); margin: clamp(22px, 3.4vh, 40px) auto 0; }
 .strip-canvas { display: block; width: 100%; height: auto; }
 .strip-src { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-@media (max-width: 719px) { .strip { width: 100%; padding: 8px; } }
+@media (max-width: 719px) { .strip { width: 100%; } }
 
 /* ---- block tones (TP-7 rhythm): light, darker light, black ---- */
 .tone-alt { --bg: #EAE5DA; background: var(--bg); }
