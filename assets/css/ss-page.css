@@ -212,6 +212,24 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 .world-map-dot { background: var(--green) !important; box-shadow: 0 0 0 4px rgba(143,214,135,.18), 0 0 14px rgba(143,214,135,.6); }
 .remote-cta .pill svg, .downloads .pill svg { flex: none; }
 
+/* ---- explore all DEADWORK tools (TE "explore all components" grid) ---- */
+main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px, 9vh, 96px) 0 0 !important; text-align: left; min-height: 0 !important; display: block !important; }
+.tools-title { padding: 0 var(--gutter) 22px; color: var(--ink) !important; font-size: 12px; letter-spacing: .12em; }
+.tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-2); }
+.tools-grid li { border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.tools-grid li:nth-child(3n) { border-right: 0; }
+.tool { position: relative; display: grid; grid-template-rows: 1fr auto; aspect-ratio: 1 / 0.82; padding: 28px; text-decoration: none; color: var(--ink); transition: background 200ms var(--ease); }
+.tool:hover { background: rgba(255,255,255,.45); }
+.tool-mark { display: grid; place-items: center; }
+.tool-mark img { width: min(62%, 300px); height: auto; max-height: 120px; object-fit: contain; opacity: .9; transition: transform 400ms var(--ease), opacity 200ms var(--ease); }
+.tool:hover .tool-mark img { transform: scale(1.04); opacity: 1; }
+.tool-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.tool-name { font-weight: 600; font-size: 16px; }
+.st-live { color: var(--green); }
+.st-soon { color: #8A6A1C; }
+@media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } .tools-grid li:nth-child(3n) { border-right: 1px solid var(--line-2); } .tools-grid li:nth-child(2n) { border-right: 0; } }
+@media (max-width: 520px) { .tools-grid { grid-template-columns: 1fr; } .tools-grid li { border-right: 0 !important; } .tool { aspect-ratio: 1 / 0.6; padding: 22px 20px; } }
+
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
 .split > div { padding: 56px clamp(20px, 4vw, 64px) 60px; }
