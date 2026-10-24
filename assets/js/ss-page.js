@@ -4,6 +4,35 @@
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // ---- shared pop-up helpers: page-scroll lock + a Tab focus trap, used by the "Submit your
+  // link" and "Leave a review" pop-ups (inline scripts further down this page, loaded after this
+  // file) so neither has to duplicate the same logic. ----
+  window.DWModal = (function () {
+    var lockCount = 0;
+    function lock() { if (lockCount++ === 0) document.body.style.overflow = 'hidden'; }
+    function unlock() { lockCount = Math.max(0, lockCount - 1); if (lockCount === 0) document.body.style.overflow = ''; }
+    function focusables(root) {
+      return Array.prototype.slice.call(root.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )).filter(function (el) { return el.offsetParent !== null; });
+    }
+    // Keeps Tab/Shift+Tab cycling inside `dialog` while `overlay` is open. Returns a function
+    // that removes the listener again — call it on close.
+    function trap(overlay, dialog) {
+      var onKeydown = function (e) {
+        if (e.key !== 'Tab') return;
+        var items = focusables(dialog);
+        if (!items.length) return;
+        var first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      };
+      overlay.addEventListener('keydown', onKeydown);
+      return function () { overlay.removeEventListener('keydown', onKeydown); };
+    }
+    return { lock: lock, unlock: unlock, trap: trap };
+  })();
+
   // ---- smart header: visible at load, hides on a deliberate scroll down, returns on scroll up ----
   var sh = document.querySelector('[data-sh]');
   if (sh) {
@@ -40,12 +69,33 @@
   }
 
   // ---- FAQ accordion (one open at a time) ----
+  // Animates open/closed with grid-template-rows (see .faq-a in ss-page.css), which needs the
+  // panel to actually be in the document (not [hidden]) while it transitions — so [hidden] is
+  // only ever applied once a close has fully finished, via transitionend (with a timeout backstop
+  // in case that event doesn't fire, e.g. a 0ms transition under reduced motion).
+  function faqOpen(el) {
+    el.hidden = false;
+    // Two rAFs: the first lets the browser paint the just-unhidden 0fr state, so the second one's
+    // class change is a real transition start rather than landing on the very first paint (which
+    // some browsers skip animating).
+    requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add('is-open'); }); });
+  }
+  function faqClose(el) {
+    if (el.hidden) return;
+    el.classList.remove('is-open');
+    var done = false;
+    var finish = function () { if (done) return; done = true; el.hidden = true; el.removeEventListener('transitionend', finish); };
+    el.addEventListener('transitionend', finish);
+    setTimeout(finish, 280);
+  }
   var qs = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
   qs.forEach(function (q) {
     q.addEventListener('click', function () {
       var open = q.getAttribute('aria-expanded') === 'true';
-      qs.forEach(function (o) { o.setAttribute('aria-expanded', 'false'); document.getElementById(o.getAttribute('aria-controls')).hidden = true; });
-      if (!open) { q.setAttribute('aria-expanded', 'true'); document.getElementById(q.getAttribute('aria-controls')).hidden = false; }
+      qs.forEach(function (o) { if (o === q) return; o.setAttribute('aria-expanded', 'false'); faqClose(document.getElementById(o.getAttribute('aria-controls'))); });
+      var panel = document.getElementById(q.getAttribute('aria-controls'));
+      if (!open) { q.setAttribute('aria-expanded', 'true'); faqOpen(panel); }
+      else { q.setAttribute('aria-expanded', 'false'); faqClose(panel); }
     });
   });
 
@@ -156,8 +206,8 @@
     var cv = fig.querySelector('[data-strip-canvas]'), ctx = cv.getContext('2d'), vid = fig.querySelector('[data-strip-video]');
     var poster = new Image(); poster.src = vid.getAttribute('poster');
     var LABELS = ['CLIP 01   0:00', 'CLIP 02   0:07', 'CLIP 03   0:15', 'CLIP 04   0:24', 'CLIP 05   0:31', 'CLIP 06   0:38'];
-    var N = 6, RATIO = 2.39, LABEL = 0.09, p = reduce ? 1 : 0, start = null;
-    function size() { var w = cv.clientWidth || fig.clientWidth, dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * dpr); cv.height = Math.round(w / RATIO * (1 + LABEL) * dpr); }
+    var N = 6, RATIO = 2.39, LABEL = 0.09, p = reduce ? 1 : 0, start = null, curDpr = 1;
+    function size() { var w = cv.clientWidth || fig.clientWidth, dpr = Math.min(2, window.devicePixelRatio || 1); curDpr = dpr; cv.width = Math.round(w * dpr); cv.height = Math.round(w / RATIO * (1 + LABEL) * dpr); if (!running) draw(); }
     function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
     function draw() {
       var W = cv.width, H = cv.height, slabH = W / RATIO;
@@ -171,19 +221,49 @@
         ctx.drawImage(src, (i / N) * sw0, 0, sw0 / N, sh0, x, 0, sliceW, slabH);
         if (p > 0.55) {
           ctx.globalAlpha = Math.min(1, (p - 0.55) / 0.45);
-          ctx.fillStyle = '#4A4741'; ctx.font = '500 ' + Math.max(9, Math.round(W * 0.0105)) + 'px ui-monospace, SF Mono, Menlo, monospace';
+          ctx.fillStyle = '#4A4741'; ctx.font = '500 ' + Math.round(Math.max(10 * curDpr, W * 0.0105)) + 'px ui-monospace, SF Mono, Menlo, monospace';
           ctx.fillText(LABELS[i], x, slabH + W * 0.026);
           ctx.globalAlpha = 1;
         }
       }
     }
-    function frame(ts) {
+
+    // Runs the slicing-in animation via rAF while it's still playing; once it settles (p reaches
+    // 1, which is permanent) switches to requestVideoFrameCallback where available so the canvas
+    // only repaints when the source video actually has a new frame, instead of every display
+    // refresh. Either way, stops entirely — and pauses the source video — the moment the strip
+    // scrolls off screen, and picks back up from wherever it left off when it scrolls back in.
+    var rafId = null, rvfcId = null, running = false;
+    function tick(ts) {
+      if (!running) return;
       if (!reduce) { if (start === null) start = ts; var t = (ts - start) / 1000; p = t < 1.2 ? 0 : ease(Math.min(1, (t - 1.2) / 1.1)); }
-      draw(); requestAnimationFrame(frame);
+      draw();
+      if (reduce) return; // single draw only; no further frames scheduled
+      if (p < 1 || !('requestVideoFrameCallback' in vid)) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rvfcId = vid.requestVideoFrameCallback(tick);
+      }
     }
+    function start_() {
+      if (running) return;
+      running = true;
+      if (reduce) { draw(); return; } // reduced motion: draw the settled state once and stop
+      var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {});
+      rafId = requestAnimationFrame(tick);
+    }
+    function stop_() {
+      running = false;
+      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+      if (rvfcId !== null && vid.cancelVideoFrameCallback) { vid.cancelVideoFrameCallback(rvfcId); rvfcId = null; }
+      vid.pause();
+    }
+
     size(); window.addEventListener('resize', size);
-    if (!reduce) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); }
-    requestAnimationFrame(frame);
+    if (reduce || !('IntersectionObserver' in window)) { start_(); return; }
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) start_(); else stop_(); });
+    }, { threshold: 0.1 }).observe(fig);
   })();
 
   // ---- one quiet entrance per section ----
