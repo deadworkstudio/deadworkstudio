@@ -233,6 +233,9 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 /* ---- section headings in the DEADWORK wordmark style (Anton, caps) ---- */
 @font-face { font-family: 'Anton'; src: url('../fonts/anton.woff2') format('woff2'); font-display: swap; }
 .head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .005em !important; line-height: 1 !important; font-size: clamp(40px, 4.2vw, 64px) !important; }
+.interface-sub { margin: -8px 0 26px; color: var(--ink-2) !important; }
+.remote .section-sub { max-width: none !important; }
+@media (max-width: 719px) { .br-desk { display: none; } }
 .head-dw .shred-word { font-size: 1.02em; text-transform: none; }
 
 /* ---- problem / solution ---- */
