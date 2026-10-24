@@ -113,4 +113,23 @@
         Array.prototype.map.call(pending, function (el) { return el.getAttribute('data-owner-review'); }));
     }
   }
+
+  // ---- support chat: loads after the first scroll, tap or key press, never on page load ----
+  // Same approach as the Stock Shredder product page (ss-page.js) — every page that loads this
+  // file and has a [data-chat-widget] marker opts in, instead of each page pasting its own
+  // Tawk.to snippet (which ran immediately on load, before anyone had asked for it). Launcher
+  // position/visibility is unchanged — same customStyle values the old inline snippets used.
+  if (document.querySelector('[data-chat-widget]') && location.protocol !== 'file:') {
+    var chatLoaded = false;
+    var loadChat = function () {
+      if (chatLoaded) return; chatLoaded = true;
+      ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.removeEventListener(ev, loadChat); });
+      window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
+      window.Tawk_API.customStyle = { visibility: { desktop: { position: 'br', xOffset: 20, yOffset: 50 }, mobile: { position: 'br', xOffset: 10, yOffset: 50 } } };
+      var s = document.createElement('script');
+      s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8'; s.setAttribute('crossorigin', '*');
+      document.body.appendChild(s);
+    };
+    ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
+  }
 })();

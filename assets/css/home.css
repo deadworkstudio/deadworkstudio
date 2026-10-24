@@ -443,6 +443,11 @@ body.home .panel-headline-lede { text-align: center; }
    social icons — center the whole block to match. */
 
 @media (max-width: 719px) {
+  /* Below the fixed-poster breakpoint, .poster is just a normal flowing block sized by its own
+     content — on a short page (e.g. the default panel with little copy) that can end shorter than
+     one screen, leaving a plain black band below it where the background video/photo has already
+     run out. min-height keeps the poster (and its background) at least one viewport tall. */
+  .poster { min-height: 100svh; }
   /* .poster-foot is a CSS grid, which stretches each item to the full column width by default
      (justify-items: stretch) — text-align alone can't center a box that's already full-width;
      justify-items: center lets each row shrink to its own content first, so centering actually
