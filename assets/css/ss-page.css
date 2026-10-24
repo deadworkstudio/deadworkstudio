@@ -364,11 +364,18 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .earn-grid li { display: grid; gap: 6px; padding: 8px 20px; font-size: 14px; color: var(--ink-2); }
 .earn-grid li + li { border-left: 1px solid var(--line); }
 .earn-amt { font: 500 24px/1.1 var(--sans); letter-spacing: -.01em; color: var(--green); }
-.earn .pill { margin-top: 30px; }
+.earn .pill { margin-top: 0; }
+.earn-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 14px; margin-top: 30px; }
+.modal .review-form { margin-top: 6px; max-width: none; }
+.modal .review-stars { justify-content: flex-start; }
+.modal .review-form .pill { justify-self: stretch; }
+.tone-dark .pill-solid:hover { background: #fff; border-color: #fff; color: #0E0E0D; }
+.tone-dark .earn-actions .pill-outline { color: var(--ink); border-color: var(--ink); }
+.tone-dark .earn-actions .pill-outline:hover { background: var(--ink); color: var(--bg); }
 .earn-note { margin-top: 14px; font-size: 13px; color: var(--ink-3); }
 .modal-overlay { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 20px; background: rgba(20,20,18,.45); }
 .modal-overlay[hidden] { display: none; }
-.modal { position: relative; display: grid; gap: 10px; width: min(100%, 440px); padding: 28px; border-radius: 10px; background: var(--bg); text-align: left; }
+.modal { position: relative; display: grid; gap: 10px; width: min(100%, 480px); max-height: calc(100dvh - 40px); overflow-y: auto; padding: 28px; border-radius: 10px; background: var(--bg); text-align: left; }
 .modal h3 { font: 600 22px/1.2 var(--sans); }
 .modal [data-earn-modal-body] { display: grid; gap: 10px; }
 .modal-close { position: absolute; top: 10px; right: 12px; border: 0; background: none; font-size: 26px; cursor: pointer; }

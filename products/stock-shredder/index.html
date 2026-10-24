@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024d" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024f" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -254,29 +254,11 @@
     </div>
   </section>
 
-  <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+  <section class="reviews" id="reviews" data-reviews-section hidden aria-labelledby="reviews-title">
     <h2 class="section-title section-head head-dw" id="reviews-title">Reviews</h2>
     <p class="reviews-count" data-reviews-count hidden></p>
     <div class="reviews-list" data-reviews-list hidden></div>
     <p class="reviews-empty" data-reviews-empty hidden></p>
-    <form class="review-form" data-review-form novalidate>
-      <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
-        <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
-        <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
-        <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
-        <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
-        <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
-      </div>
-      <label class="sr-only" for="review-name">Your name</label>
-      <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
-      <label class="sr-only" for="review-email">Your email</label>
-      <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
-      <label class="sr-only" for="review-body">What's your experience been like?</label>
-      <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
-      <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
-      <button class="pill pill-solid" type="submit" data-review-submit>Submit review</button>
-      <p class="form-status" data-review-status hidden></p>
-    </form>
   </section>
 
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
@@ -358,7 +340,10 @@
       <li><span class="earn-amt">1,000 clips each</span><span>Refer a friend</span></li>
       <li><span class="earn-amt">1,500 clips</span><span>Record a YouTube review and walkthrough</span></li>
     </ul>
-    <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
+    <div class="earn-actions">
+      <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
+      <button class="pill pill-outline" type="button" data-review-open>Leave a review <span aria-hidden="true">&rarr;</span></button>
+    </div>
     <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account.</p>
   </section>
 
@@ -376,6 +361,33 @@
         <input type="text" placeholder="Instagram link" data-earn-instagram />
         <button class="pill pill-solid" type="button" data-earn-submit-btn>Submit</button>
       </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-review-modal-overlay hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Leave a review">
+      <button class="modal-close" type="button" data-review-modal-close aria-label="Close">&times;</button>
+      <p class="mono">Reviews</p>
+      <h3>Leave a review</h3>
+      <p class="earn-modal-note">Tell other filmmakers what Stock Shredder has been like. Reviews appear after a quick approval, and a website review earns you 250 clips.</p>
+      <form class="review-form" data-review-form novalidate>
+      <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
+        <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
+      </div>
+      <label class="sr-only" for="review-name">Your name</label>
+      <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
+      <label class="sr-only" for="review-email">Your email</label>
+      <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
+      <label class="sr-only" for="review-body">What's your experience been like?</label>
+      <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
+      <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
+      <button class="pill pill-solid" type="submit" data-review-submit>Submit review</button>
+      <p class="form-status" data-review-status hidden></p>
+    </form>
     </div>
   </div>
 
@@ -621,6 +633,19 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 })();
 </script>
 <script>
+// "Leave a review" pop-up: same open/close rules as "Submit your link".
+(function () {
+  var open = document.querySelector('[data-review-open]');
+  var overlay = document.querySelector('[data-review-modal-overlay]');
+  if (!open || !overlay) return;
+  var close = function () { overlay.hidden = true; open.focus(); };
+  open.addEventListener('click', function () { overlay.hidden = false; var first = overlay.querySelector('[data-review-star]'); if (first) first.focus(); });
+  overlay.querySelector('[data-review-modal-close]').addEventListener('click', close);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
+})();
+</script>
+<script>
 // Reviews: approved-review grid (GET /reviews) + the submission form (POST /reviews). New
 // submissions always land as "pending" server-side (see reviews.ts) -- nothing posted here shows
 // up publicly until an admin approves it in the Worker's own moderation page, so the success
@@ -659,6 +684,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
           '</div>';
       }).join('');
       listEl.hidden = false;
+      var reviewsSection = document.querySelector('[data-reviews-section]'); if (reviewsSection) reviewsSection.hidden = false;
     })
     .catch(function () {}); // reviews-list just stays hidden if this fails -- no broken-looking gap
 
