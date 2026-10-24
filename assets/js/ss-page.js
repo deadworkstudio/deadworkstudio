@@ -8,16 +8,26 @@
   // link" and "Leave a review" pop-ups (inline scripts further down this page, loaded after this
   // file) so neither has to duplicate the same logic. ----
   window.DWModal = (function () {
-    var lockCount = 0;
-    function lock() { if (lockCount++ === 0) document.body.style.overflow = 'hidden'; }
-    function unlock() { lockCount = Math.max(0, lockCount - 1); if (lockCount === 0) document.body.style.overflow = ''; }
+    // A plain boolean, not a counter: each pop-up guards its own open handler against firing
+    // twice in a row (see the "Submit your link" / "Leave a review" scripts further down this
+    // page), so lock() and unlock() are never meant to nest. A counter that still somehow got
+    // incremented twice for one open (e.g. a stray double click slipping past that guard) would
+    // need two matching unlock() calls to ever let go of the page again — a boolean can't get
+    // stuck that way.
+    var locked = false;
+    function lock() { if (locked) return; locked = true; document.body.style.overflow = 'hidden'; }
+    function unlock() { if (!locked) return; locked = false; document.body.style.overflow = ''; }
     function focusables(root) {
       return Array.prototype.slice.call(root.querySelectorAll(
         'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
       )).filter(function (el) { return el.offsetParent !== null; });
     }
-    // Keeps Tab/Shift+Tab cycling inside `dialog` while `overlay` is open. Returns a function
-    // that removes the listener again — call it on close.
+    // Keeps Tab/Shift+Tab cycling inside `dialog` while `overlay` is open, AND watches focus
+    // itself: disabling the currently-focused control (e.g. "Submit" while a form sends) or
+    // removing it from the DOM (a success message replacing the form) both blur focus straight to
+    // <body> without ever firing a Tab keypress the handler below could catch, which is how focus
+    // used to escape the trap entirely. Returns a function that removes both listeners — call it
+    // on close.
     function trap(overlay, dialog) {
       var onKeydown = function (e) {
         if (e.key !== 'Tab') return;
@@ -27,8 +37,17 @@
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       };
+      var onFocusIn = function (e) {
+        if (dialog.contains(e.target)) return;
+        var items = focusables(dialog);
+        (items[0] || dialog).focus();
+      };
       overlay.addEventListener('keydown', onKeydown);
-      return function () { overlay.removeEventListener('keydown', onKeydown); };
+      document.addEventListener('focusin', onFocusIn);
+      return function () {
+        overlay.removeEventListener('keydown', onKeydown);
+        document.removeEventListener('focusin', onFocusIn);
+      };
     }
     return { lock: lock, unlock: unlock, trap: trap };
   })();
@@ -74,6 +93,11 @@
   // only ever applied once a close has fully finished, via transitionend (with a timeout backstop
   // in case that event doesn't fire, e.g. a 0ms transition under reduced motion).
   function faqOpen(el) {
+    // A close triggered on this same panel moments ago (see faqClose below) may still have its
+    // hide scheduled — reopening within that window must cancel it, or it fires anyway and hides
+    // the now-open answer while its question still shows aria-expanded="true".
+    if (el._faqCloseTimer) { clearTimeout(el._faqCloseTimer); el._faqCloseTimer = null; }
+    if (el._faqCloseListener) { el.removeEventListener('transitionend', el._faqCloseListener); el._faqCloseListener = null; }
     el.hidden = false;
     // Two rAFs: the first lets the browser paint the just-unhidden 0fr state, so the second one's
     // class change is a real transition start rather than landing on the very first paint (which
@@ -84,9 +108,15 @@
     if (el.hidden) return;
     el.classList.remove('is-open');
     var done = false;
-    var finish = function () { if (done) return; done = true; el.hidden = true; el.removeEventListener('transitionend', finish); };
+    var finish = function () {
+      if (done) return; done = true;
+      el.hidden = true;
+      el.removeEventListener('transitionend', finish);
+      el._faqCloseListener = null; el._faqCloseTimer = null;
+    };
+    el._faqCloseListener = finish;
+    el._faqCloseTimer = setTimeout(finish, 280);
     el.addEventListener('transitionend', finish);
-    setTimeout(finish, 280);
   }
   var qs = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
   qs.forEach(function (q) {
@@ -207,7 +237,12 @@
     var poster = new Image(); poster.src = vid.getAttribute('poster');
     var LABELS = ['CLIP 01   0:00', 'CLIP 02   0:07', 'CLIP 03   0:15', 'CLIP 04   0:24', 'CLIP 05   0:31', 'CLIP 06   0:38'];
     var N = 6, RATIO = 2.39, LABEL = 0.09, p = reduce ? 1 : 0, start = null, curDpr = 1;
-    function size() { var w = cv.clientWidth || fig.clientWidth, dpr = Math.min(2, window.devicePixelRatio || 1); curDpr = dpr; cv.width = Math.round(w * dpr); cv.height = Math.round(w / RATIO * (1 + LABEL) * dpr); if (!running) draw(); }
+    // Resizing the canvas's width/height attributes clears its pixels, whether or not the slicing
+    // animation is still running to redraw them — so this always redraws immediately after,
+    // instead of only when `running` (which left the canvas permanently blank whenever the strip
+    // was never actually animating: autoplay blocked, e.g. iPhone Low Power Mode, or reduced
+    // motion, where the one-time draw below can land before the poster/video are ready).
+    function size() { var w = cv.clientWidth || fig.clientWidth, dpr = Math.min(2, window.devicePixelRatio || 1); curDpr = dpr; cv.width = Math.round(w * dpr); cv.height = Math.round(w / RATIO * (1 + LABEL) * dpr); draw(); }
     function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
     function draw() {
       var W = cv.width, H = cv.height, slabH = W / RATIO;
@@ -258,6 +293,12 @@
       if (rvfcId !== null && vid.cancelVideoFrameCallback) { vid.cancelVideoFrameCallback(rvfcId); rvfcId = null; }
       vid.pause();
     }
+
+    // Neither the initial size() call above nor start_() below can draw anything real until a
+    // source is actually ready — whichever of the poster image or the video's first frame finishes
+    // loading later fires its own redraw, so the strip never gets stuck showing a blank canvas.
+    poster.onload = draw;
+    vid.addEventListener('loadeddata', draw);
 
     size(); window.addEventListener('resize', size);
     if (reduce || !('IntersectionObserver' in window)) { start_(); return; }

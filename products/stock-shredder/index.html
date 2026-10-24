@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024i" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024j" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -186,12 +186,12 @@
         </span>
         <input class="compare-range" type="range" min="0" max="100" value="50" step="0.5" aria-label="Drag to compare dark mode and light mode" data-compare-range />
       </div>
-      <span class="ann ann-l" style="--x:10.2%;--y:23.5%" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
-      <span class="ann ann-r" style="--x:89.8%;--y:46.1%" data-n="2"><span class="ann-label">Add your own <strong>looks</strong></span></span>
-      <span class="ann ann-r" style="--x:90.6%;--y:65.3%" data-n="3"><span class="ann-label"><strong>Fine tune settings</strong></span></span>
-      <span class="ann ann-r" style="--x:84.4%;--y:98.4%" data-n="4"><span class="ann-label"><strong>Keyboard shortcuts</strong> for fast workflow</span></span>
-      <span class="ann ann-b" style="--x:24.4%;--y:80.1%" data-n="5"><span class="ann-label">Switch between <strong>looks</strong></span></span>
-      <span class="ann ann-b" style="--x:48.4%;--y:96.1%" data-n="6"><span class="ann-label"><strong>Approve</strong> or <strong>deny clips</strong> quickly</span></span>
+      <span class="ann ann-l" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
+      <span class="ann ann-r" data-n="2"><span class="ann-label">Add your own <strong>looks</strong></span></span>
+      <span class="ann ann-r" data-n="3"><span class="ann-label"><strong>Fine tune settings</strong></span></span>
+      <span class="ann ann-r" data-n="4"><span class="ann-label"><strong>Keyboard shortcuts</strong> for fast workflow</span></span>
+      <span class="ann ann-b" data-n="5"><span class="ann-label">Switch between <strong>looks</strong></span></span>
+      <span class="ann ann-b" data-n="6"><span class="ann-label"><strong>Approve</strong> or <strong>deny clips</strong> quickly</span></span>
       </div>
       <figcaption class="annot-list">
         <ol>
@@ -235,8 +235,8 @@
       <div class="spec-row">
         <p class="spec-k mono">Speed</p>
         <div class="spec-v">
-          <p style="font-size:16px;font-weight:600;color:var(--ink)">100 clips in 33 min</p>
-          <p class="spec-note" style="font-family:var(--mono)">Real Sony 4K footage &mdash; imported, then exported as Log + Graded ProRes 422 HQ. MacBook Pro M3 Pro. Review time not included.</p>
+          <p class="spec-headline">100 clips in 33 min</p>
+          <p class="spec-note spec-note-mono">Real Sony 4K footage &mdash; imported, then exported as Log + Graded ProRes 422 HQ. MacBook Pro M3 Pro. Review time not included.</p>
         </div>
       </div>
       <div class="spec-row">
@@ -284,7 +284,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>
         <p class="pricing-price" data-monthly="25" data-annual="250"><span class="num">$25</span>/mo</p>
-        <p class="pricing-save" data-pricing-save></p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="100">100 clips / mo</p>
         <p class="pricing-per-clip">$0.25 / clip</p>
         
@@ -293,7 +293,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Creator</span>
         <p class="pricing-price" data-monthly="59" data-annual="590"><span class="num">$59</span>/mo</p>
-        <p class="pricing-save" data-pricing-save></p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="400">400 clips / mo</p>
         <p class="pricing-per-clip">$0.15 / clip</p>
         
@@ -302,7 +302,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
         <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
-        <p class="pricing-save" data-pricing-save></p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
         <p class="pricing-per-clip">$0.11 / clip</p>
         <p class="pricing-note">Creates copy-paste keywords.</p>
@@ -311,7 +311,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Studio</span>
         <p class="pricing-price" data-monthly="199" data-annual="1990"><span class="num">$199</span>/mo</p>
-        <p class="pricing-save" data-pricing-save></p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
         <p class="pricing-per-clip">$0.10 / clip</p>
         <p class="pricing-note">Creates copy-paste keywords.</p><p class="pricing-note">Approve clips remotely via phone.</p>
@@ -356,7 +356,7 @@
   </section>
 
   <div class="modal-overlay" data-earn-modal-overlay hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit your link">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit your link" tabindex="-1">
       <button class="modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
       <p class="mono">Earn</p>
       <h3>Submit your link</h3>
@@ -377,7 +377,7 @@
   </div>
 
   <div class="modal-overlay" data-review-modal-overlay hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Leave a review">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Leave a review" tabindex="-1">
       <button class="modal-close" type="button" data-review-modal-close aria-label="Close">&times;</button>
       <p class="mono">Reviews</p>
       <h3>Leave a review</h3>
@@ -502,8 +502,8 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021c"></script>
-<script src="../../assets/js/checkout.js?v=20261024b"></script>
-<script src="../../assets/js/ss-page.js?v=20261024m"></script>
+<script src="../../assets/js/checkout.js?v=20261024c"></script>
+<script src="../../assets/js/ss-page.js?v=20261024n"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
@@ -603,6 +603,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     openBtn.focus();
   }
   openBtn.addEventListener('click', function () {
+    if (!overlay.hidden) return; // already open — a second lock() with no matching second unlock() would strand the scroll lock on
     overlay.hidden = false;
     if (window.DWModal) { window.DWModal.lock(); untrap = window.DWModal.trap(overlay, overlay.querySelector('.modal')); }
     var first = overlay.querySelector('[data-earn-email]');
@@ -645,6 +646,10 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
           return;
         }
         body.innerHTML = '<p class="earn-modal-note">Thanks! Once it’s approved, you’ll get an access code to add the clips to your account.</p>';
+        // The submit button that focus likely still lived on is gone now — send it to the close
+        // button (the only other focusable left in the dialog) instead of leaving it to fall out
+        // to <body>, outside the trap.
+        closeBtn.focus();
       })
       .catch(function () {
         submitBtn.disabled = false;
@@ -669,6 +674,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     open.focus();
   };
   open.addEventListener('click', function () {
+    if (!overlay.hidden) return; // already open — a second lock() with no matching second unlock() would strand the scroll lock on
     overlay.hidden = false;
     if (window.DWModal) { window.DWModal.lock(); untrap = window.DWModal.trap(overlay, overlay.querySelector('.modal')); }
     var first = overlay.querySelector('[data-review-star]');

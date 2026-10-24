@@ -56,8 +56,13 @@
                 var annual = Number(priceEl.getAttribute('data-annual'));
                 saveEl.textContent = 'Save $' + (monthly * 12 - annual).toLocaleString('en-US') + '/yr';
                 saveEl.classList.add('is-visible');
+                saveEl.removeAttribute('aria-hidden');
               } else {
+                // opacity: 0 (via is-visible coming off) only hides this visually — the leftover
+                // "Save $X/yr" text from the last time Annual was selected is still in the
+                // accessibility tree and gets read out on Monthly unless it's hidden explicitly too.
                 saveEl.classList.remove('is-visible');
+                saveEl.setAttribute('aria-hidden', 'true');
               }
             }
             priceEl.classList.remove('is-swapping');
