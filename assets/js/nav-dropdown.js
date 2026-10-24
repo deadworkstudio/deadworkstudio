@@ -98,6 +98,22 @@
     close(activeTrigger || null);
   });
 
-  // Resize past/under a breakpoint shouldn't strand the menu open with stale layout.
-  window.addEventListener('resize', function () { close(null); });
+  // Resize past/under a breakpoint shouldn't strand the menu open with stale layout — but on
+  // phones, scrolling toggles the URL bar and fires a HEIGHT-only resize (no width change), which
+  // would otherwise slam an open menu shut mid-scroll for no reason. Only close on a real width
+  // change (rotating, or an actual breakpoint crossing).
+  var lastWidth = window.innerWidth;
+  window.addEventListener('resize', function () {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
+    close(null);
+  });
+
+  // Menu photos/logos load eagerly now (no more loading="lazy" popping in late once the panel is
+  // already open) — fade each one in the moment it's actually ready instead of having it pop in
+  // as a hard cut whenever that finishes, whether before or after the panel opens.
+  Array.prototype.slice.call(menu.querySelectorAll('.mega-menu-card-photo, .mega-menu-card-logo')).forEach(function (img) {
+    if (img.complete) { img.classList.add('is-loaded'); return; }
+    img.addEventListener('load', function () { img.classList.add('is-loaded'); }, { once: true });
+  });
 })();
