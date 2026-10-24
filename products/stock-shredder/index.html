@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#0a0a09" />
+<meta name="theme-color" content="#F4F1EA" />
 <title>DEADWORK - Stock Shredder</title>
 <meta name="description" content="Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income." />
 <meta property="og:type" content="website" />
@@ -17,24 +17,16 @@
 <!-- Starts the Swamp Witch font downloading immediately instead of waiting for the CSS to be
      parsed and the h1 to need it — without this, the fallback font flashes briefly before the
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
-<link rel="preload" href="../../assets/fonts/swampwitch.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/bg.jpg?v=20261022n" />
-<link rel="preload" as="image" href="../../assets/img/brand/deadwork-wordmark-bone.png" />
-<link rel="preload" href="../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="../../assets/css/tokens.css?v=20261016c" />
-<link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
-<link rel="stylesheet" href="../../assets/css/home.css?v=20261022t" />
-<link rel="stylesheet" href="../../assets/css/product.css?v=20261021a" />
+<link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024d" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
-<body>
-<a class="earn-tab" href="#earn" aria-label="Jump to the Earn section">Earn</a>
-<div class="poster">
-  <div class="poster-media" aria-hidden="true">
-    <img src="../../assets/img/products/stock-shredder/bg.jpg?v=20261022n" alt="" fetchpriority="high" />
-  </div>
-  <header class="poster-head">
+<body class="ss">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="poster-head" data-sh>
     <span class="poster-meta-left">06 Tools</span>
     <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
       <div class="nav-tab" data-nav-tab>
@@ -45,7 +37,7 @@
       </div>
     </nav>
 
-    <h1 class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
+    <h1 class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-black-nr.png" alt="DEADWORK" width="1854" height="394"></a></h1>
 
     <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
       <div class="nav-tab" data-nav-tab>
@@ -134,369 +126,336 @@
           </div>
         </div>
     </div>
-  </header>
+</header>
 
-  <main class="poster-panel" data-panels>
-    <div class="panel-stack">
-      <article class="panel is-active" data-panel="default">
-
-<section class="wrap product-hero" data-product="stock-shredder">
-  <div class="product-hero-title-row">
-    <h1 class="display">Stock Shredder</h1>
-    <div class="product-hero-badge-row">
-      <span class="badge badge-beta"><span class="badge-icon badge-icon--filled"></span>BETA</span>
+<main id="main">
+  <section class="hero">
+    <div class="hero-brand"><img class="hero-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" /></div>
+    <h1>Raw footage into stock-ready clips.</h1>
+    <figure class="strip" data-strip aria-label="A single take of raw behind-the-scenes footage shreds into six separate clips.">
+      <canvas class="strip-canvas" data-strip-canvas aria-hidden="true"></canvas>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../../assets/img/products/stock-shredder/strip-poster.jpg" data-strip-video aria-hidden="true"><source src="../../assets/img/products/stock-shredder/strip.mp4" type="video/mp4" /></video>
+    </figure>
+    <div class="downloads">
+      <a id="download-mac" class="pill pill-solid" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Download for Mac</span></a>
+      <a id="download-win" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Setup-0.6.3.exe"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg><span>Download for Windows</span></a>
+      <span class="pill pill-outline is-disabled" aria-disabled="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone &middot; Coming soon</span></span>
+      <a id="download-android" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
     </div>
+    <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.3</span> (Beta)</p>
+  </section>
+
+  <section class="film tone-dark" aria-label="On set">
+    <video class="film-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/film-poster.jpg" data-film aria-hidden="true"><source src="../../assets/img/products/stock-shredder/film.mp4" type="video/mp4" /></video>
+    <p class="film-line mono">By artists. For artists.</p>
+  </section>
+
+  <div class="pair tone-alt">
+  <section class="workflow" aria-labelledby="workflow-title">
+    <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
+    <ol class="steps">
+      <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Select</span><span class="step-d">Import your folder</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Review your selections</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Send</span><span class="step-d">Export your clips</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Share</span><span class="step-d">Receive created keywords</span></li>
+    </ol>
+  </section>
+
+  <section class="split" aria-label="The problem and the solution">
+    <div>
+      <h2 class="mono">The problem</h2>
+      <p>Terabytes of footage never make it to sites because sorting, trimming, coloring, exporting, and tagging by hand takes more time than it's worth. Stock footage is profitable but the repetitive workflow of hundreds of hours can cause constant derailment from other tasks.</p>
+    </div>
+    <div>
+      <h2 class="mono">The solution</h2>
+      <p>Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income.</p>
+    </div>
+  </section>
   </div>
-  <p class="eyebrow">Raw footage into stock-ready clips.</p>
-  <p class="lede">Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload.</p>
-</section>
 
-<section class="wrap product-hero-cta" data-product="stock-shredder">
-  <p class="eyebrow download-eyebrow">Download</p>
-  <div class="product-hero-actions">
-    <div class="download-group">
-      <!-- 2x2 grid: Mac/iPhone on top, Windows/Android below. No more per-button captions --
-           platform/pricing detail that used to repeat per button now lives once, centered, below
-           the whole grid (.download-footnote). -->
-      <a id="download-mac" class="btn btn-primary" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg">
-        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
-        <span class="label">Mac</span>
-      </a>
+  <section class="interface tone-dark" aria-labelledby="interface-title">
+    <h2 class="section-title section-head head-dw" id="interface-title">The interface</h2>
+    <p class="section-title interface-sub">Built for speed.</p>
+    <figure class="annot">
+      <div class="annot-img">
+      <div class="compare" data-compare style="--pos:50%">
+        <span class="compare-clip">
+        <video class="compare-img" muted loop playsinline preload="metadata" poster="../../assets/img/products/stock-shredder/review-dark-poster.jpg" width="1600" height="1022" aria-label="Stock Shredder's Review screen in dark mode, playing a reel-to-reel tape deck clip with the clip list, LOG and GRADED tabs, trim, approve and deny, and the look and fine-tune settings." data-compare-a><source src="../../assets/img/products/stock-shredder/review-dark.mp4" type="video/mp4" /></video>
+        <video class="compare-img compare-light" muted loop playsinline preload="metadata" poster="../../assets/img/products/stock-shredder/review-light-poster.jpg" width="1600" height="1022" aria-hidden="true" data-compare-b><source src="../../assets/img/products/stock-shredder/review-light.mp4" type="video/mp4" /></video>
+        <span class="compare-line" aria-hidden="true"><span class="compare-knob"></span></span>
+        </span>
+        <input class="compare-range" type="range" min="0" max="100" value="50" step="0.5" aria-label="Drag to compare dark mode and light mode" data-compare-range />
+      </div>
+      <span class="ann ann-l" style="--x:10.2%;--y:23.5%" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
+      <span class="ann ann-r" style="--x:89.8%;--y:46.1%" data-n="2"><span class="ann-label">Add your own <strong>looks</strong></span></span>
+      <span class="ann ann-r" style="--x:90.6%;--y:65.3%" data-n="3"><span class="ann-label"><strong>Fine tune settings</strong></span></span>
+      <span class="ann ann-r" style="--x:84.4%;--y:98.4%" data-n="4"><span class="ann-label"><strong>Keyboard shortcuts</strong> for fast workflow</span></span>
+      <span class="ann ann-b" style="--x:24.4%;--y:80.1%" data-n="5"><span class="ann-label">Switch between <strong>looks</strong></span></span>
+      <span class="ann ann-b" style="--x:48.4%;--y:96.1%" data-n="6"><span class="ann-label"><strong>Approve</strong> or <strong>deny clips</strong> quickly</span></span>
+      </div>
+      <figcaption class="annot-list">
+        <ol>
+          <li><strong>Clips</strong> &mdash; usable moments from raw footage.</li>
+          <li>Add your own <strong>looks</strong></li>
+          <li><strong>Fine tune settings</strong></li>
+          <li><strong>Keyboard shortcuts</strong> for fast workflow</li>
+          <li>Switch between <strong>looks</strong></li>
+          <li><strong>Approve</strong> or <strong>deny clips</strong> quickly</li>
+        </ol>
+      </figcaption>
+    </figure>
+  </section>
 
-      <span class="btn btn-outline btn-unavailable" aria-disabled="true">
-        <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg>
-        <span class="label">Remote for iPhone (Coming soon)</span>
-      </span>
+  <section class="remote" aria-labelledby="remote-title">
+    <h2 class="mono">Stock Shredder Remote</h2>
+    <p class="section-title" id="remote-title">Approve clips from your phone.</p>
+    <p class="section-sub">Approve or deny clips remotely from your phone via Studio.<br class="br-desk" /> Process footage anywhere without being at your computer.</p>
+    <figure class="phone">
+      <div class="phone-body">
+        <span class="phone-island" aria-hidden="true"></span>
+        <img src="../../assets/img/products/stock-shredder/remote-import.jpg" alt="Stock Shredder Remote on iPhone: the Import screen, choose files or a folder from your Mac, with the Select, Shred, Send, Share steps." width="660" height="1344" loading="lazy" />
+      </div>
+    </figure>
+    <div class="remote-cta">
+      <span class="pill pill-outline is-disabled" aria-disabled="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone &middot; Coming soon</span></span>
+      <a class="pill pill-outline" href="#download-android"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
+    </div>
+  </section>
 
-      <a id="download-win" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Setup-0.6.3.exe">
-        <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg>
-        <span class="label">Windows</span>
-      </a>
-
-      <a id="download-android" class="btn btn-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk">
-        <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
-        <span class="label">Remote for Android</span>
-      </a>
-
-      <div class="download-footnote">
-        <p class="checkout-success-note">25 clips, no card required.</p>
-        <p class="download-version" id="download-version">Version 0.6.3</p>
+  <section class="spec tone-alt" aria-labelledby="spec-title">
+    <h2 class="section-title section-head head-dw" id="spec-title">Spec sheet</h2>
+    <div class="specs">
+      <div class="spec-row">
+        <p class="spec-k mono">Platform</p>
+        <div class="spec-v">
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg></span><span><strong>macOS</strong><br />Intel &amp; Apple Silicon</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></span><span><strong>Windows</strong></span></div>
+        </div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Works with</p>
+        <div class="spec-v"><ul class="tiles"><li>Artgrid</li><li>Shutterstock</li><li>Adobe Stock</li><li>Pond5</li><li>Storyblocks</li><li>Blackbox</li><li>iStock</li><li>Getty Images</li><li>Motion Array</li><li>Envato Elements</li><li>Filmsupply</li><li class="tile-more">and more</li></ul></div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Formats</p>
+        <div class="spec-v"><ul class="tiles tiles-mono"><li>MP4</li><li>MOV</li><li>MXF</li><li>MKV</li><li>AVI</li><li>M4V</li><li>MTS</li><li>M2TS</li><li>MPG</li><li>MPEG</li><li>WebM</li><li>3GP</li><li>WMV</li></ul>
+          <ul class="tiles tiles-raw"><li>Blackmagic RAW</li><li>RED R3D</li><li>CinemaDNG</li><li>ARRIRAW</li></ul>
+          <p class="spec-note">RAW formats need the camera maker's free tools installed.</p></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="wrap hero-screenshot">
-  <button type="button" class="lightbox-trigger" data-lightbox-trigger>
-    <img src="../../assets/img/products/stock-shredder/interface-dark.png" alt="Stock Shredder's Import screen in dark mode, showing the drop zone for raw footage and the Select / Shred / Send / Share step rail." width="1280" height="820" loading="eager" fetchpriority="high" />
-  </button>
-</section>
+  <section class="world tone-dark" data-world-map hidden aria-labelledby="world-title">
+    <h2 class="section-title section-head head-dw" id="world-title">Clips <span class="shred-word">shredded</span> worldwide</h2>
+    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span><span class="world-count-note mono" data-shred-note>Preview only &middot; live server count, hidden on the real site until confirmed</span></p>
+    <div class="world-map">
+      <img src="../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
+      <div class="world-map-dots" data-world-map-dots></div>
+    </div>
+  </section>
 
-<section class="wrap split">
-  <div>
-    <h2>The problem</h2>
-    <p>Terabytes of footage never make it to sites because sorting, trimming, coloring, exporting, and tagging by hand takes more time than it's worth. Stock footage is profitable but the repetitive workflow of hundreds of hours can cause constant derailment from other tasks.</p>
-  </div>
-  <div>
-    <h2>The solution</h2>
-    <p>Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income.</p>
-  </div>
-</section>
+  <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+    <h2 class="section-title section-head head-dw" id="reviews-title">Reviews</h2>
+    <p class="reviews-count" data-reviews-count hidden></p>
+    <div class="reviews-list" data-reviews-list hidden></div>
+    <p class="reviews-empty" data-reviews-empty hidden></p>
+    <form class="review-form" data-review-form novalidate>
+      <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
+        <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
+      </div>
+      <label class="sr-only" for="review-name">Your name</label>
+      <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
+      <label class="sr-only" for="review-email">Your email</label>
+      <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
+      <label class="sr-only" for="review-body">What's your experience been like?</label>
+      <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
+      <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
+      <button class="pill pill-solid" type="submit" data-review-submit>Submit review</button>
+      <p class="form-status" data-review-status hidden></p>
+    </form>
+  </section>
 
-<section class="wrap steps">
-  <div class="step">
-    <div class="step-num">I</div>
-    <div class="step-title">Select</div>
-    <p class="step-desc">Import your folder</p>
-  </div>
-  <div class="step">
-    <div class="step-num">II</div>
-    <div class="step-title">Shred</div>
-    <p class="step-desc">Review your selections</p>
-  </div>
-  <div class="step">
-    <div class="step-num">III</div>
-    <div class="step-title">Send</div>
-    <p class="step-desc">Export your clips</p>
-  </div>
-  <div class="step">
-    <div class="step-num">IV</div>
-    <div class="step-title">Share</div>
-    <p class="step-desc">Receive created keywords</p>
-  </div>
-</section>
-
-<section class="wrap pricing" id="pricing">
-  <p class="eyebrow pricing-eyebrow">Pricing</p>
-  <p class="pricing-status pricing-status-bad" data-pricing-error hidden></p>
-
-  <div class="billing-toggle" role="group" aria-label="Billing interval" data-billing-toggle>
-    <button type="button" class="billing-toggle-btn is-active" data-billing="month">Monthly</button>
-    <button type="button" class="billing-toggle-btn" data-billing="year">Annual <span class="billing-toggle-save">(2 months free)</span></button>
-  </div>
-
-  <div class="pricing-grid" data-pricing-grid>
-    <div class="pricing-card">
-      <div class="pricing-card-head">
+  <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
+    <h2 class="section-title section-head">Plans and pricing</h2>
+    <p class="section-title" id="pricing-title">Simple pricing.</p>
+    <p class="section-sub">Choose the plan that fits your workflow. Change plans anytime.</p>
+    <p class="pricing-error" data-pricing-error hidden></p>
+    <div class="billing">
+      <div class="billing-toggle" role="group" aria-label="Billing interval" data-billing-toggle>
+        <button type="button" class="billing-toggle-btn is-active" data-billing="month">Monthly</button>
+        <button type="button" class="billing-toggle-btn" data-billing="year">Annual</button>
+      </div>
+      <button type="button" class="billing-switch" role="switch" aria-checked="false" data-billing-switch><span class="mono">2 months free</span><span class="billing-switch-track" aria-hidden="true"><span></span></span></button>
+    </div>
+    <div class="pricing-grid" data-pricing-grid>
+      <div class="pricing-card">
         <span class="pricing-name">Starter</span>
+        <p class="pricing-price" data-monthly="25" data-annual="250"><span class="num">$25</span>/mo</p>
+        <p class="pricing-save" data-pricing-save hidden></p>
+        <p class="pricing-clips" data-clips-monthly="100">100 clips / mo</p>
+        <p class="pricing-per-clip">$0.25 / clip</p>
+        
+        <button type="button" class="pill pill-outline" data-plan-button="starter">Get started</button>
       </div>
-      <p class="pricing-price" data-monthly="25" data-annual="250"><span class="num">$25</span>/mo</p>
-      <p class="pricing-save" data-pricing-save hidden></p>
-      <p class="pricing-clips" data-clips-monthly="100">100 clips / mo</p>
-      <p class="pricing-per-clip">$0.25 / clip</p>
-      <button type="button" class="btn btn-secondary" data-plan-button="starter">Buy now</button>
-    </div>
-    <div class="pricing-card">
-      <div class="pricing-card-head">
+      <div class="pricing-card">
         <span class="pricing-name">Creator</span>
+        <p class="pricing-price" data-monthly="59" data-annual="590"><span class="num">$59</span>/mo</p>
+        <p class="pricing-save" data-pricing-save hidden></p>
+        <p class="pricing-clips" data-clips-monthly="400">400 clips / mo</p>
+        <p class="pricing-per-clip">$0.15 / clip</p>
+        
+        <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
       </div>
-      <p class="pricing-price" data-monthly="59" data-annual="590"><span class="num">$59</span>/mo</p>
-      <p class="pricing-save" data-pricing-save hidden></p>
-      <p class="pricing-clips" data-clips-monthly="400">400 clips / mo</p>
-      <p class="pricing-per-clip">$0.15 / clip</p>
-      <button type="button" class="btn btn-secondary" data-plan-button="creator">Buy now</button>
-    </div>
-    <div class="pricing-card pricing-card-recommended">
-      <div class="pricing-card-head">
-        <span class="pricing-name">Pro</span>
-        <span class="pricing-badge pricing-badge-green">Best value</span>
+      <div class="pricing-card">
+        <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
+        <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
+        <p class="pricing-save" data-pricing-save hidden></p>
+        <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
+        <p class="pricing-per-clip">$0.11 / clip</p>
+        <p class="pricing-note">Creates copy-paste keywords.</p>
+        <button type="button" class="pill pill-outline" data-plan-button="pro">Get started</button>
       </div>
-      <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
-      <p class="pricing-save" data-pricing-save hidden></p>
-      <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
-      <p class="pricing-per-clip">$0.11 / clip</p>
-      <p class="pricing-note">Creates copy-paste keywords.</p>
-      <button type="button" class="btn btn-secondary" data-plan-button="pro">Buy now</button>
-    </div>
-    <div class="pricing-card">
-      <div class="pricing-card-head">
+      <div class="pricing-card">
         <span class="pricing-name">Studio</span>
-      </div>
-      <p class="pricing-price" data-monthly="199" data-annual="1990"><span class="num">$199</span>/mo</p>
-      <p class="pricing-save" data-pricing-save hidden></p>
-      <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
-      <p class="pricing-per-clip">$0.10 / clip</p>
-      <p class="pricing-note">Creates copy-paste keywords.</p>
-      <p class="pricing-note">Approve clips remotely via phone.</p>
-      <button type="button" class="btn btn-secondary" data-plan-button="studio">Buy now</button>
-    </div>
-  </div>
-
-  <div class="checkout-panel" data-checkout-panel hidden>
-    <p class="checkout-status" data-checkout-status hidden></p>
-    <div class="checkout-panel-frame" id="checkout-frame"></div>
-    <div class="checkout-panel-actions">
-      <button type="button" class="btn btn-secondary" data-checkout-retry hidden>Try again</button>
-      <button type="button" class="btn btn-secondary" data-checkout-cancel>Cancel</button>
-    </div>
-  </div>
-
-  <div class="checkout-success" data-checkout-success hidden>
-    <span class="checkout-panel-eyebrow">You're in</span>
-    <h3>Your activation key</h3>
-    <div class="activation-key-box">
-      <code data-activation-key></code>
-      <button type="button" class="btn btn-secondary" data-copy-key>Copy</button>
-    </div>
-    <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg" class="btn btn-primary">Download Stock Shredder</a>
-    <p class="checkout-success-note">Paste this activation key when it asks — full instructions are in the app.</p>
-  </div>
-</section>
-
-<section class="wrap interface-shot">
-  <p class="eyebrow interface-shot-eyebrow">Also available in light mode</p>
-  <figure class="interface-shot-secondary">
-    <button type="button" class="lightbox-trigger" data-lightbox-trigger>
-      <img src="../../assets/img/products/stock-shredder/interface-light.png" alt="Stock Shredder's Import screen in light mode." width="1280" height="820" loading="lazy" />
-    </button>
-    <figcaption>Day</figcaption>
-  </figure>
-</section>
-
-<!-- Click-anywhere-to-close lightbox, shared by every .lightbox-trigger above. -->
-<div class="lightbox-overlay" data-lightbox-overlay hidden>
-  <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
-  <img class="lightbox-image" data-lightbox-image src="" alt="" />
-</div>
-
-<section class="wrap world-map" data-world-map hidden>
-  <p class="eyebrow">Where shredders are</p>
-  <h2 class="world-map-headline display">Signups from around the world</h2>
-  <div class="world-map-frame">
-    <svg class="world-map-grid" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <line x1="0" y1="83" x2="1000" y2="83" /><line x1="0" y1="167" x2="1000" y2="167" />
-      <line x1="0" y1="250" x2="1000" y2="250" /><line x1="0" y1="333" x2="1000" y2="333" />
-      <line x1="0" y1="417" x2="1000" y2="417" />
-      <line x1="83" y1="0" x2="83" y2="500" /><line x1="167" y1="0" x2="167" y2="500" />
-      <line x1="250" y1="0" x2="250" y2="500" /><line x1="333" y1="0" x2="333" y2="500" />
-      <line x1="417" y1="0" x2="417" y2="500" /><line x1="500" y1="0" x2="500" y2="500" />
-      <line x1="583" y1="0" x2="583" y2="500" /><line x1="667" y1="0" x2="667" y2="500" />
-      <line x1="750" y1="0" x2="750" y2="500" /><line x1="833" y1="0" x2="833" y2="500" />
-      <line x1="917" y1="0" x2="917" y2="500" />
-    </svg>
-    <div class="world-map-dots" data-world-map-dots></div>
-  </div>
-</section>
-
-<section class="wrap spec">
-  <h2>Spec sheet</h2>
-  <table class="spec-table">
-    <tbody>
-        <tr><th>Platform</th><td>macOS (Intel &amp; Apple Silicon) and Windows</td></tr>
-        <tr><th>Works with</th><td>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks, Blackbox, iStock, Getty Images, Motion Array, Envato Elements, Filmsupply, and more</td></tr>
-        <tr><th>Formats</th><td>MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV, plus Blackmagic RAW, RED R3D, CinemaDNG, and ARRIRAW with the relevant vendor tools installed</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="wrap reviews" id="reviews">
-  <p class="eyebrow">Reviews</p>
-  <h2 class="display">What people are saying</h2>
-  <p class="reviews-count" data-reviews-count hidden></p>
-
-  <div class="reviews-list" data-reviews-list hidden></div>
-  <p class="reviews-empty" data-reviews-empty hidden>No reviews yet — be the first.</p>
-
-  <form class="review-form" data-review-form novalidate>
-    <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
-      <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
-      <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
-    </div>
-    <label class="sr-only" for="review-name">Your name</label>
-    <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
-    <label class="sr-only" for="review-email">Your email</label>
-    <input type="email" id="review-email" placeholder="Your email (not shown publicly)" required data-review-email />
-    <label class="sr-only" for="review-body">What's your experience been like?</label>
-    <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
-    <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
-    <div class="review-form-foot">
-      <button class="btn btn-primary" type="submit" data-review-submit>Submit review</button>
-    </div>
-    <p class="notify-status" data-review-status hidden></p>
-  </form>
-</section>
-
-<section class="wrap earn" id="earn">
-  <p class="eyebrow earn-eyebrow">Earn</p>
-  <h2 class="earn-headline display">Help other filmmakers find us.<br>Get paid in clips.</h2>
-  <p class="earn-sub">No ad budget here. Just filmmakers telling filmmakers.</p>
-  <ul class="earn-list">
-    <li><span>Write a website review</span><span class="earn-amount">250 clips</span></li>
-    <li><span>Share about us on Instagram or TikTok</span><span class="earn-amount">500 clips</span></li>
-    <li><span>Refer a friend</span><span class="earn-amount">1,000 clips each</span></li>
-    <li><span>Record a YouTube review and walkthrough</span><span class="earn-amount">1,500 clips</span></li>
-  </ul>
-  <div class="earn-submit">
-    <button class="btn btn-primary" type="button" data-earn-submit-open>Submit your link</button>
-    <p class="earn-cta">Once it's approved, you'll get an access code to add the clips to your account.</p>
-  </div>
-</section>
-
-<div class="earn-modal-overlay" data-earn-modal-overlay hidden>
-  <div class="earn-modal" role="dialog" aria-modal="true" aria-label="Submit your link">
-    <button class="earn-modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
-    <p class="checkout-panel-eyebrow">Earn</p>
-    <h3 class="earn-modal-title">Submit your link</h3>
-    <div data-earn-modal-body>
-      <p class="earn-modal-note">Share where you posted about Stock Shredder so we can take a look.</p>
-      <p class="earn-modal-error" data-earn-modal-error hidden></p>
-      <input class="earn-modal-input" type="email" placeholder="Your email" data-earn-email />
-      <input class="earn-modal-input" type="text" placeholder="TikTok link" data-earn-tiktok />
-      <input class="earn-modal-input" type="text" placeholder="YouTube link" data-earn-youtube />
-      <input class="earn-modal-input" type="text" placeholder="Instagram link" data-earn-instagram />
-      <button class="btn btn-primary earn-modal-submit" type="button" data-earn-submit-btn>Submit</button>
-    </div>
-  </div>
-</div>
-
-<section class="wrap faq" id="faq">
-  <h2>FAQ</h2>
-  <div class="faq-list">
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Do unused clips expire?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">No. If you don't use all your clips in a given month, the unused ones roll over into the next month automatically. Once you've paid for them, they're yours to use whenever you're ready.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>What footage formats does it support?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        <p>Fully supported: MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV. Covers standard DJI, Sony, and ARRI camera files.</p>
-        <p>Blackmagic RAW (.braw) is supported natively. RED R3D is accepted with REDCINE-X Pro installed. CinemaDNG sequences (DJI, Blackmagic) are supported on macOS. ARRIRAW/ARRICORE (.ari/.arx sequences and modern ALEXA 35-style .mxf) works with ARRI's free ART CMD tool installed.</p>
-        <p>Not yet supported: Canon Cinema RAW Light. Phantom Cine isn't read directly, but Windows users can convert it first with Phantom's own free PCC software. Nikon N-RAW also isn't supported.</p>
+        <p class="pricing-price" data-monthly="199" data-annual="1990"><span class="num">$199</span>/mo</p>
+        <p class="pricing-save" data-pricing-save hidden></p>
+        <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
+        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-note">Creates copy-paste keywords.</p><p class="pricing-note">Approve clips remotely via phone.</p>
+        <button type="button" class="pill pill-outline" data-plan-button="studio">Get started</button>
       </div>
     </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Can I use my activation key on more than one computer?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">Each key is tied to one computer at a time. Moving to a new machine? Just reach out and we'll reset it for you.</div>
+    <div class="checkout-panel" data-checkout-panel hidden>
+      <p class="checkout-status" data-checkout-status hidden></p>
+      <div class="checkout-panel-frame" id="checkout-frame"></div>
+      <div class="checkout-panel-actions">
+        <button type="button" class="pill pill-outline" data-checkout-retry hidden>Try again</button>
+        <button type="button" class="pill pill-outline" data-checkout-cancel>Cancel</button>
+      </div>
     </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Is there a free trial?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">Yes. 25 free clips, no card required, right from your first download.</div>
+    <div class="checkout-success" data-checkout-success hidden>
+      <p class="mono">You're in</p>
+      <h3>Your activation key</h3>
+      <div class="activation-key-box">
+        <code data-activation-key></code>
+        <button type="button" class="pill pill-outline" data-copy-key>Copy</button>
+      </div>
+      <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-0.6.3-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
+      <p class="checkout-success-note">Paste this activation key when it asks &mdash; full instructions are in the app.</p>
     </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>What does automatic keyword tagging do?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">On Pro and Studio, Stock Shredder creates ready-to-paste keywords for every exported clip. No typing tags by hand for each stock marketplace submission.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>What's the iPhone app for?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">With Studio, you can approve or deny clips remotely from your phone. Process footage anywhere without being at your computer.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Can I cancel or change my plan anytime?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">You can change plans anytime from right inside the app. Plans are billed monthly or on a 12-month commitment, and automatically renew for another 12-month term when it ends. Monthly plans can be canceled early for a one-time 2-month payout. Annual plans are paid in full for the term and can't be canceled early.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>What if I lose my activation key?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">Open the app's Account menu to see it anytime, or have a copy emailed to you.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>Which platforms do you support?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">macOS (Intel &amp; Apple Silicon) and Windows. The iPhone app is on the way.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" type="button">
-        <span>What if I need more than 2,000 clips per month?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">Get in touch. If there's enough demand, we'll look into adding bigger plans.</div>
+  </section>
+
+  <section class="earn tone-dark" id="earn" aria-labelledby="earn-title">
+    <h2 class="section-title section-head head-dw">Earn</h2>
+    <p class="section-title" id="earn-title">Help other filmmakers find us. Get paid in clips.</p>
+    <ul class="earn-grid">
+      <li><span class="earn-amt">250 clips</span><span>Write a website review</span></li>
+      <li><span class="earn-amt">500 clips</span><span>Share about us on Instagram or TikTok</span></li>
+      <li><span class="earn-amt">1,000 clips each</span><span>Refer a friend</span></li>
+      <li><span class="earn-amt">1,500 clips</span><span>Record a YouTube review and walkthrough</span></li>
+    </ul>
+    <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
+    <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account.</p>
+  </section>
+
+  <div class="modal-overlay" data-earn-modal-overlay hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit your link">
+      <button class="modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
+      <p class="mono">Earn</p>
+      <h3>Submit your link</h3>
+      <div data-earn-modal-body>
+        <p class="earn-modal-note">Share where you posted about Stock Shredder so we can take a look.</p>
+        <p class="form-status form-status-bad" data-earn-modal-error hidden></p>
+        <input type="email" placeholder="Your email" data-earn-email />
+        <input type="text" placeholder="TikTok link" data-earn-tiktok />
+        <input type="text" placeholder="YouTube link" data-earn-youtube />
+        <input type="text" placeholder="Instagram link" data-earn-instagram />
+        <button class="pill pill-solid" type="button" data-earn-submit-btn>Submit</button>
+      </div>
     </div>
   </div>
-</section>
 
-      </article>
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <h2 class="section-title section-head head-dw" id="faq-title">FAQ</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>Do unused clips expire?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><p>No. If you don't use all your clips in a given month, the unused ones roll over into the next month automatically. Once you've paid for them, they're yours to use whenever you're ready.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>Can I use my activation key on more than one computer?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p>Each key is tied to one computer at a time. Moving to a new machine? Just reach out and we'll reset it for you.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What does automatic keyword tagging do?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p>On Pro and Studio, Stock Shredder creates ready-to-paste keywords for every exported clip. No typing tags by hand for each stock marketplace submission.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>Can I cancel or change my plan anytime?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p>You can change plans anytime from right inside the app. Plans are billed monthly or on a 12-month commitment, and automatically renew for another 12-month term when it ends. Monthly plans can be canceled early for a one-time 2-month payout. Annual plans are paid in full for the term and can't be canceled early.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Which platforms do you support?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><p>macOS (Intel &amp; Apple Silicon) and Windows. The iPhone app is on the way.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>What footage formats does it support?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><p>Fully supported: MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV. Covers standard DJI, Sony, and ARRI camera files.</p><p>Blackmagic RAW (.braw) is supported natively. RED R3D is accepted with REDCINE-X Pro installed. CinemaDNG sequences (DJI, Blackmagic) are supported on macOS. ARRIRAW/ARRICORE (.ari/.arx sequences and modern ALEXA 35-style .mxf) works with ARRI's free ART CMD tool installed.</p><p>Not yet supported: Canon Cinema RAW Light. Phantom Cine isn't read directly, but Windows users can convert it first with Phantom's own free PCC software. Nikon N-RAW also isn't supported.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Is there a free trial?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><p>Yes. 25 free clips, no card required, right from your first download.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>What's the iPhone app for?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><p>With Studio, you can approve or deny clips remotely from your phone. Process footage anywhere without being at your computer.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a9" id="faq-q9"><span>What if I lose my activation key?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a9" role="region" aria-labelledby="faq-q9" hidden><p>Open the app's Account menu to see it anytime, or have a copy emailed to you.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>What if I need more than 2,000 clips per month?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a10" role="region" aria-labelledby="faq-q10" hidden><p>Get in touch. If there's enough demand, we'll look into adding bigger plans.</p></div>
+      </div>
     </div>
-  </main>
+  </section>
+  <section class="tools" aria-labelledby="tools-title">
+    <p class="tools-title mono" id="tools-title">Explore all DEADWORK tools:</p>
+    <ul class="tools-grid">
+      <li><a class="tool" href="../scene-lock/">
+        <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/scene-lock.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Scene Lock</span><span class="mono">Pre-production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../set-control/">
+        <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/set-control.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Set Control</span><span class="mono">Pre-production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../loadout/">
+        <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/loadout.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Loadout</span><span class="mono">Production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../handoff/">
+        <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/handoff.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Handoff</span><span class="mono">Production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../sound-driver/">
+        <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/sound-driver.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Sound Driver</span><span class="mono">Post-production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool is-here" href="./" aria-current="page">
+        <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/stock-shredder.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Stock Shredder</span><span class="mono">Post-production &middot; <span class="st-live">Available now</span></span></span>
+      </a></li>
+    </ul>
+  </section>
+</main>
 
-  <footer class="poster-foot">
+<footer class="poster-foot">
     <p class="foot-email">deadworkstudio@gmail.com</p>
     <div class="foot-social">
       <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
@@ -510,12 +469,17 @@
       </a>
     </div>
     <p class="foot-note">By artists. For artists. Thank you.</p>
-    <p class="foot-copy">&copy; 2026 DEADWORK STUDIO&reg;</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO</p>
   </footer>
+
+<div class="lightbox-overlay" data-lightbox-overlay hidden>
+  <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
+  <img class="lightbox-image" data-lightbox-image src="" alt="" />
 </div>
-<script src="../../assets/js/main.js"></script>
+
 <script src="../../assets/js/nav-dropdown.js?v=20261021b"></script>
 <script src="../../assets/js/checkout.js"></script>
+<script src="../../assets/js/ss-page.js?v=20261023l"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
@@ -534,49 +498,68 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     if (exe) document.getElementById('download-win').href = exe.browser_download_url;
     if (apk) document.getElementById('download-android').href = apk.browser_download_url;
     var versionEl = document.getElementById('download-version');
-    if (versionEl && release.tag_name) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
+    if (versionEl && release.tag_name && dmg) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
   })
   .catch(function () {}); // the hardcoded fallback above still works either way
 
-// World map of real signup locations — city-level counts only (see the Worker's
-// listLeadLocations for why no name/email ever leaves the database). Plotted on a plain lat/long
-// graticule rather than real landmass art, equirectangular projection (x from longitude, y from
-// latitude) since that's the one projection where "percent across" and "percent down" map
-// directly to lon/lat with no distortion math needed. Stays hidden until there's at least one
-// real location — an empty map reads as broken, not "early." Direct report 2026-10-19: wait
-// for 10 real signups total (not 10 distinct cities) before showing it at all, so the map's
-// debut has enough spread on it to read as "a real community," not three dots.
+// World map of real signup locations (city-level counts only, see the Worker's listLeadLocations).
+// Same rule as before: real dots only appear once there are 10 real signups. The section itself
+// shows in local review (opened from disk, or ?preview=map) so the layout can be judged; in
+// production it stays hidden until there is real data. The "clips shredded" counter is NOT wired
+// to anything yet and is never shown with a made-up number.
 var WORLD_MAP_MIN_SIGNUPS = 10;
-fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
-  .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-  .then(function (data) {
-    var locations = (data && data.locations) || [];
-    var totalSignups = locations.reduce(function (sum, loc) { return sum + loc.count; }, 0);
-    if (totalSignups < WORLD_MAP_MIN_SIGNUPS) return;
-    var section = document.querySelector('[data-world-map]');
-    var dotsEl = document.querySelector('[data-world-map-dots]');
-    if (!section || !dotsEl) return;
+var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
+(function () {
+  var section = document.querySelector('[data-world-map]');
+  if (!section) return;
+  var preview = location.protocol === 'file:' || /[?&]preview=map\b/.test(location.search);
+  if (preview) { section.hidden = false; section.classList.add('is-preview'); }
+  fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (data) {
+      var locations = (data && data.locations) || [];
+      var total = locations.reduce(function (s, l) { return s + l.count; }, 0);
+      if (total < WORLD_MAP_MIN_SIGNUPS) return;
+      var dotsEl = section.querySelector('[data-world-map-dots]');
+      var maxCount = locations.reduce(function (m, l) { return Math.max(m, l.count); }, 1);
+      locations.forEach(function (loc) {
+        if (loc.latitude > MAP_LAT_TOP || loc.latitude < MAP_LAT_BOT) return;
+        var dot = document.createElement('span');
+        dot.className = 'world-map-dot';
+        dot.style.left = ((loc.longitude + 180) / 360 * 100) + '%';
+        dot.style.top = ((MAP_LAT_TOP - loc.latitude) / (MAP_LAT_TOP - MAP_LAT_BOT) * 100) + '%';
+        var size = 5 + (loc.count / maxCount) * 9;
+        dot.style.width = size + 'px'; dot.style.height = size + 'px';
+        dot.title = loc.city + ', ' + loc.country;
+        dotsEl.appendChild(dot);
+      });
+      section.hidden = false;
+    })
+    .catch(function () {});
+  // Clips-shredded counter: reads the real shared counter on the payments server (+1 per finished
+  // export, sent by the Mac app). Shown on the live site only once data-counter-live="true" is set,
+  // i.e. once Daniel has confirmed the number is real; in local preview it shows whatever the server says.
+  var countWrap = section.querySelector('[data-shred-count]');
+  var countLive = countWrap && countWrap.getAttribute('data-counter-live') === 'true';
+  if (countWrap && (countLive || preview)) {
+    fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/clips-shredded')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) {
+        var total = Number(d && d.total) || 0;
+        var el = countWrap.querySelector('[data-shred-num]');
+        if (!el || !total) return;
+        if (countLive) { section.hidden = false; countWrap.classList.add('is-live'); }
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, start = null, dur = 1200;
+        function step(ts) { if (start === null) start = ts; var p = Math.min(1, (ts - start) / dur); el.textContent = Math.round(total * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1) requestAnimationFrame(step); }
+        if (reduce) el.textContent = total.toLocaleString('en-US'); else requestAnimationFrame(step);
+      })
+      .catch(function () {});
+  }
+})();
 
-    var maxCount = locations.reduce(function (m, loc) { return Math.max(m, loc.count); }, 1);
 
-    locations.forEach(function (loc) {
-      var dot = document.createElement('div');
-      dot.className = 'world-map-dot';
-      dot.style.left = ((loc.longitude + 180) / 360 * 100) + '%';
-      dot.style.top = ((90 - loc.latitude) / 180 * 100) + '%';
-      // Scaled by share of the busiest city, not raw count, so one outlier city can't shrink
-      // every other dot down to an invisible speck — 6px floor, 22px ceiling.
-      var size = 6 + (loc.count / maxCount) * 16;
-      dot.style.width = size + 'px';
-      dot.style.height = size + 'px';
-      dot.title = loc.city + ', ' + loc.country + ' — ' + loc.count + (loc.count === 1 ? ' signup' : ' signups');
-      dotsEl.appendChild(dot);
-    });
-
-    section.hidden = false;
-  })
-  .catch(function () {}); // stays hidden if the fetch fails
-
+</script>
+<script>
 // "Submit your link" — same /earn-submission endpoint stockshredder.com's own modal posts to.
 (function () {
   var EARN_API = 'https://stock-shredder-payments.stockshredder.workers.dev';
@@ -660,7 +643,6 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
       var countEl = document.querySelector('[data-reviews-count]');
       if (!listEl || !emptyEl) return;
       if (!reviews || !reviews.length) {
-        emptyEl.hidden = false;
         return;
       }
       if (countEl) {
@@ -800,19 +782,5 @@ fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-loca
   });
 })();
 </script>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-Tawk_API.customStyle={visibility:{desktop:{position:'br',xOffset:20,yOffset:50},mobile:{position:'br',xOffset:10,yOffset:50}}};
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 </body>
 </html>
