@@ -349,6 +349,7 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .pricing-card > :nth-last-child(2) { margin-bottom: 14px; }
 .pricing-card .pill { margin-top: auto; align-self: center; min-height: 40px; padding: 0 26px; }
 .pricing-error { margin-top: 12px; color: #A3241D; }
+.pricing-terms { max-width: 62ch; margin: 26px auto 0; font-size: 13px; line-height: 1.55; color: var(--ink-2); }
 .checkout-panel { max-width: 720px; margin: 28px auto 0; }
 .checkout-panel-actions { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
 .checkout-status { margin-bottom: 12px; color: var(--ink-2); }
