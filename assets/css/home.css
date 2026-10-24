@@ -353,13 +353,16 @@ a[href$="loadout/"] .mega-menu-card-img::after {
 .index-meta { margin: 0 0 16px; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); white-space: nowrap; }
 
 /* "06 Tools" / "Est. Los Angeles" — pinned to the outer edges of the header (Fear of God's own
-   pattern: utility text flanking the nav, not tucked inside a menu). Hidden below 720px, where
-   the tabs themselves wrap under the logo and there's no spare width at the edges for this. */
+   pattern: utility text flanking the nav, not tucked inside a menu). Hidden below 1101px — matches
+   ss-page.css's own breakpoint for this same pair of labels on the Stock Shredder page. Below that
+   width there isn't enough spare gutter on either side of the centered nav for these without
+   colliding with it (confirmed at iPad portrait, 720-1100px: "STUDIO" over "EST. LOS ANGELES",
+   "06 TOOLS" touching "PRE-PRODUCTION"). */
 .poster-meta-left,
 .poster-meta-right {
   display: none;
 }
-@media (min-width: 720px) {
+@media (min-width: 1101px) {
   .poster-meta-left,
   .poster-meta-right {
     display: block;
