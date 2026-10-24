@@ -34,21 +34,40 @@
         Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (b) {
           b.classList.toggle('is-active', b === btn);
         });
+        // Swapping the number mid-transition (rather than before or after it) is what makes the
+        // blur+fade read as one number smoothly becoming another instead of the old one vanishing
+        // and a different one popping in once it's gone — see the emil-design-eng skill's note on
+        // using blur to mask an otherwise-abrupt crossfade.
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         Array.prototype.forEach.call(grid.querySelectorAll('.pricing-price'), function (priceEl) {
           var amount = currentInterval === 'year' ? priceEl.getAttribute('data-annual') : priceEl.getAttribute('data-monthly');
           var suffix = currentInterval === 'year' ? '/yr' : '/mo';
-          priceEl.innerHTML = '<span class="num">$' + Number(amount).toLocaleString('en-US') + '</span>' + suffix;
 
-          var saveEl = priceEl.nextElementSibling;
-          if (saveEl && saveEl.hasAttribute('data-pricing-save')) {
-            if (currentInterval === 'year') {
-              var monthly = Number(priceEl.getAttribute('data-monthly'));
-              var annual = Number(priceEl.getAttribute('data-annual'));
-              saveEl.textContent = 'Save $' + (monthly * 12 - annual).toLocaleString('en-US') + '/yr';
-              saveEl.hidden = false;
-            } else {
-              saveEl.hidden = true;
+          var apply = function () {
+            priceEl.innerHTML = '<span class="num">$' + Number(amount).toLocaleString('en-US') + '</span>' + suffix;
+
+            // The "save" line is always rendered (never [hidden]) so its height is reserved
+            // whether or not it currently has text — toggling a class instead of hidden means the
+            // monthly <-> annual swap never changes the card's height.
+            var saveEl = priceEl.nextElementSibling;
+            if (saveEl && saveEl.hasAttribute('data-pricing-save')) {
+              if (currentInterval === 'year') {
+                var monthly = Number(priceEl.getAttribute('data-monthly'));
+                var annual = Number(priceEl.getAttribute('data-annual'));
+                saveEl.textContent = 'Save $' + (monthly * 12 - annual).toLocaleString('en-US') + '/yr';
+                saveEl.classList.add('is-visible');
+              } else {
+                saveEl.classList.remove('is-visible');
+              }
             }
+            priceEl.classList.remove('is-swapping');
+          };
+
+          if (reduceMotion) {
+            apply();
+          } else {
+            priceEl.classList.add('is-swapping');
+            setTimeout(apply, 90);
           }
         });
         // Clips are always granted monthly regardless of billing cycle — switching this to a
