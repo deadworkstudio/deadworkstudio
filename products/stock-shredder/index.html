@@ -348,6 +348,36 @@
     </div>
   </section>
 
+  <section class="earn tone-dark" id="earn" aria-labelledby="earn-title">
+    <h2 class="section-title section-head">Earn</h2>
+    <p class="section-title" id="earn-title">Help other filmmakers find us. Get paid in clips.</p>
+    <ul class="earn-grid">
+      <li><span class="earn-amt">250 clips</span><span>Write a website review</span></li>
+      <li><span class="earn-amt">500 clips</span><span>Share about us on Instagram or TikTok</span></li>
+      <li><span class="earn-amt">1,000 clips each</span><span>Refer a friend</span></li>
+      <li><span class="earn-amt">1,500 clips</span><span>Record a YouTube review and walkthrough</span></li>
+    </ul>
+    <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
+    <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account.</p>
+  </section>
+
+  <div class="modal-overlay" data-earn-modal-overlay hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit your link">
+      <button class="modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
+      <p class="mono">Earn</p>
+      <h3>Submit your link</h3>
+      <div data-earn-modal-body>
+        <p class="earn-modal-note">Share where you posted about Stock Shredder so we can take a look.</p>
+        <p class="form-status form-status-bad" data-earn-modal-error hidden></p>
+        <input type="email" placeholder="Your email" data-earn-email />
+        <input type="text" placeholder="TikTok link" data-earn-tiktok />
+        <input type="text" placeholder="YouTube link" data-earn-youtube />
+        <input type="text" placeholder="Instagram link" data-earn-instagram />
+        <button class="pill pill-solid" type="button" data-earn-submit-btn>Submit</button>
+      </div>
+    </div>
+  </div>
+
   <section class="faq" id="faq" aria-labelledby="faq-title">
     <h2 class="section-title section-head" id="faq-title">FAQ</h2>
     <div class="faq-list">
@@ -498,6 +528,67 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 })();
 
 
+</script>
+<script>
+// "Submit your link" — same /earn-submission endpoint stockshredder.com's own modal posts to.
+(function () {
+  var EARN_API = 'https://stock-shredder-payments.stockshredder.workers.dev';
+  var openBtn = document.querySelector('[data-earn-submit-open]');
+  var overlay = document.querySelector('[data-earn-modal-overlay]');
+  if (!openBtn || !overlay) return;
+  var closeBtn = overlay.querySelector('[data-earn-modal-close]');
+  var body = overlay.querySelector('[data-earn-modal-body]');
+  var errorEl = overlay.querySelector('[data-earn-modal-error]');
+  var submitBtn = overlay.querySelector('[data-earn-submit-btn]');
+
+  function closeModal() { overlay.hidden = true; }
+  openBtn.addEventListener('click', function () { overlay.hidden = false; });
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+
+  submitBtn.addEventListener('click', function () {
+    errorEl.hidden = true;
+    var email = overlay.querySelector('[data-earn-email]').value.trim();
+    var tiktok = overlay.querySelector('[data-earn-tiktok]').value.trim();
+    var youtube = overlay.querySelector('[data-earn-youtube]').value.trim();
+    var instagram = overlay.querySelector('[data-earn-instagram]').value.trim();
+    if (!email) {
+      errorEl.textContent = 'Your email is required.';
+      errorEl.hidden = false;
+      return;
+    }
+    if (!tiktok && !youtube && !instagram) {
+      errorEl.textContent = 'Add at least one link.';
+      errorEl.hidden = false;
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+    fetch(EARN_API + '/earn-submission', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, tiktok: tiktok, youtube: youtube, instagram: instagram })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+          errorEl.textContent = (result.data && result.data.error) || 'Could not submit — try again in a moment.';
+          errorEl.hidden = false;
+          return;
+        }
+        body.innerHTML = '<p class="earn-modal-note">Thanks! Once it’s approved, you’ll get an access code to add the clips to your account.</p>';
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+        errorEl.textContent = 'Could not reach the server — try again in a moment.';
+        errorEl.hidden = false;
+      });
+  });
+})();
 </script>
 <script>
 // Reviews: approved-review grid (GET /reviews) + the submission form (POST /reviews). New
