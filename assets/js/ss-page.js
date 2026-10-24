@@ -141,17 +141,57 @@
   }
 
   // ---- support chat: loads after the first scroll, tap or key press, never on page load ----
-  var chatLoaded = false;
+  // On phones (<=719px) the floating bubble is kept hidden — it sits on top of page content
+  // (plan buttons, FAQ text) with nowhere good to put it — but the chat itself is still one tap
+  // away via the "Chat with us" link at the end of the FAQ. Desktop keeps the bubble as before.
+  var CHAT_PHONE_MAX = 719;
+  function isChatPhone() { return window.matchMedia('(max-width: ' + CHAT_PHONE_MAX + 'px)').matches; }
+  var chatLoaded = false, chatReady = false, chatOpenPending = false;
+  function syncChatVisibility() {
+    if (!chatReady || !window.Tawk_API) return;
+    if (isChatPhone()) { if (window.Tawk_API.hideWidget) window.Tawk_API.hideWidget(); }
+    else if (window.Tawk_API.showWidget) window.Tawk_API.showWidget();
+  }
+  function openChat() {
+    if (!chatReady) { chatOpenPending = true; loadChat(); return; }
+    if (window.Tawk_API.showWidget) window.Tawk_API.showWidget();
+    if (window.Tawk_API.maximize) window.Tawk_API.maximize();
+  }
   function loadChat() {
     if (chatLoaded) return; chatLoaded = true;
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.removeEventListener(ev, loadChat); });
     window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
     window.Tawk_API.customStyle = { visibility: { desktop: { position: 'br', xOffset: 20, yOffset: 24 }, mobile: { position: 'br', xOffset: 10, yOffset: 16 } } };
+    var priorOnLoad = window.Tawk_API.onLoad;
+    window.Tawk_API.onLoad = function () {
+      chatReady = true;
+      syncChatVisibility();
+      if (chatOpenPending) { chatOpenPending = false; openChat(); }
+      if (typeof priorOnLoad === 'function') priorOnLoad();
+    };
+    var priorOnMinimized = window.Tawk_API.onChatMinimized;
+    window.Tawk_API.onChatMinimized = function () {
+      syncChatVisibility();
+      if (typeof priorOnMinimized === 'function') priorOnMinimized();
+    };
     var s = document.createElement('script');
     s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8'; s.setAttribute('crossorigin', '*');
     document.body.appendChild(s);
   }
   if (location.protocol !== 'file:') ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
+  // Re-sync on resize/orientation change (e.g. rotating a phone past the breakpoint, or a
+  // desktop window resized narrow) — debounced so it only runs once the size settles.
+  var chatResizeTimer = null;
+  function scheduleChatSync() { clearTimeout(chatResizeTimer); chatResizeTimer = setTimeout(syncChatVisibility, 150); }
+  window.addEventListener('resize', scheduleChatSync);
+  window.addEventListener('orientationchange', function () { setTimeout(syncChatVisibility, 300); });
+
+  // ---- "Chat with us" link at the end of the FAQ — the only way to reach chat on phones, where
+  // the floating bubble stays hidden; works just as well on desktop. ----
+  var faqChatLink = document.querySelector('[data-faq-chat-open]');
+  if (faqChatLink) {
+    faqChatLink.addEventListener('click', function (e) { e.preventDefault(); openChat(); });
+  }
 
   // ---- full-block film: plays only while on screen ----
   document.querySelectorAll('[data-film]').forEach(function (v) {

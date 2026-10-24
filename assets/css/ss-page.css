@@ -449,6 +449,8 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
    the whole block (including the still-closed question the person just tapped) recentres and
    visibly jumps. flex-start keeps the top of the list anchored while an answer opens below it. */
 .faq { justify-content: flex-start; }
+.faq-chat { max-width: 780px; margin: 22px auto 0; font-size: 15px; color: var(--ink-2); text-align: center; }
+.faq-chat-link { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
 
 /* ---- lightbox ---- */
