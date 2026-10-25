@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024ix7" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024ix8" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -276,10 +276,19 @@
         <div class="spec-v"><ul class="tiles"><li>Artgrid</li><li>Shutterstock</li><li>Adobe Stock</li><li>Pond5</li><li>Storyblocks</li><li>Blackbox</li><li>iStock</li><li>Getty Images</li><li>Motion Array</li><li>Envato Elements</li><li>Filmsupply</li><li class="tile-more">and more</li></ul></div>
       </div>
       <div class="spec-row">
-        <p class="spec-k mono">Formats</p>
+        <p class="spec-k mono">Imports</p>
         <div class="spec-v"><ul class="tiles tiles-mono"><li>MP4</li><li>MOV</li><li>MXF</li><li>MKV</li><li>AVI</li><li>M4V</li><li>MTS</li><li>M2TS</li><li>MPG</li><li>MPEG</li><li>WebM</li><li>3GP</li><li>WMV</li></ul>
           <ul class="tiles tiles-raw"><li>Blackmagic RAW</li><li>RED R3D</li><li>CinemaDNG</li><li>ARRIRAW</li></ul>
           <p class="spec-note">RAW formats need the camera maker's free tools installed.</p></div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Exports</p>
+        <div class="spec-v">
+          <ul class="tiles tiles-raw"><li>ProRes 422 HQ</li><li>ProRes 4444</li><li>ProRes 4444 XQ</li></ul>
+          <ul class="tiles tiles-mono"><li>1080</li><li>2K</li><li>4K</li><li>5K</li><li>6K</li><li>8K</li><li>Match source</li></ul>
+          <ul class="tiles"><li>Graded + Log</li><li>Graded</li><li>Log</li></ul>
+          <p class="spec-note">Export several sizes in the same pass.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -302,7 +311,6 @@
 
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
-    <p class="section-title">Simple pricing.</p>
     <p class="section-sub">Choose the plan that fits your workflow. Change plans anytime.</p>
     <p class="pricing-error" data-pricing-error hidden></p>
     <div class="billing">
@@ -560,11 +568,11 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
   .catch(function () {}); // the hardcoded fallback above still works either way
 
 // World map of real signup locations (city-level counts only, see the Worker's listLeadLocations).
-// Same rule as before: real dots only appear once there are 10 real signups. The section itself
+// The section appears as soon as there is one real signup, and fills in as more arrive. The section itself
 // shows in local review (opened from disk, or ?preview=map) so the layout can be judged; in
 // production it stays hidden until there is real data. The "clips shredded" counter is NOT wired
 // to anything yet and is never shown with a made-up number.
-var WORLD_MAP_MIN_SIGNUPS = 10;
+var WORLD_MAP_MIN_SIGNUPS = 1;
 var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 (function () {
   var section = document.querySelector('[data-world-map]');
