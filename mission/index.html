@@ -7,7 +7,11 @@
 <title>DEADWORK — Mission</title>
 <meta http-equiv="refresh" content="0; url=../studio/#mission" />
 <link rel="canonical" href="https://deadworkstudio.com/studio/#mission" />
-<script>location.replace('../studio/#mission' + location.search);</script>
+<!-- D-9: query must come before the hash in a URL (path?query#hash) — appending location.search
+     AFTER the hash produced ".../studio/#mission?utm_source=ig", which the browser treats as
+     part of the hash itself: the query string is lost and "#mission?utm_source=ig" no longer
+     matches the #mission panel, so the page lands scrolled to the top instead of the section. -->
+<script>location.replace('../studio/' + location.search + '#mission');</script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>

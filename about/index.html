@@ -4,18 +4,21 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#0a0a09" />
-<title>DEADWORK — Mission</title>
-<meta http-equiv="refresh" content="0; url=../mission/" />
-<link rel="canonical" href="https://deadworkstudio.com/mission/" />
-<!-- /about/#contact was a real deep link (the old in-page Contact panel, now its own page) —
-     send that one straight to /contact/ instead of round-tripping through /mission/. -->
+<title>DEADWORK — About</title>
+<meta http-equiv="refresh" content="0; url=../studio/#mission" />
+<link rel="canonical" href="https://deadworkstudio.com/studio/#mission" />
+<!-- D-9: this used to round-trip through /mission/ (itself just another redirect to
+     /studio/#mission), a needless extra hop + request; point straight at the real destination.
+     /about/#contact was a real deep link (the old in-page Contact panel, now its own section) —
+     keep sending that one to #contact instead. Query must precede the hash (path?query#hash) in
+     both branches, or the query string gets swallowed into the hash and lost. -->
 <script>
-  if (location.hash === '#contact') location.replace('../contact/');
-  else location.replace('../mission/' + location.search + location.hash);
+  if (location.hash === '#contact') location.replace('../studio/' + location.search + '#contact');
+  else location.replace('../studio/' + location.search + '#mission');
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<p>DEADWORK's Mission page has moved to <a href="../mission/">deadworkstudio.com/mission</a>.</p>
+<p>DEADWORK's About page has moved to <a href="../studio/#mission">deadworkstudio.com/studio</a>.</p>
 </body>
 </html>
