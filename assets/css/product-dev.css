@@ -54,10 +54,9 @@ body.dev-light .poster-foot { border-color: var(--dev-line); }
 /* The nav underline/hover dot already uses --acc (per-product yellow, see tokens.css), which
    clears AA on cream on its own — left as-is. */
 
-/* ---- "IN DEVELOPMENT" badge: --dev-yellow (#e3b23d) is tuned for text-on-dark and falls short of
-   4.5:1 on cream. #765A12 is the same darkened amber Stock Shredder's own page already uses for
-   this exact problem (ss-page.css's .st-soon), reused here rather than inventing a new color. ---- */
-body.dev-light .badge-dev { color: #765A12; border-color: #765A12; }
+/* ---- "IN DEVELOPMENT" badge: monochrome, matching the page's own ink/gray palette instead of
+   the site's dev-yellow accent — no color accent on these pages at all. ---- */
+body.dev-light .badge-dev { color: var(--dev-ink-3); border-color: var(--dev-line-strong); }
 
 /* ---- type ---- */
 .mono { font: 500 10.5px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--dev-ink-3); }

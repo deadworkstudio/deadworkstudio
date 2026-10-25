@@ -1,0 +1,50 @@
+/* DEADWORK — the approved visual system for the five in-development product pages, applied via
+   body.dev-v2 on each one. Reuses Stock Shredder's own real patterns (ss-page.css) rather than
+   inventing new ones: the hero's logo-small/headline-big rhythm (.hero-logo / .hero h1), and the
+   problem/solution split with a hairline-divided two-column layout (.split). */
+
+/* Stock Shredder's own display font (ss-page.css), loaded here too so the headline below is
+   typographically identical, not just a size/weight approximation in system Helvetica. */
+@font-face { font-family: 'Archivo'; src: url('../fonts/archivo-variable.woff2') format('woff2-variations'), url('../fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+
+/* ---- hero: fixes the unscoped bug where .dev-hero-logo (display:block via base.css's global
+   img reset) never actually centered under text-align — needed margin-inline:auto. Logo size and
+   headline size/weight/tracking/font are taken verbatim from ss-page.css's .hero-logo / .hero h1
+   — "the same area" and "the same font + size" as Stock Shredder's own hero, not a new scale. ---- */
+body.dev-v2 .dev-hero { padding-top: clamp(20px, 4svh, 48px); }
+body.dev-v2 .dev-hero-logo { height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; }
+body.dev-v2 .dev-hero-tag {
+  margin-top: 14px;
+  max-width: none;
+  font: 600 clamp(36px, min(3.9vw, 6.4vh), 58px)/1.05 'Archivo', var(--font-body);
+  letter-spacing: -.03em;
+  color: var(--dev-ink);
+}
+body.dev-v2 .dev-hero .badge { margin-top: 16px; }
+
+/* ---- problem / solution: Stock Shredder's own .split — a single hairline divider between the
+   two columns (vertical on desktop, horizontal once stacked on mobile), no card, no fill, no
+   accent-colored heading (ss-page.css treats both the same way). Section labels stay centered
+   over each column; body copy is left-aligned within it. ---- */
+body.dev-v2 section.dev-split.wrap {
+  margin-top: 0;
+  padding-top: clamp(32px, 5svh, 56px);
+  padding-bottom: clamp(20px, 3svh, 36px);
+  border-top: 1px solid var(--dev-line);
+  text-align: center;
+}
+body.dev-v2 .dev-split > div { padding: 0 clamp(16px, 3vw, 40px); }
+body.dev-v2 .dev-split > div + div { border-left: 1px solid var(--dev-line); }
+body.dev-v2 .dev-split h3 { margin-bottom: 12px; }
+body.dev-v2 .dev-split p { margin: 0; max-width: 46ch; text-align: left; }
+body.dev-v2 .dev-split .is-solution h3 { color: var(--dev-ink-3); }
+@media (max-width: 719px) {
+  body.dev-v2 .dev-split > div + div { border-left: 0; border-top: 1px solid var(--dev-line); padding-top: 24px; margin-top: 24px; }
+}
+
+/* ---- email: one more quiet section in the same rhythm, not a separate floating block. ---- */
+body.dev-v2 section.dev-notify.wrap {
+  margin-top: 0;
+  padding-top: clamp(28px, 4svh, 44px);
+  border-top: 1px solid var(--dev-line);
+}
