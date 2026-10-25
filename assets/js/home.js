@@ -39,25 +39,3 @@
   addEventListener('hashchange', function () { show(fromHash(), { announce: true }); });
   show(fromHash());
 })();
-
-// Keyboard: the menu panel sits after every tab in the page, so Tab from an open stage would skip
-// its products. From an open stage, Tab steps into that stage's plates; past the last plate it
-// closes and moves on to the next tab; Shift+Tab from the first plate returns to its stage.
-(function () {
-  var triggers = [].slice.call(document.querySelectorAll('[data-nav-tab] .nav-tab-trigger'));
-  var menu = document.querySelector('[data-mega-menu]'); if (!menu || !triggers.length) return;
-  function links() { var g = menu.querySelector('.mega-menu-group.is-active'); return g && menu.classList.contains('is-open') ? [].slice.call(g.querySelectorAll('a[href]')) : []; }
-  function openTrigger() { return document.querySelector('[data-nav-trigger][aria-expanded="true"]'); }
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab') return;
-    var a = document.activeElement, L = links(), open = openTrigger(); if (!open || !L.length) return;
-    if (!e.shiftKey && a === open) { e.preventDefault(); L[0].focus(); return; }
-    if (e.shiftKey && a === L[0]) { e.preventDefault(); open.focus(); return; }
-    if (!e.shiftKey && a === L[L.length - 1]) {
-      e.preventDefault();
-      var next = triggers[triggers.indexOf(open) + 1];
-      open.click();                                   // the same toggle a click uses: closes the panel
-      (next || open).focus();
-    }
-  });
-})();
