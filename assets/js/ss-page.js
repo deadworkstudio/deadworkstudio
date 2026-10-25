@@ -262,7 +262,7 @@
     var stage = tour.querySelector('[data-ix-hero]'), screen = tour.querySelector('[data-ix-screen]');
     var spot = tour.querySelector('[data-ix-spot]'), holesG = spot.querySelector('[data-ix-holes]'), ringsG = spot.querySelector('[data-ix-rings]');
     var tabs = [].slice.call(tour.querySelectorAll('[data-ix-tab]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
-    var bars = [].slice.call(tour.querySelectorAll('.ix-progress i')), nextLabel = tour.querySelector('[data-ix-next-label]');
+    var day = tour.querySelector('[data-ix-day]');
     var count = tour.querySelector('[data-ix-count]'), NS = 'http://www.w3.org/2000/svg', POOL = 5;
     var cur = -1, inView = false, armed = false;
 
@@ -302,6 +302,21 @@
       })(performance.now());
     };
 
+    // Day / Night: the light recording (same take, frame-aligned) starts at the dark one's time and fades in over it
+    var dayTimer = 0;
+    var setDay = function (on) {
+      if (!day) return;
+      clearTimeout(dayTimer);
+      if (on) {
+        if (day.preload === 'none') day.preload = 'auto';
+        try { day.currentTime = screen.currentTime || 0; } catch (e) {}
+        if (!reduce && inView) { var p = day.play(); if (p && p.catch) p.catch(function () {}); }
+        stage.classList.add('is-day');
+      } else {
+        stage.classList.remove('is-day');
+        dayTimer = setTimeout(function () { day.pause(); }, 600);
+      }
+    };
     var playIf = function (v, go) { if (!v) return; if (go && !reduce) { if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); };
     var select = function (i, focus) {
       if (i === cur) return;
@@ -309,8 +324,7 @@
       tabs.forEach(function (t, k) { var on = k === i; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
       panels.forEach(function (p, k) { p.hidden = k !== i; });
       count.textContent = ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + tabs.length).slice(-2);
-      bars.forEach(function (b, k) { b.classList.toggle('is-on', k <= i); });
-      if (nextLabel) nextLabel.innerHTML = 'Next &middot; ' + tabs[(i + 1) % tabs.length].lastChild.textContent.trim() + ' &rarr;';
+      setDay(tabs[i].hasAttribute('data-day'));
       aim(tabs[i]);
       if (focus) { tabs[i].focus(); if (!armed) { armed = true; spot.classList.add('is-on'); } }
     };
@@ -318,7 +332,6 @@
     tabs.forEach(function (t, k) { t.addEventListener('click', function () { select(k, true); spot.classList.add('is-on'); armed = true; }); });
     tour.querySelector('[data-ix-prev]').addEventListener('click', function () { go(-1); spot.classList.add('is-on'); });
     tour.querySelector('[data-ix-next]').addEventListener('click', function () { go(1); spot.classList.add('is-on'); });
-    nextLabel.addEventListener('click', function () { go(1); spot.classList.add('is-on'); });
     tour.querySelector('[role=tablist]').addEventListener('keydown', function (e) {
       var k = e.key;
       if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); go(1); }
@@ -333,6 +346,7 @@
       new IntersectionObserver(function (es) {
         inView = es[0].isIntersecting;
         playIf(screen, inView);
+        if (day && stage.classList.contains('is-day')) playIf(day, inView);
       }, { threshold: 0.15 }).observe(tour);
     }
   })();

@@ -488,64 +488,60 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
   .faq-a { transition: opacity 200ms ease !important; }
 }
 
-/* ---- THE INTERFACE: one module. The real app (left) with its six stops attached underneath, and a
-   rail (right) that carries the active stop: count, name, one line of copy, one detail line and one
-   real close-up or recording. Pressing a stop dims everything but that part of the screen (SVG mask,
-   so several areas can light at once). The whole app window is always in view. ---- */
+/* ---- THE INTERFACE: one module. The real app, its seven stops directly underneath, and the active
+   stop's name and one line below that. Pressing a stop gently darkens everything but that part of the
+   screen (SVG mask, so several areas can light at once); Day / Night cross-fades to the matching light
+   recording. The whole app window is always in view, never cropped or scrolled. ---- */
 .interface-sub { margin: -8px 0 0; color: var(--ink-2) !important; }
-main > section.ix { min-height: 0 !important; padding-bottom: clamp(36px, 5vh, 56px) !important; }
-.ix-tour { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(280px, 1fr); gap: clamp(32px, 3.4vw, 52px); align-items: stretch; width: 100%; max-width: 1360px; margin: clamp(28px, 4.4vh, 48px) auto 0; padding: clamp(24px, 3.4vh, 36px) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; }
-.ix-main { width: min(100%, calc((100svh - var(--sh-h) - 262px) * 1.566)); justify-self: center; }
+main > section.ix { min-height: 0 !important; padding-bottom: clamp(40px, 6vh, 64px) !important; }
+.ix-tour { --ix-w: min(100%, 1120px, calc((100svh - var(--sh-h) - 228px) * 1.566)); width: var(--ix-w); margin: clamp(32px, 5vh, 56px) auto 0; padding-top: clamp(28px, 4vh, 40px); border-top: 1px solid var(--line); text-align: left; }
 .ix-stage { position: relative; transform-origin: 50% 0; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
 .ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 1022; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #000; }
-.ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 360ms var(--ease); }
+.ix-day { position: absolute; inset: 0; opacity: 0; transition: opacity 560ms var(--ease); background: #EBE5D8; }
+.ix-stage.is-day .ix-day { opacity: 1; }
+.ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 400ms var(--ease); }
 .ix-spot.is-on { opacity: 1; }
-.ix-dim { fill: rgba(8, 8, 7, .3); }
-.ix-ring { fill: none; stroke: var(--ink); stroke-width: 1.25px; vector-effect: non-scaling-stroke; transition: opacity 240ms var(--ease); }
+.ix-dim { fill: rgba(8, 8, 7, .34); }
+.ix-ring { fill: none; stroke: var(--ink); stroke-width: 1.25px; vector-effect: non-scaling-stroke; transition: stroke 400ms var(--ease); }
+.ix-stage.is-day .ix-ring { stroke: #141412; }
+.ix-stage.is-day .ix-dim { fill: rgba(20, 20, 18, .16); }
 
-.ix-tabs { display: grid; grid-template-columns: repeat(6, auto); justify-content: space-between; margin-top: 16px; }
+.ix-tabs { display: flex; justify-content: space-between; margin-top: 18px; }
 .ix-tabs button, .ix-arrow { border: 0; background: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); transition: color 160ms var(--ease); }
-.ix-tabs button { position: relative; display: flex; gap: 8px; padding: 12px 0 4px; }
+.ix-tabs button { position: relative; display: flex; gap: 8px; padding: 12px 0 4px; white-space: nowrap; }
 .ix-tabs button span { opacity: .6; }
-.ix-tabs button::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; transition: transform 360ms var(--ease); }
+.ix-tabs button::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; transition: transform 400ms var(--ease); }
 .ix-tabs button[aria-selected="true"] { color: var(--ink); }
 .ix-tabs button[aria-selected="true"]::before { transform: scaleX(1); }
 @media (any-hover: hover) and (any-pointer: fine) { .ix-tabs button:hover, .ix-arrow:hover { color: var(--ink); } }
 .ix-tabs button:focus-visible, .ix-arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-.ix-rail { display: flex; flex-direction: column; min-width: 0; padding-bottom: 38px; }
-.ix-step { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-.ix-count { color: var(--ink-3) !important; }
-.ix-arrows { display: flex; gap: 2px; margin-right: -10px; }
-.ix-arrow { width: 36px; height: 32px; font-size: 14px; letter-spacing: 0; color: var(--ink-2); }
-.ix-panels { display: grid; align-content: center; flex: 1; padding: clamp(24px, 4vh, 40px) 0; }
-/* every stop shares one cell: the rail keeps the tallest stop's height, so nothing shifts as it changes */
+.ix-info { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: clamp(22px, 3.4vh, 32px); }
+.ix-panels { display: grid; min-width: 0; }
+/* every stop shares one cell, so the block keeps one height and nothing below shifts */
 .ix-panel { grid-area: 1 / 1; min-width: 0; transition: opacity 320ms var(--ease), transform 320ms var(--ease); }
 .ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s 200ms; }
-.ix-p { margin-top: 14px; max-width: 36ch; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
-.ix-line { margin-top: 20px; color: var(--ink-3) !important; }
-.ix-line kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border: 1px solid var(--line-2); border-radius: 3px; font: 500 10px/1 var(--mono); letter-spacing: 0; color: var(--ink); vertical-align: 1px; }
+.ix-p { margin-top: 8px; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+.ix-step { display: flex; align-items: center; gap: 2px; flex: none; margin-right: -10px; }
+.ix-count { margin-right: 10px; color: var(--ink-3) !important; }
+.ix-arrow { width: 36px; height: 32px; font-size: 14px; letter-spacing: 0; color: var(--ink-2); }
 
-.ix-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
-.ix-progress { display: flex; gap: 4px; }
-.ix-progress i { width: 18px; height: 2px; background: var(--line-2); transition: background-color 320ms var(--ease); }
-.ix-progress i.is-on { background: var(--ink); }
-.ix-nextline { border: 0; background: none; padding: 6px 0; cursor: pointer; color: var(--ink-2) !important; transition: color 160ms var(--ease); }
-@media (any-hover: hover) and (any-pointer: fine) { .ix-nextline:hover { color: var(--ink) !important; } }
-.ix-nextline:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 @media (max-width: 1023px) {
-  .ix-tour { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
-  .ix-rail { padding-bottom: 0; }
-  .ix-panels { padding: 24px 0; }
-  .ix-main { width: 100%; }
-  .ix-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-content: stretch; }
+  .ix-tour { --ix-w: 100%; }
+  .ix-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* stops wrap onto rows here, so the active line sits under its own label, not on the row line above */
+  .ix-tabs button { padding: 10px 0 9px; }
+  .ix-tabs button::before { top: auto; bottom: 0; right: 14px; }
 }
 @media (max-width: 719px) {
-  .ix-tabs button { letter-spacing: .14em; gap: 6px; }
+  .ix-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ix-tabs button { letter-spacing: .12em; gap: 5px; font-size: 10px; }
+  .ix-info { flex-direction: column; align-items: stretch; gap: 14px; }
+  .ix-step { justify-content: flex-end; }
   .ix-panel[hidden] { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-ring, .ix-tabs button, .ix-tabs button::before, .ix-arrow, .ix-panel, .ix-panel[hidden], .ix-progress i { transition: none !important; }
+  .ix-spot, .ix-ring, .ix-day, .ix-tabs button, .ix-tabs button::before, .ix-arrow, .ix-panel, .ix-panel[hidden] { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }
