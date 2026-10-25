@@ -354,6 +354,8 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .upgrade figcaption > p:last-child { margin-top: 8px; max-width: 34ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 .upgrade-shot img { display: block; height: auto; border-radius: 6px; box-shadow: 0 14px 28px -16px rgba(20,20,18,.45); }
 .upgrade-shot--kw img { width: 220px; }
+.upgrade--kw { grid-template-columns: minmax(0, 1fr); align-content: start; }
+.upgrade--kw .upgrade-shot--kw img { width: 100%; }
 .upgrade-shot--phone { padding: 5px; border-radius: 20px; background: #0d0d0c; box-shadow: inset 0 0 0 1px #2a2a27, 0 14px 28px -16px rgba(20,20,18,.45); }
 .upgrade-shot--phone img { width: 92px; border-radius: 15px; box-shadow: none; }
 .pricing-card > :nth-last-child(2) { margin-bottom: 14px; }
@@ -462,7 +464,6 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
   .upgrade-row { grid-template-columns: 1fr; }
   .upgrade, .upgrade + .upgrade { padding: 24px 0; border-left: 0; }
   .upgrade + .upgrade { border-top: 1px solid var(--line); }
-  .upgrade-shot--kw img { width: 150px; }
 }
 @media (max-width: 1100px) {
   .poster-meta-left, .poster-meta-right { display: none; }
@@ -525,10 +526,10 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
    recording. The whole app window is always in view, never cropped or scrolled. ---- */
 .interface-sub { margin: -8px 0 0; color: var(--ink-2) !important; }
 main > section.ix { min-height: 0 !important; padding-bottom: clamp(40px, 6vh, 64px) !important; }
-.ix-tour { --ix-w: min(100%, 1120px, calc((100svh - var(--sh-h) - 228px) * 1.566)); width: var(--ix-w); margin: clamp(32px, 5vh, 56px) auto 0; padding-top: clamp(28px, 4vh, 40px); border-top: 1px solid var(--line); text-align: left; }
+.ix-tour { --ix-w: min(100%, 1120px, calc((100svh - var(--sh-h) - 228px) * 1.5)); width: var(--ix-w); margin: clamp(32px, 5vh, 56px) auto 0; padding-top: clamp(28px, 4vh, 40px); border-top: 1px solid var(--line); text-align: left; }
 .ix-stage { position: relative; transform-origin: 50% 0; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
-.ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 1022; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
+.ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
 /* the default recording is day mode; the Day / Night stop fades in the frame-aligned night recording */
 .ix-day { position: absolute; inset: 0; opacity: 0; transition: opacity 560ms var(--ease); background: #000; box-shadow: none; }
 .ix-stage.is-day .ix-day { opacity: 1; }

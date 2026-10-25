@@ -259,6 +259,10 @@
   // ---- THE INTERFACE: one recording of the app, toured feature by feature ----
   (function () {
     var tour = document.querySelector('[data-ix-tour]'); if (!tour) return;
+    // full-resolution recordings only where they'll be seen: wide or high-density screens
+    if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1700) {
+      tour.querySelectorAll('video[data-hd]').forEach(function (v) { var s = v.querySelector('source'); if (s) { s.src = v.getAttribute('data-hd'); v.load(); } });
+    }
     var stage = tour.querySelector('[data-ix-hero]'), screen = tour.querySelector('[data-ix-screen]');
     var spot = tour.querySelector('[data-ix-spot]'), holesG = spot.querySelector('[data-ix-holes]'), ringsG = spot.querySelector('[data-ix-rings]');
     var tabs = [].slice.call(tour.querySelectorAll('[data-ix-tab]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
