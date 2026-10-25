@@ -493,16 +493,16 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
    real close-up or recording. Pressing a stop dims everything but that part of the screen (SVG mask,
    so several areas can light at once). The whole app window is always in view. ---- */
 .interface-sub { margin: -8px 0 0; color: var(--ink-2) !important; }
-main > section.ix { padding-bottom: clamp(56px, 9vh, 96px) !important; }
-.ix-tour { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr); gap: clamp(32px, 4vw, 64px); align-items: start; width: 100%; max-width: 1280px; margin: clamp(28px, 4.4vh, 48px) auto 0; padding: clamp(24px, 3.4vh, 36px) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; }
-.ix-main { width: min(100%, calc((100svh - var(--sh-h) - 340px) * 1.566)); justify-self: center; }
+main > section.ix { min-height: 0 !important; padding-bottom: clamp(36px, 5vh, 56px) !important; }
+.ix-tour { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(280px, 1fr); gap: clamp(32px, 3.4vw, 52px); align-items: stretch; width: 100%; max-width: 1360px; margin: clamp(28px, 4.4vh, 48px) auto 0; padding: clamp(24px, 3.4vh, 36px) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; }
+.ix-main { width: min(100%, calc((100svh - var(--sh-h) - 262px) * 1.566)); justify-self: center; }
 .ix-stage { position: relative; transform-origin: 50% 0; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
 .ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 1022; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #000; }
 .ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 360ms var(--ease); }
 .ix-spot.is-on { opacity: 1; }
-.ix-dim { fill: rgba(8, 8, 7, .58); }
-.ix-ring { fill: none; stroke: rgba(241, 236, 226, .85); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.ix-dim { fill: rgba(8, 8, 7, .3); }
+.ix-ring { fill: none; stroke: var(--ink); stroke-width: 1.25px; vector-effect: non-scaling-stroke; transition: opacity 240ms var(--ease); }
 
 .ix-tabs { display: grid; grid-template-columns: repeat(6, auto); justify-content: space-between; margin-top: 16px; }
 .ix-tabs button, .ix-arrow { border: 0; background: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); transition: color 160ms var(--ease); }
@@ -514,22 +514,30 @@ main > section.ix { padding-bottom: clamp(56px, 9vh, 96px) !important; }
 @media (any-hover: hover) and (any-pointer: fine) { .ix-tabs button:hover, .ix-arrow:hover { color: var(--ink); } }
 .ix-tabs button:focus-visible, .ix-arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-.ix-rail { display: flex; flex-direction: column; min-width: 0; }
+.ix-rail { display: flex; flex-direction: column; min-width: 0; padding-bottom: 38px; }
 .ix-step { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
 .ix-count { color: var(--ink-3) !important; }
 .ix-arrows { display: flex; gap: 2px; margin-right: -10px; }
 .ix-arrow { width: 36px; height: 32px; font-size: 14px; letter-spacing: 0; color: var(--ink-2); }
-.ix-panels { display: grid; margin-top: clamp(22px, 3.2vh, 32px); }
+.ix-panels { display: grid; align-content: center; flex: 1; padding: clamp(24px, 4vh, 40px) 0; }
 /* every stop shares one cell: the rail keeps the tallest stop's height, so nothing shifts as it changes */
-.ix-panel { grid-area: 1 / 1; min-width: 0; transition: opacity 300ms var(--ease); }
-.ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; transition: opacity 300ms var(--ease), visibility 0s 300ms; }
-.ix-h { font: 560 clamp(26px, 2.3vw, 34px)/1.1 var(--sans); letter-spacing: -.025em; color: var(--ink); }
-.ix-p { margin-top: 12px; max-width: 38ch; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
-.ix-line { margin-top: 16px; color: var(--ink-3) !important; }
+.ix-panel { grid-area: 1 / 1; min-width: 0; transition: opacity 320ms var(--ease), transform 320ms var(--ease); }
+.ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s 200ms; }
+.ix-p { margin-top: 14px; max-width: 36ch; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+.ix-line { margin-top: 20px; color: var(--ink-3) !important; }
 .ix-line kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border: 1px solid var(--line-2); border-radius: 3px; font: 500 10px/1 var(--mono); letter-spacing: 0; color: var(--ink); vertical-align: 1px; }
 
+.ix-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.ix-progress { display: flex; gap: 4px; }
+.ix-progress i { width: 18px; height: 2px; background: var(--line-2); transition: background-color 320ms var(--ease); }
+.ix-progress i.is-on { background: var(--ink); }
+.ix-nextline { border: 0; background: none; padding: 6px 0; cursor: pointer; color: var(--ink-2) !important; transition: color 160ms var(--ease); }
+@media (any-hover: hover) and (any-pointer: fine) { .ix-nextline:hover { color: var(--ink) !important; } }
+.ix-nextline:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 @media (max-width: 1023px) {
   .ix-tour { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
+  .ix-rail { padding-bottom: 0; }
+  .ix-panels { padding: 24px 0; }
   .ix-main { width: 100%; }
   .ix-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-content: stretch; }
 }
@@ -538,6 +546,6 @@ main > section.ix { padding-bottom: clamp(56px, 9vh, 96px) !important; }
   .ix-panel[hidden] { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-tabs button, .ix-tabs button::before, .ix-arrow, .ix-panel, .ix-panel[hidden] { transition: none !important; }
+  .ix-spot, .ix-ring, .ix-tabs button, .ix-tabs button::before, .ix-arrow, .ix-panel, .ix-panel[hidden], .ix-progress i { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }

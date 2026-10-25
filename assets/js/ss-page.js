@@ -262,6 +262,7 @@
     var stage = tour.querySelector('[data-ix-hero]'), screen = tour.querySelector('[data-ix-screen]');
     var spot = tour.querySelector('[data-ix-spot]'), holesG = spot.querySelector('[data-ix-holes]'), ringsG = spot.querySelector('[data-ix-rings]');
     var tabs = [].slice.call(tour.querySelectorAll('[data-ix-tab]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
+    var bars = [].slice.call(tour.querySelectorAll('.ix-progress i')), nextLabel = tour.querySelector('[data-ix-next-label]');
     var count = tour.querySelector('[data-ix-count]'), NS = 'http://www.w3.org/2000/svg', POOL = 5;
     var cur = -1, inView = false, armed = false;
 
@@ -308,6 +309,8 @@
       tabs.forEach(function (t, k) { var on = k === i; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
       panels.forEach(function (p, k) { p.hidden = k !== i; });
       count.textContent = ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + tabs.length).slice(-2);
+      bars.forEach(function (b, k) { b.classList.toggle('is-on', k <= i); });
+      if (nextLabel) nextLabel.innerHTML = 'Next &middot; ' + tabs[(i + 1) % tabs.length].lastChild.textContent.trim() + ' &rarr;';
       aim(tabs[i]);
       if (focus) { tabs[i].focus(); if (!armed) { armed = true; spot.classList.add('is-on'); } }
     };
@@ -315,6 +318,7 @@
     tabs.forEach(function (t, k) { t.addEventListener('click', function () { select(k, true); spot.classList.add('is-on'); armed = true; }); });
     tour.querySelector('[data-ix-prev]').addEventListener('click', function () { go(-1); spot.classList.add('is-on'); });
     tour.querySelector('[data-ix-next]').addEventListener('click', function () { go(1); spot.classList.add('is-on'); });
+    nextLabel.addEventListener('click', function () { go(1); spot.classList.add('is-on'); });
     tour.querySelector('[role=tablist]').addEventListener('keydown', function (e) {
       var k = e.key;
       if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); go(1); }
