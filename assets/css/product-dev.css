@@ -33,11 +33,22 @@
 .tone-alt { background: var(--ink-raised); color: var(--bone); }
 
 /* ---- dev-hero: full-bleed photo, logo, tagline, IN DEVELOPMENT / BETA badge — the .poster-media
-   background photo already does the full-bleed image; this is the copy block that sits on it. ---- */
-.dev-hero { padding-block: clamp(56px, 9vw, 120px) clamp(40px, 6vw, 72px); }
-.dev-hero-logo { max-width: min(560px, 72vw); height: auto; }
-.dev-hero-tag { margin-top: 18px; font: 560 clamp(20px, 2vw, 28px)/1.3 var(--font-body); color: var(--bone); max-width: 20ch; }
+   background photo already does the full-bleed image; this is the copy block that sits on it.
+   Sized to sit inside the single-viewport poster (logo + slogan + badge, problem/solution, and
+   the notify form all fit on one screen — these five pages don't need Stock Shredder's full
+   scroll-length treatment while they're still in development). ---- */
+.dev-hero { padding-top: clamp(12px, 2.5svh, 28px); }
+.dev-hero-logo { max-width: min(300px, 44vw); height: auto; }
+.dev-hero-tag { margin-top: 10px; font: 560 clamp(17px, 1.6vw, 21px)/1.3 var(--font-body); color: var(--bone); max-width: 20ch; }
 .dev-hero-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 22px; }
+.dev-hero .badge { margin-top: 10px; }
+
+/* ---- one compact screen: hero, problem/solution, notify — each its own .wrap section, spaced
+   with svh so the whole thing settles inside the single-viewport poster without its own scroll
+   on a normal laptop. ---- */
+section.dev-split.wrap { margin-top: clamp(16px, 3svh, 28px); max-width: none; padding-inline: 0; }
+section.dev-split.wrap p { font-size: clamp(14px, 1.1vw, 16px); line-height: 1.5; }
+section.dev-notify.wrap { margin-top: clamp(14px, 3svh, 28px); max-width: none; padding-inline: 0; }
 
 /* ---- workflow: numbered steps, Anton numerals set in CSS (no per-product artwork needed) ---- */
 .dev-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 36px calc(-1 * var(--gutter)) 0; }
@@ -93,7 +104,13 @@
 /* ---- notify CTA band ---- */
 .dev-notify { text-align: center; }
 .dev-notify .notify-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 480px; margin: 28px auto 0; }
-.dev-notify .notify-input { flex: 1 1 260px; min-height: 48px; padding: 0 18px; border: 1px solid var(--line-strong); background: transparent; color: var(--bone); font: 16px/1.4 var(--font-body); border-radius: 999px; }
+/* No flex/width here on purpose — base.css's .notify-input already sets flex:1 1 240px (row,
+   desktop) and resets it to flex:0 0 auto + width:100% under its own @media (max-width:639px)
+   (its comment explains why: a flex-basis carries over as a HEIGHT once that query flips the
+   form to flex-direction:column). Repeating a flex-basis here at higher specificity would win
+   over that mobile reset and reintroduce exactly the bug it guards against — visual-only
+   overrides below. */
+.dev-notify .notify-input { min-height: 48px; padding: 0 18px; border: 1px solid var(--line-strong); background: transparent; color: var(--bone); font: 16px/1.4 var(--font-body); border-radius: 999px; }
 .dev-notify .notify-input::placeholder { color: var(--bone-2); }
 .dev-notify .notify-submit { border-radius: 999px; }
 .dev-notify .notify-status { margin-top: 12px; font-size: 14px; }

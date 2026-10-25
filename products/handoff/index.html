@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="../../assets/css/product-dev.css?v=20261024a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
-<body class="dev-page" data-chat-widget>
+<body data-chat-widget>
 <div class="poster">
   <div class="poster-media" aria-hidden="true">
     <img src="../../assets/img/products/handoff/bg.jpg?v=20261022u" alt="" fetchpriority="high" />
@@ -139,140 +139,29 @@
 <section class="dev-hero wrap" data-product="handoff">
   <img class="dev-hero-logo" src="../../assets/img/brand/product-logos/handoff.png" alt="Handoff" width="640" height="129" />
   <p class="dev-hero-tag">Every file. Verified.</p>
-  <div class="dev-hero-row">
-    <span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span>
-    <span class="mono">Mac &amp; Windows app &middot; iPhone companion</span>
+  <span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span>
+</section>
+
+<section class="dev-split wrap" aria-labelledby="problem-title">
+  <div>
+    <h3 id="problem-title">The problem</h3>
+    <p>Camera cards get copied by hand, under a deadline, after a long day. One bad cable, one interrupted transfer, one card formatted a step too early &mdash; and a day's footage is gone with no warning it was ever at risk.</p>
+  </div>
+  <div class="is-solution">
+    <h3>The solution</h3>
+    <p>Handoff copies to every destination in parallel and checks each file against the original before it will ever call a card safe. If anything couldn't be verified, it says so &mdash; the card stays marked unsafe until it's actually confirmed.</p>
   </div>
 </section>
 
-<section class="dev-section tone-dark" aria-labelledby="workflow-title">
-  <div class="wrap">
-    <p class="section-head mono">The workflow</p>
-    <h2 class="section-title head-dw" id="workflow-title">Card in. Proof out.</h2>
-    <ol class="dev-steps">
-      <li><span class="dev-step-n">01</span><span class="dev-step-t">Connect</span><span class="dev-step-d">Plug in the card or drive. Handoff reads every file before touching anything.</span></li>
-      <li><span class="dev-step-n">02</span><span class="dev-step-t">Copy</span><span class="dev-step-d">Copies to every backup destination at once, not one after another.</span></li>
-      <li><span class="dev-step-n">03</span><span class="dev-step-t">Verify</span><span class="dev-step-d">Every copy is checksummed against the original. Not just a file-size match.</span></li>
-      <li><span class="dev-step-n">04</span><span class="dev-step-t">Confirm</span><span class="dev-step-d">A clear verdict &mdash; SAFE TO WIPE, or exactly why not &mdash; then eject.</span></li>
-    </ol>
-  </div>
-</section>
-
-<section class="dev-section" aria-labelledby="problem-title">
-  <div class="dev-split">
-    <div>
-      <h3 id="problem-title">The problem</h3>
-      <p>Camera cards get copied by hand, under a deadline, after a long day. One bad cable, one interrupted transfer, one card formatted a step too early &mdash; and a day's footage is gone with no warning it was ever at risk.</p>
-    </div>
-    <div class="is-solution">
-      <h3>The solution</h3>
-      <p>Handoff copies to every destination in parallel and checks each file against the original before it will ever call a card safe. If anything couldn't be verified, it says so &mdash; the card stays marked unsafe until it's actually confirmed.</p>
-    </div>
-  </div>
-</section>
-
-<section class="dev-section tone-alt" aria-labelledby="features-title">
-  <div class="wrap">
-    <p class="section-head mono">The features</p>
-    <h2 class="section-title head-dw" id="features-title">Built so you never have to guess</h2>
-    <div class="dev-feats">
-      <div class="dev-feat">
-        <p class="dev-feat-n">01</p>
-        <h3>Copy, then prove it</h3>
-        <p>Every destination is written in parallel and checksummed against the source &mdash; a match on file size alone was never good enough.</p>
-      </div>
-      <div class="dev-feat">
-        <p class="dev-feat-n">02</p>
-        <h3>A verdict, not a guess</h3>
-        <p>SAFE TO WIPE only appears once every file on the card has been read and verified. One unreadable file and the card stays flagged.</p>
-      </div>
-      <div class="dev-feat">
-        <p class="dev-feat-n">03</p>
-        <h3>Eject the right thing</h3>
-        <p>Ejects the card itself, checks it isn't still being read, and refuses to touch a drive that's still in use or isn't actually removable.</p>
-      </div>
-      <div class="dev-feat">
-        <p class="dev-feat-n">04</p>
-        <h3>Watch it from your phone</h3>
-        <p>Keep an eye on a transfer from across set with the Handoff companion app, without standing over the laptop.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="dev-section tone-dark" aria-labelledby="interface-title">
-  <div class="wrap">
-    <p class="section-head mono">The interface</p>
-    <h2 class="section-title head-dw" id="interface-title">Built for the DIT cart</h2>
-    <div class="dev-interface-frame">
-      <span class="brk-tr" aria-hidden="true"></span>
-      <span class="brk-bl" aria-hidden="true"></span>
-      <div class="dev-interface-copy">
-        <p class="mono">Interface preview</p>
-        <p>Real screens go here once Handoff is far enough along to show. We don't fake what isn't built yet.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="dev-section" aria-labelledby="spec-title">
-  <div class="wrap">
-    <p class="section-head mono">Spec sheet</p>
-    <h2 class="section-title head-dw" id="spec-title">What it runs on</h2>
-    <div class="dev-spec">
-      <table>
-        <tbody>
-          <tr><th>Platform</th><td>Mac &amp; Windows, with an iPhone companion</td></tr>
-          <tr><th>Works with</th><td>SD, CFexpress &amp; CompactFlash cards, external drives</td></tr>
-          <tr><th>Verification</th><td>Checksum-verified copies to every destination, not a file-size match</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section class="dev-section tone-alt dev-notify" aria-labelledby="notify-title">
-  <div class="wrap">
-    <p class="section-head mono">Launch notification</p>
-    <h2 class="section-title head-dw" id="notify-title">Be first to know</h2>
-    <form class="notify-form" data-notify-form data-notify-product="handoff" novalidate>
-      <label class="sr-only" for="notify-email-handoff">Email address</label>
-      <input class="notify-input" type="email" id="notify-email-handoff" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-      <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-      <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
-      <p class="notify-status" data-notify-status hidden></p>
-    </form>
-  </div>
-</section>
-
-<section class="dev-section tone-dark" aria-labelledby="tools-title">
-  <p class="dev-tools-title mono" id="tools-title">Explore all DEADWORK tools:</p>
-  <ul class="dev-tools-grid">
-    <li><a class="dev-tool" href="../scene-lock/">
-      <span class="dev-tool-mark"><img src="../../assets/img/brand/product-logos/clean/scene-lock.png" alt="" loading="lazy" /></span>
-      <span><span class="dev-tool-name">Scene Lock</span><span class="dev-tool-meta">Pre-production &middot; <span class="dev-tool-status-soon">In development</span></span></span>
-    </a></li>
-    <li><a class="dev-tool" href="../set-control/">
-      <span class="dev-tool-mark"><img src="../../assets/img/brand/product-logos/clean/set-control.png" alt="" loading="lazy" /></span>
-      <span><span class="dev-tool-name">Set Control</span><span class="dev-tool-meta">Pre-production &middot; <span class="dev-tool-status-soon">In development</span></span></span>
-    </a></li>
-    <li><a class="dev-tool" href="../loadout/">
-      <span class="dev-tool-mark"><img src="../../assets/img/brand/product-logos/clean/loadout.png" alt="" loading="lazy" /></span>
-      <span><span class="dev-tool-name">Loadout</span><span class="dev-tool-meta">Production &middot; <span class="dev-tool-status-soon">In development</span></span></span>
-    </a></li>
-    <li><a class="dev-tool is-here" href="./" aria-current="page">
-      <span class="dev-tool-mark"><img src="../../assets/img/brand/product-logos/clean/handoff.png" alt="" loading="lazy" /></span>
-      <span><span class="dev-tool-name">Handoff</span><span class="dev-tool-meta">Production &middot; <span class="dev-tool-status-soon">In development</span></span></span>
-    </a></li>
-    <li><a class="dev-tool" href="../sound-driver/">
-      <span class="dev-tool-mark"><img src="../../assets/img/brand/product-logos/clean/sound-driver.png" alt="" loading="lazy" /></span>
-      <span><span class="dev-tool-name">Sound Driver</span><span class="dev-tool-meta">Post-production &middot; <span class="dev-tool-status-soon">In development</span></span></span>
-    </a></li>
-    <li><a class="dev-tool" href="../stock-shredder/">
-      <span class="dev-tool-mark"><img src="../../assets/img/brand/product-logos/clean/stock-shredder.png" alt="" loading="lazy" /></span>
-      <span><span class="dev-tool-name">Stock Shredder</span><span class="dev-tool-meta">Post-production &middot; <span class="dev-tool-status-live">Available now</span></span></span>
-    </a></li>
-  </ul>
+<section class="dev-notify wrap" aria-labelledby="notify-title">
+  <p class="section-head mono" id="notify-title">Be first to know</p>
+  <form class="notify-form" data-notify-form data-notify-product="handoff" novalidate>
+    <label class="sr-only" for="notify-email-handoff">Email address</label>
+    <input class="notify-input" type="email" id="notify-email-handoff" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+    <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+    <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
+    <p class="notify-status" data-notify-status hidden></p>
+  </form>
 </section>
 
       </article>
