@@ -526,23 +526,12 @@ main > section.ix { padding-bottom: clamp(56px, 9vh, 96px) !important; }
 .ix-h { font: 560 clamp(26px, 2.3vw, 34px)/1.1 var(--sans); letter-spacing: -.025em; color: var(--ink); }
 .ix-p { margin-top: 12px; max-width: 38ch; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
 .ix-line { margin-top: 16px; color: var(--ink-3) !important; }
-.ix-line kbd, .ix-keys kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border: 1px solid var(--line-2); border-radius: 3px; font: 500 10px/1 var(--mono); letter-spacing: 0; color: var(--ink); vertical-align: 1px; }
-.ix-media { margin-top: clamp(20px, 3vh, 28px); aspect-ratio: 1.48; }
-.ix-media img, .ix-media video { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 4px; outline: 1px solid var(--line); outline-offset: -1px; background: #000; }
-/* the two recordings are framed tight on the part that changes (counter and GO; the trim handles) */
-.ix-crop { position: relative; overflow: hidden; border-radius: 4px; outline: 1px solid var(--line); outline-offset: -1px; background: #000; }
-.ix-crop video { position: absolute; left: var(--x); top: var(--y); width: var(--w); max-width: none; max-height: none; border-radius: 0; outline: 0; }
-.ix-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; gap: 22px 12px; }
-.ix-keys li { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-.ix-keys kbd { min-width: 48px; height: 48px; padding: 0 8px; border-radius: 5px; font-size: 17px; }
-.ix-keys .ix-wide { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
-.ix-keys span { font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+.ix-line kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border: 1px solid var(--line-2); border-radius: 3px; font: 500 10px/1 var(--mono); letter-spacing: 0; color: var(--ink); vertical-align: 1px; }
 
 @media (max-width: 1023px) {
   .ix-tour { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
   .ix-main { width: 100%; }
   .ix-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-content: stretch; }
-  .ix-media { max-width: 560px; }
 }
 @media (max-width: 719px) {
   .ix-tabs button { letter-spacing: .14em; gap: 6px; }

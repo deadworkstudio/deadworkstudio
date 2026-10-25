@@ -306,9 +306,7 @@
       if (i === cur) return;
       cur = i;
       tabs.forEach(function (t, k) { var on = k === i; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
-      panels.forEach(function (p, k) {
-        var on = k === i; p.hidden = !on; playIf(p.querySelector('[data-ix-loop]'), on && inView);
-      });
+      panels.forEach(function (p, k) { p.hidden = k !== i; });
       count.textContent = ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + tabs.length).slice(-2);
       aim(tabs[i]);
       if (focus) { tabs[i].focus(); if (!armed) { armed = true; spot.classList.add('is-on'); } }
@@ -331,7 +329,6 @@
       new IntersectionObserver(function (es) {
         inView = es[0].isIntersecting;
         playIf(screen, inView);
-        playIf(panels[cur].querySelector('[data-ix-loop]'), inView);
       }, { threshold: 0.15 }).observe(tour);
     }
   })();
