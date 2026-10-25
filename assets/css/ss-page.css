@@ -543,10 +543,15 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-stage { position: relative; margin-top: clamp(14px, 2.2vh, 24px); transform-origin: 50% 0; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
 .ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
+/* Day / Night: the app's own dark-mode recording (same take, frame-aligned) fades in over the day one */
+.ix-dark { position: absolute; inset: 0; opacity: 0; background: #000; box-shadow: none; transition: opacity 260ms var(--ease); }
+.ix-stage.is-night .ix-dark { opacity: 1; }
 /* highlight: the rest of the app dims hard, the chosen controls stay at full brightness inside a crisp two-tone frame */
 .ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 160ms var(--ease); }
 .ix-spot.is-on { opacity: 1; }
 .ix-dim { fill: rgba(14, 14, 13, .72); }
+/* Day / Night: the point is to see the whole dark interface, so only a light dim around the toggle */
+.ix-stage.is-night .ix-dim { fill: rgba(0, 0, 0, .18); }
 .ix-ring-out { fill: none; stroke: rgba(14, 14, 13, .55); stroke-width: 4px; vector-effect: non-scaling-stroke; }
 .ix-ring { fill: none; stroke: #F4F1EA; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
 
@@ -570,6 +575,6 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .ix-explain { min-height: 7.6em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel { transition: none !important; }
+  .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }

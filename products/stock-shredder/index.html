@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261025t3" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261025t5" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -184,12 +184,13 @@
         <li><button type="button" class="ix-feat" id="ix-f2" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="2" data-rects="84.99,45.26,14.32,12.63"><span>03</span>Fine-tune</button></li>
         <li><button type="button" class="ix-feat" id="ix-f3" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="3" data-rects="17.28,82.62,65.21,10.73"><span>04</span>Trim</button></li>
         <li><button type="button" class="ix-feat" id="ix-f4" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="4" data-rects="84.99,11.29,14.32,20.28"><span>05</span>Export</button></li>
-        <li><button type="button" class="ix-feat" id="ix-f5" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="5" data-rects="96.3,0.35,2.31,3.47"><span>06</span>Day / Night</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f5" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="5" data-ix-night data-rects="96.3,0.35,2.31,3.47"><span>06</span>Day / Night</button></li>
         <li><button type="button" class="ix-feat" id="ix-f6" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="6" data-rects="84.99,87.68,14.32,11.28"><span>07</span>Shortcuts</button></li>
       </ul>
 
       <figure class="ix-stage" data-ix-hero>
         <video class="ix-screen" muted loop playsinline preload="metadata" poster="../../assets/img/products/stock-shredder/review-light-poster.jpg?v=069" width="1440" height="960" data-hd="../../assets/img/products/stock-shredder/review-light-hd.mp4?v=069" aria-label="Stock Shredder's Review screen playing a reel-to-reel tape deck clip: the clip list, the player, the trim bar, Approve and Deny, and the export, look and fine-tune settings." data-ix-screen><source src="../../assets/img/products/stock-shredder/review-light.mp4?v=069" type="video/mp4" /></video>
+        <video class="ix-screen ix-dark" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/review-dark-poster.jpg?v=069" width="1440" height="960" data-hd="../../assets/img/products/stock-shredder/review-dark-hd.mp4?v=069" aria-hidden="true" data-ix-dark><source src="../../assets/img/products/stock-shredder/review-dark.mp4?v=069" type="video/mp4" /></video>
         <svg class="ix-spot" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-ix-spot>
           <defs><mask id="ix-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="#fff" /><g data-ix-holes></g></mask></defs>
           <rect class="ix-dim" x="0" y="0" width="100" height="100" mask="url(#ix-mask)" />
@@ -539,7 +540,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021c"></script>
 <script src="../../assets/js/checkout.js?v=20261024c"></script>
-<script src="../../assets/js/ss-page.js?v=20261025t1"></script>
+<script src="../../assets/js/ss-page.js?v=20261025t4"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download

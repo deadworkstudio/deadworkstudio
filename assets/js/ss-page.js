@@ -273,6 +273,26 @@
     var spot = tour.querySelector('[data-ix-spot]'), holesG = spot.querySelector('[data-ix-holes]'), ringsG = spot.querySelector('[data-ix-rings]');
     var feats = [].slice.call(tour.querySelectorAll('[data-ix-feat]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
     var NS = 'http://www.w3.org/2000/svg', POOL = 5, cur = -1, lastPointer = 'mouse';
+    var dark = tour.querySelector('[data-ix-dark]'), inView = false, nightTimer = 0;
+    // Day / Night: start the dark recording at the day one's time, fade it in; fade back out when leaving
+    var setNight = function (on) {
+      if (!dark) return;
+      clearTimeout(nightTimer);
+      if (on) {
+        if (dark.preload === 'none') dark.preload = 'auto';
+        try { dark.currentTime = screen.currentTime || 0; } catch (e) {}
+        if (!reduce && inView) { var p = dark.play(); if (p && p.catch) p.catch(function () {}); }
+        stage.classList.add('is-night');
+      } else if (stage.classList.contains('is-night')) {
+        stage.classList.remove('is-night');
+        nightTimer = setTimeout(function () { dark.pause(); }, 400);
+      }
+    };
+    // warm the dark recording up once the section is near, so the first switch is instant
+    if (dark && 'IntersectionObserver' in window) {
+      var warm = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { dark.preload = 'auto'; warm.disconnect(); } }, { rootMargin: '400px 0px' });
+      warm.observe(tour);
+    }
 
     // the screen settles into place as it scrolls up (transform/opacity only)
     if (!reduce) {
@@ -318,6 +338,7 @@
       feats.forEach(function (f, k) { f.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
       panels.forEach(function (p, k) { p.hidden = k !== i; });
       explain.classList.toggle('has-feat', i >= 0);
+      setNight(i >= 0 && feats[i].hasAttribute('data-ix-night'));
       if (i < 0) { spot.classList.remove('is-on'); return; }
       aim(rectsFor(feats[i]));
       spot.classList.add('is-on');
@@ -343,7 +364,9 @@
     // the screen only plays while on screen
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        if (es[0].isIntersecting && !reduce) { var p = screen.play(); if (p && p.catch) p.catch(function () {}); } else screen.pause();
+        inView = es[0].isIntersecting;
+        if (inView && !reduce) { var p = screen.play(); if (p && p.catch) p.catch(function () {}); } else screen.pause();
+        if (dark && stage.classList.contains('is-night')) { if (inView && !reduce) { var q = dark.play(); if (q && q.catch) q.catch(function () {}); } else dark.pause(); }
       }, { threshold: 0.15 }).observe(tour);
     }
   })();
