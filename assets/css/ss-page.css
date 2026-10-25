@@ -330,6 +330,22 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .pricing-per-clip { font-size: 13px; color: var(--ink-3); }
 .pricing-note { font-size: 13px; color: var(--ink-2); }
 .pricing-card .pricing-per-clip + .pill, .pricing-card .pricing-note:last-of-type + .pill { margin-top: auto; }
+.pricing-inc { width: 100%; max-width: 200px; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); text-align: left; }
+.pricing-inc .mono { color: var(--ink-3); }
+.pricing-inc ul { margin-top: 8px; display: grid; gap: 6px; }
+.pricing-inc li { position: relative; padding-left: 16px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.pricing-inc li::before { content: '+'; position: absolute; left: 0; top: -1px; font: 500 14px/1.4 var(--mono); color: var(--green); }
+/* what Pro and Studio add: two real screens, quiet, under the plan cards */
+.upgrade-row { display: grid; grid-template-columns: 1fr 1fr; max-width: 1040px; margin: 40px auto 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; }
+.upgrade { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; padding: 28px 28px 28px 0; }
+.upgrade + .upgrade { padding-left: 28px; padding-right: 0; border-left: 1px solid var(--line); }
+.upgrade .mono { color: var(--ink-3); }
+.upgrade h3 { margin-top: 8px; font: 560 20px/1.2 var(--sans); letter-spacing: -.015em; color: var(--ink); }
+.upgrade figcaption > p:last-child { margin-top: 8px; max-width: 34ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.upgrade-shot img { display: block; height: auto; border-radius: 6px; box-shadow: 0 14px 28px -16px rgba(20,20,18,.45); }
+.upgrade-shot--kw img { width: 220px; }
+.upgrade-shot--phone { padding: 5px; border-radius: 20px; background: #0d0d0c; box-shadow: inset 0 0 0 1px #2a2a27, 0 14px 28px -16px rgba(20,20,18,.45); }
+.upgrade-shot--phone img { width: 92px; border-radius: 15px; box-shadow: none; }
 .pricing-card > :nth-last-child(2) { margin-bottom: 14px; }
 .pricing-card .pill { margin-top: auto; align-self: center; min-height: 40px; padding: 0 26px; }
 .pricing-error { margin-top: 12px; color: #A3241D; }
@@ -433,6 +449,10 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
   .pricing-grid, .earn-grid { margin: 26px -20px 0; }
   .billing { gap: 12px; }
   .pricing-badge { position: static; display: inline-block; margin-left: 0; }
+  .upgrade-row { grid-template-columns: 1fr; }
+  .upgrade, .upgrade + .upgrade { padding: 24px 0; border-left: 0; }
+  .upgrade + .upgrade { border-top: 1px solid var(--line); }
+  .upgrade-shot--kw img { width: 150px; }
 }
 @media (max-width: 1100px) {
   .poster-meta-left, .poster-meta-right { display: none; }
