@@ -528,7 +528,7 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .interface-sub { margin: -8px 0 0; color: var(--ink-2) !important; }
 main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px) !important; padding-bottom: clamp(40px, 6vh, 64px) !important; }
 /* title + names + the whole app + its explanation fit one window, so a hover is always seen */
-.ix-tour { --ix-w: min(100%, 1120px, calc((78svh - 184px) * 1.5)); width: var(--ix-w); margin: clamp(20px, 3.2vh, 36px) auto 0; text-align: left; }
+.ix-tour { --ix-w: min(100%, 1120px, calc((78svh - 226px) * 1.5)); width: var(--ix-w); margin: clamp(20px, 3.2vh, 36px) auto 0; text-align: left; }
 
 /* feature names: one row of mono labels, obviously pressable */
 .ix-nav { display: flex; justify-content: space-between; gap: 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
@@ -556,13 +556,15 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-ring { fill: none; stroke: #F4F1EA; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
 
 /* explanation: one fixed-height cell under the app, so nothing below ever moves */
-.ix-explain { display: grid; min-height: 4.6em; margin-top: clamp(14px, 2.2vh, 22px); }
-.ix-explain > * { grid-area: 1 / 1; align-self: start; }
+.ix-explain { display: grid; min-height: 5.4em; margin-top: clamp(14px, 2.2vh, 22px); text-align: center; }
+.ix-explain > * { grid-area: 1 / 1; align-self: start; justify-self: center; }
 .ix-idle { color: var(--ink-3) !important; padding-top: 6px; transition: opacity 160ms var(--ease); }
 .ix-explain.has-feat .ix-idle { opacity: 0; }
-.ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; }
-.ix-panel { transition: opacity 140ms var(--ease); }
-.ix-p { margin-top: 6px; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+/* the explanation rises in quickly when a feature is chosen, so the change is unmistakable */
+.ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; transform: translateY(8px); }
+.ix-panel { transition: opacity 180ms var(--ease), transform 220ms var(--ease); }
+.ix-panel .ix-h { font-size: clamp(30px, 2.8vw, 40px); }
+.ix-p { margin: 6px auto 0; max-width: 46ch; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.5; color: var(--ink); }
 
 @media (max-width: 1023px) {
   .ix-tour { --ix-w: 100%; }
