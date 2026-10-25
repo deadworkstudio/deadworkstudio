@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Stock Shredder — hero prototype: Cinematic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="hero">
+    <!-- Brand + existing headline -->
+    <header class="hero__head">
+      <img class="hero__logo" src="../../../assets/img/brand/product-logos/stock-shredder.png" alt="Stock Shredder" width="2048" height="697">
+      <h1 class="hero__title">Raw footage into stock-ready clips.</h1>
+    </header>
+
+    <!-- Letterboxed animation module: one canvas draws every frame from the <video> pool below -->
+    <section class="reel" aria-label="Raw B-roll is shredded into organized, trimmed clips with one click">
+      <div class="reel__frame" id="frame">
+        <canvas class="reel__canvas" id="canvas" aria-hidden="true"></canvas>
+        <div class="reel__grain" aria-hidden="true"></div>
+        <div class="reel__vignette" aria-hidden="true"></div>
+      </div>
+
+      <!-- Phase markers light with the shared timeline -->
+      <ol class="reel__phases" aria-hidden="true">
+        <li data-phase="chaos">Chaos</li>
+        <li data-phase="click">Click</li>
+        <li data-phase="shred">Shred</li>
+        <li data-phase="order">Order</li>
+      </ol>
+    </section>
+
+    <!-- Off-screen decode pool (never displayed; the canvas draws from these) -->
+    <div class="pool" id="pool" aria-hidden="true"></div>
+  </main>
+
+  <script src="../shared/config.js"></script>
+  <script src="../shared/timeline.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

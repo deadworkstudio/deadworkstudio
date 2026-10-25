@@ -1,0 +1,65 @@
+/* Stock Shredder hero — MECHANICAL direction.
+   Dark instrument panel: bone ink on near-black, hairline rules, green only as a tiny indicator. */
+
+@font-face { font-family: 'Archivo'; src: url('../../../assets/fonts/archivo-variable.woff2') format('woff2-variations'), url('../../../assets/fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+
+:root {
+  --bg: #0E0E0D;
+  --ink: #F1ECE2;
+  --ink-2: rgba(241, 236, 226, .62);
+  --ink-3: rgba(241, 236, 226, .38);
+  --line: rgba(241, 236, 226, .14);
+  --green: #8FD687;
+  --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --gutter: clamp(16px, 3vw, 40px);
+  --bar-h: 34px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); }
+body { font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* ---- Hero shell ---- */
+.hero { min-height: 100svh; padding: clamp(24px, 4.4vh, 52px) var(--gutter) clamp(24px, 4vh, 48px); display: flex; flex-direction: column; align-items: center; }
+.hero-head { text-align: center; }
+.hero-logo { display: block; height: clamp(52px, 8.4vh, 84px); width: auto; margin: 0 auto; }
+.hero-title { margin: 6px 0 0; font: 600 clamp(28px, min(3.6vw, 5.8vh), 54px)/1.05 var(--sans); letter-spacing: -.03em; color: var(--ink); text-wrap: balance; }
+
+/* ---- Instrument ---- */
+.rig { margin: clamp(20px, 3.4vh, 40px) 0 0; width: 100%; max-width: 1280px; } /* width is set by script.js to fit one screen */
+.rig-stage { position: relative; width: 100%; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+.rig-canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.rig-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--bar-h); padding: 0 14px; border: 1px solid var(--line); font: 500 10.5px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.rig-bar--top { border-bottom: 0; }
+.rig-bar--bottom { border-top: 0; padding: 0; }
+
+.phases { display: flex; gap: clamp(14px, 2.2vw, 28px); margin: 0; padding: 0; list-style: none; }
+.phase { display: inline-flex; align-items: center; gap: 8px; transition: color 120ms ease; }
+.phase i { width: 6px; height: 6px; border: 1px solid currentColor; transition: background-color 120ms ease, border-color 120ms ease; }
+.phase.is-on { color: var(--ink); }
+.phase.is-on i { background: var(--green); border-color: var(--green); }
+.timecode { color: var(--ink-2); letter-spacing: .14em; }
+
+/* 12 s timeline ruler: minor tick every 0.25 s, major every 1 s, the click mark at 4.0 s */
+.ruler { position: relative; width: 100%; height: 100%; margin: 0 14px;
+  background:
+    repeating-linear-gradient(90deg, rgba(241,236,226,.34) 0 1px, transparent 1px calc(100% / 12)) 0 100% / 100% 9px no-repeat,
+    repeating-linear-gradient(90deg, rgba(241,236,226,.16) 0 1px, transparent 1px calc(100% / 48)) 0 100% / 100% 4px no-repeat; }
+.ruler::after { content: ''; position: absolute; right: -1px; bottom: 0; width: 1px; height: 9px; background: rgba(241,236,226,.34); }
+.ruler-click { position: absolute; left: calc(100% / 3); bottom: 0; width: 1px; height: 16px; background: var(--ink-2); }
+.ruler-head { position: absolute; left: 0; top: 7px; bottom: 0; width: 1px; background: var(--ink); will-change: transform; }
+.ruler-head::before { content: ''; position: absolute; top: -1px; left: -3px; width: 7px; height: 4px; background: var(--ink); }
+
+/* Video sources live off to the side; the canvas draws them. Kept 1px and in-viewport so browsers keep decoding. */
+.sources { position: fixed; left: 0; top: 0; width: 1px; height: 1px; overflow: hidden; opacity: .001; pointer-events: none; }
+.sources video { width: 1px; height: 1px; }
+
+@media (max-width: 599px) {
+  :root { --bar-h: 30px; }
+  .rig-bar { padding: 0 10px; font-size: 9px; letter-spacing: .16em; }
+  .phases { gap: 12px; }
+  .phase { gap: 6px; }
+  .ruler { margin: 0 10px; }
+}

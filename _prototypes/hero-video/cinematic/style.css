@@ -1,0 +1,134 @@
+/* Stock Shredder hero — CINEMATIC prototype.
+   Black page, letterboxed 2.39:1 module, full-bleed. All motion lives in one <canvas> (script.js). */
+
+@font-face { font-family: 'Archivo'; src: url('../../../assets/fonts/archivo-variable.woff2') format('woff2-variations'), url('../../../assets/fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: 'Anton'; src: url('../../../assets/fonts/anton.woff2') format('woff2'); font-display: swap; }
+
+:root {
+  --black: #000;
+  --sand: #EBE5D8;          /* DEADWORK light ink */
+  --sand-dim: rgba(235, 229, 216, .34);
+  --sand-faint: rgba(235, 229, 216, .14);
+  --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --display: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Vertical space reserved for headline + phase markers so the module fits one screen */
+  --chrome: 252px;
+  --ratio: 2.39;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--black); color: var(--sand); }
+body { font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 0 24px;
+}
+
+/* ---- Head ---- */
+.hero__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px 28px;
+  text-align: center;
+}
+.hero__logo {
+  display: block;
+  width: clamp(168px, 15vw, 232px);
+  height: auto;
+  margin: -12px 0 -14px; /* the PNG carries generous transparent padding */
+}
+.hero__title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .005em;
+  line-height: 1;
+  font-size: clamp(30px, 4.2vw, 60px);
+  color: var(--sand);
+  text-wrap: balance;
+}
+
+/* ---- Letterboxed module ---- */
+.reel { display: flex; flex-direction: column; align-items: center; }
+.reel__frame {
+  position: relative;
+  width: min(100vw, calc((100svh - var(--chrome)) * var(--ratio)));
+  aspect-ratio: var(--ratio) / 1;
+  background: #000;
+  overflow: hidden;
+  isolation: isolate;
+}
+.reel__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Film grain: one small noise tile (generated in script.js), stepped every few frames */
+.reel__grain {
+  position: absolute; inset: 0;
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+  opacity: .1;
+  pointer-events: none;
+}
+.reel__vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(0, 0, 0, .55) 100%);
+  pointer-events: none;
+}
+
+/* ---- Phase markers ---- */
+.reel__phases {
+  list-style: none;
+  margin: 0;
+  padding: 20px 24px 0;
+  display: flex;
+  gap: clamp(20px, 3.2vw, 44px);
+  font: 500 10.5px/1 var(--mono);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.reel__phases li {
+  position: relative;
+  padding-top: 10px;
+  color: var(--sand-dim);
+  transition: color 240ms ease;
+}
+.reel__phases li::before {
+  content: '';
+  position: absolute; left: 0; top: 0;
+  width: 100%; height: 1px;
+  background: var(--sand);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+.reel__phases li.is-on { color: var(--sand); }
+.reel__phases li.is-on::before { transform: scaleX(1); }
+
+/* Decode pool: kept in the DOM (some browsers throttle detached video) but invisible */
+.pool { position: fixed; left: 0; top: 0; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.pool video { width: 1px; height: 1px; }
+
+/* ---- Tablet / phone: the 2.39 matte would leave the story postage-stamp sized, so open to 16:9 ---- */
+@media (max-width: 720px) {
+  :root { --ratio: 1.78; --chrome: 220px; }
+  .hero { justify-content: flex-start; padding-top: 56px; }
+  .hero__head { padding-bottom: 24px; }
+  .reel__phases { gap: 18px; font-size: 9.5px; }
+}
+@media (min-width: 721px) and (max-aspect-ratio: 1/1) {
+  /* portrait tablet: width-bound, so the 2.39 matte would waste the height — open to 16:9 */
+  :root { --ratio: 1.78; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel__phases li, .reel__phases li::before { transition: none; }
+}

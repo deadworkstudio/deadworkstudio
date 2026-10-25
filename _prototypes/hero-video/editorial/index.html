@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Shredder — hero prototype · Editorial</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="main">
+    <!-- Hero: logo, the live headline, then the CHAOS → CLICK → SHRED → ORDER film -->
+    <section class="hero">
+      <div class="hero-brand">
+        <img class="hero-logo" src="../../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" />
+      </div>
+      <h1>Raw footage into stock-ready clips.</h1>
+
+      <figure class="film" data-film aria-label="A table of unsorted footage is cut into strips with one click and reassembled as a clean grid of labelled clips.">
+        <!-- one canvas draws every frame of footage; the videos below are its sources -->
+        <canvas class="film-canvas" data-canvas aria-hidden="true"></canvas>
+        <!-- crisp DOM captions for the ORDER grid, positioned by script.js -->
+        <div class="film-captions" data-captions aria-hidden="true"></div>
+      </figure>
+
+      <!-- Daniel's four phase words; the current one lights -->
+      <ol class="phases" data-phases aria-hidden="true">
+        <li data-phase="chaos">Chaos</li>
+        <li data-phase="click">Click</li>
+        <li data-phase="shred">Shred</li>
+        <li data-phase="order">Order</li>
+      </ol>
+    </section>
+  </main>
+
+  <!-- video sources (decoded, never shown directly) -->
+  <div class="sources" data-sources aria-hidden="true"></div>
+
+  <script src="../shared/config.js"></script>
+  <script src="../shared/timeline.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

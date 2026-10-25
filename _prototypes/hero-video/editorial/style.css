@@ -1,0 +1,77 @@
+/* Stock Shredder hero — Editorial prototype.
+   Tokens mirror assets/css/ss-page.css (cream page, warm ink, Archivo + mono). */
+@font-face { font-family: 'Archivo'; src: url('../../../assets/fonts/archivo-variable.woff2') format('woff2-variations'), url('../../../assets/fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: 'Anton'; src: url('../../../assets/fonts/anton.woff2') format('woff2'); font-display: swap; }
+
+:root {
+  --bg: #F4F1EA;
+  --bg-2: #ECE7DC;
+  --ink: #141412;
+  --ink-2: #4A4741;
+  --ink-3: #6E6A62;
+  --line: rgba(20, 20, 18, .12);
+  --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --gutter: clamp(16px, 4.4vw, 92px);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, figure, ol { margin: 0; padding: 0; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ---- hero shell ---- */
+.hero { display: flex; flex-direction: column; align-items: center; padding: clamp(28px, 5vh, 56px) var(--gutter) 40px; text-align: center; }
+.hero-logo { height: clamp(40px, 6.2vh, 64px); width: auto; }
+.hero h1 { margin-top: 14px; font: 600 clamp(30px, min(3.9vw, 6vh), 56px)/1.05 var(--sans); letter-spacing: -.03em; text-wrap: balance; }
+
+/* ---- the film module ----
+   Width is the smaller of the column and what fits under the headline on one screen. */
+.film {
+  --ratio: 2;
+  position: relative;
+  width: min(1240px, 100%, calc((100svh - 250px) * var(--ratio)));
+  aspect-ratio: var(--ratio) / 1;
+  margin-top: clamp(20px, 3.4vh, 36px);
+  background: var(--bg);
+  contain: layout paint;
+}
+@media (max-width: 899px) { .film { --ratio: 1.75; width: 100%; } }
+@media (max-width: 599px) { .film { --ratio: .8; } }
+
+.film-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ORDER captions: small mono, uppercase, tracked — sit under each grid cell */
+.film-captions { position: absolute; inset: 0; pointer-events: none; }
+.cap {
+  position: absolute; left: 0; top: 0;
+  margin: 0; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 500 10.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2);
+  opacity: 0; will-change: transform, opacity;
+}
+@media (max-width: 599px) { .cap { font-size: 9px; letter-spacing: .14em; } }
+
+/* ---- phase markers ---- */
+.phases { display: grid; grid-template-columns: repeat(4, auto); gap: clamp(18px, 3vw, 40px); margin-top: 18px; list-style: none; }
+.phases li {
+  position: relative; padding-left: 12px;
+  font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-3); opacity: .45;
+  transition: opacity 240ms var(--ease-out), color 240ms var(--ease-out);
+}
+.phases li::before {
+  content: ''; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; margin-top: -3px;
+  background: var(--ink); transform: scale(0); transition: transform 240ms var(--ease-out);
+}
+.phases li.is-on { color: var(--ink); opacity: 1; }
+.phases li.is-on::before { transform: scale(1); }
+
+/* video sources: decoded off-screen, drawn to the canvas */
+.sources { position: fixed; left: 0; top: 0; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.sources video { width: 1px; height: 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .phases li, .phases li::before { transition: none; }
+}

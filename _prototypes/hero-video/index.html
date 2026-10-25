@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Shredder hero — 3 prototypes (local)</title>
+<style>
+  body { margin: 0; background: #141412; color: #F1ECE2; font: 14px/1.4 ui-monospace, Menlo, monospace; }
+  header { padding: 20px 28px; display: flex; gap: 24px; align-items: baseline; flex-wrap: wrap; border-bottom: 1px solid rgba(241,236,226,.14); }
+  h1 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 0; }
+  .note { opacity: .6; font-size: 12px; }
+  .jump { display: flex; gap: 8px; margin-left: auto; }
+  button { font: inherit; font-size: 12px; background: none; color: inherit; border: 1px solid rgba(241,236,226,.3); padding: 6px 12px; cursor: pointer; letter-spacing: .08em; }
+  button:hover { border-color: #8FD687; color: #8FD687; }
+  section { padding: 24px 28px 8px; }
+  h2 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 10px; display: flex; gap: 14px; }
+  h2 a { color: #8FD687; text-decoration: none; opacity: .8; }
+  iframe { width: 100%; aspect-ratio: 16 / 10; border: 1px solid rgba(241,236,226,.14); background: #000; display: block; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Stock Shredder hero · Chaos → Click → Shred → Order</h1>
+  <span class="note">Local preview only. Click = A002_C012_0306SX frame 657, lands at 4.0 s.</span>
+  <div class="jump">
+    <button data-t="">Play from start</button>
+    <button data-t="3.4">Just before click</button>
+    <button data-t="4&amp;freeze">Freeze on click</button>
+    <button data-t="7">Order</button>
+  </div>
+</header>
+<section><h2>01 Editorial <a href="editorial/index.html" target="_blank">open full ↗</a></h2><iframe src="editorial/index.html" title="Editorial"></iframe></section>
+<section><h2>02 Mechanical <a href="mechanical/index.html" target="_blank">open full ↗</a></h2><iframe src="mechanical/index.html" title="Mechanical"></iframe></section>
+<section><h2>03 Cinematic <a href="cinematic/index.html" target="_blank">open full ↗</a></h2><iframe src="cinematic/index.html" title="Cinematic"></iframe></section>
+<script>
+  document.querySelectorAll('.jump button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var q = b.dataset.t ? '?t=' + b.dataset.t : '';
+      document.querySelectorAll('iframe').forEach(function (f) { f.src = f.src.split('?')[0] + q; });
+    });
+  });
+</script>
+</body>
+</html>

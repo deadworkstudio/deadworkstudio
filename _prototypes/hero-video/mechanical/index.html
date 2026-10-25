@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Shredder hero — Mechanical</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="hero">
+    <!-- Brand block: identical copy to the live Stock Shredder page -->
+    <header class="hero-head">
+      <img class="hero-logo" src="../../../assets/img/brand/product-logos/stock-shredder.png" alt="Stock Shredder" width="2048" height="697" />
+      <h1 class="hero-title">Raw footage into stock-ready clips.</h1>
+    </header>
+
+    <!-- The instrument: phase bezel, canvas stage, 12 s timeline ruler -->
+    <figure class="rig" data-rig role="img" aria-label="Thirteen unsorted video clips are cut by a single click into a numbered, aligned register.">
+      <div class="rig-bar rig-bar--top" aria-hidden="true">
+        <ol class="phases">
+          <li class="phase" data-phase="chaos"><i></i>Chaos</li>
+          <li class="phase" data-phase="click"><i></i>Click</li>
+          <li class="phase" data-phase="shred"><i></i>Shred</li>
+          <li class="phase" data-phase="order"><i></i>Order</li>
+        </ol>
+        <span class="timecode" data-tc>00:00:00</span>
+      </div>
+
+      <div class="rig-stage" data-stage>
+        <canvas class="rig-canvas" data-canvas aria-hidden="true"></canvas>
+      </div>
+
+      <div class="rig-bar rig-bar--bottom" aria-hidden="true">
+        <div class="ruler" data-ruler>
+          <span class="ruler-click"></span>
+          <span class="ruler-head" data-head></span>
+        </div>
+      </div>
+    </figure>
+  </main>
+
+  <!-- Off-screen video sources, drawn into the canvas. Built by script.js from HERO_CONFIG. -->
+  <div class="sources" data-sources aria-hidden="true"></div>
+
+  <script src="../shared/config.js"></script>
+  <script src="../shared/timeline.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
