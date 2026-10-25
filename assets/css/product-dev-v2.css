@@ -19,6 +19,10 @@ body.dev-v2 .dev-hero-tag {
   font: 600 clamp(36px, min(3.9vw, 6.4vh), 58px)/1.05 'Archivo', var(--font-body);
   letter-spacing: -.03em;
   color: var(--dev-ink);
+  /* D-17: without it, narrow phones can break the headline into a visually lopsided 3-line
+     stack (e.g. Set Control's "Every crew. / Every detail. In / sync."); the browser balances
+     line lengths instead. */
+  text-wrap: balance;
 }
 body.dev-v2 .dev-hero .badge { margin-top: 16px; }
 
@@ -35,7 +39,10 @@ body.dev-v2 section.dev-split.wrap {
 }
 body.dev-v2 .dev-split > div { padding: 0 clamp(16px, 3vw, 40px); }
 body.dev-v2 .dev-split > div + div { border-left: 1px solid var(--dev-line); }
-body.dev-v2 .dev-split h3 { margin: 0 0 12px; max-width: 46ch; text-align: center; }
+/* D-11: centering the label over a narrower box than the left-aligned paragraph below it left
+   the label floating well right of its own copy — left-align both so the label sits directly
+   above where the text actually starts. */
+body.dev-v2 .dev-split h3 { margin: 0 0 12px; max-width: 46ch; text-align: left; }
 body.dev-v2 .dev-split p { margin: 0; max-width: 46ch; text-align: left; }
 body.dev-v2 .dev-split .is-solution h3 { color: var(--dev-ink-3); }
 @media (max-width: 719px) {

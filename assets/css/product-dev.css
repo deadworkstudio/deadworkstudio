@@ -21,6 +21,18 @@
 body.dev-light { background: var(--dev-bg); }
 body.dev-light .poster-media { display: none; }
 body.dev-light .poster { color: var(--dev-ink); }
+/* D-15: html's own background stays base.css's dark --ink — on iOS, rubber-banding past the top
+   or bottom of the page briefly reveals that band behind the cream body. */
+html:has(body.dev-light) { background: var(--dev-bg); }
+
+/* D-3: :focus-visible inherits base.css's 2px solid var(--bone) outline — #E6E0D3 on this
+   page's #F4F1EA background is 1.17:1, practically invisible. Every keyboard-focusable element
+   on these pages (inputs, the notify button, the wordmark link, mega-menu cards, social icons,
+   Privacy/Terms) needs a ring that actually shows up against cream. */
+/* The mega-menu panel itself stays dark on every page nav-v2.css reaches (including these), and
+   nav-v2.css already gives .mega-menu-card its own bone-colored ring for that dark background —
+   left alone here so this cream-focused rule doesn't make it invisible against the dark panel. */
+body.dev-light :focus-visible { outline: 2px solid var(--dev-ink); outline-offset: 3px; }
 
 /* ---- re-skin the SHARED header/footer/mega-menu for a light surface. Structure, links and
    behavior are exactly what every other page uses (nothing here touches markup or nav-dropdown.js)
@@ -58,6 +70,14 @@ body.dev-light .poster-foot { border-color: var(--dev-line); }
    the site's dev-yellow accent — no color accent on these pages at all. ---- */
 body.dev-light .badge-dev { color: var(--dev-ink-3); border-color: var(--dev-line-strong); }
 
+/* D-16: home.css's hover rule for the mega-menu card name uses --acc, which on a dev-light page
+   resolves to the per-product dev-yellow — the one color accent these monochrome pages
+   otherwise deliberately avoid (see the badge rule above). Restated here at higher specificity,
+   and kept behind the real-hover check so it doesn't stick after a tap either. */
+@media (hover: hover) and (pointer: fine) {
+  body.dev-light .mega-menu-card:hover .mega-menu-card-name { color: var(--dev-ink); }
+}
+
 /* ---- type ---- */
 .mono { font: 500 10.5px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--dev-ink-3); }
 .head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .005em; line-height: .95; }
@@ -89,11 +109,16 @@ section.dev-notify.wrap { text-align: center; margin-top: clamp(14px, 3svh, 28px
    @media (max-width:639px) (its own comment explains why: a flex-basis becomes a HEIGHT once
    that query flips the form to flex-direction:column). Repeating a flex-basis here at higher
    specificity would win over that reset and inflate the field into an oval on phones. */
-.dev-notify .notify-input { min-height: 48px; padding: 0 18px; border: 1px solid var(--dev-line-strong); background: transparent; color: var(--dev-ink); font: 16px/1.4 var(--font-body); border-radius: 999px; }
+/* D-14: var(--dev-line-strong) (rgba(20,20,18,.28)) only reads 1.86:1 against the page's own
+   cream background — below WCAG 1.4.11's 3:1 floor for a form field's own boundary, so the
+   field doesn't look like an input until it's focused. rgba(20,20,18,.5) clears 3.4:1. */
+.dev-notify .notify-input { min-height: 48px; padding: 0 18px; border: 1px solid rgba(20, 20, 18, .5); background: transparent; color: var(--dev-ink); font: 16px/1.4 var(--font-body); border-radius: 999px; }
 .dev-notify .notify-input::placeholder { color: var(--dev-ink-3); }
 .dev-notify .notify-submit { border-radius: 999px; }
 .dev-notify .notify-status { margin-top: 12px; font-size: 14px; }
-.dev-notify .notify-status-bad { color: var(--signal); }
+/* D-8: var(--signal) (#e5463d) only reads 3.53:1 on this page's cream background — below the
+   4.5:1 AA floor for ~13px text. #B3261E clears 5.8:1 while staying the same hue. */
+.dev-notify .notify-status-bad { color: #B3261E; }
 .dev-notify .notify-status-good { color: #3D6E39; }
 
 /* ---- a quiet, one-time entrance for the whole composition — Emil Kowalski's restraint: a single

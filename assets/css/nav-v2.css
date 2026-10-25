@@ -4,6 +4,12 @@
    with each product's logo on a plate, plus its status and platform line. */
 .nav-tab-trigger::after { display: none !important; }
 .nav-tab-trigger { padding: 8px 10px 6px !important; align-items: center !important; min-height: 36px; transition: opacity 160ms var(--ease, ease); }
+/* H-6/D-12: restore the 44px touch-target floor on coarse pointers (Studio, Stock Shredder, the
+   five in-development pages all measured 36px tall on touch) — mouse/trackpad keep the tighter
+   visual size. */
+@media (pointer: coarse) {
+  .nav-tab-trigger { min-height: 44px !important; }
+}
 .nav-tab-trigger::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 180ms var(--ease, ease);
   background:
@@ -67,6 +73,10 @@
    hover/focus. (home.css carries the matching rule for home + the dev pages it also styles;
    this covers Studio and Stock Shredder's own copies of the same markup, which don't load
    home.css.) */
+/* H-19: Stock Shredder's own footer markup picked up the same nowrap-group wrapper as every
+   other page (ss-page.css itself isn't touched — this file is the one already shared with it
+   via nav-v2.css). */
+.foot-links { white-space: nowrap; }
 .foot-email a, .contact-email a { color: inherit; text-decoration: none; }
 .foot-email a:hover, .foot-email a:focus-visible,
 .contact-email a:hover, .contact-email a:focus-visible { text-decoration: underline; text-underline-offset: .12em; }

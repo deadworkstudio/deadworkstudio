@@ -94,8 +94,18 @@ a[href$="handoff/"] .mega-menu-card-logo { height: clamp(52px, 5.2vw, 90px); }
 .foot-social a { display: flex; color: var(--ink-3); transition: color 160ms var(--ease); }
 @media (any-hover: hover) and (any-pointer: fine) { .foot-social a:hover { color: var(--ink); } }
 .foot-email { grid-column: 1; grid-row: 2; text-transform: none; letter-spacing: .06em; color: var(--ink-2); }
-.foot-note { grid-column: 2; grid-row: 2; text-align: center; }
+.foot-note { grid-column: 2; grid-row: 2; text-align: center; text-wrap: balance; }
 .foot-copy { grid-column: 3; grid-row: 2; text-align: right; }
+/* H-19: see home.css's matching comment — keeps "Privacy · Terms" from splitting mid-group. */
+.foot-links { white-space: nowrap; }
+/* H-6/D-12: restore a real 44px touch target on social icons and the logo link without resizing
+   the icons/wordmark themselves — same technique as home.css's copy of this fix. */
+@media (pointer: coarse) {
+  .poster-brand a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-social { gap: 4px; }
+  .foot-social a { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+  .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
+}
 
 @font-face { font-family: 'Anton'; src: url('../fonts/anton.woff2') format('woff2'); font-display: swap; }
 

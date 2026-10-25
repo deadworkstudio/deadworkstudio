@@ -17,6 +17,12 @@
 }
 
 .nav-tab-trigger { padding: 8px 10px 6px; align-items: center; min-height: 36px; margin-top: 4px; }
+/* H-6: 36px tall is well under the 44px touch-target floor on a screen where there's no cursor
+   precision to make up for it — restored on coarse pointers only, so the tighter 36px visual
+   rhythm stays intact for mouse/trackpad. */
+@media (pointer: coarse) {
+  .nav-tab-trigger { min-height: 44px; }
+}
 .nav-tab-trigger::after { display: none; }
 .nav-tab-trigger::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 180ms var(--ease);

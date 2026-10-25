@@ -343,7 +343,9 @@ a[href$="loadout/"] .mega-menu-card-img::after {
 }
 .mega-menu-card-caption { display: block; margin-top: 14px; text-align: center; }
 .mega-menu-card-name { display: block; font: 400 15px/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
-.mega-menu-card:hover .mega-menu-card-name { color: var(--acc); }
+/* D-16: was ungated, so a tap on touch stuck the card's accent color on until a different card
+   was tapped. */
+@media (hover: hover) and (pointer: fine) { .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); } }
 .mega-menu-card[aria-current] .mega-menu-card-name { color: var(--acc); }
 .mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--bone-2); }
 @media (prefers-reduced-motion: reduce) {
@@ -435,12 +437,28 @@ body.home .panel-headline-lede { text-align: center; }
    still reads quietly like the rest of the footer until interacted with. */
 .foot-email a { color: inherit; text-decoration: none; }
 .foot-email a:hover, .foot-email a:focus-visible { text-decoration: underline; text-underline-offset: .12em; }
-.foot-note { text-align: center; }
+.foot-note { text-align: center; text-wrap: balance; }
 .foot-copy a { color: var(--bone-2); text-decoration: underline; text-underline-offset: 2px; }
-.foot-copy a:hover { color: var(--bone); }
+/* H-19: keep "Privacy · Terms" from breaking apart mid-group, leaving a lone middle-dot
+   orphaned on its own line. */
+.foot-links { white-space: nowrap; }
 .foot-social { display: flex; justify-content: center; gap: 20px; }
 .foot-social a { display: flex; color: var(--bone-3); transition: color 0.15s var(--ease); }
-.foot-social a:hover { color: var(--bone); }
+/* D-16: ungated hover — see base.css's matching comment above. */
+@media (hover: hover) and (pointer: fine) {
+  .foot-copy a:hover { color: var(--bone); }
+  .foot-social a:hover { color: var(--bone); }
+}
+/* H-6/D-12: the logo link, social icons and Privacy/Terms links all measured well under the
+   44px touch-target floor (logo ~22px, icons 18x18, Privacy/Terms 14px tall) on touch viewports.
+   Padding (not resizing the visuals themselves) grows each tap target without changing how
+   anything looks — negative margins on the footer links cancel the padding's effect on layout. */
+@media (pointer: coarse) {
+  .poster-brand a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-social { gap: 4px; }
+  .foot-social a { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+  .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
+}
 
 .panel-follow { display: block; margin-top: 16px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }
 .panel-follow a { color: var(--bone); text-decoration: underline; text-underline-offset: 3px; }
@@ -552,4 +570,9 @@ body.home .panel-headline-lede { text-align: center; }
 }
 @media (min-width: 720px) and (max-width: 1023px) and (min-height: 640px) {
   .poster-lede { grid-column: 5 / 13; }
+  /* H-19: at tablet widths the 3-column footer (email / note / copyright) is too tight for
+     "BY ARTISTS. FOR ARTISTS. THANK YOU." and the copyright line without wrapping mid-phrase —
+     stack it as one centered column instead, like the sub-720px layout already does. */
+  .poster-foot { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .foot-email, .foot-note, .foot-copy { grid-column: 1; text-align: center; }
 }

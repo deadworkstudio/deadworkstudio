@@ -6,7 +6,13 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* H-7: kill the browser's default translucent tap flash on every tappable element — each one
+     gets its own deliberate :active feedback instead (see .btn/.nav-tab-trigger/.notify-submit
+     below and nav-v2.css/home-tabs.css), so removing this doesn't leave taps feeling unconfirmed. */
+  -webkit-tap-highlight-color: transparent;
+}
 
 html,
 body {
@@ -576,6 +582,12 @@ iframe[title='chat widget'],
   font-size: 14px;
   letter-spacing: 0.02em;
 }
+/* H-3: iOS Safari zooms the page on focus for any input under 16px and doesn't zoom back out on
+   blur — kept the quieter 14px on precise pointers (mouse/trackpad), restored to the 16px floor
+   wherever the primary input is a touchscreen. */
+@media (pointer: coarse) {
+  .notify-input { font-size: 16px; }
+}
 .notify-input::placeholder { color: var(--bone-3); }
 /* Honeypot: present in the DOM for bots that auto-fill every field, invisible and unreachable
    (off-screen + unfocusable) for real visitors and screen readers alike. */
@@ -586,7 +598,12 @@ iframe[title='chat widget'],
   height: 1px;
   overflow: hidden;
 }
-.notify-input:hover { border-color: var(--bone-2); }
+/* D-16: ungated hover rules "stick" after a tap on touch devices (the browser fakes a hover
+   state on the first tap and leaves it there until something else is tapped) — gate every
+   hover-only rule behind a real-pointer check. */
+@media (hover: hover) and (pointer: fine) {
+  .notify-input:hover { border-color: var(--bone-2); }
+}
 .notify-input:disabled { opacity: 0.6; }
 .notify-submit { flex: 0 0 auto; }
 .notify-submit:disabled { opacity: 0.5; cursor: not-allowed; }
