@@ -234,6 +234,8 @@
 
   // ---- full-block film: plays only while on screen ----
   document.querySelectorAll('[data-film]').forEach(function (v) {
+    // full-resolution film only on wide or high-density screens
+    if (v.hasAttribute('data-hd') && window.innerWidth * (window.devicePixelRatio || 1) > 2000) { var hs = v.querySelector('source'); if (hs) { hs.src = v.getAttribute('data-hd'); v.load(); } }
     if (reduce || !('IntersectionObserver' in window)) return;
     new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); }); }, { threshold: 0.2 }).observe(v);
   });
