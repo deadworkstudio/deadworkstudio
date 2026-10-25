@@ -34,7 +34,18 @@
   });
   var reset = document.querySelector('[data-panel-reset]');
   if (reset) reset.addEventListener('click', function (e) { e.preventDefault(); if (fromHash() !== 'default') show('default', { push: true }); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && fromHash() !== 'default') show('default', { push: true }); });
+  // H-2: this Escape handler used to fire no matter where focus was, so pressing Escape while
+  // typing in a panel's email field (a completely ordinary "never mind, let me reconsider" key
+  // press) wiped the whole panel back to default — losing the typed email and the open product
+  // along with it. Bail out when focus is in a form control (the field itself should keep
+  // Escape's usual "clear/blur" behavior, not trigger navigation) or the mega-menu is open
+  // (nav-dropdown.js already owns Escape for that case).
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || fromHash() === 'default') return;
+    if (e.target.closest('input, textarea, select, [data-mega-menu]')) return;
+    if (document.querySelector('.mega-menu.is-open')) return;
+    show('default', { push: true });
+  });
   addEventListener('popstate', function () { show(fromHash(), { announce: true }); });
   addEventListener('hashchange', function () { show(fromHash(), { announce: true }); });
   show(fromHash());

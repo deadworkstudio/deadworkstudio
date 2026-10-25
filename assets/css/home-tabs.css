@@ -1,9 +1,12 @@
 /* Homepage only (loaded by home/index.html, not the product pages that share home.css):
    tab style C (registration corners), calmer category switching, and the product plates inside each tab. */
-/* Shared by all five tab options: switching category eases the new content in instead of snapping. */
-.mega-menu-group.is-active { animation: tabs-group-in 260ms var(--ease) both; }
-.mega-menu-group.is-active .mega-menu-card { animation: tabs-card-in 340ms var(--ease) both; }
-.mega-menu-group.is-active .mega-menu-card:nth-child(2) { animation-delay: 40ms; }
+/* Shared by all five tab options: switching category eases the new content in instead of snapping.
+   H-21: scoped to :not(.was-open) — only the first open of a session animates; sweeping the
+   pointer between tabs while the panel stays open (nav-dropdown.js already sets .was-open for
+   that case) swaps content instantly instead of restarting this keyframe every time. */
+.mega-menu:not(.was-open) .mega-menu-group.is-active { animation: tabs-group-in 260ms var(--ease) both; }
+.mega-menu:not(.was-open) .mega-menu-group.is-active .mega-menu-card { animation: tabs-card-in 220ms var(--ease) both; }
+.mega-menu:not(.was-open) .mega-menu-group.is-active .mega-menu-card:nth-child(2) { animation-delay: 40ms; }
 @keyframes tabs-group-in { from { opacity: 0; } }
 @keyframes tabs-card-in { from { opacity: 0; transform: translateY(6px); } }
 /* while a category is open, the others step back so the open one reads instantly */

@@ -17,12 +17,31 @@
 
     var defaultLabel = button.textContent;
 
+    // H-12/D-7/D-8: the status text alone was never tied to the field (no aria-invalid/
+    // aria-describedby) and the <p> itself had no role/aria-live in the markup, so a screen
+    // reader announced nothing on error — and both an empty field and a malformed address
+    // showed the identical "doesn't look like a valid email" message, which isn't true for an
+    // empty field. showStatus now also wires/clears the input's error attributes; callers pass
+    // the right message for each case.
     function showStatus(message, tone) {
       status.textContent = message || '';
       status.hidden = !message;
       status.classList.remove('notify-status-bad', 'notify-status-good');
       if (tone) status.classList.add('notify-status-' + tone);
+      if (tone === 'bad') {
+        input.setAttribute('aria-invalid', 'true');
+        if (status.id) input.setAttribute('aria-describedby', status.id);
+      } else {
+        input.removeAttribute('aria-invalid');
+        input.removeAttribute('aria-describedby');
+      }
     }
+
+    // Once the error is showing, starting to retype should clear it immediately rather than
+    // leaving a stale error attached to a field the user is actively correcting.
+    input.addEventListener('input', function () {
+      if (input.getAttribute('aria-invalid') === 'true') showStatus('', null);
+    });
 
     function setBusy(isBusy) {
       button.disabled = isBusy;
@@ -42,6 +61,11 @@
       }
 
       var email = (input.value || '').trim();
+      if (!email) {
+        showStatus('Enter your email address.', 'bad');
+        input.focus();
+        return;
+      }
       if (!EMAIL_RE.test(email)) {
         showStatus("That doesn't look like a valid email address.", 'bad');
         input.focus();

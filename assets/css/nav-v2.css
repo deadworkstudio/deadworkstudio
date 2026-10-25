@@ -15,7 +15,17 @@
 @media (hover: hover) { .nav-tab-trigger:hover::before { opacity: .45; } }
 .nav-tab-trigger[aria-expanded='true']::before { opacity: 1; }
 .nav-tab-trigger[aria-expanded='true'] { color: inherit; }
-.poster-head:has(.mega-menu.is-open) .nav-tab-trigger:not([aria-expanded='true']) { opacity: .45; }
+/* H-9: the Studio tab itself has no aria-expanded (it's a plain link, not a menu trigger) — it
+   gets aria-current="page" instead on studio/index.html, so the corner-mark needs its own rule
+   to light up for that attribute too, the same way the open menu's trigger does. */
+.nav-tab-trigger[aria-current='page']::before { opacity: 1; }
+/* H-10: opacity:.45 on #141412 ink text drops to ~2.9:1 against the cream #F4F1EA header every
+   page this file reaches (Studio, the five in-development pages, Stock Shredder — all share the
+   same semi-transparent cream header, never a dark one) — fails WCAG AA (4.5:1) for the 11px
+   mono caps. A dedicated muted ink (the same --ink-3 tone studio.css already uses for the meta
+   labels, 4.77:1 on #F4F1EA) replaces the opacity fade so borders/underlines stay full-strength
+   and only the text dims. */
+.poster-head:has(.mega-menu.is-open) .nav-tab-trigger:not([aria-expanded='true']):not([aria-current='page']) { opacity: 1; color: #6e6a62; }
 .nav-tab-trigger:focus-visible { outline: 1px solid currentColor; outline-offset: 6px; }
 
 /* the menu: the same dark panel everywhere (the five in-development pages had a light one) */
@@ -23,9 +33,13 @@
 .mega-menu-eyebrow { color: #807d77 !important; }
 .mega-menu-card-name { color: #e6e0d3 !important; }
 .mega-menu-card-desc { color: #94918a !important; }
-.mega-menu-group.is-active { animation: nav2-group-in 260ms var(--ease, ease) both; }
-.mega-menu-group.is-active .mega-menu-card { animation: nav2-card-in 340ms var(--ease, ease) both; }
-.mega-menu-group.is-active .mega-menu-card:nth-child(2) { animation-delay: 40ms; }
+/* H-21: animate the cards in only the first time the panel opens in a session — see
+   nav-dropdown.js's open()/.was-open comment. Sweeping the pointer between tabs while the panel
+   stays open (.was-open already set) swaps the active group instantly instead of restarting this
+   340ms keyframe per tab. */
+.mega-menu:not(.was-open) .mega-menu-group.is-active { animation: nav2-group-in 260ms var(--ease, ease) both; }
+.mega-menu:not(.was-open) .mega-menu-group.is-active .mega-menu-card { animation: nav2-card-in 220ms var(--ease, ease) both; }
+.mega-menu:not(.was-open) .mega-menu-group.is-active .mega-menu-card:nth-child(2) { animation-delay: 40ms; }
 @keyframes nav2-group-in { from { opacity: 0; } }
 @keyframes nav2-card-in { from { opacity: 0; transform: translateY(6px); } }
 
@@ -46,3 +60,13 @@
   .nav-tab-trigger, .nav-tab-trigger::before { transition: none; }
 }
 .mm-plate[aria-current="true"] .mm-plate-box { box-shadow: inset 0 0 0 1px rgba(230,224,211,.4); }
+
+/* H-5: the footer/contact email is now a real mailto: link on every page this file reaches
+   (Studio, Stock Shredder, the five in-development pages) — it was plain unclickable text.
+   Reset the browser's default underline so it still reads quietly, and only draw one back in on
+   hover/focus. (home.css carries the matching rule for home + the dev pages it also styles;
+   this covers Studio and Stock Shredder's own copies of the same markup, which don't load
+   home.css.) */
+.foot-email a, .contact-email a { color: inherit; text-decoration: none; }
+.foot-email a:hover, .foot-email a:focus-visible,
+.contact-email a:hover, .contact-email a:focus-visible { text-decoration: underline; text-underline-offset: .12em; }

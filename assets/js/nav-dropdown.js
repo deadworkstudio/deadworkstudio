@@ -18,6 +18,14 @@
   });
 
   var openGroupKey = null;
+  // H-1: a real mouse opens the menu on hover (see canHover below), then the SAME click that
+  // naturally follows a hover — the user resting the pointer on a tab and clicking it — used to
+  // be read as "toggle it closed" because isOpen()+openGroupKey already matched that tab. Track
+  // when hover opened it so a click in the moment right after is treated as "yes, keep it open"
+  // rather than a toggle; a click long after (no intervening hover-open) still toggles normally,
+  // and touch/keyboard users (canHover false) always just get the plain toggle below.
+  var openedByHoverAt = 0;
+  var HOVER_GRACE_MS = 400;
 
   function isOpen() { return menu.classList.contains('is-open'); }
 
@@ -32,15 +40,26 @@
     });
   }
 
-  function open(key) {
+  function open(key, byHover) {
+    // H-21: distinguish "opening the panel from closed" (should animate the cards in) from
+    // "swapping the active group while the panel was already open" (sweeping the pointer from
+    // Pre to Production to Post — should swap instantly, not re-run a 340ms keyframe per tab,
+    // since keyframes always restart from 0 and can't be interrupted). .was-open reflects the
+    // state BEFORE this call, so nav-v2.css/home-tabs.css can scope the entrance animation to
+    // `.mega-menu:not(.was-open)` — true only on the first open of a session.
+    var reopening = isOpen();
     openGroupKey = key;
     setActiveGroup(key);
+    menu.classList.toggle('was-open', reopening);
     menu.classList.add('is-open');
+    if (byHover) openedByHoverAt = Date.now();
   }
 
   function close(returnFocusTrigger) {
     openGroupKey = null;
     menu.classList.remove('is-open');
+    menu.classList.remove('was-open');
+    openedByHoverAt = 0;
     triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
     if (returnFocusTrigger) returnFocusTrigger.focus();
   }
@@ -48,7 +67,8 @@
   triggers.forEach(function (trigger) {
     var key = trigger.dataset.megaGroup;
     trigger.addEventListener('click', function () {
-      if (isOpen() && openGroupKey === key) close(null);
+      var justOpenedByHover = isOpen() && openGroupKey === key && (Date.now() - openedByHoverAt) < HOVER_GRACE_MS;
+      if (isOpen() && openGroupKey === key && !justOpenedByHover) close(null);
       else open(key);
     });
   });
@@ -65,7 +85,7 @@
     hoverables.forEach(function (el) {
       el.addEventListener('mouseenter', function () {
         clearTimeout(closeTimer);
-        if (el.hasAttribute('data-nav-trigger')) open(el.dataset.megaGroup);
+        if (el.hasAttribute('data-nav-trigger')) open(el.dataset.megaGroup, true);
       });
       el.addEventListener('mouseleave', function () {
         // Clear any already-pending close before scheduling a new one — without this, sweeping
