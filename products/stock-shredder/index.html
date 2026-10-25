@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024p1" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024s2" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -267,8 +267,16 @@
       <div class="spec-row">
         <p class="spec-k mono">Speed</p>
         <div class="spec-v">
-          <p class="spec-headline">100 clips in 33 min</p>
-          <p class="spec-note spec-note-mono">Real Sony 4K footage &mdash; imported, then exported as Log + Graded ProRes 422 HQ. MacBook Pro M3 Pro. Review time not included.</p>
+          <table class="speed">
+            <caption class="sr-only">Speed on real footage</caption>
+            <thead><tr><th scope="col">Raw takes in</th><th scope="col">Shots found</th><th scope="col">4K clips out</th><th scope="col">Total time</th></tr></thead>
+            <tbody>
+              <tr><td>48</td><td>126</td><td>100</td><td>33 min</td></tr>
+              <tr><td>256</td><td>500</td><td>500</td><td>2 h 50 min</td></tr>
+              <tr><td>640</td><td>1,003</td><td>1,000</td><td>6 h 11 min</td></tr>
+            </tbody>
+          </table>
+          <p class="spec-note spec-note-mono">Real Sony 4K footage on a MacBook Pro M3 Pro. Every clip exported as Log + Graded ProRes 422 HQ &mdash; 2,000 files, all verified, 0 failed. Review time not included.</p>
         </div>
       </div>
       <div class="spec-row">
