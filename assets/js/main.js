@@ -127,7 +127,14 @@
       window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
       window.Tawk_API.customStyle = { visibility: { desktop: { position: 'br', xOffset: 20, yOffset: 50 }, mobile: { position: 'br', xOffset: 10, yOffset: 50 } } };
       var s = document.createElement('script');
-      s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8'; s.setAttribute('crossorigin', '*');
+      // D-6: crossorigin="*" isn't a real value (only "anonymous"/"use-credentials" are), and an
+      // invalid value still puts the script in CORS mode, requiring embed.tawk.to to answer with
+      // an Access-Control-Allow-Origin header — which it doesn't, for a plain widget-loader
+      // script that was never fetched for its response content. That's the exact "blocked by
+      // CORS policy" console error. A normal cross-origin <script src> load (no crossorigin
+      // attribute at all) doesn't need CORS headers and is how every other third-party widget
+      // script on the web loads.
+      s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8';
       document.body.appendChild(s);
     };
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });

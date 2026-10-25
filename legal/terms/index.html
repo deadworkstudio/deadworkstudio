@@ -3,38 +3,99 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#0a0a09" />
+<meta name="theme-color" content="#F4F1EA" />
 <title>DEADWORK — Terms of Use</title>
 <meta name="description" content="Terms of use and subscription terms for every DEADWORK app." />
 <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
-<link rel="preload" as="image" href="../../assets/img/brand/deadwork-wordmark-bone.png" />
+<link rel="preload" as="image" href="../../assets/img/brand/deadwork-wordmark-black-nr.png" />
 <link rel="preload" href="../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/tokens.css?v=20261025a" />
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261025a" />
+<link rel="stylesheet" href="../../assets/css/home.css?v=20261025e" />
+<link rel="stylesheet" href="../../assets/css/product-dev.css?v=20261025a" />
+<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261025c" />
 <style>
-  .legal-main { padding: 160px 0 var(--space-section); }
-  .legal-main h2 { margin-top: var(--space-block); font-size: clamp(22px, 2.4vw, 28px); }
-  .legal-main h2:first-of-type { margin-top: 48px; }
-  .legal-main p, .legal-main li { color: var(--bone-2); margin-top: 16px; }
-  .legal-main ul { list-style: disc; padding-left: 1.2em; }
-  .legal-main li { margin-top: 8px; }
-  .legal-updated { color: var(--bone-3); margin-top: 8px; }
-  .legal-nav { margin-top: 40px; }
-  .legal-nav a { color: var(--bone); border-bottom: 1px solid var(--line-strong); text-decoration: none; }
+/* D-6: see legal/privacy/index.html's matching comment — same dev-light shell, built from the
+   same shared files every other page uses instead of this page's own old dark template. */
+.legal-main { padding: clamp(96px, 14svh, 160px) 0 var(--space-section); color: var(--dev-ink); }
+.legal-main h2 { margin-top: var(--space-block); font-size: clamp(22px, 2.4vw, 28px); color: var(--dev-ink); }
+.legal-main h2:first-of-type { margin-top: 48px; }
+.legal-main p, .legal-main li { color: var(--dev-ink-2); margin-top: 16px; }
+.legal-main ul { list-style: disc; padding-left: 1.2em; }
+.legal-main li { margin-top: 8px; }
+.legal-updated { color: var(--dev-ink-3); margin-top: 8px; }
+.legal-nav { margin-top: 40px; }
+.legal-nav a { color: var(--dev-ink); border-bottom: 1px solid var(--dev-line-strong); text-decoration: none; }
+.legal-main .eyebrow.kicker { color: var(--dev-ink-3); }
+.legal-main .lede { color: var(--dev-ink-2); }
+
+/* Legal pages are long-form reading, not a short hero like the product pages this shell is
+   normally built for -- undo home.css's locked single-viewport "poster" mode (which would
+   otherwise confine all this text to a small internally-scrolling box) so the page scrolls
+   normally, the same technique product-dev-v2.css already uses for the same reason. */
+body.legal-page .poster { height: auto; }
+@media (min-width: 720px) and (min-height: 640px) {
+  html:has(body.legal-page), body.legal-page { height: auto; overflow: visible; overscroll-behavior: auto; }
+  body.legal-page .poster-panel { overflow: visible; min-height: auto; }
+}
 </style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
-<body>
+<body class="dev-light legal-page" data-chat-widget>
 <div class="poster">
-  <header class="poster-head" style="position: static;">
-    <h1 class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226" style="width: 200px; height: auto;"></a></h1>
+  <header class="poster-head">
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <h1 class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-black-nr.png" alt="DEADWORK" width="1120" height="226"></a></h1>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I — Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/scene-lock.png" alt="" decoding="async" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mm-meta"><span class="mm-status">IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/set-control.png" alt="" decoding="async" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every crew. Every detail. In sync.</span><span class="mm-meta"><span class="mm-status">IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">iPhone, Mac &amp; Windows</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II — Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/loadout.png" alt="" decoding="async" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mm-meta"><span class="mm-status">IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">iPhone, Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/handoff.png" alt="" decoding="async" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mm-meta"><span class="mm-status">IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">iPhone, Mac &amp; Windows</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III — Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/sound-driver.png" alt="" decoding="async" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real designers. Real sounds.</span><span class="mm-meta"><span class="mm-status">IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/stock-shredder/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/stock-shredder.png" alt="" decoding="async" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mm-meta"><span class="mm-status">BETA</span><span class="mm-dot">·</span><span class="mm-platform">macOS &mdash; Intel &amp; Apple Silicon. Windows in development.</span></span></span></a>
+          </div>
+        </div>
+    </div>
   </header>
 
-  <main class="legal-main">
+  <main class="poster-panel legal-main">
     <div class="wrap-narrow">
       <p class="eyebrow kicker">Legal</p>
-      <h1 class="display" style="font-size: clamp(32px, 5vw, 56px); margin-top: 8px;">Terms of Use</h1>
+      <h2 class="display" style="font-size: clamp(32px, 5vw, 56px); margin-top: 8px;">Terms of Use</h2>
       <p class="legal-updated mono">Last updated October 24, 2026</p>
 
       <p class="lede" style="margin-top: 32px;">These terms cover DEADWORK's apps, including Loadout, Stock Shredder, Handoff, Sound Driver, Scene Lock, and Set Control. By using a DEADWORK app, you agree to them.</p>
@@ -70,7 +131,7 @@
       <p>We may update these terms as the app changes. If we make a material change, we'll make a reasonable effort to let you know in the app.</p>
 
       <h2>Contact</h2>
-      <p>Questions about these terms: deadworkstudio@gmail.com</p>
+      <p>Questions about these terms: <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a></p>
 
       <p class="legal-nav"><a href="../../home/">&larr; Back to DEADWORK</a> &middot; <a href="../../products/stock-shredder/">Stock Shredder</a></p>
     </div>
@@ -81,19 +142,7 @@
     <p class="foot-copy">&copy; 2026 DEADWORK STUDIO&reg;</p>
   </footer>
 </div>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-Tawk_API.customStyle={visibility:{desktop:{position:'br',xOffset:20,yOffset:50},mobile:{position:'br',xOffset:10,yOffset:50}}};
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+<script src="../../assets/js/main.js?v=20261025a"></script>
+<script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 </body>
 </html>
