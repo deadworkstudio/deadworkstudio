@@ -258,19 +258,21 @@
     }).catch(function () {});
   })();
 
-  // ---- THE INTERFACE: one recording of the app, toured feature by feature ----
+  // ---- THE INTERFACE: point at a feature name to see that part of the real app ----
+  // Mouse: hovering a name shows it, leaving the row clears it. Touch: tapping a name shows it,
+  // tapping it again clears it. Keyboard: focusing a name shows it, arrows move along the row,
+  // leaving the row clears it. Nothing is highlighted at rest, and nothing cycles on its own.
   (function () {
     var tour = document.querySelector('[data-ix-tour]'); if (!tour) return;
-    // full-resolution recordings only where they'll be seen: wide or high-density screens
+    // full-resolution recording only where it'll be seen: wide or high-density screens
     if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1700) {
       tour.querySelectorAll('video[data-hd]').forEach(function (v) { var s = v.querySelector('source'); if (s) { s.src = v.getAttribute('data-hd'); v.load(); } });
     }
     var stage = tour.querySelector('[data-ix-hero]'), screen = tour.querySelector('[data-ix-screen]');
+    var nav = tour.querySelector('[data-ix-nav]'), explain = tour.querySelector('[data-ix-explain]');
     var spot = tour.querySelector('[data-ix-spot]'), holesG = spot.querySelector('[data-ix-holes]'), ringsG = spot.querySelector('[data-ix-rings]');
-    var tabs = [].slice.call(tour.querySelectorAll('[data-ix-tab]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
-    var day = tour.querySelector('[data-ix-day]');
-    var count = tour.querySelector('[data-ix-count]'), NS = 'http://www.w3.org/2000/svg', POOL = 5;
-    var cur = -1, inView = false, armed = false;
+    var feats = [].slice.call(tour.querySelectorAll('[data-ix-feat]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
+    var NS = 'http://www.w3.org/2000/svg', POOL = 5, cur = -1, lastPointer = 'mouse';
 
     // the screen settles into place as it scrolls up (transform/opacity only)
     if (!reduce) {
@@ -279,80 +281,69 @@
       var upd = function () {
         ticking = false;
         var r = stage.getBoundingClientRect(), vh = window.innerHeight;
-        var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.6)));
-        stage.style.setProperty('--p', p.toFixed(3));
-        if (!armed && (p >= 1 || tour.getBoundingClientRect().bottom <= vh)) { armed = true; setTimeout(function () { spot.classList.add('is-on'); }, 500); }
+        stage.style.setProperty('--p', Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.6))).toFixed(3));
       };
       window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
       window.addEventListener('resize', upd); upd();
-    } else { spot.classList.add('is-on'); armed = true; }
-
-    // highlight: a fixed pool of holes in the dimming mask, each with an outline, tweened between features
-    var holes = [], rings = [];
-    for (var i = 0; i < POOL; i++) {
-      var h = document.createElementNS(NS, 'rect'); h.setAttribute('fill', '#000'); h.setAttribute('rx', '0.4'); holesG.appendChild(h); holes.push(h);
-      var g = document.createElementNS(NS, 'rect'); g.setAttribute('class', 'ix-ring'); g.setAttribute('rx', '0.4'); ringsG.appendChild(g); rings.push(g);
     }
-    var now = []; for (i = 0; i < POOL; i++) now.push([50, 50, 0, 0]);
-    var put = function (r) { for (var k = 0; k < POOL; k++) { var v = r[k]; [holes[k], rings[k]].forEach(function (el) { el.setAttribute('x', v[0]); el.setAttribute('y', v[1]); el.setAttribute('width', Math.max(0, v[2])); el.setAttribute('height', Math.max(0, v[3])); el.style.opacity = v[2] > 0.05 ? 1 : 0; }); } };
+
+    // a fixed pool of holes in the dimming mask, each framed by a two-tone outline
+    var holes = [], outs = [], rings = [];
+    var mk = function (parent, cls, fill) { var r = document.createElementNS(NS, 'rect'); if (cls) r.setAttribute('class', cls); if (fill) r.setAttribute('fill', fill); r.setAttribute('rx', '0.35'); parent.appendChild(r); return r; };
+    for (var i = 0; i < POOL; i++) { holes.push(mk(holesG, '', '#000')); outs.push(mk(ringsG, 'ix-ring-out')); }
+    for (i = 0; i < POOL; i++) rings.push(mk(ringsG, 'ix-ring'));
+    var now = null;
+    var put = function (r) { for (var k = 0; k < POOL; k++) { var v = r[k]; [holes[k], outs[k], rings[k]].forEach(function (el) { el.setAttribute('x', v[0]); el.setAttribute('y', v[1]); el.setAttribute('width', Math.max(0, v[2])); el.setAttribute('height', Math.max(0, v[3])); el.style.opacity = v[2] > 0.05 ? 1 : 0; }); } };
+    var rectsFor = function (btn) {
+      var list = btn.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
+      var to = []; for (var k = 0; k < POOL; k++) to.push(list[k] ? list[k] : [list[0][0] + list[0][2] / 2, list[0][1] + list[0][3] / 2, 0, 0]);
+      return to;
+    };
     var raf = 0;
-    var aim = function (tab) {
-      var list = tab.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
-      var to = []; for (var k = 0; k < POOL; k++) { var src = list[k]; to.push(src ? src : [list[0][0] + list[0][2] / 2, list[0][1] + list[0][3] / 2, 0, 0]); }
-      if (reduce) { now = to; put(now); return; }
-      var from = now.map(function (v) { return v.slice(); }), t0 = null; cancelAnimationFrame(raf);
+    var aim = function (to) {
+      cancelAnimationFrame(raf);
+      // first highlight after rest appears in place; moving between features glides
+      if (reduce || !now || !spot.classList.contains('is-on')) { now = to; put(now); return; }
+      var from = now.map(function (v) { return v.slice(); }), t0 = null;
       (function step(ts) {
-        if (t0 === null) t0 = ts; var t = Math.min(1, (ts - t0) / 380), e = 1 - Math.pow(1 - t, 3);
+        if (t0 === null) t0 = ts; var t = Math.min(1, (ts - t0) / 200), e = 1 - Math.pow(1 - t, 3);
         now = from.map(function (f, k) { return f.map(function (x, j) { return x + (to[k][j] - x) * e; }); });
         put(now); if (t < 1) raf = requestAnimationFrame(step);
       })(performance.now());
     };
 
-    // Day / Night: the light recording (same take, frame-aligned) starts at the dark one's time and fades in over it
-    var dayTimer = 0;
-    var setDay = function (on) {
-      if (!day) return;
-      clearTimeout(dayTimer);
-      if (on) {
-        if (day.preload === 'none') day.preload = 'auto';
-        try { day.currentTime = screen.currentTime || 0; } catch (e) {}
-        if (!reduce && inView) { var p = day.play(); if (p && p.catch) p.catch(function () {}); }
-        stage.classList.add('is-day');
-      } else {
-        stage.classList.remove('is-day');
-        dayTimer = setTimeout(function () { day.pause(); }, 600);
-      }
-    };
-    var playIf = function (v, go) { if (!v) return; if (go && !reduce) { if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); };
-    var select = function (i, focus) {
+    var show = function (i) {
       if (i === cur) return;
       cur = i;
-      tabs.forEach(function (t, k) { var on = k === i; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
+      feats.forEach(function (f, k) { f.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
       panels.forEach(function (p, k) { p.hidden = k !== i; });
-      count.textContent = ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + tabs.length).slice(-2);
-      setDay(tabs[i].hasAttribute('data-day'));
-      aim(tabs[i]);
-      if (focus) { tabs[i].focus(); if (!armed) { armed = true; spot.classList.add('is-on'); } }
+      explain.classList.toggle('has-feat', i >= 0);
+      if (i < 0) { spot.classList.remove('is-on'); return; }
+      aim(rectsFor(feats[i]));
+      spot.classList.add('is-on');
     };
-    var go = function (d) { select((cur + d + tabs.length) % tabs.length, true); };
-    tabs.forEach(function (t, k) { t.addEventListener('click', function () { select(k, true); spot.classList.add('is-on'); armed = true; }); });
-    tour.querySelector('[data-ix-prev]').addEventListener('click', function () { go(-1); spot.classList.add('is-on'); });
-    tour.querySelector('[data-ix-next]').addEventListener('click', function () { go(1); spot.classList.add('is-on'); });
-    tour.querySelector('[role=tablist]').addEventListener('keydown', function (e) {
-      var k = e.key;
-      if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); go(1); }
-      else if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); go(-1); }
-      else if (k === 'Home') { e.preventDefault(); select(0, true); }
-      else if (k === 'End') { e.preventDefault(); select(tabs.length - 1, true); }
-    });
-    select(0, false);
 
-    // the screen and the open panel's recording only play while on screen
+    nav.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType || 'mouse'; });
+    feats.forEach(function (f, k) {
+      f.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') show(k); });
+      f.addEventListener('focus', function () { if (lastPointer === 'mouse' || lastPointer === 'keyboard') show(k); });
+      // touch/pen (and Enter/Space): tap to show, tap the same name again to clear
+      f.addEventListener('click', function () { if (lastPointer !== 'mouse') show(cur === k ? -1 : k); lastPointer = 'mouse'; });
+    });
+    nav.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') show(-1); });
+    nav.addEventListener('keydown', function (e) {
+      lastPointer = 'keyboard';
+      var at = feats.indexOf(document.activeElement); if (at < 0) return;
+      var to = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? at + 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? at - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? feats.length - 1 : null;
+      if (to === null) { if (e.key === 'Escape') show(-1); return; }
+      e.preventDefault(); feats[(to + feats.length) % feats.length].focus();
+    });
+    nav.addEventListener('focusout', function (e) { if (!nav.contains(e.relatedTarget) && lastPointer !== 'touch' && lastPointer !== 'pen') show(-1); });
+
+    // the screen only plays while on screen
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        inView = es[0].isIntersecting;
-        playIf(screen, inView);
-        if (day && stage.classList.contains('is-day')) playIf(day, inView);
+        if (es[0].isIntersecting && !reduce) { var p = screen.play(); if (p && p.catch) p.catch(function () {}); } else screen.pause();
       }, { threshold: 0.15 }).observe(tour);
     }
   })();

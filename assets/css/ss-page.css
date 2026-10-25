@@ -520,61 +520,56 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
   .faq-a { transition: opacity 200ms ease !important; }
 }
 
-/* ---- THE INTERFACE: one module. The real app, its seven stops directly underneath, and the active
-   stop's name and one line below that. Pressing a stop gently darkens everything but that part of the
+/* ---- THE INTERFACE: seven feature names above the real app. Pointing at (or focusing, or tapping) a
+   name darkens everything but that part of the screen; the name and one line appear under the app.
+   Nothing is highlighted at rest. Pressing a stop gently darkens everything but that part of the
    screen (SVG mask, so several areas can light at once); Day / Night cross-fades to the matching light
    recording. The whole app window is always in view, never cropped or scrolled. ---- */
 .interface-sub { margin: -8px 0 0; color: var(--ink-2) !important; }
-main > section.ix { min-height: 0 !important; padding-bottom: clamp(40px, 6vh, 64px) !important; }
-.ix-tour { --ix-w: min(100%, 1120px, calc((100svh - var(--sh-h) - 228px) * 1.5)); width: var(--ix-w); margin: clamp(32px, 5vh, 56px) auto 0; padding-top: clamp(28px, 4vh, 40px); border-top: 1px solid var(--line); text-align: left; }
-.ix-stage { position: relative; transform-origin: 50% 0; }
+main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px) !important; padding-bottom: clamp(40px, 6vh, 64px) !important; }
+/* title + names + the whole app + its explanation fit one window, so a hover is always seen */
+.ix-tour { --ix-w: min(100%, 1120px, calc((78svh - 184px) * 1.5)); width: var(--ix-w); margin: clamp(20px, 3.2vh, 36px) auto 0; text-align: left; }
+
+/* feature names: one row of mono labels, obviously pressable */
+.ix-nav { display: flex; justify-content: space-between; gap: 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.ix-feat { position: relative; display: flex; align-items: baseline; gap: 8px; padding: 10px 2px; border: 0; background: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; font: 500 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; transition: color 120ms var(--ease); }
+.ix-feat span { color: var(--ink-3); transition: color 120ms var(--ease); }
+.ix-feat::after { content: ''; position: absolute; left: 0; right: 0; bottom: -15px; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; transition: transform 200ms var(--ease); }
+.ix-feat[aria-pressed="true"] { color: var(--ink); }
+.ix-feat[aria-pressed="true"] span { color: var(--ink); }
+.ix-feat[aria-pressed="true"]::after { transform: scaleX(1); }
+.ix-feat:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+.ix-stage { position: relative; margin-top: clamp(14px, 2.2vh, 24px); transform-origin: 50% 0; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
 .ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
-/* the default recording is day mode; the Day / Night stop fades in the frame-aligned night recording */
-.ix-day { position: absolute; inset: 0; opacity: 0; transition: opacity 560ms var(--ease); background: #000; box-shadow: none; }
-.ix-stage.is-day .ix-day { opacity: 1; }
-.ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 400ms var(--ease); }
+/* highlight: the rest of the app dims hard, the chosen controls stay at full brightness inside a crisp two-tone frame */
+.ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 160ms var(--ease); }
 .ix-spot.is-on { opacity: 1; }
-.ix-dim { fill: rgba(20, 20, 18, .2); }
-.ix-ring { fill: none; stroke: var(--ink); stroke-width: 1.25px; vector-effect: non-scaling-stroke; transition: stroke 400ms var(--ease); }
-.ix-stage.is-day .ix-ring { stroke: #F1ECE2; }
-.ix-stage.is-day .ix-dim { fill: rgba(8, 8, 7, .34); }
+.ix-dim { fill: rgba(14, 14, 13, .72); }
+.ix-ring-out { fill: none; stroke: rgba(14, 14, 13, .55); stroke-width: 4px; vector-effect: non-scaling-stroke; }
+.ix-ring { fill: none; stroke: #F4F1EA; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
 
-.ix-tabs { display: flex; justify-content: space-between; margin-top: 18px; }
-.ix-tabs button, .ix-arrow { border: 0; background: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); transition: color 160ms var(--ease); }
-.ix-tabs button { position: relative; display: flex; gap: 8px; padding: 12px 0 4px; white-space: nowrap; }
-.ix-tabs button span { opacity: .6; }
-.ix-tabs button::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; transition: transform 400ms var(--ease); }
-.ix-tabs button[aria-selected="true"] { color: var(--ink); }
-.ix-tabs button[aria-selected="true"]::before { transform: scaleX(1); }
-@media (any-hover: hover) and (any-pointer: fine) { .ix-tabs button:hover, .ix-arrow:hover { color: var(--ink); } }
-.ix-tabs button:focus-visible, .ix-arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-.ix-info { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: clamp(22px, 3.4vh, 32px); }
-.ix-panels { display: grid; min-width: 0; }
-/* every stop shares one cell, so the block keeps one height and nothing below shifts */
-.ix-panel { grid-area: 1 / 1; min-width: 0; transition: opacity 320ms var(--ease), transform 320ms var(--ease); }
-.ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s 200ms; }
-.ix-p { margin-top: 8px; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
-.ix-step { display: flex; align-items: center; gap: 2px; flex: none; margin-right: -10px; }
-.ix-count { margin-right: 10px; color: var(--ink-3) !important; }
-.ix-arrow { width: 36px; height: 32px; font-size: 14px; letter-spacing: 0; color: var(--ink-2); }
+/* explanation: one fixed-height cell under the app, so nothing below ever moves */
+.ix-explain { display: grid; min-height: 4.6em; margin-top: clamp(14px, 2.2vh, 22px); }
+.ix-explain > * { grid-area: 1 / 1; align-self: start; }
+.ix-idle { color: var(--ink-3) !important; padding-top: 6px; transition: opacity 160ms var(--ease); }
+.ix-explain.has-feat .ix-idle { opacity: 0; }
+.ix-panel[hidden] { display: block; visibility: hidden; opacity: 0; }
+.ix-panel { transition: opacity 140ms var(--ease); }
+.ix-p { margin-top: 6px; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
 
 @media (max-width: 1023px) {
   .ix-tour { --ix-w: 100%; }
-  .ix-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  /* stops wrap onto rows here, so the active line sits under its own label, not on the row line above */
-  .ix-tabs button { padding: 10px 0 9px; }
-  .ix-tabs button::before { top: auto; bottom: 0; right: 14px; }
+  .ix-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 12px; }
+  .ix-feat::after { bottom: 2px; right: 12px; }
 }
 @media (max-width: 719px) {
-  .ix-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .ix-tabs button { letter-spacing: .12em; gap: 5px; font-size: 10px; }
-  .ix-info { flex-direction: column; align-items: stretch; gap: 14px; }
-  .ix-step { justify-content: flex-end; }
-  .ix-panel[hidden] { display: none; }
+  .ix-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ix-feat { letter-spacing: .12em; gap: 5px; font-size: 10.5px; padding: 12px 0; }
+  .ix-explain { min-height: 7.6em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-ring, .ix-day, .ix-tabs button, .ix-tabs button::before, .ix-arrow, .ix-panel, .ix-panel[hidden] { transition: none !important; }
+  .ix-spot, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }
