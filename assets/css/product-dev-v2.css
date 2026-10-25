@@ -11,7 +11,7 @@
    img reset) never actually centered under text-align — needed margin-inline:auto. Logo size and
    headline size/weight/tracking/font are taken verbatim from ss-page.css's .hero-logo / .hero h1
    — "the same area" and "the same font + size" as Stock Shredder's own hero, not a new scale. ---- */
-body.dev-v2 .dev-hero { padding-top: clamp(20px, 4svh, 48px); }
+body.dev-v2 .dev-hero { padding-top: clamp(20px, 4svh, 48px); padding-bottom: clamp(28px, 4svh, 44px); }
 body.dev-v2 .dev-hero-logo { height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; }
 body.dev-v2 .dev-hero-tag {
   margin-top: 14px;
@@ -35,7 +35,7 @@ body.dev-v2 section.dev-split.wrap {
 }
 body.dev-v2 .dev-split > div { padding: 0 clamp(16px, 3vw, 40px); }
 body.dev-v2 .dev-split > div + div { border-left: 1px solid var(--dev-line); }
-body.dev-v2 .dev-split h3 { margin-bottom: 12px; }
+body.dev-v2 .dev-split h3 { margin: 0 0 12px; max-width: 46ch; text-align: center; }
 body.dev-v2 .dev-split p { margin: 0; max-width: 46ch; text-align: left; }
 body.dev-v2 .dev-split .is-solution h3 { color: var(--dev-ink-3); }
 @media (max-width: 719px) {
