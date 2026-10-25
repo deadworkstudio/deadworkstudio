@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#0a0a09" />
+<meta name="theme-color" content="#F4F1EA" />
 <title>DEADWORK — Studio</title>
 <meta name="description" content="Who DEADWORK is, what we believe, how to join, and how to reach us." />
 <meta property="og:type" content="website" />
@@ -14,21 +14,13 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../assets/img/brand/apple-touch-icon.png" />
-<link rel="preload" as="image" href="../assets/img/mission/bg.jpg" />
-<link rel="preload" as="image" href="../assets/img/brand/deadwork-wordmark-bone.png" />
+<link rel="preload" as="image" href="../assets/img/brand/deadwork-wordmark-black.png" />
 <link rel="preload" href="../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261016c" />
-<link rel="stylesheet" href="../assets/css/base.css?v=20261015e" />
-<link rel="stylesheet" href="../assets/css/home.css?v=20261024a" />
-<link rel="stylesheet" href="../assets/css/mission.css?v=20261022b" />
+<link rel="stylesheet" href="../assets/css/studio.css?v=20261024e1" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
-<body class="about" data-chat-widget>
-<div class="poster">
-  <div class="poster-media" aria-hidden="true">
-    <img src="../assets/img/mission/bg.jpg" alt="" fetchpriority="high" />
-  </div>
-  <header class="poster-head">
+<body data-chat-widget>
+  <header class="poster-head" data-sh>
     <span class="poster-meta-left">06 Tools</span>
     <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
       <div class="nav-tab" data-nav-tab>
@@ -39,7 +31,7 @@
       </div>
     </nav>
 
-    <h1 class="poster-brand"><a href="../home/"><img src="../assets/img/brand/deadwork-wordmark-bone.png" alt="DEADWORK" width="1120" height="226"></a></h1>
+    <h1 class="poster-brand"><a href="../home/"><img class="brand-black" src="../assets/img/brand/deadwork-wordmark-black.png" alt="DEADWORK" width="1120" height="226"><img class="brand-bone" src="../assets/img/brand/deadwork-wordmark-bone.png" alt="" width="1120" height="226"></a></h1>
 
     <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
       <div class="nav-tab" data-nav-tab>
@@ -130,88 +122,89 @@
     </div>
   </header>
 
-  <main class="poster-panel" data-panels>
-    <div class="panel-stack">
-      <article class="panel is-active panel-origin" data-panel="default" data-title="Studio">
-
-        <section id="mission">
-          <h2 class="panel-kicker">By artists. For artists.</h2>
-          <h2 class="panel-headline display">CREATE MORE. MANAGE LESS.</h2>
-          <p class="panel-oneliner">Most people who want to create more spend their time juggling software, managing files, organizing projects, and fighting workflows.</p>
-          <p class="panel-oneliner">Leading to wasted time, burnout, unfinished projects, and less energy for the work that we actually got into this to do. To make things.</p>
-        </section>
-
-        <section id="values" class="mission-section">
-          <h2 class="panel-kicker">Values</h2>
-          <ol class="compact-list">
-            <li class="compact-item">
-              <span class="compact-index">1</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Kill the tedious work.</h3>
-                <p class="compact-text">Software that removes repetitive, unorganized and uncertain work so artists can spend their time creating.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">2</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Idea. Execution. Completion.</h3>
-                <p class="compact-text">The human owns all three. DEADWORK removes the friction between them.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">3</span>
-              <div class="compact-body">
-                <h3 class="compact-title">We don't want AI making the art for us.</h3>
-                <p class="compact-text">We want it doing the tasks that waste time.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">4</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Honest about what's ready.</h3>
-                <p class="compact-text">We label what's shipping and what's still in progress. No polish over a product that isn't there yet.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">5</span>
-              <div class="compact-body">
-                <h3 class="compact-title">We pay artists.</h3>
-                <p class="compact-text">We source real materials from real artists. Every artist gets paid for products you use.</p>
-              </div>
-            </li>
-            <li class="compact-item">
-              <span class="compact-index">6</span>
-              <div class="compact-body">
-                <h3 class="compact-title">Your footage stays yours.</h3>
-                <p class="compact-text">Footage and production data you run through our tools is yours. We don't sell it or train on it.</p>
-              </div>
-            </li>
-          </ol>
-        </section>
-
-        <section id="join" class="mission-section">
-          <h2 class="panel-kicker">Join</h2>
-          <p class="lede" style="max-width:none;">Follow along for our new releases. We'll let you know when something new drops. No spam. Just real updates.</p>
-          <div class="product-hero-actions" style="margin-top:24px">
-            <form class="notify-form" data-notify-form data-notify-product="general" novalidate style="max-width:420px">
-              <label class="sr-only" for="notify-email-general">Email address</label>
-              <input class="notify-input" type="email" id="notify-email-general" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-              <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-              <button class="btn btn-primary notify-submit" type="submit" data-notify-submit>Notify me</button>
-              <p class="notify-status" data-notify-status hidden></p>
-            </form>
-          </div>
-        </section>
-
-        <section id="contact" class="mission-section">
-          <h2 class="panel-kicker">Contact</h2>
-          <p class="lede" style="max-width:60ch;">Questions? Feedback? Feel free to reach out.</p>
-          <p class="panel-email" style="margin-top:16px;">deadworkstudio@gmail.com</p>
-        </section>
-
-      </article>
+<main id="main">
+  <!-- I. Mission: cream opener with the monumental headline, then the cinematic block that carries the two paragraphs -->
+  <section class="mission" id="mission" aria-labelledby="mission-title">
+    <div class="opener tone-dark">
+      <video class="opener-film" muted loop playsinline preload="metadata" poster="../assets/img/products/stock-shredder/film-poster.jpg" aria-hidden="true" data-opener-film><source src="../assets/img/products/stock-shredder/film.mp4" type="video/mp4" /></video>
+      <p class="opener-kicker mono">By artists. For artists.</p>
+      <h2 class="opener-title" id="mission-title">
+        <span class="opener-line"><span class="opener-line-in">CREATE MORE.</span></span>
+        <span class="opener-line"><span class="opener-line-in">MANAGE LESS.</span></span>
+      </h2>
+      <span class="opener-rule" aria-hidden="true"></span>
     </div>
-  </main>
+
+    <div class="film tone-dark">
+      <img class="film-img" src="../assets/img/mission/bg.jpg" alt="" width="1920" height="2000" loading="lazy" decoding="async" aria-hidden="true" />
+      <div class="film-split" data-reveal>
+        <p class="film-p">Most people who want to create more spend their time juggling software, managing files, organizing projects, and fighting workflows.</p>
+        <p class="film-p">Leading to wasted time, burnout, unfinished projects, and less energy for the work that we actually got into this to do. To make things.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- II. Values: hairline-ruled spec rows (index / title / description) -->
+  <section class="values" id="values" aria-labelledby="values-title">
+    <h2 class="head-dw section-head" id="values-title" data-reveal>Values</h2>
+    <ol class="value-list">
+      <li class="value-row" data-reveal>
+        <span class="value-index mono">01</span>
+        <h3 class="value-title">Kill the tedious work.</h3>
+        <p class="value-text">Software that removes repetitive, unorganized and uncertain work so artists can spend their time creating.</p>
+      </li>
+      <li class="value-row" data-reveal>
+        <span class="value-index mono">02</span>
+        <h3 class="value-title">Idea. Execution. Completion.</h3>
+        <p class="value-text">The human owns all three. DEADWORK removes the friction between them.</p>
+      </li>
+      <li class="value-row" data-reveal>
+        <span class="value-index mono">03</span>
+        <h3 class="value-title">We don't want AI making the art for us.</h3>
+        <p class="value-text">We want it doing the tasks that waste time.</p>
+      </li>
+      <li class="value-row" data-reveal>
+        <span class="value-index mono">04</span>
+        <h3 class="value-title">Honest about what's ready.</h3>
+        <p class="value-text">We label what's shipping and what's still in progress. No polish over a product that isn't there yet.</p>
+      </li>
+      <li class="value-row" data-reveal>
+        <span class="value-index mono">05</span>
+        <h3 class="value-title">We pay artists.</h3>
+        <p class="value-text">We source real materials from real artists. Every artist gets paid for products you use.</p>
+      </li>
+      <li class="value-row" data-reveal>
+        <span class="value-index mono">06</span>
+        <h3 class="value-title">Your footage stays yours.</h3>
+        <p class="value-text">Footage and production data you run through our tools is yours. We don't sell it or train on it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- III. Join: black block, centred signup -->
+  <section class="join tone-dark" id="join" aria-labelledby="join-title">
+    <div class="join-in" data-reveal>
+      <h2 class="head-dw section-head" id="join-title">Join</h2>
+      <p class="join-lede">Follow along for our new releases. We'll let you know when something new drops. No spam. Just real updates.</p>
+      <form class="notify-form" data-notify-form data-notify-product="general" novalidate>
+        <label class="sr-only" for="notify-email-general">Email address</label>
+        <input class="notify-input" type="email" id="notify-email-general" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
+        <p class="notify-status" data-notify-status hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- IV. Contact: darker cream, address set as a section title -->
+  <section class="contact tone-alt" id="contact" aria-labelledby="contact-title">
+    <div class="contact-in" data-reveal>
+      <h2 class="head-dw section-head" id="contact-title">Contact</h2>
+      <p class="contact-lede">Questions? Feedback? Feel free to reach out.</p>
+      <p class="contact-email">deadworkstudio@gmail.com</p>
+    </div>
+  </section>
+</main>
 
   <footer class="poster-foot">
     <p class="foot-email">deadworkstudio@gmail.com</p>
@@ -229,9 +222,9 @@
     <p class="foot-note">By artists. For artists. Thank you.</p>
     <p class="foot-copy">&copy; 2026 DEADWORK STUDIO&reg; &middot; <a href="../legal/privacy/">Privacy</a> &middot; <a href="../legal/terms/">Terms</a></p>
   </footer>
-</div>
 <script src="../assets/js/main.js?v=20261024a"></script>
 <script src="../assets/js/nav-dropdown.js?v=20261021c"></script>
 <script src="../assets/js/notify.js" defer></script>
+<script src="../assets/js/studio.js?v=20261024e1" defer></script>
 </body>
 </html>

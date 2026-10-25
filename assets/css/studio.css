@@ -1,0 +1,376 @@
+/* DEADWORK Studio page — concept 05 "DEADWORK Evolved" (chosen 2026-10-24).
+   Standalone like ss-page.css: shared header/footer from the Stock Shredder page, then the page. */
+/* DEADWORK Studio concepts: shared frame. The Stock Shredder page's own header, dropdown and footer
+   (copied from ss-page.css), so every concept keeps identical navigation and footer. Light by default;
+   add class="theme-dark" to <body> for the dark palette. */
+@font-face { font-family: 'Archivo'; src: url('../fonts/archivo-variable.woff2') format('woff2-variations'), url('../fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+
+:root {
+  --bg: #F4F1EA;
+  --bg-2: #ECE7DC;
+  --ink: #141412;
+  --ink-2: #4A4741;
+  --ink-3: #6E6A62;
+  --line: rgba(20, 20, 18, .12);
+  --line-2: rgba(20, 20, 18, .28);
+  --green: #3D6E39;
+  --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --gutter: clamp(20px, 6.4vw, 92px);
+  --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
+  --nav-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sh-h: 78px;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--sh-h) + 12px); overflow-x: clip; -webkit-tap-highlight-color: transparent; }
+body { overflow-x: clip; overscroll-behavior-x: none; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 200; padding: 10px 14px; background: var(--ink); color: var(--bg); }
+.skip:focus { left: 8px; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.mono { font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+.hp { position: absolute; left: -9999px; }
+
+
+/* ---- original DEADWORK header: 06 TOOLS · PRE-PRODUCTION PRODUCTION | DEADWORK | POST-PRODUCTION STUDIO · EST. LOS ANGELES
+   Same markup and dropdown script (nav-dropdown.js) as the live site, recoloured for the cream page.
+   Fixed; hides on scroll down and returns on scroll up (ss-page.js). ---- */
+.poster-head { position: fixed; inset: 0 0 auto 0; z-index: 50; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px; padding: 22px var(--gutter) 18px; background: rgba(244, 241, 234, .9); -webkit-backdrop-filter: saturate(1.4) blur(18px); backdrop-filter: saturate(1.4) blur(18px); transition: transform 240ms var(--ease), box-shadow 240ms var(--ease); }
+.poster-head.is-scrolled { box-shadow: 0 1px 0 var(--line); }
+.poster-head.is-hidden { transform: translateY(-100%); }
+.poster-brand { grid-column: 2; justify-self: center; margin: 0; }
+.poster-brand img { height: 22px; width: auto; transform: translateY(-4px); }
+.nav-tabs { display: flex; gap: 4px 36px; }
+.nav-tabs--pre { grid-column: 1; grid-row: 1; justify-content: flex-end; padding-right: clamp(16px, 3vw, 48px); }
+.nav-tabs--post { grid-column: 3; grid-row: 1; justify-content: flex-start; padding-left: clamp(16px, 3vw, 48px); }
+.nav-tab-trigger { position: relative; display: inline-flex; align-items: flex-end; min-height: 36px; padding: 0 2px; border: 0; background: none; cursor: pointer; font: 500 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.nav-tab-trigger::after { content: ''; position: absolute; left: 2px; right: 2px; bottom: -6px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 160ms var(--ease); }
+@media (any-hover: hover) and (any-pointer: fine) { .nav-tab-trigger:hover::after { transform: scaleX(1); } }
+.nav-tab-trigger[aria-expanded='true']::after { transform: scaleX(1); }
+.poster-meta-left, .poster-meta-right { position: absolute; bottom: 22px; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+.poster-meta-left { left: var(--gutter); }
+.poster-meta-right { right: var(--gutter); }
+
+/* the photo dropdown keeps its original dark panel: the product photography is built for it */
+.mega-menu { position: absolute; top: 100%; left: 0; right: 0; z-index: 1; padding: 0 var(--gutter); background: #0a0a09; color: #e6e0d3; box-shadow: 0 24px 48px -16px rgba(0,0,0,.6); opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 180ms var(--ease), transform 180ms var(--ease), visibility 0s linear 180ms; pointer-events: none; }
+.mega-menu.is-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition: opacity 220ms var(--ease), transform 220ms var(--ease), visibility 0s; }
+.mega-menu-group { display: none; flex-direction: column; gap: 18px; padding: 32px 0 36px; }
+.mega-menu-group.is-active { display: flex; }
+.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: #807d77; }
+.mega-menu-cards { display: flex; flex-wrap: wrap; gap: 24px; }
+.mega-menu-card { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; text-decoration: none; color: inherit; }
+.mega-menu-card-img { position: relative; display: block; height: 280px; overflow: hidden; background: #11110f; }
+.mega-menu-card-photo { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1); opacity: 0; transition: transform 160ms var(--ease), opacity 150ms var(--ease); }
+.mega-menu-card-photo.is-loaded { opacity: 1; }
+.mega-menu-card-logo { opacity: 0; transition: opacity 150ms var(--ease); }
+.mega-menu-card-logo.is-loaded { opacity: 1; }
+@media (any-hover: hover) and (any-pointer: fine) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
+.mega-menu-card-img::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(70%, 280px); height: 58%; background: radial-gradient(ellipse at center, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 72%); }
+.mega-menu-card-logo { position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); height: clamp(32px, 3.2vw, 56px); width: auto; max-width: calc(100% - 48px); filter: drop-shadow(0 2px 8px rgba(0,0,0,.65)); }
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
+a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
+a[href$="set-control/"] .mega-menu-card-logo { filter: none; height: clamp(36px, 3.6vw, 62px); }
+a[href$="sound-driver/"] .mega-menu-card-logo { height: clamp(26px, 2.6vw, 41px); }
+a[href$="stock-shredder/"] .mega-menu-card-logo { height: clamp(23px, 2.3vw, 35px); }
+a[href$="handoff/"] .mega-menu-card-logo { height: clamp(52px, 5.2vw, 90px); }
+.mega-menu-card-caption { display: block; margin-top: 14px; text-align: center; }
+.mega-menu-card-name { display: block; font: 400 15px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.mega-menu-card[aria-current] .mega-menu-card-name { color: #8fd687; }
+.mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; color: #94918a; }
+
+/* ---- original DEADWORK footer ---- */
+.poster-foot { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; row-gap: 12px; align-items: center; padding: 28px var(--gutter) 32px; border-top: 1px solid var(--line); font: 400 12px/1.5 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+.poster-foot p { margin: 0; }
+.foot-social { grid-column: 1 / -1; grid-row: 1; display: flex; justify-content: center; gap: 22px; }
+.foot-social a { display: flex; color: var(--ink-3); transition: color 160ms var(--ease); }
+@media (any-hover: hover) and (any-pointer: fine) { .foot-social a:hover { color: var(--ink); } }
+.foot-email { grid-column: 1; grid-row: 2; text-transform: none; letter-spacing: .06em; color: var(--ink-2); }
+.foot-note { grid-column: 2; grid-row: 2; text-align: center; }
+.foot-copy { grid-column: 3; grid-row: 2; text-align: right; }
+
+@font-face { font-family: 'Anton'; src: url('../fonts/anton.woff2') format('woff2'); font-display: swap; }
+
+/* brand wordmark: black on the light palette, bone on the dark one */
+.poster-brand .brand-bone { display: none; }
+.theme-dark .poster-brand .brand-black { display: none; }
+.theme-dark .poster-brand .brand-bone { display: block; }
+.theme-dark {
+  --bg: #0E0E0D; --bg-2: #1A1A18; --ink: #F1ECE2; --ink-2: #A9A499; --ink-3: #8A867E;
+  --line: rgba(241, 236, 226, .14); --line-2: rgba(241, 236, 226, .32); --green: #8FD687;
+  color-scheme: dark;
+}
+.theme-dark .poster-head { background: rgba(14, 14, 13, .82); }
+
+/* email signup: real notify.js form. Keep these data- attributes and the honeypot input. */
+.notify-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.notify-status { flex-basis: 100%; margin-top: 10px; font-size: 14px; }
+.notify-status-bad { color: #C0392B; }
+.notify-status-good { color: var(--green); }
+@media (prefers-reduced-motion: reduce) {
+  .poster-head, .mega-menu, .mega-menu-card-photo, .nav-tab-trigger::after { transition: none !important; }
+  .mega-menu { transform: none !important; }
+}
+
+@media (max-width: 1100px) {
+  .poster-meta-left, .poster-meta-right { display: none; }
+}
+@media (max-width: 719px) {
+  :root { --sh-h: 110px; }
+  .poster-head { grid-template-columns: 1fr; justify-items: center; row-gap: 0; padding: 14px 16px 8px; }
+  .poster-brand { grid-column: 1; grid-row: 1; }
+  .poster-brand img { height: 20px; transform: none; }
+  .nav-tabs { gap: 2px 18px; }
+  .nav-tabs--pre, .nav-tabs--post { grid-column: 1; padding: 0; justify-content: center; }
+  .nav-tabs--pre { grid-row: 2; margin-top: 4px; } .nav-tabs--post { grid-row: 3; }
+  .nav-tab-trigger { min-height: 32px; align-items: center; font-size: 10.5px; }
+  .nav-tab-trigger::after { bottom: 2px; }
+  /* .poster-head's backdrop-filter makes it the containing block for its position:fixed
+     descendants (same effect as transform/filter on an ancestor), so a fixed .mega-menu here
+     measures itself against the header's own (short) box instead of the viewport, opening with
+     ~0 visible height. position:absolute anchored to the header's own bottom edge (top:100%) sits
+     in the right place without relying on fixed positioning at all, sized to fill exactly what's
+     left of the screen below the header and scrolling its own content if that's still not enough. */
+  .mega-menu { position: absolute; top: 100%; left: 0; right: 0; bottom: auto; height: calc(100vh - var(--sh-h)); height: calc(100dvh - var(--sh-h)); overflow-y: auto; overscroll-behavior: contain; padding: 0 16px; }
+  .mega-menu-cards { flex-direction: column; gap: 20px; }
+  .mega-menu-card { flex: none; }
+  .mega-menu-card-img { height: 180px; }
+  .poster-foot { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .foot-email, .foot-note, .foot-copy { grid-column: 1; grid-row: auto; text-align: center; }
+}
+
+
+/* Concept 05 — DEADWORK Evolved
+   The Stock Shredder page's language (tone blocks, Anton heads, Archivo 560 titles, mono labels,
+   hairline rules, pill buttons, one full-block film moment) pushed one step toward the brand's home:
+   a single monumental headline, a cinematic block that carries the mission, and a ruled values sheet.
+   Rhythm: cream opener -> black film -> cream values -> black join -> darker-cream contact. */
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --anton: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --measure: 1120px;           /* content width for ruled sheets */
+  --block-y: clamp(80px, 11vh, 128px);
+}
+
+/* ---- block tones (same values as ss-page.css) ---- */
+.tone-alt { --bg: #EAE5DA; background: var(--bg); }
+.tone-dark { --bg: #0E0E0D; --bg-2: #1A1A18; --ink: #F1ECE2; --ink-2: #A9A499; --ink-3: #8A867E; --line: rgba(241,236,226,.14); --line-2: rgba(241,236,226,.32); --green: #8FD687; background: var(--bg); color: var(--ink); }
+.tone-dark .mono { color: var(--ink-2); }
+.tone-dark :focus-visible { outline-color: var(--ink); }
+
+main section { text-align: center; }
+
+/* Anton section heads — the DEADWORK wordmark voice (.head-dw on the Stock Shredder page) */
+.head-dw { font-family: var(--anton); font-weight: 400; text-transform: uppercase; letter-spacing: .005em; line-height: 1; font-size: clamp(40px, 4.2vw, 64px); color: var(--ink); }
+
+/* ---- pills (from ss-page.css) ---- */
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--ink); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: background-color 160ms var(--ease), color 80ms var(--ease), transform 160ms var(--ease-out); }
+.pill:active { transform: scale(.97); }
+.pill-solid { background: var(--ink); color: var(--bg); }
+@media (hover: hover) and (pointer: fine) {
+  .pill-solid:hover { background: #fff; border-color: #fff; }
+}
+
+
+/* =========================================================================================
+   I. Opener — kicker, then the one monumental moment on the page
+   ========================================================================================= */
+.opener {
+  position: relative;
+  display: grid; justify-items: center; align-content: center;
+  min-height: 100vh; min-height: 100svh;
+  padding: calc(var(--sh-h) + 48px) var(--gutter) clamp(72px, 12vh, 120px);
+}
+/* behind-the-scenes film behind the headline (borrowed from concept 03), held dark so the type leads */
+.opener { overflow: hidden; isolation: isolate; }
+.opener-film { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.opener::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 70% 45% at 50% 42%, rgba(14,14,13,.5) 0%, rgba(14,14,13,0) 100%), linear-gradient(180deg, rgba(14,14,13,.62) 0%, rgba(14,14,13,.66) 55%, rgba(14,14,13,.94) 100%); }
+.opener-kicker { color: var(--ink); letter-spacing: .3em; font-size: 11px; }
+.opener-title {
+  margin-top: clamp(22px, 3.6vh, 40px);
+  font-family: var(--anton); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(60px, 15.4vw, 236px); line-height: .9; letter-spacing: -.004em;
+  color: var(--ink);
+}
+.opener-line { display: block; overflow: hidden; padding-bottom: .03em; }
+.opener-line-in { display: block; }
+/* a single hairline drops from the headline toward the film: the page's spine */
+.opener-rule {
+  position: absolute; left: 50%; bottom: 0;
+  width: 1px; height: clamp(40px, 8vh, 80px);
+  background: var(--line-2); transform-origin: top;
+}
+
+/* The headline rises out of its own line mask on load — the one meaningful moment. */
+@media (prefers-reduced-motion: no-preference) {
+  .opener-line-in { animation: dw-rise 900ms var(--ease-out) both; }
+  .opener-line + .opener-line .opener-line-in { animation-delay: 90ms; }
+  .opener-kicker { animation: dw-fade 600ms var(--ease-out) both; }
+  .opener-rule { animation: dw-draw 700ms var(--ease-out) 420ms both; }
+}
+@keyframes dw-rise { from { transform: translateY(104%); } to { transform: none; } }
+@keyframes dw-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes dw-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+
+/* =========================================================================================
+   Film — the Studio photograph, full block; the mission set in the dark sky under the light
+   ========================================================================================= */
+.film {
+  position: relative; overflow: hidden;
+  display: grid; align-items: center;
+  /* tall enough on desktop to hold both the light (top) and the skyline (lower third) */
+  height: max(100vh, 70vw); height: max(100svh, 70vw);
+  max-height: 1240px;
+  padding: 0 var(--gutter);
+}
+.film-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 8%;
+}
+/* slow settle as the block arrives (JS only; without JS the photo is simply there) */
+.js-reveal .film-img { opacity: 0; transform: scale(1.04); transition: transform 1600ms var(--ease-out), opacity 900ms var(--ease-out); }
+.js-reveal .film.is-in .film-img.is-loaded { opacity: 1; transform: none; }
+.film::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(14,14,13,.15) 0%, rgba(14,14,13,0) 30%, rgba(14,14,13,0) 70%, rgba(14,14,13,.45) 100%); }
+
+.film-split {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr;
+  width: min(100%, 1040px); margin: 0 auto;
+  /* sits in the black sky between the light and the city */
+  transform: translateY(-4%);
+}
+.film-split > * + * { border-left: 1px solid var(--line-2); }
+.film-p {
+  padding: 4px clamp(24px, 3.6vw, 56px);
+  max-width: 34ch; justify-self: center;
+  font: 400 clamp(17px, 1.6vw, 23px)/1.5 var(--sans); letter-spacing: -.005em;
+  color: var(--ink); text-wrap: pretty;
+}
+.film-p + .film-p { color: var(--ink-2); }
+
+
+/* =========================================================================================
+   II. Values — a ruled spec sheet
+   ========================================================================================= */
+.values { padding: var(--block-y) var(--gutter); }
+.values .section-head { margin-bottom: clamp(36px, 5vh, 56px); }
+.value-list { max-width: var(--measure); margin: 0 auto; border-top: 1px solid var(--line-2); text-align: left; counter-reset: none; }
+.value-row {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px clamp(24px, 4vw, 64px); align-items: baseline;
+  padding: clamp(26px, 3.4vh, 36px) 0;
+  border-bottom: 1px solid var(--line-2);
+}
+.value-index { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.value-title { font: 560 clamp(22px, 2vw, 30px)/1.15 var(--sans); letter-spacing: -.025em; color: var(--ink); text-wrap: balance; }
+.value-text { max-width: 44ch; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+
+
+/* =========================================================================================
+   III. Join — black block, centred
+   ========================================================================================= */
+.join { padding: var(--block-y) var(--gutter); }
+.join-in { display: grid; justify-items: center; }
+.join-lede { margin-top: 22px; max-width: 46ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
+.notify-form {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  width: min(100%, 480px); margin-top: 36px;
+}
+.notify-input {
+  flex: 1 1 240px; min-width: 0; min-height: 48px; padding: 0 22px;
+  border: 1px solid var(--line-2); border-radius: 999px; background: transparent;
+  font: 400 16px/1 var(--sans); color: var(--ink);
+  transition: border-color 160ms var(--ease);
+}
+.notify-input::placeholder { color: var(--ink-3); }
+.notify-input:focus { outline: none; border-color: var(--ink); }
+.notify-input:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.notify-submit { flex: none; }
+.notify-status { margin-top: 6px; color: var(--ink-2); text-align: center; }
+.tone-dark .notify-status-bad { color: #F08A7E; }
+.tone-dark .notify-status-good { color: var(--green); }
+
+
+/* =========================================================================================
+   IV. Contact — darker cream
+   ========================================================================================= */
+.contact { padding: var(--block-y) clamp(16px, 3vw, 48px); }
+.contact-in { display: grid; justify-items: center; }
+.contact-lede { margin-top: 22px; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); }
+.contact-email {
+  margin-top: clamp(28px, 5vh, 56px); padding: 0;
+  font: 300 clamp(30px, 7.4vw, 124px)/1 var(--sans); letter-spacing: -.035em; color: var(--ink);
+  overflow-wrap: anywhere; user-select: all; -webkit-user-select: all;
+}
+
+/* footer sits on cream after the darker-cream contact block */
+.poster-foot { border-top-color: transparent; }
+
+
+/* =========================================================================================
+   Scroll reveals — quiet rise, content only (block backgrounds never fade)
+   ========================================================================================= */
+.js-reveal [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
+.js-reveal [data-reveal].is-in { opacity: 1; transform: none; }
+.js-reveal .film-split[data-reveal] { transform: translateY(calc(-4% + 10px)); transition-delay: 200ms; }
+.js-reveal .film-split[data-reveal].is-in { transform: translateY(-4%); }
+
+
+/* =========================================================================================
+   Responsive
+   ========================================================================================= */
+@media (max-width: 1100px) {
+  .value-row { grid-template-columns: 64px minmax(0, 1fr); }
+  .value-text { grid-column: 2; margin-top: -12px; }
+}
+
+@media (max-width: 900px) {
+  .film { height: auto; min-height: 100vh; min-height: 100svh; max-height: none; padding: 0 var(--gutter); }
+  .film-img { object-position: 45% 50%; }
+  .film-split { grid-template-columns: 1fr; gap: 0; width: min(100%, 560px); transform: none; }
+  .film-split > * + * { border-left: 0; border-top: 1px solid var(--line-2); }
+  .film-p { max-width: none; padding: 28px 0; }
+  .film-split .film-p:first-child { padding-top: 0; }
+  .film-split .film-p:last-child { padding-bottom: 0; }
+  .js-reveal .film-split[data-reveal] { transform: translateY(10px); }
+  .js-reveal .film-split[data-reveal].is-in { transform: none; }
+  /* a soft dark field behind the text keeps the city lights from competing with it */
+  .film::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 90% 46% at 50% 50%, rgba(14,14,13,.78) 0%, rgba(14,14,13,.5) 55%, rgba(14,14,13,0) 100%); }
+  .film-split { z-index: 2; }
+}
+
+@media (max-width: 719px) {
+  .opener { min-height: calc(100svh - 40px); padding-top: calc(var(--sh-h) + 32px); }
+  .opener-title { font-size: clamp(52px, 16.4vw, 120px); }
+  .value-row { grid-template-columns: 1fr; gap: 10px; }
+  .value-text { grid-column: 1; margin-top: 0; }
+  .notify-form { flex-direction: column; align-items: stretch; }
+  .notify-input { flex: none; }  /* the 240px basis would become a height in a column */
+  .notify-submit { width: 100%; }
+  .notify-status { flex: none; align-self: stretch; }  /* same flex-basis-becomes-height trap as the input */
+}
+
+
+/* =========================================================================================
+   Reduced motion — no movement, content simply present
+   ========================================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js-reveal .film-split[data-reveal] { transform: translateY(-4%); }
+  .js-reveal .film-img { transform: none; transition: opacity 200ms ease; }
+  .pill { transition: background-color 160ms ease, color 80ms ease; }
+  .pill:active { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 900px) {
+  .js-reveal .film-split[data-reveal] { transform: none; }
+}
