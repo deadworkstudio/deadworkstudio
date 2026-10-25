@@ -66,7 +66,13 @@ body.dev-v2 { --ss-gutter: clamp(20px, 6.4vw, 92px); --ss-sh: 78px; --ss-hero-te
 body.dev-v2 .poster-head { position: fixed; inset: 0 0 auto 0; z-index: 50; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px; margin: 0; padding: 22px var(--ss-gutter) 18px; background: rgba(244, 241, 234, .9); -webkit-backdrop-filter: saturate(1.4) blur(18px); backdrop-filter: saturate(1.4) blur(18px); }
 body.dev-v2 .poster-brand { grid-column: 2; grid-row: 1; justify-self: center; margin: 0; }
 body.dev-v2 .poster-brand img { height: 22px; width: auto; transform: translateY(-4px); }
-body.dev-v2 .nav-tabs { display: flex; gap: 4px 36px; }
+/* D-1: home.css's shared .nav-tabs sets flex-wrap: wrap, which at tablet widths (e.g. 834px)
+   wraps "Production" onto its own row, growing the header to 116px and overlapping the hero
+   logo below it. Stock Shredder's own header never had that flex-wrap in the first place — its
+   tab pair is nowrap, slightly overflowing its grid column's padding box into the shared gap
+   around the centered wordmark rather than wrapping, which reads as a single clean row at this
+   width. Matched here so these pages behave the same way Stock Shredder already does. */
+body.dev-v2 .nav-tabs { display: flex; flex-wrap: nowrap; gap: 4px 36px; }
 body.dev-v2 .nav-tabs--pre { grid-column: 1; grid-row: 1; justify-content: flex-end; padding-right: clamp(16px, 3vw, 48px); }
 body.dev-v2 .nav-tabs--post { grid-column: 3; grid-row: 1; justify-content: flex-start; padding-left: clamp(16px, 3vw, 48px); }
 body.dev-v2 .nav-tab-trigger { min-height: 36px; padding: 0 2px; font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; }

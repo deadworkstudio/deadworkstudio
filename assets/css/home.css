@@ -581,7 +581,11 @@ body.home .panel-headline-lede { text-align: center; }
   .poster-lede { grid-column: 5 / 13; }
   /* H-19: at tablet widths the 3-column footer (email / note / copyright) is too tight for
      "BY ARTISTS. FOR ARTISTS. THANK YOU." and the copyright line without wrapping mid-phrase —
-     stack it as one centered column instead, like the sub-720px layout already does. */
-  .poster-foot { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-  .foot-email, .foot-note, .foot-copy { grid-column: 1; text-align: center; }
+     stack it as one centered column instead, like the sub-720px layout already does. All three
+     share grid-row:2 in the 3-column layout this overrides — each needs its OWN row here too,
+     or stacking them into one column leaves them overlapping in the same cell. */
+  .poster-foot { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; justify-items: center; text-align: center; }
+  .foot-email { grid-column: 1; grid-row: 2; text-align: center; }
+  .foot-note { grid-column: 1; grid-row: 3; text-align: center; }
+  .foot-copy { grid-column: 1; grid-row: 4; text-align: center; }
 }
