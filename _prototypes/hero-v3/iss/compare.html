@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>Stock Shredder hero · import, shred, send (local)</title>
+<style>
+ body{margin:0;background:#E9E3D6;color:#141412;font:12px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.06em}
+ header{padding:22px 28px;border-bottom:1px solid rgba(20,20,18,.14);display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}
+ h1{font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin:0}
+ .note{opacity:.6} button{font:inherit;background:none;border:1px solid rgba(20,20,18,.3);padding:6px 12px;cursor:pointer;margin-left:auto}
+ section{padding:26px 28px 8px} h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 6px;display:flex;gap:14px} h2 a{color:inherit;opacity:.55}
+ p{margin:0 0 4px;max-width:110ch;opacity:.75} .q{opacity:.5;margin-bottom:12px}
+ iframe{width:100%;height:720px;border:1px solid rgba(20,20,18,.14);background:#F3EFE6;display:block}
+</style></head><body>
+<header><h1>Stock Shredder hero · import, shred, send</h1><span class="note">One hero, three ways for the take to leave the archive. Everything else is identical.</span><button id="r">Replay all</button></header>
+<section><h2>A Push in <a href="index.html?v=push" target="_blank">open full ↗</a></h2>
+<p>The drift settles and the camera pushes in on one frame of the wall until it is the picture, then the take starts playing.</p>
+<p class="q">One continuous move, 1.4 s · hands off to the video over four frames</p>
+<iframe src="index.html?v=push"></iframe></section>
+<section><h2>B Fade away <a href="index.html?v=fade" target="_blank">open full ↗</a></h2>
+<p>The rest of the archive goes dark around one frame, which stays lit where it is. The take dissolves up over it.</p>
+<p class="q">Nothing moves · 0.8 s to dark, 0.8 s dissolve</p>
+<iframe src="index.html?v=fade"></iframe></section>
+<section><h2>C Hard cut <a href="index.html?v=cut" target="_blank">open full ↗</a></h2>
+<p>A held beat on the wall, one frame a touch brighter than the rest, then a straight cut to the take.</p>
+<p class="q">An editor's cut · no transition at all</p>
+<iframe src="index.html?v=cut"></iframe></section>
+<script>document.getElementById('r').onclick=function(){document.querySelectorAll('iframe').forEach(function(f){f.src=f.src});};</script>
+</body></html>

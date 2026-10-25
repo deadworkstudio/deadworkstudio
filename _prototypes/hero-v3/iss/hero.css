@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Hero: IMPORT -> SHRED -> SEND (three transition variants: push, fade, cut)
+   Size + placement come from .strip in ss-page.css (unchanged). This file only
+   lays out the inside: a 2.39:1 picture (one canvas) and a label row that is
+   9% of the picture's height, so the total box matches today's shredded strip.
+   Everything scales off the figure's own width (cqw), not the viewport.
+   The label row holds three layers that take turns (opacity only):
+     .iss-meta  ARCHIVE ............................ 690 TAKES   (archive concept)
+     .iss-scan  hairline + marks + playhead, file name, timecode (edit concept)
+     .iss-caps  six captions under six panels                    (today's strip)
+   ========================================================================== */
+
+.iss {
+  container-type: inline-size;
+  --iss-ink: #4A4741;          /* today's label colour */
+  --iss-head: #141412;         /* playhead: the one darker stroke */
+  --iss-line: rgba(74, 71, 65, .34);
+  --iss-gap: 1.8cqw;           /* today's gap between the six clips (0.018 W) */
+  --iss-track-top: max(2px, .5cqw);
+  --iss-track-h: max(5px, .82cqw);
+  text-align: left;
+}
+
+/* ---- picture: 2.39:1, one canvas; the six source videos are never shown directly ---- */
+.iss-pic { position: relative; aspect-ratio: 2.39 / 1; }
+.iss-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.iss-src { position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.iss-src video { width: 1px; height: 1px; }
+
+/* ---- label row ---- */
+.iss-row {
+  position: relative;
+  height: calc(100cqw / 2.39 * .09);
+  margin: 0;
+  font: 500 max(9.5px, 1.02cqw)/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--iss-ink);
+  font-variant-numeric: tabular-nums;
+}
+.iss-meta, .iss-scan, .iss-caps { position: absolute; inset: 0; margin: 0; }
+
+/* IMPORT: exactly the archive concept's row */
+.iss-meta { display: flex; justify-content: space-between; padding: max(4px, calc(2.6cqw - 1em)) 0 0; }
+
+/* SHRED: exactly the edit concept's row */
+.iss-scan { opacity: 0; }
+.iss-track { position: absolute; left: 0; right: 0; top: var(--iss-track-top); height: var(--iss-track-h); overflow: clip; }
+.iss-line { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--iss-line); }
+.iss-mark {
+  position: absolute; top: calc(50% - 1px); height: 3px; min-width: 2px;
+  background: var(--iss-ink);
+  transform-origin: 0 50%; transform: scaleX(0);
+}
+.iss-rail { position: absolute; inset: 0; transform: translateX(0%); }  /* translateX(% of own width) = position on the take */
+.iss-head { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--iss-head); }
+.iss-l, .iss-r {
+  position: absolute;
+  top: calc(var(--iss-track-top) + var(--iss-track-h) + .62cqw);
+  font-size: max(9px, 1.05cqw);
+  letter-spacing: .2em;
+  white-space: pre;
+}
+.iss-l { left: 0; }
+.iss-r { right: -.2em; }       /* cancel trailing letter-spacing so the right edge sits on the frame */
+
+/* SEND: six captions on today's six-column grid */
+.iss-caps {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--iss-gap);
+  padding: max(4px, calc(2.6cqw - 1em)) 0 0;
+  list-style: none;
+}
+.iss-caps li { display: flex; min-width: 0; white-space: pre; overflow: hidden; opacity: 0; }
+.iss-ci { margin-left: 3ch; }
+
+/* Narrower: drop tracking first, then the word CLIP, then the out-point. */
+@container (max-width: 980px) { .iss-row { letter-spacing: .06em; } .iss-l, .iss-r { letter-spacing: .14em; } .iss-r { right: -.14em; } }
+@container (max-width: 860px) { .iss-cw { display: none; } }
+@container (max-width: 560px) { .iss-co { display: none; } .iss-ci { margin-left: 1.2ch; } .iss-caps li { letter-spacing: .04em; } }
+
+/* Reduced motion: the six panels as stills with their captions (hero.js draws the posters). */
+@media (prefers-reduced-motion: reduce) {
+  .iss-meta, .iss-scan { display: none; }
+  .iss-caps li { opacity: 1; }
+}
