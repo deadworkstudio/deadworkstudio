@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Hero 01 · THE ARCHIVE
+   Same footprint as today's .strip: a 2.39:1 picture plus a label row that is
+   9% of the picture's height. Everything inside is sized in container units
+   (cqw = 1% of the figure's width), so the module scales as one object.
+   Motion is opacity + a canvas drift only; driven by hero.js.
+   ========================================================================== */
+
+.archive {
+  --archive-ink: #4A4741;
+  --archive-black: #0E0E0D;
+  --archive-gap: 1.8cqw;            /* today's settled gap between the six clips */
+  container-type: inline-size;
+  position: relative;
+  display: block;
+  width: min(100%, 1120px, calc((100svh - var(--hero-text)) * 2.3));
+  margin: clamp(22px, 3.4vh, 40px) auto 0;
+  text-align: left;
+}
+@media (max-width: 719px) { .archive { width: 100%; } }
+
+/* ---- picture: 2.39:1 ---- */
+.archive-pic { position: relative; aspect-ratio: 2.39 / 1; }
+
+.archive-wall {
+  position: absolute; inset: 0;
+  display: block; width: 100%; height: 100%;
+  background: var(--archive-black);
+  opacity: 0;
+}
+
+.archive-cols {
+  position: absolute; inset: 0;
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--archive-gap);
+  margin: 0; padding: 0; list-style: none;
+}
+.archive-col { position: relative; overflow: hidden; opacity: 0; }
+.archive-col video {
+  position: absolute; inset: 0;
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: var(--pos, 50%) 50%;
+}
+
+/* ---- label row: 9% of the picture height, small mono, #4A4741 ---- */
+.archive-labels {
+  position: relative;
+  height: calc(100cqw / 2.39 * 0.09);
+  font: 500 max(9.5px, 1.02cqw)/1 ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--archive-ink);
+  font-variant-numeric: tabular-nums;
+}
+.archive-meta, .archive-captions {
+  position: absolute; inset: 0;
+  margin: 0; padding: max(4px, calc(2.6cqw - 1em)) 0 0;
+}
+.archive-meta { display: flex; justify-content: space-between; }
+.archive-count { display: grid; justify-items: end; }
+.archive-count > span { grid-area: 1 / 1; }
+[data-archive-selected] { opacity: 0; }
+
+.archive-captions {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--archive-gap);
+  list-style: none;
+}
+.archive-captions li { display: flex; gap: .9em; min-width: 0; white-space: nowrap; overflow: hidden; opacity: 0; }
+.archive-n { color: var(--archive-ink); }
+.archive-name { overflow: hidden; text-overflow: clip; }
+.archive-dur { margin-left: auto; padding-left: .6em; opacity: .72; }
+
+/* Narrower: drop the tracking first, then the place name; phones keep number + length. */
+@container (max-width: 980px) { .archive-labels { letter-spacing: .06em; } }
+@container (max-width: 760px) { .archive-name { display: none; } }
+@container (max-width: 300px) { .archive-dur { display: none; } }
+
+/* Reduced motion: the settled six as stills (hero.js also skips the clock). */
+@media (prefers-reduced-motion: reduce) {
+  .archive-wall, .archive-meta { display: none; }
+  .archive-col, .archive-captions li { opacity: 1; }
+}
