@@ -264,22 +264,69 @@
     // two recordings of the same playback (dark + light): play together while on screen, light kept in step with dark
     var va = box.querySelector('[data-compare-a]'), vb = box.querySelector('[data-compare-b]');
     if (va && vb && !reduce) {
-      var sync = function () { if (Math.abs(vb.currentTime - va.currentTime) > 0.06) vb.currentTime = va.currentTime; };
-      va.addEventListener('timeupdate', sync); va.addEventListener('seeked', sync);
+      // Keep the light recording in step by nudging its speed, not by seeking: every seek makes the
+      // decoder jump to the nearest keyframe, which showed as a visible skip. Only a big drift (a
+      // loop seam or a stalled tab) is fixed with a seek.
+      var sync = function () {
+        var d = va.currentTime - vb.currentTime;
+        if (Math.abs(d) > 0.5) { vb.currentTime = va.currentTime; vb.playbackRate = 1; }
+        else vb.playbackRate = Math.abs(d) < 0.03 ? 1 : 1 + Math.max(-0.08, Math.min(0.08, d));
+      };
+      va.addEventListener('timeupdate', sync); va.addEventListener('seeked', function () { vb.currentTime = va.currentTime; });
       va.addEventListener('play', function () { vb.currentTime = va.currentTime; var p = vb.play(); if (p && p.catch) p.catch(function () {}); });
       va.addEventListener('pause', function () { vb.pause(); });
       var vis = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { var p = va.play(); if (p && p.catch) p.catch(function () {}); } else va.pause(); }); }, { threshold: 0.25 });
       vis.observe(box);
     }
-    // a gentle one-time sweep the first time it scrolls into view, so it's obvious it moves
+    // a gentle sweep the first time it scrolls into view (and again from the Day / Night word below),
+    // so it's obvious the line moves
+    var sweeping = false;
+    box.dwSweep = function () {
+      if (reduce || sweeping) return; sweeping = true;
+      var t0 = null, dur = 1600;
+      (function frame(ts) { if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur); var v = 50 + Math.sin(p * Math.PI * 2) * 22 * (1 - p); set(v); range.value = v; if (p < 1) requestAnimationFrame(frame); else { set(50); range.value = 50; sweeping = false; } })(performance.now());
+    };
     if (!reduce && 'IntersectionObserver' in window) {
       var seen = new IntersectionObserver(function (es) {
-        if (!es[0].isIntersecting) return; seen.disconnect();
-        var t0 = null, dur = 1600;
-        (function frame(ts) { if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur); var v = 50 + Math.sin(p * Math.PI * 2) * 22 * (1 - p); set(v); range.value = v; if (p < 1) requestAnimationFrame(frame); else { set(50); range.value = 50; } })(performance.now());
+        if (!es[0].isIntersecting) return; seen.disconnect(); box.dwSweep();
       }, { threshold: 0.6 });
       seen.observe(box);
     }
+  });
+
+  // ---- interface: words under the screenshot light up that part of the real app ----
+  document.querySelectorAll('.annot').forEach(function (fig) {
+    var wrap = fig.querySelector('.annot-img'), spot = fig.querySelector('[data-spot]'), card = fig.querySelector('[data-spot-card]');
+    var text = fig.querySelector('[data-feat-text]'), copy = fig.querySelector('[data-feat-copy]'), box = fig.querySelector('[data-compare]');
+    var tabs = [].slice.call(fig.querySelectorAll('[data-feat]'));
+    if (!wrap || !spot || !text || !copy || !tabs.length) return;
+    var idle = text.innerHTML, pinned = null;
+    var place = function (x, y, w, h) { spot.style.left = x + '%'; spot.style.top = y + '%'; spot.style.width = w + '%'; spot.style.height = h + '%'; };
+    var show = function (btn) {
+      tabs.forEach(function (t) { t.setAttribute('aria-selected', t === btn ? 'true' : 'false'); });
+      if (!btn) { wrap.classList.remove('is-spot', 'show-card'); text.innerHTML = idle; return; }
+      var r = btn.getAttribute('data-rect');
+      if (r === 'card' && card) {
+        wrap.classList.add('show-card');
+        var W = wrap.clientWidth, H = wrap.clientHeight;
+        place(card.offsetLeft / W * 100 - 0.6, card.offsetTop / H * 100 - 1, card.offsetWidth / W * 100 + 1.2, card.offsetHeight / H * 100 + 2);
+      } else {
+        wrap.classList.remove('show-card');
+        var v = r.split(',').map(Number); place(v[0], v[1], v[2], v[3]);
+      }
+      wrap.classList.add('is-spot');
+      var p = copy.content.querySelector('[data-for="' + btn.getAttribute('data-feat') + '"]');
+      if (p) text.innerHTML = p.innerHTML;
+      if (btn.getAttribute('data-feat') === 'daynight' && box && box.dwSweep) box.dwSweep();
+    };
+    tabs.forEach(function (t) {
+      t.addEventListener('mouseenter', function () { show(t); });
+      t.addEventListener('focus', function () { show(t); });
+      t.addEventListener('click', function () { pinned = pinned === t ? null : t; show(pinned || t); if (!pinned) show(null); });
+    });
+    var row = fig.querySelector('.feat-tabs');
+    row.addEventListener('mouseleave', function () { show(pinned); });
+    row.addEventListener('focusout', function (e) { if (!row.contains(e.relatedTarget)) show(pinned); });
   });
 
   // ---- hero: the shredded strip ----

@@ -577,3 +577,33 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 @media (max-width: 719px) {
   .ann::before { width: 18px; height: 18px; font-size: 10px; }
 }
+
+/* ---- Interface: word row under the screenshot. Pointing at (or tapping) a word lights up that part
+   of the real Review screen and explains it underneath. Coordinates live on each button
+   (data-rect, % of the screenshot) so the highlight always lands on the real control. ---- */
+.annot-img { position: relative; }
+.spot-wrap { position: absolute; inset: 0; overflow: hidden; border-radius: 6px; pointer-events: none; z-index: 3; }
+.spot { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: 0 0 0 200vmax rgba(10,10,9,.62); opacity: 0; transition: opacity 200ms var(--ease), left 280ms var(--ease), top 280ms var(--ease), width 280ms var(--ease), height 280ms var(--ease); }
+.annot-img.is-spot .spot { opacity: 1; }
+.spot-card { position: absolute; right: 4%; bottom: 9%; width: 44%; height: auto; border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); border-radius: 4px; box-shadow: 0 24px 48px -16px rgba(0,0,0,.7); opacity: 0; transform: translateY(8px); transition: opacity 220ms var(--ease), transform 220ms var(--ease); pointer-events: none; z-index: 2; }
+.annot-img.show-card .spot-card { opacity: 1; transform: none; }
+.feat { margin-top: 40px; text-align: center; }
+.feat-tabs { display: inline-flex; border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); }
+.feat-tab { font: 600 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 62%, transparent); background: none; border: 0; padding: 16px 24px; cursor: pointer; transition: background-color 160ms var(--ease), color 120ms var(--ease); touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.feat-tab + .feat-tab { border-left: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); }
+.feat-tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+@media (any-hover: hover) and (any-pointer: fine) { .feat-tab:hover { color: var(--ink); } .feat-tab[aria-selected="true"]:hover { color: var(--bg); } }
+.feat-tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.feat-text { max-width: 640px; min-height: 3.2em; margin: 22px auto 0; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
+.feat-text strong { color: var(--ink); font-weight: 600; }
+.feat-text kbd { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 5px; border: 1px solid color-mix(in srgb, var(--ink) 40%, transparent); font: 600 11px/1 var(--mono); color: var(--ink); vertical-align: 1px; }
+@media (max-width: 719px) {
+  .feat { margin-top: 28px; }
+  .feat-tabs { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }
+  .feat-tab { padding: 14px 6px; font-size: 11px; letter-spacing: .14em; }
+  .feat-tab:nth-child(4) { border-left: 0; }
+  .feat-tab:nth-child(n+4) { border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); }
+  .feat-text { font-size: 15px; min-height: 4.6em; }
+  .spot-card { width: 70%; right: 3%; bottom: 7%; }
+}
+@media (prefers-reduced-motion: reduce) { .spot, .spot-card, .feat-tab { transition: opacity 150ms linear; } .spot-card { transform: none; } }

@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024m" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024n" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -186,22 +186,27 @@
         </span>
         <input class="compare-range" type="range" min="0" max="100" value="50" step="0.5" aria-label="Drag to compare dark mode and light mode" data-compare-range />
       </div>
-      <span class="ann ann-l" data-n="1"><span class="ann-label"><strong>Clips</strong><br />Usable moments from raw footage.</span></span>
-      <span class="ann ann-r" data-n="2"><span class="ann-label">Add your own <strong>looks</strong></span></span>
-      <span class="ann ann-r" data-n="3"><span class="ann-label"><strong>Fine tune settings</strong></span></span>
-      <span class="ann ann-r" data-n="4"><span class="ann-label"><strong>Keyboard shortcuts</strong> for fast workflow</span></span>
-      <span class="ann ann-b" data-n="5"><span class="ann-label">Switch between <strong>looks</strong></span></span>
-      <span class="ann ann-b" data-n="6"><span class="ann-label"><strong>Approve</strong> or <strong>deny clips</strong> quickly</span></span>
+      <span class="spot-wrap" aria-hidden="true"><span class="spot" data-spot></span></span>
+      <img class="spot-card" src="../../assets/img/products/stock-shredder/keywords.jpg" width="663" height="170" alt="" aria-hidden="true" data-spot-card />
       </div>
-      <figcaption class="annot-list">
-        <ol>
-          <li><strong>Clips</strong> &mdash; usable moments from raw footage.</li>
-          <li>Add your own <strong>looks</strong></li>
-          <li><strong>Fine tune settings</strong></li>
-          <li><strong>Keyboard shortcuts</strong> for fast workflow</li>
-          <li>Switch between <strong>looks</strong></li>
-          <li><strong>Approve</strong> or <strong>deny clips</strong> quickly</li>
-        </ol>
+      <figcaption class="feat">
+        <div class="feat-tabs" role="tablist" aria-label="What the Review screen does">
+          <button type="button" role="tab" class="feat-tab" aria-selected="false" data-feat="review" data-rect="17.9,93.4,61.2,5.8">Review</button>
+          <button type="button" role="tab" class="feat-tab" aria-selected="false" data-feat="grade" data-rect="81.2,41.2,17.6,30.6">Grade</button>
+          <button type="button" role="tab" class="feat-tab" aria-selected="false" data-feat="trim" data-rect="17.9,77,61.2,15.2">Trim</button>
+          <button type="button" role="tab" class="feat-tab" aria-selected="false" data-feat="export" data-rect="81.2,13.4,17.6,26.2">Export</button>
+          <button type="button" role="tab" class="feat-tab" aria-selected="false" data-feat="keywords" data-rect="card">Keywords</button>
+          <button type="button" role="tab" class="feat-tab" aria-selected="false" data-feat="daynight" data-rect="0,0,100,100">Day / Night</button>
+        </div>
+        <p class="feat-text" aria-live="polite" data-feat-text>Point at a word to see it in the app.</p>
+        <template data-feat-copy>
+          <p data-for="review"><strong>Review.</strong> Every usable moment, one at a time. Press <kbd>A</kbd> to approve or <kbd>D</kbd> to deny &mdash; approved clips wait for GO, then export together.</p>
+          <p data-for="grade"><strong>Grade.</strong> Built-in looks for each camera&rsquo;s log, plus your own LUTs. Fine-tune exposure, contrast, temperature and tint &mdash; on one clip or all of them.</p>
+          <p data-for="trim"><strong>Trim.</strong> Set the in and out points with <kbd>I</kbd> and <kbd>O</kbd>, or drag the handles. Flip between the Log original and the graded look anytime.</p>
+          <p data-for="export"><strong>Export.</strong> Pick the format and size, add extra sizes from 1080 to 8K in the same pass, and export Graded, Log or both. Stabilizing and grain cleanup when you want them.</p>
+          <p data-for="keywords"><strong>Keywords.</strong> Every exported clip gets stock-ready keywords written for it. One click copies them into your upload.</p>
+          <p data-for="daynight"><strong>Day / Night.</strong> Dark for the edit bay, warm sand for daylight. Drag the line to compare.</p>
+        </template>
       </figcaption>
     </figure>
   </section>
@@ -504,7 +509,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021c"></script>
 <script src="../../assets/js/checkout.js?v=20261024c"></script>
-<script src="../../assets/js/ss-page.js?v=20261024q"></script>
+<script src="../../assets/js/ss-page.js?v=20261024r"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
