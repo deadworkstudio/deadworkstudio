@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
-<link rel="preload" as="image" href="../../assets/img/products/set-control/bg.jpg?v=20261022" />
+<link rel="preload" as="image" href="../../assets/img/products/set-control/bg.jpg?v=20261022u" />
 <link rel="preload" as="image" href="../../assets/img/brand/deadwork-wordmark-bone.png" />
 <link rel="preload" as="image" href="../../assets/img/brand/product-logos/set-control.png" />
 <link rel="preload" href="../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
@@ -22,12 +22,13 @@
 <link rel="stylesheet" href="../../assets/css/base.css?v=20261015e" />
 <link rel="stylesheet" href="../../assets/css/home.css?v=20261024a" />
 <link rel="stylesheet" href="../../assets/css/product.css?v=20261019aa" />
+<link rel="stylesheet" href="../../assets/css/product-dev.css?v=20261024a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body data-chat-widget>
 <div class="poster">
   <div class="poster-media" aria-hidden="true">
-    <img src="../../assets/img/products/set-control/bg.jpg?v=20261022" alt="" fetchpriority="high" />
+    <img src="../../assets/img/products/set-control/bg.jpg?v=20261022u" alt="" fetchpriority="high" />
   </div>
   <header class="poster-head">
     <span class="poster-meta-left">06 Tools</span>
@@ -93,8 +94,8 @@
             </a>
             <a class="mega-menu-card" href="../../products/handoff/">
               <span class="mega-menu-card-img">
-                <img class="mega-menu-card-photo" src="../../assets/img/products/handoff/bg.jpg?v=20261022u" alt="" loading="lazy" />
-                <img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/handoff.png" alt="" loading="lazy" />
+                <img class="mega-menu-card-photo" src="../../assets/img/products/set-control/bg.jpg?v=20261022u" alt="" loading="lazy" />
+                <img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/set-control.png" alt="" loading="lazy" />
               </span>
               <span class="mega-menu-card-caption">
                 <span class="mega-menu-card-name">Handoff</span>
@@ -135,47 +136,32 @@
     <div class="panel-stack">
       <article class="panel is-active" data-panel="default">
 
-<section class="wrap product-hero" data-product="set-control">
-  <div class="product-hero-title-row">
-    <h1 class="display product-hero-logo-wrap"><img class="product-hero-logo" src="../../assets/img/brand/product-logos/set-control.png" alt="Set Control" /></h1>
-    <div class="product-hero-badge-row">
-      <span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span>
-    </div>
-  </div>
-  <p class="eyebrow">Every crew. Every detail. In sync.</p>
+<section class="dev-hero wrap" data-product="set-control">
+  <img class="dev-hero-logo" src="../../assets/img/brand/product-logos/set-control.png" alt="Set Control" width="1940" height="413" />
+  <p class="dev-hero-tag">Every crew. Every detail. In sync.</p>
+  <span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span>
 </section>
 
-<section class="wrap split">
+<section class="dev-split wrap" aria-labelledby="problem-title">
   <div>
-    <h2>The problem</h2>
+    <h3 id="problem-title">The problem</h3>
     <p>Things are constantly changing; documents get outdated, schedules shift, a location gets moved, and times adjust. None of it reaches the people who need it or until someone asks out loud.</p>
   </div>
-  <div>
-    <h2>The solution</h2>
+  <div class="is-solution">
+    <h3>The solution</h3>
     <p>Organized film sets with tracked schedules, locations, shot progress, timing and production in one shared view. A change made once is a change everyone sees via iPhone notifications. Eliminates inefficient communication during pre-production and production.</p>
   </div>
 </section>
 
-<section class="wrap product-hero-cta" data-product="set-control">
-  <div class="product-hero-actions">
-    <form class="notify-form" data-notify-form data-notify-product="set-control" novalidate>
-      <label class="sr-only" for="notify-email-set-control">Email address</label>
-      <input class="notify-input" type="email" id="notify-email-set-control" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-      <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-      <button class="btn btn-primary notify-submit" type="submit" data-notify-submit>Notify me</button>
-      <p class="notify-status" data-notify-status hidden></p>
-    </form>
-  </div>
-</section>
-
-<section class="wrap spec">
-  <h2>Spec sheet</h2>
-  <table class="spec-table">
-    <tbody>
-        <tr><th>Platform</th><td>iPhone, Mac &amp; Windows</td></tr>
-        <tr><th>Works with</th><td>iPhone companion app, Scene Lock</td></tr>
-    </tbody>
-  </table>
+<section class="dev-notify wrap" aria-labelledby="notify-title">
+  <p class="section-head mono" id="notify-title">Be first to know</p>
+  <form class="notify-form" data-notify-form data-notify-product="set-control" novalidate>
+    <label class="sr-only" for="notify-email-set-control">Email address</label>
+    <input class="notify-input" type="email" id="notify-email-set-control" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+    <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+    <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
+    <p class="notify-status" data-notify-status hidden></p>
+  </form>
 </section>
 
       </article>
@@ -202,5 +188,6 @@
 <script src="../../assets/js/main.js?v=20261024a"></script>
 <script src="../../assets/js/nav-dropdown.js?v=20261021c"></script>
 <script src="../../assets/js/notify.js" defer></script>
+<script src="../../assets/js/product-dev.js?v=20261024a" defer></script>
 </body>
 </html>
