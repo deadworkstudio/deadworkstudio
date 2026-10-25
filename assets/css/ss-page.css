@@ -300,12 +300,16 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
    an element's own style attribute always outranks any stylesheet rule regardless of selector
    specificity. Declaring them here instead, at equal specificity to those overrides and earlier in
    source order, lets the media query win exactly when it's supposed to. */
-.ann[data-n="1"] { --x: 10.2%; --y: 23.5%; }
-.ann[data-n="2"] { --x: 89.8%; --y: 46.1%; }
-.ann[data-n="3"] { --x: 90.6%; --y: 65.3%; }
-.ann[data-n="4"] { --x: 84.4%; --y: 98.4%; }
-.ann[data-n="5"] { --x: 24.4%; --y: 80.1%; }
-.ann[data-n="6"] { --x: 48.4%; --y: 96.1%; }
+/* Each dot sits on the edge of the control it names, never on its text: 1 the clip thumbnail,
+   2 the right end of the Look picker, 3 the right end of the fine-tune sliders, 4 the "O" key
+   hint on End Here, 5 the left edge of the LOG / GRADED toggle, 6 between Approve and Deny.
+   5 and 6 are far enough apart that their labels under the image never touch. */
+.ann[data-n="1"] { --x: 3.4%; --y: 23.8%; }
+.ann[data-n="2"] { --x: 98.4%; --y: 46.2%; }
+.ann[data-n="3"] { --x: 98.4%; --y: 66.4%; }
+.ann[data-n="4"] { --x: 76.8%; --y: 84.8%; }
+.ann[data-n="5"] { --x: 19.2%; --y: 80.2%; }
+.ann[data-n="6"] { --x: 48.9%; --y: 96.2%; }
 
 /* ---- Stock Shredder Remote: real app screen in a drawn phone frame ---- */
 .remote .section-sub { max-width: 52ch; margin-left: auto; margin-right: auto; }
@@ -475,11 +479,12 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
   /* As numbered dots over the screenshot (rather than leader-line labels), these need to sit on
      empty pixels instead of on top of the controls/text they're pointing at, and stay clear of the
      image edge so the circle marker never hangs off it. */
-  .ann[data-n="1"] { --x: 10%; --y: 55%; }
-  .ann[data-n="2"] { --x: 80%; --y: 50%; }
-  .ann[data-n="4"] { --y: 93%; }
-  .ann[data-n="5"] { --x: 24%; --y: 70%; }
-  .ann[data-n="6"] { --y: 92%; }
+  .ann[data-n="1"] { --x: 5%; --y: 24%; }
+  .ann[data-n="2"] { --x: 93%; --y: 42.8%; }
+  .ann[data-n="3"] { --x: 93%; --y: 57.4%; }
+  .ann[data-n="4"] { --x: 70.6%; --y: 79%; }
+  .ann[data-n="5"] { --x: 19%; --y: 80%; }
+  .ann[data-n="6"] { --y: 93%; }
 }
 @media (max-width: 1023px) {
   .pricing-grid, .earn-grid { grid-template-columns: 1fr 1fr; row-gap: 28px; }
@@ -566,4 +571,9 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
   .mega-menu, .modal, .pricing-price { transform: none !important; filter: none !important; }
   .tool-mark img, .mega-menu-card-photo { transition: opacity 150ms ease !important; }
   .faq-a { transition: opacity 200ms ease !important; }
+}
+/* Phones: the screenshot is ~330px wide, so the numbered markers shrink to stay off the
+   small controls they sit beside. */
+@media (max-width: 719px) {
+  .ann::before { width: 18px; height: 18px; font-size: 10px; }
 }
