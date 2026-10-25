@@ -274,6 +274,21 @@
     var feats = [].slice.call(tour.querySelectorAll('[data-ix-feat]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
     var NS = 'http://www.w3.org/2000/svg', POOL = 5, cur = -1, lastPointer = 'mouse';
     var dark = tour.querySelector('[data-ix-dark]'), inView = false, nightTimer = 0;
+    var zoom = tour.querySelector('[data-ix-zoom]');
+    // Magnify: scale the app so the chosen controls fill most of the frame, centred in it.
+    // Day / Night stays at full size (the point there is to see the whole dark interface).
+    var magnify = function (btn) {
+      if (!zoom) return;
+      if (!btn || btn.hasAttribute('data-ix-night')) { zoom.style.transform = ''; return; }
+      var z = btn.getAttribute('data-zoom'), list = (z || btn.getAttribute('data-rects')).split(';').map(function (t) { return t.split(',').map(Number); });
+      var x0 = Math.min.apply(null, list.map(function (r) { return r[0]; })), y0 = Math.min.apply(null, list.map(function (r) { return r[1]; }));
+      var x1 = Math.max.apply(null, list.map(function (r) { return r[0] + r[2]; })), y1 = Math.max.apply(null, list.map(function (r) { return r[1] + r[3]; }));
+      var fit = z ? 100 : 72, s = Math.max(1, Math.min(2.4, fit / (x1 - x0), fit / (y1 - y0)));
+      // centred across; up and down it stays inside the app so the frame never shows empty space above or below
+      var tx = 50 - s * (x0 + x1) / 2, ty = Math.min(0, Math.max(100 - 100 * s, 50 - s * (y0 + y1) / 2));
+      if (z) tx = Math.min(0, Math.max(100 - 100 * s, tx));
+      zoom.style.transform = 'translate(' + tx.toFixed(2) + '%, ' + ty.toFixed(2) + '%) scale(' + s.toFixed(3) + ')';
+    };
     // Day / Night: start the dark recording at the day one's time, fade it in; fade back out when leaving
     var setNight = function (on) {
       if (!dark) return;
@@ -339,6 +354,7 @@
       panels.forEach(function (p, k) { p.hidden = k !== i; });
       explain.classList.toggle('has-feat', i >= 0);
       setNight(i >= 0 && feats[i].hasAttribute('data-ix-night'));
+      magnify(i >= 0 ? feats[i] : null);
       if (i < 0) { spot.classList.remove('is-on'); return; }
       aim(rectsFor(feats[i]));
       spot.classList.add('is-on');
