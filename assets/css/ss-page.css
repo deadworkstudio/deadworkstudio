@@ -245,7 +245,7 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .005em !important; line-height: 1 !important; font-size: clamp(40px, 4.2vw, 64px) !important; }
 .remote .section-sub { max-width: none !important; }
 @media (max-width: 719px) { .br-desk { display: none; } }
-.head-dw .shred-word { font-size: 1.02em; text-transform: none; }
+.head-dw .shred-word { font-size: 1.1em; text-transform: none; position: relative; top: -.08em; }
 
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -356,7 +356,7 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .upgrade h3 { margin-top: 8px; font: 560 18px/1.2 var(--sans); letter-spacing: -.015em; color: var(--ink); }
 .upgrade figcaption > p:last-child { margin: 8px auto 0; max-width: 30ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 .upgrade-shot img { display: block; height: auto; border-radius: 6px; box-shadow: 0 14px 28px -16px rgba(20,20,18,.45); }
-.upgrade-shot--kw { width: min(100%, 320px); }
+.upgrade-shot--kw { width: min(100%, 340px); }
 .upgrade-shot--kw img { width: 100%; }
 .upgrade-shot--phone { padding: 5px; border-radius: 20px; background: #0d0d0c; box-shadow: inset 0 0 0 1px #2a2a27, 0 14px 28px -16px rgba(20,20,18,.45); }
 .upgrade-shot--phone img { width: 104px; border-radius: 15px; box-shadow: none; }
@@ -544,7 +544,10 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-feat[aria-pressed="true"]::after { transform: scaleX(1); }
 .ix-feat:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
-.ix-stage { position: relative; margin-top: clamp(14px, 2.2vh, 24px); transform-origin: 50% 0; }
+.ix-stage { position: relative; margin-top: clamp(14px, 2.2vh, 24px); transform-origin: 50% 0; border-radius: 6px; overflow: hidden; isolation: isolate; background: #4C4A46; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
+/* magnify: the chosen controls scale up and move to the middle of the frame (transform only, so it stays smooth) */
+.ix-zoom { position: relative; transform-origin: 0 0; transition: transform 520ms cubic-bezier(.22, 1, .36, 1); will-change: transform; }
+.ix-zoom .ix-screen { box-shadow: none; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
 .ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
 /* Day / Night: the app's own dark-mode recording (same take, frame-aligned) fades in over the day one */
@@ -572,7 +575,7 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 
 @media (max-width: 1023px) {
   .ix-tour { --ix-w: 100%; }
-  .ix-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 12px; }
+  .ix-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 12px; }
   .ix-feat::after { bottom: 2px; right: 12px; }
 }
 @media (max-width: 719px) {
@@ -581,6 +584,6 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .ix-explain { min-height: 7.6em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel { transition: none !important; }
+  .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }
