@@ -70,7 +70,9 @@ body.dev-v2 .nav-tabs { display: flex; gap: 4px 36px; }
 body.dev-v2 .nav-tabs--pre { grid-column: 1; grid-row: 1; justify-content: flex-end; padding-right: clamp(16px, 3vw, 48px); }
 body.dev-v2 .nav-tabs--post { grid-column: 3; grid-row: 1; justify-content: flex-start; padding-left: clamp(16px, 3vw, 48px); }
 body.dev-v2 .nav-tab-trigger { min-height: 36px; padding: 0 2px; font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; }
-body.dev-v2 .poster-meta-left, body.dev-v2 .poster-meta-right { position: absolute; bottom: 22px; margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+/* H-20: same baseline nudge as studio.css's identical header geometry (these dev pages share
+   the exact same poster-head padding/positioning scheme). */
+body.dev-v2 .poster-meta-left, body.dev-v2 .poster-meta-right { position: absolute; bottom: 27px; margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
 body.dev-v2 .poster-meta-left { left: var(--ss-gutter); }
 body.dev-v2 .poster-meta-right { right: var(--ss-gutter); }
 body.dev-v2 .poster-panel { margin-top: 0; padding-top: 0; border-top: 0; }

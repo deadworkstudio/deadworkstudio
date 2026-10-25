@@ -369,7 +369,11 @@ a[href$="loadout/"] .mega-menu-card-img::after {
   .poster-meta-right {
     display: block;
     position: absolute;
-    bottom: 0;
+    /* H-20: bottom:0 anchors the box's own bottom edge to the header's, but this line's text is
+       shorter than the tab's own 36px-tall flex box (which bottom-aligns its glyphs via
+       align-items:flex-end) — the meta text itself rendered ~9px below the tab's baseline.
+       Nudged up by the measured gap so both read as sitting on one shelf. */
+    bottom: 9px;
     font: 400 11px/1.4 var(--font-mono);
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -543,7 +547,12 @@ body.home .panel-headline-lede { text-align: center; }
   .poster-head, .poster-foot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; }
   /* Bottom-align the header's own items (logo + both tab groups) so they read as sitting on one
      shelf together, rather than inheriting the top-align the footer still wants. */
-  .poster-head { align-items: end; padding-top: clamp(24px, 4svh, 40px); }
+  /* H-8: Studio, Stock Shredder and the five in-development pages all use a fixed 22px top
+     padding on their own copy of this header — home's own clamp(24px, 4svh, 40px) grew well past
+     that on an ordinary laptop screen (36-40px), landing the tab row ~18px lower and making the
+     whole header visibly jump on navigating Home -> Studio. Matched to the same fixed 22px so
+     every "registration corner" header on the site sits at the same height. */
+  .poster-head { align-items: end; padding-top: 22px; }
   /* Same equal-flanking-tracks centering trick as the 720px-only rule above, now expressed against
      the 12-column poster subgrid: 5 columns either side of a 2-column middle slot for the
      wordmark (5 + 2 + 5 = 12), so the logo still lands exactly on the grid's own center line. */

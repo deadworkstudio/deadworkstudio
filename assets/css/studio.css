@@ -55,7 +55,10 @@ button { font: inherit; color: inherit; }
 .nav-tab-trigger::after { content: ''; position: absolute; left: 2px; right: 2px; bottom: -6px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 160ms var(--ease); }
 @media (any-hover: hover) and (any-pointer: fine) { .nav-tab-trigger:hover::after { transform: scaleX(1); } }
 .nav-tab-trigger[aria-expanded='true']::after { transform: scaleX(1); }
-.poster-meta-left, .poster-meta-right { position: absolute; bottom: 22px; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+/* H-20: the tab's own 36px flex box bottom-aligns its glyphs (align-items:flex-end), which sit
+   ~5px lower than this box's own bottom edge — nudged up so the meta text's baseline matches
+   the tabs' instead of reading as dropped below them. */
+.poster-meta-left, .poster-meta-right { position: absolute; bottom: 27px; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
 .poster-meta-left { left: var(--gutter); }
 .poster-meta-right { right: var(--gutter); }
 
@@ -204,7 +207,16 @@ main section { text-align: center; }
 .opener { overflow: hidden; isolation: isolate; }
 .opener-film { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
 .opener::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 70% 45% at 50% 42%, rgba(14,14,13,.5) 0%, rgba(14,14,13,0) 100%), linear-gradient(180deg, rgba(14,14,13,.62) 0%, rgba(14,14,13,.66) 55%, rgba(14,14,13,.94) 100%); }
-.opener-kicker { color: var(--ink); letter-spacing: .3em; font-size: 11px; }
+/* H-11: the kicker sits in the top band of the film, where the existing scrim above is at its
+   weakest (its radial/vertical gradients are both centered lower, toward the headline) — bright
+   crew/lighting moments there dropped the kicker to ~1:1 contrast. A dedicated top-down scrim,
+   independent of where the headline's own gradient is strongest, keeps that band legible
+   regardless of what's playing underneath. */
+.opener::after { content: ''; position: absolute; inset: 0 0 auto; z-index: -1; height: 45%; background: linear-gradient(180deg, rgba(14,14,13,.7) 0%, rgba(14,14,13,0) 100%); pointer-events: none; }
+.opener-kicker { position: relative; z-index: 1; color: var(--ink); letter-spacing: .3em; font-size: 12px; }
+/* .opener-kicker also carries .mono, whose .tone-dark .mono rule (higher specificity, see the
+   "block tones" section above) would otherwise win and put the dimmer --ink-2 back. */
+.tone-dark .opener-kicker { color: #F1ECE2; }
 .opener-title {
   margin-top: clamp(22px, 3.6vh, 40px);
   font-family: var(--anton); font-weight: 400; text-transform: uppercase;

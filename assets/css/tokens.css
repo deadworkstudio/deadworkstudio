@@ -21,6 +21,20 @@
   font-display: swap;
 }
 
+/* H-13: Stock Shredder, Studio and the five in-development pages already load this as their
+   body face (each via its own @font-face copy — see ss-page.css/studio.css/product-dev-v2.css);
+   only the home page was still falling back to Helvetica/Arial, so the exact same menu caption
+   or body paragraph rendered in two different sans faces depending on which page you were on.
+   Declared again here (harmless duplicate — browsers de-dupe identical @font-face rules) so
+   --font-body below can use it without reordering which file loads first. */
+@font-face {
+  font-family: 'Archivo';
+  src: url('../fonts/archivo-variable.woff2') format('woff2-variations'), url('../fonts/archivo-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 
@@ -62,7 +76,10 @@
   --acc-text: var(--acc);
 
   --font-display: 'Anton', 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
-  --font-body: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  /* H-13: pick one body face sitewide — Archivo is the real direction (Stock Shredder, Studio
+     and the five in-development pages all already use it); the Helvetica/Arial stack now only
+     matters as the fallback before Archivo loads, or if it fails to load at all. */
+  --font-body: 'Archivo', 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
 
   --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
