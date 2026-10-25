@@ -249,7 +249,9 @@ main section { text-align: center; }
   /* sits in the black sky between the light and the city */
   transform: translateY(-4%);
 }
-.film-split > * + * { border-left: 1px solid var(--line-2); }
+/* the divider sits on the row's exact centre (the page's centre line), not on the edge of the
+   right-hand paragraph, which is narrower than its column */
+.film-split::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line-2); }
 .film-p {
   padding: 4px clamp(24px, 3.6vw, 56px);
   max-width: 34ch; justify-self: center;
@@ -338,7 +340,8 @@ main section { text-align: center; }
   .film { height: auto; min-height: 100vh; min-height: 100svh; max-height: none; padding: 0 var(--gutter); }
   .film-img { object-position: 45% 50%; }
   .film-split { grid-template-columns: 1fr; gap: 0; width: min(100%, 560px); transform: none; }
-  .film-split > * + * { border-left: 0; border-top: 1px solid var(--line-2); }
+  .film-split::before { display: none; }
+  .film-split > * + * { border-top: 1px solid var(--line-2); }
   .film-p { max-width: none; padding: 28px 0; }
   .film-split .film-p:first-child { padding-top: 0; }
   .film-split .film-p:last-child { padding-bottom: 0; }
