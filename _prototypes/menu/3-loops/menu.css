@@ -1,0 +1,4 @@
+/* Loops: colour footage, resting dim and still; on hover/focus it brightens and plays */
+.mm-loop .mega-menu-card-photo { filter: saturate(.85) brightness(.55) !important; object-position: 50% 50% !important; transition: filter 400ms var(--ease), transform var(--duration-hover) var(--ease) !important; }
+.mm-loop.is-playing .mega-menu-card-photo { filter: saturate(1) brightness(.85) !important; }
+a[href$="handoff/"] .mega-menu-card-img::after { width: min(80%, 340px) !important; height: 72% !important; background: radial-gradient(ellipse at center, rgba(0,0,0,.78) 0%, rgba(0,0,0,0) 72%) !important; }

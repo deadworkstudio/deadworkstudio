@@ -1,0 +1,4 @@
+/* Refined current: today's photos, one consistent grade and crop, the mark sized consistently */
+.mega-menu-card-photo { filter: grayscale(1) contrast(1.15) brightness(.62) !important; }
+.mega-menu-card-logo, a[href] .mega-menu-card-logo { height: clamp(40px, 4vw, 64px) !important; filter: drop-shadow(0 2px 10px rgba(0,0,0,.6)) !important; }
+a[href$="handoff/"] .mega-menu-card-logo { height: clamp(58px, 5.6vw, 92px) !important; }

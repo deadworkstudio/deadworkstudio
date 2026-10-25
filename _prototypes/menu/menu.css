@@ -1,0 +1,6 @@
+/* shared: the status + platform line under each tagline, quiet mono like the rest of the menu */
+.mm-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; margin-top: 10px; font: 400 10px/1.5 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--bone-3); }
+.mm-status { color: var(--bone-2); }
+a[href$="stock-shredder/"] .mm-status { color: #8FD687; }
+.mega-menu-card-caption { display: flex; flex-direction: column; align-items: center; }
+.mega-menu-card:focus-visible { outline: 1px solid var(--bone); outline-offset: 6px; }

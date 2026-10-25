@@ -1,0 +1,6 @@
+/* Plates: no photography — the logo alone on a quiet plate, with a hairline frame */
+.mm-plate-box { background: #121210 !important; box-shadow: inset 0 0 0 1px rgba(230,224,211,.10); transition: box-shadow 200ms var(--ease), background-color 200ms var(--ease); }
+.mm-plate-box::after { display: none !important; }
+.mm-plate .mega-menu-card-logo { filter: none !important; height: clamp(44px, 4.6vw, 76px) !important; transition: transform 300ms var(--ease); }
+a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120px) !important; }
+@media (hover: hover) { .mm-plate:hover .mm-plate-box { background: #171715 !important; box-shadow: inset 0 0 0 1px rgba(230,224,211,.28); } .mm-plate:hover .mega-menu-card-logo { transform: translate(-50%, -50%) scale(1.03); } }

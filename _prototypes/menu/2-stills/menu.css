@@ -1,0 +1,3 @@
+/* Stills: one frame of Daniel's own footage per product, black and white, darkened so the mark reads */
+.mega-menu-card-photo { filter: grayscale(1) contrast(1.08) brightness(.72) !important; object-position: 50% 50% !important; }
+a[href$="handoff/"] .mega-menu-card-img::after { width: min(80%, 340px) !important; height: 72% !important; background: radial-gradient(ellipse at center, rgba(0,0,0,.78) 0%, rgba(0,0,0,0) 72%) !important; }

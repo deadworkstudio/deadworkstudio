@@ -1,0 +1,10 @@
+/* Index: no images — names set large in the headline face, like a printed catalogue */
+.mm-index { display: flex !important; flex-direction: column; align-items: flex-start; gap: 12px; padding: 28px 28px 26px; border: 1px solid rgba(230,224,211,.12); min-height: 300px; transition: border-color 200ms var(--ease), background-color 200ms var(--ease); text-align: left; }
+.mm-index-top { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 16px; }
+.mm-index-top .mm-meta { margin: 0; justify-content: flex-end; text-align: right; max-width: 60%; }
+.mm-index-logo { height: 30px; width: auto; max-width: 45%; }
+a.mm-index[href$="handoff/"] .mm-index-logo { height: 44px; }
+.mm-index-name { margin-top: auto; font: 400 clamp(44px, 5.4vw, 88px)/.95 'Anton', var(--font-display, sans-serif); text-transform: uppercase; color: var(--bone); letter-spacing: .005em; }
+.mm-index .mega-menu-card-desc { text-align: left; }
+.mm-index-go { font: 400 10px/1.5 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); transition: color 160ms var(--ease), transform 200ms var(--ease); }
+@media (hover: hover) { .mm-index:hover { border-color: rgba(230,224,211,.35); background: #10100e; } .mm-index:hover .mm-index-go { color: var(--bone); transform: translateX(4px); } }
