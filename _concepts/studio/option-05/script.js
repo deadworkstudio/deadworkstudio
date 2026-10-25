@@ -1,6 +1,11 @@
 // Concept 05 — DEADWORK Evolved
 // Quiet scroll reveals (opacity/transform only) and the film block's photo settle.
 (function () {
+  // opener film: plays only while on screen, and never under reduced motion (poster stays)
+  var film = document.querySelector('[data-opener-film]');
+  if (film && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var p = film.play(); if (p && p.catch) p.catch(function () {}); } else film.pause(); }); }, { threshold: 0.1 }).observe(film);
+  }
   var root = document.documentElement;
   if (!('IntersectionObserver' in window)) return;
   root.classList.add('js-reveal');

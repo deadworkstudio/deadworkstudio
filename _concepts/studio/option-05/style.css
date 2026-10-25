@@ -40,7 +40,11 @@ main section { text-align: center; }
   min-height: 100vh; min-height: 100svh;
   padding: calc(var(--sh-h) + 48px) var(--gutter) clamp(72px, 12vh, 120px);
 }
-.opener-kicker { color: var(--ink-2); letter-spacing: .3em; font-size: 11px; }
+/* behind-the-scenes film behind the headline (borrowed from concept 03), held dark so the type leads */
+.opener { overflow: hidden; isolation: isolate; }
+.opener-film { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.opener::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 70% 45% at 50% 42%, rgba(14,14,13,.5) 0%, rgba(14,14,13,0) 100%), linear-gradient(180deg, rgba(14,14,13,.62) 0%, rgba(14,14,13,.66) 55%, rgba(14,14,13,.94) 100%); }
+.opener-kicker { color: var(--ink); letter-spacing: .3em; font-size: 11px; }
 .opener-title {
   margin-top: clamp(22px, 3.6vh, 40px);
   font-family: var(--anton); font-weight: 400; text-transform: uppercase;
@@ -150,12 +154,12 @@ main section { text-align: center; }
 /* =========================================================================================
    IV. Contact — darker cream
    ========================================================================================= */
-.contact { padding: var(--block-y) var(--gutter); }
+.contact { padding: var(--block-y) clamp(16px, 3vw, 48px); }
 .contact-in { display: grid; justify-items: center; }
 .contact-lede { margin-top: 22px; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); }
 .contact-email {
-  margin-top: 28px; padding: 18px 0 0; border-top: 1px solid var(--line-2);
-  font: 560 clamp(24px, 3.4vw, 48px)/1.1 var(--sans); letter-spacing: -.025em; color: var(--ink);
+  margin-top: clamp(28px, 5vh, 56px); padding: 0;
+  font: 300 clamp(30px, 7.4vw, 124px)/1 var(--sans); letter-spacing: -.035em; color: var(--ink);
   overflow-wrap: anywhere; user-select: all; -webkit-user-select: all;
 }
 
@@ -203,6 +207,7 @@ main section { text-align: center; }
   .notify-form { flex-direction: column; align-items: stretch; }
   .notify-input { flex: none; }  /* the 240px basis would become a height in a column */
   .notify-submit { width: 100%; }
+  .notify-status { flex: none; align-self: stretch; }  /* same flex-basis-becomes-height trap as the input */
 }
 
 
