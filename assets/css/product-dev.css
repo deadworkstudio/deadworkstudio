@@ -1,0 +1,123 @@
+/* DEADWORK — shared design system for the five IN-DEVELOPMENT product pages (Scene Lock, Set
+   Control, Loadout, Handoff, Sound Driver), carrying the Stock Shredder product page's design
+   language (tone-dark/tone-alt bands, Anton section heads, mono labels, pill buttons, scroll
+   reveal) without touching ss-page.css itself or anything Stock Shredder-specific (its compare
+   slider, interface annotations, pricing/checkout, world map, reviews).
+   Loaded after tokens.css + base.css + home.css + product.css on each of the five pages. */
+
+/* ---- type + labels ---- */
+.mono { font: 500 10.5px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-2); }
+.section-head { font: 560 12px/1 var(--font-mono); letter-spacing: .22em; text-transform: uppercase; color: var(--acc-text); }
+.section-head + .section-title { margin-top: 10px; }
+.section-title { font: 560 clamp(28px, 2.6vw, 38px)/1.1 var(--font-body); letter-spacing: -.025em; color: var(--bone); }
+.head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .005em !important; line-height: 1 !important; font-size: clamp(36px, 4vw, 58px) !important; }
+
+/* ---- scroll reveal: content fades + rises in once, backgrounds never animate (see WEB-2) ---- */
+.will-reveal > * { opacity: 0; transform: translateY(8px); transition: opacity 400ms var(--ease), transform 400ms var(--ease); }
+.will-reveal.is-in > * { opacity: 1; transform: none; }
+.will-reveal > *:nth-child(2) { transition-delay: 60ms; }
+.will-reveal > *:nth-child(3) { transition-delay: 120ms; }
+@media (prefers-reduced-motion: reduce) { .will-reveal > * { opacity: 1; transform: none; transition: none; } }
+
+/* ---- pill buttons (same shape/feel as Stock Shredder's) ---- */
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--bone); font: 600 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: background 160ms var(--ease), color 80ms var(--ease), transform 160ms var(--ease); }
+.pill:active { transform: scale(.97); }
+.pill-solid { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+@media (any-hover: hover) and (any-pointer: fine) { .pill-solid:hover { background: transparent; color: var(--bone); } .pill-outline:hover { background: var(--bone); color: var(--ink); } }
+.pill-outline { background: transparent; color: var(--bone); }
+
+/* ---- tone bands: dark (ink) and alt (a touch lighter) sections, same device the Stock Shredder
+   page uses to break the page into blocks without borders ---- */
+.tone-dark { background: var(--ink); color: var(--bone); }
+.tone-dark .mono { color: var(--bone-2); }
+.tone-alt { background: var(--ink-raised); color: var(--bone); }
+
+/* ---- dev-hero: full-bleed photo, logo, tagline, IN DEVELOPMENT / BETA badge — the .poster-media
+   background photo already does the full-bleed image; this is the copy block that sits on it. ---- */
+.dev-hero { padding-block: clamp(56px, 9vw, 120px) clamp(40px, 6vw, 72px); }
+.dev-hero-logo { max-width: min(560px, 72vw); height: auto; }
+.dev-hero-tag { margin-top: 18px; font: 560 clamp(20px, 2vw, 28px)/1.3 var(--font-body); color: var(--bone); max-width: 20ch; }
+.dev-hero-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 22px; }
+
+/* ---- workflow: numbered steps, Anton numerals set in CSS (no per-product artwork needed) ---- */
+.dev-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 36px calc(-1 * var(--gutter)) 0; }
+.dev-steps li { padding: 8px 28px 4px; }
+.dev-steps li + li { border-left: 1px solid var(--line); }
+.dev-step-n { font-family: 'Anton', 'Impact', sans-serif; font-size: clamp(32px, 3.4vw, 46px); line-height: 1; color: var(--acc-text); opacity: .9; }
+.dev-step-t { display: block; margin-top: 10px; font: 600 12px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; }
+.dev-step-d { display: block; margin-top: 6px; font-size: 14px; color: var(--bone-2); max-width: 26ch; }
+@media (max-width: 719px) {
+  .dev-steps { grid-template-columns: 1fr 1fr; row-gap: 28px; }
+  .dev-steps li:nth-child(odd) { border-left: 0; }
+  .dev-steps li:nth-child(n+3) { border-top: 1px solid var(--line); padding-top: 24px; }
+}
+
+/* ---- problem / solution split (upgrades product.css's plain .split for the dark tone) ---- */
+.dev-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); max-width: var(--wrap-max); margin: 0 auto; padding-inline: var(--gutter); }
+.dev-split h3 { font: 560 13px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-2); margin-bottom: 14px; }
+.dev-split p { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.6; color: var(--bone); max-width: 58ch; }
+.dev-split .is-solution h3 { color: var(--acc-text); }
+@media (max-width: 719px) { .dev-split { grid-template-columns: 1fr; gap: 36px; } }
+
+/* ---- features: restrained hairline cards, no icons/gradients/rounded-dashboard chrome ---- */
+.dev-feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 40px; border-top: 1px solid var(--line); }
+.dev-feat { padding: 30px 28px; border-bottom: 1px solid var(--line); }
+@media (min-width: 720px) { .dev-feat { border-right: 1px solid var(--line); } .dev-feat:last-child { border-right: 0; } }
+.dev-feat-n { font: 600 11px/1 var(--font-mono); letter-spacing: .2em; color: var(--acc-text); }
+.dev-feat h3 { margin-top: 14px; font: 560 19px/1.3 var(--font-body); letter-spacing: -.01em; color: var(--bone); }
+.dev-feat p { margin-top: 10px; font-size: 14.5px; line-height: 1.6; color: var(--bone-2); }
+
+/* ---- interface: reserved space for real screenshots, honestly labelled — the corner-bracket
+   motif is the same empty-state device DEADWORK's own apps already use (see Handoff's "NO
+   SOURCES ADDED" state), not an invented UI pattern. ---- */
+.dev-interface-frame { position: relative; max-width: 980px; margin: 36px auto 0; aspect-ratio: 16 / 7.2; border: 1px solid var(--line); display: grid; place-items: center; text-align: center; padding: 24px; overflow: hidden; }
+.dev-interface-frame::before, .dev-interface-frame::after,
+.dev-interface-frame .brk-tr, .dev-interface-frame .brk-bl {
+  content: ''; position: absolute; width: 22px; height: 22px; border-color: var(--line-strong); border-style: solid; border-width: 0;
+}
+.dev-interface-frame::before { top: 14px; left: 14px; border-top-width: 1px; border-left-width: 1px; }
+.dev-interface-frame .brk-tr { top: 14px; right: 14px; border-top-width: 1px; border-right-width: 1px; }
+.dev-interface-frame::after { bottom: 14px; left: 14px; border-bottom-width: 1px; border-left-width: 1px; }
+.dev-interface-frame .brk-bl { bottom: 14px; right: 14px; border-bottom-width: 1px; border-right-width: 1px; }
+.dev-interface-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .16; filter: grayscale(1) contrast(1.05); }
+.dev-interface-copy { position: relative; z-index: 1; }
+.dev-interface-copy p { margin-top: 10px; color: var(--bone-2); font-size: 14px; max-width: 42ch; }
+
+/* ---- spec sheet (mirrors Stock Shredder's spec table styling) ---- */
+.dev-spec { max-width: 760px; margin: 0 auto; text-align: left; }
+.dev-spec table { width: 100%; border-collapse: collapse; font-size: 15px; border-bottom: 1px solid var(--line); }
+.dev-spec tr { border-top: 1px solid var(--line); }
+.dev-spec th { width: 30%; padding: 14px 24px 14px 0; text-align: left; vertical-align: top; font: 500 10.5px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-2); }
+.dev-spec td { padding: 14px 0; color: var(--bone); max-width: 70ch; }
+
+/* ---- notify CTA band ---- */
+.dev-notify { text-align: center; }
+.dev-notify .notify-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 480px; margin: 28px auto 0; }
+.dev-notify .notify-input { flex: 1 1 260px; min-height: 48px; padding: 0 18px; border: 1px solid var(--line-strong); background: transparent; color: var(--bone); font: 16px/1.4 var(--font-body); border-radius: 999px; }
+.dev-notify .notify-input::placeholder { color: var(--bone-2); }
+.dev-notify .notify-submit { border-radius: 999px; }
+.dev-notify .notify-status { margin-top: 12px; font-size: 14px; }
+.dev-notify .notify-status-bad { color: var(--signal); }
+.dev-notify .notify-status-good { color: var(--beta-green); }
+
+/* ---- explore DEADWORK tools grid (same device as Stock Shredder's, generalized) ---- */
+.dev-tools-title { text-align: center; margin-bottom: 20px; }
+.dev-tools-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--line); max-width: var(--wrap-max); margin: 0 auto; padding: 0; }
+.dev-tool { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: var(--ink); text-decoration: none; transition: background 160ms var(--ease); }
+@media (any-hover: hover) and (any-pointer: fine) { .dev-tool:hover { background: var(--ink-raised); } }
+.dev-tool-mark { display: grid; place-items: center; width: 34px; height: 34px; flex: none; }
+.dev-tool-mark img { width: 100%; height: 100%; object-fit: contain; }
+.dev-tool-name { display: block; font-size: 14px; color: var(--bone); }
+.dev-tool-meta { display: block; margin-top: 3px; font: 500 10px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }
+.dev-tool.is-here { outline: 1px solid var(--line-strong); outline-offset: -1px; }
+.dev-tool-status-soon { color: var(--dev-yellow); }
+.dev-tool-status-live { color: var(--beta-green); }
+
+/* ---- section rhythm on these pages: every band gets the same vertical breathing room ---- */
+.dev-section { padding-block: var(--space-section); }
+.dev-section > .wrap { text-align: center; }
+.dev-section .dev-split,
+.dev-section .dev-tools-grid { text-align: left; }
+@media (max-width: 719px) {
+  .dev-section { padding-block: clamp(64px, 16vw, 96px); }
+}
