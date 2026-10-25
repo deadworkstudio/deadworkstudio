@@ -1,0 +1,8 @@
+.nav-tab-trigger[data-mega-group]::before { margin-right: 10px; color: var(--bone-3); letter-spacing: .1em; transition: color 160ms var(--ease); }
+.nav-tab-trigger[data-mega-group='pre']::before { content: 'I'; }
+.nav-tab-trigger[data-mega-group='production']::before { content: 'II'; }
+.nav-tab-trigger[data-mega-group='post']::before { content: 'III'; }
+.nav-tab-trigger::after { display: none; }
+@media (hover: hover) { .nav-tab-trigger:hover::before { color: var(--bone); } }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--bone); }
+.nav-tab-trigger[aria-expanded='true']::before { color: var(--bone); }

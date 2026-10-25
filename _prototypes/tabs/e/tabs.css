@@ -1,0 +1,4 @@
+.nav-tab-trigger { padding: 7px 12px; align-items: center; min-height: 34px; margin-top: 6px; box-shadow: inset 0 0 0 1px transparent; transition: color 160ms var(--ease), background-color 160ms var(--ease), box-shadow 160ms var(--ease); }
+.nav-tab-trigger::after { display: none; }
+@media (hover: hover) { .nav-tab-trigger:hover { box-shadow: inset 0 0 0 1px rgba(230, 224, 211, .45); } }
+.nav-tab-trigger[aria-expanded='true'] { background: var(--bone); color: var(--ink) !important; box-shadow: none; }

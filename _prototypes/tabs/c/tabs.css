@@ -1,0 +1,13 @@
+.nav-tab-trigger { padding: 8px 10px 6px; align-items: center; min-height: 36px; margin-top: 4px; }
+.nav-tab-trigger::after { display: none; }
+.nav-tab-trigger::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 180ms var(--ease);
+  background:
+    linear-gradient(var(--bone), var(--bone)) top left / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) top left / 1px 7px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top right / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) top right / 1px 7px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom left / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) bottom left / 1px 7px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom right / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) bottom right / 1px 7px no-repeat;
+}
+@media (hover: hover) { .nav-tab-trigger:hover::before { opacity: .45; } }
+.nav-tab-trigger[aria-expanded='true']::before { opacity: 1; }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--bone); }

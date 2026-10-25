@@ -1,0 +1,12 @@
+/* Shared by all five tab options: switching category eases the new content in instead of snapping. */
+.mega-menu-group.is-active { animation: tabs-group-in 260ms var(--ease) both; }
+.mega-menu-group.is-active .mega-menu-card { animation: tabs-card-in 340ms var(--ease) both; }
+.mega-menu-group.is-active .mega-menu-card:nth-child(2) { animation-delay: 40ms; }
+@keyframes tabs-group-in { from { opacity: 0; } }
+@keyframes tabs-card-in { from { opacity: 0; transform: translateY(6px); } }
+/* while a category is open, the others step back so the open one reads instantly */
+.poster-head:has(.mega-menu.is-open) .nav-tab-trigger:not([aria-expanded='true']) { color: var(--bone-3); }
+.nav-tab-trigger:focus-visible { outline: 1px solid var(--bone); outline-offset: 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu-group.is-active, .mega-menu-group.is-active .mega-menu-card { animation: none; }
+}

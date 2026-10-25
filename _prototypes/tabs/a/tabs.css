@@ -1,0 +1,6 @@
+/* A — Hairline: a 1px bone rule draws out from the centre under the open stage; the rest recede */
+.nav-tab-trigger { padding-bottom: 10px; }
+.nav-tab-trigger::after { height: 1px; bottom: 2px; transform-origin: center; transition: transform 220ms var(--ease); }
+@media (hover: hover) { .nav-tab-trigger:hover::after { transform: scaleX(.35); } }
+.nav-tab-trigger[aria-expanded='true']::after { transform: scaleX(1); }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--bone); }

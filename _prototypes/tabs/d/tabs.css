@@ -1,0 +1,7 @@
+.nav-tab-trigger { align-items: center; gap: 10px; }
+.nav-tab-trigger::after { display: none; }
+.nav-tab-trigger::before { content: ''; width: 6px; height: 6px; box-shadow: inset 0 0 0 1px var(--bone-3); transition: background-color 160ms var(--ease), box-shadow 160ms var(--ease); flex: none; }
+@media (hover: hover) { .nav-tab-trigger:hover::before { box-shadow: inset 0 0 0 1px var(--bone); } }
+.nav-tab-trigger[aria-expanded='true']::before { background: var(--bone); box-shadow: none; }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--bone); }
+a.nav-tab-trigger::before { display: none; }
