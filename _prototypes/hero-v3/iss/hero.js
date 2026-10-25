@@ -176,7 +176,7 @@
     var Z = W / tw;                                                // solve tw*Z - g*sqrt(Z) = W: picture width -> frame width
     for (var n = 0; n < 6; n++) Z -= (tw * Z - g * Math.sqrt(Z) - W) / (tw - g / (2 * Math.sqrt(Z)));
     var ox = (Z * cx - W / 2) / (Z - 1), oy = (Z * cy - H / 2) / (Z - 1);
-    var z = Math.pow(Z, e), gs = g * Math.sqrt(z);                 // log-space: a steady push, no rush at the end
+    var z = Math.pow(Z, e), gs = g * Math.sqrt(z) * Math.pow(1 - e, 2);   // log-space: a steady push; gutters thin away as it lands
     ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
     var x0 = ox - ox / z, x1 = ox + (W - ox) / z, y0 = oy - oy / z, y1 = oy + (H - oy) / z;   // visible, rest-space
     var c0 = Math.floor(x0 / tw) + FIRST_COL, c1 = Math.floor(x1 / tw) + FIRST_COL;
@@ -189,9 +189,14 @@
       var rr = ((r % WALL.rows) + WALL.rows) % WALL.rows, cc = ((c % WALL.cols) + WALL.cols) % WALL.cols;
       if (cc === HERO.col && rr === HERO.row) {
         if (e >= 1) { drawWeld(ctx, 0, 0, W, H); continue; }       // land exactly on the frame
-        var k = e * e * e * e;                                     // the picture opens to 2.39 only as the push lands,
-        var hh = h + (w / RATIO - h) * k;                          // when the tile's top and bottom are leaving the frame
-        drawWeld(ctx, X0, Y0 + (h - hh) / 2, w, hh);
+        // The picture always covers whatever part of its tile is on screen (never a dark band), keeps
+        // its own 2.39 shape, and at the end of the push that is exactly the full frame.
+        var pcx = X0 + w / 2, pcy = Y0 + h / 2;
+        var hw = Math.max(pcx - Math.max(X0, 0), Math.min(X0 + w, W) - pcx), hv = Math.max(pcy - Math.max(Y0, 0), Math.min(Y0 + h, H) - pcy);
+        var ph = Math.max(2 * hv, 2 * hw / RATIO), pw = ph * RATIO;
+        ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, w, h); ctx.clip();
+        if (weld.naturalWidth) ctx.drawImage(weld, pcx - pw / 2, pcy - ph / 2, pw, ph);
+        ctx.restore();
         continue;
       }
       var src = cellSrc(cc, rr);
