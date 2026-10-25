@@ -190,7 +190,7 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 .spec-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line-2); align-items: start; }
 .spec-k { padding-top: 6px; }
 .spec-v { display: grid; gap: 12px; }
-.spec-v:has(.spec-plat) { grid-template-columns: repeat(2, minmax(0, 220px)); gap: 16px; }
+.spec-v:has(.spec-plat) { grid-template-columns: repeat(3, minmax(0, 220px)); gap: 16px; }
 .spec-plat { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line-2); font-size: 14px; line-height: 1.35; color: var(--ink-2); }
 .spec-plat strong { color: var(--ink); font-weight: 600; font-size: 16px; }
 .spec-plat-ic { display: grid; place-items: center; width: 44px; height: 44px; color: var(--ink); }
@@ -208,7 +208,7 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 .speed td:nth-child(3), .speed td:nth-child(4) { font-weight: 600; color: var(--ink); }
 /* the older spec-table phone rule stacks th/td into blocks; this table keeps its rows */
 @media (max-width: 719px) { .spec .speed tr { display: table-row; } .spec .speed th, .spec .speed td { display: table-cell; width: auto; } .spec .speed th { letter-spacing: .08em; padding: 0 8px 10px 0; } .spec .speed td { font-size: 15px; padding: 12px 8px 12px 0; white-space: normal; } }
-@media (max-width: 719px) { .spec-row { grid-template-columns: 1fr; gap: 12px; } .spec-v:has(.spec-plat) { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 719px) { .spec-row { grid-template-columns: 1fr; gap: 12px; } .spec-v:has(.spec-plat) { grid-template-columns: 1fr; } }
 
 /* ---- world map: dots load in ---- */
 .world-map svg { display: block; width: 100%; height: auto; }
