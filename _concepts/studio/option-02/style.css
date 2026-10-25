@@ -1,0 +1,251 @@
+/* Concept 02 — NASA / Industrial
+   Mission-control spec sheet: a visible 12-column hairline grid, registration marks, ruler ticks
+   and crosshairs. Every "documentation" cue is structure only — no invented text.
+   Motion: lines draw in, plates un-shutter, modules power on in sequence. Transform/opacity only. */
+
+.o2-page {
+  --o2-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --o2-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --o2-col-line: rgba(241, 236, 226, .045);
+  --o2-lamp: #8FD687;
+  --o2-sec-gap: clamp(88px, 10vw, 152px);
+}
+
+/* ---------- frame + visible column grid ---------- */
+.o2 { position: relative; padding: 0 var(--gutter); }
+.o2-columns { position: absolute; inset: 0 var(--gutter); z-index: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); pointer-events: none; }
+.o2-columns span { border-left: 1px solid var(--o2-col-line); }
+.o2-columns span:last-child { border-right: 1px solid var(--o2-col-line); }
+
+.o2-sec { position: relative; z-index: 1; padding-top: var(--o2-sec-gap); }
+.o2-mission { padding-top: calc(var(--sh-h) + clamp(24px, 3vw, 44px)); }
+.o2-contact { padding-bottom: var(--o2-sec-gap); }
+
+/* ---------- section head: full-width rule, pip count, mono kicker ---------- */
+.o2-sec-head { position: relative; display: flex; align-items: center; gap: 18px; padding-top: 18px; margin-bottom: clamp(44px, 5vw, 72px); }
+.o2-rule { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--line-2); transform-origin: left center; }
+.o2-pips { display: inline-flex; gap: 4px; }
+.o2-pips i { display: block; width: 6px; height: 6px; background: var(--ink); }
+.o2-kicker { font: 500 11.5px/1.4 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); }
+
+/* ---------- Sheet A: mission ---------- */
+.o2-mission-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: stretch; }
+.o2-mission-copy { grid-column: 1 / 8; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(40px, 5vw, 72px); padding-right: clamp(24px, 3vw, 56px); }
+.o2-headline { font: 400 clamp(60px, 8.6vw, 146px)/.9 'Anton', Impact, sans-serif; letter-spacing: .004em; color: var(--ink); }
+.o2-line { display: block; overflow: hidden; padding-bottom: .04em; margin-bottom: -.04em; }
+.o2-line > span { display: block; }
+
+.o2-paras { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 2.4vw, 36px); padding: 22px 0 4px 22px; }
+.o2-bracket { position: absolute; top: 0; bottom: 0; left: 0; width: 10px; border: 1px solid var(--line-2); border-right: 0; }
+.o2-paras p { font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 38ch; }
+.o2-paras p:first-of-type { color: var(--ink); }
+
+/* ---------- measured image plates ---------- */
+.o2-plate { position: relative; margin: 0; }
+.o2-plate--tall { grid-column: 8 / 13; }
+.o2-plate-frame { position: relative; display: block; overflow: hidden; background: var(--bg-2); outline: 1px solid var(--line-2); }
+.o2-plate--tall .o2-plate-frame { aspect-ratio: 5 / 6; }
+.o2-plate--wide .o2-plate-frame { aspect-ratio: 16 / 10; }
+.o2-plate img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.08); }
+.o2-plate--tall img { object-position: 50% 30%; }
+
+/* rulers: major tick every 64px, minor every 8px */
+.o2-ruler { position: absolute; pointer-events: none; background-repeat: repeat-x; }
+.o2-ruler--x {
+  left: 0; right: 0; top: -16px; height: 8px;
+  background-image: linear-gradient(to right, var(--ink-3) 1px, transparent 1px), linear-gradient(to right, var(--line-2) 1px, transparent 1px);
+  background-size: 64px 100%, 8px 50%;
+  background-position: 0 0, 0 100%;
+  transform-origin: left center;
+}
+.o2-ruler--y {
+  top: 0; bottom: 0; left: -16px; width: 8px; background-repeat: repeat-y;
+  background-image: linear-gradient(to bottom, var(--ink-3) 1px, transparent 1px), linear-gradient(to bottom, var(--line-2) 1px, transparent 1px);
+  background-size: 100% 64px, 50% 8px;
+  background-position: 0 0, 100% 0;
+  transform-origin: center top;
+}
+
+/* registration marks: ring + crosshair centred on each corner */
+.o2-reg { position: absolute; z-index: 2; width: 13px; height: 13px; border: 1px solid var(--ink-2); border-radius: 50%; transform: translate(-50%, -50%); }
+.o2-reg::before, .o2-reg::after { content: ''; position: absolute; left: 50%; top: 50%; background: var(--ink-2); }
+.o2-reg::before { width: 25px; height: 1px; transform: translate(-50%, -50%); }
+.o2-reg::after { width: 1px; height: 25px; transform: translate(-50%, -50%); }
+.o2-reg--tl { left: 0; top: 0; }
+.o2-reg--tr { left: 100%; top: 0; }
+.o2-reg--bl { left: 0; top: 100%; }
+.o2-reg--br { left: 100%; top: 100%; }
+
+/* centre reticle over the photograph */
+.o2-reticle { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; transform: translate(-50%, -50%); pointer-events: none; }
+.o2-reticle::before, .o2-reticle::after { content: ''; position: absolute; left: 50%; top: 50%; background: rgba(241, 236, 226, .55); }
+.o2-reticle::before { width: 100%; height: 1px; transform: translate(-50%, -50%); -webkit-mask: linear-gradient(to right, #000 38%, transparent 38% 62%, #000 62%); mask: linear-gradient(to right, #000 38%, transparent 38% 62%, #000 62%); }
+.o2-reticle::after { width: 1px; height: 100%; transform: translate(-50%, -50%); -webkit-mask: linear-gradient(to bottom, #000 38%, transparent 38% 62%, #000 62%); mask: linear-gradient(to bottom, #000 38%, transparent 38% 62%, #000 62%); }
+
+.o2-shutter { position: absolute; inset: 0; background: var(--bg); transform: scaleY(0); transform-origin: center bottom; }
+
+/* ---------- Sheet B: values register ---------- */
+.o2-register-wrap { position: relative; }
+.o2-register { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-2); border-left: 1px solid var(--line-2); }
+.o2-module { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; min-height: clamp(260px, 22vw, 320px); padding: clamp(22px, 2.2vw, 34px); border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); transition: background-color 160ms ease; }
+@media (hover: hover) and (pointer: fine) { .o2-module:hover { background-color: rgba(241, 236, 226, .025); } }
+
+.o2-x { position: absolute; z-index: 2; width: 13px; height: 13px; pointer-events: none; }
+.o2-x::before, .o2-x::after { content: ''; position: absolute; left: 50%; top: 50%; background: var(--ink-2); }
+.o2-x::before { width: 13px; height: 1px; transform: translate(-50%, -50%); }
+.o2-x::after { width: 1px; height: 13px; transform: translate(-50%, -50%); }
+.o2-x--tl { left: -7px; top: -7px; }
+.o2-x--br { right: -7px; bottom: -7px; }
+
+.o2-module-top { display: flex; align-items: center; justify-content: space-between; }
+.o2-index { font: 500 11.5px/1 var(--mono); letter-spacing: .22em; color: var(--ink-3); }
+.o2-lamp { position: relative; width: 9px; height: 9px; border: 1px solid var(--line-2); }
+.o2-lamp::after { content: ''; position: absolute; inset: 1px; background: var(--o2-lamp); }
+.o2-module-title { font: 600 clamp(20px, 1.6vw, 25px)/1.15 var(--sans); letter-spacing: -.012em; color: var(--ink); max-width: 17ch; text-wrap: balance; }
+.o2-module-text { margin-top: 14px; font-size: 15px; line-height: 1.55; color: var(--ink-2); max-width: 36ch; }
+
+/* ---------- Sheet C: join ---------- */
+.o2-join-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
+.o2-join-copy { grid-column: 1 / 7; padding-right: clamp(24px, 3vw, 56px); }
+.o2-plate--wide { grid-column: 8 / 13; margin-top: 8px; }
+.o2-lede { font: 400 clamp(20px, 1.9vw, 28px)/1.38 var(--sans); letter-spacing: -.01em; color: var(--ink); max-width: 30ch; text-wrap: pretty; }
+
+.o2-form { display: flex; flex-wrap: wrap; max-width: 520px; margin-top: clamp(32px, 3.6vw, 48px); }
+.o2-input { flex: 1 1 240px; min-width: 0; height: 56px; padding: 0 18px; border: 1px solid var(--line-2); border-right: 0; border-radius: 0; background: transparent; color: var(--ink); font: 400 15px/1 var(--mono); letter-spacing: .02em; -webkit-appearance: none; appearance: none; transition: border-color 160ms ease; }
+.o2-input::placeholder { color: var(--ink-3); opacity: 1; }
+.o2-input:focus { border-color: var(--ink-2); }
+.o2-input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.o2-submit { flex: 0 0 auto; height: 56px; padding: 0 28px; border: 0; border-radius: 0; background: var(--ink); color: var(--bg); font: 500 11.5px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; cursor: pointer; transition: transform 140ms var(--o2-ease-out), background-color 160ms ease; }
+@media (hover: hover) and (pointer: fine) { .o2-submit:hover { background-color: #fff; } }
+.o2-submit:active { transform: scale(.97); }
+.o2-submit:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.o2-submit:disabled { opacity: .6; cursor: default; }
+.o2-status { flex-basis: 100%; margin-top: 14px; font: 400 12.5px/1.5 var(--mono); letter-spacing: .04em; color: var(--ink-2); }
+.o2-page .notify-status-bad { color: #E8796B; }
+
+/* ---------- Sheet D: contact ---------- */
+.o2-contact-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: end; row-gap: 32px; }
+.o2-contact-grid .o2-lede { grid-column: 1 / 6; }
+.o2-email { grid-column: 7 / 13; justify-self: end; display: flex; align-items: center; gap: 18px; font: 400 clamp(18px, 2.5vw, 38px)/1.2 var(--mono); letter-spacing: .01em; color: var(--ink); overflow-wrap: anywhere; }
+.o2-email-tick { flex: 0 0 auto; position: relative; width: 32px; height: 1px; background: var(--ink-3); transform-origin: left center; }
+.o2-email-tick::after { content: ''; position: absolute; right: 0; top: -4px; width: 1px; height: 9px; background: var(--ink-3); }
+
+/* ---------- tablet ---------- */
+@media (max-width: 1100px) {
+  .o2-mission-grid { align-items: start; row-gap: clamp(40px, 6vw, 64px); }
+  .o2-mission-copy { display: contents; }
+  .o2-headline { grid-column: 1 / -1; }
+  .o2-paras { grid-column: 1 / 7; grid-template-columns: 1fr; margin-top: 0; margin-right: clamp(24px, 3vw, 40px); align-self: start; }
+  .o2-plate--tall { grid-column: 7 / 13; }
+  .o2-register { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .o2-join-copy { grid-column: 1 / 7; }
+  .o2-plate--wide { grid-column: 7 / 13; }
+  .o2-headline { font-size: clamp(60px, 11vw, 120px); }
+  .o2-contact-grid .o2-lede { grid-column: 1 / -1; }
+  .o2-email { grid-column: 1 / -1; justify-self: start; }
+  /* narrow join column: stack the console vertically (reset the input's flex-basis so it isn't read as a height) */
+  .o2-form { flex-direction: column; max-width: none; }
+  .o2-input { flex: 0 0 auto; width: 100%; border-right: 1px solid var(--line-2); }
+  .o2-submit { width: 100%; margin-top: 8px; }
+}
+
+/* ---------- phone ---------- */
+@media (max-width: 719px) {
+  .o2-columns { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .o2-columns span:nth-child(n+5) { display: none; }
+  .o2-columns span:nth-child(4) { border-right: 1px solid var(--o2-col-line); }
+  .o2-mission-grid, .o2-join-grid { grid-template-columns: minmax(0, 1fr); }
+  .o2-headline { font-size: clamp(50px, 15.4vw, 72px); }
+  .o2-paras, .o2-plate--tall, .o2-join-copy, .o2-plate--wide { grid-column: 1 / -1; }
+  .o2-paras { margin-right: 0; }
+  .o2-plate--tall { margin-left: 16px; }
+  .o2-plate--tall .o2-plate-frame { aspect-ratio: 4 / 5; }
+  .o2-join-copy { padding-right: 0; }
+  .o2-plate--wide { margin: clamp(48px, 12vw, 64px) 0 0 16px; }
+  .o2-register { grid-template-columns: minmax(0, 1fr); }
+  .o2-module { min-height: 0; gap: 32px; }
+  .o2-form { flex-direction: column; max-width: none; }
+  .o2-input { flex: 0 0 auto; width: 100%; border-right: 1px solid var(--line-2); }
+  .o2-submit { width: 100%; margin-top: 8px; }
+  .o2-email { gap: 12px; }
+  .o2-email-tick { width: 20px; }
+}
+
+/* ---------- motion: reveal states (only when scripting runs and motion is welcome) ---------- */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-o2-reveal] .o2-rule { transform: scaleX(0); transition: transform 400ms var(--o2-ease-in-out); }
+  [data-o2-reveal] .o2-pips i { opacity: 0; transition: opacity 0ms linear; }
+  [data-o2-reveal] .o2-kicker { opacity: 0; transform: translateX(-8px); transition: opacity 300ms var(--o2-ease-out) 160ms, transform 300ms var(--o2-ease-out) 160ms; }
+
+  [data-o2-reveal].is-on .o2-rule { transform: none; }
+  [data-o2-reveal].is-on .o2-pips i { opacity: 1; }
+  [data-o2-reveal].is-on .o2-pips i:nth-child(1) { transition-delay: 220ms; }
+  [data-o2-reveal].is-on .o2-pips i:nth-child(2) { transition-delay: 280ms; }
+  [data-o2-reveal].is-on .o2-pips i:nth-child(3) { transition-delay: 340ms; }
+  [data-o2-reveal].is-on .o2-pips i:nth-child(4) { transition-delay: 400ms; }
+  [data-o2-reveal].is-on .o2-kicker { opacity: 1; transform: none; }
+
+  /* headline lines rise out of their own masks */
+  .o2-line > span { transform: translateY(104%); transition: transform 420ms var(--o2-ease-out); }
+  .o2-line:nth-child(2) > span { transition-delay: 90ms; }
+  .is-on .o2-line > span { transform: none; }
+  .is-on .o2-line:nth-child(1) > span { transition-delay: 200ms; }
+  .is-on .o2-line:nth-child(2) > span { transition-delay: 290ms; }
+
+  .o2-paras, .o2-lede, .o2-form, .o2-email { opacity: 0; transform: translateY(8px); transition: opacity 320ms var(--o2-ease-out), transform 320ms var(--o2-ease-out); }
+  .is-on .o2-paras { opacity: 1; transform: none; transition-delay: 420ms; }
+  .is-on .o2-lede { opacity: 1; transform: none; transition-delay: 240ms; }
+  .is-on .o2-form { opacity: 1; transform: none; transition-delay: 320ms; }
+  .is-on .o2-email { opacity: 1; transform: none; transition-delay: 340ms; }
+  .o2-bracket { transform: scaleY(0); transform-origin: center top; transition: transform 360ms var(--o2-ease-in-out); }
+  .is-on .o2-bracket { transform: none; transition-delay: 380ms; }
+  .o2-email-tick { transform: scaleX(0); transition: transform 300ms var(--o2-ease-in-out); }
+  .is-on .o2-email-tick { transform: none; transition-delay: 300ms; }
+
+  /* plates: rulers draw, marks register, shutter lifts */
+  .o2-ruler--x { transform: scaleX(0); transition: transform 400ms var(--o2-ease-in-out); }
+  .o2-ruler--y { transform: scaleY(0); transition: transform 400ms var(--o2-ease-in-out); }
+  .o2-reg { opacity: 0; transition: opacity 0ms linear; }
+  .o2-shutter { transform: scaleY(1); transition: transform 440ms var(--o2-ease-in-out); }
+  .o2-plate img { transform: scale(1.04); transition: transform 900ms var(--o2-ease-out); }
+  .is-on .o2-ruler--x, .is-on .o2-ruler--y { transform: none; transition-delay: 140ms; }
+  .is-on .o2-reg { opacity: 1; transition-delay: 300ms; }
+  .is-on .o2-reg--tr { transition-delay: 360ms; }
+  .is-on .o2-reg--br { transition-delay: 420ms; }
+  .is-on .o2-reg--bl { transition-delay: 480ms; }
+  .is-on .o2-shutter { transform: scaleY(0); transition-delay: 260ms; }
+  .is-on .o2-plate img { transform: none; transition-delay: 260ms; }
+
+  /* values: modules power on in sequence, lamps strike */
+  .o2-module { opacity: 0; transform: translateY(6px); transition: opacity 280ms var(--o2-ease-out), transform 280ms var(--o2-ease-out), background-color 160ms ease; }
+  .o2-x { opacity: 0; transition: opacity 0ms linear; }
+  .o2-lamp::after { opacity: 0; }
+  .is-on .o2-module, .is-on .o2-x { opacity: 1; transform: none; }
+  .is-on .o2-lamp::after { animation: o2-power 360ms steps(1, end) forwards; }
+  .is-on .o2-module:nth-child(1), .is-on .o2-module:nth-child(1) .o2-x { transition-delay: 260ms; }
+  .is-on .o2-module:nth-child(2), .is-on .o2-module:nth-child(2) .o2-x { transition-delay: 330ms; }
+  .is-on .o2-module:nth-child(3), .is-on .o2-module:nth-child(3) .o2-x { transition-delay: 400ms; }
+  .is-on .o2-module:nth-child(4), .is-on .o2-module:nth-child(4) .o2-x { transition-delay: 470ms; }
+  .is-on .o2-module:nth-child(5), .is-on .o2-module:nth-child(5) .o2-x { transition-delay: 540ms; }
+  .is-on .o2-module:nth-child(6), .is-on .o2-module:nth-child(6) .o2-x { transition-delay: 610ms; }
+  .is-on .o2-module:nth-child(1) .o2-lamp::after { animation-delay: 420ms; }
+  .is-on .o2-module:nth-child(2) .o2-lamp::after { animation-delay: 490ms; }
+  .is-on .o2-module:nth-child(3) .o2-lamp::after { animation-delay: 560ms; }
+  .is-on .o2-module:nth-child(4) .o2-lamp::after { animation-delay: 630ms; }
+  .is-on .o2-module:nth-child(5) .o2-lamp::after { animation-delay: 700ms; }
+  .is-on .o2-module:nth-child(6) .o2-lamp::after { animation-delay: 770ms; }
+  /* after the sequence, hover must respond without the stagger delay */
+  .o2-values.is-settled .o2-module { transition-delay: 0ms; }
+}
+
+@keyframes o2-power {
+  0% { opacity: 0; }
+  30% { opacity: .55; }
+  45% { opacity: .1; }
+  60%, 100% { opacity: 1; }
+}
+
+/* Reduced motion: everything is already in its final state above; nothing to hide, nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+  .o2-module, .o2-input, .o2-submit { transition: none; }
+}

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>DEADWORK Studio — 5 concepts</title>
+<link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
+<style>
+@font-face { font-family: 'Anton'; src: url('../../assets/fonts/anton.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Archivo'; src: url('../../assets/fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+:root { --bg: #0E0E0D; --panel: #161614; --ink: #F1ECE2; --ink-2: #A9A499; --ink-3: #6F6B64; --line: rgba(241,236,226,.14); --green: #8FD687; --mono: ui-monospace, 'SF Mono', Menlo, monospace; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 400 15px/1.5 'Archivo', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.mono { font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+
+.app { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; height: 100vh; height: 100dvh; }
+.top { display: flex; align-items: center; gap: 24px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.top h1 { flex: none; font: 400 22px/1 'Anton', sans-serif; letter-spacing: .01em; text-transform: uppercase; white-space: nowrap; }
+.tabs { display: flex; gap: 2px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.tabs button { padding: 10px 12px; border-radius: 6px; font: 500 11px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; transition: background-color 160ms, color 160ms; }
+.tabs button span { color: var(--ink-3); margin-right: 8px; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: #0E0E0D; }
+.tabs button[aria-selected="true"] span { color: #6F6B64; }
+.tabs button.is-rec::after { content: ''; display: inline-block; width: 6px; height: 6px; margin-left: 8px; border-radius: 50%; background: var(--green); vertical-align: 2px; }
+.device { flex: none; display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.device button { padding: 7px 14px; border-radius: 999px; font: 500 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+.device button[aria-pressed="true"] { background: var(--ink); color: #0E0E0D; }
+.open { font: 500 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); text-decoration: none; padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; }
+
+.body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; min-height: 0; min-width: 0; }
+.app { min-width: 0; overflow: hidden; }
+.stage { position: relative; display: grid; place-items: center; min-height: 0; background: #070707; overflow: hidden; }
+.stage iframe { border: 0; background: #fff; width: 100%; height: 100%; }
+.stage.is-phone iframe { width: 390px; height: min(844px, calc(100% - 40px)); border-radius: 28px; box-shadow: 0 0 0 10px #1b1b19, 0 0 0 11px #2a2a27, 0 30px 80px rgba(0,0,0,.6); }
+.notes { overflow-y: auto; padding: 24px 22px 40px; border-left: 1px solid var(--line); }
+.notes h2 { margin-top: 10px; font: 400 34px/1 'Anton', sans-serif; text-transform: uppercase; letter-spacing: .01em; }
+.notes .rec { display: inline-block; margin-top: 14px; padding: 5px 9px; background: var(--green); color: #0E0E0D; font: 600 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.notes p.lead { margin-top: 14px; color: var(--ink); font-size: 15px; }
+.notes h3 { margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--line); }
+.notes ul { margin-top: 10px; display: grid; gap: 8px; }
+.notes li { position: relative; padding-left: 16px; color: var(--ink-2); font-size: 14px; }
+.notes li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
+.notes .shot { display: block; margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--line); }
+.notes .shot a { color: var(--ink-2); font: 500 10.5px/1.6 var(--mono); letter-spacing: .14em; text-transform: uppercase; margin-right: 14px; }
+.notes .shot img { display: block; width: 100%; margin-top: 10px; border-radius: 4px; }
+.panel[hidden] { display: none; }
+
+@media (max-width: 1000px) {
+  .body { grid-template-columns: 1fr; grid-template-rows: 70vh auto; }
+  .notes { border-left: 0; border-top: 1px solid var(--line); }
+  .top { flex-wrap: wrap; }
+  .tabs { order: 3; flex-basis: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <h1>Studio — 5 concepts</h1>
+    <div class="tabs" role="tablist" aria-label="Concepts">
+      <button role="tab" data-i="1"><span>01</span>Editorial</button>
+      <button role="tab" data-i="2"><span>02</span>NASA / Industrial</button>
+      <button role="tab" data-i="3"><span>03</span>Cinematic</button>
+      <button role="tab" data-i="4"><span>04</span>Brutalist</button>
+      <button role="tab" data-i="5" class="is-rec"><span>05</span>DEADWORK Evolved</button>
+      <button role="tab" data-i="0"><span>—</span>Current page</button>
+    </div>
+    <div class="device" aria-label="Preview size">
+      <button aria-pressed="true" data-dev="desktop">Desktop</button>
+      <button aria-pressed="false" data-dev="phone">Phone</button>
+    </div>
+    <a class="open" href="option-05/index.html" target="_blank" data-open>Open full page ↗</a>
+  </div>
+
+  <div class="body">
+    <div class="stage"><iframe title="Concept preview" data-frame></iframe></div>
+    <aside class="notes">
+
+      <div class="panel" data-panel="1" hidden>
+        <p class="mono">Option 01</p><h2>Editorial Minimalism</h2>
+        <p class="lead">A fashion editorial on cream. Mostly empty space, an oversized headline split across the full width, and two photos placed like magazine plates.</p>
+        <h3 class="mono">Strongest</h3>
+        <ul><li>"CREATE MORE." flush left, "MANAGE LESS." flush right: confident and simple.</li><li>The values read like a lookbook: big 01–06 numerals, entries stepping across the grid.</li><li>The email address set huge at the close feels like a magazine back page.</li><li>Slow, soft reveals; very calm.</li></ul>
+        <h3 class="mono">Weaknesses</h3>
+        <ul><li>Section labels (Values, Join, Contact) are very small and easy to miss.</li><li>Long and sparse; it can feel thin to someone skimming.</li><li>Least "industrial" of the five; furthest from the DEADWORK equipment feel.</li></ul>
+        <div class="shot"><p class="mono">Full-page screenshots</p><a href="_shots/option-01-desktop.jpg" target="_blank">Desktop ↗</a><a href="_shots/option-01-mobile.jpg" target="_blank">Phone ↗</a><img src="_shots/option-01-desktop.jpg" alt="" loading="lazy" /></div>
+      </div>
+
+      <div class="panel" data-panel="2" hidden>
+        <p class="mono">Option 02</p><h2>NASA / Industrial</h2>
+        <p class="lead">A dark mission-control spec sheet. Bone type on a faint hairline grid, with ruler ticks, registration marks and crosshairs on the photos. No technical words added: the precision comes from structure alone.</p>
+        <h3 class="mono">Strongest</h3>
+        <ul><li>The six values as a control panel of six modules, each with a small indicator light that powers on in sequence.</li><li>The mission-control photo measured into the grid beside the headline.</li><li>Lines draw in and photos wipe open; crisp and mechanical.</li><li>The shortest page: dense, fast to scan.</li></ul>
+        <h3 class="mono">Weaknesses</h3>
+        <ul><li>The headline is smaller than in the others; less of a statement.</li><li>Empty space under the headline on desktop.</li><li>The NASA lettering in the photo is someone else's mark; worth a thought before going live.</li></ul>
+        <div class="shot"><p class="mono">Full-page screenshots</p><a href="_shots/option-02-desktop.jpg" target="_blank">Desktop ↗</a><a href="_shots/option-02-mobile.jpg" target="_blank">Phone ↗</a><img src="_shots/option-02-desktop.jpg" alt="" loading="lazy" /></div>
+      </div>
+
+      <div class="panel" data-panel="3" hidden>
+        <p class="mono">Option 03</p><h2>Cinematic Manifesto</h2>
+        <p class="lead">The page plays like a short film. The headline is a title card over your behind-the-scenes footage, the paragraphs sit over the LA skyline, and each value is a full-width frame with its own photo. Join and Contact close like end credits.</p>
+        <h3 class="mono">Strongest</h3>
+        <ul><li>The most emotional opening: real film footage behind the headline.</li><li>"To make things." lands as its own big line, a moment the other concepts don't create.</li><li>Every value gets its own image: engines, consoles, spacesuits, server racks.</li></ul>
+        <h3 class="mono">Weaknesses</h3>
+        <ul><li>The longest page by far; six full-width image frames is a lot of scrolling.</li><li>Heaviest to load (video plus seven photos).</li><li>The images are the same ones the product menu uses, so they repeat across the site.</li><li>The email address was made a tap-to-email link (a small behavior change from today).</li></ul>
+        <div class="shot"><p class="mono">Full-page screenshots</p><a href="_shots/option-03-desktop.jpg" target="_blank">Desktop ↗</a><a href="_shots/option-03-mobile.jpg" target="_blank">Phone ↗</a><img src="_shots/option-03-desktop.jpg" alt="" loading="lazy" /></div>
+      </div>
+
+      <div class="panel" data-panel="4" hidden>
+        <p class="mono">Option 04</p><h2>Brutalist / Architectural</h2>
+        <p class="lead">Dark with a poured-concrete grain. CREATE / MORE. / MANAGE / LESS. stack like building blocks, cropped at the screen edges, over a tall slab of server racks. Values, Join and Contact follow as heavy flush slabs.</p>
+        <h3 class="mono">Strongest</h3>
+        <ul><li>The most striking first screen; impossible to mistake for a template.</li><li>The values as a stepped stack of slabs in three finishes; value 03 (the AI line) gets the widest one.</li><li>"JOIN" and "CONTACT" set enormous; blunt and memorable.</li></ul>
+        <h3 class="mono">Weaknesses</h3>
+        <ul><li>Busiest of the five; on phones the headline overlaps the photo.</li><li>Furthest from the calm Stock Shredder page; the two wouldn't feel like siblings.</li><li>Small layout rough edges ("Values" overlaps the first slab, kicker wraps on phones).</li><li>The email address was made a tap-to-email link.</li></ul>
+        <div class="shot"><p class="mono">Full-page screenshots</p><a href="_shots/option-04-desktop.jpg" target="_blank">Desktop ↗</a><a href="_shots/option-04-mobile.jpg" target="_blank">Phone ↗</a><img src="_shots/option-04-desktop.jpg" alt="" loading="lazy" /></div>
+      </div>
+
+      <div class="panel" data-panel="5" hidden>
+        <p class="mono">Option 05</p><h2>DEADWORK Evolved</h2>
+        <span class="rec">Recommended</span>
+        <p class="lead">Built on the Stock Shredder page's own language (cream, then a black image block, then hairline-ruled content), with one huge headline and the Studio's LA skyline photo used full-screen as the home-page moment.</p>
+        <h3 class="mono">Strongest</h3>
+        <ul><li>Reads as Stock Shredder's sibling: same tone blocks, same section heads, same pill buttons.</li><li>The headline at full width rising out of masked lines on load: one meaningful motion moment.</li><li>The two paragraphs sit in the dark sky between the studio light and the city.</li><li>Values laid out like the Stock Shredder spec sheet; easy to scan.</li><li>Compact page, nothing wasted.</li></ul>
+        <h3 class="mono">Weaknesses</h3>
+        <ul><li>The safest of the five; less of a surprise than 03 or 04.</li><li>Lots of empty cream under the headline on tablet.</li><li>On phones the second paragraph sits over the city lights (kept readable with a dark fade).</li></ul>
+        <div class="shot"><p class="mono">Full-page screenshots</p><a href="_shots/option-05-desktop.jpg" target="_blank">Desktop ↗</a><a href="_shots/option-05-mobile.jpg" target="_blank">Phone ↗</a><img src="_shots/option-05-desktop.jpg" alt="" loading="lazy" /></div>
+      </div>
+
+      <div class="panel" data-panel="0" hidden>
+        <p class="mono">For reference</p><h2>Current page</h2>
+        <p class="lead">Today's live Studio page, for comparison. All five concepts use exactly these words, in this order, with the same navigation, footer and working email signup.</p>
+      </div>
+
+    </aside>
+  </div>
+</div>
+<script>
+(function () {
+  var frame = document.querySelector('[data-frame]'), stage = document.querySelector('.stage'), open = document.querySelector('[data-open]');
+  var tabs = [].slice.call(document.querySelectorAll('[role=tab]')), panels = [].slice.call(document.querySelectorAll('[data-panel]'));
+  var devs = [].slice.call(document.querySelectorAll('[data-dev]'));
+  var url = function (i) { return i === '0' ? '../../studio/index.html' : 'option-0' + i + '/index.html'; };
+  var show = function (i) {
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.dataset.i === i ? 'true' : 'false'); });
+    panels.forEach(function (p) { p.hidden = p.dataset.panel !== i; });
+    frame.src = url(i); open.href = url(i); history.replaceState(null, '', '#' + i);
+  };
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.dataset.i); }); });
+  devs.forEach(function (d) { d.addEventListener('click', function () {
+    devs.forEach(function (x) { x.setAttribute('aria-pressed', x === d ? 'true' : 'false'); });
+    stage.classList.toggle('is-phone', d.dataset.dev === 'phone');
+  }); });
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest('input,textarea')) return;
+    if (/^[0-5]$/.test(e.key)) show(e.key);
+  });
+  show((location.hash || '#1').slice(1));
+})();
+</script>
+</body>
+</html>
