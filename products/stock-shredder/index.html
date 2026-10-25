@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024s2" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024s3" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -245,7 +245,7 @@
     <figure class="phone">
       <div class="phone-body">
         <span class="phone-island" aria-hidden="true"></span>
-        <video class="phone-screen" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/remote-flow-poster.jpg" width="660" height="1344" aria-label="Recording of Stock Shredder Remote on iPhone: a clip plays, Approve is tapped, then GO, and the Mac exports it — 1/1 clips complete." data-film><source src="../../assets/img/products/stock-shredder/remote-flow.mp4" type="video/mp4" /></video>
+        <div class="phone-screen"><div class="phone-screen-in"><video class="phone-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/remote-flow-poster.jpg" width="660" height="1344" aria-label="Recording of Stock Shredder Remote on iPhone: a clip plays, Approve is tapped, then GO, and the Mac exports it — 1/1 clips complete." data-film><source src="../../assets/img/products/stock-shredder/remote-flow.mp4" type="video/mp4" /></video><span class="phone-ver" aria-hidden="true" data-latest-version>v0.6.8</span></div></div>
       </div>
     </figure>
     <div class="remote-cta">
@@ -582,42 +582,53 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     if (apk) document.getElementById('download-android').href = apk.browser_download_url;
     var versionEl = document.getElementById('download-version');
     if (versionEl && release.tag_name && dmg) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
+    // the version shown inside the phone recording follows the latest release too
+    if (release.tag_name) document.querySelectorAll('[data-latest-version]').forEach(function (el) { el.textContent = 'v' + release.tag_name.replace(/^v/, ''); });
   })
   .catch(function () {}); // the hardcoded fallback above still works either way
 
 // World map of real signup locations (city-level counts only, see the Worker's listLeadLocations).
-// The section appears as soon as there is one real signup, and fills in as more arrive. The section itself
+// Always shows Daniel's pinned places (MAP_PINS below) and adds real signups elsewhere. The section itself
 // shows in local review (opened from disk, or ?preview=map) so the layout can be judged; in
 // production it stays hidden until there is real data. The "clips shredded" counter is NOT wired
 // to anything yet and is never shown with a made-up number.
-var WORLD_MAP_MIN_SIGNUPS = 1;
 var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 (function () {
   var section = document.querySelector('[data-world-map]');
   if (!section) return;
   var preview = location.protocol === 'file:' || /[?&]preview=map\b/.test(location.search);
   if (preview) { section.hidden = false; section.classList.add('is-preview'); }
+  // Places Daniel set by hand; real signups elsewhere are added on top of these.
+  var MAP_PINS = [
+    { city: 'Los Angeles', country: 'US', latitude: 34.05, longitude: -118.24, count: 1 },
+    { city: 'St. Louis', country: 'US', latitude: 38.63, longitude: -90.2, count: 1 },
+    { city: 'Belleville', country: 'US', latitude: 38.52, longitude: -89.98, count: 1 },
+    { city: 'Moab', country: 'US', latitude: 38.57, longitude: -109.55, count: 1 },
+    { city: 'Dallas', country: 'US', latitude: 32.78, longitude: -96.8, count: 1 }
+  ];
+  var near = function (a, b) { return Math.abs(a.latitude - b.latitude) < 0.5 && Math.abs(a.longitude - b.longitude) < 0.5; };
+  var drawMap = function (extra) {
+    var locations = MAP_PINS.concat(extra.filter(function (l) { return !MAP_PINS.some(function (p) { return near(p, l); }); }));
+    var dotsEl = section.querySelector('[data-world-map-dots]');
+    dotsEl.innerHTML = '';
+    var maxCount = locations.reduce(function (m, l) { return Math.max(m, l.count); }, 1);
+    locations.forEach(function (loc) {
+      if (loc.latitude > MAP_LAT_TOP || loc.latitude < MAP_LAT_BOT) return;
+      var dot = document.createElement('span');
+      dot.className = 'world-map-dot';
+      dot.style.left = ((loc.longitude + 180) / 360 * 100) + '%';
+      dot.style.top = ((MAP_LAT_TOP - loc.latitude) / (MAP_LAT_TOP - MAP_LAT_BOT) * 100) + '%';
+      var size = 5 + (loc.count / maxCount) * 9;
+      dot.style.width = size + 'px'; dot.style.height = size + 'px';
+      dot.title = loc.city + ', ' + loc.country;
+      dotsEl.appendChild(dot);
+    });
+    section.hidden = false;
+  };
+  drawMap([]);
   fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-    .then(function (data) {
-      var locations = (data && data.locations) || [];
-      var total = locations.reduce(function (s, l) { return s + l.count; }, 0);
-      if (total < WORLD_MAP_MIN_SIGNUPS) return;
-      var dotsEl = section.querySelector('[data-world-map-dots]');
-      var maxCount = locations.reduce(function (m, l) { return Math.max(m, l.count); }, 1);
-      locations.forEach(function (loc) {
-        if (loc.latitude > MAP_LAT_TOP || loc.latitude < MAP_LAT_BOT) return;
-        var dot = document.createElement('span');
-        dot.className = 'world-map-dot';
-        dot.style.left = ((loc.longitude + 180) / 360 * 100) + '%';
-        dot.style.top = ((MAP_LAT_TOP - loc.latitude) / (MAP_LAT_TOP - MAP_LAT_BOT) * 100) + '%';
-        var size = 5 + (loc.count / maxCount) * 9;
-        dot.style.width = size + 'px'; dot.style.height = size + 'px';
-        dot.title = loc.city + ', ' + loc.country;
-        dotsEl.appendChild(dot);
-      });
-      section.hidden = false;
-    })
+    .then(function (data) { drawMap((data && data.locations) || []); })
     .catch(function () {});
   // Clips-shredded counter: reads the real shared counter on the payments server (+1 per finished
   // export, sent by the Mac app). Shown on the live site only once data-counter-live="true" is set,
