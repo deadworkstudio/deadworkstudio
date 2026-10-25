@@ -272,9 +272,9 @@
       var upd = function () {
         ticking = false;
         var r = stage.getBoundingClientRect(), vh = window.innerHeight;
-        var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.7)));
+        var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.6)));
         stage.style.setProperty('--p', p.toFixed(3));
-        if (p >= 1 && !armed) { armed = true; setTimeout(function () { spot.classList.add('is-on'); }, 500); }
+        if (!armed && (p >= 1 || tour.getBoundingClientRect().bottom <= vh)) { armed = true; setTimeout(function () { spot.classList.add('is-on'); }, 500); }
       };
       window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
       window.addEventListener('resize', upd); upd();
@@ -308,7 +308,6 @@
       tabs.forEach(function (t, k) { var on = k === i; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
       panels.forEach(function (p, k) {
         var on = k === i; p.hidden = !on; playIf(p.querySelector('[data-ix-loop]'), on && inView);
-        if (on && !reduce) { p.classList.remove('is-entering'); void p.offsetWidth; p.classList.add('is-entering'); }
       });
       count.textContent = ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + tabs.length).slice(-2);
       aim(tabs[i]);
