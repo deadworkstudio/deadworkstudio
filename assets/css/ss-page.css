@@ -245,7 +245,7 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .005em !important; line-height: 1 !important; font-size: clamp(40px, 4.2vw, 64px) !important; }
 .remote .section-sub { max-width: none !important; }
 @media (max-width: 719px) { .br-desk { display: none; } }
-.head-dw .shred-word { font-size: 1.02em; text-transform: none; }
+.head-dw .shred-word { font-size: 1.1em; text-transform: none; position: relative; top: -.08em; }
 
 /* ---- problem / solution ---- */
 .split { display: grid; grid-template-columns: 1fr 1fr; padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -356,7 +356,7 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .upgrade h3 { margin-top: 8px; font: 560 18px/1.2 var(--sans); letter-spacing: -.015em; color: var(--ink); }
 .upgrade figcaption > p:last-child { margin: 8px auto 0; max-width: 30ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 .upgrade-shot img { display: block; height: auto; border-radius: 6px; box-shadow: 0 14px 28px -16px rgba(20,20,18,.45); }
-.upgrade-shot--kw { width: min(100%, 320px); }
+.upgrade-shot--kw { width: min(100%, 340px); }
 .upgrade-shot--kw img { width: 100%; }
 .upgrade-shot--phone { padding: 5px; border-radius: 20px; background: #0d0d0c; box-shadow: inset 0 0 0 1px #2a2a27, 0 14px 28px -16px rgba(20,20,18,.45); }
 .upgrade-shot--phone img { width: 104px; border-radius: 15px; box-shadow: none; }
