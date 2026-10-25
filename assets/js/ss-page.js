@@ -256,78 +256,58 @@
     }).catch(function () {});
   })();
 
-  // ---- dark / light comparison slider ----
-  document.querySelectorAll('[data-compare]').forEach(function (box) {
-    var range = box.querySelector('[data-compare-range]');
-    var set = function (v) { box.style.setProperty('--pos', v + '%'); };
-    range.addEventListener('input', function () { set(range.value); });
-    // two recordings of the same playback (dark + light): play together while on screen, light kept in step with dark
-    var va = box.querySelector('[data-compare-a]'), vb = box.querySelector('[data-compare-b]');
-    if (va && vb && !reduce) {
-      // Keep the light recording in step by nudging its speed, not by seeking: every seek makes the
-      // decoder jump to the nearest keyframe, which showed as a visible skip. Only a big drift (a
-      // loop seam or a stalled tab) is fixed with a seek.
-      var sync = function () {
-        var d = va.currentTime - vb.currentTime;
-        if (Math.abs(d) > 0.5) { vb.currentTime = va.currentTime; vb.playbackRate = 1; }
-        else vb.playbackRate = Math.abs(d) < 0.03 ? 1 : 1 + Math.max(-0.08, Math.min(0.08, d));
+  // ---- THE INTERFACE: full app -> six details -> two real recordings ----
+  (function () {
+    var sec = document.querySelector('.ix'); if (!sec) return;
+    // stage 01: the full app settles into place as it scrolls up the screen (transform/opacity only)
+    var hero = sec.querySelector('[data-ix-hero]');
+    if (hero && !reduce) {
+      hero.classList.add('is-scrub');
+      var ticking = false;
+      var upd = function () {
+        ticking = false;
+        var r = hero.getBoundingClientRect(), vh = window.innerHeight;
+        var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.7)));
+        hero.style.setProperty('--p', p.toFixed(3));
       };
-      va.addEventListener('timeupdate', sync); va.addEventListener('seeked', function () { vb.currentTime = va.currentTime; });
-      va.addEventListener('play', function () { vb.currentTime = va.currentTime; var p = vb.play(); if (p && p.catch) p.catch(function () {}); });
-      va.addEventListener('pause', function () { vb.pause(); });
-      var vis = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { var p = va.play(); if (p && p.catch) p.catch(function () {}); } else va.pause(); }); }, { threshold: 0.25 });
-      vis.observe(box);
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+      window.addEventListener('resize', upd); upd();
     }
-    // a gentle sweep the first time it scrolls into view (and again from the Day / Night word below),
-    // so it's obvious the line moves
-    var sweeping = false;
-    box.dwSweep = function () {
-      if (reduce || sweeping) return; sweeping = true;
-      var t0 = null, dur = 1600;
-      (function frame(ts) { if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur); var v = 50 + Math.sin(p * Math.PI * 2) * 22 * (1 - p); set(v); range.value = v; if (p < 1) requestAnimationFrame(frame); else { set(50); range.value = 50; sweeping = false; } })(performance.now());
-    };
+    // stage 02: each detail arrives once
+    var items = [].slice.call(sec.querySelectorAll('[data-ix-reveal]'));
     if (!reduce && 'IntersectionObserver' in window) {
-      var seen = new IntersectionObserver(function (es) {
-        if (!es[0].isIntersecting) return; seen.disconnect(); box.dwSweep();
-      }, { threshold: 0.6 });
-      seen.observe(box);
+      items.forEach(function (el) { el.classList.add('is-pending'); });
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove('is-pending'); io.unobserve(en.target); } });
+      }, { rootMargin: '0px 0px -12% 0px' });
+      items.forEach(function (el) { io.observe(el); });
     }
-  });
-
-  // ---- interface: words under the screenshot light up that part of the real app ----
-  document.querySelectorAll('.annot').forEach(function (fig) {
-    var wrap = fig.querySelector('.annot-img'), spot = fig.querySelector('[data-spot]'), card = fig.querySelector('[data-spot-card]');
-    var text = fig.querySelector('[data-feat-text]'), copy = fig.querySelector('[data-feat-copy]'), box = fig.querySelector('[data-compare]');
-    var tabs = [].slice.call(fig.querySelectorAll('[data-feat]'));
-    if (!wrap || !spot || !text || !copy || !tabs.length) return;
-    var idle = text.innerHTML, pinned = null;
-    var place = function (x, y, w, h) { spot.style.left = x + '%'; spot.style.top = y + '%'; spot.style.width = w + '%'; spot.style.height = h + '%'; };
-    var show = function (btn) {
-      tabs.forEach(function (t) { t.setAttribute('aria-selected', t === btn ? 'true' : 'false'); });
-      if (!btn) { wrap.classList.remove('is-spot', 'show-card'); text.innerHTML = idle; return; }
-      var r = btn.getAttribute('data-rect');
-      if (r === 'card' && card) {
-        wrap.classList.add('show-card');
-        var W = wrap.clientWidth, H = wrap.clientHeight;
-        place(card.offsetLeft / W * 100 - 0.6, card.offsetTop / H * 100 - 1, card.offsetWidth / W * 100 + 1.2, card.offsetHeight / H * 100 + 2);
-      } else {
-        wrap.classList.remove('show-card');
-        var v = r.split(',').map(Number); place(v[0], v[1], v[2], v[3]);
-      }
-      wrap.classList.add('is-spot');
-      var p = copy.content.querySelector('[data-for="' + btn.getAttribute('data-feat') + '"]');
-      if (p) text.innerHTML = p.innerHTML;
-      if (btn.getAttribute('data-feat') === 'daynight' && box && box.dwSweep) box.dwSweep();
+    // stage 03: the recordings play in turn while on screen; with reduced motion they only play when a chapter is pressed
+    var reel = sec.querySelector('[data-ix-reel]'); if (!reel) return;
+    var clips = [].slice.call(reel.querySelectorAll('[data-ix-clip]'));
+    var chs = [].slice.call(reel.querySelectorAll('[data-ix-chapter]'));
+    var cur = 0, visible = false, raf = 0;
+    var bar = function (k, p) { chs[k].querySelector('.ix-bar i').style.setProperty('--p', p); };
+    var tick = function () { var v = clips[cur]; if (v.duration) bar(cur, v.currentTime / v.duration); raf = v.paused ? 0 : requestAnimationFrame(tick); };
+    var play = function (v) { if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+    var show = function (i, go) {
+      cur = i;
+      clips.forEach(function (v, k) { v.classList.toggle('is-on', k === i); if (k !== i) { v.pause(); if (v.readyState) v.currentTime = 0; bar(k, 0); } });
+      chs.forEach(function (c, k) { c.classList.toggle('is-on', k === i); c.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (go) play(clips[i]);
     };
-    tabs.forEach(function (t) {
-      t.addEventListener('mouseenter', function () { show(t); });
-      t.addEventListener('focus', function () { show(t); });
-      t.addEventListener('click', function () { pinned = pinned === t ? null : t; show(pinned || t); if (!pinned) show(null); });
+    clips.forEach(function (v, k) {
+      v.addEventListener('play', function () { if (!raf) raf = requestAnimationFrame(tick); });
+      v.addEventListener('ended', function () { bar(k, 1); if (!reduce && visible) show((k + 1) % clips.length, true); });
     });
-    var row = fig.querySelector('.feat-tabs');
-    row.addEventListener('mouseleave', function () { show(pinned); });
-    row.addEventListener('focusout', function (e) { if (!row.contains(e.relatedTarget)) show(pinned); });
-  });
+    chs.forEach(function (c, k) { c.addEventListener('click', function () { if (clips[k].ended) clips[k].currentTime = 0; show(k, true); }); });
+    if (!reduce && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (visible) play(clips[cur]); else clips[cur].pause();
+      }, { threshold: 0.35 }).observe(reel);
+    }
+  })();
 
   // ---- hero: the shredded strip ----
   // One real take (black and white) plays as a single flat frame, then slices into six clips that
@@ -409,7 +389,7 @@
   })();
 
   // ---- one quiet entrance per section ----
-  var els = document.querySelectorAll('main > section:not(.hero), main > .pair');
+  var els = document.querySelectorAll('main > section:not(.hero):not(.ix), main > .pair');
   if (reduce || !('IntersectionObserver' in window)) return;
   els.forEach(function (el) { el.classList.add('will-reveal'); });
   var io = new IntersectionObserver(function (entries) {
