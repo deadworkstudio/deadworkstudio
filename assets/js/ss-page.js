@@ -256,56 +256,84 @@
     }).catch(function () {});
   })();
 
-  // ---- THE INTERFACE: full app -> six details -> two real recordings ----
+  // ---- THE INTERFACE: one recording of the app, toured feature by feature ----
   (function () {
-    var sec = document.querySelector('.ix'); if (!sec) return;
-    // stage 01: the full app settles into place as it scrolls up the screen (transform/opacity only)
-    var hero = sec.querySelector('[data-ix-hero]');
-    if (hero && !reduce) {
-      hero.classList.add('is-scrub');
+    var tour = document.querySelector('[data-ix-tour]'); if (!tour) return;
+    var stage = tour.querySelector('[data-ix-hero]'), screen = tour.querySelector('[data-ix-screen]');
+    var spot = tour.querySelector('[data-ix-spot]'), holesG = spot.querySelector('[data-ix-holes]'), ringsG = spot.querySelector('[data-ix-rings]');
+    var tabs = [].slice.call(tour.querySelectorAll('[data-ix-tab]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
+    var count = tour.querySelector('[data-ix-count]'), NS = 'http://www.w3.org/2000/svg', POOL = 5;
+    var cur = -1, inView = false, armed = false;
+
+    // the screen settles into place as it scrolls up (transform/opacity only)
+    if (!reduce) {
+      stage.classList.add('is-scrub');
       var ticking = false;
       var upd = function () {
         ticking = false;
-        var r = hero.getBoundingClientRect(), vh = window.innerHeight;
+        var r = stage.getBoundingClientRect(), vh = window.innerHeight;
         var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.7)));
-        hero.style.setProperty('--p', p.toFixed(3));
+        stage.style.setProperty('--p', p.toFixed(3));
+        if (p >= 1 && !armed) { armed = true; setTimeout(function () { spot.classList.add('is-on'); }, 500); }
       };
       window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
       window.addEventListener('resize', upd); upd();
+    } else { spot.classList.add('is-on'); armed = true; }
+
+    // highlight: a fixed pool of holes in the dimming mask, each with an outline, tweened between features
+    var holes = [], rings = [];
+    for (var i = 0; i < POOL; i++) {
+      var h = document.createElementNS(NS, 'rect'); h.setAttribute('fill', '#000'); h.setAttribute('rx', '0.4'); holesG.appendChild(h); holes.push(h);
+      var g = document.createElementNS(NS, 'rect'); g.setAttribute('class', 'ix-ring'); g.setAttribute('rx', '0.4'); ringsG.appendChild(g); rings.push(g);
     }
-    // stage 02: each detail arrives once
-    var items = [].slice.call(sec.querySelectorAll('[data-ix-reveal]'));
-    if (!reduce && 'IntersectionObserver' in window) {
-      items.forEach(function (el) { el.classList.add('is-pending'); });
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove('is-pending'); io.unobserve(en.target); } });
-      }, { rootMargin: '0px 0px -12% 0px' });
-      items.forEach(function (el) { io.observe(el); });
-    }
-    // stage 03: the recordings play in turn while on screen; with reduced motion they only play when a chapter is pressed
-    var reel = sec.querySelector('[data-ix-reel]'); if (!reel) return;
-    var clips = [].slice.call(reel.querySelectorAll('[data-ix-clip]'));
-    var chs = [].slice.call(reel.querySelectorAll('[data-ix-chapter]'));
-    var cur = 0, visible = false, raf = 0;
-    var bar = function (k, p) { chs[k].querySelector('.ix-bar i').style.setProperty('--p', p); };
-    var tick = function () { var v = clips[cur]; if (v.duration) bar(cur, v.currentTime / v.duration); raf = v.paused ? 0 : requestAnimationFrame(tick); };
-    var play = function (v) { if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
-    var show = function (i, go) {
-      cur = i;
-      clips.forEach(function (v, k) { v.classList.toggle('is-on', k === i); if (k !== i) { v.pause(); if (v.readyState) v.currentTime = 0; bar(k, 0); } });
-      chs.forEach(function (c, k) { c.classList.toggle('is-on', k === i); c.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
-      if (go) play(clips[i]);
+    var now = []; for (i = 0; i < POOL; i++) now.push([50, 50, 0, 0]);
+    var put = function (r) { for (var k = 0; k < POOL; k++) { var v = r[k]; [holes[k], rings[k]].forEach(function (el) { el.setAttribute('x', v[0]); el.setAttribute('y', v[1]); el.setAttribute('width', Math.max(0, v[2])); el.setAttribute('height', Math.max(0, v[3])); el.style.opacity = v[2] > 0.05 ? 1 : 0; }); } };
+    var raf = 0;
+    var aim = function (tab) {
+      var list = tab.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
+      var to = []; for (var k = 0; k < POOL; k++) { var src = list[k]; to.push(src ? src : [list[0][0] + list[0][2] / 2, list[0][1] + list[0][3] / 2, 0, 0]); }
+      if (reduce) { now = to; put(now); return; }
+      var from = now.map(function (v) { return v.slice(); }), t0 = null; cancelAnimationFrame(raf);
+      (function step(ts) {
+        if (t0 === null) t0 = ts; var t = Math.min(1, (ts - t0) / 380), e = 1 - Math.pow(1 - t, 3);
+        now = from.map(function (f, k) { return f.map(function (x, j) { return x + (to[k][j] - x) * e; }); });
+        put(now); if (t < 1) raf = requestAnimationFrame(step);
+      })(performance.now());
     };
-    clips.forEach(function (v, k) {
-      v.addEventListener('play', function () { if (!raf) raf = requestAnimationFrame(tick); });
-      v.addEventListener('ended', function () { bar(k, 1); if (!reduce && visible) show((k + 1) % clips.length, true); });
+
+    var playIf = function (v, go) { if (!v) return; if (go && !reduce) { if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); };
+    var select = function (i, focus) {
+      if (i === cur) return;
+      cur = i;
+      tabs.forEach(function (t, k) { var on = k === i; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
+      panels.forEach(function (p, k) {
+        var on = k === i; p.hidden = !on; playIf(p.querySelector('[data-ix-loop]'), on && inView);
+        if (on && !reduce) { p.classList.remove('is-entering'); void p.offsetWidth; p.classList.add('is-entering'); }
+      });
+      count.textContent = ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + tabs.length).slice(-2);
+      aim(tabs[i]);
+      if (focus) { tabs[i].focus(); if (!armed) { armed = true; spot.classList.add('is-on'); } }
+    };
+    var go = function (d) { select((cur + d + tabs.length) % tabs.length, true); };
+    tabs.forEach(function (t, k) { t.addEventListener('click', function () { select(k, true); spot.classList.add('is-on'); armed = true; }); });
+    tour.querySelector('[data-ix-prev]').addEventListener('click', function () { go(-1); spot.classList.add('is-on'); });
+    tour.querySelector('[data-ix-next]').addEventListener('click', function () { go(1); spot.classList.add('is-on'); });
+    tour.querySelector('[role=tablist]').addEventListener('keydown', function (e) {
+      var k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); go(1); }
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); go(-1); }
+      else if (k === 'Home') { e.preventDefault(); select(0, true); }
+      else if (k === 'End') { e.preventDefault(); select(tabs.length - 1, true); }
     });
-    chs.forEach(function (c, k) { c.addEventListener('click', function () { if (clips[k].ended) clips[k].currentTime = 0; show(k, true); }); });
-    if (!reduce && 'IntersectionObserver' in window) {
+    select(0, false);
+
+    // the screen and the open panel's recording only play while on screen
+    if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        visible = es[0].isIntersecting;
-        if (visible) play(clips[cur]); else clips[cur].pause();
-      }, { threshold: 0.35 }).observe(reel);
+        inView = es[0].isIntersecting;
+        playIf(screen, inView);
+        playIf(panels[cur].querySelector('[data-ix-loop]'), inView);
+      }, { threshold: 0.15 }).observe(tour);
     }
   })();
 

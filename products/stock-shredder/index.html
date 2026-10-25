@@ -19,7 +19,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/strip-poster.jpg" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024ix" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261024ix2" />
 <script src="https://js.stripe.com/v3/"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -180,124 +180,99 @@
       <p class="ix-sub">Built for speed.</p>
     </header>
 
-    <figure class="ix-hero" data-ix-hero>
-      <img src="../../assets/img/products/stock-shredder/interface/full-1600.jpg" srcset="../../assets/img/products/stock-shredder/interface/full-1600.jpg 1600w, ../../assets/img/products/stock-shredder/interface/full-2880.jpg 2880w" sizes="(min-width: 1560px) 1440px, 92vw" width="2880" height="1800" loading="lazy" decoding="async" alt="Stock Shredder's Review screen: the clip list, a reel-to-reel tape deck clip in the player, the trim bar, Approve and Deny, and the export, look and fine-tune settings." />
-    </figure>
-
-    <nav class="ix-index" aria-label="Interface details">
-      <a href="#ix-review"><span>01</span>Review</a>
-      <a href="#ix-looks"><span>02</span>Looks</a>
-      <a href="#ix-finetune"><span>03</span>Fine-tune</a>
-      <a href="#ix-trim"><span>04</span>Trim</a>
-      <a href="#ix-export"><span>05</span>Export</a>
-      <a href="#ix-keys"><span>06</span>Shortcuts</a>
-    </nav>
-
-    <div class="ix-details">
-      <article class="ix-d ix-d--review" id="ix-review" data-ix-reveal>
-        <div class="ix-meta">
-          <p class="ix-n">01 / 06</p>
-          <h3 class="ix-h">Review</h3>
-          <p class="ix-p">Every usable moment, one at a time. Approved clips wait for GO, then export together.</p>
-        </div>
-        <figure class="ix-shot ix-shot--card"><img src="../../assets/img/products/stock-shredder/interface/card.jpg" width="1080" height="440" loading="lazy" decoding="async" alt="A clip in the list marked Approved, waiting for GO." /></figure>
-        <figure class="ix-shot ix-shot--decide">
-          <picture>
-            <source media="(max-width: 719px)" srcset="../../assets/img/products/stock-shredder/interface/decide-m.jpg" width="1736" height="208" />
-            <img src="../../assets/img/products/stock-shredder/interface/decide.jpg" width="2400" height="143" loading="lazy" decoding="async" alt="The Approve and Deny buttons, with their A and D keys." />
-          </picture>
-        </figure>
-      </article>
-
-      <article class="ix-d ix-d--looks" id="ix-looks" data-ix-reveal>
-        <figure class="ix-shot ix-shot--panel"><img src="../../assets/img/products/stock-shredder/interface/look.jpg" width="1016" height="512" loading="lazy" decoding="async" alt="The Look picker set to ARRI LogC3 Natural, with Strength, Import LUT and Manage LUTs." /></figure>
-        <div class="ix-meta">
-          <p class="ix-n">02 / 06</p>
-          <h3 class="ix-h">Looks</h3>
-          <p class="ix-p">Built-in looks for each camera&rsquo;s log. Import your own LUTs.</p>
-          <table class="ix-matrix">
-            <caption class="sr-only">Built-in looks</caption>
-            <thead><tr><th scope="col"><span class="sr-only">Camera log</span></th><th scope="col">Natural</th><th scope="col">Punchy</th><th scope="col">Extra punchy</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">ARRI LogC3</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
-              <tr><th scope="row">DJI D-Log</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
-              <tr><th scope="row">RED IPP2</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
-              <tr><th scope="row">Sony S-Log3</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </article>
-
-      <article class="ix-d ix-d--finetune" id="ix-finetune" data-ix-reveal>
-        <div class="ix-meta">
-          <p class="ix-n">03 / 06</p>
-          <h3 class="ix-h">Fine-tune</h3>
-          <p class="ix-p">Exposure, contrast, temperature and tint. On one clip, or all of them.</p>
-        </div>
-        <figure class="ix-shot ix-shot--wide-panel"><img src="../../assets/img/products/stock-shredder/interface/finetune.jpg" width="1016" height="592" loading="lazy" decoding="async" alt="Fine-tune sliders: exposure +0.4, contrast +13, temperature 0, tint 0, applied to all clips." /></figure>
-      </article>
-
-      <article class="ix-d ix-d--trim" id="ix-trim" data-ix-reveal>
-        <div class="ix-meta">
-          <p class="ix-n">04 / 06</p>
-          <h3 class="ix-h">Trim</h3>
-          <p class="ix-p">Set the in and out points with I and O, or drag the handles. Flip between the Log original and the graded look.</p>
-        </div>
-        <figure class="ix-shot ix-shot--trim">
-          <picture>
-            <source media="(max-width: 719px)" srcset="../../assets/img/products/stock-shredder/interface/trim-m.jpg" width="1840" height="584" />
-            <img src="../../assets/img/products/stock-shredder/interface/trim.jpg" width="2400" height="402" loading="lazy" decoding="async" alt="The trim bar set from 2.4 to 11.6 seconds, with Start Here (I), End Here (O) and the Log / Graded switch." />
-          </picture>
-        </figure>
-      </article>
-
-      <article class="ix-d ix-d--export" id="ix-export" data-ix-reveal>
-        <figure class="ix-shot ix-shot--panel ix-shot--tall"><img src="../../assets/img/products/stock-shredder/interface/export.jpg" width="1016" height="920" loading="lazy" decoding="async" alt="Export settings: ProRes 422 HQ at 4K, also exporting at 1080 and 6K, Graded Only." /></figure>
-        <div class="ix-meta">
-          <p class="ix-n">05 / 06</p>
-          <h3 class="ix-h">Export</h3>
-          <p class="ix-p">Add extra sizes in the same pass. Graded, Log, or both.</p>
-          <dl class="ix-spec">
-            <div><dt>Format</dt><dd>ProRes 422 HQ &middot; 4444 &middot; 4444 XQ</dd></div>
-            <div><dt>Size</dt><dd>1080 &middot; 2K &middot; 4K &middot; 5K &middot; 6K &middot; 8K</dd></div>
-            <div><dt>Output</dt><dd>Graded + Log &middot; Graded &middot; Log</dd></div>
-            <div><dt>Stabilize</dt><dd>Off &middot; Auto &middot; Always</dd></div>
-            <div><dt>Remove grain</dt><dd>Off &middot; Auto &middot; Always</dd></div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="ix-d ix-d--keys" id="ix-keys" data-ix-reveal>
-        <div class="ix-meta">
-          <p class="ix-n">06 / 06</p>
-          <h3 class="ix-h">Shortcuts</h3>
-          <p class="ix-p">Hands stay on the keyboard.</p>
-        </div>
-        <ul class="ix-keys">
-          <li><span class="ix-k"><kbd>A</kbd></span><span>Approve</span></li>
-          <li><span class="ix-k"><kbd>D</kbd></span><span>Deny</span></li>
-          <li><span class="ix-k"><kbd>B</kbd></span><span>Log / Graded</span></li>
-          <li><span class="ix-k"><kbd>I</kbd><kbd>O</kbd></span><span>Trim</span></li>
-          <li><span class="ix-k"><kbd class="ix-wide">Space</kbd></span><span>Play / Pause</span></li>
-        </ul>
-      </article>
-    </div>
-
-    <div class="ix-motion" data-ix-reveal>
-      <header class="ix-motion-head">
-        <p class="ix-n">In motion</p>
-        <h3 class="ix-h">Recorded in the app.</h3>
-      </header>
-      <figure class="ix-reel" data-ix-reel>
-        <div class="ix-reel-frame">
-          <video class="is-on" muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/interface/approve-poster.jpg" width="1600" height="1080" aria-label="Recording: pressing A approves the clip; it's marked Approved, waiting for GO, and a GO (Export 1 clip) button appears." data-ix-clip><source src="../../assets/img/products/stock-shredder/interface/approve.mp4" type="video/mp4" /></video>
-          <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/interface/trim-poster.jpg" width="1600" height="1080" aria-label="Recording: pressing I then O while the clip plays sets the trim from 2.5 to 7.5 seconds." data-ix-clip><source src="../../assets/img/products/stock-shredder/interface/trim.mp4" type="video/mp4" /></video>
-        </div>
-        <figcaption class="ix-chapters">
-          <button type="button" class="is-on" aria-pressed="true" data-ix-chapter="0"><span class="ix-bar"><i></i></span><span class="ix-ch-n">01</span>Approve <kbd>A</kbd></button>
-          <button type="button" aria-pressed="false" data-ix-chapter="1"><span class="ix-bar"><i></i></span><span class="ix-ch-n">02</span>Trim <kbd>I</kbd><kbd>O</kbd></button>
-        </figcaption>
+    <div class="ix-tour" data-ix-tour>
+      <figure class="ix-stage" data-ix-hero>
+        <video class="ix-screen" muted loop playsinline preload="metadata" poster="../../assets/img/products/stock-shredder/review-dark-poster.jpg?v=068" width="1600" height="1022" aria-label="Stock Shredder's Review screen playing a reel-to-reel tape deck clip: the clip list, the player, the trim bar, Approve and Deny, and the export, look and fine-tune settings." data-ix-screen><source src="../../assets/img/products/stock-shredder/review-dark.mp4?v=068" type="video/mp4" /></video>
+        <svg class="ix-spot" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-ix-spot>
+          <defs><mask id="ix-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="#fff" /><g data-ix-holes></g></mask></defs>
+          <rect class="ix-dim" x="0" y="0" width="100" height="100" mask="url(#ix-mask)" />
+          <g data-ix-rings></g>
+        </svg>
       </figure>
+
+      <div class="ix-bar-row">
+        <div class="ix-tabs" role="tablist" aria-label="Tour the Review screen">
+          <button type="button" role="tab" id="ix-t0" aria-controls="ix-p0" aria-selected="true" tabindex="0" data-ix-tab data-rects="0.8,19.6,20,7.6;22.1,92.4,55.4,6.6"><span>01</span>Review</button>
+          <button type="button" role="tab" id="ix-t1" aria-controls="ix-p1" aria-selected="false" tabindex="-1" data-ix-tab data-rects="79.3,44.8,19.6,15.8"><span>02</span>Looks</button>
+          <button type="button" role="tab" id="ix-t2" aria-controls="ix-p2" aria-selected="false" tabindex="-1" data-ix-tab data-rects="79.3,60.4,19.6,18.2"><span>03</span>Fine-tune</button>
+          <button type="button" role="tab" id="ix-t3" aria-controls="ix-p3" aria-selected="false" tabindex="-1" data-ix-tab data-rects="22.1,74,55.4,17.9"><span>04</span>Trim</button>
+          <button type="button" role="tab" id="ix-t4" aria-controls="ix-p4" aria-selected="false" tabindex="-1" data-ix-tab data-rects="79.3,15,19.6,29.2"><span>05</span>Export</button>
+          <button type="button" role="tab" id="ix-t5" aria-controls="ix-p5" aria-selected="false" tabindex="-1" data-ix-tab data-rects="37.9,94.8,2.4,3.8;64.6,94.8,2.4,3.8;63.5,81,2,3.8;73.3,81,2,3.8;23.4,75.6,24.6,4.6"><span>06</span>Shortcuts</button>
+        </div>
+        <div class="ix-step">
+          <button type="button" class="ix-arrow" aria-label="Previous feature" data-ix-prev>&larr;</button>
+          <span class="ix-count" aria-hidden="true" data-ix-count>01 / 06</span>
+          <button type="button" class="ix-arrow" aria-label="Next feature" data-ix-next>&rarr;</button>
+        </div>
+      </div>
+
+      <div class="ix-panels">
+        <div class="ix-panel" role="tabpanel" id="ix-p0" aria-labelledby="ix-t0" data-ix-panel>
+          <div class="ix-text">
+            <h3 class="ix-h">Review</h3>
+            <p class="ix-p">Every usable moment, one at a time. Press <kbd>A</kbd> to approve or <kbd>D</kbd> to deny. Approved clips wait for GO, then export together.</p>
+          </div>
+          <figure class="ix-media"><video muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/interface/approve-poster.jpg" width="1600" height="1080" aria-label="Recording: pressing A approves the clip; it's marked Approved, waiting for GO, and a GO (Export 1 clip) button appears." data-ix-loop><source src="../../assets/img/products/stock-shredder/interface/approve.mp4" type="video/mp4" /></video><figcaption>Recorded in the app</figcaption></figure>
+        </div>
+        <div class="ix-panel" role="tabpanel" id="ix-p1" aria-labelledby="ix-t1" data-ix-panel hidden>
+          <div class="ix-text">
+            <h3 class="ix-h">Looks</h3>
+            <p class="ix-p">Built-in looks for each camera&rsquo;s log. Import your own LUTs.</p>
+            <table class="ix-matrix">
+              <caption class="sr-only">Built-in looks</caption>
+              <thead><tr><th scope="col"><span class="sr-only">Camera log</span></th><th scope="col">Natural</th><th scope="col">Punchy</th><th scope="col">Extra punchy</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">ARRI LogC3</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">DJI D-Log</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">RED IPP2</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Sony S-Log3</th><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td><td><span class="sr-only">Included</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figure class="ix-media ix-media--panel"><img src="../../assets/img/products/stock-shredder/interface/look.jpg" width="1016" height="512" loading="lazy" decoding="async" alt="The Look picker set to ARRI LogC3 Natural, with Strength, Import LUT and Manage LUTs." /></figure>
+        </div>
+        <div class="ix-panel" role="tabpanel" id="ix-p2" aria-labelledby="ix-t2" data-ix-panel hidden>
+          <div class="ix-text">
+            <h3 class="ix-h">Fine-tune</h3>
+            <p class="ix-p">Exposure, contrast, temperature and tint. On one clip, or all of them.</p>
+          </div>
+          <figure class="ix-media ix-media--panel"><img src="../../assets/img/products/stock-shredder/interface/finetune.jpg" width="1016" height="592" loading="lazy" decoding="async" alt="Fine-tune sliders: exposure +0.4, contrast +13, temperature 0, tint 0, applied to all clips." /></figure>
+        </div>
+        <div class="ix-panel" role="tabpanel" id="ix-p3" aria-labelledby="ix-t3" data-ix-panel hidden>
+          <div class="ix-text">
+            <h3 class="ix-h">Trim</h3>
+            <p class="ix-p">Set the in and out points with <kbd>I</kbd> and <kbd>O</kbd>, or drag the handles. Flip between the Log original and the graded look.</p>
+          </div>
+          <figure class="ix-media"><video muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/interface/trim-poster.jpg" width="1600" height="1080" aria-label="Recording: pressing I then O while the clip plays sets the trim from 2.5 to 7.5 seconds." data-ix-loop><source src="../../assets/img/products/stock-shredder/interface/trim.mp4" type="video/mp4" /></video><figcaption>Recorded in the app</figcaption></figure>
+        </div>
+        <div class="ix-panel" role="tabpanel" id="ix-p4" aria-labelledby="ix-t4" data-ix-panel hidden>
+          <div class="ix-text">
+            <h3 class="ix-h">Export</h3>
+            <p class="ix-p">Add extra sizes in the same pass. Graded, Log, or both.</p>
+            <dl class="ix-spec">
+              <div><dt>Format</dt><dd>ProRes 422 HQ &middot; 4444 &middot; 4444 XQ</dd></div>
+              <div><dt>Size</dt><dd>1080 &middot; 2K &middot; 4K &middot; 5K &middot; 6K &middot; 8K</dd></div>
+              <div><dt>Output</dt><dd>Graded + Log &middot; Graded &middot; Log</dd></div>
+              <div><dt>Stabilize</dt><dd>Off &middot; Auto &middot; Always</dd></div>
+              <div><dt>Remove grain</dt><dd>Off &middot; Auto &middot; Always</dd></div>
+            </dl>
+          </div>
+          <figure class="ix-media ix-media--panel ix-media--tall"><img src="../../assets/img/products/stock-shredder/interface/export.jpg" width="1016" height="920" loading="lazy" decoding="async" alt="Export settings: ProRes 422 HQ at 4K, also exporting at 1080 and 6K, Graded Only." /></figure>
+        </div>
+        <div class="ix-panel" role="tabpanel" id="ix-p5" aria-labelledby="ix-t5" data-ix-panel hidden>
+          <div class="ix-text">
+            <h3 class="ix-h">Shortcuts</h3>
+            <p class="ix-p">Hands stay on the keyboard.</p>
+          </div>
+          <ul class="ix-keys">
+            <li><span class="ix-k"><kbd>A</kbd></span><span>Approve</span></li>
+            <li><span class="ix-k"><kbd>D</kbd></span><span>Deny</span></li>
+            <li><span class="ix-k"><kbd>B</kbd></span><span>Log / Graded</span></li>
+            <li><span class="ix-k"><kbd>I</kbd><kbd>O</kbd></span><span>Trim</span></li>
+            <li><span class="ix-k"><kbd class="ix-wide">Space</kbd></span><span>Play / Pause</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -599,7 +574,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261021c"></script>
 <script src="../../assets/js/checkout.js?v=20261024c"></script>
-<script src="../../assets/js/ss-page.js?v=20261024ix"></script>
+<script src="../../assets/js/ss-page.js?v=20261024ix2"></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
