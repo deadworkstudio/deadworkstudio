@@ -35,11 +35,14 @@
   var GUTTER = 0.035;                                              // near-black gutter, fraction of a tile
 
   // ---- the take ----
-  var TAKE = 317.9, LEN = 7, FILE = 'A002_C044_0217SC';
-  var IN = [60, 92, 145, 224, 249, 300];                           // weld-1..6 in-points within the take
-  var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each 7 s moment (weld-5 longest)
+  // Serenity Prayer (Caskey), 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
+  var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
+  var IN = [64.49, 68.37, 69.74, 70.87, 72.91, 77.71];             // each shot's in-point in the film (s)
+  var LENS = [2.69, 1.27, 1.03, 1.94, 3.74, 1.15];                 // each shot's length (s)
+  var RATE = 0.6;                                                  // the riding plays in slow motion, so short shots never stutter-loop
+  var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 180;                                                 // take-seconds per second between moments
-  var FOCAL = [0.36, 0.72, 0.58, 0.32, 0.46, 0.70];                // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.667, 0.723, 0.712, 0.634, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -60,10 +63,10 @@
   // when the picture arrives (that is what is playing), dwells through each moment, scrubs between.
   var segs = [], arrive = [X.P], tt = X.P, pp = IN[0];
   function seg_(dt, p1) { segs.push({ t0: tt, t1: tt + dt, p0: pp, p1: p1 }); tt += dt; pp = p1; }
-  seg_(X.F - X.P + 0.25 + DWELL[0], IN[0] + LEN);
+  seg_(X.F - X.P + 0.25 + DWELL[0], IN[0] + LENS[0]);
   for (var k = 1; k < IN.length; k++) {
     seg_((IN[k] - pp) / SCRUB, IN[k]); arrive[k] = tt;
-    seg_(DWELL[k], IN[k] + LEN);
+    seg_(DWELL[k], IN[k] + LENS[k]);
   }
   seg_((TAKE - pp) / SCRUB, TAKE);
   var SCAN_END = tt, S = SCAN_END + 0.1;
@@ -75,11 +78,12 @@
   // ---- elements ----
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
   var vids = [].slice.call(fig.querySelectorAll('[data-iss-src] video'));
+  vids.forEach(function (v) { v.defaultPlaybackRate = RATE; v.playbackRate = RATE; v.addEventListener('loadedmetadata', function () { v.playbackRate = RATE; }); });
   var meta = fig.querySelector('[data-iss-meta]'), scan = fig.querySelector('[data-iss-scan]');
   var marks = [].slice.call(fig.querySelectorAll('.iss-mark'));
   var rail = fig.querySelector('[data-iss-rail]'), rightEl = fig.querySelector('[data-iss-right]');
   var caps = [].slice.call(fig.querySelectorAll('[data-iss-caps] li'));
-  marks.forEach(function (m, i) { m.style.left = (IN[i] / TAKE * 100) + '%'; m.style.width = (LEN / TAKE * 100) + '%'; });
+  marks.forEach(function (m, i) { m.style.left = (IN[i] / TAKE * 100) + '%'; m.style.width = (LENS[i] / TAKE * 100) + '%'; });
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var freeze = q.has('freeze');
@@ -239,7 +243,7 @@
       var ph = playheadAt(t);
       setStyle(rail, 'rail', 'transform', 'translateX(' + (ph / TAKE * 100).toFixed(3) + '%)');
       var label = tc(ph); if (rightEl.textContent !== label) rightEl.textContent = label;
-      for (var m = 0; m < marks.length; m++) setStyle(marks[m], 'm' + m, 'transform', 'scaleX(' + clamp01((ph - IN[m]) / LEN).toFixed(4) + ')');
+      for (var m = 0; m < marks.length; m++) setStyle(marks[m], 'm' + m, 'transform', 'scaleX(' + clamp01((ph - IN[m]) / LENS[m]).toFixed(4) + ')');
     }
     for (var j = 0; j < caps.length; j++) {
       var a = T.caps + j * T.capStep;
@@ -321,9 +325,9 @@
       var v = vids[i]; v.preload = 'auto';
       pending.push(new Promise(function (res) {
         v.addEventListener('loadedmetadata', function () {
-          var d = v.duration || LEN;
+          var d = v.duration || LENS[i];
           v.addEventListener('seeked', function () { res(); }, { once: true });
-          v.currentTime = Math.min(lt % d, d - 0.05);
+          v.currentTime = Math.min((lt * RATE) % d, d - 0.05);
         }, { once: true });
         v.addEventListener('error', res, { once: true });
         v.load();
