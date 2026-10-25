@@ -37,7 +37,11 @@
 .nav-tab-trigger[aria-expanded='true'] { color: var(--bone); }
 
 /* shared: the status + platform line under each tagline, quiet mono like the rest of the menu */
+/* H-18: a layout-only mitigation (text itself is unchanged — the full fix needs copy shortened,
+   which is the owner's call, see the audit). text-wrap:pretty avoids a single orphaned word on
+   the platform line's own last line when it does wrap. */
 .mm-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; margin-top: 10px; font: 400 10px/1.5 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--bone-3); }
+.mm-platform { text-wrap: pretty; }
 .mm-status { color: var(--bone-2); }
 a[href$="stock-shredder/"] .mm-status { color: #8FD687; }
 .mega-menu-card-caption { display: flex; flex-direction: column; align-items: center; }
