@@ -19,10 +19,13 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261025w1" />
-<link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261025w2" />
+<link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261025a" />
-<script src="https://js.stripe.com/v3/"></script>
+<!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" —
+     nothing needs this synchronously before the page has finished parsing, so there's no reason
+     to block <head> on a script that's first used thousands of pixels down the page. -->
+<script src="https://js.stripe.com/v3/" defer></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body class="ss">
@@ -156,7 +159,7 @@
         <li><button type="button" class="ix-feat" id="ix-f1" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="1" data-rects="17.28,82.62,65.21,10.73"><span>02</span>Trim</button></li>
         <li><button type="button" class="ix-feat" id="ix-f2" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="2" data-rects="84.99,11.29,14.32,20.28"><span>03</span>Export</button></li>
         <li><button type="button" class="ix-feat" id="ix-f3" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="3" data-rects="84.99,33.41,14.32,11.04"><span>04</span>Looks</button></li>
-        <li><button type="button" class="ix-feat" id="ix-f4" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="4" data-rects="84.99,45.26,14.32,12.63"><span>05</span>Fine-tune</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f4" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="4" data-rects="84.24,45.26,15.82,12.63"><span>05</span>Fine-tune</button></li>
         <li><button type="button" class="ix-feat" id="ix-f5" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="5" data-ix-night data-rects="96.3,0.35,2.31,3.47"><span>06</span>Day / Night</button></li>
       </ul>
 
@@ -251,7 +254,6 @@
 
   <section class="world tone-dark" data-world-map hidden aria-labelledby="world-title">
     <h2 class="section-title section-head head-dw" id="world-title">Clips <span class="shred-word">shredded</span> worldwide</h2>
-    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span><span class="world-count-note mono" data-shred-note>Preview only &middot; live server count, hidden on the real site until confirmed</span></p>
     <div class="world-map">
       <img src="../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
       <div class="world-map-dots" data-world-map-dots></div>
@@ -272,9 +274,8 @@
     <div class="billing">
       <div class="billing-toggle" role="group" aria-label="Billing interval" data-billing-toggle>
         <button type="button" class="billing-toggle-btn is-active" data-billing="month">Monthly</button>
-        <button type="button" class="billing-toggle-btn" data-billing="year">Annual</button>
+        <button type="button" class="billing-toggle-btn" data-billing="year">Annual<span class="billing-tag">2 mo free</span></button>
       </div>
-      <button type="button" class="billing-switch" role="switch" aria-checked="false" data-billing-switch><span class="mono">2 months free</span><span class="billing-switch-track" aria-hidden="true"><span></span></span></button>
     </div>
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
@@ -460,7 +461,7 @@
     <p class="faq-chat">Still have a question? <a href="mailto:deadworkstudio@gmail.com?subject=Stock%20Shredder%20question" class="faq-chat-link" data-faq-chat-open>Chat with us</a></p>
   </section>
   <section class="tools" aria-labelledby="tools-title">
-    <p class="tools-title mono" id="tools-title">Explore all DEADWORK tools:</p>
+    <p class="tools-title mono" id="tools-title">Explore all DEADWORK tools</p>
     <ul class="tools-grid">
       <li><a class="tool" href="../scene-lock/">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/scene-lock.png" alt="" loading="lazy" /></span>
@@ -514,8 +515,8 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025a"></script>
 <script src="../../assets/js/checkout.js?v=20261024c"></script>
-<script src="../../assets/js/ss-page.js?v=20261025w1"></script>
-<script src="../../assets/js/ss-hero.js?v=20261025c" defer></script>
+<script src="../../assets/js/ss-page.js?v=20261025w2"></script>
+<script src="../../assets/js/ss-hero.js?v=20261025d" defer></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download

@@ -1,6 +1,5 @@
-// Stock Shredder page: smart header, phone tools sheet, FAQ accordion, the "2 months free" switch
-// (kept in sync with the Monthly/Annual toggle that checkout.js already drives), and the chat
-// widget loaded after the visitor's first interaction instead of on page load.
+// Stock Shredder page: smart header, phone tools sheet, FAQ accordion, and the chat widget loaded
+// after the visitor's first interaction instead of on page load.
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -129,17 +128,6 @@
     });
   });
 
-  // ---- "2 months free" switch mirrors the Monthly / Annual toggle ----
-  var sw = document.querySelector('[data-billing-switch]');
-  var month = document.querySelector('[data-billing="month"]');
-  var year = document.querySelector('[data-billing="year"]');
-  if (sw && month && year) {
-    var sync = function () { sw.setAttribute('aria-checked', year.classList.contains('is-active') ? 'true' : 'false'); };
-    sw.addEventListener('click', function () { (year.classList.contains('is-active') ? month : year).click(); sync(); });
-    month.addEventListener('click', function () { setTimeout(sync, 0); });
-    year.addEventListener('click', function () { setTimeout(sync, 0); });
-  }
-
   // ---- support chat: loads after the first scroll, tap or key press, never on page load ----
   // On phones (<=719px) the floating bubble is kept hidden — it sits on top of page content
   // (plan buttons, FAQ text) with nowhere good to put it — but the chat itself is still one tap
@@ -228,7 +216,14 @@
       if (chatReady && window.Tawk_API) { e.preventDefault(); openChat(); return; }
       e.preventDefault();
       openChat();
-      setTimeout(function () { if (!chatReady) window.location.href = faqChatLink.href; }, 2500);
+      setTimeout(function () {
+        if (!chatReady) {
+          // The fallback is firing for real — relabel so the link's text matches what it's
+          // actually about to do instead of promising live chat and silently opening mail.
+          faqChatLink.textContent = 'Email us';
+          window.location.href = faqChatLink.href;
+        }
+      }, 2500);
     });
   }
 
@@ -284,12 +279,18 @@
       var x0 = Math.min.apply(null, list.map(function (r) { return r[0]; })), y0 = Math.min.apply(null, list.map(function (r) { return r[1]; }));
       var x1 = Math.max.apply(null, list.map(function (r) { return r[0] + r[2]; })), y1 = Math.max.apply(null, list.map(function (r) { return r[1] + r[3]; }));
       var fit = z ? 100 : 72, s = Math.max(1, Math.min(2.4, fit / (x1 - x0), fit / (y1 - y0)));
-      // centred across; up and down it stays inside the app so the frame never shows empty space above or below
-      var tx = 50 - s * (x0 + x1) / 2, ty = Math.min(0, Math.max(100 - 100 * s, 50 - s * (y0 + y1) / 2));
-      if (z) tx = Math.min(0, Math.max(100 - 100 * s, tx));
+      // Centred on the chosen rect, both axes — but never past the recording's own edge: once the
+      // frame is scaled up by s, clamping the translate to [100 - 100*s, 0] keeps the picture
+      // covering the whole stage, so it magnifies and centres as much as it can without ever
+      // uncovering grey past the edge of the recording.
+      var tx = Math.min(0, Math.max(100 - 100 * s, 50 - s * (x0 + x1) / 2));
+      var ty = Math.min(0, Math.max(100 - 100 * s, 50 - s * (y0 + y1) / 2));
       zoom.style.transform = 'translate(' + tx.toFixed(2) + '%, ' + ty.toFixed(2) + '%) scale(' + s.toFixed(3) + ')';
     };
-    // Day / Night: start the dark recording at the day one's time, fade it in; fade back out when leaving
+    // Day / Night: start the dark recording at the day one's time, fade it in; fade back out when
+    // leaving. Both recordings only ever decode while they're actually the one on screen — once
+    // the dark one has fully crossfaded in (280ms, just past its own 260ms transition) the light
+    // one underneath is paused, and the reverse on the way out, so the two never decode together.
     var setNight = function (on) {
       if (!dark) return;
       clearTimeout(nightTimer);
@@ -298,8 +299,10 @@
         try { dark.currentTime = screen.currentTime || 0; } catch (e) {}
         if (!reduce && inView) { var p = dark.play(); if (p && p.catch) p.catch(function () {}); }
         stage.classList.add('is-night');
+        nightTimer = setTimeout(function () { if (stage.classList.contains('is-night')) screen.pause(); }, 280);
       } else if (stage.classList.contains('is-night')) {
         stage.classList.remove('is-night');
+        if (!reduce && inView) { var r = screen.play(); if (r && r.catch) r.catch(function () {}); }
         nightTimer = setTimeout(function () { dark.pause(); }, 400);
       }
     };
@@ -364,8 +367,11 @@
     feats.forEach(function (f, k) {
       f.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') show(k); });
       f.addEventListener('focus', function () { if (lastPointer === 'mouse' || lastPointer === 'keyboard') show(k); });
-      // touch/pen (and Enter/Space): tap to show, tap the same name again to clear
-      f.addEventListener('click', function () { if (lastPointer !== 'mouse') show(cur === k ? -1 : k); lastPointer = 'mouse'; });
+      // touch/pen: tap to show, tap the same name again to clear. Keyboard is deliberately left
+      // out here — focus already showed this stop the moment Tab landed on it, so Enter/Space
+      // (which the nav keydown listener below marks as lastPointer = 'keyboard') must be a no-op
+      // rather than toggling it straight back off.
+      f.addEventListener('click', function () { if (lastPointer === 'touch' || lastPointer === 'pen') show(cur === k ? -1 : k); lastPointer = 'mouse'; });
     });
     nav.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') show(-1); });
     nav.addEventListener('keydown', function (e) {
@@ -381,8 +387,11 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
         inView = es[0].isIntersecting;
-        if (inView && !reduce) { var p = screen.play(); if (p && p.catch) p.catch(function () {}); } else screen.pause();
-        if (dark && stage.classList.contains('is-night')) { if (inView && !reduce) { var q = dark.play(); if (q && q.catch) q.catch(function () {}); } else dark.pause(); }
+        // Only the recording actually on screen plays — waking the other one back up here would
+        // undo the single-decode optimization in setNight() above every time this refires.
+        var night = stage.classList.contains('is-night');
+        if (inView && !reduce) { var p = (night ? dark : screen).play(); if (p && p.catch) p.catch(function () {}); }
+        else { screen.pause(); if (dark) dark.pause(); }
       }, { threshold: 0.15 }).observe(tour);
     }
   })();
