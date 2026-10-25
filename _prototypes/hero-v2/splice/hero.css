@@ -1,0 +1,6 @@
+/* ---- hero: SPLICE ----
+   Sizing, placement and phone width come from the live `.strip` rule in ss-page.css
+   (the figure carries that class), so this frame is exactly today's size. Only the
+   hidden source videos need styling here. */
+.splice .strip-canvas { display: block; width: 100%; height: auto; }
+.splice-src { position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }

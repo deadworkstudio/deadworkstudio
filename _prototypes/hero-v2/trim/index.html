@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en" data-product="stock-shredder">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#F4F1EA" />
+<title>DEADWORK - Stock Shredder</title>
+<meta name="description" content="Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://deadworkstudio.com/products/stock-shredder/" />
+<meta property="og:title" content="DEADWORK - Stock Shredder" />
+<meta property="og:description" content="Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="../../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../../assets/img/brand/apple-touch-icon.png" />
+<!-- Starts the Swamp Witch font downloading immediately instead of waiting for the CSS to be
+     parsed and the h1 to need it — without this, the fallback font flashes briefly before the
+     swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
+<link rel="preload" href="../../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" href="../../../assets/img/products/stock-shredder/strip-poster.jpg" />
+<link rel="stylesheet" href="../../../assets/css/ss-page.css?v=20261025w1" />
+<script src="https://js.stripe.com/v3/"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="ss">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="poster-head" data-sh>
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <h1 class="poster-brand"><a href="../../../home/"><img src="../../../assets/img/brand/deadwork-wordmark-black-nr.png" alt="DEADWORK" width="1854" height="394"></a></h1>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I — Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card" href="../../../products/scene-lock/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/scene-lock/bg.jpg?v=20261022h" alt="" decoding="async" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/scene-lock.png" alt="" decoding="async" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Scene Lock</span>
+                <span class="mega-menu-card-desc">Plan smarter. Execute better.</span>
+              </span>
+            </a>
+            <a class="mega-menu-card" href="../../../products/set-control/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/set-control/bg.jpg?v=20261022" alt="" decoding="async" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/set-control.png" alt="" decoding="async" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Set Control</span>
+                <span class="mega-menu-card-desc">Every crew. Every detail. In sync.</span>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II — Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card" href="../../../products/loadout/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/loadout/bg.jpg?v=20261022o" alt="" decoding="async" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/loadout.png" alt="" decoding="async" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Loadout</span>
+                <span class="mega-menu-card-desc">Never leave gear behind.</span>
+              </span>
+            </a>
+            <a class="mega-menu-card" href="../../../products/handoff/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/handoff/bg.jpg?v=20261022u" alt="" decoding="async" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/handoff.png" alt="" decoding="async" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Handoff</span>
+                <span class="mega-menu-card-desc">Every file. Verified.</span>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III — Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card" href="../../../products/sound-driver/">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/sound-driver/bg.jpg?v=20261022s" alt="" decoding="async" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/sound-driver.png" alt="" decoding="async" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Sound Driver</span>
+                <span class="mega-menu-card-desc">Real designers. Real sounds.</span>
+              </span>
+            </a>
+            <a class="mega-menu-card" href="../../../products/stock-shredder/" aria-current="true">
+              <span class="mega-menu-card-img">
+                <img class="mega-menu-card-photo" src="../../../assets/img/products/stock-shredder/bg.jpg?v=20261022s" alt="" decoding="async" />
+                <img class="mega-menu-card-logo" src="../../../assets/img/brand/product-logos/stock-shredder.png" alt="" decoding="async" />
+              </span>
+              <span class="mega-menu-card-caption">
+                <span class="mega-menu-card-name">Stock Shredder</span>
+                <span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span>
+              </span>
+            </a>
+          </div>
+        </div>
+    </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="hero-brand"><img class="hero-logo" src="../../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" /></div>
+    <h1>Raw footage into stock-ready clips.</h1>
+    <!-- hero: TRIM. The real click, then one raw reel of drone footage is scanned, cut and closed up
+         into six trimmed clips (same frame, size and label style as the live .strip). -->
+    <figure class="strip trim" data-trim aria-label="A hand clicks a mouse; a long reel of raw drone footage is trimmed into six clips.">
+      <canvas class="strip-canvas" data-trim-canvas aria-hidden="true"></canvas>
+      <video class="strip-src" muted playsinline preload="auto" poster="../media/click-wide.jpg" data-trim-click aria-hidden="true"><source src="../media/click-wide.mp4" type="video/mp4" /></video>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../media/drone/santa-monica.jpg" data-trim-drone data-label="Santa Monica" aria-hidden="true"><source src="../media/drone/santa-monica.mp4" type="video/mp4" /></video>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../media/drone/beverly-hills.jpg" data-trim-drone data-label="Beverly Hills" aria-hidden="true"><source src="../media/drone/beverly-hills.mp4" type="video/mp4" /></video>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../media/drone/century-city.jpg" data-trim-drone data-label="Century City" aria-hidden="true"><source src="../media/drone/century-city.mp4" type="video/mp4" /></video>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../media/drone/lower-manhattan.jpg" data-trim-drone data-label="Lower Manhattan" aria-hidden="true"><source src="../media/drone/lower-manhattan.mp4" type="video/mp4" /></video>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../media/drone/hollywood-hills.jpg" data-trim-drone data-label="Hollywood Hills" aria-hidden="true"><source src="../media/drone/hollywood-hills.mp4" type="video/mp4" /></video>
+      <video class="strip-src" muted loop playsinline preload="auto" poster="../media/drone/sunrise.jpg" data-trim-drone data-label="Sunrise" aria-hidden="true"><source src="../media/drone/sunrise.mp4" type="video/mp4" /></video>
+    </figure>
+    <div class="downloads">
+      <a id="download-mac" class="pill pill-solid" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.8/Stock-Shredder-0.6.8-universal.dmg"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Download for Mac</span></a>
+      <a id="download-win" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.8/Stock-Shredder-Setup-0.6.8.exe"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg><span>Download for Windows</span></a>
+      <span class="pill pill-outline is-disabled" aria-disabled="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone &middot; Coming soon</span></span>
+      <a id="download-android" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
+    </div>
+    <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.8</span> (Beta)</p>
+  </section>
+
+  <section class="film tone-dark" aria-label="On set">
+    <video class="film-video" muted loop playsinline preload="none" poster="../../../assets/img/products/stock-shredder/ss-film-poster.jpg" data-film data-hd="../../../assets/img/products/stock-shredder/ss-film-hd.mp4" aria-hidden="true"><source src="../../../assets/img/products/stock-shredder/ss-film.mp4" type="video/mp4" /></video>
+    <p class="film-line mono">By artists. For artists.</p>
+  </section>
+
+  <div class="pair tone-alt">
+  <section class="workflow" aria-labelledby="workflow-title">
+    <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
+    <ol class="steps">
+      <li><img src="../../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Select</span><span class="step-d">Import your folder</span></li>
+      <li><img src="../../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Review your selections</span></li>
+      <li><img src="../../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Send</span><span class="step-d">Export your clips</span></li>
+      <li><img src="../../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Share</span><span class="step-d">Receive created keywords</span></li>
+    </ol>
+  </section>
+
+  <section class="split" aria-label="The problem and the solution">
+    <div>
+      <h2 class="mono">The problem</h2>
+      <p>Terabytes of footage never make it to sites because sorting, trimming, coloring, exporting, and tagging by hand takes more time than it's worth. Stock footage is profitable but the repetitive workflow of hundreds of hours can cause constant derailment from other tasks.</p>
+    </div>
+    <div>
+      <h2 class="mono">The solution</h2>
+      <p>Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income.</p>
+    </div>
+  </section>
+  </div>
+
+  <section class="interface ix" aria-labelledby="interface-title">
+    <h2 class="section-title section-head head-dw" id="interface-title">The interface</h2>
+    <p class="section-title interface-sub">Built for speed.</p>
+
+    <div class="ix-tour" data-ix-tour>
+      <ul class="ix-nav" aria-label="Interface features" data-ix-nav>
+        <li><button type="button" class="ix-feat" id="ix-f0" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="0" data-rects="84.99,87.68,14.32,11.28;85.3,87.95,13.7,2.05;85.3,90.25,13.7,2.05"><span>01</span>Shortcuts</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f1" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="1" data-rects="17.28,82.62,65.21,10.73"><span>02</span>Trim</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f2" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="2" data-rects="84.99,11.29,14.32,20.28"><span>03</span>Export</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f3" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="3" data-rects="84.99,33.41,14.32,11.04"><span>04</span>Looks</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f4" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="4" data-rects="84.99,45.26,14.32,12.63"><span>05</span>Fine-tune</button></li>
+        <li><button type="button" class="ix-feat" id="ix-f5" aria-pressed="false" aria-controls="ix-explain" data-ix-feat="5" data-ix-night data-rects="96.3,0.35,2.31,3.47"><span>06</span>Day / Night</button></li>
+      </ul>
+
+      <figure class="ix-stage" data-ix-hero>
+        <div class="ix-zoom" data-ix-zoom>
+        <video class="ix-screen" muted loop playsinline preload="metadata" poster="../../../assets/img/products/stock-shredder/review-light-poster.jpg?v=069" width="1440" height="960" data-hd="../../../assets/img/products/stock-shredder/review-light-hd.mp4?v=069" aria-label="Stock Shredder's Review screen playing a reel-to-reel tape deck clip: the clip list, the player, the trim bar, Approve and Deny, and the export, look and fine-tune settings." data-ix-screen><source src="../../../assets/img/products/stock-shredder/review-light.mp4?v=069" type="video/mp4" /></video>
+        <video class="ix-screen ix-dark" muted loop playsinline preload="none" poster="../../../assets/img/products/stock-shredder/review-dark-poster.jpg?v=069" width="1440" height="960" data-hd="../../../assets/img/products/stock-shredder/review-dark-hd.mp4?v=069" aria-hidden="true" data-ix-dark><source src="../../../assets/img/products/stock-shredder/review-dark.mp4?v=069" type="video/mp4" /></video>
+        <svg class="ix-spot" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-ix-spot>
+          <defs><mask id="ix-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="#fff" /><g data-ix-holes></g></mask></defs>
+          <rect class="ix-dim" x="0" y="0" width="100" height="100" mask="url(#ix-mask)" />
+          <g data-ix-rings></g>
+        </svg>
+        </div>
+      </figure>
+
+      <div class="ix-explain" id="ix-explain" aria-live="polite" data-ix-explain>
+        <p class="ix-idle mono" data-ix-idle>Explore the interface.</p>
+          <div class="ix-panel" data-ix-panel="0" hidden><h3 class="section-title ix-h">Shortcuts</h3><p class="ix-p">Approve with A, deny with D &mdash; trim and play without leaving the keyboard.</p></div>
+          <div class="ix-panel" data-ix-panel="1" hidden><h3 class="section-title ix-h">Trim</h3><p class="ix-p">Set the in and out points with I and O as it plays, or drag the handles.</p></div>
+          <div class="ix-panel" data-ix-panel="2" hidden><h3 class="section-title ix-h">Export</h3><p class="ix-p">ProRes in extra sizes up to 8K.<br />Graded, Log or both, in one pass.</p></div>
+          <div class="ix-panel" data-ix-panel="3" hidden><h3 class="section-title ix-h">Looks</h3><p class="ix-p">Built-in looks for ARRI, DJI, RED and Sony log, plus your own LUTs.</p></div>
+          <div class="ix-panel" data-ix-panel="4" hidden><h3 class="section-title ix-h">Fine-tune</h3><p class="ix-p">Exposure, contrast, temperature and tint &mdash; on one clip or all of them.</p></div>
+          <div class="ix-panel" data-ix-panel="5" hidden><h3 class="section-title ix-h">Day / Night</h3><p class="ix-p">Warm sand for daylight, dark for the edit bay &mdash; one tap to switch.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="remote" aria-labelledby="remote-title">
+    <h2 class="mono">Stock Shredder Remote</h2>
+    <p class="section-title" id="remote-title">Approve clips from your phone.</p>
+    <p class="section-sub">Approve or deny clips remotely from your phone via Studio.<br class="br-desk" /> Process footage anywhere without being at your computer.</p>
+    <figure class="phone">
+      <div class="phone-body">
+        <span class="phone-island" aria-hidden="true"></span>
+        <div class="phone-screen"><div class="phone-screen-in"><video class="phone-video" muted loop playsinline preload="none" poster="../../../assets/img/products/stock-shredder/remote-flow-poster.jpg?v=bh1" width="660" height="1344" aria-label="Recording of Stock Shredder Remote on iPhone: a Beverly Hills drone clip plays, Approve is tapped, then GO, and the Mac exports it — 1/1 clips complete." data-film><source src="../../../assets/img/products/stock-shredder/remote-flow.mp4?v=bh1" type="video/mp4" /></video><span class="phone-ver" aria-hidden="true" data-latest-version>v0.6.8</span></div></div>
+      </div>
+    </figure>
+    <div class="remote-cta">
+      <span class="pill pill-outline is-disabled" aria-disabled="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone &middot; Coming soon</span></span>
+      <a class="pill pill-outline" href="#download-android"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
+    </div>
+  </section>
+
+  <section class="spec tone-alt" aria-labelledby="spec-title">
+    <h2 class="section-title section-head head-dw" id="spec-title">Spec sheet</h2>
+    <div class="specs">
+      <div class="spec-row">
+        <p class="spec-k mono">Platform</p>
+        <div class="spec-v">
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg></span><span><strong>macOS</strong><br />Intel &amp; Apple Silicon</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></span><span><strong>Windows</strong></span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />Remote app &middot; soon</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />Remote app</span></div>
+        </div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Speed</p>
+        <div class="spec-v">
+          <table class="speed">
+            <caption class="sr-only">Speed on real footage</caption>
+            <thead><tr><th scope="col">Raw clips</th><th scope="col">Shots found</th><th scope="col">4K clips out</th><th scope="col">Total time</th></tr></thead>
+            <tbody>
+              <tr><td>48</td><td>126</td><td>100</td><td>33 min</td></tr>
+              <tr><td>256</td><td>500</td><td>500</td><td>2 h 50 min</td></tr>
+              <tr><td>640</td><td>1,003</td><td>1,000</td><td>6 h 11 min</td></tr>
+            </tbody>
+          </table>
+          <p class="spec-note spec-note-mono">Sony 4K footage with M3 Pro. Every clip exported Log + Graded ProRes 422 HQ + 2,000 files. All verified. 0 failed. Review time not included.</p>
+        </div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Works with</p>
+        <div class="spec-v"><ul class="tiles"><li>Artgrid</li><li>Shutterstock</li><li>Adobe Stock</li><li>Pond5</li><li>Storyblocks</li><li>Blackbox</li><li>iStock</li><li>Getty Images</li><li>Motion Array</li><li>Envato Elements</li><li>Filmsupply</li><li class="tile-more">and more</li></ul></div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Imports</p>
+        <div class="spec-v"><ul class="tiles tiles-mono"><li>MP4</li><li>MOV</li><li>MXF</li><li>MKV</li><li>AVI</li><li>M4V</li><li>MTS</li><li>M2TS</li><li>MPG</li><li>MPEG</li><li>WebM</li><li>3GP</li><li>WMV</li></ul>
+          <ul class="tiles tiles-raw"><li>Blackmagic RAW</li><li>RED R3D</li><li>CinemaDNG</li><li>ARRIRAW</li></ul>
+          <p class="spec-note">RAW formats need the camera maker's free tools installed.</p></div>
+      </div>
+      <div class="spec-row">
+        <p class="spec-k mono">Exports</p>
+        <div class="spec-v">
+          <ul class="tiles tiles-mono"><li>1080</li><li>2K</li><li>4K</li><li>5K</li><li>6K</li><li>8K</li><li>Match source</li></ul>
+          <ul class="tiles"><li>Graded + Log</li><li>Graded</li><li>Log</li></ul>
+          <ul class="tiles tiles-raw"><li>ProRes 422 HQ</li><li>ProRes 4444</li><li>ProRes 4444 XQ</li></ul>
+          <p class="spec-note">Export several sizes in the same pass.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="world tone-dark" data-world-map hidden aria-labelledby="world-title">
+    <h2 class="section-title section-head head-dw" id="world-title">Clips <span class="shred-word">shredded</span> worldwide</h2>
+    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span><span class="world-count-note mono" data-shred-note>Preview only &middot; live server count, hidden on the real site until confirmed</span></p>
+    <div class="world-map">
+      <img src="../../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
+      <div class="world-map-dots" data-world-map-dots></div>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews" data-reviews-section hidden aria-labelledby="reviews-title">
+    <h2 class="section-title section-head head-dw" id="reviews-title">Reviews</h2>
+    <p class="reviews-count" data-reviews-count hidden></p>
+    <div class="reviews-list" data-reviews-list hidden></div>
+    <p class="reviews-empty" data-reviews-empty hidden></p>
+  </section>
+
+  <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
+    <h2 class="section-title section-head head-dw" id="pricing-title">Simple pricing</h2>
+    <p class="section-sub">Choose the plan that fits your workflow. Change plans anytime.</p>
+    <p class="pricing-error" data-pricing-error hidden></p>
+    <div class="billing">
+      <div class="billing-toggle" role="group" aria-label="Billing interval" data-billing-toggle>
+        <button type="button" class="billing-toggle-btn is-active" data-billing="month">Monthly</button>
+        <button type="button" class="billing-toggle-btn" data-billing="year">Annual</button>
+      </div>
+      <button type="button" class="billing-switch" role="switch" aria-checked="false" data-billing-switch><span class="mono">2 months free</span><span class="billing-switch-track" aria-hidden="true"><span></span></span></button>
+    </div>
+    <div class="pricing-grid" data-pricing-grid>
+      <div class="pricing-card">
+        <span class="pricing-name">Starter</span>
+        <p class="pricing-price" data-monthly="25" data-annual="250"><span class="num">$25</span>/mo</p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
+        <p class="pricing-clips" data-clips-monthly="200">200 clips / mo</p>
+        <p class="pricing-per-clip">$0.13 / clip</p>
+        
+        <button type="button" class="pill pill-outline" data-plan-button="starter">Get started</button>
+      </div>
+      <div class="pricing-card">
+        <span class="pricing-name">Creator</span>
+        <p class="pricing-price" data-monthly="59" data-annual="590"><span class="num">$59</span>/mo</p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
+        <p class="pricing-clips" data-clips-monthly="500">500 clips / mo</p>
+        <p class="pricing-per-clip">$0.12 / clip</p>
+        
+        <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
+      </div>
+      <div class="pricing-card">
+        <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
+        <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
+        <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
+        <p class="pricing-per-clip">$0.11 / clip</p>
+        <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li></ul></div>
+        <button type="button" class="pill pill-outline" data-plan-button="pro">Get started</button>
+      </div>
+      <div class="pricing-card">
+        <span class="pricing-name">Studio</span>
+        <p class="pricing-price" data-monthly="199" data-annual="1990"><span class="num">$199</span>/mo</p>
+        <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
+        <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
+        <p class="pricing-per-clip">$0.10 / clip</p>
+        <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li><li>Approve from your phone</li></ul></div>
+        <button type="button" class="pill pill-outline" data-plan-button="studio">Get started</button>
+      </div>
+    </div>
+    <div class="upgrade-row" aria-label="What Pro and Studio add">
+      <figure class="upgrade upgrade--kw">
+        <figcaption><p class="mono">Pro &middot; Studio</p><h3>Copy-paste keywords</h3><p>Every exported clip gets stock-ready keywords. One click copies them into your upload.</p></figcaption>
+        <div class="upgrade-shot upgrade-shot--kw"><img src="../../../assets/img/products/stock-shredder/keywords-card.jpg?v=bh1" width="1360" height="1192" loading="lazy" alt="Stock Shredder's keyword card for a Beverly Hills drone shot: palm trees, beverly hills, aerial, street, luxury, residential, mansion, afternoon, sunny, california, with a Copy button." /></div>
+      </figure>
+      <figure class="upgrade upgrade--phone">
+        <figcaption><p class="mono">Studio</p><h3>Approve from your phone</h3><p>Approve or deny clips from your phone while your Mac does the shredding.</p></figcaption>
+        <div class="upgrade-shot upgrade-shot--phone"><img src="../../../assets/img/products/stock-shredder/remote-import.jpg" width="660" height="1344" loading="lazy" alt="Stock Shredder Remote on iPhone, ready to pick footage from your Mac." /></div>
+      </figure>
+    </div>
+    <p class="pricing-terms">Monthly plans renew each month and can be canceled anytime. No fee. You keep access until the end of your billing month. Annual plans are paid for 12&nbsp;months. Can't be canceled early. Renew automatically.</p>
+    <div class="checkout-panel" data-checkout-panel hidden>
+      <p class="checkout-status" data-checkout-status hidden></p>
+      <div class="checkout-panel-frame" id="checkout-frame"></div>
+      <div class="checkout-panel-actions">
+        <button type="button" class="pill pill-outline" data-checkout-retry hidden>Try again</button>
+        <button type="button" class="pill pill-outline" data-checkout-cancel>Cancel</button>
+      </div>
+    </div>
+    <div class="checkout-success" data-checkout-success hidden>
+      <p class="mono">You're in</p>
+      <h3>Your activation key</h3>
+      <div class="activation-key-box">
+        <code data-activation-key></code>
+        <button type="button" class="pill pill-outline" data-copy-key>Copy</button>
+      </div>
+      <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.8/Stock-Shredder-0.6.8-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
+      <p class="checkout-success-note">Paste this activation key when it asks. Full instructions are in the app.</p>
+    </div>
+  </section>
+
+  <section class="earn tone-dark" id="earn" aria-labelledby="earn-title">
+    <h2 class="section-title section-head head-dw">Earn</h2>
+    <p class="section-title" id="earn-title">Help other filmmakers find us. Get paid in clips.</p>
+    <ul class="earn-grid">
+      <li><span class="earn-amt">250 clips</span><span>Write a website review</span></li>
+      <li><span class="earn-amt">500 clips</span><span>Share about us on Instagram or TikTok</span></li>
+      <li><span class="earn-amt">1,000 clips each</span><span>Refer a friend</span></li>
+      <li><span class="earn-amt">1,500 clips</span><span>Record a YouTube review and walkthrough</span></li>
+    </ul>
+    <div class="earn-actions">
+      <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
+      <button class="pill pill-outline" type="button" data-review-open>Leave a review <span aria-hidden="true">&rarr;</span></button>
+    </div>
+    <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account.</p>
+  </section>
+
+  <div class="modal-overlay" data-earn-modal-overlay hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit your link" tabindex="-1">
+      <button class="modal-close" type="button" data-earn-modal-close aria-label="Close">&times;</button>
+      <p class="mono">Earn</p>
+      <h3>Submit your link</h3>
+      <div data-earn-modal-body>
+        <p class="earn-modal-note">Share where you posted about Stock Shredder so we can take a look.</p>
+        <p class="form-status form-status-bad" data-earn-modal-error hidden></p>
+        <label class="sr-only" for="earn-email">Your email</label>
+        <input type="email" id="earn-email" placeholder="Your email" autocomplete="email" data-earn-email />
+        <label class="sr-only" for="earn-tiktok">TikTok link</label>
+        <input type="url" inputmode="url" id="earn-tiktok" placeholder="TikTok link" data-earn-tiktok />
+        <label class="sr-only" for="earn-youtube">YouTube link</label>
+        <input type="url" inputmode="url" id="earn-youtube" placeholder="YouTube link" data-earn-youtube />
+        <label class="sr-only" for="earn-instagram">Instagram link</label>
+        <input type="url" inputmode="url" id="earn-instagram" placeholder="Instagram link" data-earn-instagram />
+        <button class="pill pill-solid" type="button" data-earn-submit-btn>Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-review-modal-overlay hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Leave a review" tabindex="-1">
+      <button class="modal-close" type="button" data-review-modal-close aria-label="Close">&times;</button>
+      <p class="mono">Reviews</p>
+      <h3>Leave a review</h3>
+      <p class="earn-modal-note">Tell other filmmakers what Stock Shredder has been like. Reviews appear after a quick approval, and a website review earns you 250 clips.</p>
+      <form class="review-form" data-review-form novalidate>
+      <div class="review-stars" data-review-stars role="radiogroup" aria-label="Your rating">
+        <button type="button" class="review-star" data-review-star="1" aria-label="1 star" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="2" aria-label="2 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="3" aria-label="3 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="4" aria-label="4 stars" aria-pressed="false">&#9733;</button>
+        <button type="button" class="review-star" data-review-star="5" aria-label="5 stars" aria-pressed="false">&#9733;</button>
+      </div>
+      <label class="sr-only" for="review-name">Your name</label>
+      <input type="text" id="review-name" placeholder="Your name" maxlength="100" required data-review-name />
+      <label class="sr-only" for="review-email">Your email</label>
+      <input type="email" id="review-email" placeholder="Your email (not shown publicly)" autocomplete="email" required data-review-email />
+      <label class="sr-only" for="review-body">What's your experience been like?</label>
+      <textarea id="review-body" placeholder="What's your experience been like?" maxlength="2000" required data-review-body></textarea>
+      <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-review-hp />
+      <button class="pill pill-solid" type="submit" data-review-submit>Submit review</button>
+      <p class="form-status" data-review-status hidden></p>
+    </form>
+    </div>
+  </div>
+
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <h2 class="section-title section-head head-dw" id="faq-title">FAQ</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>Do unused clips expire?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>No. If you don't use all your clips in a given month, the unused ones roll over into the next month automatically. Once you've paid for them, they're yours to use whenever you're ready.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>Can I use my activation key on more than one computer?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><div class="faq-a-inner"><p>Each key is tied to one computer at a time. Moving to a new machine? Just reach out and we'll reset it for you.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What does automatic keyword tagging do?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>On Pro and Studio, Stock Shredder creates ready-to-paste keywords for every exported clip. No typing tags by hand for each stock marketplace submission.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>Can I cancel or change my plan anytime?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><div class="faq-a-inner"><p>You can change plans anytime from right inside the app. Monthly plans can be canceled anytime, no fee — you keep access until the end of your billing month, then it stops. Annual plans are paid in full for a 12-month term and automatically renew into another 12-month term when it ends; they can't be canceled mid-term, but you can turn off auto-renew anytime from Account to let the current term run out instead.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Which platforms do you support?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><div class="faq-a-inner"><p>macOS (Intel &amp; Apple Silicon) and Windows. The iPhone app is on the way.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a11" id="faq-q11"><span>Windows says it protected my PC. Is it safe?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a11" role="region" aria-labelledby="faq-q11" hidden><div class="faq-a-inner"><p>Yes. Windows shows that message for apps from smaller studios that it hasn't seen many installs of yet. Click <strong>More info</strong>, then <strong>Run anyway</strong>. The Mac version is signed and verified by Apple.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>What footage formats does it support?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>Fully supported: MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS, MPG, MPEG, WebM, 3GP, WMV. Covers standard DJI, Sony, and ARRI camera files.</p><p>Blackmagic RAW (.braw) is supported natively. RED R3D is accepted with REDCINE-X Pro installed. CinemaDNG sequences (DJI, Blackmagic) are supported on macOS. ARRIRAW/ARRICORE (.ari/.arx sequences and modern ALEXA 35-style .mxf) works with ARRI's free ART CMD tool installed.</p><p>Not yet supported: Canon Cinema RAW Light. Phantom Cine isn't read directly, but Windows users can convert it first with Phantom's own free PCC software. Nikon N-RAW also isn't supported.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Is there a free trial?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Yes. 25 free clips, no card required, right from your first download.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>What's the iPhone app for?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><div class="faq-a-inner"><p>With Studio, you can approve or deny clips remotely from your phone. Process footage anywhere without being at your computer.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a9" id="faq-q9"><span>What if I lose my activation key?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a9" role="region" aria-labelledby="faq-q9" hidden><div class="faq-a-inner"><p>Open the app's Account menu to see it anytime, or have a copy emailed to you.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>What if I need more than 2,000 clips per month?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a10" role="region" aria-labelledby="faq-q10" hidden><div class="faq-a-inner"><p>Get in touch. If there's enough demand, we'll look into adding bigger plans.</p></div></div>
+      </div>
+    </div>
+    <p class="faq-chat">Still have a question? <a href="mailto:deadworkstudio@gmail.com?subject=Stock%20Shredder%20question" class="faq-chat-link" data-faq-chat-open>Chat with us</a></p>
+  </section>
+  <section class="tools" aria-labelledby="tools-title">
+    <p class="tools-title mono" id="tools-title">Explore all DEADWORK tools:</p>
+    <ul class="tools-grid">
+      <li><a class="tool" href="../scene-lock/">
+        <span class="tool-mark"><img src="../../../assets/img/brand/product-logos/clean/scene-lock.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Scene Lock</span><span class="mono">Pre-production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../set-control/">
+        <span class="tool-mark"><img src="../../../assets/img/brand/product-logos/clean/set-control.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Set Control</span><span class="mono">Pre-production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../loadout/">
+        <span class="tool-mark"><img src="../../../assets/img/brand/product-logos/clean/loadout.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Loadout</span><span class="mono">Production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../handoff/">
+        <span class="tool-mark"><img src="../../../assets/img/brand/product-logos/clean/handoff.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Handoff</span><span class="mono">Production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool" href="../sound-driver/">
+        <span class="tool-mark"><img src="../../../assets/img/brand/product-logos/clean/sound-driver.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Sound Driver</span><span class="mono">Post-production &middot; <span class="st-soon">In development</span></span></span>
+      </a></li>
+      <li><a class="tool is-here" href="./" aria-current="page">
+        <span class="tool-mark"><img src="../../../assets/img/brand/product-logos/clean/stock-shredder.png" alt="" loading="lazy" /></span>
+        <span class="tool-meta"><span class="tool-name">Stock Shredder</span><span class="mono">Post-production &middot; <span class="st-live">Available now</span></span></span>
+      </a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="poster-foot">
+    <p class="foot-email">deadworkstudio@gmail.com</p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="foot-note">By artists. For artists. Thank you.</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO &middot; <a href="../../../legal/privacy/">Privacy</a> &middot; <a href="../../../legal/terms/">Terms</a></p>
+  </footer>
+
+<div class="lightbox-overlay" data-lightbox-overlay hidden>
+  <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">&times;</button>
+  <img class="lightbox-image" data-lightbox-image src="" alt="" />
+</div>
+
+<script src="../../../assets/js/nav-dropdown.js?v=20261021c"></script>
+<script src="../../../assets/js/checkout.js?v=20261024c"></script>
+<script src="../../../assets/js/ss-page.js?v=20261025w1"></script>
+<script>
+// The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
+// failed fetch below — this finds whatever the actual latest release is and points every download
+// button there instead (including the post-checkout success link, previously hardcoded to an old
+// version and missed by this script entirely), so this page never goes stale just because a new
+// build shipped.
+fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releases/latest')
+  .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+  .then(function (release) {
+    var assets = release.assets || [];
+    var dmg = assets.find(function (a) { return a.name.endsWith('.dmg'); });
+    var exe = assets.find(function (a) { return a.name.endsWith('.exe'); });
+    var apk = assets.find(function (a) { return a.name.endsWith('.apk'); });
+    if (dmg) document.getElementById('download-mac').href = dmg.browser_download_url;
+    if (dmg) document.getElementById('download-success').href = dmg.browser_download_url;
+    if (exe) document.getElementById('download-win').href = exe.browser_download_url;
+    if (apk) document.getElementById('download-android').href = apk.browser_download_url;
+    var versionEl = document.getElementById('download-version');
+    if (versionEl && release.tag_name && dmg) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
+    // the version shown inside the phone recording follows the latest release too
+    if (release.tag_name) document.querySelectorAll('[data-latest-version]').forEach(function (el) { el.textContent = 'v' + release.tag_name.replace(/^v/, ''); });
+  })
+  .catch(function () {}); // the hardcoded fallback above still works either way
+
+// World map of real signup locations (city-level counts only, see the Worker's listLeadLocations).
+// Always shows Daniel's pinned places (MAP_PINS below) and adds real signups elsewhere. The section itself
+// shows in local review (opened from disk, or ?preview=map) so the layout can be judged; in
+// production it stays hidden until there is real data. The "clips shredded" counter is NOT wired
+// to anything yet and is never shown with a made-up number.
+var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
+(function () {
+  var section = document.querySelector('[data-world-map]');
+  if (!section) return;
+  var preview = location.protocol === 'file:' || /[?&]preview=map\b/.test(location.search);
+  if (preview) { section.hidden = false; section.classList.add('is-preview'); }
+  // Places Daniel set by hand; real signups elsewhere are added on top of these.
+  var MAP_PINS = [
+    { city: 'Los Angeles', country: 'US', latitude: 34.05, longitude: -118.24, count: 1 },
+    { city: 'St. Louis', country: 'US', latitude: 38.63, longitude: -90.2, count: 1 },
+    { city: 'Belleville', country: 'US', latitude: 38.52, longitude: -89.98, count: 1 },
+    { city: 'Moab', country: 'US', latitude: 38.57, longitude: -109.55, count: 1 },
+    { city: 'Dallas', country: 'US', latitude: 32.78, longitude: -96.8, count: 1 },
+    { city: 'Berlin', country: 'DE', latitude: 52.52, longitude: 13.41, count: 1 }
+  ];
+  var near = function (a, b) { return Math.abs(a.latitude - b.latitude) < 0.5 && Math.abs(a.longitude - b.longitude) < 0.5; };
+  var drawMap = function (extra) {
+    var locations = MAP_PINS.concat(extra.filter(function (l) { return !MAP_PINS.some(function (p) { return near(p, l); }); }));
+    var dotsEl = section.querySelector('[data-world-map-dots]');
+    dotsEl.innerHTML = '';
+    var maxCount = locations.reduce(function (m, l) { return Math.max(m, l.count); }, 1);
+    locations.forEach(function (loc) {
+      if (loc.latitude > MAP_LAT_TOP || loc.latitude < MAP_LAT_BOT) return;
+      var dot = document.createElement('span');
+      dot.className = 'world-map-dot';
+      dot.style.left = ((loc.longitude + 180) / 360 * 100) + '%';
+      dot.style.top = ((MAP_LAT_TOP - loc.latitude) / (MAP_LAT_TOP - MAP_LAT_BOT) * 100) + '%';
+      var size = 5 + (loc.count / maxCount) * 9;
+      dot.style.width = size + 'px'; dot.style.height = size + 'px';
+      dot.title = loc.city + ', ' + loc.country;
+      dotsEl.appendChild(dot);
+    });
+    section.hidden = false;
+  };
+  drawMap([]);
+  fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (data) { drawMap((data && data.locations) || []); })
+    .catch(function () {});
+  // Clips-shredded counter: reads the real shared counter on the payments server (+1 per finished
+  // export, sent by the Mac app). Shown on the live site only once data-counter-live="true" is set,
+  // i.e. once Daniel has confirmed the number is real; in local preview it shows whatever the server says.
+  var countWrap = section.querySelector('[data-shred-count]');
+  var countLive = countWrap && countWrap.getAttribute('data-counter-live') === 'true';
+  if (countWrap && (countLive || preview)) {
+    fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/clips-shredded')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) {
+        var total = Number(d && d.total) || 0;
+        var el = countWrap.querySelector('[data-shred-num]');
+        if (!el || !total) return;
+        if (countLive) { section.hidden = false; countWrap.classList.add('is-live'); }
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, start = null, dur = 1200;
+        function step(ts) { if (start === null) start = ts; var p = Math.min(1, (ts - start) / dur); el.textContent = Math.round(total * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1) requestAnimationFrame(step); }
+        if (reduce) el.textContent = total.toLocaleString('en-US'); else requestAnimationFrame(step);
+      })
+      .catch(function () {});
+  }
+})();
+
+
+</script>
+<script>
+// "Submit your link" — same /earn-submission endpoint stockshredder.com's own modal posts to.
+(function () {
+  var EARN_API = 'https://stock-shredder-payments.stockshredder.workers.dev';
+  var openBtn = document.querySelector('[data-earn-submit-open]');
+  var overlay = document.querySelector('[data-earn-modal-overlay]');
+  if (!openBtn || !overlay) return;
+  var closeBtn = overlay.querySelector('[data-earn-modal-close]');
+  var body = overlay.querySelector('[data-earn-modal-body]');
+  var errorEl = overlay.querySelector('[data-earn-modal-error]');
+  var submitBtn = overlay.querySelector('[data-earn-submit-btn]');
+  var untrap = null;
+
+  function closeModal() {
+    overlay.hidden = true;
+    if (untrap) { untrap(); untrap = null; }
+    if (window.DWModal) window.DWModal.unlock();
+    openBtn.focus();
+  }
+  openBtn.addEventListener('click', function () {
+    if (!overlay.hidden) return; // already open — a second lock() with no matching second unlock() would strand the scroll lock on
+    overlay.hidden = false;
+    if (window.DWModal) { window.DWModal.lock(); untrap = window.DWModal.trap(overlay, overlay.querySelector('.modal')); }
+    var first = overlay.querySelector('[data-earn-email]');
+    if (first) first.focus();
+  });
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+
+  submitBtn.addEventListener('click', function () {
+    errorEl.hidden = true;
+    var email = overlay.querySelector('[data-earn-email]').value.trim();
+    var tiktok = overlay.querySelector('[data-earn-tiktok]').value.trim();
+    var youtube = overlay.querySelector('[data-earn-youtube]').value.trim();
+    var instagram = overlay.querySelector('[data-earn-instagram]').value.trim();
+    if (!email) {
+      errorEl.textContent = 'Your email is required.';
+      errorEl.hidden = false;
+      return;
+    }
+    if (!tiktok && !youtube && !instagram) {
+      errorEl.textContent = 'Add at least one link.';
+      errorEl.hidden = false;
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+    fetch(EARN_API + '/earn-submission', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, tiktok: tiktok, youtube: youtube, instagram: instagram })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+          errorEl.textContent = (result.data && result.data.error) || 'Could not submit — try again in a moment.';
+          errorEl.hidden = false;
+          return;
+        }
+        body.innerHTML = '<p class="earn-modal-note">Thanks! Once it’s approved, you’ll get an access code to add the clips to your account.</p>';
+        // The submit button that focus likely still lived on is gone now — send it to the close
+        // button (the only other focusable left in the dialog) instead of leaving it to fall out
+        // to <body>, outside the trap.
+        closeBtn.focus();
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+        errorEl.textContent = 'Could not reach the server — try again in a moment.';
+        errorEl.hidden = false;
+      });
+  });
+})();
+</script>
+<script>
+// "Leave a review" pop-up: same open/close rules as "Submit your link".
+(function () {
+  var open = document.querySelector('[data-review-open]');
+  var overlay = document.querySelector('[data-review-modal-overlay]');
+  if (!open || !overlay) return;
+  var untrap = null;
+  var close = function () {
+    overlay.hidden = true;
+    if (untrap) { untrap(); untrap = null; }
+    if (window.DWModal) window.DWModal.unlock();
+    open.focus();
+  };
+  open.addEventListener('click', function () {
+    if (!overlay.hidden) return; // already open — a second lock() with no matching second unlock() would strand the scroll lock on
+    overlay.hidden = false;
+    if (window.DWModal) { window.DWModal.lock(); untrap = window.DWModal.trap(overlay, overlay.querySelector('.modal')); }
+    var first = overlay.querySelector('[data-review-star]');
+    if (first) first.focus();
+  });
+  overlay.querySelector('[data-review-modal-close]').addEventListener('click', close);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
+})();
+</script>
+<script>
+// Reviews: approved-review grid (GET /reviews) + the submission form (POST /reviews). New
+// submissions always land as "pending" server-side (see reviews.ts) -- nothing posted here shows
+// up publicly until an admin approves it in the Worker's own moderation page, so the success
+// message below says "pending," not "posted."
+(function () {
+  var REVIEWS_URL = 'https://stock-shredder-payments.stockshredder.workers.dev/reviews';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  fetch(REVIEWS_URL)
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (reviews) {
+      var listEl = document.querySelector('[data-reviews-list]');
+      var emptyEl = document.querySelector('[data-reviews-empty]');
+      var countEl = document.querySelector('[data-reviews-count]');
+      if (!listEl || !emptyEl) return;
+      if (!reviews || !reviews.length) {
+        return;
+      }
+      if (countEl) {
+        var avg = reviews.reduce(function (sum, r) { return sum + r.rating; }, 0) / reviews.length;
+        countEl.textContent = avg.toFixed(1) + '★ average · ' + reviews.length + ' review' + (reviews.length === 1 ? '' : 's');
+        countEl.hidden = false;
+      }
+      listEl.innerHTML = reviews.map(function (r) {
+        var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return '<div class="review-card">' +
+          '<div class="review-card-stars" aria-label="' + r.rating + ' out of 5 stars">' + stars + '</div>' +
+          '<p class="review-card-body">' + escapeHtml(r.body) + '</p>' +
+          '<p class="review-card-name">— ' + escapeHtml(r.name) + '</p>' +
+          '</div>';
+      }).join('');
+      listEl.hidden = false;
+      var reviewsSection = document.querySelector('[data-reviews-section]'); if (reviewsSection) reviewsSection.hidden = false;
+    })
+    .catch(function () {}); // reviews-list just stays hidden if this fails -- no broken-looking gap
+
+  var form = document.querySelector('[data-review-form]');
+  if (!form) return;
+  var starsWrap = form.querySelector('[data-review-stars]');
+  var stars = Array.prototype.slice.call(form.querySelectorAll('[data-review-star]'));
+  var nameInput = form.querySelector('[data-review-name]');
+  var emailInput = form.querySelector('[data-review-email]');
+  var bodyInput = form.querySelector('[data-review-body]');
+  var honeypot = form.querySelector('[data-review-hp]');
+  var submitBtn = form.querySelector('[data-review-submit]');
+  var status = form.querySelector('[data-review-status]');
+  var rating = 0;
+  var defaultLabel = submitBtn.textContent;
+
+  function paintStars(upTo) {
+    stars.forEach(function (star) {
+      var val = Number(star.getAttribute('data-review-star'));
+      star.classList.toggle('is-active', val <= upTo);
+      star.setAttribute('aria-pressed', val <= rating ? 'true' : 'false');
+    });
+  }
+
+  stars.forEach(function (star) {
+    var val = Number(star.getAttribute('data-review-star'));
+    star.addEventListener('click', function () {
+      rating = val;
+      paintStars(rating);
+    });
+    star.addEventListener('mouseenter', function () { paintStars(val); });
+  });
+  if (starsWrap) starsWrap.addEventListener('mouseleave', function () { paintStars(rating); });
+
+  function showStatus(message, tone) {
+    status.textContent = message || '';
+    status.hidden = !message;
+    status.classList.remove('notify-status-bad', 'notify-status-good');
+    if (tone) status.classList.add('notify-status-' + tone);
+  }
+
+  function setBusy(isBusy) {
+    submitBtn.disabled = isBusy;
+    submitBtn.textContent = isBusy ? 'Sending…' : defaultLabel;
+  }
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    if (honeypot && honeypot.value) {
+      form.reset();
+      rating = 0;
+      paintStars(0);
+      showStatus('Thanks for the review!', 'good');
+      return;
+    }
+
+    var name = (nameInput.value || '').trim();
+    var email = (emailInput.value || '').trim();
+    var body = (bodyInput.value || '').trim();
+
+    if (!rating) { showStatus('Pick a star rating first.', 'bad'); return; }
+    if (!name) { showStatus('Your name is required.', 'bad'); nameInput.focus(); return; }
+    if (!EMAIL_RE.test(email)) { showStatus("That doesn't look like a valid email address.", 'bad'); emailInput.focus(); return; }
+    if (!body) { showStatus("Tell us what your experience has been like.", 'bad'); bodyInput.focus(); return; }
+
+    setBusy(true);
+    showStatus('', null);
+
+    fetch(REVIEWS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, rating: rating, body: body })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) throw new Error((result.data && result.data.error) || 'Review submission failed');
+        form.reset();
+        rating = 0;
+        paintStars(0);
+        showStatus('Thanks — your review is in, pending a quick approval.', 'good');
+      })
+      .catch(function (err) {
+        showStatus((err && err.message) || 'Something went wrong — please try again.', 'bad');
+      })
+      .then(function () {
+        setBusy(false);
+      });
+  });
+})();
+
+// Image lightbox: click a trigger to see its image full-screen, click anywhere (including the
+// image itself, since the click bubbles up to the overlay) or press Escape to close.
+(function () {
+  var overlay = document.querySelector('[data-lightbox-overlay]');
+  var overlayImg = overlay ? overlay.querySelector('[data-lightbox-image]') : null;
+  var triggers = document.querySelectorAll('[data-lightbox-trigger]');
+  if (!overlay || !overlayImg || !triggers.length) return;
+
+  function openLightbox(src, alt) {
+    overlayImg.src = src;
+    overlayImg.alt = alt || '';
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    overlay.hidden = true;
+    overlayImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var img = trigger.querySelector('img');
+      if (img) openLightbox(img.src, img.alt);
+    });
+  });
+  overlay.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !overlay.hidden) closeLightbox();
+  });
+})();
+</script>
+<script src="hero.js"></script>
+</body>
+</html>

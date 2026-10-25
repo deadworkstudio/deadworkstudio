@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Shredder hero, round 2 (local)</title>
+<style>
+ body{margin:0;background:#E9E3D6;color:#141412;font:12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em}
+ header{padding:18px 28px;display:flex;gap:20px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid rgba(20,20,18,.14)}
+ h1{font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:0}
+ .note{opacity:.6}
+ button{font:inherit;background:none;border:1px solid rgba(20,20,18,.3);padding:6px 12px;cursor:pointer;margin-left:auto}
+ section{padding:22px 28px 6px}
+ h2{font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 4px;display:flex;gap:14px}
+ h2 a{color:inherit;opacity:.6}
+ p{margin:0 0 10px;opacity:.7}
+ iframe{width:100%;height:720px;border:1px solid rgba(20,20,18,.14);background:#F3EFE6;display:block}
+</style></head><body>
+<header><h1>Stock Shredder hero · round 2</h1><span class="note">Local preview. Color, drone only, real click fills the frame first.</span><button id="r">Replay all</button></header>
+<section><h2>01 Splice <a href="splice/index.html" target="_blank">open full ↗</a></h2><p>On the click, six cuts slice the frame and each slice becomes a different drone shot.</p><iframe src="splice/index.html"></iframe></section>
+<section><h2>02 Trim <a href="trim/index.html" target="_blank">open full ↗</a></h2><p>On the click, one long raw reel of drone footage slides by, gets cut, and closes up into six trimmed clips.</p><iframe src="trim/index.html"></iframe></section>
+<section><h2>03 Sequence <a href="sequence/index.html" target="_blank">open full ↗</a></h2><p>On the click, quick hard cuts through the drone shots, then they settle into a neat grid of six.</p><iframe src="sequence/index.html"></iframe></section>
+<script>document.getElementById('r').onclick=function(){document.querySelectorAll('iframe').forEach(function(f){f.src=f.src});};</script>
+</body></html>

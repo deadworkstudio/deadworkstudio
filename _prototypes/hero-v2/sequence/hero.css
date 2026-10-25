@@ -1,0 +1,5 @@
+/* ---- hero: "Sequence" — click, raw pile, editorial grid ----
+   Reuses .strip for size and placement (same width rule as the live strip).
+   The canvas reserves the strip's exact footprint before any video loads:
+   one 2.39:1 frame plus the 9% label row underneath, so the page never jumps. */
+.seq-canvas { display: block; width: 100%; height: auto; aspect-ratio: 2.39 / 1.09; }
