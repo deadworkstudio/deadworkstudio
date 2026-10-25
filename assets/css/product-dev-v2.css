@@ -52,3 +52,47 @@ body.dev-v2 section.dev-notify.wrap {
 /* ---- full-width film block under the hero (Sound Driver), like the Stock Shredder page's film ---- */
 body.dev-v2 .dev-film { position: relative; overflow: hidden; width: 100%; margin: clamp(8px, 2vh, 20px) 0 0; border-radius: 4px; aspect-ratio: 1920 / 1012; max-height: 78svh; background: #0E0E0D; }
 body.dev-v2 .dev-film-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- match Stock Shredder's page exactly (2026-10-25): its fixed header, hero rhythm and the hero
+   video's size/position — values copied from ss-page.css (.poster-head, .hero, .strip). ---- */
+body.dev-v2 { --ss-gutter: clamp(20px, 6.4vw, 92px); --ss-sh: 78px; --ss-hero-text: clamp(360px, 41vh, 430px); }
+body.dev-v2 .poster-head { position: fixed; inset: 0 0 auto 0; z-index: 50; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px; margin: 0; padding: 22px var(--ss-gutter) 18px; background: rgba(244, 241, 234, .9); -webkit-backdrop-filter: saturate(1.4) blur(18px); backdrop-filter: saturate(1.4) blur(18px); }
+body.dev-v2 .poster-brand { grid-column: 2; grid-row: 1; justify-self: center; margin: 0; }
+body.dev-v2 .poster-brand img { height: 22px; width: auto; transform: translateY(-4px); }
+body.dev-v2 .nav-tabs { display: flex; gap: 4px 36px; }
+body.dev-v2 .nav-tabs--pre { grid-column: 1; grid-row: 1; justify-content: flex-end; padding-right: clamp(16px, 3vw, 48px); }
+body.dev-v2 .nav-tabs--post { grid-column: 3; grid-row: 1; justify-content: flex-start; padding-left: clamp(16px, 3vw, 48px); }
+body.dev-v2 .nav-tab-trigger { min-height: 36px; padding: 0 2px; font: 500 11px/1.4 var(--font-mono); letter-spacing: .2em; }
+body.dev-v2 .poster-meta-left, body.dev-v2 .poster-meta-right { position: absolute; bottom: 22px; margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+body.dev-v2 .poster-meta-left { left: var(--ss-gutter); }
+body.dev-v2 .poster-meta-right { right: var(--ss-gutter); }
+body.dev-v2 .poster-panel { margin-top: 0; padding-top: 0; border-top: 0; }
+body.dev-v2 .poster { padding-top: 0; }
+body.dev-v2 .dev-hero { padding-top: calc(var(--ss-sh) + clamp(16px, 2.6vh, 32px)); padding-bottom: 0; }
+body.dev-v2 .dev-film { width: min(100%, 1120px, calc((100svh - var(--ss-hero-text)) * 2.3)); aspect-ratio: 2.39 / 1 !important; max-height: none; margin: clamp(22px, 3.4vh, 40px) auto 0; border-radius: 0; }
+body.dev-v2 .dev-status { display: flex; justify-content: center; margin: clamp(18px, 2.6vh, 30px) 0 clamp(28px, 4svh, 44px); }
+body.dev-v2 .dev-hero:not(:has(+ .dev-film)) { padding-bottom: clamp(28px, 4svh, 44px); }
+@media (max-width: 1100px) { body.dev-v2 .poster-meta-left, body.dev-v2 .poster-meta-right { display: none; } }
+@media (max-width: 719px) {
+  body.dev-v2 { --ss-sh: 110px; }
+  body.dev-v2 .poster-head { grid-template-columns: 1fr; justify-items: center; row-gap: 0; padding: 14px 16px 8px; }
+  body.dev-v2 .poster-brand { grid-column: 1; grid-row: 1; }
+  body.dev-v2 .poster-brand img { height: 20px; transform: none; }
+  body.dev-v2 .nav-tabs { gap: 2px 18px; }
+  body.dev-v2 .nav-tabs--pre, body.dev-v2 .nav-tabs--post { grid-column: 1; padding: 0; justify-content: center; }
+  body.dev-v2 .nav-tabs--pre { grid-row: 2; margin-top: 4px; } body.dev-v2 .nav-tabs--post { grid-row: 3; }
+  body.dev-v2 .nav-tab-trigger { min-height: 32px; align-items: center; font-size: 10.5px; }
+  body.dev-v2 .dev-hero { padding-top: calc(var(--ss-sh) + 36px); }
+  body.dev-v2 .dev-film { width: 100%; }
+}
+@media (min-width: 900px) and (min-height: 600px) { body.dev-v2 { --ss-hero-text: clamp(470px, 50vh, 560px); } }
+@media (max-width: 719px) { body.dev-v2 .dev-film { width: calc(100vw - 40px); margin-left: calc(50% - 50vw + 20px); margin-right: 0; } }
+/* the page flows to its full length (footer after the content, never over it) and the dropdown keeps Stock Shredder's side margins */
+body.dev-v2 .poster { height: auto !important; min-height: 100vh; min-height: 100svh; }
+body.dev-v2 .mega-menu { padding-left: var(--ss-gutter); padding-right: var(--ss-gutter); }
+@media (max-width: 719px) { body.dev-v2 .mega-menu { padding-left: 16px; padding-right: 16px; } }
+/* scroll the whole page like Stock Shredder's, not a panel inside a locked one-screen poster */
+@media (min-width: 720px) and (min-height: 640px) {
+  html:has(body.dev-v2), body.dev-v2 { height: auto; overflow: visible; overflow-x: clip; overscroll-behavior: auto; }
+  body.dev-v2 .poster-panel { overflow: visible; min-height: auto; }
+}
