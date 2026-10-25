@@ -1,5 +1,6 @@
 // ==========================================================================
-// Hero: IMPORT -> SHRED -> SEND. Plays once (~13 s), then rests on six playing clips. Never loops back.
+// Hero: IMPORT -> SHRED -> SEND, ~15.5 s, then a short fade back to the wall and it starts over.
+// Push variant (the chosen one): wall 0–2 s, push 2–3 s, shred ~3–9.4 s, six panels held 6 s, loop.
 //
 //   0.0–3.5   IMPORT  the archive wall (the archive concept, unchanged): dissolves up, drifts, eases to a stop.
 //                     One tile holds weld-1's frame: the take we are about to open.
@@ -43,12 +44,12 @@
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
   var VARIANT = ({ push: 1, fade: 1, cut: 1 })[q.get('v')] ? q.get('v') : 'push';
-  var T = { wallIn: [0, 0.8], cruiseEnd: 2.3, stop: 3.5 };
+  var T = { wallIn: [0, 0.6], cruiseEnd: 1.3, stop: 2.0 };
   var DRIFT_V = 7 / (3.8 + (5.8 - 3.8) / 2);                       // the archive concept's drift speed (rows/s)
   var DRIFT_ROWS = DRIFT_V * (T.cruiseEnd + (T.stop - T.cruiseEnd) / 2);
   var START_TOP = REST_TOP - DRIFT_ROWS;
   var X = {                                                        // P = weld-1 starts playing, F = picture is full frame
-    push: { push: [3.5, 4.9], xfade: [4.9, 5.07], P: 4.9, F: 5.07 },
+    push: { push: [2.0, 3.0], xfade: [3.0, 3.0001], P: 2.0, F: 3.0 },  // weld-1 plays inside its tile for the whole push
     fade: { dim: [3.5, 4.3], dissolve: [4.3, 5.1], P: 4.3, F: 5.1 },
     cut:  { lift: [3.5, 3.95], cut: 4.5, P: 4.5, F: 4.5 }
   }[VARIANT];
@@ -69,6 +70,7 @@
   T.panelsIn = [S, S + 0.8]; T.fullOut = [S + 0.4, S + 1.2]; T.scanOut = [S, S + 0.5];
   T.caps = S + 0.8; T.capDur = 0.6; T.capStep = 0.05;
   T.rest = T.caps + 5 * T.capStep + T.capDur;
+  T.HOLD = 6; T.LOOP = S + T.HOLD; T.loopOut = [T.LOOP - 0.6, T.LOOP];   // six panels held, then fade and start over
 
   // ---- elements ----
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
@@ -107,8 +109,9 @@
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
     var L = [-1, -1, -1, -1, -1, -1];
-    if (t < X.P) return L;
-    if (t < S) { var c = clipAt(t); L[c] = t - arrive[c]; return L; }
+    var OFF0 = VARIANT === 'push' ? X.P : 0;                         // push: weld-1 runs from t = 0, inside its tile
+    if (t < X.P) { if (OFF0) L[0] = t; return L; }
+    if (t < S) { var c = clipAt(t); L[c] = t - arrive[c] + (c === 0 ? OFF0 : 0); return L; }
     for (var i = 0; i < 6; i++) L[i] = i === 5 ? t - arrive[5] : t - S;
     return L;
   }
@@ -128,9 +131,9 @@
   // weld-1 cover-cropped into a w x h picture: at rest it is an ordinary tile (no letterbox); during the
   // push its picture opens from the tile's shape to the full 2.39 frame, so it lands on the exact video frame.
   function drawWeld(c, x, y, w, h) {
-    var iw = weld.naturalWidth, ih = weld.naturalHeight; if (!iw) return;
+    var src = frameOf(0), iw = src.videoWidth || src.naturalWidth, ih = src.videoHeight || src.naturalHeight; if (!iw) return;
     var sw = iw, sh = iw * h / w; if (sh > ih) { sh = ih; sw = ih * w / h; }
-    c.drawImage(weld, (iw - sw) / 2, (ih - sh) / 2, sw, sh, x, y, w, h);
+    c.drawImage(src, (iw - sw) / 2, (ih - sh) / 2, sw, sh, x, y, w, h);
   }
   function size() {
     dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -195,7 +198,7 @@
         var hw = Math.max(pcx - Math.max(X0, 0), Math.min(X0 + w, W) - pcx), hv = Math.max(pcy - Math.max(Y0, 0), Math.min(Y0 + h, H) - pcy);
         var ph = Math.max(2 * hv, 2 * hw / RATIO), pw = ph * RATIO;
         ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, w, h); ctx.clip();
-        if (weld.naturalWidth) ctx.drawImage(weld, pcx - pw / 2, pcy - ph / 2, pw, ph);
+        ctx.drawImage(frameOf(0), pcx - pw / 2, pcy - ph / 2, pw, ph);   // the live video itself: no image-to-video swap
         ctx.restore();
         continue;
       }
@@ -240,13 +243,13 @@
     }
     for (var j = 0; j < caps.length; j++) {
       var a = T.caps + j * T.capStep;
-      setStyle(caps[j], 'c' + j, 'opacity', String(out(seg(t, [a, a + T.capDur]))));
+      setStyle(caps[j], 'c' + j, 'opacity', String(out(seg(t, [a, a + T.capDur])) * (1 - inOut(seg(t, T.loopOut)))));
     }
 
     // Canvas: the picture
     if (!ready || !W) return;
     var wallA = out(seg(t, T.wallIn));
-    setStyle(canvas, 'cv', 'opacity', String(t < T.wallIn[1] ? wallA : 1));
+    setStyle(canvas, 'cv', 'opacity', String(t < T.wallIn[1] ? wallA : 1 - inOut(seg(t, T.loopOut))));
     ctx.clearRect(0, 0, W, H);
 
     if (t < X.F) {                                                  // IMPORT + the transition
@@ -255,6 +258,10 @@
         drawFull(0, inOut(seg(t, X.xfade)));
       } else {
         drawWall(t);
+        if (VARIANT === 'push') {
+          var sheetH = th * WALL.rows, ty = (((HERO.row - wallTop(t)) * th) % sheetH + sheetH) % sheetH;
+          drawWeld(ctx, (HERO.col - FIRST_COL) * tw + g / 2, ty + g / 2, tw - g, th - g);
+        }
         var hr = heroRest();
         if (VARIANT === 'fade' && t >= X.dim[0]) {
           ctx.fillStyle = 'rgba(14,14,13,' + (0.9 * inOut(seg(t, X.dim))) + ')'; ctx.fillRect(0, 0, W, H);
@@ -336,7 +343,8 @@
     if (!onScreen || document.hidden) return;
     if (last !== null) clock += Math.min(0.1, (ts - last) / 1000);  // a dropped tab never skips a beat
     last = ts;
-    if (clock > 0.2) loadAll();
+    loadAll();
+    if (clock >= T.LOOP) { clock = 0; vids.forEach(function (v) { v.pause(); try { v.currentTime = 0; } catch (e) {} }); }
     syncVideos(clock);
     render(clock);
     raf = requestAnimationFrame(frame);                              // keeps drawing the playing clips at rest
