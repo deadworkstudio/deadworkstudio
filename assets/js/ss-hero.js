@@ -24,7 +24,7 @@
   var RATIO = 2.39;
 
   // ---- the wall (archive-wall.json, inlined so the page works from file://) ----
-  var WALL = { src: MEDIA + 'archive-wall.jpg', cols: 24, rows: 20, tileW: 192, tileH: 101, total: 690 };
+  var WALL = { src: MEDIA + 'archive-wall.jpg?v=2', cols: 24, rows: 20, tileW: 192, tileH: 101, total: 360 };
   var VIEW_COLS = 20, FIRST_COL = 2;                               // the archive concept's window
   var VIEW_ROWS = VIEW_COLS * WALL.tileW / (WALL.tileH * RATIO);   // ≈15.9
   // The take's own frame (A002_C044_0217SC) sits at col 3,row 4, on the edge of the window. Its frame
