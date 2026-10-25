@@ -528,15 +528,16 @@ main > section.ix { min-height: 0 !important; padding-bottom: clamp(40px, 6vh, 6
 .ix-tour { --ix-w: min(100%, 1120px, calc((100svh - var(--sh-h) - 228px) * 1.566)); width: var(--ix-w); margin: clamp(32px, 5vh, 56px) auto 0; padding-top: clamp(28px, 4vh, 40px); border-top: 1px solid var(--line); text-align: left; }
 .ix-stage { position: relative; transform-origin: 50% 0; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
-.ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 1022; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #000; }
-.ix-day { position: absolute; inset: 0; opacity: 0; transition: opacity 560ms var(--ease); background: #EBE5D8; }
+.ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 1022; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
+/* the default recording is day mode; the Day / Night stop fades in the frame-aligned night recording */
+.ix-day { position: absolute; inset: 0; opacity: 0; transition: opacity 560ms var(--ease); background: #000; box-shadow: none; }
 .ix-stage.is-day .ix-day { opacity: 1; }
 .ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 400ms var(--ease); }
 .ix-spot.is-on { opacity: 1; }
-.ix-dim { fill: rgba(8, 8, 7, .34); }
+.ix-dim { fill: rgba(20, 20, 18, .2); }
 .ix-ring { fill: none; stroke: var(--ink); stroke-width: 1.25px; vector-effect: non-scaling-stroke; transition: stroke 400ms var(--ease); }
-.ix-stage.is-day .ix-ring { stroke: #141412; }
-.ix-stage.is-day .ix-dim { fill: rgba(20, 20, 18, .16); }
+.ix-stage.is-day .ix-ring { stroke: #F1ECE2; }
+.ix-stage.is-day .ix-dim { fill: rgba(8, 8, 7, .34); }
 
 .ix-tabs { display: flex; justify-content: space-between; margin-top: 18px; }
 .ix-tabs button, .ix-arrow { border: 0; background: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); transition: color 160ms var(--ease); }
