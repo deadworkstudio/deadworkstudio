@@ -100,18 +100,43 @@
 .dev-notify .notify-status-bad { color: var(--signal); }
 .dev-notify .notify-status-good { color: var(--beta-green); }
 
-/* ---- explore DEADWORK tools grid (same device as Stock Shredder's, generalized) ---- */
-.dev-tools-title { text-align: center; margin-bottom: 20px; }
-.dev-tools-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--line); max-width: var(--wrap-max); margin: 0 auto; padding: 0; }
-.dev-tool { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: var(--ink); text-decoration: none; transition: background 160ms var(--ease); }
+/* ---- explore DEADWORK tools grid: the exact same tile Stock Shredder's own page ends on (big
+   centered logo over a name + status line), not a reinvented compact list. ---- */
+.dev-tools-title { text-align: center; margin-bottom: 0; }
+.dev-tools-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); max-width: var(--wrap-max); margin: 0 auto; padding: 0; border-top: 1px solid var(--line-strong); }
+.dev-tools-grid li { border-right: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+.dev-tools-grid li:nth-child(3n) { border-right: 0; }
+.dev-tool { position: relative; display: grid; grid-template-rows: 1fr auto; aspect-ratio: 1 / 0.82; padding: 28px; text-decoration: none; color: var(--bone); transition: background 200ms var(--ease); }
 @media (any-hover: hover) and (any-pointer: fine) { .dev-tool:hover { background: var(--ink-raised); } }
-.dev-tool-mark { display: grid; place-items: center; width: 34px; height: 34px; flex: none; }
-.dev-tool-mark img { width: 100%; height: 100%; object-fit: contain; }
-.dev-tool-name { display: block; font-size: 14px; color: var(--bone); }
-.dev-tool-meta { display: block; margin-top: 3px; font: 500 10px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }
+.dev-tool-mark { display: grid; place-items: center; }
+.dev-tool-mark img { width: min(62%, 300px); height: auto; max-height: 120px; object-fit: contain; opacity: .9; transition: transform 200ms var(--ease), opacity 200ms var(--ease); }
+@media (any-hover: hover) and (any-pointer: fine) { .dev-tool:hover .dev-tool-mark img { transform: scale(1.04); opacity: 1; } }
+.dev-tool-name { display: block; font-size: 15px; }
+.dev-tool-meta { display: block; margin-top: 4px; font: 500 10px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }
 .dev-tool.is-here { outline: 1px solid var(--line-strong); outline-offset: -1px; }
 .dev-tool-status-soon { color: var(--dev-yellow); }
 .dev-tool-status-live { color: var(--beta-green); }
+@media (max-width: 719px) { .dev-tools-grid { grid-template-columns: repeat(2, 1fr); } .dev-tools-grid li:nth-child(3n) { border-right: 1px solid var(--line-strong); } .dev-tools-grid li:nth-child(2n) { border-right: 0; } }
+
+/* ---- escape the shared "single-viewport poster" shell (home.css's .poster/.poster-panel at
+   ≥720x640: html/body locked to 100vh, .poster-panel scrolling internally with .poster-foot
+   pinned below it in its own grid row). That shell suits the old short pages (one screen of
+   content); it can't hold a long, Stock-Shredder-length page — .poster-panel would scroll on
+   its own with the footer floating mid-page. Stock Shredder's own page sidesteps this by not
+   loading home.css at all (ss-page.css is fully self-contained); these five pages still need
+   home.css for the real shared header/mega-menu, so instead <body class="dev-page"> turns the
+   shell back into a normal, whole-page-scrolling document — same header, same mega-menu
+   positioning (both stay untouched: this only un-does the height/overflow/grid-row part). ---- */
+@media (min-width: 720px) and (min-height: 640px) {
+  html:has(body.dev-page), body.dev-page { height: auto; overflow: visible; }
+  /* Stay display:grid with the same 12 columns — .poster-head's grid-template-columns:subgrid
+     (home.css) needs that exact parent grid to keep the header laid out correctly; only the
+     fixed 100vh height and the single-viewport row sizing are undone. */
+  body.dev-page .poster { height: auto; grid-template-rows: auto auto auto; }
+  body.dev-page .poster-media { position: absolute; }
+  body.dev-page .poster-panel { overflow: visible; padding-block: clamp(24px, 5svh, 64px) 0; }
+  body.dev-page .poster-foot { margin-top: 0; }
+}
 
 /* ---- section rhythm on these pages: every band gets the same vertical breathing room ---- */
 .dev-section { padding-block: var(--space-section); }
