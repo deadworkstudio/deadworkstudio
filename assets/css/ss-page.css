@@ -190,7 +190,8 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 .spec-row { display: grid; grid-template-columns: 180px 1fr; gap: 32px; padding: 26px 0; border-bottom: 1px solid var(--line-2); align-items: start; }
 .spec-k { padding-top: 6px; }
 .spec-v { display: grid; gap: 12px; }
-.spec-v:has(.spec-plat) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.spec-v:has(.spec-plat) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1023px) { .spec-v:has(.spec-plat) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .spec-plat { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line-2); font-size: 14px; line-height: 1.35; color: var(--ink-2); }
 .spec-plat strong { color: var(--ink); font-weight: 600; font-size: 16px; }
 .spec-plat-ic { display: grid; place-items: center; width: 44px; height: 44px; color: var(--ink); }
