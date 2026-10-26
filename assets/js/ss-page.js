@@ -195,7 +195,14 @@
       if (typeof priorOnMinimized === 'function') priorOnMinimized();
     };
     var s = document.createElement('script');
-    s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8'; s.setAttribute('crossorigin', '*');
+    // QA-22: crossorigin="*" isn't a real value (only "anonymous"/"use-credentials" are), and an
+    // invalid value still puts the script in CORS mode, requiring embed.tawk.to to answer with
+    // an Access-Control-Allow-Origin header, which it doesn't — confirmed on the live production
+    // domain (deadworkstudio.com), not just a CORS quirk of testing from a non-whitelisted
+    // origin: the widget never loaded there either. main.js's own loader had this exact bug
+    // fixed already (D-6); this page's separate loader (triggered by the FAQ "Chat with us"
+    // link as well as scroll/tap/key) still had it. Dropped, same fix.
+    s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8';
     document.body.appendChild(s);
   }
   if (location.protocol !== 'file:') ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
