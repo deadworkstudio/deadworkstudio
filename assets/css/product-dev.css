@@ -66,6 +66,14 @@ body.dev-light .poster-foot { border-color: var(--dev-line); }
 /* The nav underline/hover dot already uses --acc (per-product yellow, see tokens.css), which
    clears AA on cream on its own — left as-is. */
 
+/* D-1/QA-12: home.css's shared .nav-tabs sets flex-wrap: wrap, which wraps "Production" onto its
+   own row at tablet widths (720-732px), growing the header to two rows. product-dev-v2.css
+   already fixes this for the five in-development pages (body.dev-v2) — the legal pages and 404
+   share this same dev-light shell but don't load that file, so they keep the bug. Same nowrap
+   fix, scoped to every dev-light page instead of just the dev-v2 ones; harmless where
+   product-dev-v2.css's own (later-loaded, equally specific) rule already sets the same value. */
+body.dev-light .nav-tabs { flex-wrap: nowrap; }
+
 /* ---- "IN DEVELOPMENT" badge: monochrome, matching the page's own ink/gray palette instead of
    the site's dev-yellow accent — no color accent on these pages at all. ---- */
 body.dev-light .badge-dev { color: var(--dev-ink-3); border-color: var(--dev-line-strong); }

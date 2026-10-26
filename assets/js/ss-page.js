@@ -1,5 +1,6 @@
-// Stock Shredder page: smart header, phone tools sheet, FAQ accordion, and the chat widget loaded
-// after the visitor's first interaction instead of on page load.
+// Stock Shredder page: smart header, phone tools sheet, FAQ accordion, the "2 months free" switch
+// (kept in sync with the Monthly/Annual toggle that checkout.js already drives), and the chat
+// widget loaded after the visitor's first interaction instead of on page load.
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -127,6 +128,17 @@
       else { q.setAttribute('aria-expanded', 'false'); faqClose(panel); }
     });
   });
+
+  // ---- "2 months free" switch mirrors the Monthly / Annual toggle ----
+  var sw = document.querySelector('[data-billing-switch]');
+  var month = document.querySelector('[data-billing="month"]');
+  var year = document.querySelector('[data-billing="year"]');
+  if (sw && month && year) {
+    var sync = function () { sw.setAttribute('aria-checked', year.classList.contains('is-active') ? 'true' : 'false'); };
+    sw.addEventListener('click', function () { (year.classList.contains('is-active') ? month : year).click(); sync(); });
+    month.addEventListener('click', function () { setTimeout(sync, 0); });
+    year.addEventListener('click', function () { setTimeout(sync, 0); });
+  }
 
   // ---- support chat: loads after the first scroll, tap or key press, never on page load ----
   // On phones (<=719px) the floating bubble is kept hidden — it sits on top of page content
@@ -302,6 +314,10 @@
         nightTimer = setTimeout(function () { if (stage.classList.contains('is-night')) screen.pause(); }, 280);
       } else if (stage.classList.contains('is-night')) {
         stage.classList.remove('is-night');
+        // screen was paused back in the on-branch above and has been sitting at whatever time
+        // that was — re-sync it to the dark recording (which kept playing) before resuming, or
+        // the crossfade shows two different moments (QA-9).
+        try { screen.currentTime = dark.currentTime || 0; } catch (e) {}
         if (!reduce && inView) { var r = screen.play(); if (r && r.catch) r.catch(function () {}); }
         nightTimer = setTimeout(function () { dark.pause(); }, 400);
       }
@@ -367,11 +383,18 @@
     feats.forEach(function (f, k) {
       f.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') show(k); });
       f.addEventListener('focus', function () { if (lastPointer === 'mouse' || lastPointer === 'keyboard') show(k); });
-      // touch/pen: tap to show, tap the same name again to clear. Keyboard is deliberately left
-      // out here — focus already showed this stop the moment Tab landed on it, so Enter/Space
-      // (which the nav keydown listener below marks as lastPointer = 'keyboard') must be a no-op
-      // rather than toggling it straight back off.
-      f.addEventListener('click', function () { if (lastPointer === 'touch' || lastPointer === 'pen') show(cur === k ? -1 : k); lastPointer = 'mouse'; });
+      // touch/pen: tap to show, tap the same name again to clear. Keyboard (Enter/Space, which the
+      // nav keydown listener below marks as lastPointer = 'keyboard') only toggles OFF when this
+      // stop is already the one showing — focus already showed it the moment Tab landed here, so
+      // that keypress must be a no-op rather than clearing it straight back off. But if Escape (or
+      // anything else) cleared the stop while focus stayed put, Enter/Space must still be able to
+      // bring it back (QA-10) — so a keyboard activation on a stop that ISN'T the current one
+      // always shows it.
+      f.addEventListener('click', function () {
+        if (lastPointer === 'touch' || lastPointer === 'pen') show(cur === k ? -1 : k);
+        else if (lastPointer === 'keyboard' && cur !== k) show(k);
+        lastPointer = 'mouse';
+      });
     });
     nav.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') show(-1); });
     nav.addEventListener('keydown', function (e) {

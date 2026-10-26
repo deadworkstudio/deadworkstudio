@@ -52,7 +52,9 @@ button { font: inherit; color: inherit; }
 .nav-tab-trigger::after { content: ''; position: absolute; left: 2px; right: 2px; bottom: -6px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 160ms var(--ease); }
 @media (any-hover: hover) and (any-pointer: fine) { .nav-tab-trigger:hover::after { transform: scaleX(1); } }
 .nav-tab-trigger[aria-expanded='true']::after { transform: scaleX(1); }
-.poster-meta-left, .poster-meta-right { position: absolute; bottom: 22px; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+/* QA-18/S-22: matches studio.css and product-dev-v2.css's identical header geometry — those use
+   bottom:27px; this page was still at the old 22px, landing 5.3px below the tab baseline. */
+.poster-meta-left, .poster-meta-right { position: absolute; bottom: 27px; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
 .poster-meta-left { left: var(--gutter); }
 .poster-meta-right { right: var(--gutter); }
 
@@ -185,10 +187,6 @@ main > section.tone-dark, main > .pair.tone-alt, main > section.tone-alt { borde
 /* ---- full-block film moment ---- */
 main > section.film { position: relative; padding: 0 !important; min-height: 100vh; min-height: 100svh; overflow: hidden; }
 .film-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-/* The film is a wide 16:9 moment — cropped to cover a tall phone screen it loses the subject
-   entirely (just a blurred sliver). Letterboxing it on the section's own dark background keeps
-   the whole shot in frame instead. */
-@media (max-aspect-ratio: 3/4) { .film-video { object-fit: contain; } }
 .film::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,14,13,.35) 0%, rgba(14,14,13,0) 30%, rgba(14,14,13,0) 70%, rgba(14,14,13,.55) 100%); pointer-events: none; }
 .film-line { position: absolute; left: 0; right: 0; bottom: clamp(28px, 6vh, 56px); z-index: 1; text-align: center; color: #F1ECE2 !important; letter-spacing: .3em; font-size: 12px; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
 
@@ -295,9 +293,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .world-count { display: grid; justify-items: center; gap: 6px; margin-top: 2px; }
 .world-count-num { font: 500 clamp(40px, 4vw, 56px)/1 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .world:not(.is-preview) .world-count:not(.is-live) { display: none; }
-.world-count.is-live .world-count-note { display: none; }
 .world.is-preview .world-count-num { color: var(--ink-3); opacity: .45; }
-.world-count-note { color: var(--ink-3); }
 .world-map { position: relative; max-width: 1040px; margin: 32px auto 0; }
 .world-map-dots { position: absolute; inset: 0; }
 .world-map-dot { position: absolute; border-radius: 50%; background: var(--ink); transform: translate(-50%, -50%); }
@@ -325,10 +321,12 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .billing-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line-2); border-radius: 999px; }
 .billing-toggle-btn { min-height: 34px; padding: 0 18px; border: 0; border-radius: 999px; background: none; font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
 .billing-toggle-btn.is-active { background: var(--ink); color: var(--bg); }
-/* "2 mo free" rides along on the Annual segment itself rather than as a second control that
-   mirrors the same state — one toggle, one fact about it, instead of two things to read. */
-.billing-tag { margin-left: 7px; padding: 2px 6px; border-radius: 999px; font-size: 8.5px; letter-spacing: .1em; color: var(--green); background: rgba(61,110,57,.12); vertical-align: 1px; }
-.billing-toggle-btn.is-active .billing-tag { color: #cdeec6; background: rgba(255,255,255,.16); }
+.billing-switch { display: inline-flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 0 0 16px; border: 1px solid var(--line-2); border-radius: 999px; background: none; cursor: pointer; padding-right: 4px; }
+.billing-switch .mono { color: var(--ink); }
+.billing-switch-track { position: relative; width: 44px; height: 26px; border-radius: 999px; background: var(--line-2); transition: background 200ms var(--ease); }
+.billing-switch-track span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms var(--ease); }
+.billing-switch[aria-checked='true'] .billing-switch-track { background: var(--ink); }
+.billing-switch[aria-checked='true'] .billing-switch-track span { transform: translateX(18px); }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
 .pricing-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 20px 8px; }
 .pricing-card + .pricing-card { border-left: 1px solid var(--line); }
@@ -611,4 +609,21 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   /* Padding grows the real hit area to 44px; the matching negative margin keeps the link's
      visible position and the paragraph's line height exactly as they were. */
   .faq-chat-link { padding: 14px 4px; margin: -14px -4px; }
+  /* Header logo, footer social icons, mailto and Privacy/Terms links all measured well under the
+     44px touch-target floor on this page (it doesn't load home.css/studio.css, which already got
+     this treatment) — same technique: padding/min-size grows the real hit area without resizing
+     or moving the visible mark, and negative margins cancel the effect on surrounding layout. */
+  /* QA-17: min-height:44px (inline-flex) here grew the fixed header's own row by ~20-22px on
+     touch viewports — see nav-v2.css's matching comment on the same bug for .nav-tab-trigger. An
+     absolutely-positioned ::after extends the tappable zone without adding to the row's height. */
+  .poster-brand a { position: relative; }
+  .poster-brand a::after { content: ''; position: absolute; inset: -12px -4px; }
+  .foot-social { gap: 4px; }
+  .foot-social a { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+  .foot-email { display: inline-flex; align-items: center; min-height: 44px; }
+  /* QA-16: the 44px floor above was set on the wrapping <p>, not the actual tappable <a> inside
+     it — align-items: center on the flex parent keeps the <a> at its own (text-height) size, so
+     the extra height around it isn't part of the link. Set it on the link itself too. */
+  .foot-email a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
 }

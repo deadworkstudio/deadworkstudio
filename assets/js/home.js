@@ -40,12 +40,20 @@
   // along with it. Bail out when focus is in a form control (the field itself should keep
   // Escape's usual "clear/blur" behavior, not trigger navigation) or the mega-menu is open
   // (nav-dropdown.js already owns Escape for that case).
+  //
+  // This listener is registered on the CAPTURE phase deliberately. nav-dropdown.js isn't
+  // deferred, so it runs (and registers its own Escape listener) before this deferred script
+  // even exists — meaning its bubble-phase listener would always close the mega-menu first, and
+  // the ".mega-menu.is-open" check below would see it already gone no matter how the two scripts
+  // are ordered. Capture-phase listeners on document run before ANY bubble-phase listener on
+  // document, regardless of registration order, so this always sees the menu's real state before
+  // nav-dropdown.js's own (bubble-phase) handler has a chance to close it.
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' || fromHash() === 'default') return;
     if (e.target.closest('input, textarea, select, [data-mega-menu]')) return;
     if (document.querySelector('.mega-menu.is-open')) return;
     show('default', { push: true });
-  });
+  }, true);
   addEventListener('popstate', function () { show(fromHash(), { announce: true }); });
   addEventListener('hashchange', function () { show(fromHash(), { announce: true }); });
   show(fromHash());

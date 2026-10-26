@@ -6,9 +6,18 @@
 .nav-tab-trigger { padding: 8px 10px 6px !important; align-items: center !important; min-height: 36px; transition: opacity 160ms var(--ease, ease); }
 /* H-6/D-12: restore the 44px touch-target floor on coarse pointers (Studio, Stock Shredder, the
    five in-development pages all measured 36px tall on touch) — mouse/trackpad keep the tighter
-   visual size. */
+   visual size.
+   QA-17: the first attempt here set min-height:44px!important, which grew the row's own box (and
+   with it the fixed header) by 6-15px on touch viewports — a visible jump that wasn't part of
+   the brief. ::after is unused on every page this file reaches under coarse pointers (it's
+   display:none!important above; the pages that normally animate an underline off it — Studio,
+   Stock Shredder, the dev pages — all get their corner-mark from ::before instead), so it's free
+   to repurpose purely as an absolutely-positioned hit-box extension that never touches layout. */
 @media (pointer: coarse) {
-  .nav-tab-trigger { min-height: 44px !important; }
+  .nav-tab-trigger::after { content: ''; display: block !important; position: absolute; inset: -6px 0; }
+  /* The footer/contact mailto link's 44px floor was set on the wrapping paragraph, not the link
+     itself, and measured well under 44px tall in practice — set it on the actual tappable <a>. */
+  .foot-email a, .contact-email a { display: inline-flex; align-items: center; min-height: 44px; }
 }
 .nav-tab-trigger::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 180ms var(--ease, ease);

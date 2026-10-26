@@ -458,10 +458,18 @@ body.home .panel-headline-lede { text-align: center; }
    Padding (not resizing the visuals themselves) grows each tap target without changing how
    anything looks — negative margins on the footer links cancel the padding's effect on layout. */
 @media (pointer: coarse) {
-  .poster-brand a { display: inline-flex; align-items: center; min-height: 44px; }
+  /* QA-17: min-height:44px (inline-flex) on the logo link grew the whole mobile header row by
+     ~22px — the row's own box, not just a hit area, since the <a> sits in the header's own flow.
+     An absolutely-positioned ::after extends the tappable zone without adding to the row's
+     height; -12px top/bottom covers the smallest (20px) logo down to a full 44px. */
+  .poster-brand a { position: relative; }
+  .poster-brand a::after { content: ''; position: absolute; inset: -12px -4px; }
   .foot-social { gap: 4px; }
   .foot-social a { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
   .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
+  /* The 44px floor above was set on the wrapping <p>, not the actual tappable <a> inside it —
+     set it on the link itself too. */
+  .foot-email a { display: inline-flex; align-items: center; min-height: 44px; }
 }
 
 .panel-follow { display: block; margin-top: 16px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }

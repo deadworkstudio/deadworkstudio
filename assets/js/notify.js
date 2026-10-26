@@ -23,11 +23,15 @@
     // showed the identical "doesn't look like a valid email" message, which isn't true for an
     // empty field. showStatus now also wires/clears the input's error attributes; callers pass
     // the right message for each case.
+    // QA-15: 'bad' means the field itself is invalid (empty/malformed) — that's the only case
+    // that should mark the input aria-invalid. A network/server failure ('error') is not the
+    // visitor's fault; it reused 'bad' before, which told screen readers a correctly-typed
+    // address was invalid. 'error' still renders with the same "something's wrong" styling.
     function showStatus(message, tone) {
-      status.textContent = message || '';
+      status.textContent = '';
       status.hidden = !message;
       status.classList.remove('notify-status-bad', 'notify-status-good');
-      if (tone) status.classList.add('notify-status-' + tone);
+      if (tone) status.classList.add('notify-status-' + (tone === 'error' ? 'bad' : tone));
       if (tone === 'bad') {
         input.setAttribute('aria-invalid', 'true');
         if (status.id) input.setAttribute('aria-describedby', status.id);
@@ -35,6 +39,11 @@
         input.removeAttribute('aria-invalid');
         input.removeAttribute('aria-describedby');
       }
+      // Clearing textContent above and setting it a frame later (rather than in the same tick)
+      // means submitting the same error twice still reads as a change to the live region, so
+      // screen readers announce it the second time too — and gives the hidden -> visible flip a
+      // moment to settle first, which VoiceOver otherwise sometimes misses.
+      if (message) requestAnimationFrame(function () { status.textContent = message; });
     }
 
     // Once the error is showing, starting to retype should clear it immediately rather than
@@ -99,7 +108,7 @@
           showStatus("You're on the list.", 'good');
         })
         .catch(function () {
-          showStatus("Something went wrong — please try again.", 'bad');
+          showStatus("Something went wrong — please try again.", 'error');
         })
         .then(function () {
           setBusy(false);

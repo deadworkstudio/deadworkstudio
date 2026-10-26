@@ -104,10 +104,17 @@ a[href$="handoff/"] .mega-menu-card-logo { height: clamp(52px, 5.2vw, 90px); }
 /* H-6/D-12: restore a real 44px touch target on social icons and the logo link without resizing
    the icons/wordmark themselves — same technique as home.css's copy of this fix. */
 @media (pointer: coarse) {
-  .poster-brand a { display: inline-flex; align-items: center; min-height: 44px; }
+  /* QA-17: min-height:44px (inline-flex) here grew the fixed header's own row by ~22px on touch
+     viewports — see nav-v2.css's matching comment on the same bug for .nav-tab-trigger. An
+     absolutely-positioned ::after extends the tappable zone without adding to the row's height. */
+  .poster-brand a { position: relative; }
+  .poster-brand a::after { content: ''; position: absolute; inset: -12px -4px; }
   .foot-social { gap: 4px; }
   .foot-social a { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
   .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
+  /* QA-16: the mailto link's clickable area was only as tall as its own text — home.css's
+     identical footer markup got this same fix already. */
+  .foot-email a { display: inline-flex; align-items: center; min-height: 44px; }
 }
 
 @font-face { font-family: 'Anton'; src: url('../fonts/anton.woff2') format('woff2'); font-display: swap; }

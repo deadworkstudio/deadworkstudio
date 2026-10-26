@@ -20,12 +20,14 @@
   var openGroupKey = null;
   // H-1: a real mouse opens the menu on hover (see canHover below), then the SAME click that
   // naturally follows a hover — the user resting the pointer on a tab and clicking it — used to
-  // be read as "toggle it closed" because isOpen()+openGroupKey already matched that tab. Track
-  // when hover opened it so a click in the moment right after is treated as "yes, keep it open"
-  // rather than a toggle; a click long after (no intervening hover-open) still toggles normally,
-  // and touch/keyboard users (canHover false) always just get the plain toggle below.
-  var openedByHoverAt = 0;
-  var HOVER_GRACE_MS = 400;
+  // be read as "toggle it closed" because isOpen()+openGroupKey already matched that tab. A
+  // person who rests on the tab while reading and THEN clicks must never lose the menu, no matter
+  // how long they rested there — so this tracks WHO opened it (hover vs. an explicit click/
+  // keyboard/touch activation) instead of a timing window. A click on a tab that hover opened
+  // just confirms it's open (and hands "ownership" to the click, so a second click can still
+  // close it); a click on a tab that was already open by click/keyboard/touch toggles it closed,
+  // same as always.
+  var openedByHover = false;
 
   function isOpen() { return menu.classList.contains('is-open'); }
 
@@ -52,14 +54,14 @@
     setActiveGroup(key);
     menu.classList.toggle('was-open', reopening);
     menu.classList.add('is-open');
-    if (byHover) openedByHoverAt = Date.now();
+    openedByHover = !!byHover;
   }
 
   function close(returnFocusTrigger) {
     openGroupKey = null;
+    openedByHover = false;
     menu.classList.remove('is-open');
     menu.classList.remove('was-open');
-    openedByHoverAt = 0;
     triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
     if (returnFocusTrigger) returnFocusTrigger.focus();
   }
@@ -67,9 +69,12 @@
   triggers.forEach(function (trigger) {
     var key = trigger.dataset.megaGroup;
     trigger.addEventListener('click', function () {
-      var justOpenedByHover = isOpen() && openGroupKey === key && (Date.now() - openedByHoverAt) < HOVER_GRACE_MS;
-      if (isOpen() && openGroupKey === key && !justOpenedByHover) close(null);
-      else open(key);
+      if (isOpen() && openGroupKey === key) {
+        if (openedByHover) { openedByHover = false; return; } // hover opened it — a click just confirms, never closes
+        close(null);
+      } else {
+        open(key);
+      }
     });
   });
 
