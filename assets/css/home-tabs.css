@@ -16,14 +16,20 @@
   .mega-menu-group.is-active, .mega-menu-group.is-active .mega-menu-card { animation: none; }
 }
 
-.nav-tab-trigger { padding: 8px 10px 6px; align-items: center; min-height: 36px; margin-top: 4px; }
-/* H-6: 36px tall is well under the 44px touch-target floor on a screen where there's no cursor
-   precision to make up for it — restored on coarse pointers only, so the tighter 36px visual
-   rhythm stays intact for mouse/trackpad. */
-@media (pointer: coarse) {
-  .nav-tab-trigger { min-height: 44px; }
-}
+/* QA-18: this 4px margin-top (home's own tab rhythm, predating the header-geometry alignment
+   work) was the last thing landing home's tab row 4px lower than Studio/Stock Shredder/the dev
+   pages' identical-looking header once the shared padding-top was matched (H-8) — dropped so the
+   tab row's top edge lines up exactly with every other page's. */
+.nav-tab-trigger { padding: 8px 10px 6px; align-items: center; min-height: 36px; }
 .nav-tab-trigger::after { display: none; }
+/* H-6/QA-17: 36px tall is well under the 44px touch-target floor on a screen where there's no
+   cursor precision to make up for it. min-height:44px (the first attempt) grew the whole header
+   row's own box by ~16px on touch viewports, same bug nav-v2.css hit on the other pages — this
+   tab has its own ::after (disabled above), so it's free to repurpose purely as an
+   absolutely-positioned hit-box extension that never touches layout, matching nav-v2.css's fix. */
+@media (pointer: coarse) {
+  .nav-tab-trigger::after { content: ''; display: block; position: absolute; inset: -6px 0; }
+}
 .nav-tab-trigger::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 180ms var(--ease);
   background:

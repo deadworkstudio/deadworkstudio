@@ -23,18 +23,20 @@
 <link rel="preload" href="../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../assets/css/tokens.css?v=20261025a" />
 <link rel="stylesheet" href="../assets/css/base.css?v=20261025a" />
-<link rel="stylesheet" href="../assets/css/home.css?v=20261025f" />
-<link rel="stylesheet" href="../assets/css/product.css?v=20261025a" />
-<link rel="stylesheet" href="../assets/css/home-tabs.css?v=20261025c" />
+<link rel="stylesheet" href="../assets/css/home.css?v=20261025g" />
+<link rel="stylesheet" href="../assets/css/product.css?v=20261025b" />
+<link rel="stylesheet" href="../assets/css/home-tabs.css?v=20261025d" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body class="home" data-chat-widget>
 <div class="poster">
   <div class="poster-media" aria-hidden="true">
     <img src="../assets/img/hero/poster.jpg" alt="" width="640" height="360" fetchpriority="high" />
-    <video autoplay muted loop playsinline preload="metadata" poster="../assets/img/hero/poster.jpg">
-      <source src="../assets/video/hero.mp4" type="video/mp4" />
-    </video>
+    <!-- QA-21/H-15: no <source> and no autoplay/preload in the markup — home.js picks the
+         right rendition (mobile-sized under ~800px wide, full elsewhere) and only attaches a
+         <source>/calls play() when motion isn't reduced, so a visitor with reduced motion (or
+         no JS) gets the poster frame only and the browser never fetches any video bytes. -->
+    <video muted loop playsinline preload="none" poster="../assets/img/hero/poster.jpg" data-hero-video data-src="../assets/video/hero.mp4" data-src-mobile="../assets/video/hero-mobile.mp4"></video>
   </div>
   <header class="poster-head">
     <span class="poster-meta-left">06 Tools</span>
@@ -243,7 +245,7 @@
 </div>
 <script src="../assets/js/main.js?v=20261025a"></script>
 <script src="../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../assets/js/home.js?v=20261025c" defer></script>
+<script src="../assets/js/home.js?v=20261025d" defer></script>
 <script src="../assets/js/notify.js?v=20261025b" defer></script>
 </body>
 </html>
