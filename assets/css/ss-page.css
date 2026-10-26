@@ -172,7 +172,10 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 @media (max-width: 719px) { .strip { width: 100%; } }
 
 /* ---- block tones (TP-7 rhythm): light, darker light, black ---- */
-.tone-alt { --bg: #EAE5DA; background: var(--bg); }
+/* --ink-3 (secondary/muted text) is darkened here specifically: #6E6A62 only clears AA (4.5:1)
+   against the lighter --bg, and drops to 4.29:1 on this section's darker sand — #625E57 clears
+   4.6:1 on #EAE5DA while still reading as the same "quiet" weight. */
+.tone-alt { --bg: #EAE5DA; --ink-3: #625E57; background: var(--bg); }
 .tone-dark { --bg: #0E0E0D; --bg-2: #1A1A18; --ink: #F1ECE2; --ink-2: #A9A499; --ink-3: #8A867E; --line: rgba(241,236,226,.14); --line-2: rgba(241,236,226,.32); --green: #8FD687; background: var(--bg); color: var(--ink); }
 .tone-dark .mono { color: var(--ink-2); }
 main > section.tone-dark, main > .pair.tone-alt, main > section.tone-alt { border-top-color: transparent; }
@@ -182,6 +185,10 @@ main > section.tone-dark, main > .pair.tone-alt, main > section.tone-alt { borde
 /* ---- full-block film moment ---- */
 main > section.film { position: relative; padding: 0 !important; min-height: 100vh; min-height: 100svh; overflow: hidden; }
 .film-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The film is a wide 16:9 moment — cropped to cover a tall phone screen it loses the subject
+   entirely (just a blurred sliver). Letterboxing it on the section's own dark background keeps
+   the whole shot in frame instead. */
+@media (max-aspect-ratio: 3/4) { .film-video { object-fit: contain; } }
 .film::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,14,13,.35) 0%, rgba(14,14,13,0) 30%, rgba(14,14,13,0) 70%, rgba(14,14,13,.55) 100%); pointer-events: none; }
 .film-line { position: absolute; left: 0; right: 0; bottom: clamp(28px, 6vh, 56px); z-index: 1; text-align: center; color: #F1ECE2 !important; letter-spacing: .3em; font-size: 12px; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
 
@@ -220,7 +227,7 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 .remote-cta .pill svg, .downloads .pill svg { flex: none; }
 
 /* ---- explore all DEADWORK tools (TE "explore all components" grid) ---- */
-main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px, 9vh, 96px) 0 0 !important; text-align: left; min-height: 0 !important; display: block !important; }
+main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px, 9vh, 96px) 0 0 !important; text-align: left; min-height: 0 !important; display: block !important; }
 .tools-title { padding: 0 var(--gutter) 22px; color: var(--ink) !important; font-size: 12px; letter-spacing: .12em; }
 .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-2); }
 .tools-grid li { border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
@@ -318,12 +325,10 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .billing-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line-2); border-radius: 999px; }
 .billing-toggle-btn { min-height: 34px; padding: 0 18px; border: 0; border-radius: 999px; background: none; font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
 .billing-toggle-btn.is-active { background: var(--ink); color: var(--bg); }
-.billing-switch { display: inline-flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 0 0 16px; border: 1px solid var(--line-2); border-radius: 999px; background: none; cursor: pointer; padding-right: 4px; }
-.billing-switch .mono { color: var(--ink); }
-.billing-switch-track { position: relative; width: 44px; height: 26px; border-radius: 999px; background: var(--line-2); transition: background 200ms var(--ease); }
-.billing-switch-track span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms var(--ease); }
-.billing-switch[aria-checked='true'] .billing-switch-track { background: var(--ink); }
-.billing-switch[aria-checked='true'] .billing-switch-track span { transform: translateX(18px); }
+/* "2 mo free" rides along on the Annual segment itself rather than as a second control that
+   mirrors the same state — one toggle, one fact about it, instead of two things to read. */
+.billing-tag { margin-left: 7px; padding: 2px 6px; border-radius: 999px; font-size: 8.5px; letter-spacing: .1em; color: var(--green); background: rgba(61,110,57,.12); vertical-align: 1px; }
+.billing-toggle-btn.is-active .billing-tag { color: #cdeec6; background: rgba(255,255,255,.16); }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
 .pricing-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 20px 8px; }
 .pricing-card + .pricing-card { border-left: 1px solid var(--line); }
@@ -430,7 +435,9 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
    visibly jumps. flex-start keeps the top of the list anchored while an answer opens below it. */
 .faq { justify-content: flex-start; }
 .faq-chat { max-width: 780px; margin: 22px auto 0; font-size: 15px; color: var(--ink-2); text-align: center; }
-.faq-chat-link { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+/* The visible underline stays text-sized; the padding + matching negative margin below (coarse
+   pointers only) grows the actual hit area to 44px without shifting surrounding text. */
+.faq-chat-link { display: inline-block; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
 
 /* ---- lightbox ---- */
@@ -440,11 +447,18 @@ main > section.tools { --bg: #E4E4E2; background: var(--bg); padding: clamp(56px
 .lightbox-close { position: absolute; top: 12px; right: 16px; border: 0; background: none; color: #fff; font-size: 30px; cursor: pointer; }
 
 @media (max-width: 1023px) {
-  .pricing-grid, .earn-grid { grid-template-columns: 1fr 1fr; row-gap: 28px; }
+  .pricing-grid, .earn-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 28px; }
   .upgrade-row { grid-template-columns: 1fr 1fr; }
   .upgrade--kw { grid-column: 1; }
   .upgrade--phone { grid-column: 2; }
   .pricing-card:nth-child(3), .earn-grid li:nth-child(3) { border-left: 0; }
+}
+/* Below 480px two columns get too tight for the card's own padding plus its longest line
+   ("Copy-paste keywords") — one column, inside the page's own 20px gutter, so nothing clips. */
+@media (max-width: 480px) {
+  .pricing-grid { grid-template-columns: 1fr; margin: 26px 0 0; }
+  .pricing-card { padding: 20px 0; }
+  .pricing-card + .pricing-card { border-left: 0; border-top: 1px solid var(--line); }
 }
 @media (max-width: 719px) {
   main > section { padding: 56px 20px; }
@@ -586,4 +600,15 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 @media (prefers-reduced-motion: reduce) {
   .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
+}
+
+/* ---- touch targets: 44px minimum on coarse pointers, without changing how anything looks on a
+   mouse-driven desktop (where the smaller sizes are an intentional, denser look) ---- */
+@media (pointer: coarse) {
+  .ix-feat { min-height: 44px; }
+  .billing-toggle-btn { min-height: 44px; }
+  .pricing-card .pill { min-height: 44px; }
+  /* Padding grows the real hit area to 44px; the matching negative margin keeps the link's
+     visible position and the paragraph's line height exactly as they were. */
+  .faq-chat-link { padding: 14px 4px; margin: -14px -4px; }
 }

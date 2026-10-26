@@ -32,7 +32,7 @@
   position: relative;
   height: calc(100cqw / 2.39 * .09);
   margin: 0;
-  font: 500 max(9.5px, 1.02cqw)/1 var(--mono);
+  font: 500 max(11px, 1.02cqw)/1 var(--mono);
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--iss-ink);
@@ -57,7 +57,7 @@
 .iss-l, .iss-r {
   position: absolute;
   top: calc(var(--iss-track-top) + var(--iss-track-h) + .62cqw);
-  font-size: max(9px, 1.05cqw);
+  font-size: max(11px, 1.05cqw);
   letter-spacing: .2em;
   white-space: pre;
 }

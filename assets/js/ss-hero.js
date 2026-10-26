@@ -284,12 +284,22 @@
     drawPanels(inOut(seg(t, T.panelsIn)));
   }
 
-  // ---- video: preload during IMPORT, play exactly the clips on screen ----
-  var loaded = false;
-  function loadAll() {
-    if (loaded) return; loaded = true;
-    vids.forEach(function (v) { v.preload = 'auto'; v.load(); });
+  // ---- video: load clip 1 with the wall (it's already playing inside its tile from t=0), then
+  // each later clip just-in-time — a little before its own arrival, never all six at once. Six
+  // small clips (~4 MB total) don't need the old loadAll() eager-preload-everything approach; the
+  // real cost was asking for six files the instant the hero appeared instead of spreading the ask
+  // out over the ~7 s it actually takes to reach each one. ----
+  var videoLoaded = [false, false, false, false, false, false];
+  var LOAD_LEAD = 1.5;   // seconds of wall-clock lead time before a clip is first needed
+  function loadClip(i) {
+    if (videoLoaded[i]) return; videoLoaded[i] = true;
+    var v = vids[i]; v.preload = 'auto'; v.load();
   }
+  function loadScheduled(t) {
+    loadClip(0);                                                    // playing inside the wall tile from t = 0
+    for (var i = 1; i < vids.length; i++) if (t >= arrive[i] - LOAD_LEAD) loadClip(i);
+  }
+  function loadAll() { for (var i = 0; i < vids.length; i++) loadClip(i); }   // deep-link (?t=) fallback only
   function syncVideos(t) {
     var L = localTimes(t);
     for (var i = 0; i < vids.length; i++) {
@@ -347,7 +357,7 @@
     if (!onScreen || document.hidden) return;
     if (last !== null) clock += Math.min(0.1, (ts - last) / 1000);  // a dropped tab never skips a beat
     last = ts;
-    loadAll();
+    loadScheduled(clock);
     if (clock >= T.LOOP) { clock = 0; vids.forEach(function (v) { v.pause(); try { v.currentTime = 0; } catch (e) {} }); }
     syncVideos(clock);
     render(clock);
