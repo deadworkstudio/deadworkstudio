@@ -801,6 +801,13 @@ html[data-product="stock-shredder"] .interface-shot-secondary {
 }
 .spec-table td { color: var(--bone); }
 .spec-tbd { color: var(--bone-3); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; }
+/* QA-11/H-23: scoped to the home page's own panels (.panel), not the standalone product/dev
+   pages, which don't sit inside the single-viewport "poster" frame this is squeezing for. See
+   home.css's matching max-height:800px block for why. */
+@media (min-width: 720px) and (min-height: 640px) and (max-height: 800px) {
+  .panel .spec-table th,
+  .panel .spec-table td { padding: 8px 0; }
+}
 
 /* ---------- Earn (Stock Shredder's in-app referral program, mirrored here) ---------- */
 .earn { padding-block: var(--space-block); border-top: 1px solid var(--line); }

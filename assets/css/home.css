@@ -597,3 +597,20 @@ body.home .panel-headline-lede { text-align: center; }
   .foot-note { grid-column: 1; grid-row: 3; text-align: center; }
   .foot-copy { grid-column: 1; grid-row: 4; text-align: center; }
 }
+
+/* QA-11/H-23: H-23's own fix (this file's panel-name/-meta/-oneliner spacing, product.css's
+   spec-table padding) tightened the single-viewport "poster" panel enough to stop scrolling
+   inside itself at 900px-tall screens and up, but common laptop sizes are shorter — Stock
+   Shredder (the deepest panel: badge row, headline, lede, spec table, CTA) still overflowed its
+   frame by up to ~80px at 1280x720, ~36px at 1366x768, ~20px at 1440x800. Tightens the same
+   rhythm further, scoped to the shorter end of the single-viewport range so a 900px+ display
+   (already fitting) renders identically — nothing here drops content, it only trims the gaps
+   between it and nudges the headline size down a little on the shortest screens in this band. */
+@media (min-width: 720px) and (min-height: 640px) and (max-height: 800px) {
+  .panel-meta { margin-bottom: clamp(8px, 1.4svh, 16px); }
+  .panel-name { font-size: min(15.5cqi, 13svh); margin-bottom: clamp(8px, 1.4svh, 16px); }
+  .panel-oneliner { margin-bottom: clamp(10px, 1.6svh, 20px) !important; }
+  .panel .spec-table { margin-top: 10px !important; }
+  .panel .btn { margin-top: 10px !important; }
+  .poster-panel { padding-block: clamp(16px, 3svh, 40px) clamp(16px, 2.4svh, 28px); }
+}
