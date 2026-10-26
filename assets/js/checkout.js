@@ -105,6 +105,20 @@
   var pricingError = document.querySelector('[data-pricing-error]');
   var keyEl = success.querySelector('[data-activation-key]');
   var copyBtn = success.querySelector('[data-copy-key]');
+  var successHeading = success.querySelector('h3');
+  var macDownload = document.getElementById('download-success');
+  var winDownload = document.getElementById('download-success-alt');
+
+  // Windows visitors get the .exe as the primary button and the .dmg as the small secondary
+  // link, and vice versa for everyone else — navigator.userAgentData is the modern replacement
+  // for sniffing the UA string; platform/userAgent cover browsers that don't support it yet.
+  function isWindowsVisitor() {
+    if (navigator.userAgentData && navigator.userAgentData.platform) {
+      return /win/i.test(navigator.userAgentData.platform);
+    }
+    var platform = navigator.platform || navigator.userAgent || '';
+    return /win/i.test(platform);
+  }
 
   var stripe = null;
   function getStripe() {
@@ -151,6 +165,15 @@
     success.hidden = true;
     grid.hidden = false;
     showPricingError(errorMessage || '');
+    // Cancelling (or an error sending the person back) leaves focus on an element that just got
+    // hidden unless we move it ourselves — to the error itself when there is one to read, otherwise
+    // the first plan button so keyboard/screen-reader users land back inside the visible grid.
+    if (errorMessage && pricingError) {
+      pricingError.focus();
+    } else {
+      var firstPlanBtn = grid.querySelector('[data-plan-button]');
+      if (firstPlanBtn) firstPlanBtn.focus();
+    }
   }
 
   function showSuccess(activationKey) {
@@ -159,6 +182,24 @@
     grid.hidden = true;
     success.hidden = false;
     if (keyEl) keyEl.textContent = activationKey;
+
+    // Show the visitor's own platform as the big button, the other platform as a small secondary
+    // link — macDownload/winDownload keep whatever the release-fetch script resolved as the
+    // latest .dmg/.exe, so this only ever reorders/relabels them, never re-derives the URLs.
+    if (macDownload && winDownload) {
+      var onWindows = isWindowsVisitor();
+      var primary = onWindows ? winDownload : macDownload;
+      var secondary = onWindows ? macDownload : winDownload;
+      primary.className = 'pill pill-solid';
+      secondary.className = 'mono checkout-success-alt';
+      primary.textContent = 'Download Stock Shredder';
+      secondary.textContent = onWindows ? 'Also for Mac' : 'Also for Windows';
+      primary.parentNode.insertBefore(primary, secondary);
+    }
+
+    // Move focus into the panel that just appeared — otherwise it's silently left on the
+    // Stripe iframe's own "Pay" button, which is now hidden/destroyed.
+    if (successHeading) successHeading.focus();
   }
 
   // Asks our Worker to create a real Stripe Checkout Session for the chosen plan and hands back
@@ -240,6 +281,10 @@
     grid.hidden = true;
     success.hidden = true;
     panel.hidden = false;
+    // The grid button that opened this is now hidden — move focus into the panel itself (it's
+    // given tabindex="-1" in the markup for exactly this) so keyboard/screen-reader users land
+    // somewhere that still exists, and the aria-live status below gets announced from here on.
+    panel.focus();
 
     // Stripe's embedded form takes a second or two to fetch and render — without this the panel
     // briefly shows nothing but the Cancel button. Show a loading state and the shimmer, and

@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#F4F1EA" />
 <title>DEADWORK - Stock Shredder</title>
-<meta name="description" content="Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income." />
+<meta name="description" content="Stock Shredder finds the usable shots in your raw footage, trims and grades them, and exports stock-ready ProRes clips. 25 free clips. Mac &amp; Windows." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://deadworkstudio.com/products/stock-shredder/" />
 <meta property="og:title" content="DEADWORK - Stock Shredder" />
-<meta property="og:description" content="Reviews raw footage, selects and trims the usable moments, exports, then writes keywords ready for immediate upload. Approve clips remotely via phone. Allowing freedom of time to pursue other tasks, turning unused footage into thousands of revenue-producing assets without avoiding income." />
+<meta property="og:description" content="Stock Shredder finds the usable shots in your raw footage, trims and grades them, and exports stock-ready ProRes clips. 25 free clips. Mac &amp; Windows." />
 <meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="Stock Shredder finds the usable shots in your raw footage, trims and grades them, and exports stock-ready ProRes clips. 25 free clips. Mac &amp; Windows." />
 <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
 <!-- Starts the Swamp Witch font downloading immediately instead of waiting for the CSS to be
@@ -19,7 +20,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261025w4" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026a" />
 <link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261025e" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -117,6 +118,7 @@
       <a id="download-android" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.3/Stock-Shredder-Remote-1.0.apk"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
     </div>
     <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.9</span> (Beta)</p>
+    <p class="mono downloads-note" data-win-smartscreen-note hidden>Windows may show &ldquo;Windows protected your PC&rdquo; &mdash; click More info, then Run anyway.</p>
   </section>
 
   <section class="film tone-dark" aria-label="On set">
@@ -129,9 +131,9 @@
     <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
     <ol class="steps">
       <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Select</span><span class="step-d">Import your folder</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Review your selections</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Finds and trims the keepers</span></li>
       <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Send</span><span class="step-d">Export your clips</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Share</span><span class="step-d">Receive created keywords</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Share</span><span class="step-d">Receive created keywords <span class="mono">&mdash; Pro &amp; Studio</span></span></li>
     </ol>
   </section>
 
@@ -269,7 +271,7 @@
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Simple pricing</h2>
     <p class="section-sub">Choose the plan that fits your workflow.<br class="br-desk" /> Unused clips roll over. Change plans anytime. Start with 25 free clips.</p>
-    <p class="pricing-error" data-pricing-error hidden></p>
+    <p class="pricing-error" data-pricing-error role="alert" tabindex="-1" hidden></p>
     <div class="billing">
       <div class="billing-toggle" role="group" aria-label="Billing interval" data-billing-toggle>
         <button type="button" class="billing-toggle-btn is-active" data-billing="month">Monthly</button>
@@ -326,8 +328,8 @@
       </figure>
     </div>
     <p class="pricing-terms">Monthly plans renew each month and can be canceled anytime. No fee. You keep access until the end of your billing month. Annual plans are paid for 12&nbsp;months. Can't be canceled early. Renew automatically.</p>
-    <div class="checkout-panel" data-checkout-panel hidden>
-      <p class="checkout-status" data-checkout-status hidden></p>
+    <div class="checkout-panel" data-checkout-panel tabindex="-1" hidden>
+      <p class="checkout-status" data-checkout-status role="status" aria-live="polite" hidden></p>
       <div class="checkout-panel-frame" id="checkout-frame"></div>
       <div class="checkout-panel-actions">
         <button type="button" class="pill pill-outline" data-checkout-retry hidden>Try again</button>
@@ -336,12 +338,16 @@
     </div>
     <div class="checkout-success" data-checkout-success hidden>
       <p class="mono">You're in</p>
-      <h3>Your activation key</h3>
+      <h3 tabindex="-1">Your activation key</h3>
       <div class="activation-key-box">
         <code data-activation-key></code>
         <button type="button" class="pill pill-outline" data-copy-key>Copy</button>
       </div>
+      <!-- Mac is the no-JS/fallback default below; showSuccess() in checkout.js swaps which of
+           these two is the primary (solid) button based on the visitor's OS, reusing whatever
+           the release-fetch script resolved for the hero's #download-mac/#download-win links. -->
       <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.9/Stock-Shredder-0.6.9-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
+      <a id="download-success-alt" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.9/Stock-Shredder-Setup-0.6.9.exe" class="mono checkout-success-alt">Also for Windows</a>
       <p class="checkout-success-note">Paste this activation key when it asks. Full instructions are in the app.</p>
     </div>
   </section>
@@ -514,7 +520,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261024c"></script>
+<script src="../../assets/js/checkout.js?v=20261026a"></script>
 <script src="../../assets/js/ss-page.js?v=20261025w4"></script>
 <script src="../../assets/js/ss-hero.js?v=20261025d" defer></script>
 <script>
@@ -533,6 +539,7 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     if (dmg) document.getElementById('download-mac').href = dmg.browser_download_url;
     if (dmg) document.getElementById('download-success').href = dmg.browser_download_url;
     if (exe) document.getElementById('download-win').href = exe.browser_download_url;
+    if (exe) document.getElementById('download-success-alt').href = exe.browser_download_url;
     if (apk) document.getElementById('download-android').href = apk.browser_download_url;
     var versionEl = document.getElementById('download-version');
     if (versionEl && release.tag_name && dmg) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
@@ -540,6 +547,20 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     if (release.tag_name) document.querySelectorAll('[data-latest-version]').forEach(function (el) { el.textContent = 'v' + release.tag_name.replace(/^v/, ''); });
   })
   .catch(function () {}); // the hardcoded fallback above still works either way
+
+// Windows installs aren't code-signed yet (deferred until the app makes real revenue), so
+// Microsoft Defender SmartScreen blocks the installer behind a full-screen "Windows protected
+// your PC" warning on first run. Nothing here can remove that warning — this just tells Windows
+// visitors it's expected and how to get past it, before they hit it. Hidden with the `hidden`
+// attribute for JS-disabled browsers rather than shown to everyone, since it's irrelevant on Mac.
+(function () {
+  var note = document.querySelector('[data-win-smartscreen-note]');
+  if (!note) return;
+  var isWindows = (navigator.userAgentData && navigator.userAgentData.platform)
+    ? /win/i.test(navigator.userAgentData.platform)
+    : /win/i.test(navigator.platform || navigator.userAgent || '');
+  if (isWindows) note.hidden = false;
+})();
 
 // World map of real signup locations (city-level counts only, see the Worker's listLeadLocations).
 // Always shows Daniel's pinned places (MAP_PINS below) and adds real signups elsewhere. The section itself

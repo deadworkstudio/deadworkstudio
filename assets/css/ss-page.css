@@ -385,6 +385,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .activation-key-box { display: flex; gap: 10px; align-items: center; padding: 10px 10px 10px 16px; border: 1px solid var(--line-2); border-radius: 8px; }
 .activation-key-box code { font: 15px/1.3 var(--mono); }
 .checkout-success-note { font-size: 14px; color: var(--ink-2); }
+.checkout-success-alt { margin-top: -4px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
 /* ---- earn ---- */
 .earn-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
