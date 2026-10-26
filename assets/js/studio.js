@@ -20,9 +20,18 @@
 // Concept 05 — DEADWORK Evolved
 // Quiet scroll reveals (opacity/transform only) and the film block's photo settle.
 (function () {
-  // opener film: plays only while on screen, and never under reduced motion (poster stays)
+  // opener film: plays only while on screen, and never under reduced motion (poster stays).
+  // H-15: no <source> lives in the markup — attach the mobile-sized rendition under ~800px
+  // wide (phones were downloading the full 4MB desktop file for a ~350px-tall strip) and the
+  // full one otherwise, only once motion is confirmed fine, so reduced motion never loads
+  // any video bytes at all.
   var film = document.querySelector('[data-opener-film]');
   if (film && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    var filmSource = document.createElement('source');
+    filmSource.src = innerWidth <= 800 ? film.dataset.srcMobile : film.dataset.src;
+    filmSource.type = 'video/mp4';
+    film.appendChild(filmSource);
+    film.load();
     new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var p = film.play(); if (p && p.catch) p.catch(function () {}); } else film.pause(); }); }, { threshold: 0.1 }).observe(film);
   }
   var root = document.documentElement;

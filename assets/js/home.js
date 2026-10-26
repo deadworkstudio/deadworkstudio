@@ -57,4 +57,23 @@
   addEventListener('popstate', function () { show(fromHash(), { announce: true }); });
   addEventListener('hashchange', function () { show(fromHash(), { announce: true }); });
   show(fromHash());
+
+  // QA-21/H-15: the hero background video has no <source> and no autoplay/preload in the
+  // markup (see home/index.html) specifically so the browser never fetches a single byte of it
+  // on its own. Under reduced motion, leave it alone — the poster frame (already shown via the
+  // <img> beneath it and the video's own poster attribute) is the whole experience. Otherwise,
+  // pick the mobile-sized rendition under ~800px wide (phones download the full 1280-wide
+  // desktop file otherwise — H-15) and attach a real <source> to start it loading/playing.
+  var hero = document.querySelector('[data-hero-video]');
+  if (hero && !reduce.matches) {
+    var src = innerWidth <= 800 ? hero.dataset.srcMobile : hero.dataset.src;
+    var source = document.createElement('source');
+    source.src = src;
+    source.type = 'video/mp4';
+    hero.appendChild(source);
+    hero.preload = 'auto';
+    hero.load();
+    var p = hero.play();
+    if (p && p.catch) p.catch(function () {});
+  }
 })();

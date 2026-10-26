@@ -73,7 +73,10 @@
   <!-- I. Mission: cream opener with the monumental headline, then the cinematic block that carries the two paragraphs -->
   <section class="mission" id="mission" aria-labelledby="mission-title">
     <div class="opener tone-dark">
-      <video class="opener-film" muted loop playsinline preload="metadata" poster="../assets/img/products/stock-shredder/film-poster.jpg" aria-hidden="true" data-opener-film><source src="../assets/img/products/stock-shredder/film.mp4" type="video/mp4" /></video>
+      <!-- H-15: no <source> in the markup — studio.js picks the mobile-sized rendition under
+           ~800px wide (phones were downloading the full 4MB desktop file) and only attaches one
+           when motion isn't reduced, same approach as home's hero video. -->
+      <video class="opener-film" muted loop playsinline preload="none" poster="../assets/img/products/stock-shredder/film-poster.jpg" aria-hidden="true" data-opener-film data-src="../assets/img/products/stock-shredder/film.mp4" data-src-mobile="../assets/img/products/stock-shredder/film-mobile.mp4"></video>
       <p class="opener-kicker mono">By artists. For artists.</p>
       <h2 class="opener-title" id="mission-title">
         <span class="opener-line"><span class="opener-line-in">CREATE MORE.</span></span>
@@ -172,6 +175,6 @@
 <script src="../assets/js/main.js?v=20261025a"></script>
 <script src="../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../assets/js/notify.js?v=20261025b" defer></script>
-<script src="../assets/js/studio.js?v=20261024e1" defer></script>
+<script src="../assets/js/studio.js?v=20261025a" defer></script>
 </body>
 </html>
