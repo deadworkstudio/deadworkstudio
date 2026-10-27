@@ -67,7 +67,7 @@ button { font: inherit; color: inherit; }
 .mega-menu.is-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition: opacity 220ms var(--ease), transform 220ms var(--ease), visibility 0s; }
 .mega-menu-group { display: none; flex-direction: column; gap: 18px; padding: 32px 0 36px; }
 .mega-menu-group.is-active { display: flex; }
-.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: #807d77; }
+.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; text-align: center; color: #807d77; }
 .mega-menu-cards { display: flex; flex-wrap: wrap; gap: 24px; }
 .mega-menu-card { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; text-decoration: none; color: inherit; }
 .mega-menu-card-img { position: relative; display: block; height: 280px; overflow: hidden; background: #11110f; }
