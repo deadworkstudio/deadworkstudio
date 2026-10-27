@@ -20,7 +20,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026b" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026c" />
 <link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261025e" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -281,15 +281,27 @@
     </div>
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
       <p class="mono trial-offer-eyebrow">SHRED</p>
-      <h3 class="trial-offer-title">7 days free. 100 clips.</h3>
-      <p class="trial-offer-sub">Then Starter, $25/mo for 200 clips a month. Cancel anytime before <span data-trial-offer-date>{date}</span> and you pay nothing.</p>
+      <h3 class="trial-offer-title">7 days or 100 clips, free.</h3>
+      <p class="trial-offer-sub">Try Stock Shredder with a card on file. <strong>$0 today.</strong> You're never charged unless you choose a plan.</p>
       <form class="trial-offer-form" data-trial-offer-form novalidate>
         <label class="sr-only" for="trial-email">Your email</label>
         <input type="email" id="trial-email" placeholder="Your email" autocomplete="email" required data-trial-email />
         <button type="submit" class="pill pill-solid" data-trial-submit>Start free trial</button>
       </form>
-      <p class="trial-offer-disclosure">You'll add a card to start. On <span data-trial-offer-date>{date}</span>, Starter starts automatically at $25/month (200 clips a month) on that card unless you cancel first. Cancel anytime in the app under Account. Cancel during the trial and you're never charged. One trial per person, card and computer.</p>
-      <p class="trial-offer-error" data-trial-offer-error role="alert" tabindex="-1" hidden></p>
+      <!-- §8.1's disclosure, full size next to the button — the site's own version adds the real
+           end date, filled in from GET /offer's own endsOnText (never computed here). -->
+      <p class="trial-offer-disclosure">We'll save your card. <strong>$0 today.</strong> Your trial ends after 7 days or 100 clips, whichever comes first — <span data-trial-offer-date>{date}</span> at the latest. Nothing is ever charged unless you choose a plan. One trial per person, card and computer.</p>
+      <p class="trial-offer-status" data-trial-offer-status role="status" aria-live="polite"></p>
+      <p class="trial-offer-error" data-trial-offer-error role="alert" aria-live="assertive" tabindex="-1" hidden></p>
+      <div class="trial-offer-resend">
+        <button type="button" class="trial-offer-resend-toggle" data-trial-resend-toggle aria-expanded="false" aria-controls="trial-resend-form">Already started a trial? <span class="trial-offer-resend-link">Email me my plan link</span></button>
+        <form class="trial-offer-resend-form" id="trial-resend-form" data-trial-resend-form novalidate hidden>
+          <label class="sr-only" for="trial-resend-email">Your email</label>
+          <input type="email" id="trial-resend-email" placeholder="Your email" autocomplete="email" required data-trial-resend-email />
+          <button type="submit" class="pill pill-outline" data-trial-resend-submit>Send my link</button>
+        </form>
+        <p class="trial-offer-resend-status" data-trial-resend-status role="status" aria-live="polite"></p>
+      </div>
     </div>
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
@@ -463,11 +475,11 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Is there a free trial?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Yes. 25 free clips, no card required, right from your first download.</p></div></div>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Yes. Every download includes the Free plan: 25 clips, no card needed. With a code like SHRED you can also try 7 days or 100 clips (whichever comes first) with a card on file. You're never charged unless you choose a plan.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a12" id="faq-q12"><span>What's the SHRED code / free trial offer?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a12" role="region" aria-labelledby="faq-q12" hidden><div class="faq-a-inner"><p>Some offers include a free trial. You add a card when you start. On the last day of the trial your plan starts and your card is charged unless you canceled before then. Cancel anytime in the app under Account. If you cancel during the trial you are not charged and access ends when the trial ends. Trials are limited to one per person, card and computer. A trial that breaks this rule is canceled at once with no charge. Trial clips don't roll over.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a12" id="faq-q12"><span>What's SHRED?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a12" role="region" aria-labelledby="faq-q12" hidden><div class="faq-a-inner"><p>A launch code for a bigger free trial: 7 days or 100 clips. You add a card to start, $0 is charged, and nothing is ever charged unless you pick a plan when the trial ends. One per person, card and computer.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>What's the iPhone app for?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -538,7 +550,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261026b"></script>
+<script src="../../assets/js/checkout.js?v=20261026c"></script>
 <script src="../../assets/js/ss-page.js?v=20261025w4"></script>
 <script src="../../assets/js/ss-hero.js?v=20261025d" defer></script>
 <script>
