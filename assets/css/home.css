@@ -616,9 +616,19 @@ body.home .panel-headline-lede { text-align: center; }
 @media (min-width: 720px) and (min-height: 640px) and (max-height: 800px) {
   .panel-meta { margin-bottom: clamp(8px, 1.4svh, 16px); }
   .panel-name { margin-bottom: clamp(8px, 1.4svh, 16px); }
-  .panel-logo { height: clamp(48px, 13svh, 96px); }
+  /* HIGH-1 (2026-10-27 QA): shrunk further still — at the shortest heights in this band
+     (1280x640/660, 1366x700) the 48-96px version left Sound Driver's email field and Notify
+     button sitting behind the footer. */
+  .panel-logo { height: clamp(40px, 10svh, 80px); }
   .panel-oneliner { margin-bottom: clamp(10px, 1.6svh, 20px) !important; }
   .panel .spec-table { margin-top: 10px !important; }
   .panel .btn { margin-top: 10px !important; }
   .poster-panel { padding-block: clamp(16px, 3svh, 40px) clamp(16px, 2.4svh, 28px); }
+  /* HIGH-1 (2026-10-27 QA): Sound Driver is the deepest panel at this breakpoint — eyebrow +
+     oneliner + spec table + a notify form (every other panel skips at least one of those, and
+     Stock Shredder's own already-shorter copy is the only other panel with a form). Capping its
+     longer-than-the-others description to 2 lines here is the cheapest way to keep its form
+     clear of the footer without touching the panel's own scroll fallback. */
+  .panel[data-product="sound-driver"] .eyebrow { margin-top: 6px !important; }
+  .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 }
