@@ -106,7 +106,12 @@ button { font: inherit; }
   color: rgba(230, 224, 211, 0.8);
 }
 
-/* ---------- Buttons: one primary per screen; secondary outline; tertiary mono link ---------- */
+/* ---------- Buttons: one primary per screen; secondary outline; tertiary mono link ----------
+   P1-3 (2026-10-26 audit): one shape site-wide — the rounded pill already approved for Stock
+   Shredder (ss-page.css's .pill) and already used on the five in-development pages and Studio
+   (product-dev.css/studio.css's own .pill copies). This was the one holdout at border-radius:0;
+   changing just the radius here carries every page that uses .btn (home's panels, the product
+   grid) to the same shape with no markup changes. ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -114,7 +119,7 @@ button { font: inherit; }
   gap: 10px;
   min-height: 48px;
   padding: 16px 32px;
-  border-radius: 0;
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-weight: 500;
   font-size: 12px;
@@ -187,9 +192,9 @@ button { font: inherit; }
   height: 24px;
   padding: 0 10px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -197,10 +202,14 @@ button { font: inherit; }
   background: var(--beta-green);
   color: var(--ink);
 }
+/* P1-1 (2026-10-26 audit): this used to be --dev-yellow, the only place that color carried any
+   meaning as "status". Shape (hairline + hollow square) already does that job on its own, so the
+   badge is now a neutral bone-on-dark mark, same family as the beta chip's ink-on-green. See
+   product-dev.css's body.dev-light override for the ink-on-sand counterpart on the light pages. */
 .badge-dev {
   background: transparent;
-  color: var(--dev-yellow);
-  border: 1px solid var(--dev-yellow);
+  color: var(--bone);
+  border: 1px solid var(--bone);
 }
 .badge-icon {
   display: inline-block;
@@ -569,25 +578,26 @@ iframe[title='chat widget'],
   align-items: stretch;
   gap: 12px;
 }
+/* P1-2 (2026-10-26 audit): this was a square field with a mono placeholder — the home panels'
+   own look, different from the pill field with an Archivo placeholder the five in-development
+   pages use (product-dev.css's .dev-notify .notify-input, which already overrides this at higher
+   specificity and is unaffected by the change below). Matching the default to that same shape so
+   home's panels need no extra override class to pick it up. */
 .notify-input {
   flex: 1 1 240px;
   min-width: 0;
   min-height: 48px;
-  padding: 0 16px;
+  padding: 0 18px;
   background: var(--ink-raised);
   border: 1px solid var(--line-strong);
-  border-radius: 0;
+  border-radius: 999px;
   color: var(--bone);
-  font-family: var(--font-mono);
-  font-size: 14px;
-  letter-spacing: 0.02em;
+  font-family: var(--font-body);
+  font-size: 16px;
 }
 /* H-3: iOS Safari zooms the page on focus for any input under 16px and doesn't zoom back out on
-   blur — kept the quieter 14px on precise pointers (mouse/trackpad), restored to the 16px floor
-   wherever the primary input is a touchscreen. */
-@media (pointer: coarse) {
-  .notify-input { font-size: 16px; }
-}
+   blur. The field is 16px at every size already (P1-2 above), so the coarse-pointer bump this
+   used to need is now a no-op — left noted here in case the base size ever drops again. */
 .notify-input::placeholder { color: var(--bone-3); }
 /* Honeypot: present in the DOM for bots that auto-fill every field, invisible and unreachable
    (off-screen + unfocusable) for real visitors and screen readers alike. */

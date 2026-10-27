@@ -26,27 +26,47 @@ body.dev-v2 .dev-hero-tag {
 }
 body.dev-v2 .dev-hero .badge { margin-top: 16px; }
 
-/* ---- problem / solution: Stock Shredder's own .split — a single hairline divider between the
-   two columns (vertical on desktop, horizontal once stacked on mobile), no card, no fill, no
-   accent-colored heading (ss-page.css treats both the same way). Section labels stay centered
-   over each column; body copy is left-aligned within it. ---- */
+/* ---- problem / solution: matches ss-page.css's own .split rule-for-rule (P1-6, 2026-10-26) —
+   no grid gap (so the hairline divider sits on the true page centre line between two equal
+   columns), centred mono label, centred 40ch paragraph, equal padding on both sides. The old
+   version here added a grid `gap` the real Stock Shredder page never had, which is what pushed
+   the divider off-centre and left uneven columns; it also force-left-aligned the label/paragraph
+   and used a lighter grey + heavier weight than ss-page.css's label. All fixed by inheriting the
+   real values instead of re-deriving new ones. ---- */
 body.dev-v2 section.dev-split.wrap {
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
   margin-top: 0;
-  padding-top: clamp(32px, 5svh, 56px);
-  padding-bottom: clamp(20px, 3svh, 36px);
+  padding-top: 0;
+  padding-bottom: 0;
   border-top: 1px solid var(--dev-line);
   text-align: center;
 }
-body.dev-v2 .dev-split > div { padding: 0 clamp(16px, 3vw, 40px); }
+body.dev-v2 .dev-split > div { padding: 56px clamp(20px, 4vw, 64px) 60px; }
 body.dev-v2 .dev-split > div + div { border-left: 1px solid var(--dev-line); }
-/* D-11: centering the label over a narrower box than the left-aligned paragraph below it left
-   the label floating well right of its own copy — left-align both so the label sits directly
-   above where the text actually starts. */
-body.dev-v2 .dev-split h3 { margin: 0 0 12px; max-width: 46ch; text-align: left; }
-body.dev-v2 .dev-split p { margin: 0; max-width: 46ch; text-align: left; }
-body.dev-v2 .dev-split .is-solution h3 { color: var(--dev-ink-3); }
+body.dev-v2 .dev-split h3 {
+  margin: 0;
+  max-width: none;
+  font: 500 10.5px/1.4 var(--font-mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--dev-ink-2);
+  text-align: center;
+}
+body.dev-v2 .dev-split p {
+  margin: 18px auto 0;
+  max-width: 40ch;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.45;
+  color: var(--dev-ink);
+  font-weight: 400;
+  text-align: center;
+}
+body.dev-v2 .dev-split .is-solution h3 { color: var(--dev-ink-2); }
 @media (max-width: 719px) {
-  body.dev-v2 .dev-split > div + div { border-left: 0; border-top: 1px solid var(--dev-line); padding-top: 24px; margin-top: 24px; }
+  body.dev-v2 section.dev-split.wrap { grid-template-columns: 1fr; padding: 56px 20px; }
+  body.dev-v2 .dev-split > div { padding: 44px 0; }
+  body.dev-v2 .dev-split > div + div { border-left: 0; border-top: 1px solid var(--dev-line); }
 }
 
 /* ---- email: one more quiet section in the same rhythm, not a separate floating block. ---- */

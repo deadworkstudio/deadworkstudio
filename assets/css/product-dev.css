@@ -75,8 +75,10 @@ body.dev-light .poster-foot { border-color: var(--dev-line); }
 body.dev-light .nav-tabs { flex-wrap: nowrap; }
 
 /* ---- "IN DEVELOPMENT" badge: monochrome, matching the page's own ink/gray palette instead of
-   the site's dev-yellow accent — no color accent on these pages at all. ---- */
-body.dev-light .badge-dev { color: var(--dev-ink-3); border-color: var(--dev-line-strong); }
+   the site's dev-yellow accent — no color accent on these pages at all.
+   P1-1 (2026-10-26 audit): full ink, not the softer grey — "in ink on sand" per the shared
+   status-chip spec, matching base.css's "bone on dark" counterpart at the same strength. ---- */
+body.dev-light .badge-dev { color: var(--dev-ink); border-color: var(--dev-ink); }
 
 /* D-16: home.css's hover rule for the mega-menu card name uses --acc, which on a dev-light page
    resolves to the per-product dev-yellow — the one color accent these monochrome pages
