@@ -387,6 +387,19 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .checkout-success-note { font-size: 14px; color: var(--ink-2); }
 .checkout-success-alt { margin-top: -4px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
+/* ---- SHRED launch trial (docs/superpowers/specs/2026-10-26-shred-trial-design.md) ----
+   Same contained-card look .review-card already uses inside a tone-alt section (border + bg-2),
+   shown only when ?code=SHRED (or a known equivalent) resolves — hidden by default in markup. */
+.trial-offer { max-width: 560px; margin: 28px auto 0; padding: 28px 30px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg-2); text-align: center; scroll-margin-top: calc(var(--sh-h) + 16px); }
+.trial-offer-eyebrow { color: var(--green); }
+.trial-offer-title { margin-top: 8px; font: 560 26px/1.15 var(--sans); letter-spacing: -.02em; color: var(--ink); }
+.trial-offer-sub { margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.trial-offer-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 18px; }
+.trial-offer-form input { flex: 1 1 240px; min-width: 0; padding: 13px 14px; border: 1px solid var(--line-2); border-radius: 6px; background: #FBF9F5; font: 16px/1.4 var(--sans); color: var(--ink); }
+/* The auto-renew disclosure (§7.1) - deliberately full-size body text, not small-print grey. */
+.trial-offer-disclosure { margin-top: 16px; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.trial-offer-error { margin-top: 12px; color: #A3241D; }
+
 /* ---- earn ---- */
 .earn-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
 .earn-grid li { display: grid; gap: 6px; padding: 8px 20px; font-size: 14px; color: var(--ink-2); }

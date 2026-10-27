@@ -106,8 +106,21 @@
   var keyEl = success.querySelector('[data-activation-key]');
   var copyBtn = success.querySelector('[data-copy-key]');
   var successHeading = success.querySelector('h3');
+  var successEyebrow = success.querySelector('[data-checkout-success-eyebrow]');
+  var successNote = success.querySelector('[data-checkout-success-note]');
   var macDownload = document.getElementById('download-success');
   var winDownload = document.getElementById('download-success-alt');
+
+  // SHRED launch trial (docs/superpowers/specs/2026-10-26-shred-trial-design.md) — the trial offer
+  // panel above the pricing grid. Absent on any page that doesn't have one, same tolerance as the
+  // rest of this file.
+  var trialOffer = document.querySelector('[data-trial-offer]');
+  var trialForm = trialOffer ? trialOffer.querySelector('[data-trial-offer-form]') : null;
+  var trialEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-email]') : null;
+  var trialErrorEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-error]') : null;
+  var trialDateEls = trialOffer ? trialOffer.querySelectorAll('[data-trial-offer-date]') : [];
+  var trialSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-submit]') : null;
+  var currentOfferCode = null; // set once /offer confirms a real, active code
 
   // Windows visitors get the .exe as the primary button and the .dmg as the small secondary
   // link, and vice versa for everyone else — navigator.userAgentData is the modern replacement
@@ -176,12 +189,24 @@
     }
   }
 
-  function showSuccess(activationKey) {
+  function showSuccess(activationKey, trial) {
     teardownCheckout();
     panel.hidden = true;
     grid.hidden = true;
     success.hidden = false;
     if (keyEl) keyEl.textContent = activationKey;
+
+    // SHRED launch trial (§7.5): a trial completion gets its own eyebrow/heading-note copy
+    // instead of the paid-purchase wording — the activation key box and download buttons below
+    // are identical either way.
+    if (trial && trial.endsAt) {
+      var endDate = new Date(trial.endsAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      if (successEyebrow) successEyebrow.textContent = 'Trial started';
+      if (successNote) successNote.textContent = 'Trial ends ' + endDate + '. Cancel in the app before then and you pay nothing.';
+    } else {
+      if (successEyebrow) successEyebrow.textContent = "You're in";
+      if (successNote) successNote.textContent = 'Paste this activation key when it asks. Full instructions are in the app.';
+    }
 
     // Show the visitor's own platform as the big button, the other platform as a small secondary
     // link — macDownload/winDownload keep whatever the release-fetch script resolved as the
@@ -251,7 +276,17 @@
       })
       .then(function (data) {
         if (data && data.ok && data.customerId && data.planId && data.activationKey) {
-          showSuccess(data.activationKey);
+          showSuccess(data.activationKey, data.trial);
+          return;
+        }
+        // SHRED launch trial: a repeat-trial detection (email/card/computer already used, or this
+        // email already has an account) caught at completion time — the Worker already canceled
+        // the $0 subscription and emailed an explanation. Show its specific reason verbatim
+        // instead of the generic "that charge didn't go through" message, which would be
+        // confusing here (nothing was ever charged either way).
+        if (data && data.trialRejected) {
+          if (retryBtn) retryBtn.hidden = true;
+          showStatus(data.message || "This trial couldn't be started.", true);
           return;
         }
         // The Worker successfully asked Stripe, and Stripe confirmed the charge did not go
@@ -346,6 +381,155 @@
           copyBtn.textContent = original;
         }, 1600);
       });
+    });
+  }
+
+  // ---- SHRED launch trial (docs/superpowers/specs/2026-10-26-shred-trial-design.md) -----------
+
+  function showTrialError(message) {
+    if (!trialErrorEl) return;
+    trialErrorEl.textContent = message || '';
+    trialErrorEl.hidden = !message;
+    if (message) trialErrorEl.focus();
+  }
+
+  function formatOfferDate(date) {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  // Asks the Worker whether a code is a real, currently-active offer before ever showing the
+  // panel for it — a dead or typo'd ?code= just falls through to the ordinary pricing grid
+  // (showPricingError, not the trial panel itself) rather than showing an empty/broken trial box.
+  function checkOffer(code) {
+    if (!trialOffer || !code) return;
+    fetch(WORKER_URL + '/offer?code=' + encodeURIComponent(code))
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || !data.valid) {
+          showPricingError((data && data.message) || "That code isn't active.");
+          return;
+        }
+        currentOfferCode = data.code;
+        try {
+          sessionStorage.setItem('ss-offer', data.code);
+        } catch (err) {
+          // Private browsing / storage disabled — the code still works for this one page view,
+          // it just won't survive a reload without the query string.
+        }
+        var trialDays = typeof data.trialDays === 'number' ? data.trialDays : 7;
+        var formatted = formatOfferDate(new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000));
+        Array.prototype.forEach.call(trialDateEls, function (el) {
+          el.textContent = formatted;
+        });
+        trialOffer.hidden = false;
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        trialOffer.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+      })
+      .catch(function () {
+        // A network hiccup checking the code — leave the ordinary pricing grid usable and say
+        // nothing alarming; the person can still just pick a plan.
+      });
+  }
+
+  (function initOfferFromUrl() {
+    if (!trialOffer) return;
+    var code = null;
+    try {
+      code = new URLSearchParams(window.location.search).get('code');
+    } catch (err) {
+      code = null;
+    }
+    if (!code) {
+      try {
+        code = sessionStorage.getItem('ss-offer');
+      } catch (err) {
+        code = null;
+      }
+    }
+    if (code) checkOffer(code);
+  })();
+
+  // Starts a trial Checkout Session for the entered email. Unlike startCheckout above, this
+  // fetches the client secret ITSELF first (not via Stripe.js's own fetchClientSecret callback)
+  // so a 409/400 from the Worker (repeat email/card/computer, or an existing account) can be
+  // shown right in the trial box, with the panel never opening at all — the "fail fast" behavior
+  // the spec calls for, instead of Stripe's embedded form opening and only then failing to mount.
+  function startTrialCheckout(email) {
+    if (!currentOfferCode || !frame) return;
+    showTrialError('');
+    if (trialSubmitBtn) trialSubmitBtn.disabled = true;
+
+    fetch(WORKER_URL + '/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ offer: currentOfferCode, email: email })
+    })
+      .then(function (res) {
+        return res.json().then(function (data) {
+          return { ok: res.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        if (trialSubmitBtn) trialSubmitBtn.disabled = false;
+        if (!result.ok || !result.data || !result.data.clientSecret || !result.data.sessionId) {
+          showTrialError((result.data && result.data.error) || "Couldn't start your trial. Please try again.");
+          return;
+        }
+        sessionId = result.data.sessionId;
+        var clientSecret = result.data.clientSecret;
+
+        grid.hidden = true;
+        success.hidden = true;
+        panel.hidden = false;
+        panel.focus();
+        showStatus('Loading secure checkout…', false);
+        frame.classList.add('is-loading');
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+
+        getStripe()
+          .initEmbeddedCheckout({
+            // Already have the real clientSecret from the pre-flight call above — nothing left
+            // to fetch, so this just hands it straight back.
+            fetchClientSecret: function () {
+              return Promise.resolve(clientSecret);
+            },
+            onComplete: function () {
+              verifySession();
+            }
+          })
+          .then(function (checkout) {
+            if (panel.hidden) {
+              checkout.destroy();
+              return;
+            }
+            embeddedCheckout = checkout;
+            frame.classList.remove('is-loading');
+            showStatus('', false);
+            checkout.mount(frame);
+          })
+          .catch(function () {
+            showGrid("Couldn't start checkout — please try again.");
+          });
+      })
+      .catch(function () {
+        if (trialSubmitBtn) trialSubmitBtn.disabled = false;
+        showTrialError("Couldn't reach the server. Please try again.");
+      });
+  }
+
+  if (trialForm && trialEmailInput) {
+    trialForm.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      var email = (trialEmailInput.value || '').trim();
+      if (!email) {
+        showTrialError('Enter your email to start the trial.');
+        trialEmailInput.focus();
+        return;
+      }
+      startTrialCheckout(email);
     });
   }
 })();

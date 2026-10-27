@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>DEADWORK - Stock Shredder</title>
+<!-- Short share link for the SHRED trial (docs/superpowers/specs/2026-10-26-shred-trial-design.md,
+     §6.1): deadworkstudio.com/stock-shredder/?code=SHRED redirects straight to the real product
+     page's pricing section with the query string (and the code in it) carried along. -->
+<script>
+  location.replace('../products/stock-shredder/' + location.search + '#trial');
+</script>
+</head>
+<body>
+<noscript>
+  <p><a href="../products/stock-shredder/">Continue to Stock Shredder</a></p>
+</noscript>
+</body>
+</html>

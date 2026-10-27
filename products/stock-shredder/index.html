@@ -20,7 +20,7 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026b" />
 <link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261025e" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -279,6 +279,18 @@
       </div>
       <button type="button" class="billing-switch" role="switch" aria-checked="false" data-billing-switch><span class="mono">2 months free</span><span class="billing-switch-track" aria-hidden="true"><span></span></span></button>
     </div>
+    <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
+      <p class="mono trial-offer-eyebrow">SHRED</p>
+      <h3 class="trial-offer-title">7 days free. 100 clips.</h3>
+      <p class="trial-offer-sub">Then Starter, $25/mo for 200 clips a month. Cancel anytime before <span data-trial-offer-date>{date}</span> and you pay nothing.</p>
+      <form class="trial-offer-form" data-trial-offer-form novalidate>
+        <label class="sr-only" for="trial-email">Your email</label>
+        <input type="email" id="trial-email" placeholder="Your email" autocomplete="email" required data-trial-email />
+        <button type="submit" class="pill pill-solid" data-trial-submit>Start free trial</button>
+      </form>
+      <p class="trial-offer-disclosure">You'll add a card to start. On <span data-trial-offer-date>{date}</span>, Starter starts automatically at $25/month (200 clips a month) on that card unless you cancel first. Cancel anytime in the app under Account. Cancel during the trial and you're never charged. One trial per person, card and computer.</p>
+      <p class="trial-offer-error" data-trial-offer-error role="alert" tabindex="-1" hidden></p>
+    </div>
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>
@@ -337,7 +349,7 @@
       </div>
     </div>
     <div class="checkout-success" data-checkout-success hidden>
-      <p class="mono">You're in</p>
+      <p class="mono" data-checkout-success-eyebrow>You're in</p>
       <h3 tabindex="-1">Your activation key</h3>
       <div class="activation-key-box">
         <code data-activation-key></code>
@@ -348,7 +360,9 @@
            the release-fetch script resolved for the hero's #download-mac/#download-win links. -->
       <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.10/Stock-Shredder-0.6.10-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
       <a id="download-success-alt" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.10/Stock-Shredder-Setup-0.6.10.exe" class="mono checkout-success-alt">Also for Windows</a>
-      <p class="checkout-success-note">Paste this activation key when it asks. Full instructions are in the app.</p>
+      <!-- SHRED launch trial (§7.5): checkout.js's showSuccess() swaps this note's text (and the
+           eyebrow above) when the completed checkout was a trial, not a paid plan. -->
+      <p class="checkout-success-note" data-checkout-success-note>Paste this activation key when it asks. Full instructions are in the app.</p>
     </div>
   </section>
 
@@ -452,6 +466,10 @@
         <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Yes. 25 free clips, no card required, right from your first download.</p></div></div>
       </div>
       <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a12" id="faq-q12"><span>What's the SHRED code / free trial offer?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a12" role="region" aria-labelledby="faq-q12" hidden><div class="faq-a-inner"><p>Some offers include a free trial. You add a card when you start. On the last day of the trial your plan starts and your card is charged unless you canceled before then. Cancel anytime in the app under Account. If you cancel during the trial you are not charged and access ends when the trial ends. Trials are limited to one per person, card and computer. A trial that breaks this rule is canceled at once with no charge. Trial clips don't roll over.</p></div></div>
+      </div>
+      <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>What's the iPhone app for?</span><span class="faq-plus" aria-hidden="true"></span></button>
         <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><div class="faq-a-inner"><p>With Studio, you can approve or deny clips remotely from your phone. Process footage anywhere without being at your computer.</p></div></div>
       </div>
@@ -520,7 +538,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261026a"></script>
+<script src="../../assets/js/checkout.js?v=20261026b"></script>
 <script src="../../assets/js/ss-page.js?v=20261025w4"></script>
 <script src="../../assets/js/ss-hero.js?v=20261025d" defer></script>
 <script>
