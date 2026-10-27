@@ -22,7 +22,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261028a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261027bt1" />
 <link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -275,43 +275,44 @@
     <p class="section-sub">Choose the plan that fits your workflow.<br class="br-desk" /> Unused clips roll over. Change plans anytime. Start with 25 free clips.</p>
     <p class="pricing-error" data-pricing-error role="alert" tabindex="-1" hidden></p>
     <div class="billing">
-      <div class="billing-toggle" role="group" aria-label="Billing interval" data-billing-toggle>
-        <button type="button" class="billing-toggle-btn is-active" data-billing="month">Monthly</button>
-        <button type="button" class="billing-toggle-btn" data-billing="year">Annual</button>
+      <div class="billing-toggle" role="group" aria-label="Billing option" data-billing-toggle>
+        <button type="button" class="billing-toggle-btn is-active" data-billing="monthly">Monthly</button>
+        <button type="button" class="billing-toggle-btn" data-billing="commit6">6-month <span class="billing-toggle-save">10% off</span></button>
+        <button type="button" class="billing-toggle-btn" data-billing="commit12">12-month <span class="billing-toggle-save">15% off</span></button>
+        <button type="button" class="billing-toggle-btn" data-billing="annual">Annual <span class="billing-toggle-save">20% off</span></button>
       </div>
-      <button type="button" class="billing-switch" role="switch" aria-checked="false" data-billing-switch><span class="mono">2 months free</span><span class="billing-switch-track" aria-hidden="true"><span></span></span></button>
     </div>
     <div class="pricing-grid" data-pricing-grid>
-      <div class="pricing-card">
+      <div class="pricing-card" data-plan="starter">
         <span class="pricing-name">Starter</span>
-        <p class="pricing-price" data-monthly="25" data-annual="250"><span class="num">$25</span>/mo</p>
+        <p class="pricing-price"><span class="num">$25</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="200">200 clips / mo</p>
         <p class="pricing-per-clip">$0.13 / clip</p>
-        
+
         <button type="button" class="pill pill-outline" data-plan-button="starter">Get started</button>
       </div>
-      <div class="pricing-card">
+      <div class="pricing-card" data-plan="creator">
         <span class="pricing-name">Creator</span>
-        <p class="pricing-price" data-monthly="59" data-annual="590"><span class="num">$59</span>/mo</p>
+        <p class="pricing-price"><span class="num">$59</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="500">500 clips / mo</p>
         <p class="pricing-per-clip">$0.12 / clip</p>
-        
+
         <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
       </div>
-      <div class="pricing-card">
+      <div class="pricing-card" data-plan="pro">
         <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
-        <p class="pricing-price" data-monthly="109" data-annual="1090"><span class="num">$109</span>/mo</p>
+        <p class="pricing-price"><span class="num">$109</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
         <p class="pricing-per-clip">$0.11 / clip</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="pro">Get started</button>
       </div>
-      <div class="pricing-card">
+      <div class="pricing-card" data-plan="studio">
         <span class="pricing-name">Studio</span>
-        <p class="pricing-price" data-monthly="199" data-annual="1990"><span class="num">$199</span>/mo</p>
+        <p class="pricing-price"><span class="num">$199</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
         <p class="pricing-per-clip">$0.10 / clip</p>
@@ -329,7 +330,7 @@
         <div class="upgrade-shot upgrade-shot--phone"><img src="../../assets/img/products/stock-shredder/remote-import.jpg" width="660" height="1344" loading="lazy" alt="Stock Shredder Remote on iPhone, ready to pick footage from your Mac." /></div>
       </figure>
     </div>
-    <p class="pricing-terms">Monthly plans renew each month and can be canceled anytime. No fee. You keep access until the end of your billing month. Annual plans are paid for 12&nbsp;months. Can't be canceled early. Renew automatically.</p>
+    <p class="pricing-terms">Monthly plans renew each month and can be canceled anytime, no fee — you keep access until the end of your billing month. 6- and 12-month plans bill monthly at a discount for that term, then renew into another term of the same length; annual plans are paid once for the full year and renew yearly. None of the three can be canceled early, but you can turn off auto-renew anytime from Account.</p>
     <div class="checkout-panel" data-checkout-panel tabindex="-1" hidden>
       <p class="checkout-status" data-checkout-status role="status" aria-live="polite" hidden></p>
       <div class="checkout-panel-frame" id="checkout-frame"></div>
@@ -435,7 +436,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>Can I cancel or change my plan anytime?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><div class="faq-a-inner"><p>You can change plans anytime from right inside the app. Monthly plans can be canceled anytime, no fee — you keep access until the end of your billing month, then it stops. Annual plans are paid in full for a 12-month term and automatically renew into another 12-month term when it ends; they can't be canceled mid-term, but you can turn off auto-renew anytime from Account to let the current term run out instead.</p></div></div>
+        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><div class="faq-a-inner"><p>You can change plans anytime from right inside the app, and you can always move up to a bigger plan or a longer commitment. Monthly plans can be canceled anytime, no fee — you keep access until the end of your billing month, then it stops. 6-month, 12-month, and annual plans are paid for that term and automatically renew into another term of the same length when it ends; none of them can be canceled or downgraded mid-term, but you can turn off auto-renew anytime from Account to let the current term run out instead.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Which platforms do you support?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -522,8 +523,8 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261026a"></script>
-<script src="../../assets/js/ss-page.js?v=20261025w4"></script>
+<script src="../../assets/js/checkout.js?v=20261027bt1"></script>
+<script src="../../assets/js/ss-page.js?v=20261027bt1"></script>
 <script src="../../assets/js/ss-hero.js?v=20261025d" defer></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a

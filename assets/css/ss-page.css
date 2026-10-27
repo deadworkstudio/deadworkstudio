@@ -343,15 +343,14 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 
 /* ---- pricing ---- */
 .billing { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 22px; }
-.billing-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line-2); border-radius: 999px; }
-.billing-toggle-btn { min-height: 34px; padding: 0 18px; border: 0; border-radius: 999px; background: none; font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+.billing-toggle { display: inline-flex; flex-wrap: wrap; justify-content: center; padding: 3px; border: 1px solid var(--line-2); border-radius: 999px; gap: 2px; }
+.billing-toggle-btn { min-height: 34px; padding: 0 16px; border: 0; border-radius: 999px; background: none; font: 600 10.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
 .billing-toggle-btn.is-active { background: var(--ink); color: var(--bg); }
-.billing-switch { display: inline-flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 0 0 16px; border: 1px solid var(--line-2); border-radius: 999px; background: none; cursor: pointer; padding-right: 4px; }
-.billing-switch .mono { color: var(--ink); }
-.billing-switch-track { position: relative; width: 44px; height: 26px; border-radius: 999px; background: var(--line-2); transition: background 200ms var(--ease); }
-.billing-switch-track span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms var(--ease); }
-.billing-switch[aria-checked='true'] .billing-switch-track { background: var(--ink); }
-.billing-switch[aria-checked='true'] .billing-switch-track span { transform: translateX(18px); }
+/* Billing-tiers plan §7: the per-option savings label inside each of the 4 toggle buttons
+   (Monthly has none). Muted on an inactive button, inherits the active button's own ink-on-bg
+   contrast once selected. */
+.billing-toggle-save { margin-left: 5px; opacity: .6; }
+.billing-toggle-btn.is-active .billing-toggle-save { opacity: .8; }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
 .pricing-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 20px 8px; }
 .pricing-card + .pricing-card { border-left: 1px solid var(--line); }
@@ -554,7 +553,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .review-form, .faq-list, .checkout-panel, .checkout-success { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .poster-head, .will-reveal > *, .billing-switch-track, .billing-switch-track span, .faq-plus::after { transition: none !important; }
+  .poster-head, .will-reveal > *, .faq-plus::after { transition: none !important; }
   .will-reveal > * { opacity: 1; transform: none; }
   .checkout-panel-frame.is-loading { background: var(--bg-2); animation: none; }
   .mega-menu, .modal, .pricing-price { transform: none !important; filter: none !important; }
