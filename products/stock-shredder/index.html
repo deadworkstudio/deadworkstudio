@@ -19,10 +19,11 @@
      parsed and the h1 to need it — without this, the fallback font flashes briefly before the
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261026b" />
 <link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
-<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261025e" />
+<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261026a" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
 <script src="https://js.stripe.com/v3/" defer></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -82,6 +83,7 @@
   <section class="hero">
     <div class="hero-brand"><img class="hero-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" /></div>
     <h1>Raw footage into stock-ready clips.</h1>
+    <span class="badge badge-beta"><span class="badge-icon badge-icon--filled"></span>Beta</span>
     <figure class="strip iss" data-iss aria-label="An archive of shots from 14 films; one film, Serenity Prayer, is opened and its motorcycle run cut down to six clips.">
       <div class="iss-pic">
         <canvas class="iss-canvas" data-iss-canvas aria-hidden="true"></canvas>
@@ -117,7 +119,7 @@
       <span class="pill pill-outline is-disabled" aria-disabled="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone &middot; Coming soon</span></span>
       <a id="download-android" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.10/Stock-Shredder-Remote-1.1.apk"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
     </div>
-    <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.10</span> (Beta)</p>
+    <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.10</span></p>
     <p class="mono downloads-note" data-win-smartscreen-note hidden>Windows may show &ldquo;Windows protected your PC&rdquo; &mdash; click More info, then Run anyway.</p>
   </section>
 
@@ -471,27 +473,27 @@
     <ul class="tools-grid">
       <li><a class="tool" href="../scene-lock/">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/scene-lock.png" alt="" loading="lazy" /></span>
-        <span class="tool-meta"><span class="tool-name">Scene Lock</span><span class="mono">Pre-production &middot; <span class="st-soon">In development</span></span></span>
+        <span class="tool-meta"><span class="tool-name">Scene Lock</span><span class="tool-status"><span class="mono">Pre-production</span><span class="badge badge-dev"><span class="badge-icon"></span>In development</span></span></span>
       </a></li>
       <li><a class="tool" href="../set-control/">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/set-control.png" alt="" loading="lazy" /></span>
-        <span class="tool-meta"><span class="tool-name">Set Control</span><span class="mono">Pre-production &middot; <span class="st-soon">In development</span></span></span>
+        <span class="tool-meta"><span class="tool-name">Set Control</span><span class="tool-status"><span class="mono">Pre-production</span><span class="badge badge-dev"><span class="badge-icon"></span>In development</span></span></span>
       </a></li>
       <li><a class="tool" href="../loadout/">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/loadout.png" alt="" loading="lazy" /></span>
-        <span class="tool-meta"><span class="tool-name">Loadout</span><span class="mono">Production &middot; <span class="st-soon">In development</span></span></span>
+        <span class="tool-meta"><span class="tool-name">Loadout</span><span class="tool-status"><span class="mono">Production</span><span class="badge badge-dev"><span class="badge-icon"></span>In development</span></span></span>
       </a></li>
       <li><a class="tool" href="../handoff/">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/handoff.png" alt="" loading="lazy" /></span>
-        <span class="tool-meta"><span class="tool-name">Handoff</span><span class="mono">Production &middot; <span class="st-soon">In development</span></span></span>
+        <span class="tool-meta"><span class="tool-name">Handoff</span><span class="tool-status"><span class="mono">Production</span><span class="badge badge-dev"><span class="badge-icon"></span>In development</span></span></span>
       </a></li>
       <li><a class="tool" href="../sound-driver/">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/sound-driver.png" alt="" loading="lazy" /></span>
-        <span class="tool-meta"><span class="tool-name">Sound Driver</span><span class="mono">Post-production &middot; <span class="st-soon">In development</span></span></span>
+        <span class="tool-meta"><span class="tool-name">Sound Driver</span><span class="tool-status"><span class="mono">Post-production</span><span class="badge badge-dev"><span class="badge-icon"></span>In development</span></span></span>
       </a></li>
       <li><a class="tool is-here" href="./" aria-current="page">
         <span class="tool-mark"><img src="../../assets/img/brand/product-logos/clean/stock-shredder.png" alt="" loading="lazy" /></span>
-        <span class="tool-meta"><span class="tool-name">Stock Shredder</span><span class="mono">Post-production &middot; <span class="st-live">Available now</span></span></span>
+        <span class="tool-meta"><span class="tool-name">Stock Shredder</span><span class="tool-status"><span class="mono">Post-production</span><span class="badge badge-beta"><span class="badge-icon badge-icon--filled"></span>Beta</span></span></span>
       </a></li>
     </ul>
   </section>
