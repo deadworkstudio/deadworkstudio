@@ -234,7 +234,7 @@ html[data-product="scene-lock"] .poster-media img {
 .mega-menu-group { display: none; flex-direction: column; padding: 36px 0 40px; gap: 18px; }
 .mega-menu-group.is-active { display: flex; }
 
-.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); }
+.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; text-align: center; color: var(--bone-3); }
 
 /* Studio (Mission/Values/Join/Contact) is a 2x2 grid of its own cards rather than the single
    row the product groups use — same card markup, just laid out two-by-two since there are 4
