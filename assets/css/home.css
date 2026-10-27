@@ -406,9 +406,16 @@ a[href$="loadout/"] .mega-menu-card-img::after {
 .panel.is-active { display: block; animation: panel-in .14s var(--ease); }
 @keyframes panel-in { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .panel.is-active { animation: none; } }
-.panel[data-product]::before { content: ''; display: block; width: 48px; height: 2px; background: var(--acc); margin-bottom: 20px; }
 .panel-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: clamp(16px, 3svh, 32px); }
-.panel-name { font-size: min(15.5cqi, 16svh); margin-bottom: clamp(16px, 3svh, 32px); }
+/* P1-2 (2026-10-26 audit): this was the product name retyped in giant Anton — one click later,
+   the product's own page shows the real logo artwork instead, so the same product looked
+   hand-lettered here and designed there. Logo art now, at the same cap height the retyped name
+   used to occupy, same as the mega-menu's own logos (same source files, bone-on-dark). The old
+   yellow/green accent rule above this (.panel[data-product]::before) is dropped along with it —
+   see P1-1's own note on dropping the accent color from the status mark; shape alone (hairline vs
+   solid) already carries that meaning, so a second colored flourish next to it was redundant. */
+.panel-name { display: block; margin-bottom: clamp(16px, 3svh, 32px); }
+.panel-logo { display: block; height: clamp(56px, 16svh, 120px); width: auto; max-width: 100%; object-fit: contain; }
 /* width:fit-content makes the box hug the actual rendered glyphs instead of filling out to the
    max-width cap — the logo row below measures this box's width via JS, and without fit-content
    it was matching an invisible wider box rather than the visible letters. */
@@ -608,7 +615,8 @@ body.home .panel-headline-lede { text-align: center; }
    between it and nudges the headline size down a little on the shortest screens in this band. */
 @media (min-width: 720px) and (min-height: 640px) and (max-height: 800px) {
   .panel-meta { margin-bottom: clamp(8px, 1.4svh, 16px); }
-  .panel-name { font-size: min(15.5cqi, 13svh); margin-bottom: clamp(8px, 1.4svh, 16px); }
+  .panel-name { margin-bottom: clamp(8px, 1.4svh, 16px); }
+  .panel-logo { height: clamp(48px, 13svh, 96px); }
   .panel-oneliner { margin-bottom: clamp(10px, 1.6svh, 20px) !important; }
   .panel .spec-table { margin-top: 10px !important; }
   .panel .btn { margin-top: 10px !important; }
