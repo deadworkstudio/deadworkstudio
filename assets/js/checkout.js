@@ -151,6 +151,10 @@
   var sessionId = null; // the current Checkout Session id — reused by "Try again" so we never start a second session for one charge
   var currentPlanId = null;
   var currentPlanInterval = 'month'; // snapshotted from currentInterval when "Buy now" is clicked, so toggling the (now-hidden) grid mid-checkout can't change an in-flight session
+  // L2 (2026-10-26 QA): which flavor of Checkout is currently in flight — a setup-mode trial
+  // start never charges anything, so verifySession()'s generic "that charge didn't go through"
+  // copy is simply untrue for it; this flag lets that one fallthrough branch answer correctly.
+  var currentCheckoutIsTrial = false;
 
   function showPricingError(message) {
     if (!pricingError) return;
@@ -185,6 +189,10 @@
     panel.hidden = true;
     success.hidden = true;
     grid.hidden = false;
+    // L2: a trial checkout (or its own panel) may have hidden the trial offer box on the way
+    // in — bring it back whenever there's still a live offer code to show it for, so cancelling
+    // out of a trial's embedded Checkout doesn't lose the box entirely.
+    if (trialOffer && currentOfferCode) trialOffer.hidden = false;
     showPricingError(errorMessage || '');
     // Cancelling (or an error sending the person back) leaves focus on an element that just got
     // hidden unless we move it ourselves — to the error itself when there is one to read, otherwise
@@ -202,6 +210,10 @@
     panel.hidden = true;
     grid.hidden = true;
     success.hidden = false;
+    // L2: the trial offer box (email field + its own form) has nothing left to do once the
+    // trial — or any purchase — has actually completed; leaving it visible behind the success
+    // panel let someone immediately try to start a second trial from the same page.
+    if (trialOffer) trialOffer.hidden = true;
     if (keyEl) keyEl.textContent = activationKey;
 
     // SHRED launch trial v2 (§8.7): a trial completion gets its own eyebrow/note copy instead of
@@ -306,6 +318,24 @@
           }
           return;
         }
+        // L2: a setup-mode trial session never charges anything — if it somehow lands here
+        // (the card itself failed to save, say) the paid-flow's "that charge didn't go through"
+        // copy is simply untrue for it, and sending the visitor back to the generic pricing grid
+        // loses the trial entirely. Route back to the trial box with trial-appropriate wording.
+        if (currentCheckoutIsTrial) {
+          teardownCheckout();
+          panel.hidden = true;
+          success.hidden = true;
+          if (trialOffer) {
+            grid.hidden = true;
+            trialOffer.hidden = false;
+            showTrialError("We couldn't save your card. Nothing was charged — try again.");
+          } else {
+            grid.hidden = false;
+            showPricingError("We couldn't save your card. Nothing was charged — try again.");
+          }
+          return;
+        }
         // The Worker successfully asked Stripe, and Stripe confirmed the charge did not go
         // through (e.g. a decline) — nothing to retry-confirm, so send them back to pick again.
         if (retryBtn) retryBtn.hidden = true;
@@ -330,12 +360,14 @@
 
     currentPlanId = planId;
     currentPlanInterval = currentInterval;
+    currentCheckoutIsTrial = false;
     sessionId = null;
     showPricingError('');
     if (retryBtn) retryBtn.hidden = true;
 
     grid.hidden = true;
     success.hidden = true;
+    if (trialOffer) trialOffer.hidden = true;
     panel.hidden = false;
     // The grid button that opened this is now hidden — move focus into the panel itself (it's
     // given tabindex="-1" in the markup for exactly this) so keyboard/screen-reader users land
@@ -412,6 +444,20 @@
     trialErrorEl.textContent = message || '';
     trialErrorEl.hidden = !message;
     if (message) trialErrorEl.focus();
+  }
+
+  // L4: same as showTrialError, but appends a REAL anchor to #pricing instead of plain text —
+  // built with DOM nodes (never innerHTML) so the server-provided message can't inject markup.
+  function showTrialErrorWithPricingLink(message) {
+    if (!trialErrorEl) return;
+    trialErrorEl.textContent = '';
+    trialErrorEl.appendChild(document.createTextNode((message || "This trial couldn't be started.") + ' '));
+    var link = document.createElement('a');
+    link.href = '#pricing';
+    link.textContent = 'See plans';
+    trialErrorEl.appendChild(link);
+    trialErrorEl.hidden = false;
+    trialErrorEl.focus();
   }
 
   function showTrialStatus(message) {
@@ -508,7 +554,12 @@
         if (!result.ok || !result.data || !result.data.clientSecret || !result.data.sessionId) {
           var data = result.data || {};
           if (result.status === 409 && data.code === 'not_eligible') {
-            showTrialError((data.error || "This email can't start a SHRED trial.") + ' See plans below instead.');
+            // L4: the Worker's own not_eligible message already ends with "Pick a plan below
+            // instead." (see trials.ts's TRIAL_NOT_ELIGIBLE_MESSAGE) — appending another, nearly
+            // identical "See plans below instead." on top just repeated the same instruction
+            // twice in one sentence. Link "See plans" to #pricing for real instead, matching the
+            // spec's own error-mapping note (§5.4 step 5 / §7 item 3).
+            showTrialErrorWithPricingLink(data.error || "This email can't start a SHRED trial.");
           } else if (result.status === 409) {
             showTrialError(data.error || "This trial couldn't be started.");
           } else if (result.status === 429) {
@@ -522,13 +573,20 @@
         // start) must never leave two embedded Checkout instances mounted at once.
         teardownCheckout();
         sessionId = result.data.sessionId;
+        currentCheckoutIsTrial = true;
         var clientSecret = result.data.clientSecret;
 
         grid.hidden = true;
         success.hidden = true;
+        // L2: the trial box's own email form has nothing left to do once its Checkout form is
+        // open — leaving it visible duplicated the "$0 today" messaging right above Stripe's own
+        // card-saving form and let someone submit a second trial start mid-flight.
+        if (trialOffer) trialOffer.hidden = true;
         panel.hidden = false;
         panel.focus();
-        showStatus('Loading secure checkout…', false);
+        // L2: this is a card SAVE, not a charge — "Loading secure checkout…" (shared with the
+        // paid flow) reads like a purchase is about to happen.
+        showStatus('Saving your card…', false);
         frame.classList.add('is-loading');
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });

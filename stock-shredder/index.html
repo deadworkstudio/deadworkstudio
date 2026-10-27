@@ -14,7 +14,11 @@
 </head>
 <body>
 <noscript>
-  <p><a href="../products/stock-shredder/">Continue to Stock Shredder</a></p>
+  <!-- L11 (2026-10-26 QA): this whole page exists only as the SHRED share link (see the comment
+       above) — a script-disabled browser can't read location.search to forward an arbitrary
+       code, but since the code here is always SHRED, hardcoding it keeps the fallback link
+       working the same as the JS redirect instead of silently dropping the trial. -->
+  <p><a href="../products/stock-shredder/?code=SHRED#trial">Continue to Stock Shredder</a></p>
 </noscript>
 </body>
 </html>
