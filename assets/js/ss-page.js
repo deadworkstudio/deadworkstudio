@@ -514,3 +514,23 @@
   }, { rootMargin: '0px 0px -10% 0px' });
   els.forEach(function (el) { io.observe(el); });
 })();
+
+// ---- footer live clock: replaces the mailto address in the bottom-left corner. Own IIFE
+// (not appended inside the block above) because that one can `return` early under reduced
+// motion / no IntersectionObserver, which would skip this too if it lived in the same scope. ----
+// Always Los Angeles time (the studio's own, per "Est. Los Angeles" in the nav), not each
+// visitor's local time. Intl's timeZoneName:'short' already resolves to PST/PDT correctly for
+// the date, so DST isn't hand-rolled here. No aria-live: a per-second update would spam screen
+// readers for no real information.
+(function () {
+  var clocks = document.querySelectorAll('[data-live-clock]');
+  if (!clocks.length) return;
+  var dateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZoneName: 'short' });
+  var tick = function () {
+    var text = dateFmt.format(new Date()) + ' | ' + timeFmt.format(new Date());
+    Array.prototype.forEach.call(clocks, function (el) { el.textContent = text; });
+  };
+  tick();
+  setInterval(tick, 1000);
+})();
