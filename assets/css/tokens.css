@@ -39,18 +39,30 @@
    sheet — was never actually self-hosted, so it rendered in whatever the visitor's OS/browser
    happened to ship (Menlo on Mac Chrome, SF Mono on Mac Safari, Consolas/Courier New on Windows,
    Droid Sans Mono on Android). JetBrains Mono (OFL, see assets/fonts/OFL-JetBrainsMono.txt),
-   subset to the uppercase+digit+punctuation set this site actually uses, in 2 weights (~4.4KB
-   each as woff2). The old OS stack stays as the fallback if the font fails to load. */
+   subset to the uppercase+digit+punctuation set this site actually uses, in 3 weights (~4.6KB
+   each as woff2). The old OS stack stays as the fallback if the font fails to load.
+   LOW (2026-10-27 QA): the subset was missing &copy;/&reg;, en/em dash, curly quotes, the arrow
+   glyph, the ellipsis and the non-breaking space — any copy using those fell back to the OS
+   stack mid-word. Rebuilt all three weights from the upstream variable font with those added.
+   The 500 weight used to not exist at all, so every `font: 500 ... var(--font-mono)` request
+   silently resolved to whichever of 400/600 the browser judged closer — now it's real. */
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('../fonts/jetbrains-mono-400.woff2') format('woff2');
+  src: url('../fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('../fonts/jetbrains-mono-600.woff2') format('woff2');
+  src: url('../fonts/jetbrains-mono-500.woff2?v=20261027a') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../fonts/jetbrains-mono-600.woff2?v=20261027a') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;

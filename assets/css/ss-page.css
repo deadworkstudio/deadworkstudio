@@ -2,8 +2,9 @@
    Standalone: does not load base/home/product.css. Reuses only the shared font files. */
 @font-face { font-family: 'Archivo'; src: url('../fonts/archivo-variable.woff2') format('woff2-variations'), url('../fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
 /* P1-4 (2026-10-26 audit): self-hosted mono — see tokens.css's matching declaration for why. */
-@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-500.woff2?v=20261027a') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-600.woff2?v=20261027a') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
 
 :root {
   --bg: #F4F1EA;

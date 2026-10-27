@@ -7,7 +7,7 @@
    light (ss-page.css/studio.css --mono) systems, and those variable names don't match — so the
    mega-menu's own mono text can't just reference a var here without risking an undefined custom
    property on half the pages it's loaded on. Self-hosted font, declared and used directly. */
-@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 .nav-tab-trigger::after { display: none !important; }
 .nav-tab-trigger { padding: 8px 10px 6px !important; align-items: center !important; min-height: 36px; transition: opacity 160ms var(--ease, ease); }
 /* H-6/D-12: restore the 44px touch-target floor on coarse pointers (Studio, Stock Shredder, the
