@@ -343,6 +343,9 @@ main section { text-align: center; }
   font: 300 clamp(30px, 7.4vw, 124px)/1 var(--sans); letter-spacing: -.035em; color: var(--ink);
   overflow-wrap: anywhere; user-select: all; -webkit-user-select: all;
 }
+/* Privacy/Terms now live only here, under the contact email — removed from every other
+   page's footer per Daniel's 2026-10-27 request. */
+.contact-legal { margin-top: clamp(16px, 2.4vh, 24px); }
 
 /* footer sits on cream after the darker-cream contact block */
 .poster-foot { border-top-color: transparent; }
