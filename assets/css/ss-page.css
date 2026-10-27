@@ -127,12 +127,9 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .will-reveal > *:nth-child(2) { transition-delay: 60ms; }
 .will-reveal > *:nth-child(3) { transition-delay: 120ms; }
 
-/* ---- pills ---- */
-.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--ink); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: background 160ms var(--ease), color 80ms var(--ease), transform 160ms var(--ease); }
-.pill:active { transform: scale(.97); }
-/* A disabled "coming soon" pill isn't being pressed toward anything — shrinking it on tap/click
-   implies it registered the press the same way a real action does, which it doesn't. */
-.pill.is-disabled:active { transform: none; }
+/* ---- pills: shared geometry now lives in buttons.css (MEDIUM-2, 2026-10-27 QA) — this page
+   just supplies its own ink-on-sand color variant and mono font. ---- */
+.pill { font-family: var(--mono); border-color: var(--ink); }
 .pill-solid { background: var(--ink); color: var(--bg); }
 .pill-outline { background: transparent; color: var(--ink); }
 @media (any-hover: hover) and (any-pointer: fine) {

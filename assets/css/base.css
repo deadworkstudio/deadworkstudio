@@ -110,27 +110,16 @@ button { font: inherit; }
    P1-3 (2026-10-26 audit): one shape site-wide — the rounded pill already approved for Stock
    Shredder (ss-page.css's .pill) and already used on the five in-development pages and Studio
    (product-dev.css/studio.css's own .pill copies). This was the one holdout at border-radius:0;
-   changing just the radius here carries every page that uses .btn (home's panels, the product
-   grid) to the same shape with no markup changes. ---------- */
+   changing just the radius here carried every page that uses .btn (home's panels, the product
+   grid) to the same shape with no markup changes.
+   MEDIUM-2 (2026-10-27 QA): that P1-3 fix only matched the shape — size/weight/spacing
+   (12px/500/0.18em/16-32px padding) still quietly differed from the real pill
+   (11px/600/0.14em/0-28px padding) defined three other times across the site. Shared geometry
+   now lives in buttons.css, loaded on every page .btn appears on; this is just the mono font and
+   the default transparent border the color variants below paint over. ---------- */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 16px 32px;
-  border-radius: 999px;
   font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease), transform 0.08s;
-  border: 1px solid transparent;
 }
-.btn:active { transform: translateY(1px); }
 .btn-icon { display: block; flex-shrink: 0; }
 
 .btn-primary {

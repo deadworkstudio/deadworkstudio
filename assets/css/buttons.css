@@ -1,0 +1,41 @@
+/* DEADWORK — the one pill button shape, shared by every page (MEDIUM-2, 2026-10-27 QA).
+
+   This exact geometry used to be pasted three times (ss-page.css, product-dev.css, studio.css)
+   while home.css's own .btn/.btn-primary quietly drifted into a second, slightly different shape
+   (12px/500/0.18em/16-32px padding) instead of matching the pill everyone else already agreed on
+   (11px/600/0.14em/0-28px padding) — so "Notify me" on the homepage still read as a different
+   button family from every product page's own CTA, even after the P1-3 fix that was supposed to
+   unify them gave both the same border-radius but not the same type/spacing.
+
+   Geometry only, on purpose: color still lives on each page's own .pill-solid/.pill-outline/
+   .btn-primary variant, because the three systems this file reaches name their ink/background
+   tokens differently (--ink/--bg on ss-page.css and studio.css, --dev-ink/--dev-bg on
+   product-dev.css, --bone/--ink on base.css's dark system) — same reasoning nav-v2.css already
+   uses for declaring its own cross-system rules standalone instead of guessing a shared var name.
+   Each page's own stylesheet still sets font-family (its own mono var name) plus border/
+   background/color for -solid and -outline. */
+.pill, .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background 160ms var(--ease, ease), color 80ms var(--ease, ease), border-color 160ms var(--ease, ease), transform 160ms var(--ease, ease);
+}
+.pill:active, .btn:active { transform: scale(.97); }
+/* A disabled "coming soon" pill isn't being pressed toward anything — shrinking it on tap/click
+   implies it registered the press the same way a real action does, which it doesn't. */
+.pill.is-disabled:active { transform: none; }
