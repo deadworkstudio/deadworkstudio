@@ -74,8 +74,19 @@
 /* H-18: layout-only mitigation, see home-tabs.css's matching comment. */
 .mm-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; margin-top: 8px; font: 400 10.5px/1.5 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Monaco, 'Courier New', monospace; letter-spacing: .16em; text-transform: uppercase; color: #807d77; }
 .mm-platform { text-wrap: pretty; }
-.mm-status { color: #94918a; }
-.mm-plate[href$="stock-shredder/"] .mm-status { color: #8FD687; }
+/* MEDIUM-1 (2026-10-27 QA): this used to draw "IN DEVELOPMENT"/"BETA" as plain colored text
+   (.mm-status) instead of the shared .badge component used everywhere else (hero, home panels,
+   tools grid). Defined fully standalone here — same reasoning as the @font-face above — since
+   this file reaches Studio, which doesn't load base.css and has no .badge CSS of its own at all,
+   and the mega-menu panel is always forced dark regardless of the host page's own light/dark
+   badge variant (ss-page.css's own .badge-dev is ink-on-sand, which would render as dark text on
+   this dark panel if it won one of the cascade). !important matches every other cross-system
+   override already in this file. Stock Shredder's own entry deliberately carries no badge (see
+   Daniel's "it's live, not beta" decision on home/index.html's panel) so there's no beta variant
+   needed here. */
+.mm-meta .badge { display: inline-flex !important; align-items: center !important; gap: 5px !important; height: 18px !important; padding: 0 7px !important; font: inherit !important; letter-spacing: inherit !important; white-space: nowrap !important; }
+.mm-meta .badge-dev { background: transparent !important; color: #e6e0d3 !important; border: 1px solid #e6e0d3 !important; }
+.mm-meta .badge-icon { display: inline-block !important; width: 6px !important; height: 6px !important; flex-shrink: 0 !important; border: 1px solid currentColor !important; background: none !important; }
 .mega-menu-card:focus-visible { outline: 1px solid #e6e0d3; outline-offset: 6px; }
 @media (max-width: 719px) { .mm-plate .mm-plate-box { height: 180px; } }
 @media (prefers-reduced-motion: reduce) {
