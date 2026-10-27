@@ -76,4 +76,17 @@
     var p = hero.play();
     if (p && p.catch) p.catch(function () {});
   }
+
+  // Footer live clock — always Los Angeles time (the studio's own, per "Est. Los Angeles" in
+  // the nav), not each visitor's local time. Intl's timeZoneName:'short' already resolves to
+  // PST/PDT correctly for the date, so DST isn't hand-rolled here. No aria-live: announcing a
+  // per-second update would spam screen readers for no real information.
+  var clock = document.querySelector('[data-live-clock]');
+  if (clock) {
+    var dateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZoneName: 'short' });
+    var tick = function () { clock.textContent = dateFmt.format(new Date()) + ' | ' + timeFmt.format(new Date()); };
+    tick();
+    setInterval(tick, 1000);
+  }
 })();
