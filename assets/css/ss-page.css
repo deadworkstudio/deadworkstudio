@@ -1,6 +1,10 @@
 /* Stock Shredder product page — light editorial layout (Daniel's 2026-10-23 design).
    Standalone: does not load base/home/product.css. Reuses only the shared font files. */
 @font-face { font-family: 'Archivo'; src: url('../fonts/archivo-variable.woff2') format('woff2-variations'), url('../fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+/* P1-4 (2026-10-26 audit): self-hosted mono — see tokens.css's matching declaration for why. */
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-500.woff2?v=20261027a') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../fonts/jetbrains-mono-600.woff2?v=20261027a') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
 
 :root {
   --bg: #F4F1EA;
@@ -12,7 +16,7 @@
   --line-2: rgba(20, 20, 18, .28);
   --green: #3D6E39;
   --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Monaco, 'Courier New', monospace;
   --gutter: clamp(20px, 6.4vw, 92px);
   --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
   --nav-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -35,6 +39,16 @@ button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .mono { font: 500 10.5px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
 .hp { position: absolute; left: -9999px; }
+
+/* ---- status badge: the same shared component as base.css's .badge/.badge-beta/.badge-dev
+   (home panels, the five in-development pages, the tools grid below), re-declared here because
+   this page is standalone and doesn't load base.css. Shape-coded, not just colour-coded: BETA is
+   a solid plate, IN DEVELOPMENT is a hairline outline with a hollow square (P1-1, 2026-10-26). ---- */
+.badge { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; font: 500 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
+.badge-beta { background: #8FD687; color: var(--ink); }
+.badge-dev { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+.badge-icon { display: inline-block; width: 8px; height: 8px; flex-shrink: 0; border: 1px solid currentColor; }
+.badge-icon--filled { background: currentColor; border: none; }
 
 
 /* ---- original DEADWORK header: 06 TOOLS · PRE-PRODUCTION PRODUCTION | DEADWORK | POST-PRODUCTION STUDIO · EST. LOS ANGELES
@@ -114,12 +128,9 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .will-reveal > *:nth-child(2) { transition-delay: 60ms; }
 .will-reveal > *:nth-child(3) { transition-delay: 120ms; }
 
-/* ---- pills ---- */
-.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--ink); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: background 160ms var(--ease), color 80ms var(--ease), transform 160ms var(--ease); }
-.pill:active { transform: scale(.97); }
-/* A disabled "coming soon" pill isn't being pressed toward anything — shrinking it on tap/click
-   implies it registered the press the same way a real action does, which it doesn't. */
-.pill.is-disabled:active { transform: none; }
+/* ---- pills: shared geometry now lives in buttons.css (MEDIUM-2, 2026-10-27 QA) — this page
+   just supplies its own ink-on-sand color variant and mono font. ---- */
+.pill { font-family: var(--mono); border-color: var(--ink); }
 .pill-solid { background: var(--ink); color: var(--bg); }
 .pill-outline { background: transparent; color: var(--ink); }
 @media (any-hover: hover) and (any-pointer: fine) {
@@ -136,6 +147,11 @@ main > section > h2.section-head, .pair > section > h2.section-head { margin-bot
 .hero { --hero-text: clamp(360px, 41vh, 430px); padding-top: calc(var(--sh-h) + clamp(20px, 3.4vh, 40px)) !important; padding-bottom: 64px !important; }
 .hero-logo { display: block; margin: 0 !important; height: clamp(44px, 6.6vh, 68px); width: auto; margin: 0 auto; }
 .hero h1 { margin-top: 14px; font: 600 clamp(36px, min(3.9vw, 6.4vh), 58px)/1.05 var(--sans); letter-spacing: -.03em; }
+/* .hero becomes a flex column at the one-block-per-screen breakpoint (main > section rule further
+   down this file) with no align-items set, so it defaults to stretch — invisible on the other
+   hero children since they center their own content with text-align, but this chip has a filled
+   background, so the stretch would otherwise paint a full-width green bar instead of a chip. */
+.hero .badge { margin-top: 16px; align-self: center; }
 .hero-lede { margin: 12px auto 0; max-width: none; font-size: clamp(15px, 1.15vw, 18px); line-height: 1.45; color: var(--ink-2); }
 @media (min-width: 900px) { .hero-lede { white-space: nowrap; } }
 .shot { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
@@ -237,11 +253,20 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .tool:hover { background: rgba(255,255,255,.45); }
   .tool:hover .tool-mark img { transform: scale(1.04); opacity: 1; }
 }
-.tool-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.tool-meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .tool-meta .mono { color: #625E57; }
 .tool-name { font-weight: 600; font-size: 16px; }
-.st-live { color: var(--green); }
-.st-soon { color: #765A12; }
+/* P1-1 (2026-10-26 audit): "Available now"/"In development" used to be plain colored text here —
+   now the same shared .badge component as everywhere else, label beside it unchanged. */
+.tool-status { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+/* M-1 (2026-10-27 QA): Stock Shredder is the one tile in this grid that's actually buyable
+   today, but "Available now" inherited .tool-meta .mono's grey — identical to the category
+   label next to it, so the one live product read as the least available thing on the page
+   next to five outlined "IN DEVELOPMENT" chips. Daniel already ruled out a badge/chip here;
+   this gives it the brand green (same var(--green) as the notify-success and pricing-save
+   text elsewhere on this page) so it reads as a positive "ready now" signal without any
+   extra chrome. */
+.tool-meta .tool-live { color: var(--green); font-weight: 600; }
 @media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } .tools-grid li:nth-child(3n) { border-right: 1px solid var(--line-2); } .tools-grid li:nth-child(2n) { border-right: 0; } }
 @media (max-width: 520px) { .tools-grid { grid-template-columns: 1fr; } .tools-grid li { border-right: 0 !important; } .tool { aspect-ratio: 1 / 0.6; padding: 22px 20px; } }
 

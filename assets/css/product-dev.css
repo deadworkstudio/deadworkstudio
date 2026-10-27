@@ -75,8 +75,10 @@ body.dev-light .poster-foot { border-color: var(--dev-line); }
 body.dev-light .nav-tabs { flex-wrap: nowrap; }
 
 /* ---- "IN DEVELOPMENT" badge: monochrome, matching the page's own ink/gray palette instead of
-   the site's dev-yellow accent — no color accent on these pages at all. ---- */
-body.dev-light .badge-dev { color: var(--dev-ink-3); border-color: var(--dev-line-strong); }
+   the site's dev-yellow accent — no color accent on these pages at all.
+   P1-1 (2026-10-26 audit): full ink, not the softer grey — "in ink on sand" per the shared
+   status-chip spec, matching base.css's "bone on dark" counterpart at the same strength. ---- */
+body.dev-light .badge-dev { color: var(--dev-ink); border-color: var(--dev-ink); }
 
 /* D-16: home.css's hover rule for the mega-menu card name uses --acc, which on a dev-light page
    resolves to the per-product dev-yellow — the one color accent these monochrome pages
@@ -90,9 +92,9 @@ body.dev-light .badge-dev { color: var(--dev-ink-3); border-color: var(--dev-lin
 .mono { font: 500 10.5px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--dev-ink-3); }
 .head-dw { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .005em; line-height: .95; }
 
-/* ---- pill buttons, Stock Shredder's own shape ---- */
-.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--dev-ink); font: 600 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: background 160ms var(--ease), color 80ms var(--ease), transform 160ms var(--ease); }
-.pill:active { transform: scale(.97); }
+/* ---- pill buttons: shared geometry now lives in buttons.css (MEDIUM-2, 2026-10-27 QA) — this
+   page just supplies its own monochrome ink-on-sand color variant and mono font. ---- */
+.pill { font-family: var(--font-mono); border-color: var(--dev-ink); }
 .pill-solid { background: var(--dev-ink); color: var(--dev-bg); border-color: var(--dev-ink); }
 @media (any-hover: hover) and (any-pointer: fine) { .pill-solid:hover { background: transparent; color: var(--dev-ink); } }
 
