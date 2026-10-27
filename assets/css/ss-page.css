@@ -259,6 +259,14 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 /* P1-1 (2026-10-26 audit): "Available now"/"In development" used to be plain colored text here —
    now the same shared .badge component as everywhere else, label beside it unchanged. */
 .tool-status { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+/* M-1 (2026-10-27 QA): Stock Shredder is the one tile in this grid that's actually buyable
+   today, but "Available now" inherited .tool-meta .mono's grey — identical to the category
+   label next to it, so the one live product read as the least available thing on the page
+   next to five outlined "IN DEVELOPMENT" chips. Daniel already ruled out a badge/chip here;
+   this gives it the brand green (same var(--green) as the notify-success and pricing-save
+   text elsewhere on this page) so it reads as a positive "ready now" signal without any
+   extra chrome. */
+.tool-meta .tool-live { color: var(--green); font-weight: 600; }
 @media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } .tools-grid li:nth-child(3n) { border-right: 1px solid var(--line-2); } .tools-grid li:nth-child(2n) { border-right: 0; } }
 @media (max-width: 520px) { .tools-grid { grid-template-columns: 1fr; } .tools-grid li { border-right: 0 !important; } .tool { aspect-ratio: 1 / 0.6; padding: 22px 20px; } }
 

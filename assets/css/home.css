@@ -627,8 +627,25 @@ body.home .panel-headline-lede { text-align: center; }
   /* HIGH-1 (2026-10-27 QA): Sound Driver is the deepest panel at this breakpoint — eyebrow +
      oneliner + spec table + a notify form (every other panel skips at least one of those, and
      Stock Shredder's own already-shorter copy is the only other panel with a form). Capping its
-     longer-than-the-others description to 2 lines here is the cheapest way to keep its form
-     clear of the footer without touching the panel's own scroll fallback. */
+     longer-than-the-others description is the cheapest way to keep its form clear of the footer
+     without touching the panel's own scroll fallback. */
   .panel[data-product="sound-driver"] .eyebrow { margin-top: 6px !important; }
-  .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+}
+/* HIGH-1 follow-up (2026-10-27 QA round 2): a flat 2-line clamp across the whole 640-800px
+   height band clipped the description mid-word even at heights with 100px+ to spare (e.g.
+   159px free at 1366x768, enough for all 5 lines). Measured the real free space (lowest
+   control's bottom edge to the footer's top edge) at 1280px width — the narrowest/tightest
+   width in this band — across the height range to size each band to what it can actually fit,
+   with an 8px+ safety margin: 3 lines fits down to 640px tall (12px+ to spare), 4 lines needs
+   680px+ (20px+ to spare), and by 700px tall there's room for the full 5-line paragraph with
+   no clamp at all. Widths above 1280px always have more free space at the same height, so these
+   bands stay safe there too. */
+@media (min-width: 720px) and (min-height: 640px) and (max-height: 679px) {
+  .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+}
+@media (min-width: 720px) and (min-height: 680px) and (max-height: 699px) {
+  .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+}
+@media (min-width: 720px) and (min-height: 700px) and (max-height: 800px) {
+  .panel[data-product="sound-driver"] .panel-oneliner { display: block; -webkit-line-clamp: unset; overflow: visible; }
 }
