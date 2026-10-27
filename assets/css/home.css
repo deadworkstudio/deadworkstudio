@@ -592,7 +592,7 @@ body.home .panel-headline-lede { text-align: center; }
   .foot-note  { grid-column: 5 / 9; grid-row: 2; }
   .foot-copy  { grid-column: 9 / 13; grid-row: 2; text-align: right; }
 }
-@media (min-width: 720px) and (max-width: 1023px) and (min-height: 640px) {
+@media (min-width: 720px) and (width < 1024px) and (min-height: 640px) {
   .poster-lede { grid-column: 5 / 13; }
   /* H-19: at tablet widths the 3-column footer (email / note / copyright) is too tight for
      "BY ARTISTS. FOR ARTISTS. THANK YOU." and the copyright line without wrapping mid-phrase —
@@ -613,7 +613,7 @@ body.home .panel-headline-lede { text-align: center; }
    rhythm further, scoped to the shorter end of the single-viewport range so a 900px+ display
    (already fitting) renders identically — nothing here drops content, it only trims the gaps
    between it and nudges the headline size down a little on the shortest screens in this band. */
-@media (min-width: 720px) and (min-height: 640px) and (max-height: 800px) {
+@media (min-width: 720px) and (min-height: 640px) and (max-height: 920px) {
   .panel-meta { margin-bottom: clamp(8px, 1.4svh, 16px); }
   .panel-name { margin-bottom: clamp(8px, 1.4svh, 16px); }
   /* HIGH-1 (2026-10-27 QA): shrunk further still — at the shortest heights in this band
@@ -641,19 +641,29 @@ body.home .panel-headline-lede { text-align: center; }
    free space at the same height (round 3 found 720-1023px does not — see below), so these
    bands are safe from 1024px up. Range syntax (not max-height) so a fractional viewport height
    from browser zoom can't fall between two tiers and skip the clamp.
-   HIGH-1 round 3: 720-1023px uses the stacked-footer layout (max-width:1023px block below),
+   HIGH-1 round 3: 720-1023px uses the stacked-footer layout (width < 1024px block below),
    leaving ~50-75px less room at the same height than 1280px was measured at, which let the
    3/4-line tiers here run behind the footer. That width band keeps the original flat 2-line
-   clamp instead (see the single rule following these three). */
+   clamp instead (see the single rule following these three).
+   HIGH-1 round 4: the 700px+ "no clamp" tier and the compact-spacing/2-line-clamp bands above
+   all shared the same max-height:800px ceiling, so at 801px tall they ALL switched off at once —
+   full 5-line text at full spacing appeared in one step, dropping free space by ~112px instantly
+   and cutting the form off behind the footer from 801px up to ~900px tall, at every width. Raised
+   every one of those ceilings to 920px so the compact spacing and clamping stay active through
+   that gap; swept 720-1536 wide by 640-1000 tall afterward with every cell clear. Also switched
+   the two remaining max-width:1023px boundaries (here and below) to range syntax, since a
+   fractional viewport width (certain device pixel ratios) could otherwise match neither the
+   720-1023 nor the 1024+ rule and show the unclamped text with the stacked-footer layout at once —
+   the same trap the height tiers were already fixed for in round 3. */
 @media (min-width: 1024px) and (height < 680px) {
   .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 }
 @media (min-width: 1024px) and (height >= 680px) and (height < 700px) {
   .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
 }
-@media (min-width: 1024px) and (height >= 700px) and (max-height: 800px) {
+@media (min-width: 1024px) and (height >= 700px) and (max-height: 920px) {
   .panel[data-product="sound-driver"] .panel-oneliner { display: block; -webkit-line-clamp: unset; overflow: visible; }
 }
-@media (min-width: 720px) and (max-width: 1023px) and (min-height: 640px) and (max-height: 800px) {
+@media (min-width: 720px) and (width < 1024px) and (min-height: 640px) and (max-height: 920px) {
   .panel[data-product="sound-driver"] .panel-oneliner { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 }
