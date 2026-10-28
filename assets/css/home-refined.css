@@ -676,3 +676,11 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
   .side--left .tool-desc { margin-left: 0; }
   .side--left .tool-link:hover .tool-name { transform: none; }
 }
+
+/* ---------- Status colors on the homepage: In Development = yellow, Live = green ---------- */
+.mega-menu .badge-dev { background: var(--dev-yellow); border-color: var(--dev-yellow); color: var(--ink); }
+.mega-menu .badge-dev .badge-icon { border-color: currentColor; }
+.screen--tools .status { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; background: var(--dev-yellow); color: var(--ink); font-weight: 500; }
+.screen--tools .status--live { background: var(--beta-green); color: var(--ink); }
+.screen--tools .status::before { border-color: currentColor; background: transparent; width: 6px; height: 6px; margin-right: 6px; }
+.screen--tools .status--live::before { background: currentColor; }
