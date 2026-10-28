@@ -235,11 +235,16 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 
 /* ---------- Screen 2: three tools · DEADWORK · three tools ---------- */
 .tools-head { text-align: center; }
-.constellation { display: grid; grid-template-columns: minmax(0, 1fr) clamp(180px, 20vw, 300px) minmax(0, 1fr); align-items: center; min-height: 0; gap: clamp(24px, 4vw, 64px); }
-.side { display: grid; gap: 0; }
+.constellation { display: grid; grid-template-columns: minmax(0, 1fr) clamp(180px, 20vw, 300px) minmax(0, 1fr); grid-template-rows: repeat(3, auto); align-content: center; align-items: stretch; column-gap: clamp(24px, 4vw, 64px); min-height: 0; }
+.side { display: contents; }
+/* rows by phase: Pre-Production on top, Production in the middle, Post-Production at the bottom */
+.side--left .tool { grid-column: 1; text-align: right; }
+.side--right .tool { grid-column: 3; }
+.side .tool:nth-child(1) { grid-row: 1; } .side .tool:nth-child(2) { grid-row: 2; } .side .tool:nth-child(3) { grid-row: 3; }
+.center { grid-column: 2; grid-row: 1 / 4; }
 .side--left { text-align: right; }
 .tool { display: grid; gap: 8px; padding: clamp(18px, 3.2vh, 32px) 0; border-top: 1px solid var(--line); }
-.tool:last-child { border-bottom: 1px solid var(--line); }
+.side .tool:nth-child(3) { border-bottom: 1px solid var(--line); }
 .tool-meta { display: flex; gap: 16px; font: 400 10px var(--font-mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--bone-3); }
 .side--left .tool-meta { justify-content: flex-end; }
 .tool-name { font: 400 clamp(36px, 3.9vw, 60px)/0.95 var(--font-display); text-transform: uppercase; }
@@ -249,7 +254,7 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 .tool-tag { font-size: 16px; color: var(--bone-body); }
 .tool-actions { display: flex; gap: 20px; align-items: center; margin-top: 4px; }
 .side--left .tool-actions { justify-content: flex-end; }
-.center { display: grid; justify-items: center; gap: 20px; }
+.center { display: grid; justify-items: center; align-content: center; gap: 20px; }
 .center img { width: 100%; height: auto; }
 .center-rule { width: 1px; height: clamp(48px, 10vh, 120px); background: var(--line-strong); }
 
@@ -260,5 +265,11 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
   .center img { width: 60%; }
   .center-rule { display: none; }
   .side--left, .side--left .tool-meta, .side--left .tool-actions { text-align: left; justify-content: flex-start; }
-  .side--right .tool:first-child { border-top: 0; }
+  /* phones: one column in product order — the two sides interleave back into 01 → 06 */
+  .side .tool:nth-child(1), .side .tool:nth-child(2), .side .tool:nth-child(3), .center { grid-column: 1; grid-row: auto; }
+  .side--left .tool:nth-child(1) { order: 1; } .side--right .tool:nth-child(1) { order: 2; }
+  .side--left .tool:nth-child(2) { order: 3; } .side--right .tool:nth-child(2) { order: 4; }
+  .side--left .tool:nth-child(3) { order: 5; } .side--right .tool:nth-child(3) { order: 6; }
+  .side .tool:nth-child(3) { border-bottom: 0; }
+  .side--right .tool:nth-child(3) { border-bottom: 1px solid var(--line); }
 }
