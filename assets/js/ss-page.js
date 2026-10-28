@@ -525,10 +525,9 @@
 (function () {
   var clocks = document.querySelectorAll('[data-live-clock]');
   if (!clocks.length) return;
-  var dateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZoneName: 'short' });
   var tick = function () {
-    var text = dateFmt.format(new Date()) + ' | ' + timeFmt.format(new Date());
+    var text = timeFmt.format(new Date());
     Array.prototype.forEach.call(clocks, function (el) { el.textContent = text; });
   };
   tick();
