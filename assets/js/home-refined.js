@@ -19,45 +19,14 @@
     if (playing && playing.catch) playing.catch(function () {});
   }
 
-  /* ------------------------------------------------------------------ Mega-menus */
-  var masthead = document.querySelector('[data-masthead]');
-  var menu = document.querySelector('[data-menu]');
-  var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-menu-trigger]'));
-  var groups = {};
-  each('[data-menu-group]', function (g) { groups[g.dataset.menuGroup] = g; });
-  var openKey = null;
-
-  function openMenu(key) {
-    openKey = key;
-    triggers.forEach(function (t) { t.setAttribute('aria-expanded', String(t.dataset.menuTrigger === key)); });
-    Object.keys(groups).forEach(function (k) { groups[k].hidden = k !== key; });
-    var wasHidden = menu.hidden;
-    menu.hidden = false;
-    if (wasHidden) requestAnimationFrame(function () { menu.classList.add('is-open'); });
+  /* ------------------------------------------------------------------ Nav tabs */
+  // The Pre-Production / Production / Post-Production tabs and their mega-menu are the site's
+  // own (nav-dropdown.js: opens on hover with a real mouse, click/keyboard/touch otherwise).
+  // Opening a sheet or resetting just needs that menu closed.
+  function closeMenu() {
+    var open = document.querySelector('.mega-menu.is-open');
+    if (open) document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   }
-  function closeMenu(restoreFocus) {
-    if (!openKey) return;
-    var trigger = triggers.filter(function (t) { return t.dataset.menuTrigger === openKey; })[0];
-    openKey = null;
-    triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
-    menu.classList.remove('is-open');
-    menu.hidden = true;
-    if (restoreFocus && trigger) trigger.focus();
-  }
-  triggers.forEach(function (t) {
-    t.addEventListener('click', function () {
-      if (openKey === t.dataset.menuTrigger) closeMenu(false); else openMenu(t.dataset.menuTrigger);
-    });
-  });
-  document.addEventListener('click', function (e) {
-    if (openKey && !masthead.contains(e.target)) closeMenu(false);
-  });
-  masthead.addEventListener('focusout', function (e) {
-    if (openKey && e.relatedTarget && !masthead.contains(e.relatedTarget)) closeMenu(false);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && openKey) { e.preventDefault(); closeMenu(true); }
-  });
 
   /* ------------------------------------------------------------------ Sheets */
   // Native <dialog>s; the hash keeps deep links (#scene-lock) and the back button working.
@@ -108,29 +77,16 @@
   });
 
   /* ------------------------------------------------------------------ LA clock */
-  // data-home-clock, not data-live-clock: main.js writes date + time into every [data-live-clock].
-  // Time only, always America/Los_Angeles with PDT/PST; fixed-width digit cells.
+  // The footer clock as it always looked: plain mono time, America/Los_Angeles, PDT/PST.
+  // No date. data-home-clock (not data-live-clock) so main.js doesn't write the date back in.
   var clock = document.querySelector('[data-home-clock]');
   if (clock && window.Intl) {
-    var hms = clock.querySelector('[data-clock-hms]');
-    var suffix = clock.querySelector('[data-clock-suffix]');
-    var sr = clock.querySelector('[data-clock-sr]');
     var fmt = new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit',
       hour12: true, timeZoneName: 'short'
     });
     var tick = function () {
-      var now = new Date();
-      var p = {};
-      fmt.formatToParts(now).forEach(function (part) { p[part.type] = part.value; });
-      var time = ('0' + p.hour).slice(-2) + ':' + p.minute + ':' + p.second;
-      var tail = (p.dayPeriod || '').toUpperCase() + ' ' + (p.timeZoneName || '');
-      hms.innerHTML = time.split('').map(function (ch, i) {
-        return ch === ':' ? '<span class="c">:</span>' : '<span class="d' + (i > 5 ? ' s' : '') + '">' + ch + '</span>';
-      }).join('');
-      suffix.textContent = tail;
-      sr.textContent = 'Los Angeles time ' + time + ' ' + tail;
-      clock.setAttribute('datetime', now.toISOString());
+      clock.textContent = fmt.format(new Date());
       setTimeout(tick, 1000 - (Date.now() % 1000) + 5);
     };
     tick();
