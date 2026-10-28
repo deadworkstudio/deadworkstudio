@@ -685,3 +685,4 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
 .screen--tools .status--live { background: var(--beta-green); color: var(--ink); }
 .screen--tools .status::before { border-color: currentColor; background: transparent; width: 6px; height: 6px; margin-right: 6px; }
 .screen--tools .status--live::before { background: currentColor; }
+.mega-menu .badge-live { background: var(--beta-green); border: 1px solid var(--beta-green); color: var(--ink); }
