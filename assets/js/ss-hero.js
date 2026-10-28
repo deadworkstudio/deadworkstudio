@@ -24,7 +24,15 @@
   var RATIO = 2.39;
 
   // ---- the wall (archive-wall.json, inlined so the page works from file://) ----
-  var WALL = { src: MEDIA + 'archive-wall.jpg?v=2', cols: 24, rows: 20, tileW: 192, tileH: 101, total: 360 };
+  // WEB-02: same breakpoint as the <link preload media> pair in the page head, so whichever one
+  // the browser already fetched for LCP is the exact one this Image() reuses — never both. The
+  // sprite sheet is a grid, so tileW/tileH (the source pixel size of one cell) must shrink by the
+  // same ratio as the whole sheet, or every cellSrc() lookup below samples the wrong patch of it.
+  var WALL_FULL_W = 4608, WALL_TILE_W = 192, WALL_TILE_H = 101;
+  var WALL_W = (window.innerWidth || document.documentElement.clientWidth) <= 767 ? 800 : 1600;
+  var WALL_FILE = WALL_W === 800 ? 'archive-wall-800.webp' : 'archive-wall-1600.webp';
+  var WALL_SCALE = WALL_W / WALL_FULL_W;
+  var WALL = { src: MEDIA + WALL_FILE + '?v=1', cols: 24, rows: 20, tileW: WALL_TILE_W * WALL_SCALE, tileH: WALL_TILE_H * WALL_SCALE, total: 360 };
   var VIEW_COLS = 20, FIRST_COL = 2;                               // the archive concept's window
   var VIEW_ROWS = VIEW_COLS * WALL.tileW / (WALL.tileH * RATIO);   // ≈15.9
   // The take's own frame (A002_C044_0217SC) sits at col 3,row 4, on the edge of the window. Its frame
