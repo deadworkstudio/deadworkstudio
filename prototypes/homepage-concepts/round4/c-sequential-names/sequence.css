@@ -1,0 +1,438 @@
+/* =========================================================================
+   DEADWORK — Round 4 / C: SEQUENTIAL NAMES
+   A title sequence. The opening statement at full scale, then six title
+   cards — one product per screen — each name set at the same size as
+   "CREATE MORE. MANAGE LESS." Then an end card with the LA clock.
+
+   No borders, no tables, no panels. Type, space, order.
+   Palette: ink + bone. Green only means "live / success". Red only means error.
+   Spacing scale: 4 8 12 16 24 32 48 64 96 128.
+   ========================================================================= */
+
+/* ---------- Fonts (self-hosted, shared with the live site) ---------- */
+@font-face {
+  font-family: 'Anton';
+  src: url('../../../../assets/fonts/anton.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('../../../../assets/fonts/archivo-variable.woff2') format('woff2-variations'),
+       url('../../../../assets/fonts/archivo-variable.woff2') format('woff2');
+  font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+}
+/* JetBrains Mono is subset to UPPERCASE + digits + punctuation — every mono
+   element is text-transform: uppercase on purpose. */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../../../assets/fonts/jetbrains-mono-500.woff2?v=20261027a') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  color-scheme: dark;
+
+  --ink: #0a0a09;
+  --ink-deep: #060605;
+  --ink-raised: #11110f;
+  --bone: #e6e0d3;
+  --bone-2: #94918a;
+  --bone-3: #807d77;
+  --line: rgba(230, 224, 211, 0.14);
+  --line-strong: rgba(230, 224, 211, 0.4);
+  --signal: #e5463d;
+  --green: #8fd687;
+
+  --font-display: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --font-body: 'Archivo', 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gutter: clamp(20px, 4vw, 64px);
+  --masthead-h: 76px;
+
+  /* THE scale. The opening statement and every product name share it, so each
+     title card lands with the same weight as "CREATE MORE. MANAGE LESS."
+     Capped by height too, so a short laptop screen never loses the tagline. */
+  --display: min(14.2vw, 25svh, 240px);
+
+  --ease-out: cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--masthead-h); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+p, h1, h2, dl, dd, ol { margin: 0; }
+ol { padding: 0; list-style: none; }
+
+:focus-visible { outline: 2px solid var(--bone); outline-offset: 4px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; left: 16px; top: -64px; z-index: 100;
+  padding: 12px 16px; background: var(--bone); color: var(--ink);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none;
+}
+.skip-link:focus { top: 16px; }
+
+/* Shared mono label voice */
+.masthead-meta, .tab, .menu-eyebrow, .menu-card-meta, .running-order,
+.card-kicker, .card-spec dt, .notify-label, .btn, .clock-label, .endcard-copy {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+/* =========================================================================
+   MASTHEAD
+   ========================================================================= */
+.masthead {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  transition: background-color 300ms var(--ease-out);
+}
+.masthead.is-solid,
+.masthead.is-menu { background: rgba(6, 6, 5, 0.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.masthead-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: var(--masthead-h);
+  padding: 0 var(--gutter);
+  column-gap: 32px;
+}
+.masthead-meta { font-size: 11px; letter-spacing: .2em; color: var(--bone-2); }
+.masthead-meta--right { justify-self: end; }
+.masthead-nav { display: flex; align-items: center; gap: clamp(24px, 3vw, 48px); }
+.masthead-tabs { display: flex; gap: clamp(16px, 2.2vw, 32px); }
+.masthead-tabs--left { justify-content: flex-end; }
+.masthead-mark { display: block; padding: 8px 0; }
+.masthead-mark img { width: clamp(120px, 10vw, 156px); height: auto; }
+
+.tab {
+  position: relative;
+  display: inline-flex; align-items: center; height: 44px; padding: 0 2px;
+  background: none; border: 0; cursor: pointer;
+  font-size: 11.5px; letter-spacing: .16em; color: var(--bone-2); text-decoration: none;
+  transition: color 160ms var(--ease-out);
+}
+.tab::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1px;
+  background: var(--bone); transform: scaleX(0); transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.tab[aria-expanded='true'] { color: var(--bone); }
+.tab[aria-expanded='true']::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .tab:hover { color: var(--bone); }
+  .tab:hover::after { transform: scaleX(1); }
+}
+
+/* ---------- Mega-menu ---------- */
+.menu {
+  padding: 24px var(--gutter) 48px;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+.menu.is-open { opacity: 1; transform: none; }
+.menu[hidden], .menu-group[hidden] { display: none; }
+.menu-group { max-width: 960px; margin: 0 auto; }
+.menu-eyebrow { margin-bottom: 24px; font-size: 11px; letter-spacing: .2em; color: var(--bone-3); text-align: center; }
+.menu-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.menu-card {
+  display: grid; gap: 8px; align-content: start;
+  padding: 16px; margin: -16px; text-decoration: none;
+  transition: background-color 160ms var(--ease-out);
+}
+@media (hover: hover) { .menu-card:hover { background: rgba(230, 224, 211, 0.05); } }
+.menu-card-plate { display: block; height: 40px; margin-bottom: 8px; }
+.menu-card-plate img { height: 100%; width: auto; }
+.menu-card-name { font-family: var(--font-display); font-size: 32px; line-height: 1.05; text-transform: uppercase; letter-spacing: .01em; }
+.menu-card-desc { font-size: 16px; line-height: 1.45; color: var(--bone-2); }
+.menu-card-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 4px; font-size: 10.5px; letter-spacing: .14em; color: var(--bone-3); }
+.badge { color: var(--bone-2); }
+
+/* =========================================================================
+   OPENING TITLE
+   ========================================================================= */
+.opening {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: calc(var(--masthead-h) + 32px) var(--gutter) 32px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.opening-film { position: absolute; inset: 0; z-index: -1; }
+.opening-film img, .opening-film video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.opening-film img { filter: grayscale(.2); }
+.opening-shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(6,6,5,.72) 0%, rgba(6,6,5,.28) 30%, rgba(6,6,5,.4) 62%, rgba(10,10,9,1) 100%);
+}
+.opening-inner { align-self: center; display: grid; justify-items: center; text-align: center; }
+.opening-title {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: var(--display);
+  line-height: .9; letter-spacing: -.005em;
+  text-transform: uppercase;
+}
+.opening-title .line { display: block; }
+.opening-lede {
+  margin-top: clamp(24px, 3vh, 40px);
+  max-width: 34ch;
+  font-size: clamp(18px, 1.6vw, 24px); font-weight: 400; line-height: 1.4;
+  color: var(--bone);
+}
+
+/* Running order: the six names in plain text, each one a jump to its card. */
+.running-order { margin-top: 48px; }
+.running-order ol {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 12px clamp(24px, 3.2vw, 56px);
+}
+.running-order a {
+  display: inline-flex; align-items: baseline; gap: 10px; padding: 8px 0;
+  font-size: 12px; letter-spacing: .16em; color: var(--bone); text-decoration: none;
+  transition: color 160ms var(--ease-out);
+}
+.ro-num { color: var(--bone-3); }
+@media (hover: hover) { .running-order a:hover { color: var(--bone-2); } }
+
+/* =========================================================================
+   TITLE CARDS
+   ========================================================================= */
+.card {
+  min-height: 100svh;
+  display: flex; align-items: center;
+  padding: 128px var(--gutter);
+}
+.card-inner { width: 100%; max-width: 1600px; margin: 0 auto; }
+
+.card-kicker {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 32px;
+  margin-bottom: clamp(16px, 2.4vh, 32px);
+  font-size: 12px; letter-spacing: .2em; color: var(--bone-3);
+}
+.card-cat { color: var(--bone); }
+.card-status { display: inline-flex; align-items: center; gap: 10px; }
+.card-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bone-3); }
+.card-status--live { color: var(--green); }
+.card-status--live::before { background: var(--green); box-shadow: 0 0 10px rgba(143, 214, 135, .6); }
+
+.card-name {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: var(--display);
+  line-height: .9; letter-spacing: -.005em;
+  text-transform: uppercase;
+  margin-left: -.04em;            /* optical: Anton's side bearing at this size */
+}
+.card-tag {
+  margin-top: clamp(16px, 2.4vh, 32px);
+  max-width: 28ch;
+  font-size: clamp(24px, 2.8vw, 44px); font-weight: 500; line-height: 1.15; letter-spacing: -.01em;
+  font-stretch: 92%;
+}
+
+.card-body {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 32px clamp(48px, 6vw, 128px);
+  margin-top: clamp(32px, 5vh, 64px);
+  align-items: start;
+}
+.card-desc { max-width: 60ch; font-size: clamp(17px, 1.25vw, 19px); line-height: 1.6; color: var(--bone-2); }
+
+.card-spec { display: grid; gap: 16px; }
+.card-spec dt { font-size: 10.5px; letter-spacing: .2em; color: var(--bone-3); margin-bottom: 4px; }
+.card-spec dd { font-size: 15px; line-height: 1.5; color: var(--bone); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 24px;
+  border: 0; cursor: pointer; text-decoration: none; white-space: nowrap;
+  font-size: 12px; font-weight: 500; letter-spacing: .16em;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.btn-primary { background: var(--bone); color: var(--ink); }
+@media (hover: hover) { .btn-primary:hover { background: #fff; } }
+.btn:active { transform: scale(.98); }
+.btn:disabled { opacity: .6; cursor: default; }
+.btn-cta { margin-top: 32px; min-height: 56px; padding: 0 32px; font-size: 13px; }
+
+/* ---------- Notify form (wired by the shared notify.js) ---------- */
+.notify { margin-top: 32px; }
+.notify-label { display: block; margin-bottom: 8px; font-size: 10.5px; letter-spacing: .2em; color: var(--bone-3); }
+.notify-row { display: flex; align-items: stretch; gap: 12px; }
+.notify-input {
+  flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 2px;
+  background: transparent; color: var(--bone);
+  border: 0; border-bottom: 1px solid var(--line-strong); border-radius: 0;
+  font: inherit; font-size: 16px;               /* 16px: no iOS zoom on focus */
+  transition: border-color 160ms var(--ease-out);
+}
+.notify-input::placeholder { color: var(--bone-3); }
+.notify-input:focus { outline: none; border-bottom-color: var(--bone); }
+.notify-input:focus-visible { outline: none; }
+.notify-input[aria-invalid='true'] { border-bottom-color: var(--signal); }
+.notify-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.notify-status { margin-top: 12px; font-size: 14px; color: var(--bone-2); }
+.notify-status[hidden] { display: none; }
+.notify-status-good { color: var(--green); }
+.notify-status-bad { color: var(--signal); }
+
+/* =========================================================================
+   END CARD — sign-off + Los Angeles clock at headline scale
+   ========================================================================= */
+.endcard {
+  min-height: 100svh;
+  display: grid; grid-template-rows: 1fr auto auto; justify-items: center;
+  padding: 128px var(--gutter) 32px;
+  text-align: center;
+}
+.endcard-sign {
+  align-self: center;
+  font-family: var(--font-display); font-size: clamp(40px, 6.4vw, 112px);
+  line-height: .95; text-transform: uppercase; color: var(--bone-2);
+}
+.clock { margin-top: 64px; }
+.clock-label { font-size: 12px; letter-spacing: .2em; color: var(--bone-3); margin-bottom: 8px; }
+.clock-sep { margin: 0 8px; }
+.clock-time { position: relative; display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 0 .2em; font-family: var(--font-display); }
+.clock-hms { font-size: var(--display); line-height: .95; }
+/* Fixed-width cells so the ticking seconds never shove the line sideways. */
+.clock-hms .d { display: inline-block; width: .5em; text-align: center; }
+.clock-hms .c { display: inline-block; width: .26em; text-align: center; }
+.clock-suffix {
+  font-family: var(--font-mono); font-size: clamp(14px, 1.4vw, 20px); letter-spacing: .16em; color: var(--bone-2);
+  /* hangs off the right edge so the numerals themselves sit dead centre */
+  position: absolute; left: 100%; bottom: .9em; margin-left: .6em; white-space: nowrap;
+}
+
+.endcard-rail {
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  margin-top: 96px; padding-top: 24px;
+}
+.endcard-social { display: flex; gap: 8px; }
+.endcard-social a {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+  color: var(--bone-2); transition: color 160ms var(--ease-out);
+}
+@media (hover: hover) { .endcard-social a:hover { color: var(--bone); } }
+.endcard-copy { font-size: 11px; letter-spacing: .16em; color: var(--bone-3); }
+
+/* =========================================================================
+   MOTION — title-card entrances. Only under html.motion (JS on + motion OK).
+   The name rises out of a mask like a title cut in; the rest follows.
+   ========================================================================= */
+.motion [data-card] .card-name .w,
+.motion .opening-title .w { display: inline-block; }
+.motion [data-card] .card-name { overflow: hidden; padding-bottom: .04em; }
+.motion [data-card] .card-name .w {
+  transform: translateY(105%);
+  transition: transform 900ms var(--ease-out);
+}
+.motion [data-card] .card-name .w + .w { transition-delay: 70ms; }
+.motion [data-card] .card-kicker,
+.motion [data-card] .card-tag,
+.motion [data-card] .card-body {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.motion [data-card] .card-tag { transition-delay: 240ms; }
+.motion [data-card] .card-body { transition-delay: 360ms; }
+.motion [data-card].is-in .card-name .w,
+.motion [data-card].is-in .card-kicker,
+.motion [data-card].is-in .card-tag,
+.motion [data-card].is-in .card-body { opacity: 1; transform: none; }
+
+.motion .opening-title .line { overflow: hidden; padding-bottom: .04em; }
+.motion .opening-title .w { animation: rise 1000ms var(--ease-out) both; }
+.motion .opening-title .line + .line .w { animation-delay: 90ms; }
+.motion .opening-lede, .motion .running-order { animation: fade 900ms var(--ease-out) 400ms both; }
+@keyframes rise { from { transform: translateY(105%); } }
+@keyframes fade { from { opacity: 0; transform: translateY(12px); } }
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 1100px) {
+  .masthead-meta { display: none; }
+  .masthead-row { grid-template-columns: 1fr; justify-items: center; }
+  .card-body { grid-template-columns: 1fr; }
+  .card-side { max-width: 560px; }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --masthead-h: 96px;
+    /* Phones: one word per line, so each word can be huge. Sized so the longest
+       word ("SHREDDER", "CONTROL", "MANAGE") fills the width. */
+    --display: min(24vw, 140px);
+  }
+  .masthead-row { height: auto; padding: 12px var(--gutter) 4px; }
+  .masthead-nav { flex-direction: column; gap: 4px; }
+  .masthead-mark { order: -1; padding: 4px 0 0; }
+  .masthead-mark img { width: 128px; }
+  .masthead-tabs { gap: 20px; }
+  .masthead-tabs--left, .masthead-tabs--right { display: contents; }
+  .masthead-nav { display: grid; grid-template-columns: repeat(4, auto); justify-content: center; column-gap: 14px; row-gap: 0; }
+  .masthead-mark { grid-column: 1 / -1; justify-self: center; }
+  .tab { font-size: 10px; letter-spacing: .04em; white-space: nowrap; height: 40px; }
+
+  .menu { padding: 16px var(--gutter) 32px; max-height: calc(100svh - var(--masthead-h)); overflow-y: auto; }
+  .menu-cards { grid-template-columns: 1fr; gap: 32px; }
+  .menu-card-name { font-size: 28px; }
+
+  .opening { padding-top: calc(var(--masthead-h) + 24px); }
+  .opening-title .w { display: block; }
+  .running-order { margin-top: 40px; }
+  .running-order ol { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }
+  .running-order a { font-size: 11px; letter-spacing: .1em; padding: 12px 0; }
+
+  .card { padding: 96px var(--gutter); min-height: auto; }
+  .card-name .w { display: block; }
+  .card-kicker { gap: 8px 16px; font-size: 11px; letter-spacing: .14em; }
+  .card-num { flex-basis: 100%; }
+  .card-tag { font-size: 26px; }
+  .card-desc { font-size: 17px; }
+
+  .notify-row { flex-direction: column; gap: 12px; }
+  .btn { width: 100%; }
+
+  .endcard { min-height: auto; padding-top: 96px; }
+  .clock-hms { font-size: 22vw; }
+  .clock-time { flex-direction: column; align-items: center; gap: 8px; }
+  .clock-suffix { position: static; margin: 0; }
+  .endcard-sign span { display: block; }
+  .endcard-rail { flex-direction: column-reverse; gap: 12px; margin-top: 64px; }
+}
+
+/* Reduced motion: no transitions on chrome either; the film never plays (JS). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; }
+}

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>DEADWORK — Homepage Concepts (internal review)</title>
+<style>
+  :root {
+    --ink: #0a0a09; --ink-raised: #15140f; --bone: #e6e0d3; --bone-2: #94918a; --bone-3: #605d58;
+    --mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ink); color: var(--bone); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  header { padding: 56px 24px 40px; text-align: center; border-bottom: 1px solid rgba(230,224,211,.12); }
+  header .eyebrow { font: 500 11px/1.4 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-3); margin: 0 0 16px; }
+  header h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 12px; letter-spacing: -.02em; }
+  header p { max-width: 640px; margin: 0 auto; color: var(--bone-2); line-height: 1.6; font-size: 15px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1px; background: rgba(230,224,211,.12); max-width: 1680px; margin: 1px auto 0; }
+  .card { background: var(--ink); padding: 32px; display: flex; flex-direction: column; gap: 18px; }
+  .card .num { font: 600 13px/1 var(--mono); letter-spacing: .14em; color: var(--bone-3); }
+  .card h2 { margin: 0; font-size: 22px; letter-spacing: -.01em; }
+  .card .refs { font: 500 11px/1.5 var(--mono); letter-spacing: .06em; color: var(--bone-3); text-transform: uppercase; }
+  .thumbs { display: grid; grid-template-columns: 1fr 160px; gap: 10px; }
+  .thumbs a { display: block; overflow: hidden; border-radius: 2px; border: 1px solid rgba(230,224,211,.12); background: #000; position: relative; }
+  .thumbs img { width: 100%; display: block; }
+  .thumbs .desktop img { aspect-ratio: 16/10; object-fit: cover; object-position: top; height: auto; }
+  .thumbs .mobile img { aspect-ratio: 9/16; object-fit: cover; object-position: top; height: auto; }
+  .thumbs .label { position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 8px; font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; background: linear-gradient(0deg, rgba(0,0,0,.85), transparent); color: var(--bone); }
+  .card p.summary { margin: 0; color: var(--bone-2); font-size: 14px; line-height: 1.6; }
+  .card .actions { display: flex; gap: 10px; margin-top: auto; padding-top: 4px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 20px; border-radius: 999px; font: 600 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: opacity 150ms; }
+  .btn:hover { opacity: .8; }
+  .btn-solid { background: var(--bone); color: var(--ink); }
+  .btn-outline { background: transparent; color: var(--bone); border: 1px solid rgba(230,224,211,.3); }
+  footer { text-align: center; padding: 48px 24px; color: var(--bone-3); font: 500 11px/1.5 var(--mono); letter-spacing: .08em; }
+  @media (max-width: 620px) {
+    .thumbs { grid-template-columns: 1fr 110px; }
+    .card { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">Internal review — not public</p>
+  <h1>DEADWORK Homepage — 5 Directions</h1>
+  <p>All five preserve the center nav tabs, all six products with their exact content, the oversized statement typography, the 3&nbsp;|&nbsp;logo&nbsp;|&nbsp;3 composition, and a live Los Angeles clock (date removed, time only). None of this is live — click through each one, then say which direction to build out for real.</p>
+</header>
+<div class="grid">
+
+  <article class="card">
+    <span class="num">01 / 05</span>
+    <h2>Refined Original</h2>
+    <p class="refs">Apple · Fear of God · Lens Distortions</p>
+    <div class="thumbs">
+      <a class="desktop" href="01-refined-original/index.html"><img src="01-refined-original/desktop.png" alt="" loading="lazy" /><span class="label">Desktop</span></a>
+      <a class="mobile" href="01-refined-original/index.html"><img src="01-refined-original/mobile.png" alt="" loading="lazy" /><span class="label">Mobile</span></a>
+    </div>
+    <p class="summary">The current homepage at its best — same structure, refined execution. The six products move from a hidden URL hash into a real, visible tool strip at the 3|logo|3 position, each opening a full detail panel in place. The clock becomes a quiet instrument readout.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="01-refined-original/index.html">Open prototype</a>
+      <a class="btn btn-outline" href="01-refined-original/NOTES.md">Notes</a>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="num">02 / 05</span>
+    <h2>Experimental Editorial</h2>
+    <p class="refs">A24 · Rick Owens · Balenciaga</p>
+    <div class="thumbs">
+      <a class="desktop" href="02-experimental-editorial/index.html"><img src="02-experimental-editorial/desktop-fold.png" alt="" loading="lazy" /><span class="label">Desktop</span></a>
+      <a class="mobile" href="02-experimental-editorial/index.html"><img src="02-experimental-editorial/mobile-fold.png" alt="" loading="lazy" /><span class="label">Mobile</span></a>
+    </div>
+    <p class="summary">Dramatic, staggered title-sequence typography with the hero video cutting through the letterforms. Three Roman-numeral chapters (I/II/III) hold the full product content as alternating editorial spreads. The boldest typography of the five.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="02-experimental-editorial/index.html">Open prototype</a>
+      <a class="btn btn-outline" href="02-experimental-editorial/NOTES.md">Notes</a>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="num">03 / 05</span>
+    <h2>Industrial Minimalism</h2>
+    <p class="refs">Teenage Engineering · NASA · ARRI</p>
+    <div class="thumbs">
+      <a class="desktop" href="03-industrial-minimalism/index.html"><img src="03-industrial-minimalism/desktop.png" alt="" loading="lazy" /><span class="label">Desktop</span></a>
+      <a class="mobile" href="03-industrial-minimalism/index.html"><img src="03-industrial-minimalism/mobile.png" alt="" loading="lazy" /><span class="label">Mobile</span></a>
+    </div>
+    <p class="summary">Treats the whole page like a piece of filmmaking equipment — the nav reads like labeled hardware buttons, products are an instrument index table (channel, stage, status, platform icons), and the clock is a telemetry readout with a 60-tick second bar. The quietest motion of the five.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="03-industrial-minimalism/index.html">Open prototype</a>
+      <a class="btn btn-outline" href="03-industrial-minimalism/NOTES.md">Notes</a>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="num">04 / 05</span>
+    <h2>Cinematic Studio</h2>
+    <p class="refs">A24 · IMAX · Kodak · Lens Distortions</p>
+    <div class="thumbs">
+      <a class="desktop" href="04-cinematic-studio/index.html"><img src="04-cinematic-studio/desktop.png" alt="" loading="lazy" /><span class="label">Desktop</span></a>
+      <a class="mobile" href="04-cinematic-studio/index.html"><img src="04-cinematic-studio/mobile.png" alt="" loading="lazy" /><span class="label">Mobile</span></a>
+    </div>
+    <p class="summary">Plays like a film: a widescreen black-and-white title card, a film-poster-style credits block for the six products, three chapters each opening on a full-width crew photo, and a closing title card. Color appears only for signup success/error states. Heaviest page (real B&W stills added), all lazy-loaded.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="04-cinematic-studio/index.html">Open prototype</a>
+      <a class="btn btn-outline" href="04-cinematic-studio/NOTES.md">Notes</a>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="num">05 / 05</span>
+    <h2>Experimental Direction</h2>
+    <p class="refs">The Blksmith · Rick Owens · Nike</p>
+    <div class="thumbs">
+      <a class="desktop" href="05-experimental-direction/index.html"><img src="05-experimental-direction/desktop.png" alt="" loading="lazy" /><span class="label">Desktop</span></a>
+      <a class="mobile" href="05-experimental-direction/index.html"><img src="05-experimental-direction/mobile.png" alt="" loading="lazy" /><span class="label">Mobile</span></a>
+    </div>
+    <p class="summary">One idea, pushed all the way: the entire homepage is a wall of full-bleed-width giant type — headline, each product name, and the clock all run edge to edge at the same massive scale. Click a product name and it "opens" right there. The clock is the last line of the wall, same size as everything else.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="05-experimental-direction/index.html">Open prototype</a>
+      <a class="btn btn-outline" href="05-experimental-direction/NOTES.md">Notes</a>
+    </div>
+  </article>
+
+</div>
+<footer>Nothing here is live. The real homepage is untouched until one of these is approved.</footer>
+</body>
+</html>

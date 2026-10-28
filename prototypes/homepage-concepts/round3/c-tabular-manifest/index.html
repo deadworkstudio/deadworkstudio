@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#060605" />
+<title>DEADWORK - Create more. Manage less.</title>
+<meta name="description" content="DEADWORK builds production software for filmmakers: pre-production, production, and post tools made by filmmakers for filmmakers." />
+<link rel="icon" href="../../../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../../../assets/img/brand/apple-touch-icon.png" />
+<link rel="preload" as="image" href="../../../../assets/img/hero/poster.jpg" />
+<link rel="preload" as="image" href="../../../../assets/img/brand/deadwork-wordmark-bone.webp" />
+<link rel="preload" href="../../../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../../../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../../../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<!-- .js = the spec sheet works as a dialog. .motion = entrance motion is allowed.
+     No JS = every spec entry renders in-page under the manifest. Reduced motion = static page. -->
+<script>
+  document.documentElement.classList.add('js');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+</script>
+<link rel="stylesheet" href="manifest.css?v=1" />
+</head>
+<body>
+<a class="skip-link" href="#manifest">Skip to the tool manifest</a>
+
+<!-- Background plate: the hero film, desaturated and pushed far back so the manifest reads first. -->
+<div class="plate" aria-hidden="true">
+  <img src="../../../../assets/img/hero/poster.jpg" alt="" width="640" height="360" fetchpriority="high" />
+  <!-- Same mechanism as the live home page: no <source>, no autoplay, preload="none".
+       manifest.js attaches the right rendition (mobile under ~800px) only when motion isn't
+       reduced, so reduced-motion / no-JS visitors never fetch any video bytes. -->
+  <video muted loop playsinline preload="none" poster="../../../../assets/img/hero/poster.jpg" data-hero-video data-src="../../../../assets/video/hero.mp4" data-src-mobile="../../../../assets/video/hero-mobile.mp4"></video>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- =====================================================================
+       MASTHEAD / TITLE BLOCK — 06 Tools · Pre · Production | DEADWORK | Post · Studio · Est.
+       The wordmark sits in the centre cell like the title on a call sheet.
+       ===================================================================== -->
+  <header class="masthead" data-masthead>
+    <div class="masthead-row">
+      <div class="masthead-side masthead-side--left">
+        <span class="masthead-meta">06 Tools</span>
+        <nav class="masthead-nav" aria-label="Pre-production and production tools">
+          <button class="tab" type="button" aria-expanded="false" aria-controls="menu-pre" data-menu-trigger="pre">Pre-Production</button>
+          <button class="tab" type="button" aria-expanded="false" aria-controls="menu-production" data-menu-trigger="production">Production</button>
+        </nav>
+      </div>
+
+      <a class="masthead-brand" href="./" data-reset aria-label="DEADWORK home">
+        <img src="../../../../assets/img/brand/deadwork-wordmark-bone.webp" alt="" width="1120" height="226" fetchpriority="high" />
+      </a>
+
+      <div class="masthead-side masthead-side--right">
+        <nav class="masthead-nav" aria-label="Post-production and studio">
+          <button class="tab" type="button" aria-expanded="false" aria-controls="menu-post" data-menu-trigger="post">Post-Production</button>
+          <a class="tab" href="../../../../studio/">Studio</a>
+        </nav>
+        <span class="masthead-meta">Est. Los Angeles</span>
+      </div>
+    </div>
+
+    <!-- Mega-menu: one group per production phase. Cards link to each product's own page. -->
+    <div class="menu" data-menu hidden>
+      <div class="menu-group" id="menu-pre" data-menu-group="pre" hidden>
+        <p class="menu-eyebrow"><span>I</span>Pre-Production</p>
+        <div class="menu-cards">
+          <a class="menu-card" href="../../../../products/scene-lock/">
+            <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/scene-lock.webp" alt="" loading="lazy" decoding="async" /></span>
+            <span class="menu-card-name">Scene Lock</span>
+            <span class="menu-card-desc">Plan smarter. Execute better.</span>
+            <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+          </a>
+          <a class="menu-card" href="../../../../products/set-control/">
+            <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/set-control.webp" alt="" loading="lazy" decoding="async" /></span>
+            <span class="menu-card-name">Set Control</span>
+            <span class="menu-card-desc">Every crew. Every detail. In sync.</span>
+            <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+          </a>
+        </div>
+      </div>
+      <div class="menu-group" id="menu-production" data-menu-group="production" hidden>
+        <p class="menu-eyebrow"><span>II</span>Production</p>
+        <div class="menu-cards">
+          <a class="menu-card" href="../../../../products/loadout/">
+            <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/loadout.webp" alt="" loading="lazy" decoding="async" /></span>
+            <span class="menu-card-name">Loadout</span>
+            <span class="menu-card-desc">Never leave gear behind.</span>
+            <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+          </a>
+          <a class="menu-card" href="../../../../products/handoff/">
+            <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/handoff.webp" alt="" loading="lazy" decoding="async" /></span>
+            <span class="menu-card-name">Handoff</span>
+            <span class="menu-card-desc">Every file. Verified.</span>
+            <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+          </a>
+        </div>
+      </div>
+      <div class="menu-group" id="menu-post" data-menu-group="post" hidden>
+        <p class="menu-eyebrow"><span>III</span>Post-Production</p>
+        <div class="menu-cards">
+          <a class="menu-card" href="../../../../products/sound-driver/">
+            <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/sound-driver.webp" alt="" loading="lazy" decoding="async" /></span>
+            <span class="menu-card-name">Sound Driver</span>
+            <span class="menu-card-desc">Real artists. Real sounds.</span>
+            <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>Mac &amp; Windows</span></span>
+          </a>
+          <a class="menu-card" href="../../../../products/stock-shredder/">
+            <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/stock-shredder.webp" alt="" loading="lazy" decoding="async" /></span>
+            <span class="menu-card-name">Stock Shredder</span>
+            <span class="menu-card-desc">Raw footage into stock-ready clips.</span>
+            <span class="menu-card-meta"><span>Mac &amp; Windows</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- =====================================================================
+         STATEMENT — the headline anchors the sheet, directly under the wordmark.
+         ===================================================================== -->
+    <section class="statement" aria-labelledby="statement-title">
+      <h1 class="statement-title" id="statement-title"><span>CREATE MORE.</span> <span class="statement-rule" aria-hidden="true"></span><span>MANAGE LESS.</span></h1>
+      <p class="statement-lede">tools designed to eliminate busywork so creatives can stay creative.</p>
+    </section>
+
+    <!-- =====================================================================
+         MANIFEST — all six tools as numbered lines on one sheet.
+         Each line opens that tool's full spec entry (description, specs, signup).
+         ===================================================================== -->
+    <section class="manifest" id="manifest" aria-labelledby="manifest-title">
+      <div class="manifest-bar">
+        <h2 class="manifest-title" id="manifest-title">Tool Manifest</h2>
+        <span class="manifest-count" aria-hidden="true">06 Tools <i>/</i> 03 Phases</span>
+        <span class="manifest-hint" aria-hidden="true">Select a line for full spec</span>
+      </div>
+
+      <div class="manifest-head" aria-hidden="true">
+        <span>No.</span><span>Phase</span><span>Tool</span><span>Function</span><span>Platform</span><span>Status</span><span></span>
+      </div>
+
+      <ol class="manifest-list">
+        <li class="line" data-phase="1">
+          <a class="line-link" href="#scene-lock" data-entry="scene-lock">
+            <span class="line-no">01</span>
+            <span class="line-phase"><span class="line-phase-num">I</span>Pre-Production</span>
+            <span class="line-name">Scene Lock</span>
+            <span class="line-tag">Plan smarter. Execute better.</span>
+            <span class="line-platform">iPhone, Mac &amp; Windows</span>
+            <span class="line-status"><span class="status status--dev">In Development</span></span>
+            <span class="line-go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="line" data-phase="1">
+          <a class="line-link" href="#set-control" data-entry="set-control">
+            <span class="line-no">02</span>
+            <span class="line-phase line-phase--ditto"><span class="sr-only">Pre-Production</span><span class="ditto" aria-hidden="true">&quot;</span></span>
+            <span class="line-name">Set Control</span>
+            <span class="line-tag">Every crew. Every detail. In sync.</span>
+            <span class="line-platform">iPhone, Mac &amp; Windows</span>
+            <span class="line-status"><span class="status status--dev">In Development</span></span>
+            <span class="line-go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="line line--group" data-phase="2">
+          <a class="line-link" href="#loadout" data-entry="loadout">
+            <span class="line-no">03</span>
+            <span class="line-phase"><span class="line-phase-num">II</span>Production</span>
+            <span class="line-name">Loadout</span>
+            <span class="line-tag">Never leave gear behind.</span>
+            <span class="line-platform">iPhone, Mac &amp; Windows</span>
+            <span class="line-status"><span class="status status--dev">In Development</span></span>
+            <span class="line-go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="line" data-phase="2">
+          <a class="line-link" href="#handoff" data-entry="handoff">
+            <span class="line-no">04</span>
+            <span class="line-phase line-phase--ditto"><span class="sr-only">Production</span><span class="ditto" aria-hidden="true">&quot;</span></span>
+            <span class="line-name">Handoff</span>
+            <span class="line-tag">Every file. Verified.</span>
+            <span class="line-platform">iPhone, Mac &amp; Windows</span>
+            <span class="line-status"><span class="status status--dev">In Development</span></span>
+            <span class="line-go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="line line--group" data-phase="3">
+          <a class="line-link" href="#sound-driver" data-entry="sound-driver">
+            <span class="line-no">05</span>
+            <span class="line-phase"><span class="line-phase-num">III</span>Post-Production</span>
+            <span class="line-name">Sound Driver</span>
+            <span class="line-tag">Real artists. Real sounds.</span>
+            <span class="line-platform">Mac &amp; Windows</span>
+            <span class="line-status"><span class="status status--dev">In Development</span></span>
+            <span class="line-go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <!-- The one tool shipping today: LIVE signal instead of IN DEVELOPMENT. -->
+        <li class="line line--live" data-phase="3">
+          <a class="line-link" href="#stock-shredder" data-entry="stock-shredder">
+            <span class="line-no">06</span>
+            <span class="line-phase line-phase--ditto"><span class="sr-only">Post-Production</span><span class="ditto" aria-hidden="true">&quot;</span></span>
+            <span class="line-name">Stock Shredder</span>
+            <span class="line-tag">Raw footage into stock-ready clips.</span>
+            <span class="line-platform">Mac &amp; Windows</span>
+            <span class="line-status"><span class="status status--live">Live</span></span>
+            <span class="line-go" aria-hidden="true"></span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER STRIP — Los Angeles clock as an instrument readout + sign-off.
+       ===================================================================== -->
+  <footer class="strip">
+    <div class="strip-cell strip-cell--clock">
+      <span class="strip-label">Local time <i>/</i> Los Angeles</span>
+      <time class="clock" data-live-clock>
+        <span class="clock-hms" data-clock-hms>--:--:--</span><span class="clock-suffix" data-clock-suffix></span>
+      </time>
+      <!-- 60 ticks, one per second: the current second lights up. Built by manifest.js. -->
+      <span class="clock-ticks" data-clock-ticks aria-hidden="true"></span>
+    </div>
+    <p class="strip-cell strip-cell--motto">By artists. For artists.</p>
+    <div class="strip-cell strip-cell--social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="strip-cell strip-cell--copy">&copy; 2026 DEADWORK STUDIO&reg;</p>
+  </footer>
+</div>
+
+<!-- =========================================================================
+     SPEC SHEET — the full entry for each manifest line. With JS this is a modal
+     side sheet over the manifest (the page itself never scrolls); without JS
+     every entry simply renders in-page and the manifest links jump to it.
+     ========================================================================= -->
+<dialog class="spec" aria-label="Tool specification" data-spec>
+  <div class="spec-inner">
+    <div class="spec-top">
+      <span class="spec-top-label">Spec sheet</span>
+      <button class="spec-close" type="button" data-spec-close>Close <span aria-hidden="true">&times;</span></button>
+    </div>
+
+    <article class="entry" id="scene-lock" aria-labelledby="scene-lock-name" data-entry-panel="scene-lock">
+      <div class="entry-meta"><span class="entry-no">01 / 06</span><span>I &mdash; Pre-Production</span><span class="status status--dev">In Development</span></div>
+      <h2 class="entry-name" id="scene-lock-name"><img src="../../../../assets/img/brand/product-logos/scene-lock.webp" alt="Scene Lock" loading="lazy" decoding="async" /></h2>
+      <p class="entry-tag">Plan smarter. Execute better.</p>
+      <p class="entry-desc">Organizes your pre-production with storyboards, shot lists, camera plots, references, and schedules all in one place. Provides iPhone capability so everyone can see the entire day with a clock and schedule to see where production is.</p>
+      <dl class="entry-specs">
+        <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+        <div><dt>Works with</dt><dd>iPhone companion app, PDF &amp; image references</dd></div>
+      </dl>
+      <form class="notify" data-notify-form data-notify-product="scene-lock" novalidate>
+        <label class="notify-label" for="notify-email-scene-lock">Get notified at launch</label>
+        <div class="notify-row">
+          <input class="notify-input" type="email" id="notify-email-scene-lock" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+          <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+          <button class="btn btn-ghost" type="submit" data-notify-submit>Notify me</button>
+        </div>
+        <p class="notify-status" role="status" aria-live="polite" id="notify-status-scene-lock" data-notify-status hidden></p>
+      </form>
+    </article>
+
+    <article class="entry" id="set-control" aria-labelledby="set-control-name" data-entry-panel="set-control">
+      <div class="entry-meta"><span class="entry-no">02 / 06</span><span>I &mdash; Pre-Production</span><span class="status status--dev">In Development</span></div>
+      <h2 class="entry-name" id="set-control-name"><img src="../../../../assets/img/brand/product-logos/set-control.webp" alt="Set Control" loading="lazy" decoding="async" /></h2>
+      <p class="entry-tag">Every crew. Every detail. In sync.</p>
+      <p class="entry-desc">Organizes film sets with tracked schedules, locations, shot progress, timing and production in one shared view. A change made once is a change everyone sees via iPhone notifications. Eliminates inefficient communication during pre-production and production.</p>
+      <dl class="entry-specs">
+        <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+        <div><dt>Works with</dt><dd>iPhone companion app, Scene Lock</dd></div>
+      </dl>
+      <form class="notify" data-notify-form data-notify-product="set-control" novalidate>
+        <label class="notify-label" for="notify-email-set-control">Get notified at launch</label>
+        <div class="notify-row">
+          <input class="notify-input" type="email" id="notify-email-set-control" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+          <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+          <button class="btn btn-ghost" type="submit" data-notify-submit>Notify me</button>
+        </div>
+        <p class="notify-status" role="status" aria-live="polite" id="notify-status-set-control" data-notify-status hidden></p>
+      </form>
+    </article>
+
+    <article class="entry" id="loadout" aria-labelledby="loadout-name" data-entry-panel="loadout">
+      <div class="entry-meta"><span class="entry-no">03 / 06</span><span>II &mdash; Production</span><span class="status status--dev">In Development</span></div>
+      <h2 class="entry-name" id="loadout-name"><img src="../../../../assets/img/brand/product-logos/loadout.webp" alt="Loadout" loading="lazy" decoding="async" /></h2>
+      <p class="entry-tag">Never leave gear behind.</p>
+      <p class="entry-desc">Tracks production gear, cases, and equipment against a created list. It uses uploaded photos to confirm each item before it leaves or is needed so nothing gets lost or left behind.</p>
+      <dl class="entry-specs">
+        <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+        <div><dt>Works with</dt><dd>iPhone companion app</dd></div>
+      </dl>
+      <form class="notify" data-notify-form data-notify-product="loadout" novalidate>
+        <label class="notify-label" for="notify-email-loadout">Get notified at launch</label>
+        <div class="notify-row">
+          <input class="notify-input" type="email" id="notify-email-loadout" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+          <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+          <button class="btn btn-ghost" type="submit" data-notify-submit>Notify me</button>
+        </div>
+        <p class="notify-status" role="status" aria-live="polite" id="notify-status-loadout" data-notify-status hidden></p>
+      </form>
+    </article>
+
+    <article class="entry" id="handoff" aria-labelledby="handoff-name" data-entry-panel="handoff">
+      <div class="entry-meta"><span class="entry-no">04 / 06</span><span>II &mdash; Production</span><span class="status status--dev">In Development</span></div>
+      <h2 class="entry-name" id="handoff-name"><img src="../../../../assets/img/brand/product-logos/handoff.webp" alt="Handoff" loading="lazy" decoding="async" /></h2>
+      <p class="entry-tag">Every file. Verified.</p>
+      <p class="entry-desc">Handoff copies to every destination in parallel and checks each file against the original before it will ever call a card safe. If anything couldn't be verified, it says so &mdash; the card stays marked unsafe until it's actually confirmed.</p>
+      <dl class="entry-specs">
+        <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+        <div><dt>Works with</dt><dd>SD, CFexpress &amp; CompactFlash cards, external drives</dd></div>
+      </dl>
+      <form class="notify" data-notify-form data-notify-product="handoff" novalidate>
+        <label class="notify-label" for="notify-email-handoff">Get notified at launch</label>
+        <div class="notify-row">
+          <input class="notify-input" type="email" id="notify-email-handoff" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+          <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+          <button class="btn btn-ghost" type="submit" data-notify-submit>Notify me</button>
+        </div>
+        <p class="notify-status" role="status" aria-live="polite" id="notify-status-handoff" data-notify-status hidden></p>
+      </form>
+    </article>
+
+    <article class="entry" id="sound-driver" aria-labelledby="sound-driver-name" data-entry-panel="sound-driver">
+      <div class="entry-meta"><span class="entry-no">05 / 06</span><span>III &mdash; Post-Production</span><span class="status status--dev">In Development</span></div>
+      <h2 class="entry-name" id="sound-driver-name"><img src="../../../../assets/img/brand/product-logos/sound-driver.webp" alt="Sound Driver" loading="lazy" decoding="async" /></h2>
+      <p class="entry-tag">Real artists. Real sounds.</p>
+      <p class="entry-desc">Eliminates the grunt work and watches visuals of an edit to get to the creative process. Every sound comes from DEADWORK's own exclusive library; you won't find it in any other stock library or sound tool. Recorded and designed in-house and available nowhere else, with thousands of diverse cinematic sound variations straight to you.</p>
+      <dl class="entry-specs">
+        <div><dt>Platform</dt><dd>Mac &amp; Windows</dd></div>
+        <div><dt>Works with</dt><dd>Premiere Pro, DaVinci Resolve, Final Cut Pro, Avid Media Composer, Pro Tools, Nuendo</dd></div>
+      </dl>
+      <form class="notify" data-notify-form data-notify-product="sound-driver" novalidate>
+        <label class="notify-label" for="notify-email-sound-driver">Get notified at launch</label>
+        <div class="notify-row">
+          <input class="notify-input" type="email" id="notify-email-sound-driver" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+          <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+          <button class="btn btn-ghost" type="submit" data-notify-submit>Notify me</button>
+        </div>
+        <p class="notify-status" role="status" aria-live="polite" id="notify-status-sound-driver" data-notify-status hidden></p>
+      </form>
+    </article>
+
+    <!-- Shipping today: no IN DEVELOPMENT badge, primary CTA instead of a form. -->
+    <article class="entry entry--live" id="stock-shredder" aria-labelledby="stock-shredder-name" data-entry-panel="stock-shredder">
+      <div class="entry-meta"><span class="entry-no">06 / 06</span><span>III &mdash; Post-Production</span><span class="status status--live">Live</span></div>
+      <h2 class="entry-name" id="stock-shredder-name"><img src="../../../../assets/img/brand/product-logos/stock-shredder.webp" alt="Stock Shredder" loading="lazy" decoding="async" /></h2>
+      <p class="entry-tag">Raw footage into stock-ready clips.</p>
+      <p class="entry-desc">Stock Shredder helps find and prepare usable moments from your raw footage. You review what stays, fine-tune the look, and export individual clips ready for stock submission.</p>
+      <dl class="entry-specs">
+        <div><dt>Platform</dt><dd>Mac &amp; Windows</dd></div>
+        <div><dt>Works with</dt><dd>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks, Blackbox, iStock, Getty Images, Motion Array, Envato Elements, Filmsupply</dd></div>
+      </dl>
+      <a class="btn btn-primary" href="../../../../products/stock-shredder/">Get Stock Shredder</a>
+    </article>
+
+    <!-- Step through the manifest without closing the sheet -->
+    <nav class="spec-step" aria-label="Other tools">
+      <button class="spec-step-btn" type="button" data-spec-step="-1"><span aria-hidden="true">&larr;</span> <span data-spec-prev-label>Prev</span></button>
+      <span class="spec-step-pos" aria-hidden="true" data-spec-pos>01 / 06</span>
+      <button class="spec-step-btn" type="button" data-spec-step="1"><span data-spec-next-label>Next</span> <span aria-hidden="true">&rarr;</span></button>
+    </nav>
+  </div>
+</dialog>
+
+<script src="manifest.js?v=1" defer></script>
+<script src="../../../../assets/js/notify.js?v=20261025b" defer></script>
+</body>
+</html>

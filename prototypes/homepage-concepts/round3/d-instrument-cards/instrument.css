@@ -1,0 +1,707 @@
+/* =========================================================================
+   DEADWORK — Round 3 / D: INSTRUMENT CARDS
+   The constellation hero, re-cut as a hardware rack. Six bordered modules
+   (one per product) flank a centre window holding the wordmark + headline,
+   all on one non-scrolling desktop screen.
+
+   Palette is the brand's: ink, bone, greys. Colour only means something:
+   brand green = "live / shipping" LED and signup success; signal red = error.
+
+   Spacing scale: 4 8 12 16 24 32 48 64.
+   ========================================================================= */
+
+/* ---------- Fonts (self-hosted, shared with the live site) ---------- */
+@font-face {
+  font-family: 'Anton';
+  src: url('../../../../assets/fonts/anton.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('../../../../assets/fonts/archivo-variable.woff2') format('woff2-variations'),
+       url('../../../../assets/fonts/archivo-variable.woff2') format('woff2');
+  font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+}
+/* JetBrains Mono is subset to UPPERCASE + digits + punctuation — every mono
+   element is text-transform: uppercase on purpose. */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../../../assets/fonts/jetbrains-mono-500.woff2?v=20261027a') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  color-scheme: dark;
+
+  --ink: #0a0a09;
+  --ink-deep: #060605;
+  --ink-raised: #11110f;
+  --bone: #e6e0d3;
+  --bone-2: #94918a;
+  --bone-3: #807d77;
+  --line: rgba(230, 224, 211, 0.12);
+  --line-mid: rgba(230, 224, 211, 0.2);
+  --line-strong: rgba(230, 224, 211, 0.36);
+  --signal: #e5463d;
+  --green: #8fd687;
+
+  /* module surface: opaque enough to read over film, thin enough to feel like a panel */
+  --panel: rgba(12, 12, 10, 0.82);
+  --panel-hover: rgba(20, 20, 17, 0.9);
+
+  --font-display: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --font-body: 'Archivo', 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gutter: clamp(16px, 2.8vw, 48px);
+  --gap: 12px;                       /* the rack's single seam width, used everywhere */
+  --pad: clamp(16px, 1.6vw, 24px);   /* module internal padding */
+
+  --ease-out: cubic-bezier(0.22, 0.8, 0.2, 1);
+  --t-hover: 160ms;
+  --t-menu: 220ms;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- Reset / base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ink-deep);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, h2, h3, p, dl, dd { margin: 0; }
+:focus-visible { outline: 2px solid var(--bone); outline-offset: 3px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: fixed; top: 8px; left: 8px; z-index: 300;
+  padding: 12px 16px; background: var(--bone); color: var(--ink);
+  font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .14em;
+  transform: translateY(-160%);
+}
+.skip-link:focus { transform: none; }
+
+/* Shared mono label voice */
+.masthead-meta, .tab, .menu-eyebrow, .badge, .menu-card-meta,
+.module-top, .module-cat, .module-platform, .module-open, .module-buy,
+.bay-label, .readout, .rail-copy, .sheet-top, .spec dt, .notify-label, .btn {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* ---------- Film grain ---------- */
+.grain {
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  z-index: 250; pointer-events: none;
+  background-image: var(--grain);
+  background-size: 180px 180px;
+  opacity: .06;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .grain { animation: grain-shift 0.9s steps(6) infinite; }
+}
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  17%  { transform: translate(-3%, 2%); }
+  33%  { transform: translate(2%, -4%); }
+  50%  { transform: translate(-4%, -1%); }
+  67%  { transform: translate(3%, 3%); }
+  83%  { transform: translate(-1%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------- Background film ---------- */
+.backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+.backdrop img,
+.backdrop video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.12) brightness(.5);
+}
+/* Darkest at the edges (behind the modules), most open in the centre window. */
+.backdrop-shade {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 42% 38% at 50% 36%, rgba(6, 6, 5, .18) 0%, rgba(6, 6, 5, .62) 70%, rgba(6, 6, 5, .86) 100%),
+    linear-gradient(180deg, rgba(6, 6, 5, .55) 0%, transparent 18%, transparent 70%, rgba(6, 6, 5, .8) 100%);
+}
+
+/* =========================================================================
+   FRAME — header / rack / rail, locked to one viewport on desktop
+   ========================================================================= */
+.frame {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100svh;
+  min-height: 680px;
+  padding: 0 var(--gutter);
+}
+
+/* =========================================================================
+   MASTHEAD — columns align with the rack below
+   ========================================================================= */
+.masthead { position: relative; z-index: 50; }
+.masthead-row {
+  height: 64px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: center;
+}
+.masthead-meta {
+  font-size: 10.5px; letter-spacing: .2em; color: var(--bone-3);
+  white-space: nowrap;
+}
+.masthead-meta--right { justify-self: end; }
+.masthead-nav {
+  grid-column: 2 / 4;
+  display: flex; justify-content: center;
+  gap: clamp(20px, 2.6vw, 44px);
+}
+.tab {
+  position: relative;
+  display: inline-flex; align-items: center; height: 44px;
+  font-size: 11px; letter-spacing: .18em; color: var(--bone-2);
+  white-space: nowrap;
+  transition: color var(--t-hover) var(--ease-out);
+}
+.tab::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 10px; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-menu) var(--ease-out);
+}
+.tab[aria-expanded='true'] { color: var(--bone); }
+.tab[aria-expanded='true']::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .tab:hover { color: var(--bone); }
+  .tab:hover::after { transform: scaleX(1); }
+}
+
+/* ---------- Mega-menu: drops over the rack as its own panel ---------- */
+.menu {
+  position: absolute; left: 0; right: 0; top: 64px;
+  background: var(--ink-deep);
+  border: 1px solid var(--line-mid);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .7);
+  padding: 32px clamp(24px, 3vw, 48px) 40px;
+  opacity: 0; transform: translateY(-4px);
+  transition: opacity var(--t-menu) var(--ease-out), transform var(--t-menu) var(--ease-out);
+}
+.menu.is-open { opacity: 1; transform: none; }
+.menu[hidden], .menu-group[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .menu { transition: none; transform: none; } }
+
+.menu-group { max-width: 820px; margin: 0 auto; }
+.menu-eyebrow {
+  font-size: 10.5px; letter-spacing: .2em; color: var(--bone-3);
+  margin-bottom: 20px; text-align: center;
+}
+.menu-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.menu-card { display: grid; gap: 8px; }
+.menu-card-plate {
+  display: grid; place-items: center;
+  aspect-ratio: 3 / 1;
+  background: var(--ink);
+  border: 1px solid var(--line-mid);
+  margin-bottom: 8px;
+  transition: border-color var(--t-hover) var(--ease-out);
+}
+.menu-card-plate img { max-height: 46%; max-width: 62%; width: auto; height: auto; }
+.menu-card-name {
+  font-family: var(--font-display); font-size: 26px; line-height: 1.05;
+  text-transform: uppercase;
+}
+.menu-card-desc { font-size: 15px; line-height: 1.45; color: var(--bone-2); }
+.menu-card-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  font-size: 10px; letter-spacing: .14em; color: var(--bone-3);
+}
+@media (hover: hover) {
+  .menu-card:hover .menu-card-plate { border-color: var(--line-strong); }
+}
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 8px 4px;
+  border: 1px solid var(--line-strong);
+  font-size: 9.5px; letter-spacing: .16em; line-height: 1; color: var(--bone-2);
+  white-space: nowrap;
+}
+.badge::before { content: ''; width: 6px; height: 6px; border: 1px solid currentColor; flex-shrink: 0; }
+
+/* =========================================================================
+   THE RACK
+   ========================================================================= */
+.rack {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-areas:
+    "sl   core core sd"
+    "sc   lo   ho   ss"
+    "lpre lprd lprd lpst";
+  gap: var(--gap);
+  padding: 8px 0 0;
+  min-height: 0;
+}
+.bay { display: contents; }
+
+/* Desktop placement only — phones fall back to plain document (timeline) order. */
+@media (min-width: 820px) {
+  #mod-scene-lock     { grid-area: sl; }
+  #mod-set-control    { grid-area: sc; }
+  #mod-loadout        { grid-area: lo; }
+  #mod-handoff        { grid-area: ho; }
+  #mod-sound-driver   { grid-area: sd; }
+  #mod-stock-shredder { grid-area: ss; }
+  .bay--pre .bay-label        { grid-area: lpre; }
+  .bay--production .bay-label { grid-area: lprd; }
+  .bay--post .bay-label       { grid-area: lpst; }
+}
+
+/* ---------- Centre window: wordmark + headline ---------- */
+.core {
+  grid-area: core;
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(12px, 1.8vh, 20px);
+  padding: 24px;
+  text-align: center;
+}
+/* Crop marks in the four corners: the window is framed, not boxed. */
+.core::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  --m: 18px; --c: var(--line-strong);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--m) 1px,
+    linear-gradient(var(--c), var(--c)) top left / 1px var(--m),
+    linear-gradient(var(--c), var(--c)) top right / var(--m) 1px,
+    linear-gradient(var(--c), var(--c)) top right / 1px var(--m),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--m) 1px,
+    linear-gradient(var(--c), var(--c)) bottom left / 1px var(--m),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--m) 1px,
+    linear-gradient(var(--c), var(--c)) bottom right / 1px var(--m);
+  background-repeat: no-repeat;
+}
+.core-mark { display: block; }
+.core-mark img { width: clamp(300px, 31vw, 500px); height: auto; }
+.core-title {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(12px, 1.2vw, 20px);
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(26px, 2.7vw, 44px);
+  line-height: 1; letter-spacing: .02em;
+  white-space: nowrap;
+}
+.core-title-rule { display: block; width: clamp(24px, 3vw, 56px); height: 2px; background: var(--bone); }
+.core-lede {
+  max-width: 44ch;
+  font-size: clamp(14px, 1.05vw, 16px); line-height: 1.5;
+  color: var(--bone-2);
+}
+
+/* ---------- Module (product card) ---------- */
+.module {
+  position: relative;
+  display: flex; flex-direction: column;
+  min-height: 0;
+  padding: var(--pad);
+  background-color: var(--panel);
+  /* Four screw heads, one per corner — the panel is fastened, not floating. */
+  background-image:
+    radial-gradient(circle at 9px 9px, rgba(230, 224, 211, .22) 1.5px, transparent 2px),
+    radial-gradient(circle at calc(100% - 9px) 9px, rgba(230, 224, 211, .22) 1.5px, transparent 2px),
+    radial-gradient(circle at 9px calc(100% - 9px), rgba(230, 224, 211, .22) 1.5px, transparent 2px),
+    radial-gradient(circle at calc(100% - 9px) calc(100% - 9px), rgba(230, 224, 211, .22) 1.5px, transparent 2px);
+  border: 1px solid var(--line-mid);
+  box-shadow: inset 0 1px 0 rgba(230, 224, 211, .05), 0 1px 0 rgba(0, 0, 0, .6);
+  transition: border-color var(--t-hover) var(--ease-out),
+              background-color var(--t-hover) var(--ease-out),
+              transform 90ms var(--ease-out);
+}
+
+.module-top {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; letter-spacing: .18em; color: var(--bone-3);
+}
+.module-index { color: var(--bone-2); }
+.module-status { display: inline-flex; align-items: center; gap: 8px; }
+
+/* Status LED: an unlit ring while in development, lit brand green when shipping. */
+.led {
+  width: 7px; height: 7px; border-radius: 50%;
+  border: 1px solid var(--bone-3);
+  flex-shrink: 0;
+}
+.module--live .led {
+  background: var(--green); border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(143, 214, 135, .14), 0 0 10px rgba(143, 214, 135, .55);
+}
+.module--live .module-status { color: var(--green); }
+
+/* Product mark as a faceplate badge, top-left under the status row. */
+.module-logo {
+  width: auto; height: clamp(22px, 3.4vh, 34px); max-width: 70%;
+  margin-top: clamp(16px, 2.6vh, 28px);
+  object-fit: contain; object-position: left center;
+  opacity: .88;
+}
+.module-body {
+  margin-top: auto;
+  padding: 16px 0 20px;
+  display: grid; gap: 8px;
+}
+.module-cat { font-size: 10px; letter-spacing: .18em; color: var(--bone-3); }
+.module-name {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(30px, 2.75vw, 44px);
+  line-height: .98; letter-spacing: .01em;
+  text-transform: uppercase;
+}
+.module-tag {
+  font-size: clamp(14px, 1.05vw, 16px); line-height: 1.4;
+  color: var(--bone-2);
+  max-width: 28ch;
+}
+
+.module-foot {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.module-platform { font-size: 9.5px; letter-spacing: .14em; color: var(--bone-3); white-space: nowrap; }
+
+/* The Details key: its ::after stretches over the whole module, so the
+   entire panel is one press target without nesting interactive elements. */
+.module-open {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 32px;
+  font-size: 10px; letter-spacing: .18em; color: var(--bone-2);
+  white-space: nowrap;
+  transition: color var(--t-hover) var(--ease-out);
+}
+.module-open::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.module-open:focus-visible { outline: none; }
+.key {
+  display: grid; place-items: center;
+  width: 24px; height: 24px;
+  border: 1px solid var(--line-strong);
+  font-size: 14px; line-height: 1; letter-spacing: 0;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
+}
+
+/* Narrower desktops: the key alone carries "Details" (the word stays for screen readers). */
+.module--live .module-open-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 1359px) {
+  .module-open-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+/* Live module: the buy key sits above the stretched press target. */
+.module--live { border-color: var(--line-strong); }
+.module-buy {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; min-height: 32px;
+  padding: 0 12px;
+  background: var(--bone); color: var(--ink);
+  font-size: 10px; font-weight: 500; letter-spacing: .14em;
+  white-space: nowrap;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+.module-buy:focus-visible { outline-offset: 2px; }
+
+/* Interaction: hover lifts the light, press seats the module 1px into the rack. */
+@media (hover: hover) {
+  .module:hover { border-color: var(--line-strong); background-color: var(--panel-hover); }
+  .module:hover .module-open { color: var(--bone); }
+  .module:hover .key { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+  .module-buy:hover { background: #fff; }
+}
+.module:has(.module-open:active) { transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(0, 0, 0, .4); }
+.module:has(.module-open:focus-visible) { outline: 2px solid var(--bone); outline-offset: 2px; }
+
+/* ---------- Bay legend: silkscreened labels under each group ---------- */
+.bay-label {
+  position: relative;
+  display: flex; justify-content: center; align-items: baseline; gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-strong);
+  font-size: 10px; font-weight: 400; letter-spacing: .22em; color: var(--bone-3);
+}
+.bay-label::before,
+.bay-label::after {
+  content: ''; position: absolute; top: -1px; width: 1px; height: 7px; background: var(--line-strong);
+}
+.bay-label::before { left: 0; }
+.bay-label::after { right: 0; }
+.bay-num { color: var(--bone); }
+
+/* =========================================================================
+   BOTTOM RAIL — sign-off · LA clock · socials + copyright
+   ========================================================================= */
+.rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: center;
+  padding: 16px 0 20px;
+}
+.rail-sign {
+  font-family: var(--font-display); font-size: 18px; line-height: 1;
+  letter-spacing: .03em; text-transform: uppercase;
+}
+
+/* The clock is a readout module of its own — same border language as the rack. */
+.readout {
+  grid-column: 2 / 4; justify-self: center;
+  display: inline-flex; align-items: stretch;
+  border: 1px solid var(--line-mid);
+  background: var(--panel);
+}
+.readout-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 14px;
+  border-right: 1px solid var(--line);
+  font-size: 10px; letter-spacing: .2em; color: var(--bone-3);
+}
+.readout-led { width: 5px; height: 5px; border-radius: 50%; background: var(--bone); }
+@media (prefers-reduced-motion: no-preference) {
+  .readout-led.is-tick { animation: tick 1000ms steps(1) both; }
+}
+@keyframes tick { 0% { opacity: 1; } 50% { opacity: .25; } }
+.readout-time { display: inline-flex; align-items: baseline; gap: 10px; padding: 8px 16px 7px; }
+.readout-hms {
+  font-size: 22px; font-weight: 500; line-height: 1; letter-spacing: .08em; color: var(--bone);
+  font-variant-numeric: tabular-nums;
+}
+.readout-suffix { font-size: 10px; letter-spacing: .18em; color: var(--bone-3); }
+
+.rail-end { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+.rail-social { display: flex; gap: 4px; }
+.rail-social a {
+  display: grid; place-items: center; width: 32px; height: 32px;
+  color: var(--bone-2);
+  transition: color var(--t-hover) var(--ease-out);
+}
+@media (hover: hover) { .rail-social a:hover { color: var(--bone); } }
+.rail-copy { font-size: 9.5px; letter-spacing: .16em; color: var(--bone-3); white-space: nowrap; }
+
+/* =========================================================================
+   PRODUCT SHEET (dialog)
+   ========================================================================= */
+.sheet {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100svh - 48px);
+  padding: 0; margin: auto;
+  background: var(--ink-raised);
+  color: var(--bone);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+}
+.sheet:focus, .sheet:focus-visible { outline: none; }
+.sheet::backdrop { background: rgba(6, 6, 5, .78); }
+.sheet-panel { padding: 24px 32px 32px; }
+.sheet-top {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 10px; letter-spacing: .18em; color: var(--bone-3);
+}
+.sheet-close {
+  margin-left: auto;
+  display: grid; place-items: center; width: 36px; height: 36px;
+  border: 1px solid var(--line-mid);
+  font-family: var(--font-body); font-size: 20px; line-height: 1; color: var(--bone-2);
+  transition: border-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+@media (hover: hover) { .sheet-close:hover { border-color: var(--bone); color: var(--bone); } }
+
+.sheet-plate {
+  display: flex; align-items: center;
+  height: 88px; margin: 24px 0 20px; padding: 0 20px;
+  background: var(--ink); border: 1px solid var(--line);
+}
+.sheet-plate img { max-height: 40px; width: auto; }
+.sheet-name {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 40px; line-height: 1; text-transform: uppercase;
+}
+.sheet-tag { margin-top: 8px; font-size: 18px; line-height: 1.35; }
+.sheet-desc { margin-top: 16px; font-size: 15px; line-height: 1.6; color: var(--bone-2); max-width: 62ch; }
+
+.spec { margin-top: 24px; border-top: 1px solid var(--line); }
+.spec div {
+  display: grid; grid-template-columns: 112px 1fr; gap: 16px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.spec dt { font-size: 10px; letter-spacing: .16em; color: var(--bone-3); padding-top: 3px; }
+.spec dd { font-size: 14px; line-height: 1.5; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 20px;
+  font-size: 11px; font-weight: 500; letter-spacing: .16em;
+  white-space: nowrap;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+.btn-primary { background: var(--bone); color: var(--ink); }
+@media (hover: hover) { .btn-primary:hover { background: #fff; } }
+.btn-primary:disabled { opacity: .6; cursor: progress; }
+.btn-block { display: flex; width: 100%; margin-top: 24px; }
+
+/* ---------- Notify form (wired by the shared notify.js) ---------- */
+.notify { margin-top: 24px; }
+.notify-label { display: block; margin-bottom: 8px; font-size: 10px; letter-spacing: .18em; color: var(--bone-3); }
+.notify-row { display: flex; }
+.notify-input {
+  flex: 1 1 auto; min-width: 0; height: 48px;
+  padding: 0 16px;
+  background: var(--ink); color: var(--bone);
+  border: 1px solid var(--line-strong); border-right: 0;
+  font: 16px/1 var(--font-body);
+  border-radius: 0;
+  transition: border-color var(--t-hover) var(--ease-out);
+}
+.notify-input::placeholder { color: var(--bone-3); }
+.notify-input:focus { outline: none; border-color: var(--bone); }
+.notify-input[aria-invalid='true'] { border-color: var(--signal); }
+.notify-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.notify-status { margin-top: 10px; font-size: 14px; color: var(--bone-2); }
+.notify-status[hidden] { display: none; }
+.notify-status-good { color: var(--green); }
+.notify-status-bad { color: var(--signal); }
+
+/* =========================================================================
+   MOTION — the rack powers on. Opacity/transform only; base styles are the
+   final state, so skipped animations still show everything.
+   ========================================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .motion .core   { animation: power-on 700ms var(--ease-out) 80ms backwards; }
+  .motion .module { animation: seat 520ms var(--ease-out) backwards; animation-delay: calc(240ms + var(--i, 0) * 70ms); }
+  .motion .module .led { animation: led-on 600ms steps(1) backwards; animation-delay: calc(520ms + var(--i, 0) * 70ms); }
+  .motion .bay-label, .motion .rail { animation: fade 600ms var(--ease-out) 760ms both; }
+  .motion #mod-scene-lock     { --i: 0; }
+  .motion #mod-set-control    { --i: 1; }
+  .motion #mod-loadout        { --i: 2; }
+  .motion #mod-handoff        { --i: 3; }
+  .motion #mod-sound-driver   { --i: 4; }
+  .motion #mod-stock-shredder { --i: 5; }
+  .motion .sheet[open] { animation: sheet-in 220ms var(--ease-out) both; }
+  .motion .sheet[open]::backdrop { animation: fade 220ms var(--ease-out) both; }
+}
+@keyframes power-on { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes seat     { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes led-on   { 0% { opacity: .2; } 30% { opacity: 1; } 45% { opacity: .2; } 60% { opacity: 1; } }
+@keyframes fade     { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheet-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* =========================================================================
+   SHORT DESKTOP SCREENS — tighten so the rack still fits one screen
+   ========================================================================= */
+@media (min-width: 820px) and (max-height: 820px) {
+  .masthead-row { height: 56px; }
+  .menu { top: 56px; }
+  .module-body { padding: 12px 0 14px; gap: 6px; }
+  .module-name { font-size: clamp(28px, 2.4vw, 38px); }
+  .core-mark img { width: clamp(280px, 27vw, 420px); }
+  .rail { padding: 12px 0 14px; }
+  .readout-hms { font-size: 20px; }
+}
+
+/* =========================================================================
+   TABLET — 3-column bridge: rack keeps its shape, labels shrink
+   ========================================================================= */
+@media (min-width: 820px) and (max-width: 1099px) {
+  .module-platform { font-size: 9px; letter-spacing: .1em; }
+  .rail-copy { display: none; }
+}
+
+/* =========================================================================
+   PHONES — one column in timeline order; page scrolls naturally
+   ========================================================================= */
+@media (max-width: 819px) {
+  .frame { height: auto; min-height: 100svh; }
+
+  .masthead-row {
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0;
+    padding-top: 12px;
+  }
+  .masthead-meta { font-size: 9.5px; letter-spacing: .14em; }
+  .masthead-nav {
+    grid-column: 1 / -1; grid-row: 2;
+    justify-content: space-between; gap: 0;
+    margin-top: 8px;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .tab { font-size: 9.5px; letter-spacing: .06em; height: 44px; }
+  .menu { top: 100%; max-height: calc(100svh - 120px); overflow-y: auto; padding: 24px 16px; }
+  .menu-eyebrow { text-align: left; margin-bottom: 16px; }
+  .menu-cards { grid-template-columns: 1fr; }
+  .menu-card { grid-template-columns: 104px 1fr; column-gap: 16px; row-gap: 4px; align-items: start; }
+  .menu-card-plate { grid-row: 1 / 4; aspect-ratio: 1; margin: 0; }
+  .menu-card-plate img { max-width: 76%; max-height: 52%; }
+  .menu-card-name { font-size: 22px; }
+  .menu-card-desc { font-size: 14px; }
+
+  .rack { display: block; padding: 0; }
+  .core { padding: 48px 8px 40px; gap: 16px; }
+  .core-mark img { width: min(78vw, 360px); }
+  .core-title { flex-direction: column; gap: 10px; font-size: 40px; }
+  .core-title-rule { width: 40px; }
+
+  .bay { display: grid; gap: var(--gap); margin-top: 32px; }
+  .bay-label {
+    order: -1;
+    justify-content: flex-start;
+    padding: 12px 0 4px;
+  }
+  .bay-label::after { display: none; }
+  .module { min-height: 0; }
+  .module-body { padding: 24px 0 20px; }
+  .module-logo { height: 28px; margin-top: 20px; }
+  .module-name { font-size: 36px; }
+
+  .rail {
+    grid-template-columns: 1fr;
+    justify-items: center; row-gap: 20px;
+    padding: 48px 0 32px; text-align: center;
+  }
+  .readout { grid-column: auto; }
+  .rail-end { flex-direction: column; gap: 12px; justify-content: center; }
+
+  .sheet {
+    width: 100%; max-width: none; max-height: 92svh;
+    margin: auto 0 0;
+    border-left: 0; border-right: 0; border-bottom: 0;
+  }
+  .sheet-panel { padding: 20px 20px calc(24px + env(safe-area-inset-bottom)); }
+  .sheet-name { font-size: 34px; }
+  .notify-row { flex-direction: column; gap: 8px; }
+  .notify-input { border-right: 1px solid var(--line-strong); }
+}
