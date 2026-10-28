@@ -287,3 +287,392 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
   .side .tool:nth-child(3) { border-bottom: 0; }
   .side--right .tool:nth-child(3) { border-bottom: 1px solid var(--line); }
 }
+
+/* ---------- Footer clock: the original plain mono time (no date) ---------- */
+.foot-clock { font: 400 12px/1.5 var(--font-mono); letter-spacing: .06em; color: var(--bone-2); font-variant-numeric: tabular-nums; }
+
+
+/* =====================================================================================
+   NAV TABS + MEGA-MENU — the site's original header, restored on request (2026-10-28).
+   Rules copied from home.css / home-tabs.css / base.css (badges) rather than loading those
+   files whole: home.css also locks html/body scrolling for its one-screen poster layout,
+   which would stop this page's second screen from being reachable.
+   ===================================================================================== */
+.screen--hero .poster-head { padding-top: 22px; }
+.poster-brand img { height: 22px; width: auto; margin: 0 auto; transform: translateY(-4.6px); }
+.poster-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 10px 16px; position: relative; z-index: 50; }
+.poster-brand { order: -1; flex: 1 0 100%; text-align: center; }
+.nav-tabs { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
+.nav-tab { position: static; }
+.nav-tab-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  min-height: 44px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: 400 11px/1.4 var(--font-mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bone);
+  transition: color var(--duration-hover) var(--ease);
+  white-space: nowrap;
+}
+/* A real underline draw-in (a bar scaling from 0 to full width) instead of a plain color fade on
+   a static underline — reads as a considered, deliberate reveal rather than just a color swap. */
+.nav-tab-trigger::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: -6px;
+  height: 2px;
+  background: var(--acc);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-hover) var(--ease);
+}
+@media (hover: hover) { .nav-tab-trigger:hover::after { transform: scaleX(1); } }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--acc); }
+.nav-tab-trigger[aria-expanded='true']::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .nav-tab-trigger::after { transition: none; }
+}
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: var(--ink);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .85), 0 8px 20px -8px rgba(0, 0, 0, .7);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity var(--duration-close) var(--ease), transform var(--duration-close) var(--ease), visibility 0s linear var(--duration-close);
+  pointer-events: none;
+}
+.mega-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity var(--duration-open) var(--ease), transform var(--duration-open) var(--ease), visibility 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu, .mega-menu.is-open { transition-duration: 1ms; transform: none; }
+}
+/* Only the active group's content is in flow at all — an instant swap (rather than a timed
+   cross-fade) while the panel stays open, which reads as smooth without risking either group
+   being visible at once mid-transition. Column direction: the group's own eyebrow sits in its
+   own row above .mega-menu-cards, rather than living inside the left-most card's own box — an
+   earlier version nested it in a wrapper around just that one card, which pushed only that
+   card's photo down and left the two cards visibly misaligned/different-looking even though
+   they were exactly the same rendered width. Left-aligned text in a full-width row still reads
+   as "above the left card" (there's nothing above the card(s) to its right), without that
+   misalignment risk. */
+.mega-menu-group { display: none; flex-direction: column; padding: 36px 0 40px; gap: 18px; }
+.mega-menu-group.is-active { display: flex; }
+
+.mega-menu-eyebrow { margin: 0; font: 400 11px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; text-align: center; color: var(--bone-3); }
+
+/* Studio (Mission/Values/Join/Contact) is a 2x2 grid of its own cards rather than the single
+   row the product groups use — same card markup, just laid out two-by-two since there are 4
+   items, not 2. Each card is shorter (160px) than a product card (300px): these are simple
+   section links, not hero-grade product photography. All four currently share the one existing
+   generic site photo (no dedicated photography per section yet, unlike the 6 products). */
+.mega-menu-group--studio .mega-menu-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.mega-menu-group--studio .mega-menu-card-img { height: 160px; }
+
+/* The group's own products as image cards, side by side, filling the full panel width.
+   flex-wrap lets them stack cleanly at tablet widths where two 280px+ cards don't fit side by
+   side. */
+.mega-menu-cards { display: flex; flex: 1; flex-wrap: wrap; gap: 24px; min-width: 0; }
+.mega-menu-card { display: flex; flex-direction: column; flex: 1 1 240px; min-width: 220px; text-decoration: none; }
+.mega-menu-card-img { position: relative; display: block; width: 100%; height: 300px; overflow: hidden; background: var(--ink-raised); }
+.mega-menu-card-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  transition: transform var(--duration-hover) var(--ease);
+}
+@media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.03); } }
+/* Sound Driver's motorcycle photo: the black panel behind the mark sits roughly here, a touch
+   left of the photo's own horizontal center (no real fix for that without cropping tighter,
+   which was tried and reverted — see chat, 2026-10-22 — for showing noticeably less of the
+   machinery than wanted). */
+a[href$="sound-driver/"] .mega-menu-card-photo { object-position: 50% 48%; }
+/* Stock Shredder's engine-bay photo: lands the bracket roughly behind the mark, same tradeoff
+   as above. */
+a[href$="stock-shredder/"] .mega-menu-card-photo { object-position: 50% 53%; }
+/* Scene Lock: the first fix (61%) centered the mark ON the console row itself, overlapping the
+   switches. Pulled back up to 54%, where the full crosshair+text mark instead hovers in the dark
+   gap right above the desk's top edge — sitting on top of it, not down in the switches. */
+a[href$="scene-lock/"] .mega-menu-card-photo { object-position: 50% 54%; }
+/* A soft dark scrim sits behind the centered logo, independent of whatever the photo underneath
+   actually shows — without it, a light-colored mark (Loadout's circles, Handoff's diamond) can
+   disappear into bright/busy regions of some photos (confirmed: both nearly vanished against
+   their latest background swap) with no reliable fix possible from the drop-shadow alone, since
+   that contours to the mark's own shape rather than guaranteeing contrast. Sized to comfortably
+   clear each mark's own bounding box, not tied to any specific photo's content. */
+.mega-menu-card-img::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(70%, 280px);
+  height: 58%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, 0) 72%);
+  pointer-events: none;
+}
+/* Each product's own logo mark (same transparent-background files used on its hero) sits
+   directly on its photo, bottom-left, instead of only as plain text below. */
+.mega-menu-card-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  height: clamp(32px, 3.2vw, 56px);
+  width: auto;
+  max-width: calc(100% - 48px);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .65));
+}
+/* Set Control's wordmark reads better flat against its console photo — the shared drop-shadow
+   looked muddy on its particular mix of fine lines and light background. Sized up slightly from
+   the shared default for a touch more separation from the busy panel detail behind it — no
+   shadow/glow/scrim added back in, size is the only lever used here. */
+a[href$="set-control/"] .mega-menu-card-logo { filter: none; height: clamp(36px, 3.6vw, 62px); }
+/* Sound Driver: up ~45% from its previous subtle size — still clearly smaller than the shared
+   default (this mark reads best secondary to the wider machinery photo), just no longer reading
+   as too quiet against the black panel it sits in. */
+a[href$="sound-driver/"] .mega-menu-card-logo {
+  height: clamp(26px, 2.6vw, 41px);
+}
+/* Stock Shredder: up ~25% from its previous size, same reasoning as Sound Driver above but a
+   smaller bump — the engine bracket it sits on is a touch more forgiving than Sound Driver's
+   tighter black gap. */
+a[href$="stock-shredder/"] .mega-menu-card-logo {
+  height: clamp(23px, 2.3vw, 35px);
+}
+/* Handoff: the shared default read as too small against this particular rack photo's level of
+   detail — sized up clearly past the shared default so it's comfortably readable, not just
+   technically present. */
+a[href$="handoff/"] .mega-menu-card-logo {
+  height: clamp(52px, 5.2vw, 90px);
+}
+/* Loadout: the shared scrim wasn't quite enough separation — its logo's own white circles can
+   still read close in tone to similar round shapes in the photo behind it. Strengthened just for
+   this card rather than resizing the mark or touching the photo itself. */
+a[href$="loadout/"] .mega-menu-card-img::after {
+  /* An ellipse doesn't fit a wordmark+icon's own roughly-rectangular footprint well — its
+     corners reach further than its edge midpoints, so the logo's actual text row (wide and
+     short) fell partly outside the dark area while the gradient still looked generous on-paper.
+     A soft-edged rectangle covers the measured logo bounding box (164x56 at this viewport, with
+     margin) evenly along its whole width instead. */
+  width: 34%;
+  height: 34%;
+  max-width: 320px;
+  max-height: 110px;
+  background: rgba(0, 0, 0, .62);
+  border-radius: 10px;
+  filter: blur(14px);
+}
+.mega-menu-card-caption { display: block; margin-top: 14px; text-align: center; }
+.mega-menu-card-name { display: block; font: 400 15px/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--bone); transition: color var(--duration-hover) var(--ease); }
+/* D-16: was ungated, so a tap on touch stuck the card's accent color on until a different card
+   was tapped. */
+@media (hover: hover) and (pointer: fine) { .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); } }
+.mega-menu-card[aria-current] .mega-menu-card-name { color: var(--acc); }
+.mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--bone-2); }
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu-card-photo { transition: none; }
+}
+.poster-meta-right {
+  display: none;
+}
+@media (min-width: 1101px) {
+  .poster-meta-left,
+  .poster-meta-right {
+    display: block;
+    position: absolute;
+    /* H-20: bottom:0 anchors the box's own bottom edge to the header's, but this line's text is
+       shorter than the tab's own 36px-tall flex box (which bottom-aligns its glyphs via
+       align-items:flex-end) — the meta text itself rendered ~9px below the tab's baseline.
+       Nudged up by the measured gap so both read as sitting on one shelf. */
+    bottom: 9px;
+    font: 400 11px/1.4 var(--font-mono);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--bone-3);
+    white-space: nowrap;
+  }
+  .poster-meta-left { left: 0; }
+  .poster-meta-right { right: 0; }
+}
+@media (max-width: 719px) {
+  .mega-menu { display: none; position: static; margin: 10px 0 0; box-shadow: none; }
+  .mega-menu.is-open { display: block; }
+  .mega-menu-group.is-active { display: block; }
+  .mega-menu-group { padding: 16px 20px 20px; }
+  .mega-menu-cards, .mega-menu-group--studio .mega-menu-cards { display: flex; flex-direction: column; gap: 20px; }
+  .mega-menu-cards .mega-menu-card { flex: none; }
+  .mega-menu-card-img { height: 180px; }
+  .nav-tabs { align-items: flex-start; }
+}
+@media (min-width: 720px) {
+  .poster-head { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 16px; }
+  .poster-brand { order: 0; grid-column: 2; justify-self: center; }
+  .nav-tabs--pre { grid-column: 1; justify-content: flex-end; }
+  .nav-tabs--post { grid-column: 3; justify-content: flex-start; }
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge-beta {
+  background: var(--beta-green);
+  color: var(--ink);
+}
+/* P1-1 (2026-10-26 audit): this used to be --dev-yellow, the only place that color carried any
+   meaning as "status". Shape (hairline + hollow square) already does that job on its own, so the
+   badge is now a neutral bone-on-dark mark, same family as the beta chip's ink-on-green. See
+   product-dev.css's body.dev-light override for the ink-on-sand counterpart on the light pages. */
+.badge-dev {
+  background: transparent;
+  color: var(--bone);
+  border: 1px solid var(--bone);
+}
+.badge-icon {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+}
+.badge-icon--filled {
+  background: currentColor;
+  border: none;
+}
+/* home-tabs.css */
+/* Homepage only (loaded by home/index.html, not the product pages that share home.css):
+   tab style C (registration corners), calmer category switching, and the product plates inside each tab. */
+/* Shared by all five tab options: switching category eases the new content in instead of snapping.
+   H-21: scoped to :not(.was-open) — only the first open of a session animates; sweeping the
+   pointer between tabs while the panel stays open (nav-dropdown.js already sets .was-open for
+   that case) swaps content instantly instead of restarting this keyframe every time. */
+.mega-menu:not(.was-open) .mega-menu-group.is-active { animation: tabs-group-in 260ms var(--ease) both; }
+.mega-menu:not(.was-open) .mega-menu-group.is-active .mega-menu-card { animation: tabs-card-in 220ms var(--ease) both; }
+.mega-menu:not(.was-open) .mega-menu-group.is-active .mega-menu-card:nth-child(2) { animation-delay: 40ms; }
+@keyframes tabs-group-in { from { opacity: 0; } }
+@keyframes tabs-card-in { from { opacity: 0; transform: translateY(6px); } }
+/* while a category is open, the others step back so the open one reads instantly */
+.poster-head:has(.mega-menu.is-open) .nav-tab-trigger:not([aria-expanded='true']) { color: var(--bone-3); }
+.nav-tab-trigger:focus-visible { outline: 1px solid var(--bone); outline-offset: 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu-group.is-active, .mega-menu-group.is-active .mega-menu-card { animation: none; }
+}
+
+/* QA-18: this 4px margin-top (home's own tab rhythm, predating the header-geometry alignment
+   work) was the last thing landing home's tab row 4px lower than Studio/Stock Shredder/the dev
+   pages' identical-looking header once the shared padding-top was matched (H-8) — dropped so the
+   tab row's top edge lines up exactly with every other page's. */
+.nav-tab-trigger { padding: 8px 10px 6px; align-items: center; min-height: 36px; }
+.nav-tab-trigger::after { display: none; }
+/* H-6/QA-17: 36px tall is well under the 44px touch-target floor on a screen where there's no
+   cursor precision to make up for it. min-height:44px (the first attempt) grew the whole header
+   row's own box by ~16px on touch viewports, same bug nav-v2.css hit on the other pages — this
+   tab has its own ::after (disabled above), so it's free to repurpose purely as an
+   absolutely-positioned hit-box extension that never touches layout, matching nav-v2.css's fix. */
+@media (pointer: coarse) {
+  .nav-tab-trigger::after { content: ''; display: block; position: absolute; inset: -6px 0; }
+}
+.nav-tab-trigger::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 180ms var(--ease);
+  background:
+    linear-gradient(var(--bone), var(--bone)) top left / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) top left / 1px 7px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top right / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) top right / 1px 7px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom left / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) bottom left / 1px 7px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom right / 7px 1px no-repeat, linear-gradient(var(--bone), var(--bone)) bottom right / 1px 7px no-repeat;
+}
+@media (hover: hover) { .nav-tab-trigger:hover::before { opacity: .45; } }
+.nav-tab-trigger[aria-expanded='true']::before { opacity: 1; }
+.nav-tab-trigger[aria-expanded='true'] { color: var(--bone); }
+
+/* shared: the status + platform line under each tagline, quiet mono like the rest of the menu */
+/* H-18: a layout-only mitigation (text itself is unchanged — the full fix needs copy shortened,
+   which is the owner's call, see the audit). text-wrap:pretty avoids a single orphaned word on
+   the platform line's own last line when it does wrap. */
+.mm-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; margin-top: 10px; font: 400 10.5px/1.5 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--bone-3); }
+.mm-platform { text-wrap: pretty; }
+/* MEDIUM-1 (2026-10-27 QA): nav-v2.css's near-duplicate sibling needs the identical fix — this
+   page loads base.css, so the real shared .badge/.badge-dev/.badge-icon already exist on the
+   page; only the smaller in-menu sizing needs restating here. Stock Shredder's own entry
+   deliberately carries no badge (see this page's panel-meta decision above), so there's no beta
+   variant needed here either. */
+.mm-meta .badge { height: 18px; padding: 0 7px; gap: 5px; font: inherit; letter-spacing: inherit; }
+.mega-menu-card-caption { display: flex; flex-direction: column; align-items: center; }
+.mega-menu-card:focus-visible { outline: 1px solid var(--bone); outline-offset: 6px; }
+
+/* Plates: no photography — the logo alone on a quiet plate, with a hairline frame */
+.mm-plate-box { background: #121210 !important; box-shadow: inset 0 0 0 1px rgba(230,224,211,.10); transition: box-shadow 200ms var(--ease), background-color 200ms var(--ease); }
+.mm-plate-box::after { display: none !important; }
+.mm-plate .mega-menu-card-logo { filter: none !important; height: clamp(44px, 4.6vw, 76px) !important; transition: transform 300ms var(--ease); }
+a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120px) !important; }
+@media (hover: hover) { .mm-plate:hover .mm-plate-box { background: #171715 !important; box-shadow: inset 0 0 0 1px rgba(230,224,211,.28); } .mm-plate:hover .mega-menu-card-logo { transform: translate(-50%, -50%) scale(1.03); } }
+
+/* =====================================================================================
+   TOOLS SCREEN — light (2026-10-28): warm sand stock, ink type. Every tool shows its
+   category + status, name, logo, slogan and one line of what it does, and the whole block
+   links to that product's own page. (Sand, not white: the brand's light surface.)
+   ===================================================================================== */
+.screen--tools {
+  --paper: #ebe5d8; --ink-text: #0a0a09; --ink-2: #4a4843; --ink-3: #6f6b63;
+  --rule: rgba(10,10,9,0.14); --rule-strong: rgba(10,10,9,0.32);
+  background: var(--paper); color: var(--ink-text);
+}
+.screen--tools ::selection { background: var(--ink-text); color: var(--paper); }
+.screen--tools :focus-visible { outline-color: var(--ink-text); }
+.screen--tools .tools-title { color: var(--ink-3); }
+.screen--tools .tool { border-color: var(--rule); }
+.screen--tools .side .tool:nth-child(3) { border-bottom-color: var(--rule); }
+.tool-link { display: grid; gap: 8px; color: inherit; text-decoration: none; }
+.side--left .tool-link { justify-items: end; }
+.screen--tools .tool-meta { color: var(--ink-3); }
+.screen--tools .status { color: var(--ink-2); }
+.screen--tools .status--live { color: var(--ink-text); }
+.screen--tools .status--live::before { background: #8fd687; border-color: #4f8f48; }
+.screen--tools .tool-name { color: var(--ink-text); transition: transform .45s var(--ease-out); }
+.tool-logo { display: block; height: 30px; margin: 2px 0 4px; }
+.tool-logo img { height: 100%; width: auto; filter: invert(1); }
+.screen--tools .tool-tag { color: var(--ink-text); font-size: 16px; }
+.tool-desc { max-width: 46ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.side--left .tool-desc { margin-left: auto; }
+.tool-link:hover .tool-name, .tool-link:focus-visible .tool-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.side--left .tool-link:hover .tool-name { transform: translateX(-6px); }
+.side--right .tool-link:hover .tool-name { transform: translateX(6px); }
+.screen--tools .center-rule { background: linear-gradient(transparent, var(--rule-strong) 30%, var(--rule-strong) 70%, transparent); }
+.screen--tools .foot { border-color: var(--rule); }
+.screen--tools .foot-clock, .screen--tools .foot-note, .screen--tools .foot-copy, .screen--tools .foot-social { color: var(--ink-3); }
+.screen--tools .foot-social a:hover { color: var(--ink-text); }
+@media (max-width: 899px) {
+  .side--left .tool-link { justify-items: start; }
+  .side--left .tool-desc { margin-left: 0; }
+  .side--left .tool-link:hover .tool-name { transform: none; }
+}
