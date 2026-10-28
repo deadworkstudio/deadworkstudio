@@ -686,3 +686,15 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
 .screen--tools .status::before { border-color: currentColor; background: transparent; width: 6px; height: 6px; margin-right: 6px; }
 .screen--tools .status--live::before { background: currentColor; }
 .mega-menu .badge-live { background: var(--beta-green); border: 1px solid var(--beta-green); color: var(--ink); }
+
+/* ---------- Hero: the one direct action, to the tool that's shipping ---------- */
+.hero-action {
+  display: inline-flex; align-items: center; gap: 10px; height: 44px; margin-top: 32px; padding: 0 22px;
+  background: var(--bone); color: var(--ink); text-decoration: none;
+  font: 500 11px/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase;
+  transition: background .2s var(--ease);
+}
+.hero-action::before { content: ''; width: 7px; height: 7px; background: var(--beta-green); box-shadow: 0 0 0 1px rgba(10,10,9,.35); }
+.hero-action:hover, .hero-action:focus-visible { background: #f2ede2; }
+.motion .hero-action { animation: fade 1s var(--ease) .7s both; }
+@media (max-width: 899px) { .hero-action { margin-top: 24px; } }
