@@ -140,7 +140,7 @@
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
   }
 
-  // ---- footer live clock: replaces the mailto address in the bottom-left corner on every page
+  // ---- footer live clock (time only, no date — same as the homepage's own clock): replaces the mailto address in the bottom-left corner on every page
   // that has one (the Studio page's own big Contact-section email is untouched) ----
   // Always Los Angeles time (the studio's own, per "Est. Los Angeles" in the nav), not each
   // visitor's local time. Intl's timeZoneName:'short' already resolves to PST/PDT correctly
@@ -148,10 +148,9 @@
   // would spam screen readers for no real information.
   var clocks = document.querySelectorAll('[data-live-clock]');
   if (clocks.length) {
-    var clockDateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     var clockTimeFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZoneName: 'short' });
     var tickClocks = function () {
-      var text = clockDateFmt.format(new Date()) + ' | ' + clockTimeFmt.format(new Date());
+      var text = clockTimeFmt.format(new Date());
       Array.prototype.forEach.call(clocks, function (el) { el.textContent = text; });
     };
     tickClocks();
