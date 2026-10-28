@@ -272,7 +272,7 @@
         // throws — in practice it retries this call a few times, then gives up silently inside
         // its own iframe (the checkout.mount() UI just hangs). So the error has to be surfaced
         // here, synchronously, rather than relying on a .catch() around initEmbeddedCheckout().
-        showStatus("Couldn't start checkout — click Cancel and pick a plan to try again.", true);
+        showStatus("Couldn't start checkout. Click Cancel and pick a plan to try again.", true);
         throw err;
       });
   }
@@ -329,10 +329,10 @@
           if (trialOffer) {
             grid.hidden = true;
             trialOffer.hidden = false;
-            showTrialError("We couldn't save your card. Nothing was charged — try again.");
+            showTrialError("We couldn't save your card. Nothing was charged. Try again.");
           } else {
             grid.hidden = false;
-            showPricingError("We couldn't save your card. Nothing was charged — try again.");
+            showPricingError("We couldn't save your card. Nothing was charged. Try again.");
           }
           return;
         }
@@ -346,7 +346,7 @@
         // reached (or returned something unexpected) to confirm it. Offer to retry the SAME
         // session instead of implying it's safe to just re-enter a card.
         if (retryBtn) retryBtn.hidden = false;
-        showStatus("We couldn't confirm the payment — you may have been charged. Click Try again to check once more.", true);
+        showStatus("We couldn't confirm the payment. You may have been charged. Click Try again to check once more.", true);
       });
   }
 
@@ -401,7 +401,7 @@
         checkout.mount(frame);
       })
       .catch(function () {
-        showGrid("Couldn't start checkout — please pick a plan to try again.");
+        showGrid("Couldn't start checkout. Pick a plan to try again.");
       });
   }
 
@@ -613,7 +613,7 @@
             checkout.mount(frame);
           })
           .catch(function () {
-            showGrid("Couldn't start checkout — please try again.");
+            showGrid("Couldn't start checkout. Try again.");
           });
       })
       .catch(function () {

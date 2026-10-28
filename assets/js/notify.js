@@ -108,7 +108,7 @@
           showStatus("You're on the list.", 'good');
         })
         .catch(function () {
-          showStatus("Something went wrong — please try again.", 'error');
+          showStatus("Something went wrong. Try again.", 'error');
         })
         .then(function () {
           setBusy(false);
