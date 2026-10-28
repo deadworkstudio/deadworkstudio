@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#060605" />
+<title>DEADWORK - Create more. Manage less.</title>
+<meta name="description" content="DEADWORK builds production software for filmmakers: pre-production, production, and post tools made by filmmakers for filmmakers." />
+<link rel="icon" href="../../../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../../../assets/img/brand/apple-touch-icon.png" />
+<link rel="preload" as="image" href="../../../../assets/img/hero/poster.jpg" />
+<link rel="preload" as="image" href="../../../../assets/img/brand/deadwork-wordmark-bone.webp" />
+<link rel="preload" href="../../../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../../../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+</script>
+<link rel="stylesheet" href="home.css?v=1" />
+</head>
+<body class="v-04">
+<a class="skip-link" href="#tools">Skip to the tools</a>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- SCREEN 1 — masthead + the statement -->
+<div class="screen screen--hero">
+<div class="film" aria-hidden="true">
+  <img src="../../../../assets/img/hero/poster.jpg" alt="" width="640" height="360" fetchpriority="high" />
+  <!-- Same mechanism as the live home page: no <source>, no autoplay, preload="none".
+       names.js attaches the right rendition only when motion isn't reduced. -->
+  <video muted loop playsinline preload="none" poster="../../../../assets/img/hero/poster.jpg" data-hero-video data-src="../../../../assets/video/hero.mp4" data-src-mobile="../../../../assets/video/hero-mobile.mp4"></video>
+  <div class="film-shade"></div>
+</div>
+
+<header class="masthead" data-masthead>
+  <div class="masthead-row">
+    <span class="masthead-meta masthead-meta--left">06 Tools</span>
+    <nav class="masthead-nav masthead-nav--pre" aria-label="Pre-production and production tools">
+      <button class="tab" type="button" aria-expanded="false" aria-controls="menu-pre" data-menu-trigger="pre">Pre-Production</button>
+      <button class="tab" type="button" aria-expanded="false" aria-controls="menu-production" data-menu-trigger="production">Production</button>
+    </nav>
+    <a class="masthead-mark" href="./" data-reset aria-label="DEADWORK home">
+      <img src="../../../../assets/img/brand/deadwork-wordmark-bone.webp" alt="DEADWORK" width="1120" height="226" fetchpriority="high" />
+    </a>
+    <nav class="masthead-nav masthead-nav--post" aria-label="Post-production and studio">
+      <button class="tab" type="button" aria-expanded="false" aria-controls="menu-post" data-menu-trigger="post">Post-Production</button>
+      <a class="tab" href="../../../../studio/">Studio</a>
+    </nav>
+    <span class="masthead-meta masthead-meta--right">Est. Los Angeles</span>
+  </div>
+
+  <!-- Mega-menu: one group per phase, cards link to each product's own page. -->
+  <div class="menu" data-menu hidden>
+    <div class="menu-group" id="menu-pre" data-menu-group="pre" hidden>
+      <p class="menu-eyebrow">I — Pre-Production</p>
+      <div class="menu-cards">
+        <a class="menu-card" href="../../../../products/scene-lock/">
+          <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/scene-lock.webp" alt="" loading="lazy" decoding="async" /></span>
+          <span class="menu-card-name">Scene Lock</span>
+          <span class="menu-card-desc">Plan smarter. Execute better.</span>
+          <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+        </a>
+        <a class="menu-card" href="../../../../products/set-control/">
+          <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/set-control.webp" alt="" loading="lazy" decoding="async" /></span>
+          <span class="menu-card-name">Set Control</span>
+          <span class="menu-card-desc">Every crew. Every detail. In sync.</span>
+          <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="menu-group" id="menu-production" data-menu-group="production" hidden>
+      <p class="menu-eyebrow">II — Production</p>
+      <div class="menu-cards">
+        <a class="menu-card" href="../../../../products/loadout/">
+          <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/loadout.webp" alt="" loading="lazy" decoding="async" /></span>
+          <span class="menu-card-name">Loadout</span>
+          <span class="menu-card-desc">Never leave gear behind.</span>
+          <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+        </a>
+        <a class="menu-card" href="../../../../products/handoff/">
+          <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/handoff.webp" alt="" loading="lazy" decoding="async" /></span>
+          <span class="menu-card-name">Handoff</span>
+          <span class="menu-card-desc">Every file. Verified.</span>
+          <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>iPhone, Mac &amp; Windows</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="menu-group" id="menu-post" data-menu-group="post" hidden>
+      <p class="menu-eyebrow">III — Post-Production</p>
+      <div class="menu-cards">
+        <a class="menu-card" href="../../../../products/sound-driver/">
+          <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/sound-driver.webp" alt="" loading="lazy" decoding="async" /></span>
+          <span class="menu-card-name">Sound Driver</span>
+          <span class="menu-card-desc">Real artists. Real sounds.</span>
+          <span class="menu-card-meta"><span class="badge">IN DEVELOPMENT</span><span>Mac &amp; Windows</span></span>
+        </a>
+        <a class="menu-card" href="../../../../products/stock-shredder/">
+          <span class="menu-card-plate"><img src="../../../../assets/img/brand/product-logos/stock-shredder.webp" alt="" loading="lazy" decoding="async" /></span>
+          <span class="menu-card-name">Stock Shredder</span>
+          <span class="menu-card-desc">Raw footage into stock-ready clips.</span>
+          <span class="menu-card-meta"><span>Mac &amp; Windows</span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="hero">
+  <span class="bar bar--top" aria-hidden="true"></span><span class="bar bar--bottom" aria-hidden="true"></span>
+  <p class="presents">DEADWORK STUDIO presents</p>
+  <h1 class="hero-title"><span class="hero-line">CREATE MORE.</span><span class="hero-line">MANAGE LESS.</span></h1>
+  <p class="hero-lede">tools designed to eliminate busywork so creatives can stay creative.</p>
+  <a class="hero-cue" href="#tools"><span>06 Tools</span><span class="hero-cue-line" aria-hidden="true"></span></a>
+</main>
+</div>
+
+<!-- SCREEN 2 — the six tools -->
+<section class="screen screen--tools" id="tools" aria-labelledby="tools-title" tabindex="-1">
+  <div class="tools-head"><h2 class="tools-title" id="tools-title">06 Tools</h2></div>
+  <div class="reels">
+      <section class="reel" aria-labelledby="reel-I">
+        <h2 class="reel-title" id="reel-I">Pre-Production</h2>
+        <ul class="credits" role="list"><li class="credit">
+            <h3 class="credit-name"><button type="button" aria-haspopup="dialog" data-open="sheet-scene-lock">Scene Lock</button></h3>
+            <p class="credit-tag">Plan smarter. Execute better.</p>
+            <p class="credit-meta"><span class="status">In Development</span><span>iPhone, Mac &amp; Windows</span></p>
+            
+          </li><li class="credit">
+            <h3 class="credit-name"><button type="button" aria-haspopup="dialog" data-open="sheet-set-control">Set Control</button></h3>
+            <p class="credit-tag">Every crew. Every detail. In sync.</p>
+            <p class="credit-meta"><span class="status">In Development</span><span>iPhone, Mac &amp; Windows</span></p>
+            
+          </li></ul>
+      </section>
+      <section class="reel" aria-labelledby="reel-II">
+        <h2 class="reel-title" id="reel-II">Production</h2>
+        <ul class="credits" role="list"><li class="credit">
+            <h3 class="credit-name"><button type="button" aria-haspopup="dialog" data-open="sheet-loadout">Loadout</button></h3>
+            <p class="credit-tag">Never leave gear behind.</p>
+            <p class="credit-meta"><span class="status">In Development</span><span>iPhone, Mac &amp; Windows</span></p>
+            
+          </li><li class="credit">
+            <h3 class="credit-name"><button type="button" aria-haspopup="dialog" data-open="sheet-handoff">Handoff</button></h3>
+            <p class="credit-tag">Every file. Verified.</p>
+            <p class="credit-meta"><span class="status">In Development</span><span>iPhone, Mac &amp; Windows</span></p>
+            
+          </li></ul>
+      </section>
+      <section class="reel" aria-labelledby="reel-III">
+        <h2 class="reel-title" id="reel-III">Post-Production</h2>
+        <ul class="credits" role="list"><li class="credit">
+            <h3 class="credit-name"><button type="button" aria-haspopup="dialog" data-open="sheet-sound-driver">Sound Driver</button></h3>
+            <p class="credit-tag">Real artists. Real sounds.</p>
+            <p class="credit-meta"><span class="status">In Development</span><span>Mac &amp; Windows</span></p>
+            
+          </li><li class="credit credit--live">
+            <h3 class="credit-name"><button type="button" aria-haspopup="dialog" data-open="sheet-stock-shredder">Stock Shredder</button></h3>
+            <p class="credit-tag">Raw footage into stock-ready clips.</p>
+            <p class="credit-meta"><span class="status status--live">Live</span><span>Mac &amp; Windows</span></p>
+            <div class="credit-actions"><a class="btn btn-primary" href="../../../../products/stock-shredder/">Get Stock Shredder</a></div>
+          </li></ul>
+      </section>
+    </div>
+  <footer class="foot">
+    <p class="clock"><span class="clock-label"><span class="clock-dot" aria-hidden="true"></span>Los Angeles</span>
+      <time class="clock-time" data-live-clock><span data-clock-hms aria-hidden="true">--:--:--</span><span class="clock-suffix" data-clock-suffix aria-hidden="true"></span><span class="sr-only" data-clock-sr></span></time></p>
+    <p class="foot-note">By artists. For artists.</p>
+    <div class="foot-social">
+    <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+    </a>
+  </div>
+    <p class="foot-copy">&copy; 2026 DEADWORK STUDIO&reg;</p>
+  </footer>
+</section>
+
+<dialog class="sheet" id="sheet-scene-lock" aria-labelledby="sheet-scene-lock-title">
+  <div class="sheet-panel">
+    <div class="sheet-top"><span class="module-index">01 / 06</span><span>I — Pre-Production</span><span class="badge">IN DEVELOPMENT</span><button class="sheet-close" type="button" data-close aria-label="Close Scene Lock details"><span aria-hidden="true">&times;</span></button></div>
+    <div class="sheet-plate"><img src="../../../../assets/img/brand/product-logos/scene-lock.webp" alt="" width="644" height="300" loading="lazy" decoding="async" /></div>
+    <h2 class="sheet-name" id="sheet-scene-lock-title">Scene Lock</h2>
+    <p class="sheet-tag">Plan smarter. Execute better.</p>
+    <p class="sheet-desc">Organizes your pre-production with storyboards, shot lists, camera plots, references, and schedules all in one place. Provides iPhone capability so everyone can see the entire day with a clock and schedule to see where production is.</p>
+    <dl class="spec">
+      <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+      <div><dt>Works with</dt><dd>iPhone companion app, PDF &amp; image references</dd></div>
+    </dl>
+    <form class="notify notify--sheet" data-notify-form data-notify-product="scene-lock" novalidate>
+      <label class="notify-label" for="sheet-email-scene-lock">Email address</label>
+      <div class="notify-row">
+        <input class="notify-input" type="email" id="sheet-email-scene-lock" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+        <button class="btn btn-primary" type="submit" data-notify-submit>Notify me</button>
+      </div>
+      <p class="notify-status" role="status" aria-live="polite" id="sheet-status-scene-lock" data-notify-status hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet-set-control" aria-labelledby="sheet-set-control-title">
+  <div class="sheet-panel">
+    <div class="sheet-top"><span class="module-index">02 / 06</span><span>I — Pre-Production</span><span class="badge">IN DEVELOPMENT</span><button class="sheet-close" type="button" data-close aria-label="Close Set Control details"><span aria-hidden="true">&times;</span></button></div>
+    <div class="sheet-plate"><img src="../../../../assets/img/brand/product-logos/set-control.webp" alt="" width="1409" height="300" loading="lazy" decoding="async" /></div>
+    <h2 class="sheet-name" id="sheet-set-control-title">Set Control</h2>
+    <p class="sheet-tag">Every crew. Every detail. In sync.</p>
+    <p class="sheet-desc">Organizes film sets with tracked schedules, locations, shot progress, timing and production in one shared view. A change made once is a change everyone sees via iPhone notifications. Eliminates inefficient communication during pre-production and production.</p>
+    <dl class="spec">
+      <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+      <div><dt>Works with</dt><dd>iPhone companion app, Scene Lock</dd></div>
+    </dl>
+    <form class="notify notify--sheet" data-notify-form data-notify-product="set-control" novalidate>
+      <label class="notify-label" for="sheet-email-set-control">Email address</label>
+      <div class="notify-row">
+        <input class="notify-input" type="email" id="sheet-email-set-control" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+        <button class="btn btn-primary" type="submit" data-notify-submit>Notify me</button>
+      </div>
+      <p class="notify-status" role="status" aria-live="polite" id="sheet-status-set-control" data-notify-status hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet-loadout" aria-labelledby="sheet-loadout-title">
+  <div class="sheet-panel">
+    <div class="sheet-top"><span class="module-index">03 / 06</span><span>II — Production</span><span class="badge">IN DEVELOPMENT</span><button class="sheet-close" type="button" data-close aria-label="Close Loadout details"><span aria-hidden="true">&times;</span></button></div>
+    <div class="sheet-plate"><img src="../../../../assets/img/brand/product-logos/loadout.webp" alt="" width="879" height="300" loading="lazy" decoding="async" /></div>
+    <h2 class="sheet-name" id="sheet-loadout-title">Loadout</h2>
+    <p class="sheet-tag">Never leave gear behind.</p>
+    <p class="sheet-desc">Tracks production gear, cases, and equipment against a created list. It uses uploaded photos to confirm each item before it leaves or is needed so nothing gets lost or left behind.</p>
+    <dl class="spec">
+      <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+      <div><dt>Works with</dt><dd>iPhone companion app</dd></div>
+    </dl>
+    <form class="notify notify--sheet" data-notify-form data-notify-product="loadout" novalidate>
+      <label class="notify-label" for="sheet-email-loadout">Email address</label>
+      <div class="notify-row">
+        <input class="notify-input" type="email" id="sheet-email-loadout" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+        <button class="btn btn-primary" type="submit" data-notify-submit>Notify me</button>
+      </div>
+      <p class="notify-status" role="status" aria-live="polite" id="sheet-status-loadout" data-notify-status hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet-handoff" aria-labelledby="sheet-handoff-title">
+  <div class="sheet-panel">
+    <div class="sheet-top"><span class="module-index">04 / 06</span><span>II — Production</span><span class="badge">IN DEVELOPMENT</span><button class="sheet-close" type="button" data-close aria-label="Close Handoff details"><span aria-hidden="true">&times;</span></button></div>
+    <div class="sheet-plate"><img src="../../../../assets/img/brand/product-logos/handoff.webp" alt="" width="390" height="300" loading="lazy" decoding="async" /></div>
+    <h2 class="sheet-name" id="sheet-handoff-title">Handoff</h2>
+    <p class="sheet-tag">Every file. Verified.</p>
+    <p class="sheet-desc">Handoff copies to every destination in parallel and checks each file against the original before it will ever call a card safe. If anything couldn't be verified, it says so &mdash; the card stays marked unsafe until it's actually confirmed.</p>
+    <dl class="spec">
+      <div><dt>Platform</dt><dd>iPhone, Mac &amp; Windows</dd></div>
+      <div><dt>Works with</dt><dd>SD, CFexpress &amp; CompactFlash cards, external drives</dd></div>
+    </dl>
+    <form class="notify notify--sheet" data-notify-form data-notify-product="handoff" novalidate>
+      <label class="notify-label" for="sheet-email-handoff">Email address</label>
+      <div class="notify-row">
+        <input class="notify-input" type="email" id="sheet-email-handoff" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+        <button class="btn btn-primary" type="submit" data-notify-submit>Notify me</button>
+      </div>
+      <p class="notify-status" role="status" aria-live="polite" id="sheet-status-handoff" data-notify-status hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet-sound-driver" aria-labelledby="sheet-sound-driver-title">
+  <div class="sheet-panel">
+    <div class="sheet-top"><span class="module-index">05 / 06</span><span>III — Post-Production</span><span class="badge">IN DEVELOPMENT</span><button class="sheet-close" type="button" data-close aria-label="Close Sound Driver details"><span aria-hidden="true">&times;</span></button></div>
+    <div class="sheet-plate"><img src="../../../../assets/img/brand/product-logos/sound-driver.webp" alt="" width="647" height="300" loading="lazy" decoding="async" /></div>
+    <h2 class="sheet-name" id="sheet-sound-driver-title">Sound Driver</h2>
+    <p class="sheet-tag">Real artists. Real sounds.</p>
+    <p class="sheet-desc">Eliminates the grunt work and watches visuals of an edit to get to the creative process. Every sound comes from DEADWORK's own exclusive library; you won't find it in any other stock library or sound tool. Recorded and designed in-house and available nowhere else, with thousands of diverse cinematic sound variations straight to you.</p>
+    <dl class="spec">
+      <div><dt>Platform</dt><dd>Mac &amp; Windows</dd></div>
+      <div><dt>Works with</dt><dd>Premiere Pro, DaVinci Resolve, Final Cut Pro, Avid Media Composer, Pro Tools, Nuendo</dd></div>
+    </dl>
+    <form class="notify notify--sheet" data-notify-form data-notify-product="sound-driver" novalidate>
+      <label class="notify-label" for="sheet-email-sound-driver">Email address</label>
+      <div class="notify-row">
+        <input class="notify-input" type="email" id="sheet-email-sound-driver" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+        <button class="btn btn-primary" type="submit" data-notify-submit>Notify me</button>
+      </div>
+      <p class="notify-status" role="status" aria-live="polite" id="sheet-status-sound-driver" data-notify-status hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet-stock-shredder" aria-labelledby="sheet-stock-shredder-title">
+  <div class="sheet-panel">
+    <div class="sheet-top"><span class="module-index">06 / 06</span><span>III — Post-Production</span><button class="sheet-close" type="button" data-close aria-label="Close Stock Shredder details"><span aria-hidden="true">&times;</span></button></div>
+    <div class="sheet-plate"><img src="../../../../assets/img/brand/product-logos/stock-shredder.webp" alt="" width="881" height="300" loading="lazy" decoding="async" /></div>
+    <h2 class="sheet-name" id="sheet-stock-shredder-title">Stock Shredder</h2>
+    <p class="sheet-tag">Raw footage into stock-ready clips.</p>
+    <p class="sheet-desc">Stock Shredder helps find and prepare usable moments from your raw footage. You review what stays, fine-tune the look, and export individual clips ready for stock submission.</p>
+    <dl class="spec">
+      <div><dt>Platform</dt><dd>Mac &amp; Windows</dd></div>
+      <div><dt>Works with</dt><dd>Artgrid, Shutterstock, Adobe Stock, Pond5, Storyblocks, Blackbox, iStock, Getty Images, Motion Array, Envato Elements, Filmsupply</dd></div>
+    </dl>
+    <a class="btn btn-primary btn-block" href="../../../../products/stock-shredder/">Get Stock Shredder</a>
+  </div>
+</dialog>
+
+<script src="home.js?v=1" defer></script>
+<script src="../../../../assets/js/notify.js?v=20261025b" defer></script>
+</body>
+</html>

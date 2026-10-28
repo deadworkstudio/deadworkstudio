@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DEADWORK Homepage — Five Directions</title>
+<link rel="icon" href="../../../assets/img/brand/favicon.png" type="image/png" />
+<style>
+  @font-face { font-family: 'Anton'; src: url('../../../assets/fonts/anton.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Archivo'; src: url('../../../assets/fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: 'JetBrains Mono'; src: url('../../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a') format('woff2'); font-display: swap; }
+  :root { --ink: #0a0a09; --bone: #e6e0d3; --body: #d3cdc0; --bone-2: #94918a; --line: rgba(230,224,211,0.14); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ink); color: var(--bone); font: 400 16px/1.6 'Archivo', Helvetica, sans-serif; padding: 0 clamp(16px, 4vw, 56px) 80px; }
+  a { color: inherit; }
+  header { display: flex; justify-content: space-between; align-items: center; height: 72px; border-bottom: 1px solid var(--line); }
+  header img { height: 22px; width: auto; }
+  .mono, header span, .n, dt, .open { font: 400 11px 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.14em; color: var(--bone-2); }
+  h1 { font: 400 clamp(48px, 8vw, 120px)/0.9 'Anton', Impact, sans-serif; margin: 56px 0 16px; }
+  .intro { max-width: 62ch; color: var(--body); margin: 0 0 24px; }
+  .shared { max-width: 62ch; color: var(--bone-2); font-size: 14px; margin: 0 0 64px; }
+  article { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(24px, 4vw, 64px); padding: 48px 0; border-top: 1px solid var(--line); }
+  .shots { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; align-items: start; }
+  .shots img { width: 100%; height: auto; display: block; border: 1px solid var(--line); }
+  h2 { font: 400 clamp(36px, 4vw, 60px)/0.95 'Anton', Impact, sans-serif; text-transform: uppercase; margin: 8px 0 8px; }
+  .mix { color: var(--bone-2); font-size: 14px; margin: 0 0 20px; }
+  dl { margin: 0; }
+  dl > div { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+  dt { padding-top: 3px; }
+  dd { margin: 0; color: var(--body); font-size: 15px; }
+  .open { display: inline-block; margin-top: 20px; padding: 12px 18px; background: var(--bone); color: var(--ink); text-decoration: none; }
+  @media (max-width: 860px) { article { grid-template-columns: 1fr; } dl > div { grid-template-columns: 1fr; gap: 4px; } }
+</style>
+</head>
+<body>
+<header><img src="../../../assets/img/brand/deadwork-wordmark-bone.webp" alt="DEADWORK" width="1120" height="226" /><span>Homepage — Round 7</span></header>
+
+<h1>Five directions</h1>
+<p class="intro">Five homepage prototypes built from the live page's content, with no copy added or changed. Each one keeps the Pre-Production / Production / Post-Production navigation, all six tools, the full descriptions, specs and signup forms, and the live Los Angeles clock (now without the date).</p>
+<p class="shared">Shared structure, from your last feedback: two clean screens instead of one crowded one. Screen 1 is the masthead and the statement. Screen 2 is the six tools, with nothing competing. You can reach a tool two ways: the masthead menus, or scrolling down. On the live site the full product details only open from a URL hash. Here they're one click away on screen 2, and links like #handoff still open them directly.</p>
+
+<article>
+  <div class="shots"><img src="01-refined-original/desktop.jpg" alt="Option 01 desktop: screen 1 and screen 2" loading="lazy" /><img src="01-refined-original/mobile.jpg" alt="Option 01 on a phone" loading="lazy" /></div>
+  <div>
+    <p class="n">Option 01</p>
+    <h2>Refined Original</h2>
+    <p class="mix">Apple + Fear of God + Lens Distortions</p>
+    <dl>
+      <div><dt>Philosophy</dt><dd>The current homepage at its best. Same centered statement over the film, with better proportions and a quieter rhythm.</dd></div>
+      <div><dt>What changed</dt><dd>Tighter headline leading with a clean reveal. The tools get their own screen, set as the original 3 · DEADWORK · 3 composition: Scene Lock, Set Control and Loadout on the left, the wordmark in the center, Handoff, Sound Driver and Stock Shredder on the right. The clock in the footer is set in Anton instead of being a line of small print.</dd></div>
+      <div><dt>What stayed</dt><dd>Layout, masthead, film, type, color, footer order.</dd></div>
+      <div><dt>Why DEADWORK</dt><dd>It's the safest step: anyone who knows the site still recognizes it, and the six tools finally get a proper home.</dd></div>
+      <div><dt>Tradeoffs</dt><dd>The least surprising of the five. Pairing tools across the center line means Handoff (Production) sits on the post side, same as the live nav.</dd></div>
+    </dl>
+    <a class="open" href="01-refined-original/">Open prototype</a>
+  </div>
+</article>
+
+<article>
+  <div class="shots"><img src="02-experimental-editorial/desktop.jpg" alt="Option 02 desktop: screen 1 and screen 2" loading="lazy" /><img src="02-experimental-editorial/mobile.jpg" alt="Option 02 on a phone" loading="lazy" /></div>
+  <div>
+    <p class="n">Option 02</p>
+    <h2>Experimental Editorial</h2>
+    <p class="mix">A24 + Rick Owens + Balenciaga</p>
+    <dl>
+      <div><dt>Philosophy</dt><dd>The homepage as a printed issue. Warm sand stock, ink type, a staggered cover line and a single film still with a caption.</dd></div>
+      <div><dt>What changed</dt><dd>The only light option. The statement breaks into four staggered lines, and the film becomes a captioned still. The tools are set as three chapters (I, II, III) at staggered heights, with outlined numerals and the taglines in italics.</dd></div>
+      <div><dt>What stayed</dt><dd>All copy, the menus, Anton for display type, the mono labels, the dark wordmark artwork (the brand's existing black version).</dd></div>
+      <div><dt>Why DEADWORK</dt><dd>It reads like an independent publication about filmmaking, not a software vendor.</dd></div>
+      <div><dt>Tradeoffs</dt><dd>It's the furthest from today's dark site and drops the hero video for a still. Product logos are inverted to read on sand.</dd></div>
+    </dl>
+    <a class="open" href="02-experimental-editorial/">Open prototype</a>
+  </div>
+</article>
+
+<article>
+  <div class="shots"><img src="03-industrial-minimalism/desktop.jpg" alt="Option 03 desktop: screen 1 and screen 2" loading="lazy" /><img src="03-industrial-minimalism/mobile.jpg" alt="Option 03 on a phone" loading="lazy" /></div>
+  <div>
+    <p class="n">Option 03</p>
+    <h2>Industrial Minimalism</h2>
+    <p class="mix">Teenage Engineering + NASA + ARRI</p>
+    <dl>
+      <div><dt>Philosophy</dt><dd>An instrument, not a poster. A visible 12-column grid, a framed panel with registration marks, and the clock as a monospaced readout.</dd></div>
+      <div><dt>What changed</dt><dd>The statement sits inside a labeled panel. The Los Angeles clock moves up into it as the central readout. The six tools become numbered modules (M-01 to M-06) on a 3×2 spec sheet, each with its logo, tagline and platform. A green top edge marks the one live module.</dd></div>
+      <div><dt>What stayed</dt><dd>Statement, film (darker), masthead, all copy and actions.</dd></div>
+      <div><dt>Why DEADWORK</dt><dd>It speaks the language of camera menus and spec sheets, which this audience reads every day.</dd></div>
+      <div><dt>Tradeoffs</dt><dd>It's the most technical in tone. Product names are set in mono, which gives up some of the brand's Anton punch on screen 2.</dd></div>
+    </dl>
+    <a class="open" href="03-industrial-minimalism/">Open prototype</a>
+  </div>
+</article>
+
+<article>
+  <div class="shots"><img src="04-cinematic-studio/desktop.jpg" alt="Option 04 desktop: screen 1 and screen 2" loading="lazy" /><img src="04-cinematic-studio/mobile.jpg" alt="Option 04 on a phone" loading="lazy" /></div>
+  <div>
+    <p class="n">Option 04</p>
+    <h2>Cinematic Studio</h2>
+    <p class="mix">A24 + IMAX + Kodak + Lens Distortions</p>
+    <dl>
+      <div><dt>Philosophy</dt><dd>The homepage plays like a film: the letterbox closes in, a title card fades up, and the tools roll as end credits.</dd></div>
+      <div><dt>What changed</dt><dd>The film is framed at 2.39:1 with black bars that slide in on load. The statement fades in from a soft blur like a title card. Screen 2 is set as end credits: three centered columns by phase, names in wide-spaced Anton, taglines in italics.</dd></div>
+      <div><dt>What stayed</dt><dd>Black and white, the footage, all copy, menus and sheets.</dd></div>
+      <div><dt>Why DEADWORK</dt><dd>It makes the studio feel like a film company that happens to make software.</dd></div>
+      <div><dt>Tradeoffs</dt><dd>The title sequence takes about two seconds to finish (skipped under reduced motion). Credits use the most vertical space, so on phones screen 2 scrolls the longest. Details open by clicking a tool name; there's no separate "details" link.</dd></div>
+    </dl>
+    <a class="open" href="04-cinematic-studio/">Open prototype</a>
+  </div>
+</article>
+
+<article>
+  <div class="shots"><img src="05-slate/desktop.jpg" alt="Option 05 desktop: screen 1 and screen 2" loading="lazy" /><img src="05-slate/mobile.jpg" alt="Option 05 on a phone" loading="lazy" /></div>
+  <div>
+    <p class="n">Option 05</p>
+    <h2>Slate</h2>
+    <p class="mix">The Blksmith + Rick Owens + Nike, my own direction</p>
+    <dl>
+      <div><dt>Philosophy</dt><dd>The page works like a clapperboard. Every take starts with a slate, and so does DEADWORK.</dd></div>
+      <div><dt>What changed</dt><dd>"CREATE MORE." pins to the top-left corner and "MANAGE LESS." to the bottom-right, with the live Los Angeles timecode between them as the hero. Screen 2 is a switcher: six names on the left, and whichever you point at is shown at full poster scale on the right, with its tagline and actions.</dd></div>
+      <div><dt>What stayed</dt><dd>Statement (full text kept for screen readers), film, masthead, all copy and sheets.</dd></div>
+      <div><dt>Why DEADWORK</dt><dd>It makes the clock part of the brand idea instead of a footer detail, and each tool gets a moment of real scale without crowding.</dd></div>
+      <div><dt>Tradeoffs</dt><dd>On a phone, the stage isn't shown and the names open the sheets directly. Only one tool is on stage at a time, so you can't compare taglines at a glance.</dd></div>
+    </dl>
+    <a class="open" href="05-slate/">Open prototype</a>
+  </div>
+</article>
+
+<p class="mono">Performance: no new dependencies. Each prototype is one CSS file and one small script on top of the site's own fonts, images, hero video (skipped under reduced motion) and notify.js.</p>
+</body>
+</html>
