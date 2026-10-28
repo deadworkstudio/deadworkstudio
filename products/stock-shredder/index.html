@@ -20,7 +20,16 @@
      swap happens, since font-display:swap always shows the fallback until the real font is ready. -->
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
-<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall.jpg?v=2" />
+<!-- WEB-02: phones get the 800px WebP (65 KB), desktop gets the 1600px WebP (179 KB) — ss-hero.js
+     picks the matching file by the same breakpoint so the preload is never wasted. Down from one
+     1.45 MB JPEG preloaded unconditionally on every device. -->
+<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall-800.webp?v=1" media="(max-width: 767px)" />
+<link rel="preload" as="image" href="../../assets/img/products/stock-shredder/hero/archive-wall-1600.webp?v=1" media="(min-width: 768px)" />
+<!-- WEB-02: the DNS/TLS handshake for both starts immediately instead of only once the first
+     fetch actually fires (api.github.com for the live download links, the payments worker for
+     checkout) — shaves one full round trip off whichever happens first. -->
+<link rel="preconnect" href="https://api.github.com" />
+<link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261028g" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
