@@ -202,6 +202,12 @@ function normalizeSourceField(value: unknown): string | null {
   return trimmed.slice(0, MAX_SOURCE_LENGTH)
 }
 
+// /notify is public and every accepted signup is also pushed into Kit, so without a cap a script
+// could subscribe any list of strangers' addresses from one machine. 10 an hour from one address
+// is far more than a real visitor signing up for a few products ever needs. Best-effort, same plain
+// KV get-then-put as requireAdmin's failure counter.
+const NOTIFY_MAX_PER_IP_PER_HOUR = 10
+
 async function handleNotify(request: Request, env: Env): Promise<Response> {
   let payload: { email?: unknown; product?: unknown; company?: unknown; source?: unknown; page?: unknown }
   try {
@@ -232,6 +238,14 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
   const source = normalizeSourceField(payload.source)
   const page = normalizeSourceField(payload.page)
 
+  const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
+  const ipKey = `notify-ip:${ip}`
+  const recentFromIp = Number(await env.NOTIFY_SIGNUPS.get(ipKey)) || 0
+  if (recentFromIp >= NOTIFY_MAX_PER_IP_PER_HOUR) {
+    return jsonResponse({ ok: false, error: 'Too many signups from this network. Try again later.' }, 429)
+  }
+  await env.NOTIFY_SIGNUPS.put(ipKey, String(recentFromIp + 1), { expirationTtl: 3600 })
+
   await insertSignup(env.SIGNUPS_DB, email, product, Date.now(), source, page)
 
   try {
@@ -260,9 +274,15 @@ const ADMIN_LOGIN_WINDOW_SECONDS = 15 * 60
  *  requireAdmin (same rate-limit thresholds, same "rate-limit failures only, never successes"
  *  reasoning: the dashboard re-sends the same password on every poll once logged in, so counting
  *  successes too would eventually lock the owner's own IP out of their own back office).
- *  Constant-time-ish comparison isn't attempted here: this guards a low-value internal tool, not
- *  a customer-facing secret, and the password itself is never included in any response this
- *  Worker ever sends. */
+ *  The dashboard holds every signup email, so the key is compared in constant time, same as
+ *  footage-curator/worker's constantTimeEqual. */
+function constantTimeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false
+  let diff = 0
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  return diff === 0
+}
+
 async function requireAdmin(request: Request, env: Env): Promise<Response | null> {
   const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
   const rateLimitKey = `admin-login-fail:${ip}`
@@ -271,21 +291,11 @@ async function requireAdmin(request: Request, env: Env): Promise<Response | null
     return jsonResponse({ error: 'Too many failed attempts - try again later' }, 429)
   }
   const provided = request.headers.get('Authorization')?.replace(/^Bearer\s+/, '')
-  if (!env.ADMIN_KEY || provided !== env.ADMIN_KEY) {
+  if (!env.ADMIN_KEY || !provided || !constantTimeEqual(provided, env.ADMIN_KEY)) {
     await env.NOTIFY_SIGNUPS.put(rateLimitKey, String(recentFailures + 1), { expirationTtl: ADMIN_LOGIN_WINDOW_SECONDS })
     return jsonResponse({ error: 'Unauthorized' }, 401)
   }
   return null
-}
-
-/** The one-time KV->D1 migration endpoint uses its own `?key=` check instead of requireAdmin's
- *  Bearer header — it's meant to be run once from a terminal (`curl -X POST ".../admin/migrate-kv
- *  ?key=..."`), not from the browser dashboard, so there's no sessionStorage flow to protect by
- *  keeping the key out of a URL. Same secret (env.ADMIN_KEY) either way. */
-function checkAdminKeyQueryParam(request: Request, env: Env): boolean {
-  if (!env.ADMIN_KEY) return false
-  const url = new URL(request.url)
-  return url.searchParams.get('key') === env.ADMIN_KEY
 }
 
 interface SignupStats {
@@ -527,7 +537,13 @@ function adminPageHtml(nonce: string): string {
   function toCsv() {
     const header = ['Email', 'Product', 'Source', 'When']
     const rows = signups.map((s) => [s.email, PRODUCT_LABELS[s.product] || s.product, s.source || '', new Date(s.createdAt).toISOString()])
-    return [header, ...rows].map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\\n')
+    // A cell starting with = + - @ (or a tab/CR) runs as a formula when the file is opened in
+    // Excel/Sheets, and email/source are typed by the public. A leading ' makes it plain text.
+    const cell = (v) => {
+      const text = String(v)
+      return '"' + (/^[=+\\-@\\t\\r]/.test(text) ? "'" + text : text).replace(/"/g, '""') + '"'
+    }
+    return [header, ...rows].map((r) => r.map(cell).join(',')).join('\\n')
   }
 
   document.getElementById('loginBtn').addEventListener('click', async () => {
@@ -593,7 +609,7 @@ async function migrateKvToD1(env: Env): Promise<{ emailsScanned: number; rowsIns
       // reserved prefix explicitly, and also guard with Array.isArray below in case anything else
       // unexpected ever ends up in here: a single malformed/foreign key must never abort the
       // whole migration for every other email.
-      if (key.name.startsWith('admin-login-fail:')) continue
+      if (key.name.startsWith('admin-login-fail:') || key.name.startsWith('notify-ip:')) continue
       const raw = await env.NOTIFY_SIGNUPS.get(key.name)
       if (!raw) continue
       const email = key.name
@@ -661,7 +677,11 @@ export default {
     }
 
     if (url.pathname === '/admin/migrate-kv' && request.method === 'POST') {
-      if (!checkAdminKeyQueryParam(request, env)) return jsonResponse({ ok: false, error: 'Unauthorized' }, 401)
+      // Same Bearer header and failed-attempt limit as the dashboard. This used to take the key as
+      // a ?key= query param with no attempt limit, which made it an unthrottled way to guess
+      // ADMIN_KEY (and put the key in URLs and logs).
+      const authError = await requireAdmin(request, env)
+      if (authError) return authError
       const result = await migrateKvToD1(env)
       return jsonResponse({ ok: true, ...result })
     }
@@ -699,6 +719,10 @@ export default {
       // NOTIFY_SIGNUPS KV namespace (see digest.ts) — a stale value left over from a previous
       // test-digest.mjs run would make every "is this new" comparison wrong.
       await env.NOTIFY_SIGNUPS.delete('digest:last-sent-at')
+      // Local test state persists between runs, so a previous run's signups would otherwise count
+      // against this run's per-IP /notify limit.
+      const ipCounters = await env.NOTIFY_SIGNUPS.list({ prefix: 'notify-ip:' })
+      for (const key of ipCounters.keys) await env.NOTIFY_SIGNUPS.delete(key.name)
       return jsonResponse({ ok: true })
     }
 
