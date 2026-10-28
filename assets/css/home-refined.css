@@ -181,10 +181,14 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 .tools-head { padding: clamp(28px, 5vh, 56px) 0 clamp(12px, 2vh, 20px); }
 .tools-title { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.16em; color: var(--bone-2); }
 .hero-line { display: block; }
-.hero-cue { display: inline-grid; justify-items: center; gap: 12px; font: 400 10px var(--font-mono); text-transform: uppercase; letter-spacing: 0.16em; color: var(--bone-2); }
+.hero-cue { display: inline-grid; justify-items: center; gap: 14px; padding: 8px 12px; font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.2em; color: var(--bone); }
 .hero-cue:hover { color: var(--bone); }
-.hero-cue-line { width: 1px; height: 48px; background: linear-gradient(currentColor, transparent); transform-origin: top; }
-.motion .hero-cue-line { animation: cue 2.4s var(--ease) infinite; }
+/* a hairline track with a bead that travels down it: "there's more below", without an arrow icon */
+.hero-cue-line { position: relative; width: 1px; height: 56px; background: rgba(230,224,211,0.25); overflow: hidden; }
+.hero-cue-line::after { content: ''; position: absolute; left: 0; top: 0; width: 1px; height: 18px; background: var(--bone); }
+.motion .hero-cue-line::after { animation: bead 2.2s var(--ease) infinite; }
+@keyframes bead { 0% { transform: translateY(-18px); } 70%, 100% { transform: translateY(56px); } }
+.hero-cue:hover .hero-cue-line { background: rgba(230,224,211,0.5); }
 @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 
 /* tool-name buttons inherit the type they sit in */
