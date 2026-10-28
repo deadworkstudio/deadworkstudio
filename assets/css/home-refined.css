@@ -272,7 +272,8 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
   .center { order: -1; padding: 8px 0 32px; }
   .center img { width: 60%; }
   .center-rule { display: none; }
-  .side--left, .side--left .tool-meta, .side--left .tool-actions { text-align: left; justify-content: flex-start; }
+  .center { grid-template-rows: auto; padding-bottom: 24px; }
+  .side--left .tool, .side--left .tool-meta, .side--left .tool-actions { text-align: left; justify-content: flex-start; }
   /* phones: one column in product order — the two sides interleave back into 01 → 06 */
   .side .tool:nth-child(1), .side .tool:nth-child(2), .side .tool:nth-child(3), .center { grid-column: 1; grid-row: auto; }
   .side--left .tool:nth-child(1) { order: 1; } .side--right .tool:nth-child(1) { order: 2; }
