@@ -21,81 +21,133 @@
   var success = document.querySelector('[data-checkout-success]');
   if (!grid || !panel || !success) return; // this page doesn't have the pricing section
 
-  var billingToggle = document.querySelector('[data-billing-toggle]');
-  var currentInterval = 'month';
-  if (billingToggle) {
-    Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (btn) {
-      btn.addEventListener('click', function () {
-        // Switching Monthly/Annual mid-checkout used to silently update prices behind the open
-        // checkout panel, with no visible effect — back out to the pricing grid instead, same as
-        // clicking Cancel, so the toggle actually does something the person can see.
-        if (!panel.hidden) showGrid('');
-        currentInterval = btn.getAttribute('data-billing');
-        Array.prototype.forEach.call(billingToggle.querySelectorAll('[data-billing]'), function (b) {
-          b.classList.toggle('is-active', b === btn);
-        });
-        // Swapping the number mid-transition (rather than before or after it) is what makes the
-        // blur+fade read as one number smoothly becoming another instead of the old one vanishing
-        // and a different one popping in once it's gone — see the emil-design-eng skill's note on
-        // using blur to mask an otherwise-abrupt crossfade.
-        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        Array.prototype.forEach.call(grid.querySelectorAll('.pricing-price'), function (priceEl) {
-          var amount = currentInterval === 'year' ? priceEl.getAttribute('data-annual') : priceEl.getAttribute('data-monthly');
-          var suffix = currentInterval === 'year' ? '/yr' : '/mo';
+  // Billing selector (2026-10-28): Monthly, 6 months, 12 months, Annual. Every price below is
+  // the owner's table, in cents, kept in sync by hand with the payment Worker's
+  // worker/src/billing.ts PRICE_CENTS — the Worker charges its own copy, never these, so a drift
+  // here could only ever mislabel a price, never change what Stripe charges (and Stripe's own
+  // form shows the real amount before anyone pays).
+  var CENTS = {
+    starter: { month: 2500, m6: 2250, m12: 2125, year: 24000 },
+    creator: { month: 5900, m6: 5310, m12: 5015, year: 56640 },
+    pro: { month: 10900, m6: 9810, m12: 9265, year: 104640 },
+    studio: { month: 19900, m6: 17910, m12: 16915, year: 191040 }
+  };
+  var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
+  // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
+  // the terms paragraph under the grid and the text Stripe shows above its Subscribe button.
+  var TERM_NOTE = {
+    month: '<strong>Billed monthly.</strong> Cancel anytime. No fee.',
+    m6: '<strong>Billed monthly for 6 months.</strong> 10% off every payment. Renews for another 6 months unless you turn off auto-renew.',
+    m12: '<strong>Billed monthly for 12 months.</strong> 15% off every payment. Renews for another 12 months unless you turn off auto-renew.',
+    year: '<strong>One payment today covers 12 months.</strong> 20% off. Renews yearly unless you turn off auto-renew.'
+  };
+  function usd(cents) {
+    var whole = Math.floor(cents / 100);
+    var rem = cents % 100;
+    return '$' + whole.toLocaleString('en-US') + (rem ? '.' + (rem < 10 ? '0' : '') + rem : '');
+  }
 
-          var apply = function () {
-            priceEl.innerHTML = '<span class="num">$' + Number(amount).toLocaleString('en-US') + '</span>' + suffix;
+  var termGroup = document.querySelector('[data-term]');
+  var termNote = document.querySelector('[data-term-note]');
+  var currentInterval = 'month'; // one of month | m6 | m12 | year
 
-            // The "save" line is always rendered (never [hidden]) so its height is reserved
-            // whether or not it currently has text — toggling a class instead of hidden means the
-            // monthly <-> annual swap never changes the card's height.
-            var saveEl = priceEl.nextElementSibling;
-            if (saveEl && saveEl.hasAttribute('data-pricing-save')) {
-              if (currentInterval === 'year') {
-                var monthly = Number(priceEl.getAttribute('data-monthly'));
-                var annual = Number(priceEl.getAttribute('data-annual'));
-                saveEl.textContent = 'Save $' + (monthly * 12 - annual).toLocaleString('en-US') + '/yr';
-                saveEl.classList.add('is-visible');
-                saveEl.removeAttribute('aria-hidden');
-              } else {
-                // opacity: 0 (via is-visible coming off) only hides this visually — the leftover
-                // "Save $X/yr" text from the last time Annual was selected is still in the
-                // accessibility tree and gets read out on Monthly unless it's hidden explicitly too.
-                saveEl.classList.remove('is-visible');
-                saveEl.setAttribute('aria-hidden', 'true');
-              }
-            }
-            priceEl.classList.remove('is-swapping');
-          };
+  function renderPrices(option) {
+    if (termNote) termNote.innerHTML = TERM_NOTE[option];
+    // Swapping the number mid-transition (rather than before or after it) is what makes the
+    // blur+fade read as one number smoothly becoming another instead of the old one vanishing
+    // and a different one popping in once it's gone — see the emil-design-eng skill's note on
+    // using blur to mask an otherwise-abrupt crossfade.
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    Array.prototype.forEach.call(grid.querySelectorAll('.pricing-card'), function (card) {
+      var btn = card.querySelector('[data-plan-button]');
+      var plan = btn && btn.getAttribute('data-plan-button');
+      var row = CENTS[plan];
+      var priceEl = card.querySelector('.pricing-price');
+      var saveEl = card.querySelector('[data-pricing-save]');
+      var billEl = card.querySelector('[data-pricing-bill]');
+      var clipsEl = card.querySelector('.pricing-clips');
+      var perClipEl = card.querySelector('.pricing-per-clip');
+      if (!row || !priceEl) return;
+      var cents = row[option];
+      var perMonth = option === 'year' ? Math.round(cents / 12) : cents;
 
-          if (reduceMotion) {
-            apply();
+      var apply = function () {
+        priceEl.innerHTML = '<span class="num">' + usd(cents) + '</span>' + (option === 'year' ? '/yr' : '/mo');
+
+        // The "save" line is always rendered (never [hidden]) so its height is reserved whether
+        // or not it currently has text — toggling a class instead of hidden means switching
+        // options never changes the card's height. Savings are only ever vs. paying Monthly for
+        // the same stretch: per term for 6/12 months, per year for annual.
+        if (saveEl) {
+          if (option === 'month') {
+            // opacity: 0 (via is-visible coming off) only hides this visually — the leftover text
+            // is still in the accessibility tree and gets read out on Monthly unless it's hidden
+            // explicitly too.
+            saveEl.classList.remove('is-visible');
+            saveEl.setAttribute('aria-hidden', 'true');
           } else {
-            priceEl.classList.add('is-swapping');
-            setTimeout(apply, 90);
+            saveEl.textContent = option === 'year'
+              ? 'Save ' + usd(row.month * 12 - cents) + '/yr'
+              : 'Save ' + usd((row.month - cents) * TERM_MONTHS[option]) + ' over ' + TERM_MONTHS[option] + ' mo';
+            saveEl.classList.add('is-visible');
+            saveEl.removeAttribute('aria-hidden');
           }
-        });
-        // Clips are always granted monthly regardless of billing cycle — switching this to a
-        // yearly total (e.g. "1,200 clips / yr") read like the whole year's worth lands upfront,
-        // which contradicts the "clips reset on the 1st" note right above the grid. Left as a
-        // flat monthly figure no matter which billing interval is selected.
-        //
-        // Cost-per-clip DOES change with billing interval (annual is cheaper per clip since the
-        // same clip allowance costs less over the year) — recompute it from each card's own
-        // price and clip data instead of leaving it fixed at the monthly rate.
-        Array.prototype.forEach.call(grid.querySelectorAll('.pricing-card'), function (card) {
-          var priceEl = card.querySelector('.pricing-price');
-          var clipsEl = card.querySelector('.pricing-clips');
-          var perClipEl = card.querySelector('.pricing-per-clip');
-          if (!priceEl || !clipsEl || !perClipEl) return;
-          var monthlyClips = Number(clipsEl.getAttribute('data-clips-monthly'));
-          var costPerClip = currentInterval === 'year'
-            ? Number(priceEl.getAttribute('data-annual')) / (monthlyClips * 12)
-            : Number(priceEl.getAttribute('data-monthly')) / monthlyClips;
-          perClipEl.textContent = '$' + costPerClip.toFixed(2) + ' / clip';
-        });
+        }
+        // How it's billed, on every card, so monthly payments and one upfront payment can't be
+        // confused: annual says "One payment today" and what it works out to per month.
+        if (billEl) {
+          billEl.innerHTML = option === 'year'
+            ? 'One payment today<br><span class="pricing-equiv">Works out to ' + usd(perMonth) + '/mo</span>'
+            : option === 'month' ? 'Billed monthly' : 'Billed monthly &middot; ' + TERM_MONTHS[option] + '-month term';
+        }
+        priceEl.classList.remove('is-swapping');
+      };
+
+      if (reduceMotion) {
+        apply();
+      } else {
+        priceEl.classList.add('is-swapping');
+        setTimeout(apply, 90);
+      }
+
+      // Clips are always shown as the monthly figure, whatever the option — a yearly total
+      // (e.g. "2,400 clips / yr") read like the whole year's worth lands upfront, which
+      // contradicts the "clips reset on the 1st" note. Cost-per-clip DOES follow the option.
+      if (clipsEl && perClipEl) {
+        var monthlyClips = Number(clipsEl.getAttribute('data-clips-monthly'));
+        perClipEl.textContent = '$' + (perMonth / 100 / monthlyClips).toFixed(2) + ' / clip';
+      }
+    });
+  }
+
+  if (termGroup) {
+    var termOpts = termGroup.querySelectorAll('[data-term-opt]');
+    var selectTerm = function (btn, focus) {
+      // Switching options mid-checkout used to silently update prices behind the open checkout
+      // panel, with no visible effect — back out to the pricing grid instead, same as clicking
+      // Cancel, so the selector actually does something the person can see.
+      if (!panel.hidden) showGrid('');
+      currentInterval = btn.getAttribute('data-term-opt');
+      Array.prototype.forEach.call(termOpts, function (b) {
+        var on = b === btn;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+      });
+      if (focus) btn.focus();
+      renderPrices(currentInterval);
+    };
+    Array.prototype.forEach.call(termOpts, function (btn, i) {
+      btn.addEventListener('click', function () { selectTerm(btn, false); });
+      // Radio-group keyboard behavior: arrows move the selection, as with native radios.
+      btn.addEventListener('keydown', function (e) {
+        var step = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        selectTerm(termOpts[(i + step + termOpts.length) % termOpts.length], true);
       });
     });
+    renderPrices(currentInterval);
   }
 
   var frame = document.getElementById('checkout-frame');
@@ -150,7 +202,7 @@
   var embeddedCheckout = null; // the mounted Stripe EmbeddedCheckout instance, so we can destroy it cleanly
   var sessionId = null; // the current Checkout Session id — reused by "Try again" so we never start a second session for one charge
   var currentPlanId = null;
-  var currentPlanInterval = 'month'; // snapshotted from currentInterval when "Buy now" is clicked, so toggling the (now-hidden) grid mid-checkout can't change an in-flight session
+  var currentPlanInterval = 'month'; // snapshotted from currentInterval (month | m6 | m12 | year) when "Buy now" is clicked, so changing the selector mid-checkout can't change an in-flight session
   // L2 (2026-10-26 QA): which flavor of Checkout is currently in flight — a setup-mode trial
   // start never charges anything, so verifySession()'s generic "that charge didn't go through"
   // copy is simply untrue for it; this flag lets that one fallthrough branch answer correctly.
@@ -254,7 +306,9 @@
     return fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ planId: currentPlanId, interval: currentPlanInterval })
+      // `interval` too, for a Worker that predates `billing` — but the Worker must be deployed
+      // first anyway, or 6/12-month buyers would be charged the monthly price.
+      body: JSON.stringify({ planId: currentPlanId, billing: currentPlanInterval, interval: currentPlanInterval === 'year' ? 'year' : 'month' })
     })
       .then(function (res) {
         if (!res.ok) throw new Error('Checkout request failed: ' + res.status);

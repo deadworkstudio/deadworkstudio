@@ -342,16 +342,24 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .notify-status-bad, .form-status-bad { color: #A3241D; }
 
 /* ---- pricing ---- */
-.billing { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 22px; }
-.billing-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line-2); border-radius: 999px; }
-.billing-toggle-btn { min-height: 34px; padding: 0 18px; border: 0; border-radius: 999px; background: none; font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
-.billing-toggle-btn.is-active { background: var(--ink); color: var(--bg); }
-.billing-switch { display: inline-flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 0 0 16px; border: 1px solid var(--line-2); border-radius: 999px; background: none; cursor: pointer; padding-right: 4px; }
-.billing-switch .mono { color: var(--ink); }
-.billing-switch-track { position: relative; width: 44px; height: 26px; border-radius: 999px; background: var(--line-2); transition: background 200ms var(--ease); }
-.billing-switch-track span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms var(--ease); }
-.billing-switch[aria-checked='true'] .billing-switch-track { background: var(--ink); }
-.billing-switch[aria-checked='true'] .billing-switch-track span { transform: translateX(18px); }
+/* Billing selector (2026-10-28): four square options in one hairline-ruled row, same rule
+   language as the pricing grid below it. Selected = solid ink. */
+.term { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 640px; margin: 26px auto 0; border: 1px solid var(--ink); }
+.term-opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 58px; padding: 12px 8px; border: 0; background: none; color: var(--ink); cursor: pointer; font: inherit; }
+.term-opt + .term-opt { border-left: 1px solid var(--ink); }
+.term-name { font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.term-save { font: 500 9.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--green); }
+.term-opt[data-term-opt="month"] .term-save { color: var(--ink-3); }
+.term-opt.is-active { background: var(--ink); color: var(--bg); }
+.term-opt.is-active .term-save { color: #8FD687; }
+.term-opt.is-active[data-term-opt="month"] .term-save { color: rgba(244, 241, 234, .6); }
+.term-opt:focus-visible { outline-offset: -5px; }
+.term-opt.is-active:focus-visible { outline-color: var(--bg); }
+@media (any-hover: hover) and (any-pointer: fine) { .term-opt:not(.is-active):hover { background: var(--bg-2); } }
+.term-note { max-width: 640px; margin: 12px auto 0; min-height: 1.5em; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+.term-note strong { color: var(--ink); font-weight: 600; }
+.pricing-bill { font: 600 10.5px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.pricing-bill .pricing-equiv { display: inline-block; margin-top: 2px; font: 500 13px/1.4 var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-2); }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
 .pricing-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 20px 8px; }
 .pricing-card + .pricing-card { border-left: 1px solid var(--line); }
@@ -524,7 +532,10 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .spec td { display: block; padding: 0 0 12px; }
   .spec tr { display: block; }
   .pricing-grid, .earn-grid { margin: 26px -20px 0; }
-  .billing { gap: 12px; }
+  .term { grid-template-columns: 1fr 1fr; }
+  .term-opt:nth-child(3) { border-left: 0; }
+  .term-opt:nth-child(n+3) { border-top: 1px solid var(--ink); }
+  .term-opt { min-height: 60px; }
   .pricing-badge { position: static; display: inline-block; margin-left: 0; }
   .upgrade-row { grid-template-columns: 1fr; margin: 30px 0 0; }
   .upgrade--kw, .upgrade--phone { grid-column: 1; border-left: 0; padding: 24px 0; }
@@ -576,7 +587,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .review-form, .faq-list, .checkout-panel, .checkout-success { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .poster-head, .will-reveal > *, .billing-switch-track, .billing-switch-track span, .faq-plus::after { transition: none !important; }
+  .poster-head, .will-reveal > *, .faq-plus::after { transition: none !important; }
   .will-reveal > * { opacity: 1; transform: none; }
   .checkout-panel-frame.is-loading { background: var(--bg-2); animation: none; }
   .mega-menu, .modal, .pricing-price { transform: none !important; filter: none !important; }
@@ -652,7 +663,6 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
    mouse-driven desktop (where the smaller sizes are an intentional, denser look) ---- */
 @media (pointer: coarse) {
   .ix-feat { min-height: 44px; }
-  .billing-toggle-btn { min-height: 44px; }
   .pricing-card .pill { min-height: 44px; }
   /* Padding grows the real hit area to 44px; the matching negative margin keeps the link's
      visible position and the paragraph's line height exactly as they were. */

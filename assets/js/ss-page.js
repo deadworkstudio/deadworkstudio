@@ -1,5 +1,4 @@
-// Stock Shredder page: smart header, phone tools sheet, FAQ accordion, the "2 months free" switch
-// (kept in sync with the Monthly/Annual toggle that checkout.js already drives), and the chat
+// Stock Shredder page: smart header, phone tools sheet, FAQ accordion, and the chat
 // widget loaded after the visitor's first interaction instead of on page load.
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -128,17 +127,6 @@
       else { q.setAttribute('aria-expanded', 'false'); faqClose(panel); }
     });
   });
-
-  // ---- "2 months free" switch mirrors the Monthly / Annual toggle ----
-  var sw = document.querySelector('[data-billing-switch]');
-  var month = document.querySelector('[data-billing="month"]');
-  var year = document.querySelector('[data-billing="year"]');
-  if (sw && month && year) {
-    var sync = function () { sw.setAttribute('aria-checked', year.classList.contains('is-active') ? 'true' : 'false'); };
-    sw.addEventListener('click', function () { (year.classList.contains('is-active') ? month : year).click(); sync(); });
-    month.addEventListener('click', function () { setTimeout(sync, 0); });
-    year.addEventListener('click', function () { setTimeout(sync, 0); });
-  }
 
   // ---- support chat: loads after the first scroll, tap or key press, never on page load ----
   // On phones (<=719px) the floating bubble is kept hidden — it sits on top of page content
