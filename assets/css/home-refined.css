@@ -495,6 +495,7 @@ a[href$="loadout/"] .mega-menu-card-img::after {
 @media (prefers-reduced-motion: reduce) {
   .mega-menu-card-photo { transition: none; }
 }
+.poster-meta-left,
 .poster-meta-right {
   display: none;
 }
