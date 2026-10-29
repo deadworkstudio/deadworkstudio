@@ -81,7 +81,7 @@ const KIT_API_BASE = 'https://api.kit.com/v4'
 // can follow up and sell — separate from the D1 table above, which stays the source of truth for
 // the admin dashboard. Best-effort: if Kit is down or the key is wrong, the visitor's signup
 // still succeeds (it's already saved to D1) and we just skip the Kit sync for this one.
-async function syncToKit(env: Env, email: string, product: string): Promise<void> {
+async function syncToKit(env: Env, email: string, product: string, firstName: string | null): Promise<void> {
   if (!env.KIT_API_KEY) {
     console.log('syncToKit: no KIT_API_KEY set, skipping')
     return
@@ -95,7 +95,9 @@ async function syncToKit(env: Env, email: string, product: string): Promise<void
   const subRes = await fetch(`${KIT_API_BASE}/subscribers`, {
     method: 'POST',
     headers,
-    body: JSON.stringify({ email_address: email })
+    // Kit's create-subscriber is an upsert, so first_name is only sent when we have one; sending
+    // an empty value on a later nameless signup would wipe the name Kit already has.
+    body: JSON.stringify(firstName ? { email_address: email, first_name: firstName } : { email_address: email })
   })
   if (!subRes.ok) {
     console.log('syncToKit: create subscriber failed', subRes.status, await subRes.text())
@@ -202,6 +204,13 @@ function normalizeSourceField(value: unknown): string | null {
   return trimmed.slice(0, MAX_SOURCE_LENGTH)
 }
 
+/** Trimmed, control characters stripped, capped at 80, null when missing or empty. */
+function normalizeFirstName(value: unknown): string | null {
+  if (typeof value !== 'string') return null
+  const cleaned = value.replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0, 80)
+  return cleaned || null
+}
+
 // /notify is public and every accepted signup is also pushed into Kit, so without a cap a script
 // could subscribe any list of strangers' addresses from one machine. 10 an hour from one address
 // is far more than a real visitor signing up for a few products ever needs. Best-effort, same plain
@@ -209,7 +218,7 @@ function normalizeSourceField(value: unknown): string | null {
 const NOTIFY_MAX_PER_IP_PER_HOUR = 10
 
 async function handleNotify(request: Request, env: Env): Promise<Response> {
-  let payload: { email?: unknown; product?: unknown; company?: unknown; source?: unknown; page?: unknown }
+  let payload: { email?: unknown; firstName?: unknown; product?: unknown; company?: unknown; source?: unknown; page?: unknown }
   try {
     payload = await request.json()
   } catch {
@@ -237,6 +246,9 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
   // fields at all must keep signing people up exactly as it always has.
   const source = normalizeSourceField(payload.source)
   const page = normalizeSourceField(payload.page)
+  // Optional for the same reason. Only used for Kit's first_name (the welcome email's greeting),
+  // not stored in D1.
+  const firstName = normalizeFirstName(payload.firstName)
 
   const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
   const ipKey = `notify-ip:${ip}`
@@ -249,7 +261,7 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
   await insertSignup(env.SIGNUPS_DB, email, product, Date.now(), source, page)
 
   try {
-    await syncToKit(env, email, product)
+    await syncToKit(env, email, product, firstName)
   } catch (err) {
     // D1 already has it (the admin dashboard is unaffected either way) — don't fail the
     // visitor's signup just because Kit's API had a bad moment.

@@ -138,6 +138,8 @@
       <h2 class="head-dw section-head" id="join-title">Join</h2>
       <p class="join-lede">Follow along for our new releases. We'll let you know when something new drops. No spam. Just real updates.</p>
       <form class="notify-form" data-notify-form data-notify-product="general" novalidate>
+        <label class="sr-only" for="notify-name-general">First name</label>
+        <input class="notify-input notify-name" type="text" id="notify-name-general" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
         <label class="sr-only" for="notify-email-general">Email address</label>
         <input class="notify-input" type="email" id="notify-email-general" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
         <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />

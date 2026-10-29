@@ -102,6 +102,8 @@
 <section class="dev-notify wrap" aria-labelledby="notify-title">
   <p class="section-head mono" id="notify-title">Be first to know</p>
   <form class="notify-form" data-notify-form data-notify-product="scene-lock" novalidate>
+    <label class="sr-only" for="notify-name-scene-lock">First name</label>
+    <input class="notify-input notify-name" type="text" id="notify-name-scene-lock" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
     <label class="sr-only" for="notify-email-scene-lock">Email address</label>
     <input class="notify-input" type="email" id="notify-email-scene-lock" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
     <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />

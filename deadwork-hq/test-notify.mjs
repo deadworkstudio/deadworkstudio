@@ -104,6 +104,15 @@ try {
   const afterDuplicate = await signups()
   check('re-submitting the same email+product does not create a second row', afterDuplicate.length === afterSecondProduct.length, JSON.stringify(afterDuplicate))
 
+  // First name is optional and only forwarded to Kit, so any shape of it must still sign up fine.
+  for (const [label, firstName] of [['a first name', 'Jamie'], ['a non-string first name', 42], ['an oversized first name', 'n'.repeat(500)]]) {
+    const res = await worker.fetch('http://worker/notify', {
+      method: 'POST',
+      body: JSON.stringify({ email: `named-${firstName.toString().length}@example.com`, firstName, product: 'handoff' })
+    })
+    check(`a signup with ${label} succeeds`, res.status === 200, String(res.status))
+  }
+
   // Per-IP cap: every submission above came from the same (local) address, so keep going until the
   // 10-an-hour limit is hit, and confirm the next one is refused and not stored.
   let capped = null

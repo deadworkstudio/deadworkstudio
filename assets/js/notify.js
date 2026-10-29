@@ -10,6 +10,8 @@
   Array.prototype.forEach.call(document.querySelectorAll('[data-notify-form]'), function (form) {
     var product = form.getAttribute('data-notify-product');
     var input = form.querySelector('[data-notify-email]');
+    // Optional in the markup: a form without the first-name field still works and sends no name.
+    var nameInput = form.querySelector('[data-notify-name]');
     var button = form.querySelector('[data-notify-submit]');
     var status = form.querySelector('[data-notify-status]');
     var honeypot = form.querySelector('[data-notify-hp]');
@@ -51,10 +53,19 @@
     input.addEventListener('input', function () {
       if (input.getAttribute('aria-invalid') === 'true') showStatus('', null);
     });
+    if (nameInput) {
+      nameInput.addEventListener('input', function () {
+        if (nameInput.getAttribute('aria-invalid') === 'true') {
+          nameInput.removeAttribute('aria-invalid');
+          showStatus('', null);
+        }
+      });
+    }
 
     function setBusy(isBusy) {
       button.disabled = isBusy;
       input.disabled = isBusy;
+      if (nameInput) nameInput.disabled = isBusy;
       button.textContent = isBusy ? 'Sending…' : defaultLabel;
     }
 
@@ -66,6 +77,14 @@
       if (honeypot && honeypot.value) {
         form.reset();
         showStatus("You're on the list.", 'good');
+        return;
+      }
+
+      var firstName = nameInput ? (nameInput.value || '').trim() : '';
+      if (nameInput && !firstName) {
+        showStatus('Enter your first name.', 'error');
+        nameInput.setAttribute('aria-invalid', 'true');
+        nameInput.focus();
         return;
       }
 
@@ -92,6 +111,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: email,
+          firstName: firstName,
           product: product,
           company: honeypot ? honeypot.value : '',
           source: document.referrer || 'direct',
