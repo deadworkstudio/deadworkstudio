@@ -47,9 +47,8 @@
   var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
   var IN = [64.49, 68.37, 69.74, 70.87, 72.91, 77.71];             // each shot's in-point in the film (s)
   var LENS = [2.69, 1.27, 1.03, 1.94, 3.74, 1.15];                 // each shot's length (s)
-  // The riding plays in slow motion, so short shots never stutter-loop. The slow motion is baked into
-  // the files (0.6x, motion-interpolated to 60 fps), so they play at normal rate and stay smooth;
-  // slowing 24 fps clips in the browser showed only ~14 frames a second.
+  // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
+  // stuttered). The clips don't loop: each plays once and holds its last frame, so nothing jumps.
   var RATE = 1;
   var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 180;                                                 // take-seconds per second between moments
@@ -124,8 +123,9 @@
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
     var L = [-1, -1, -1, -1, -1, -1];
-    var OFF0 = VARIANT === 'push' ? X.P : 0;                         // push: weld-1 runs from t = 0, inside its tile
-    if (t < X.P) { if (OFF0) L[0] = t; return L; }
+    // push: clip 1 starts inside its tile, timed so it finishes as the scan moves on to clip 2
+    var D0 = Math.max(0, arrive[1] - LENS[0]), OFF0 = VARIANT === 'push' ? X.P - D0 : 0;
+    if (t < X.P) { if (VARIANT === 'push' && t >= D0) L[0] = t - D0; return L; }
     if (t < S) { var c = clipAt(t); L[c] = t - arrive[c] + (c === 0 ? OFF0 : 0); return L; }
     for (var i = 0; i < 6; i++) L[i] = i === 5 ? t - arrive[5] : t - S;
     return L;
@@ -315,7 +315,7 @@
     var L = localTimes(t);
     for (var i = 0; i < vids.length; i++) {
       var v = vids[i];
-      if (L[i] >= 0) { if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+      if (L[i] >= 0) { if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
     }
   }
@@ -348,7 +348,7 @@
         v.addEventListener('loadedmetadata', function () {
           var d = v.duration || LENS[i];
           v.addEventListener('seeked', function () { res(); }, { once: true });
-          v.currentTime = Math.min((lt * RATE) % d, d - 0.05);
+          v.currentTime = Math.min(lt * RATE, d - 0.05);
         }, { once: true });
         v.addEventListener('error', res, { once: true });
         v.load();
