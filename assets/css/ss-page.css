@@ -344,7 +344,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 /* ---- pricing ---- */
 /* Billing selector (2026-10-28): four square options in one hairline-ruled row, same rule
    language as the pricing grid below it. Selected = solid ink. */
-.term { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 640px; margin: 26px auto 0; border: 1px solid var(--ink); }
+.term { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 480px; margin: 26px auto 0; border: 1px solid var(--ink); }
 .term-opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 58px; padding: 12px 8px; border: 0; background: none; color: var(--ink); cursor: pointer; font: inherit; }
 .term-opt + .term-opt { border-left: 1px solid var(--ink); }
 .term-name { font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
@@ -532,10 +532,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .spec td { display: block; padding: 0 0 12px; }
   .spec tr { display: block; }
   .pricing-grid, .earn-grid { margin: 26px -20px 0; }
-  .term { grid-template-columns: 1fr 1fr; }
-  .term-opt:nth-child(3) { border-left: 0; }
-  .term-opt:nth-child(n+3) { border-top: 1px solid var(--ink); }
-  .term-opt { min-height: 60px; }
+  .term-opt { min-height: 60px; padding: 12px 4px; }
   .pricing-badge { position: static; display: inline-block; margin-left: 0; }
   .upgrade-row { grid-template-columns: 1fr; margin: 30px 0 0; }
   .upgrade--kw, .upgrade--phone { grid-column: 1; border-left: 0; padding: 24px 0; }
