@@ -369,7 +369,7 @@
       if (!liftC) return;
       if (!btn || btn.hasAttribute('data-ix-night')) {
         if (!liftC.classList.contains('is-on')) return;
-        liftC.style.transform = liftC.dataset.from || ''; liftC.classList.remove('is-on');
+        liftC.style.transform = liftC.dataset.from || ''; liftC.classList.remove('is-on'); stage.classList.remove('is-lifted');
         setTimeout(function () { if (!liftC.classList.contains('is-on')) { liftSrc = null; cancelAnimationFrame(liftRaf); liftRaf = 0; } }, 560);
         return;
       }
@@ -381,14 +381,16 @@
       var s = Math.max(1.15, Math.min(3.2, W * (W < 600 ? 0.94 : 0.84) / sw, H * 0.76 / sh)), w = sw * s, h = sh * s;
       var left = (W - w) / 2, top = (H - h) / 2, dpr = Math.min(3, window.devicePixelRatio || 1);
       var from = 'translate(' + (x0 / 100 * W - left).toFixed(1) + 'px, ' + (y0 / 100 * H - top).toFixed(1) + 'px) scale(' + (1 / s).toFixed(4) + ')';
-      var wasOn = liftC.classList.contains('is-on');
+      var wasOn = liftC.classList.contains('is-on'), prev = wasOn ? [parseFloat(liftC.style.left), parseFloat(liftC.style.top), parseFloat(liftC.style.width), parseFloat(liftC.style.height)] : null;
       liftC.style.left = left + 'px'; liftC.style.top = top + 'px'; liftC.style.width = w + 'px'; liftC.style.height = h + 'px';
       liftC.width = Math.round(w * dpr); liftC.height = Math.round(h * dpr);
       liftSrc = [x0, y0, x1 - x0, y1 - y0]; liftC.dataset.from = from;
       if (!liftRaf) liftDraw(); else { cancelAnimationFrame(liftRaf); liftDraw(); }
-      // from rest it rises out of its own spot; between features it simply re-forms in the middle
-      liftC.classList.add('is-snap'); liftC.style.transform = wasOn ? 'scale(.96)' : from; void liftC.offsetWidth;
+      // from rest it rises out of its own spot; between features the card morphs from its last shape
+      var start = prev ? 'translate(' + (prev[0] - left).toFixed(1) + 'px, ' + (prev[1] - top).toFixed(1) + 'px) scale(' + (prev[2] / w).toFixed(4) + ', ' + (prev[3] / h).toFixed(4) + ')' : from;
+      liftC.classList.add('is-snap'); liftC.style.transform = start; void liftC.offsetWidth;
       liftC.classList.remove('is-snap'); liftC.classList.add('is-on'); liftC.style.transform = 'none';
+      stage.classList.add('is-lifted');
     };
 
     var show = function (i) {

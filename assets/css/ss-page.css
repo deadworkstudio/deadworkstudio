@@ -614,7 +614,7 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 
 .ix-stage { position: relative; margin-top: clamp(14px, 2.2vh, 24px); transform-origin: 50% 0; border-radius: 6px; overflow: hidden; isolation: isolate; background: #4C4A46; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
 /* magnify: the chosen controls scale up and move to the middle of the frame (transform only, so it stays smooth) */
-.ix-zoom { position: relative; transform-origin: 0 0; transition: transform 520ms cubic-bezier(.22, 1, .36, 1); will-change: transform; }
+.ix-zoom { position: relative; }
 .ix-zoom .ix-screen { box-shadow: none; }
 .ix-stage.is-scrub { opacity: calc(.35 + .65 * var(--p, 1)); transform: translateY(calc((1 - var(--p, 1)) * 32px)) scale(calc(.94 + .06 * var(--p, 1))); }
 .ix-screen { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #EBE5D8; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
@@ -632,9 +632,14 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 
 /* lift: the chosen controls rise out of the dimmed app, larger and centred. A canvas drawn from the
    playing recording, so it stays live (the trim playhead moves) and sharp (it reads the 4K source) */
-.ix-lift { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; border-radius: 8px; opacity: 0; transform-origin: 0 0;
-  box-shadow: 0 0 0 1px rgba(244, 241, 234, .9), 0 28px 70px -18px rgba(0, 0, 0, .6), 0 10px 24px -10px rgba(0, 0, 0, .45);
-  transition: transform 560ms cubic-bezier(.22, 1, .36, 1), opacity 200ms var(--ease); }
+.ix-lift { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; border-radius: 12px; opacity: 0; transform-origin: 0 0;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .55), 0 1px 0 0 rgba(255, 255, 255, .7) inset,
+    0 2px 6px rgba(0, 0, 0, .18), 0 18px 40px -12px rgba(0, 0, 0, .45), 0 50px 110px -30px rgba(0, 0, 0, .6);
+  transition: transform 700ms cubic-bezier(.16, 1, .3, 1), opacity 260ms var(--ease); }
+/* depth: while a feature is lifted, the app behind it eases back, softens and darkens a touch */
+.ix-zoom { transform-origin: 50% 50%; transition: transform 700ms cubic-bezier(.16, 1, .3, 1), filter 500ms var(--ease); }
+.ix-stage.is-lifted .ix-zoom { transform: scale(.955); filter: blur(2.5px) saturate(.85); }
+.ix-stage.is-lifted { background: #1A1917; }
 .ix-lift.is-on { opacity: 1; }
 .ix-lift.is-snap { transition: none; }
 
