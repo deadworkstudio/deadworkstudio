@@ -376,7 +376,8 @@
       var list = btn.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
       var x0 = Math.min.apply(null, list.map(function (r) { return r[0]; })), y0 = Math.min.apply(null, list.map(function (r) { return r[1]; }));
       var x1 = Math.max.apply(null, list.map(function (r) { return r[0] + r[2]; })), y1 = Math.max.apply(null, list.map(function (r) { return r[1] + r[3]; }));
-      x0 = Math.max(0, x0); y0 = Math.max(0, y0); x1 = Math.min(100, x1); y1 = Math.min(100, y1);
+      // breathing room around the controls (the same margin on every side, on screen)
+      x0 = Math.max(0, x0 - 0.8); y0 = Math.max(0, y0 - 0.8); x1 = Math.min(100, x1 + 0.8); y1 = Math.min(100, y1 + 0.8);
       var W = stage.clientWidth, H = stage.clientHeight, sw = (x1 - x0) / 100 * W, sh = (y1 - y0) / 100 * H;
       var s = Math.max(1.15, Math.min(3.2, W * (W < 600 ? 0.94 : 0.84) / sw, H * 0.76 / sh)), w = sw * s, h = sh * s;
       var left = (W - w) / 2, top = (H - h) / 2, dpr = Math.min(3, window.devicePixelRatio || 1);
