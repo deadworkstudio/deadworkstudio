@@ -103,6 +103,17 @@ try {
   check('re-submitting the same email+product still reports success', duplicate.status === 200, String(duplicate.status))
   const afterDuplicate = await signups()
   check('re-submitting the same email+product does not create a second row', afterDuplicate.length === afterSecondProduct.length, JSON.stringify(afterDuplicate))
+
+  // Per-IP cap: every submission above came from the same (local) address, so keep going until the
+  // 10-an-hour limit is hit, and confirm the next one is refused and not stored.
+  let capped = null
+  for (let i = 0; i < 12 && !capped; i++) {
+    const res = await worker.fetch('http://worker/notify', { method: 'POST', body: JSON.stringify({ email: `flood${i}@example.com`, product: 'general' }) })
+    if (res.status === 429) capped = i
+  }
+  check('one address is cut off after 10 signups in an hour', capped !== null, String(capped))
+  const afterFlood = await signups()
+  check('a refused signup is not stored', !afterFlood.some((s) => s.email === `flood${capped}@example.com`), JSON.stringify(afterFlood.map((s) => s.email)))
 } finally {
   await worker.stop()
 }

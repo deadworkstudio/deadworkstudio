@@ -53,7 +53,7 @@ try {
   const migrateNoKey = await worker.fetch('http://worker/admin/migrate-kv', { method: 'POST' })
   check('the migration endpoint refuses a request with no key', migrateNoKey.status === 401)
 
-  const migrateWrongKey = await worker.fetch('http://worker/admin/migrate-kv?key=wrong', { method: 'POST' })
+  const migrateWrongKey = await worker.fetch('http://worker/admin/migrate-kv', { method: 'POST', headers: { Authorization: 'Bearer wrong' } })
   check('the migration endpoint refuses the wrong key', migrateWrongKey.status === 401)
 } finally {
   await worker.stop()

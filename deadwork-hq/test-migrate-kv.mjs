@@ -50,7 +50,7 @@ try {
   const beforeMigration = await signups()
   check('nothing is in D1 before the migration runs', beforeMigration.length === 0, JSON.stringify(beforeMigration))
 
-  const firstRun = await worker.fetch('http://worker/admin/migrate-kv?key=test-admin-key', { method: 'POST' })
+  const firstRun = await worker.fetch('http://worker/admin/migrate-kv', { method: 'POST', headers: { Authorization: 'Bearer test-admin-key' } })
   check('the first migration run succeeds', firstRun.status === 200, String(firstRun.status))
   const firstRunBody = await firstRun.json()
   check('the first run reports 2 emails scanned', firstRunBody.emailsScanned === 2, JSON.stringify(firstRunBody))
@@ -63,7 +63,7 @@ try {
   check('a migrated row carries the right email and product', Boolean(legacyRow), JSON.stringify(afterFirstRun))
   check('a migrated row preserves the original signup timestamp, not "now"', legacyRow?.createdAt === Date.parse('2026-01-15T12:00:00.000Z'), legacyRow?.createdAt)
 
-  const secondRun = await worker.fetch('http://worker/admin/migrate-kv?key=test-admin-key', { method: 'POST' })
+  const secondRun = await worker.fetch('http://worker/admin/migrate-kv', { method: 'POST', headers: { Authorization: 'Bearer test-admin-key' } })
   check('running the migration a second time still succeeds', secondRun.status === 200, String(secondRun.status))
   const secondRunBody = await secondRun.json()
   check('the second run inserts 0 new rows', secondRunBody.rowsInserted === 0, JSON.stringify(secondRunBody))
