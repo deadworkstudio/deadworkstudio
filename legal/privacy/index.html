@@ -104,18 +104,30 @@ body.legal-page .poster { height: auto; }
     <div class="wrap-narrow">
       <p class="eyebrow kicker">Legal</p>
       <h1 class="display" style="font-size: clamp(32px, 5vw, 56px); margin-top: 8px;">Privacy Policy</h1>
-      <p class="legal-updated mono">Last updated October 21, 2026</p>
+      <p class="legal-updated mono">Last updated October 29, 2026</p>
 
       <p class="lede" style="margin-top: 32px;">This covers every DEADWORK app: Scene Lock, Stock Shredder, Handoff, Loadout, Sound Driver, and Set Control. Your footage and production data are yours. We don't sell it, we don't train on it without asking, and you keep it if you stop subscribing.</p>
 
       <h2>What our apps collect, and why</h2>
       <p><strong>Your project files.</strong> Footage, gear lists, production data, and anything else you bring into a DEADWORK app is processed to do what you asked the app to do: organize it, grade it, export it, track it. Wherever possible, that processing happens on your own device.</p>
       <p><strong>Your own cloud account.</strong> Where an app syncs data so it follows you across devices (like Loadout's gear lists and kits), it syncs through your own private iCloud account, not a DEADWORK server. That data stays under your control, the same way Apple's own apps (Photos, Notes) work.</p>
-      <p><strong>Account and billing data.</strong> For apps with a DEADWORK-managed subscription (outside the App Store), we store the minimum needed to run your account: your email, plan, and usage against your plan's limits. We never see or store your card details directly; that's handled by our payment processor.</p>
+      <p><strong>Account and billing data.</strong> For apps with a DEADWORK-managed subscription (outside the App Store), we store the minimum needed to run your account: your email, plan, and usage against your plan's limits. We never see or store your card details. Stripe handles all payments.</p>
       <p><strong>Protecting against piracy.</strong> Stock Shredder checks in with our server about once a day to confirm your plan, using an ID for your computer. Each exported file carries a short owner tag (a scrambled code, never your name or email) so stolen or cracked copies can be traced. If an activation key is entered incorrectly many times, or a key or account is used on a second computer, we record that event (including the IP address for repeated wrong keys) so we can stop abuse.</p>
-      <p><strong>Optional features.</strong> A few apps offer optional features that use more of your device's data, for example location, to notice when you've left a shoot. Anything like this is off by default, explained at the point you turn it on, and never sends more than that one feature needs.</p>
+      <p><strong>Clip naming in Stock Shredder.</strong> When you import footage, Stock Shredder sends a few small still frames from each clip to Claude, an AI made by Anthropic, so it can suggest a folder name and keywords. It never sends the clip itself, your file names or your folder paths. Anthropic doesn't use these frames to train its models.</p>
+          <p><strong>Optional features.</strong> A few apps offer optional features that use more of your device's data, for example location, to notice when you've left a shoot. Anything like this is off by default, explained at the point you turn it on, and never sends more than that one feature needs.</p>
 
-      <h2>What we never do</h2>
+      <h2>Services we use</h2>
+          <p>We share only what each service needs to do its job.</p>
+          <ul>
+            <li><strong>Stripe</strong> takes payments and stores your card. We get your email, plan and payment status back.</li>
+            <li><strong>Anthropic (Claude)</strong> gets the small frames described above to name clips.</li>
+            <li><strong>Cloudflare</strong> runs our servers and gives us basic, cookie-free visitor counts for this website.</li>
+            <li><strong>Gmail</strong> is how we send activation keys and support replies, all from deadworkstudio@gmail.com.</li>
+            <li><strong>Kit</strong> holds our email list. If you sign up for updates, your email and the app you're interested in go there. You can unsubscribe from any email.</li>
+            <li><strong>Tawk.to</strong> runs the support chat on this site. It only loads once you scroll or tap, and anything you type there goes to Tawk.to.</li>
+          </ul>
+
+          <h2>What we never do</h2>
       <ul>
         <li>We never sell your data to anyone.</li>
         <li>We never use your footage or production data to train AI models without asking you first.</li>
@@ -124,7 +136,7 @@ body.legal-page .poster { height: auto; }
       </ul>
 
       <h2>Subscriptions and payment</h2>
-      <p>Most DEADWORK apps offer a free trial, after which continued use requires a paid subscription (monthly or yearly). Depending on the app, that's billed through the App Store or directly by DEADWORK. In either case, DEADWORK never sees or stores your full payment details. See our <a href="../terms/">Terms of Use</a> for the full subscription terms.</p>
+      <p>Most DEADWORK apps offer a free trial, after which continued use requires a paid plan (monthly, 6-month, 12-month or annual, depending on the app). Depending on the app, that's billed through the App Store or directly by DEADWORK through Stripe. In either case, DEADWORK never sees or stores your full payment details. See our <a href="../terms/">Terms of Use</a> for the full subscription terms.</p>
 
       <h2>Questions</h2>
       <p>Email us any time at <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a>.</p>
