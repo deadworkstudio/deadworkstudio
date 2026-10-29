@@ -630,6 +630,14 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-ring-out { fill: none; stroke: rgba(14, 14, 13, .55); stroke-width: 4px; vector-effect: non-scaling-stroke; }
 .ix-ring { fill: none; stroke: #F4F1EA; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
 
+/* lift: the chosen controls rise out of the dimmed app, larger and centred. A canvas drawn from the
+   playing recording, so it stays live (the trim playhead moves) and sharp (it reads the 4K source) */
+.ix-lift { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; border-radius: 8px; opacity: 0; transform-origin: 0 0;
+  box-shadow: 0 0 0 1px rgba(244, 241, 234, .9), 0 28px 70px -18px rgba(0, 0, 0, .6), 0 10px 24px -10px rgba(0, 0, 0, .45);
+  transition: transform 560ms cubic-bezier(.22, 1, .36, 1), opacity 200ms var(--ease); }
+.ix-lift.is-on { opacity: 1; }
+.ix-lift.is-snap { transition: none; }
+
 /* explanation: one fixed-height cell under the app, so nothing below ever moves */
 .ix-explain { display: grid; min-height: 5.4em; margin-top: clamp(14px, 2.2vh, 22px); text-align: center; }
 .ix-explain > * { grid-area: 1 / 1; align-self: start; justify-self: center; }
@@ -652,7 +660,7 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .ix-explain { min-height: 7.6em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom { transition: none !important; }
+  .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom, .ix-lift { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }
 

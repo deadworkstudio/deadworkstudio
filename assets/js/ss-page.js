@@ -269,7 +269,8 @@
     // full-resolution recording on desktop and tablet screens. The features zoom the picture up to 2.4x,
     // so even a 670 px stage on a 2x screen needs ~3200 px of video (the old test, tour width x dpr > 1700,
     // left most laptops on the 1600 px file, which is what looked soft when zoomed)
-    if (window.innerWidth >= 768 && tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1000) {
+    // (phones too now: the lifted feature is drawn from the recording at up to 3x, so it needs the pixels)
+    if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1000) {
       // 4320 px HEVC where the browser plays it (Safari, most Chrome/Edge), so the zoomed-in features stay
       // sharp; 3600 px H.264 everywhere else (H.264 decoders top out around 4096 px wide)
       var hevc = !!document.createElement('video').canPlayType('video/mp4; codecs="hvc1.1.6.L180.B0"');
@@ -285,24 +286,6 @@
     var feats = [].slice.call(tour.querySelectorAll('[data-ix-feat]')), panels = [].slice.call(tour.querySelectorAll('[data-ix-panel]'));
     var NS = 'http://www.w3.org/2000/svg', POOL = 5, cur = -1, lastPointer = 'mouse';
     var dark = tour.querySelector('[data-ix-dark]'), inView = false, nightTimer = 0;
-    var zoom = tour.querySelector('[data-ix-zoom]');
-    // Magnify: scale the app so the chosen controls fill most of the frame, centred in it.
-    // Day / Night stays at full size (the point there is to see the whole dark interface).
-    var magnify = function (btn) {
-      if (!zoom) return;
-      if (!btn || btn.hasAttribute('data-ix-night')) { zoom.style.transform = ''; return; }
-      var z = btn.getAttribute('data-zoom'), list = (z || btn.getAttribute('data-rects')).split(';').map(function (t) { return t.split(',').map(Number); });
-      var x0 = Math.min.apply(null, list.map(function (r) { return r[0]; })), y0 = Math.min.apply(null, list.map(function (r) { return r[1]; }));
-      var x1 = Math.max.apply(null, list.map(function (r) { return r[0] + r[2]; })), y1 = Math.max.apply(null, list.map(function (r) { return r[1] + r[3]; }));
-      var fit = z ? 100 : 72, s = Math.max(1, Math.min(2.4, fit / (x1 - x0), fit / (y1 - y0)));
-      // Centred on the chosen rect, both axes — but never past the recording's own edge: once the
-      // frame is scaled up by s, clamping the translate to [100 - 100*s, 0] keeps the picture
-      // covering the whole stage, so it magnifies and centres as much as it can without ever
-      // uncovering grey past the edge of the recording.
-      var tx = Math.min(0, Math.max(100 - 100 * s, 50 - s * (x0 + x1) / 2));
-      var ty = Math.min(0, Math.max(100 - 100 * s, 50 - s * (y0 + y1) / 2));
-      zoom.style.transform = 'translate(' + tx.toFixed(2) + '%, ' + ty.toFixed(2) + '%) scale(' + s.toFixed(3) + ')';
-    };
     // Day / Night: start the dark recording at the day one's time, fade it in; fade back out when
     // leaving. Both recordings only ever decode while they're actually the one on screen — once
     // the dark one has fully crossfaded in (280ms, just past its own 260ms transition) the light
@@ -370,6 +353,44 @@
       })(performance.now());
     };
 
+    // Lift: rather than magnifying the whole app, the chosen controls rise out of it — the app stays put
+    // (dimmed), and a live copy of just that part scales up to the middle of the frame, then settles back.
+    var liftC = stage.querySelector('[data-ix-lift]'), liftX = liftC && liftC.getContext('2d'), liftSrc = null, liftRaf = 0;
+    var liftDraw = function () {
+      liftRaf = 0; if (!liftSrc) return;
+      var v = stage.classList.contains('is-night') && dark ? dark : screen;
+      if (v.readyState >= 2 && v.videoWidth) {
+        var r = liftSrc, vw = v.videoWidth, vh = v.videoHeight;
+        liftX.drawImage(v, r[0] / 100 * vw, r[1] / 100 * vh, r[2] / 100 * vw, r[3] / 100 * vh, 0, 0, liftC.width, liftC.height);
+      }
+      liftRaf = requestAnimationFrame(liftDraw);
+    };
+    var lift = function (btn) {
+      if (!liftC) return;
+      if (!btn || btn.hasAttribute('data-ix-night')) {
+        if (!liftC.classList.contains('is-on')) return;
+        liftC.style.transform = liftC.dataset.from || ''; liftC.classList.remove('is-on');
+        setTimeout(function () { if (!liftC.classList.contains('is-on')) { liftSrc = null; cancelAnimationFrame(liftRaf); liftRaf = 0; } }, 560);
+        return;
+      }
+      var list = btn.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
+      var x0 = Math.min.apply(null, list.map(function (r) { return r[0]; })), y0 = Math.min.apply(null, list.map(function (r) { return r[1]; }));
+      var x1 = Math.max.apply(null, list.map(function (r) { return r[0] + r[2]; })), y1 = Math.max.apply(null, list.map(function (r) { return r[1] + r[3]; }));
+      x0 = Math.max(0, x0); y0 = Math.max(0, y0); x1 = Math.min(100, x1); y1 = Math.min(100, y1);
+      var W = stage.clientWidth, H = stage.clientHeight, sw = (x1 - x0) / 100 * W, sh = (y1 - y0) / 100 * H;
+      var s = Math.max(1.15, Math.min(3.2, W * (W < 600 ? 0.94 : 0.84) / sw, H * 0.76 / sh)), w = sw * s, h = sh * s;
+      var left = (W - w) / 2, top = (H - h) / 2, dpr = Math.min(3, window.devicePixelRatio || 1);
+      var from = 'translate(' + (x0 / 100 * W - left).toFixed(1) + 'px, ' + (y0 / 100 * H - top).toFixed(1) + 'px) scale(' + (1 / s).toFixed(4) + ')';
+      var wasOn = liftC.classList.contains('is-on');
+      liftC.style.left = left + 'px'; liftC.style.top = top + 'px'; liftC.style.width = w + 'px'; liftC.style.height = h + 'px';
+      liftC.width = Math.round(w * dpr); liftC.height = Math.round(h * dpr);
+      liftSrc = [x0, y0, x1 - x0, y1 - y0]; liftC.dataset.from = from;
+      if (!liftRaf) liftDraw(); else { cancelAnimationFrame(liftRaf); liftDraw(); }
+      // from rest it rises out of its own spot; between features it simply re-forms in the middle
+      liftC.classList.add('is-snap'); liftC.style.transform = wasOn ? 'scale(.96)' : from; void liftC.offsetWidth;
+      liftC.classList.remove('is-snap'); liftC.classList.add('is-on'); liftC.style.transform = 'none';
+    };
+
     var show = function (i) {
       if (i === cur) return;
       cur = i;
@@ -377,9 +398,11 @@
       panels.forEach(function (p, k) { p.hidden = k !== i; });
       explain.classList.toggle('has-feat', i >= 0);
       setNight(i >= 0 && feats[i].hasAttribute('data-ix-night'));
-      magnify(i >= 0 ? feats[i] : null);
+      lift(i >= 0 ? feats[i] : null);
       if (i < 0) { spot.classList.remove('is-on'); return; }
-      aim(rectsFor(feats[i]));
+      // a lifted feature leaves the whole app dimmed behind it (no hole, no ring); Day / Night keeps its ring
+      var night = feats[i].hasAttribute('data-ix-night');
+      aim(night || !liftC ? rectsFor(feats[i]) : rectsFor(feats[i]).map(function () { return [50, 50, 0, 0]; }));
       spot.classList.add('is-on');
     };
 
