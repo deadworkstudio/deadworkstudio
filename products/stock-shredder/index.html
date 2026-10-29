@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261029b" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261029c" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
 <script src="https://js.stripe.com/v3/" defer></script>
@@ -183,7 +183,9 @@
           <g data-ix-rings></g>
         </svg>
         </div>
+        <canvas class="ix-build" aria-hidden="true" data-ix-build></canvas>
         <canvas class="ix-lift" aria-hidden="true" data-ix-lift></canvas>
+        <span class="ix-cursor" aria-hidden="true" data-ix-cursor><svg viewBox="0 0 20 26" width="20" height="26"><path d="M2 1.5v19.2l4.6-4.4 3 7.1 3.3-1.4-3-6.9h6.4z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
       </figure>
 
       <div class="ix-explain" id="ix-explain" aria-live="polite" data-ix-explain>
@@ -195,6 +197,13 @@
           <div class="ix-panel" data-ix-panel="4" hidden><h3 class="section-title ix-h">Fine-tune</h3><p class="ix-p">Exposure, contrast, temperature and tint on one clip or all of them.</p></div>
           <div class="ix-panel" data-ix-panel="5" hidden><h3 class="section-title ix-h">Day / Night</h3><p class="ix-p">Light or dark mode. One tap to switch.</p></div>
       </div>
+    </div>
+
+    <div class="ix-stats" data-ix-stats>
+      <p class="ix-stat"><span class="ix-num" data-count="112">112</span><span class="ix-lbl mono">Raw files in</span></p>
+      <p class="ix-stat"><span class="ix-num" data-count="196">196</span><span class="ix-lbl mono">Stock-ready clips out</span></p>
+      <p class="ix-stat"><span class="ix-num" data-count="8" data-suffix="K">8K</span><span class="ix-lbl mono">Export, up to</span></p>
+      <p class="ix-stats-note mono">One real shoot, run through Stock Shredder.</p>
     </div>
   </section>
 
@@ -565,7 +574,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/checkout.js?v=20261028b"></script>
-<script src="../../assets/js/ss-page.js?v=20261029e"></script>
+<script src="../../assets/js/ss-page.js?v=20261029f"></script>
 <script src="../../assets/js/ss-hero.js?v=20261029a" defer></script>
 <script>
 // The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a

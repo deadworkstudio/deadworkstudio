@@ -642,6 +642,26 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-stage.is-lifted { background: #1A1917; }
 .ix-lift.is-on { opacity: 1; }
 .ix-lift.is-snap { transition: none; }
+/* build-in: while it assembles, the pieces are drawn on a canvas and the live app waits underneath */
+.ix-build { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; display: none; }
+.ix-stage.is-built { background: transparent; box-shadow: none; transition: box-shadow 400ms var(--ease); }
+.ix-stage.is-building .ix-build { display: block; }
+.ix-stage.is-building .ix-zoom { opacity: 0; }
+.ix-stage.is-built:not(.is-building) { box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
+.ix-stage.is-built.is-lifted { background: #1A1917; }
+/* the ghost cursor that uses each lifted feature */
+.ix-cursor { position: absolute; left: 0; top: 0; z-index: 3; width: 20px; height: 26px; margin: -2px 0 0 -2px; pointer-events: none; opacity: 0; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .35)); }
+.ix-cursor svg { display: block; transform-origin: 3px 2px; transition: transform 120ms var(--ease); }
+.ix-cursor.is-down svg { transform: scale(.86); }
+@media (max-width: 719px) { .ix-cursor { width: 15px; height: 20px; } .ix-cursor svg { width: 15px; height: 20px; } }
+
+/* real numbers: count up once, the first time they are seen */
+.ix-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(16px, 4vw, 64px); max-width: 880px; margin: clamp(40px, 7vh, 80px) auto 0; text-align: center; }
+.ix-stat { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.ix-num { font-family: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; font-weight: 400; font-size: clamp(56px, 8vw, 112px); line-height: .9; letter-spacing: -.01em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ix-lbl { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.ix-stats-note { grid-column: 1 / -1; margin: clamp(18px, 3vh, 28px) 0 0; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+@media (max-width: 719px) { .ix-lbl { font-size: 9.5px; letter-spacing: .1em; } }
 
 /* explanation: one fixed-height cell under the app, so nothing below ever moves */
 .ix-explain { display: grid; min-height: 5.4em; margin-top: clamp(14px, 2.2vh, 22px); text-align: center; }

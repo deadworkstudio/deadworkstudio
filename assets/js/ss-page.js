@@ -315,17 +315,53 @@
       warm.observe(tour);
     }
 
-    // the screen settles into place as it scrolls up (transform/opacity only)
+    // ---- the app builds itself as it scrolls in: header, clip list, player and inspector float up out
+    // of depth into place (drawn from the recording, so it is the real app), then the live video takes
+    // over. A pure function of scroll position, so scrolling back up takes it apart again. ----
+    var build = stage.querySelector('[data-ix-build]'), bx = build && build.getContext('2d');
+    var poster = new Image(); poster.src = screen.getAttribute('poster');
+    var PIECES = [                                                                  // [x, y, w, h] %, from (dx, dy) px, start
+      { r: [16.2, 9.82, 67.32, 90.18], dx: 0, dy: 60, s0: .9, at: 0 },             // player column
+      { r: [0, 9.82, 16.2, 90.18], dx: -70, dy: 0, s0: .96, at: .14 },             // clip list
+      { r: [83.52, 9.82, 16.48, 90.18], dx: 70, dy: 0, s0: .96, at: .24 },         // inspector
+      { r: [0, 0, 100, 9.82], dx: 0, dy: -40, s0: 1, at: .36 }                      // header
+    ];
+    var buildP = -1, buildRaf = 0;
+    var drawBuild = function () {
+      buildRaf = 0; if (!build) return;
+      var p = buildP;
+      if (p >= 1 || p < 0) { stage.classList.remove('is-building'); return; }
+      stage.classList.add('is-building');
+      var W = stage.clientWidth, H = stage.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+      if (build.width !== Math.round(W * dpr)) { build.width = Math.round(W * dpr); build.height = Math.round(H * dpr); }
+      var src = screen.readyState >= 2 && screen.videoWidth ? screen : poster, sw = src.videoWidth || src.naturalWidth, sh = src.videoHeight || src.naturalHeight;
+      bx.setTransform(1, 0, 0, 1, 0, 0); bx.clearRect(0, 0, build.width, build.height);
+      if (!sw) { buildRaf = requestAnimationFrame(drawBuild); return; }
+      bx.scale(dpr, dpr);
+      PIECES.forEach(function (pc) {
+        var e = 1 - Math.pow(1 - Math.max(0, Math.min(1, (p - pc.at) / .56)), 3); if (e <= 0) return;
+        var r = pc.r, x = r[0] / 100 * W, y = r[1] / 100 * H, w = r[2] / 100 * W, h = r[3] / 100 * H, sc = pc.s0 + (1 - pc.s0) * e;
+        bx.save(); bx.globalAlpha = e;
+        bx.translate(x + w / 2 + pc.dx * (1 - e), y + h / 2 + pc.dy * (1 - e)); bx.scale(sc, sc);
+        bx.drawImage(src, r[0] / 100 * sw, r[1] / 100 * sh, r[2] / 100 * sw, r[3] / 100 * sh, -w / 2, -h / 2, w, h);
+        bx.restore();
+      });
+      if (inView) buildRaf = requestAnimationFrame(drawBuild);                       // keep the pieces live while they settle
+    };
     if (!reduce) {
-      stage.classList.add('is-scrub');
       var ticking = false;
       var upd = function () {
         ticking = false;
         var r = stage.getBoundingClientRect(), vh = window.innerHeight;
-        stage.style.setProperty('--p', Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.6))).toFixed(3));
+        var p = cur >= 0 ? 1 : Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.36)));   // done by the time it is a third of the way up; never mid-build under a lifted feature
+        stage.style.setProperty('--p', p.toFixed(3));
+        if (build && p !== buildP) { buildP = p; if (!buildRaf) drawBuild(); }
       };
+      stage.classList.add(build ? 'is-built' : 'is-scrub');
       window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
-      window.addEventListener('resize', upd); upd();
+      window.addEventListener('resize', upd);
+      if (poster.complete) upd(); else poster.addEventListener('load', upd);
+      upd();
     }
 
     // a fixed pool of holes in the dimming mask, each framed by a two-tone outline
@@ -356,12 +392,118 @@
     // Lift: rather than magnifying the whole app, the chosen controls rise out of it — the app stays put
     // (dimmed), and a live copy of just that part scales up to the middle of the frame, then settles back.
     var liftC = stage.querySelector('[data-ix-lift]'), liftX = liftC && liftC.getContext('2d'), liftSrc = null, liftRaf = 0;
+    var cursorEl = stage.querySelector('[data-ix-cursor]'), liftFeat = -1, liftAt = 0, ptr = null;
+
+    // ---- the ghost cursor: on each lifted feature, a cursor actually uses it. The recording can't
+    // react, so what changes (a tick, a slider, the trim handles, a key press) is drawn over it in the
+    // app's own colours. Everything is in the recording's coordinates (% of the app window). ----
+    var BG = '#e7e2d4', INK = '#1b1a16', LINE = '#a5a298', TRIM_BG = 'rgba(241, 238, 227, .82)', GREEN = '#8FD687';
+    var MONO = "500 1px 'JetBrains Mono', ui-monospace, Menlo, monospace";
+    var clamp01 = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
+    var io = function (x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+    var span = function (t, a, b) { return clamp01((t - a) / (b - a)); };
+    var lerp = function (a, b, e) { return a + (b - a) * e; };
+    var THUMB_W = 0.486, THUMB_H = 1.7;
+    var sliderX = function (r, v, min, max) { return r[0] + THUMB_W / 2 + (v - min) / (max - min) * (r[2] - THUMB_W); };
+    var STRENGTH = [88.67, 40.14, 7.82, 1.45], EXPOSURE = [88.67, 51.16, 7.82, 1.45], CONTRAST = [88.67, 53.34, 7.82, 1.45], TRACK = [18.36, 89.36, 63.03, 3.27];
+    var BOX8K = [84.79, 23.47, 0.79, 1.18], BOX6K = [94.57, 20.84, 0.79, 1.18], KEYS = [[87.45, 'A'], [89.82, 'D'], [92.18, 'B'], [94.55, 'I O'], [96.91, 'Space']];
+    // way(t) = [x, y, down] from waypoints [t, x, y, down]; eased between them
+    var way = function (pts, t) {
+      if (t <= pts[0][0]) return pts[0].slice(1);
+      for (var k = 1; k < pts.length; k++) if (t < pts[k][0]) { var a = pts[k - 1], b = pts[k], e = io((t - a[0]) / (b[0] - a[0])); return [lerp(a[1], b[1], e), lerp(a[2], b[2], e), a[3]]; }
+      return pts[pts.length - 1].slice(1);
+    };
+    var SCRIPTS = [
+      { len: 5.2, keys: true },                                                     // 01 shortcuts: the keys press in turn
+      { len: 7.4, pts: [[0, 40, 96, 0], [0.8, 18.62, 91, 0], [1.0, 18.62, 91, 1], [2.0, 27, 91, 1], [2.2, 27, 91, 0], [3.0, 81.08, 91, 0], [3.2, 81.08, 91, 1], [4.2, 68, 91, 1], [4.4, 68, 91, 0], [5.2, 60, 95, 0]],
+        draw: function (d, t) {                                                     // 02 trim: drag in, then out
+          var a = 1 - span(t, 6.4, 6.9); if (a <= 0 || t < 1) return;
+          var inX = lerp(18.62, 27, io(span(t, 1.0, 2.0))), outX = t < 3.2 ? 81.08 : lerp(81.08, 68, io(span(t, 3.2, 4.2)));
+          d.alpha(a); d.rect(TRACK[0], TRACK[1], inX - TRACK[0], TRACK[3], TRIM_BG); d.rect(outX, TRACK[1], TRACK[0] + TRACK[2] - outX, TRACK[3], TRIM_BG);
+          d.rect(inX - 0.18, TRACK[1], 0.36, TRACK[3], GREEN); d.rect(outX - 0.18, TRACK[1], 0.36, TRACK[3], GREEN);
+        } },
+      { len: 6.6, pts: [[0, 91, 31, 0], [0.8, 85.18, 24.06, 0], [0.9, 85.18, 24.06, 1], [1.05, 85.18, 24.06, 0], [1.8, 94.96, 21.43, 0], [1.9, 94.96, 21.43, 1], [2.05, 94.96, 21.43, 0], [2.8, 92, 28, 0]],
+        draw: function (d, t) {                                                     // 03 export: tick 8K and 6K
+          var a = 1 - span(t, 5.6, 6.1); if (a <= 0) return; d.alpha(a);
+          if (t >= 0.95) d.check(BOX8K); if (t >= 1.95) d.check(BOX6K);
+        } },
+      { len: 6.8, pts: [[0, 92, 45, 0], [0.8, 96.25, 40.86, 0], [0.9, 96.25, 40.86, 1], [2.1, sliderX(STRENGTH, 55, 0, 100), 40.86, 1], [2.3, sliderX(STRENGTH, 55, 0, 100), 40.86, 0], [3.9, sliderX(STRENGTH, 55, 0, 100), 40.86, 0], [4.0, sliderX(STRENGTH, 55, 0, 100), 40.86, 1], [5.0, 96.25, 40.86, 1], [5.1, 96.25, 40.86, 0], [5.8, 93, 45, 0]],
+        draw: function (d, t) {                                                     // 04 looks: strength down, then back
+          if (t < 0.9 || t > 5.05) return;
+          var v = t < 4 ? lerp(100, 55, io(span(t, 0.9, 2.1))) : lerp(55, 100, io(span(t, 4.0, 5.0)));
+          d.slider(STRENGTH, v, 0, 100, Math.round(v) + '%');
+        } },
+      { len: 7.0, pts: [[0, 92, 58, 0], [0.8, 92.58, 51.88, 0], [0.9, 92.58, 51.88, 1], [2.0, sliderX(EXPOSURE, 0.8, -2, 2), 51.88, 1], [2.2, sliderX(EXPOSURE, 0.8, -2, 2), 51.88, 0], [2.9, 92.58, 54.06, 0], [3.0, 92.58, 54.06, 1], [4.0, sliderX(CONTRAST, 30, -100, 100), 54.06, 1], [4.2, sliderX(CONTRAST, 30, -100, 100), 54.06, 0], [4.9, 95, 58.5, 0]],
+        draw: function (d, t) {                                                     // 05 fine-tune: exposure up, contrast up
+          var a = 1 - span(t, 6.0, 6.5); if (a <= 0 || t < 0.9) return; d.alpha(a);
+          var ex = lerp(0, 0.8, io(span(t, 0.9, 2.0))); d.slider(EXPOSURE, ex, -2, 2, ex.toFixed(1));
+          if (t >= 3.0) { var ct = lerp(0, 30, io(span(t, 3.0, 4.0))); d.slider(CONTRAST, ct, -100, 100, String(Math.round(ct))); }
+        } }
+    ];
+    // a tiny drawing kit in app coordinates, for the current card
+    var kit = function (c, src) {
+      var sx = c.canvas.width / src[2], sy = c.canvas.height / src[3];
+      var X = function (x) { return (x - src[0]) * sx; }, Y = function (y) { return (y - src[1]) * sy; };
+      var d = {
+        alpha: function (a) { c.globalAlpha = a; },
+        rect: function (x, y, w, h, fill) { c.fillStyle = fill; c.fillRect(X(x), Y(y), w * sx, h * sy); },
+        text: function (str, xr, yc, size, fill) { c.fillStyle = fill; c.font = MONO.replace('1px', (size * sy).toFixed(1) + 'px'); c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(str, X(xr), Y(yc)); },
+        check: function (b) {
+          d.rect(b[0], b[1], b[2], b[3], INK);
+          c.strokeStyle = '#fff'; c.lineWidth = Math.max(1, b[3] * sy * 0.14); c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath();
+          c.moveTo(X(b[0] + b[2] * .22), Y(b[1] + b[3] * .52)); c.lineTo(X(b[0] + b[2] * .43), Y(b[1] + b[3] * .72)); c.lineTo(X(b[0] + b[2] * .8), Y(b[1] + b[3] * .3)); c.stroke();
+        },
+        slider: function (r, v, min, max, label) {
+          var cy = r[1] + r[3] / 2;
+          d.rect(r[0] - 0.3, r[1] - 0.25, r[2] + 0.6, r[3] + 0.5, BG);
+          d.rect(r[0], cy - 0.05, r[2], 0.1, LINE);
+          d.rect(sliderX(r, v, min, max) - THUMB_W / 2, cy - THUMB_H / 2, THUMB_W, THUMB_H, INK);
+          d.rect(96.9, cy - 0.95, 2.2, 1.9, BG); d.text(label, 99.03, cy, 1.05, INK);
+        }
+      };
+      d.keys = function (t) {                                                       // one key at a time, pressed
+        for (var k = 0; k < KEYS.length; k++) {
+          var p = span(t, 0.5 + k * 0.8, 0.5 + k * 0.8 + 0.12) * (1 - span(t, 0.5 + k * 0.8 + 0.42, 0.5 + k * 0.8 + 0.62)); if (p <= 0) continue;
+          var y = KEYS[k][0]; c.globalAlpha = p;
+          d.rect(84.55, y, 2.55, 1.64, INK);
+          c.fillStyle = BG; c.font = MONO.replace('500 1px', '600 ' + (0.95 * sy).toFixed(1) + 'px'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(KEYS[k][1], X(84.55 + 1.275), Y(y + 0.86));
+        }
+        c.globalAlpha = 1;
+      };
+      return d;
+    };
+    window.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') ptr = [e.clientX, e.clientY]; }, { passive: true });
+
     var liftDraw = function () {
       liftRaf = 0; if (!liftSrc) return;
       var v = stage.classList.contains('is-night') && dark ? dark : screen;
       if (v.readyState >= 2 && v.videoWidth) {
-        var r = liftSrc, vw = v.videoWidth, vh = v.videoHeight;
-        liftX.drawImage(v, r[0] / 100 * vw, r[1] / 100 * vh, r[2] / 100 * vw, r[3] / 100 * vh, 0, 0, liftC.width, liftC.height);
+        var r = liftSrc, vw = v.videoWidth, vh = v.videoHeight, W = liftC.width, H = liftC.height;
+        liftX.globalAlpha = 1; liftX.globalCompositeOperation = 'source-over';
+        liftX.drawImage(v, r[0] / 100 * vw, r[1] / 100 * vh, r[2] / 100 * vw, r[3] / 100 * vh, 0, 0, W, H);
+        var sc = SCRIPTS[liftFeat], t = (performance.now() - liftAt) / 1000 - 0.75, cur = null;
+        if (sc && !reduce && t >= 0) {
+          t = t % sc.len;
+          var d = kit(liftX, r);
+          if (sc.keys) d.keys(t);
+          if (sc.draw) { sc.draw(d, t); liftX.globalAlpha = 1; }
+          if (sc.pts) cur = way(sc.pts, t);
+        }
+        if (cursorEl) {
+          if (cur) {
+            var L = parseFloat(liftC.style.left), T = parseFloat(liftC.style.top), w = parseFloat(liftC.style.width), h = parseFloat(liftC.style.height);
+            var fade = Math.min(span(t, 0, 0.35), 1 - span(t, sc.len - 0.5, sc.len - 0.1));
+            cursorEl.style.transform = 'translate(' + (L + (cur[0] - r[0]) / r[2] * w).toFixed(1) + 'px, ' + (T + (cur[1] - r[1]) / r[3] * h).toFixed(1) + 'px)';
+            cursorEl.style.opacity = fade.toFixed(3); cursorEl.classList.toggle('is-down', !!cur[2]);
+          } else cursorEl.style.opacity = '0';
+        }
+        // sheen: a soft light that follows the pointer across the card (drifts on its own on touch)
+        var b = liftC.getBoundingClientRect(), gx, gy;
+        if (ptr && b.width) { gx = (ptr[0] - b.left) / b.width * W; gy = (ptr[1] - b.top) / b.height * H; }
+        else { var k = performance.now() / 5200; gx = (0.5 + 0.45 * Math.sin(k)) * W; gy = (0.2 + 0.15 * Math.cos(k * 1.3)) * H; }
+        var gr = liftX.createRadialGradient(gx, gy, 0, gx, gy, Math.max(W, H) * 0.75);
+        gr.addColorStop(0, 'rgba(255, 255, 255, .16)'); gr.addColorStop(0.5, 'rgba(255, 255, 255, .05)'); gr.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        liftX.globalCompositeOperation = 'screen'; liftX.fillStyle = gr; liftX.fillRect(0, 0, W, H); liftX.globalCompositeOperation = 'source-over';
       }
       liftRaf = requestAnimationFrame(liftDraw);
     };
@@ -370,6 +512,7 @@
       if (!btn || btn.hasAttribute('data-ix-night')) {
         if (!liftC.classList.contains('is-on')) return;
         liftC.style.transform = liftC.dataset.from || ''; liftC.classList.remove('is-on'); stage.classList.remove('is-lifted');
+        liftFeat = -1; if (cursorEl) cursorEl.style.opacity = '0';
         setTimeout(function () { if (!liftC.classList.contains('is-on')) { liftSrc = null; cancelAnimationFrame(liftRaf); liftRaf = 0; } }, 560);
         return;
       }
@@ -386,12 +529,14 @@
       liftC.style.left = left + 'px'; liftC.style.top = top + 'px'; liftC.style.width = w + 'px'; liftC.style.height = h + 'px';
       liftC.width = Math.round(w * dpr); liftC.height = Math.round(h * dpr);
       liftSrc = [x0, y0, x1 - x0, y1 - y0]; liftC.dataset.from = from;
+      liftFeat = feats.indexOf(btn); liftAt = performance.now();
       if (!liftRaf) liftDraw(); else { cancelAnimationFrame(liftRaf); liftDraw(); }
       // from rest it rises out of its own spot; between features the card morphs from its last shape
       var start = prev ? 'translate(' + (prev[0] - left).toFixed(1) + 'px, ' + (prev[1] - top).toFixed(1) + 'px) scale(' + (prev[2] / w).toFixed(4) + ', ' + (prev[3] / h).toFixed(4) + ')' : from;
       liftC.classList.add('is-snap'); liftC.style.transform = start; void liftC.offsetWidth;
       liftC.classList.remove('is-snap'); liftC.classList.add('is-on'); liftC.style.transform = 'none';
       stage.classList.add('is-lifted');
+      if (buildP < 1) { buildP = 1; drawBuild(); }
     };
 
     var show = function (i) {
@@ -447,6 +592,27 @@
         else { screen.pause(); if (dark) dark.pause(); }
       }, { threshold: 0.15 }).observe(tour);
     }
+  })();
+
+  // ---- real numbers: each counts up from zero the first time the row is seen (ends on the exact value) ----
+  (function () {
+    var row = document.querySelector('[data-ix-stats]'); if (!row || reduce || !('IntersectionObserver' in window)) return;
+    var nums = [].slice.call(row.querySelectorAll('[data-count]'));
+    var put = function (el, v) { el.textContent = v + (el.getAttribute('data-suffix') || ''); };
+    nums.forEach(function (el) { put(el, 0); });
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return; io.disconnect();
+      var t0 = performance.now();
+      (function step(ts) {
+        var done = true;
+        nums.forEach(function (el, k) {
+          var x = Math.max(0, Math.min(1, (ts - t0 - k * 140) / 1600)), e = 1 - Math.pow(1 - x, 4);
+          put(el, Math.round(+el.getAttribute('data-count') * e)); if (x < 1) done = false;
+        });
+        if (!done) requestAnimationFrame(step);
+      })(t0);
+    }, { threshold: 0.6 });
+    io.observe(row);
   })();
 
   // ---- hero: the shredded strip ----
