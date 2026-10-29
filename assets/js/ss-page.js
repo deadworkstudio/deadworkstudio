@@ -594,27 +594,6 @@
     }
   })();
 
-  // ---- real numbers: each counts up from zero the first time the row is seen (ends on the exact value) ----
-  (function () {
-    var row = document.querySelector('[data-ix-stats]'); if (!row || reduce || !('IntersectionObserver' in window)) return;
-    var nums = [].slice.call(row.querySelectorAll('[data-count]'));
-    var put = function (el, v) { el.textContent = v + (el.getAttribute('data-suffix') || ''); };
-    nums.forEach(function (el) { put(el, 0); });
-    var io = new IntersectionObserver(function (es) {
-      if (!es[0].isIntersecting) return; io.disconnect();
-      var t0 = performance.now();
-      (function step(ts) {
-        var done = true;
-        nums.forEach(function (el, k) {
-          var x = Math.max(0, Math.min(1, (ts - t0 - k * 140) / 1600)), e = 1 - Math.pow(1 - x, 4);
-          put(el, Math.round(+el.getAttribute('data-count') * e)); if (x < 1) done = false;
-        });
-        if (!done) requestAnimationFrame(step);
-      })(t0);
-    }, { threshold: 0.6 });
-    io.observe(row);
-  })();
-
   // ---- hero: the shredded strip ----
   // One real take (black and white) plays as a single flat frame, then slices into six clips that
   // separate evenly and settle, each labelled like an exported clip. One canvas, one video.
