@@ -47,7 +47,10 @@
   var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
   var IN = [64.49, 68.37, 69.74, 70.87, 72.91, 77.71];             // each shot's in-point in the film (s)
   var LENS = [2.69, 1.27, 1.03, 1.94, 3.74, 1.15];                 // each shot's length (s)
-  var RATE = 0.6;                                                  // the riding plays in slow motion, so short shots never stutter-loop
+  // The riding plays in slow motion, so short shots never stutter-loop. The slow motion is baked into
+  // the files (0.6x, motion-interpolated to 60 fps), so they play at normal rate and stay smooth;
+  // slowing 24 fps clips in the browser showed only ~14 frames a second.
+  var RATE = 1;
   var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 180;                                                 // take-seconds per second between moments
   var FOCAL = [0.667, 0.723, 0.712, 0.634, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)

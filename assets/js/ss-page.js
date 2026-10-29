@@ -266,9 +266,18 @@
   // leaving the row clears it. Nothing is highlighted at rest, and nothing cycles on its own.
   (function () {
     var tour = document.querySelector('[data-ix-tour]'); if (!tour) return;
-    // full-resolution recording only where it'll be seen: wide or high-density screens
-    if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1700) {
-      tour.querySelectorAll('video[data-hd]').forEach(function (v) { var s = v.querySelector('source'); if (s) { s.src = v.getAttribute('data-hd'); v.load(); } });
+    // full-resolution recording on desktop and tablet screens. The features zoom the picture up to 2.4x,
+    // so even a 670 px stage on a 2x screen needs ~3200 px of video (the old test, tour width x dpr > 1700,
+    // left most laptops on the 1600 px file, which is what looked soft when zoomed)
+    if (window.innerWidth >= 768 && tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1000) {
+      // 4320 px HEVC where the browser plays it (Safari, most Chrome/Edge), so the zoomed-in features stay
+      // sharp; 3600 px H.264 everywhere else (H.264 decoders top out around 4096 px wide)
+      var hevc = !!document.createElement('video').canPlayType('video/mp4; codecs="hvc1.1.6.L180.B0"');
+      tour.querySelectorAll('video[data-hd]').forEach(function (v) {
+        var s = v.querySelector('source'); if (!s) return;
+        if (hevc && v.hasAttribute('data-uhd')) { s.src = v.getAttribute('data-uhd'); s.type = 'video/mp4; codecs="hvc1.1.6.L180.B0"'; } else s.src = v.getAttribute('data-hd');
+        v.load();
+      });
     }
     var stage = tour.querySelector('[data-ix-hero]'), screen = tour.querySelector('[data-ix-screen]');
     var nav = tour.querySelector('[data-ix-nav]'), explain = tour.querySelector('[data-ix-explain]');
