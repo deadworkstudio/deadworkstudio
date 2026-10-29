@@ -11,9 +11,9 @@
 
   var PLANS = {
     starter: { name: 'Starter', price: 25 },
-    creator: { name: 'Creator', price: 59 },
-    pro: { name: 'Pro', price: 109 },
-    studio: { name: 'Studio', price: 199 }
+    creator: { name: 'Creator', price: 50 },
+    pro: { name: 'Pro', price: 100 },
+    studio: { name: 'Studio', price: 200 }
   };
 
   var grid = document.querySelector('[data-pricing-grid]');
@@ -21,25 +21,25 @@
   var success = document.querySelector('[data-checkout-success]');
   if (!grid || !panel || !success) return; // this page doesn't have the pricing section
 
-  // Billing selector (2026-10-28): Monthly, 6 months, 12 months, Annual. Every price below is
+  // Billing selector (2026-10-28, second pass): Monthly, 6 months, 12 months, all billed monthly at
+  // clean round prices. Annual (one up-front payment) is no longer sold. Every price below is
   // the owner's table, in cents, kept in sync by hand with the payment Worker's
   // worker/src/billing.ts PRICE_CENTS — the Worker charges its own copy, never these, so a drift
   // here could only ever mislabel a price, never change what Stripe charges (and Stripe's own
   // form shows the real amount before anyone pays).
   var CENTS = {
-    starter: { month: 2500, m6: 2250, m12: 2125, year: 24000 },
-    creator: { month: 5900, m6: 5310, m12: 5015, year: 56640 },
-    pro: { month: 10900, m6: 9810, m12: 9265, year: 104640 },
-    studio: { month: 19900, m6: 17910, m12: 16915, year: 191040 }
+    starter: { month: 2500, m6: 2200, m12: 2000 },
+    creator: { month: 5000, m6: 4500, m12: 4000 },
+    pro: { month: 10000, m6: 9000, m12: 8000 },
+    studio: { month: 20000, m6: 18000, m12: 16000 }
   };
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
   // the terms paragraph under the grid and the text Stripe shows above its Subscribe button.
   var TERM_NOTE = {
     month: '<strong>Billed monthly.</strong> Cancel anytime. No fee.',
-    m6: '<strong>Billed monthly for 6 months.</strong> 10% off every payment. Renews for another 6 months unless you turn off auto-renew.',
-    m12: '<strong>Billed monthly for 12 months.</strong> 15% off every payment. Renews for another 12 months unless you turn off auto-renew.',
-    year: '<strong>One payment today covers 12 months.</strong> 20% off. Renews yearly unless you turn off auto-renew.'
+    m6: '<strong>Billed monthly for 6 months.</strong> At least 10% off every payment. Renews for another 6 months unless you turn off auto-renew.',
+    m12: '<strong>Billed monthly for 12 months.</strong> 20% off every payment. Renews for another 12 months unless you turn off auto-renew.'
   };
   function usd(cents) {
     var whole = Math.floor(cents / 100);
@@ -49,7 +49,7 @@
 
   var termGroup = document.querySelector('[data-term]');
   var termNote = document.querySelector('[data-term-note]');
-  var currentInterval = 'month'; // one of month | m6 | m12 | year
+  var currentInterval = 'month'; // one of month | m6 | m12
 
   function renderPrices(option) {
     if (termNote) termNote.innerHTML = TERM_NOTE[option];
