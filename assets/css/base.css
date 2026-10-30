@@ -588,6 +588,9 @@ iframe[title='chat widget'],
    blur. The field is 16px at every size already (P1-2 above), so the coarse-pointer bump this
    used to need is now a no-op — left noted here in case the base size ever drops again. */
 .notify-input::placeholder { color: var(--bone-3); }
+/* First-name field sits on its own full-width row above email + button. flex 0 0 auto + width
+   (not a 100% flex-basis) so it stays correct when a page flips the form to a column on mobile. */
+.notify-input.notify-name { flex: 0 0 auto; width: 100%; }
 /* Honeypot: present in the DOM for bots that auto-fill every field, invisible and unreachable
    (off-screen + unfocusable) for real visitors and screen readers alike. */
 .notify-hp {

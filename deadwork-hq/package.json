@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "test": "node test-notify.mjs && node test-admin.mjs && node test-migrate-kv.mjs && node test-digest-logic.mjs && node test-digest.mjs"
+    "test": "node test-notify.mjs && node test-admin.mjs && node test-migrate-kv.mjs && node test-digest-logic.mjs && node test-digest.mjs && node test-welcome.mjs"
   },
   "dependencies": {
     "worker-mailer": "^1.2.1"
