@@ -18,6 +18,8 @@ export interface MailMessage {
   subject: string
   text: string
   html: string
+  /** Defaults to 'DEADWORK HQ' (the internal digest). Customer-facing mail passes 'DEADWORK STUDIO'. */
+  fromName?: string
 }
 
 /** Throws if GMAIL_USER/GMAIL_APP_PASSWORD aren't configured yet, or if the send itself fails —
@@ -35,7 +37,7 @@ export async function sendMail(env: MailEnv, message: MailMessage): Promise<void
     startTls: true
   })
   await mailer.send({
-    from: { name: 'DEADWORK HQ', email: env.GMAIL_USER },
+    from: { name: message.fromName ?? 'DEADWORK HQ', email: env.GMAIL_USER },
     to: { email: message.to },
     subject: message.subject,
     text: message.text,

@@ -18,6 +18,7 @@
 // One public endpoint, unchanged in shape: POST /notify { email, product, company? } -> { ok: true }
 
 import { runDailyDigest } from './digest'
+import { sendWelcomeEmail } from './welcome'
 
 export interface Env {
   SIGNUPS_DB: D1Database
@@ -217,7 +218,7 @@ function normalizeFirstName(value: unknown): string | null {
 // KV get-then-put as requireAdmin's failure counter.
 const NOTIFY_MAX_PER_IP_PER_HOUR = 10
 
-async function handleNotify(request: Request, env: Env): Promise<Response> {
+async function handleNotify(request: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
   let payload: { email?: unknown; firstName?: unknown; product?: unknown; company?: unknown; source?: unknown; page?: unknown }
   try {
     payload = await request.json()
@@ -258,7 +259,19 @@ async function handleNotify(request: Request, env: Env): Promise<Response> {
   }
   await env.NOTIFY_SIGNUPS.put(ipKey, String(recentFromIp + 1), { expirationTtl: 3600 })
 
+  // Checked before the insert so someone signing up for a second product doesn't get welcomed twice.
+  const seenBefore = await env.SIGNUPS_DB.prepare('SELECT 1 FROM signups WHERE email = ? LIMIT 1').bind(email).first()
   await insertSignup(env.SIGNUPS_DB, email, product, Date.now(), source, page)
+
+  // Website signups only: Stock Shredder app users come in through footage-curator/worker's /lead
+  // and already get that app's own emails. Best-effort and off the response path, same as Kit.
+  if (!seenBefore && product !== 'stock-shredder') {
+    const welcome = sendWelcomeEmail(env, email, firstName).catch((err) => {
+      console.log('sendWelcomeEmail threw', err instanceof Error ? err.message : String(err))
+    })
+    if (ctx) ctx.waitUntil(welcome)
+    else await welcome
+  }
 
   try {
     await syncToKit(env, email, product, firstName)
@@ -651,13 +664,13 @@ async function migrateKvToD1(env: Env): Promise<{ emailsScanned: number; rowsIns
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     if (request.method === 'OPTIONS') return new Response(null, { headers: CORS_HEADERS })
 
     const url = new URL(request.url)
 
     if (url.pathname === '/notify' && request.method === 'POST') {
-      return handleNotify(request, env)
+      return handleNotify(request, env, ctx)
     }
 
     if (url.pathname === '/admin' && request.method === 'GET') {
