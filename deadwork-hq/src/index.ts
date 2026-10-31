@@ -147,6 +147,9 @@ function jsonResponse(body: unknown, status = 200): Response {
 
 export interface SignupRow {
   email: string
+  /** From the signup form's First name field. Null for rows written before
+   *  migrations/0003_signup_first_name.sql and for an old cached notify.js. */
+  firstName: string | null
   product: string
   createdAt: number
   /** The visitor's own document.referrer at submission time (or the literal string 'direct'
@@ -162,6 +165,7 @@ export interface SignupRow {
 function rowToSignup(row: Record<string, unknown>): SignupRow {
   return {
     email: row.email as string,
+    firstName: (row.first_name as string) ?? null,
     product: row.product as string,
     createdAt: row.created_at as number,
     source: (row.source as string) ?? null,
@@ -177,10 +181,10 @@ function rowToSignup(row: Record<string, unknown>): SignupRow {
  *  claimFreeTrialDevice uses for this identical atomic-check-and-claim pattern. Returns whether a
  *  new row was actually written, so callers (notably the KV migration below) can report real
  *  counts instead of guessing. */
-async function insertSignup(db: D1Database, email: string, product: string, createdAt: number, source: string | null, page: string | null): Promise<boolean> {
+async function insertSignup(db: D1Database, email: string, product: string, createdAt: number, source: string | null, page: string | null, firstName: string | null = null): Promise<boolean> {
   const { meta } = await db
-    .prepare('INSERT OR IGNORE INTO signups (email, product, created_at, source, page) VALUES (?, ?, ?, ?, ?)')
-    .bind(email, product, createdAt, source, page)
+    .prepare('INSERT OR IGNORE INTO signups (email, product, created_at, source, page, first_name) VALUES (?, ?, ?, ?, ?, ?)')
+    .bind(email, product, createdAt, source, page, firstName)
     .run()
   return meta.changes > 0
 }
@@ -188,7 +192,7 @@ async function insertSignup(db: D1Database, email: string, product: string, crea
 // Exported so digest.ts can read the same signups this admin dashboard reads, without a second
 // copy of this query living in two places.
 export async function listSignups(db: D1Database): Promise<SignupRow[]> {
-  const { results } = await db.prepare('SELECT email, product, created_at, source, page FROM signups ORDER BY created_at DESC').all()
+  const { results } = await db.prepare('SELECT email, first_name, product, created_at, source, page FROM signups ORDER BY created_at DESC').all()
   return results.map((row) => rowToSignup(row as Record<string, unknown>))
 }
 
@@ -247,8 +251,8 @@ async function handleNotify(request: Request, env: Env, ctx?: ExecutionContext):
   // fields at all must keep signing people up exactly as it always has.
   const source = normalizeSourceField(payload.source)
   const page = normalizeSourceField(payload.page)
-  // Optional for the same reason. Only used for Kit's first_name (the welcome email's greeting),
-  // not stored in D1.
+  // Optional for the same reason. Saved with the signup, sent to Kit as first_name, and used in
+  // the welcome email's greeting.
   const firstName = normalizeFirstName(payload.firstName)
 
   const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
@@ -261,7 +265,7 @@ async function handleNotify(request: Request, env: Env, ctx?: ExecutionContext):
 
   // Checked before the insert so someone signing up for a second product doesn't get welcomed twice.
   const seenBefore = await env.SIGNUPS_DB.prepare('SELECT 1 FROM signups WHERE email = ? LIMIT 1').bind(email).first()
-  await insertSignup(env.SIGNUPS_DB, email, product, Date.now(), source, page)
+  await insertSignup(env.SIGNUPS_DB, email, product, Date.now(), source, page, firstName)
 
   // Website signups only: Stock Shredder app users come in through footage-curator/worker's /lead
   // and already get that app's own emails. Best-effort and off the response path, same as Kit.
@@ -425,13 +429,13 @@ function adminPageHtml(nonce: string): string {
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px">
         <h2>Emails</h2>
         <div>
-          <input id="search" placeholder="Search email or product" style="width: 220px">
+          <input id="search" placeholder="Search name, email or product" style="width: 220px">
           <button id="downloadCsv">Download CSV</button>
         </div>
       </div>
       <div id="productFilters" style="display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0"></div>
       <table>
-        <thead><tr><th>Email</th><th>Product</th><th>Source</th><th>When</th></tr></thead>
+        <thead><tr><th>Name</th><th>Email</th><th>Product</th><th>Source</th><th>When</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -547,10 +551,11 @@ function adminPageHtml(nonce: string): string {
     const filtered = signups.filter(
       (s) =>
         (!activeProductFilter || s.product === activeProductFilter) &&
-        (!q || s.email.toLowerCase().includes(q) || s.product.toLowerCase().includes(q))
+        (!q || s.email.toLowerCase().includes(q) || (s.firstName || '').toLowerCase().includes(q) || s.product.toLowerCase().includes(q))
     )
     document.getElementById('rows').innerHTML = filtered.map((s) => \`
       <tr>
+        <td>\${escapeHtml(s.firstName || '—')}</td>
         <td>\${escapeHtml(s.email)}</td>
         <td>\${escapeHtml(PRODUCT_LABELS[s.product] || s.product)}</td>
         <td>\${escapeHtml(s.source || '—')}</td>
@@ -560,10 +565,10 @@ function adminPageHtml(nonce: string): string {
   }
 
   function toCsv() {
-    const header = ['Email', 'Product', 'Source', 'When']
-    const rows = signups.map((s) => [s.email, PRODUCT_LABELS[s.product] || s.product, s.source || '', new Date(s.createdAt).toISOString()])
+    const header = ['Name', 'Email', 'Product', 'Source', 'When']
+    const rows = signups.map((s) => [s.firstName || '', s.email, PRODUCT_LABELS[s.product] || s.product, s.source || '', new Date(s.createdAt).toISOString()])
     // A cell starting with = + - @ (or a tab/CR) runs as a formula when the file is opened in
-    // Excel/Sheets, and email/source are typed by the public. A leading ' makes it plain text.
+    // Excel/Sheets, and name/email/source are typed by the public. A leading ' makes it plain text.
     const cell = (v) => {
       const text = String(v)
       return '"' + (/^[=+\\-@\\t\\r]/.test(text) ? "'" + text : text).replace(/"/g, '""') + '"'
@@ -725,11 +730,11 @@ export default {
       )
       // signups may already exist on disk from before lead-source tracking (this same real D1
       // database persists to disk across separate test-file runs), in which case CREATE TABLE IF
-      // NOT EXISTS above is a no-op and these two columns are still missing - ALTER them in now,
+      // NOT EXISTS above is a no-op and these columns are still missing - ALTER them in now,
       // ignoring "duplicate column" once a later run has already added them. Same pattern
       // footage-curator/worker's own /_test/setup-customers-db route already uses for this exact
       // situation.
-      for (const alter of ['ALTER TABLE signups ADD COLUMN source TEXT', 'ALTER TABLE signups ADD COLUMN page TEXT']) {
+      for (const alter of ['ALTER TABLE signups ADD COLUMN source TEXT', 'ALTER TABLE signups ADD COLUMN page TEXT', 'ALTER TABLE signups ADD COLUMN first_name TEXT']) {
         try {
           await env.SIGNUPS_DB.exec(alter)
         } catch {
