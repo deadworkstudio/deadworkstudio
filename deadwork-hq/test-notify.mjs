@@ -104,7 +104,7 @@ try {
   const afterDuplicate = await signups()
   check('re-submitting the same email+product does not create a second row', afterDuplicate.length === afterSecondProduct.length, JSON.stringify(afterDuplicate))
 
-  // First name is optional and only forwarded to Kit, so any shape of it must still sign up fine.
+  // First name is optional, so any shape of it must still sign up fine.
   for (const [label, firstName] of [['a first name', 'Jamie'], ['a non-string first name', 42], ['an oversized first name', 'n'.repeat(500)]]) {
     const res = await worker.fetch('http://worker/notify', {
       method: 'POST',
@@ -112,6 +112,12 @@ try {
     })
     check(`a signup with ${label} succeeds`, res.status === 200, String(res.status))
   }
+  const afterNamed = await signups()
+  const byEmail = (e) => afterNamed.find((s) => s.email === e)
+  check('the first name is saved with the signup', byEmail('named-5@example.com')?.firstName === 'Jamie', JSON.stringify(byEmail('named-5@example.com')))
+  check('a non-string first name is saved as no name', byEmail('named-2@example.com')?.firstName === null, JSON.stringify(byEmail('named-2@example.com')))
+  check('an oversized first name is capped at 80 characters', byEmail('named-500@example.com')?.firstName?.length === 80, byEmail('named-500@example.com')?.firstName?.length)
+  check('a signup without a first name has no name', byEmail('jamie@example.com')?.firstName === null, JSON.stringify(byEmail('jamie@example.com')))
 
   // Per-IP cap: every submission above came from the same (local) address, so keep going until the
   // 10-an-hour limit is hit, and confirm the next one is refused and not stored.
