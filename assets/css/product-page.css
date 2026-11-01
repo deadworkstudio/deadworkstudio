@@ -83,3 +83,10 @@ img.film-video { filter: grayscale(.15) contrast(1.04); }
 
 /* Handoff's mark is nearly square, so it reads small at the shared logo height */
 [data-product="handoff"] .hero-logo { height: clamp(64px, 9.6vh, 96px); }
+
+/* two phones in one image (iPhone + Android side by side) */
+.feat-shot.is-phones { width: min(100%, 640px); }
+.feat-shot.is-phones img { border-radius: 18px; }
+@media (min-width: 900px) and (min-height: 600px) {
+  .feat-shot.is-phones { width: min(100%, 640px, calc((100svh - var(--sh-h) - 15vh - 230px) * 0.92)); }
+}
