@@ -1,0 +1,85 @@
+/* Product pages for the in-development tools (Handoff, Scene Lock, Set Control, Sound Driver).
+   Loads after ss-page.css and reuses its whole system (hero, film, workflow, split, spec sheet,
+   FAQ, tools grid, MacBook frame, phone frame). This file only adds what those pages need that
+   Stock Shredder doesn't have: the "Be first to know" form in place of downloads/pricing, and
+   one-screen feature sections with a framed screenshot. */
+
+/* ---- hero: room for the notify form under the screenshot ---- */
+.pp .hero { --hero-text: clamp(420px, 48vh, 500px); }
+.pp .hero .badge { margin-top: 14px; }
+@media (min-width: 900px) and (min-height: 600px) {
+  .pp main > section.hero { --hero-text: clamp(520px, 56vh, 600px); }
+}
+
+/* ---- notify form (same Worker + script as the old in-development pages) ---- */
+.pp-notify { margin-top: clamp(22px, 3.2vh, 36px); }
+.pp-notify .notify-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 640px; margin: 0 auto; }
+.pp-notify .notify-input { flex: 1 1 180px; min-width: 0; min-height: 46px; padding: 0 18px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; color: var(--ink); font: 16px/1.4 var(--sans); }
+.pp-notify .notify-input::placeholder { color: var(--ink-3); }
+.pp-notify .notify-input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.pp-notify .notify-name { flex: 0 1 170px; }
+.pp-notify .notify-submit { flex: 0 0 auto; min-height: 46px; border-radius: 999px; }
+.pp-notify .notify-submit:disabled { opacity: .5; cursor: not-allowed; }
+.pp-notify .notify-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.pp-notify .notify-status { flex-basis: 100%; margin-top: 4px; font-size: 14px; color: var(--ink-2); }
+.pp-notify .notify-status-bad { color: #B3261E; }
+.pp-notify .notify-status-good { color: var(--green); }
+.tone-dark .pp-notify .notify-status-good { color: #8FD687; }
+.tone-dark .pp-notify .notify-status-bad { color: #F08A80; }
+.pp-notify-note { margin-top: 14px; color: var(--ink-3) !important; }
+@media (max-width: 560px) {
+  .pp-notify .notify-name, .pp-notify .notify-input { flex: 1 1 100%; }
+  .pp-notify .notify-submit { flex: 1 1 100%; }
+}
+
+/* ---- film band from a still photo (tools without a film yet) ---- */
+img.film-video { filter: grayscale(.15) contrast(1.04); }
+
+/* ---- feature sections: number, headline, one line, then the real screen ---- */
+.feat .feat-num { margin-bottom: 14px; }
+.feat .section-sub { max-width: 54ch; margin-left: auto; margin-right: auto; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; color: var(--ink-2); }
+.feat-shot { width: min(100%, 1040px); margin: clamp(28px, 4vh, 44px) auto 0; }
+.feat-shot.is-flat img { width: 100%; border-radius: 6px; box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 30px 60px -24px rgba(20,20,18,.45), 0 12px 24px -12px rgba(20,20,18,.3); }
+.feat-shot.is-small { width: min(100%, 720px); }
+.tone-dark .feat-shot.is-flat img { box-shadow: 0 30px 60px -24px rgba(0,0,0,.8); }
+@media (min-width: 900px) and (min-height: 600px) {
+  .feat-shot { width: min(100%, 1040px, calc((100svh - var(--sh-h) - 15vh - 230px) * 1.55)); }
+  .feat-shot.is-small { width: min(100%, 720px, calc((100svh - var(--sh-h) - 15vh - 230px) * 1.2)); }
+}
+
+/* two screens side by side (e.g. SAFE / FAILED) */
+.feat-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 28px); width: min(100%, 1200px); margin: clamp(28px, 4vh, 44px) auto 0; }
+.feat-duo img { width: 100%; border-radius: 6px; box-shadow: 0 30px 60px -24px rgba(20,20,18,.45); }
+.feat-duo figcaption { margin-top: 12px; }
+@media (min-width: 900px) and (min-height: 600px) {
+  .feat-duo { width: min(100%, 1200px, calc((100svh - var(--sh-h) - 15vh - 240px) * 3.2)); }
+}
+@media (max-width: 719px) { .feat-duo { grid-template-columns: 1fr; } }
+
+/* phone screenshot (static image inside ss-page.css's phone frame) */
+.phone-body .phone-shot { display: block; width: 100%; border-radius: 38px; padding-top: 36px; background: #0a0a09; }
+
+/* final call to action */
+.pp-cta .section-title { margin-bottom: 6px; }
+.pp-cta .pp-notify { margin-top: 26px; }
+
+/* ---- six features (same grid as the Loadout page) ---- */
+.pp-feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1180px; margin: 12px auto 0; border-top: 1px solid var(--line-2); text-align: left; }
+.pp-feat-grid li { padding: 30px clamp(18px, 2.4vw, 34px) 34px; border-bottom: 1px solid var(--line-2); }
+.pp-feat-grid li:not(:nth-child(3n + 1)) { border-left: 1px solid var(--line-2); }
+.pp-feat-n { display: block; font-size: 12px; letter-spacing: .2em; color: var(--ink-3); }
+.pp-feat-h { margin-top: 14px; font: 600 clamp(19px, 1.5vw, 22px)/1.2 var(--sans); letter-spacing: -.015em; color: var(--ink); }
+.pp-feat-grid p { margin-top: 10px; max-width: 34ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.pp-plat { grid-template-columns: repeat(var(--plat-n, 3), minmax(0, 260px)) !important; }
+@media (max-width: 767px) {
+  .pp-feat-grid { grid-template-columns: 1fr; }
+  .pp-feat-grid li:not(:nth-child(3n + 1)) { border-left: 0; }
+  .pp-plat { grid-template-columns: 1fr !important; }
+}
+
+/* hero still (tools without screens yet) and a wide crop of a tall photo */
+.pp-hero-flat img { width: 100%; border-radius: 6px; box-shadow: 0 30px 60px -24px rgba(20,20,18,.45); }
+.feat-shot.is-crop img { aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 45%; }
+
+/* Handoff's mark is nearly square, so it reads small at the shared logo height */
+[data-product="handoff"] .hero-logo { height: clamp(64px, 9.6vh, 96px); }
