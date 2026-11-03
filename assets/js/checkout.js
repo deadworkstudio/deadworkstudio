@@ -553,7 +553,7 @@
           // it just won't survive a reload without the query string.
         }
         Array.prototype.forEach.call(trialDateEls, function (el) {
-          el.textContent = data.endsOnText || '';
+          if (data.endsOnText) el.textContent = data.endsOnText;
         });
         trialOffer.hidden = false;
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

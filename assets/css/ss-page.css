@@ -713,3 +713,9 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .foot-email a { display: inline-flex; align-items: center; min-height: 44px; }
   .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
 }
+
+/* Page audit 2026-11-03: proof line under the hero headline, phone remote as a quiet secondary line */
+.hero-proof { max-width: 620px; margin: 14px auto 0; font-size: 17px; line-height: 1.5; color: var(--ink-2); text-align: center; }
+.downloads-remote { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--ink-3); text-align: center; }
+.downloads-remote a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 720px) { .hero-proof { font-size: 15px; margin-top: 10px; padding: 0 8px; } }
