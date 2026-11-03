@@ -42,16 +42,17 @@
   // ---- the take ----
   // Serenity Prayer (Caskey), 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
   var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
-  // Played in this order: the pass under the trees (moto-4) opens full frame, then the rest in film order.
-  var IN = [70.87, 64.49, 68.37, 69.74, 72.91, 77.71];             // each shot's in-point in the film (s)
-  var LENS = [1.94, 2.69, 1.27, 1.03, 3.74, 1.15];                 // each shot's length (s)
+  // Played in this order: the zoom lands on the rider from behind (moto-5), then the pass under the trees
+  // (moto-4), then the rest in film order.
+  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71];             // each shot's in-point in the film (s)
+  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15];                 // each shot's length (s)
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
   var RATE = 1;
-  var DWELL = [0.45, 0.45, 0.45, 0.5, 2.0, 0.6];                  // wall-clock time on each moment (moto-5 longest)
+  var DWELL = [1.75, 0.6, 0.45, 0.45, 0.45, 0.6];                 // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 260;                                                 // take-seconds per second between moments
-  var FOCAL = [0.634, 0.667, 0.723, 0.712, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282];                // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -128,10 +129,9 @@
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
     var L = [-1, -1, -1, -1, -1, -1];
-    // push: clip 1 starts inside its tile, timed so it finishes as the scan moves on to clip 2
-    var D0 = Math.max(0, arrive[1] - LENS[0]), OFF0 = VARIANT === 'push' ? X.P - D0 : 0;
-    if (t < X.P) { if (VARIANT === 'push' && t >= D0) L[0] = t - D0; return L; }
-    if (t < S) { var c = clipAt(t); L[c] = t - arrive[c] + (c === 0 ? OFF0 : 0); return L; }
+    // clip 1 sits on its first frame through the wall and the zoom, and starts playing the moment it is full frame
+    if (t < X.F) return L;
+    if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.F : t - arrive[c]; return L; }
     for (var i = 0; i < 6; i++) L[i] = i === 5 ? t - arrive[5] : t - S;
     return L;
   }
@@ -250,11 +250,11 @@
   var APP_W = 2400, APP_H = 1600, APP_PLAYER = [422, 416, 1548, 815];
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
-    var b = appBox(), r = i === 4 ? APP_PLAYER : [18, 216 + 96 * i + 18, 96, 56];
+    var b = appBox(), r = i === 0 ? APP_PLAYER : [18, 216 + 96 * i + 18, 96, 56];
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
-  var CAPS = ['1.9', '2.7', '1.3', '1.0', '3.7', '1.2'];
+  var CAPS = ['3.7', '1.9', '2.7', '1.3', '1.0', '1.2'];
   function drawLabel(i, rc, a) {
     if (a <= 0) return;
     var fs = Math.round(Math.max(10 * dpr, W * 0.0095)), pad = Math.round(fs * 0.9);
@@ -378,7 +378,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review.webp?v=2';
+  app.src = MEDIA + 'app-review.webp?v=3';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
