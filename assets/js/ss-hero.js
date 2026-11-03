@@ -48,7 +48,8 @@
   var IN = [64.49, 68.37, 69.74, 70.87, 72.91, 77.71];             // each shot's in-point in the film (s)
   var LENS = [2.69, 1.27, 1.03, 1.94, 3.74, 1.15];                 // each shot's length (s)
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
-  // stuttered). The clips don't loop: each plays once and holds its last frame, so nothing jumps.
+  // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
+  // strip never sits on a frozen frame.
   var RATE = 1;
   var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 180;                                                 // take-seconds per second between moments
@@ -315,7 +316,10 @@
     var L = localTimes(t);
     for (var i = 0; i < vids.length; i++) {
       var v = vids[i];
-      if (L[i] >= 0) { if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+      if (L[i] >= 0) {
+        if (v.ended && t >= T.panelsIn[0]) { try { v.currentTime = 0; } catch (e) {} }   // panels up: keep every clip moving
+        if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
     }
   }
