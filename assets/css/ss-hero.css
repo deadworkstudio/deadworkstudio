@@ -83,3 +83,4 @@
   .iss-meta, .iss-scan { display: none; }
   .iss-caps li { opacity: 1; }
 }
+.iss-u { text-transform: lowercase; }
