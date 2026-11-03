@@ -1,0 +1,57 @@
+/* DEADWORK — motion polish (2026-11-03).
+
+   Loaded last on every page so it can retune timing without touching each page's layout rules.
+   Buttons keep their own page rules (Daniel, 2026-11-03: no lift on the download buttons).
+   Two curves only:
+     --ease-spring  a short ease-out that overshoots by a hair and settles. For small things the
+                    pointer is touching: a name nudging, a logo growing, the FAQ plus turning.
+     --ease-glide   a long, soft ease-out. For things arriving: menus, photos, sections on scroll.
+   Everything here sits inside prefers-reduced-motion: no-preference, so anyone who has asked for
+   less motion keeps each page's existing reduced-motion rules untouched.
+   The Stock Shredder app build-in (.ix-*, driven by ss-page.js) is deliberately not touched. */
+:root {
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+  --ease-glide: cubic-bezier(.16, 1, .3, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---- nav: underline draws in, dropdown glides down ---- */
+  .nav-tab-trigger::after, .tab::after { transition: transform 320ms var(--ease-glide); }
+  .mega-menu.is-open { transition: opacity 260ms var(--ease), transform 420ms var(--ease-glide), visibility 0s; }
+  .mega-menu-card-photo { transition: transform 700ms var(--ease-glide), opacity 150ms var(--ease); }
+  @media (hover: hover) { .mega-menu-card:hover .mega-menu-card-photo { transform: scale(1.04); } }
+  .mm-plate .mega-menu-card-logo { transition: transform 380ms var(--ease-spring), opacity 150ms var(--ease); }
+  .mm-plate .mm-plate-box { transition: box-shadow 260ms var(--ease), background-color 260ms var(--ease); }
+
+  /* ---- home: product names nudge toward the pointer and settle ---- */
+  .screen--tools .tool-name { transition: transform 380ms var(--ease-spring); }
+  .tool-name button { transition: opacity 280ms var(--ease); }
+
+  /* ---- Stock Shredder page: tool tiles, platform tiles, FAQ ---- */
+  .tool { transition: background-color 260ms var(--ease); }
+  .tool-mark img { transition: transform 420ms var(--ease-spring), opacity 260ms var(--ease); }
+  @media (any-hover: hover) and (any-pointer: fine) { .tool:hover .tool-mark img { transform: scale(1.05); } }
+  a.spec-plat { transition: border-color 200ms var(--ease), background-color 200ms var(--ease); }
+  .faq-plus::before, .faq-plus::after { transition: transform 360ms var(--ease-spring); }
+  .faq-a { transition: grid-template-rows 360ms var(--ease-glide), opacity 260ms var(--ease); }
+
+  /* ---- sections arriving on scroll: a longer, softer rise with a clearer stagger ---- */
+  .will-reveal > * { transform: translateY(16px); transition: opacity 600ms var(--ease), transform 800ms var(--ease-glide); }
+  .will-reveal.is-in > * { transform: none; }
+  .will-reveal > *:nth-child(2) { transition-delay: 90ms; }
+  .will-reveal > *:nth-child(3) { transition-delay: 180ms; }
+  .will-reveal > *:nth-child(n+4) { transition-delay: 240ms; }
+
+  .dev-reveal { transform: translateY(16px); transition: opacity 600ms var(--ease), transform 800ms var(--ease-glide); }
+  .dev-reveal.is-in { transform: none; }
+
+  .js-reveal [data-reveal] { transform: translateY(16px); transition: opacity 600ms var(--ease), transform 800ms var(--ease-glide); }
+  .js-reveal [data-reveal].is-in { transform: none; }
+  .js-reveal .film-split[data-reveal] { transform: translateY(calc(-4% + 16px)); }
+  .js-reveal .film-split[data-reveal].is-in { transform: translateY(-4%); }
+  @media (max-width: 900px) {
+    .js-reveal .film-split[data-reveal] { transform: translateY(16px); }
+    .js-reveal .film-split[data-reveal].is-in { transform: none; }
+  }
+}
