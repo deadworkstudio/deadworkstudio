@@ -42,15 +42,16 @@
   // ---- the take ----
   // Serenity Prayer (Caskey), 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
   var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
-  var IN = [64.49, 68.37, 69.74, 70.87, 72.91, 77.71];             // each shot's in-point in the film (s)
-  var LENS = [2.69, 1.27, 1.03, 1.94, 3.74, 1.15];                 // each shot's length (s)
+  // Played in this order: the pass under the trees (moto-4) opens full frame, then the rest in film order.
+  var IN = [70.87, 64.49, 68.37, 69.74, 72.91, 77.71];             // each shot's in-point in the film (s)
+  var LENS = [1.94, 2.69, 1.27, 1.03, 3.74, 1.15];                 // each shot's length (s)
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
   var RATE = 1;
-  var DWELL = [0.45, 0.45, 0.45, 0.5, 0.7, 0.4];                  // wall-clock time on each moment (moto-5 longest)
+  var DWELL = [0.45, 0.45, 0.45, 0.5, 2.0, 0.6];                  // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 260;                                                 // take-seconds per second between moments
-  var FOCAL = [0.667, 0.723, 0.712, 0.634, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.634, 0.667, 0.723, 0.712, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -73,7 +74,7 @@
   function seg_(dt, p1) { segs.push({ t0: tt, t1: tt + dt, p0: pp, p1: p1 }); tt += dt; pp = p1; }
   seg_(X.F - X.P + 0.25 + DWELL[0], IN[0] + LENS[0]);
   for (var k = 1; k < IN.length; k++) {
-    seg_((IN[k] - pp) / SCRUB, IN[k]); arrive[k] = tt;
+    seg_(Math.abs(IN[k] - pp) / SCRUB, IN[k]); arrive[k] = tt;
     seg_(DWELL[k], IN[k] + LENS[k]);
   }
   // The last shot is only 1.15 s long: zip the playhead to the end so the shot is still playing as the
@@ -86,7 +87,7 @@
   // The six clips sit as a 3 x 2 grid of horizontal frames, then fly into the app: clip 5 grows into the
   // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
   T.labels = [S + 0.5, S + 1.0];
-  T.toApp = [S + 2.4, S + 3.3];
+  T.toApp = [S + 4.0, S + 4.9];
   T.LOOP = T.toApp[1] + 2.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
   // ---- elements ----
@@ -253,7 +254,7 @@
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
-  var CAPS = ['2.7', '1.3', '1.0', '1.9', '3.7', '1.2'];
+  var CAPS = ['1.9', '2.7', '1.3', '1.0', '3.7', '1.2'];
   function drawLabel(i, rc, a) {
     if (a <= 0) return;
     var fs = Math.round(Math.max(10 * dpr, W * 0.0095)), pad = Math.round(fs * 0.9);
@@ -377,7 +378,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review.webp?v=1';
+  app.src = MEDIA + 'app-review.webp?v=2';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
