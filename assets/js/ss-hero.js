@@ -1,16 +1,13 @@
 // ==========================================================================
-// Hero: IMPORT -> SHRED -> SEND, ~15.5 s, then a short fade back to the wall and it starts over.
-// Push variant (the chosen one): wall 0–2 s, push 2–3 s, shred ~3–9.4 s, six panels held 6 s, loop.
+// Hero: IMPORT -> SHRED -> SEND -> THE APP, ~11.4 s, then a short fade back to the wall and it starts over.
+// Push variant (the chosen one): wall 0-1.1 s, push 1.1-1.9 s, shred ~1.9-5.5 s, clips 5.5-7.9 s, app 7.9-11.4 s.
 //
-//   0.0–3.5   IMPORT  the archive wall (the archive concept, unchanged): dissolves up, drifts, eases to a stop.
-//                     One tile holds weld-1's frame: the take we are about to open.
-//   3.5–~5.1  the take leaves the wall, three ways (?v=push | fade | cut, default push):
-//               push  one continuous camera push on that tile (1.4 s), then a 4-frame handoff to the video
-//               fade  the wall goes to near-black around the lit tile (0.8 s), the video dissolves up over it (0.8 s)
-//               cut   the tile held a beat, a touch brighter than the rest, then a hard cut to the video
-//   ~5–11.4   SHRED   the edit concept's scan: one hairline for the whole 5:18 take, a playhead, a hard cut
-//                     and an ink mark at each of six moments (weld-5, the spark waterfall, holds longest)
-//   11.4–13.1 SEND    the frame dissolves into six vertical panels (today's strip layout), captions in. Rest.
+//   0.0-1.1   IMPORT  the archive wall dissolves up, drifts, eases to a stop on weld-1's tile.
+//   1.1-1.9   push    one continuous camera push on that tile, landing on the playing video (?v=fade|cut still exist)
+//   1.9-5.5   SHRED   one hairline for the whole take, a playhead, an ink mark at each of six moments
+//   5.5-7.9   SEND    the frame dissolves into six horizontal clips (3 x 2), each labelled with its length
+//   7.9-11.4  APP     the six clips fly into Stock Shredder's Review screen: clip 5 into the player,
+//                     the others into the clip list. Held a couple of seconds, then fade and loop.
 //
 // One canvas draws everything (wall sprite + six videos), so there are only six <video> elements.
 // Everything visible is a pure function of one clock, so ?t=SECONDS&freeze parks any moment exactly,
@@ -45,25 +42,27 @@
   // ---- the take ----
   // Serenity Prayer (Caskey), 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
   var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
-  var IN = [64.49, 68.37, 69.74, 70.87, 72.91, 77.71];             // each shot's in-point in the film (s)
-  var LENS = [2.69, 1.27, 1.03, 1.94, 3.74, 1.15];                 // each shot's length (s)
+  // Played in this order: the zoom lands on the rider from behind (moto-5), then the pass under the trees
+  // (moto-4), then the rest in film order.
+  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71];             // each shot's in-point in the film (s)
+  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15];                 // each shot's length (s)
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
   var RATE = 1;
-  var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each moment (moto-5 longest)
-  var SCRUB = 180;                                                 // take-seconds per second between moments
-  var FOCAL = [0.667, 0.723, 0.712, 0.634, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)
+  var DWELL = [1.75, 0.6, 0.45, 0.45, 0.45, 0.6];                 // wall-clock time on each moment (moto-5 longest)
+  var SCRUB = 260;                                                 // take-seconds per second between moments
+  var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282];                // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
   var VARIANT = ({ push: 1, fade: 1, cut: 1 })[q.get('v')] ? q.get('v') : 'push';
-  var T = { wallIn: [0, 0.6], cruiseEnd: 1.3, stop: 2.0 };
+  var T = { wallIn: [0, 0.4], cruiseEnd: 0.7, stop: 1.1 };
   var DRIFT_V = 7 / (3.8 + (5.8 - 3.8) / 2);                       // the archive concept's drift speed (rows/s)
   var DRIFT_ROWS = DRIFT_V * (T.cruiseEnd + (T.stop - T.cruiseEnd) / 2);
   var START_TOP = REST_TOP - DRIFT_ROWS;
   var X = {                                                        // P = weld-1 starts playing, F = picture is full frame
-    push: { push: [2.0, 3.0], xfade: [3.0, 3.0001], P: 2.0, F: 3.0 },  // weld-1 plays inside its tile for the whole push
+    push: { push: [1.1, 1.9], xfade: [1.9, 1.9001], P: 1.1, F: 1.9 },  // weld-1 plays inside its tile for the whole push
     fade: { dim: [3.5, 4.3], dissolve: [4.3, 5.1], P: 4.3, F: 5.1 },
     cut:  { lift: [3.5, 3.95], cut: 4.5, P: 4.5, F: 4.5 }
   }[VARIANT];
@@ -76,15 +75,21 @@
   function seg_(dt, p1) { segs.push({ t0: tt, t1: tt + dt, p0: pp, p1: p1 }); tt += dt; pp = p1; }
   seg_(X.F - X.P + 0.25 + DWELL[0], IN[0] + LENS[0]);
   for (var k = 1; k < IN.length; k++) {
-    seg_((IN[k] - pp) / SCRUB, IN[k]); arrive[k] = tt;
+    seg_(Math.abs(IN[k] - pp) / SCRUB, IN[k]); arrive[k] = tt;
     seg_(DWELL[k], IN[k] + LENS[k]);
   }
-  seg_((TAKE - pp) / SCRUB, TAKE);
+  // The last shot is only 1.15 s long: zip the playhead to the end so the shot is still playing as the
+  // panels open, instead of running out, freezing, and jumping back to its start mid-split.
+  seg_(Math.min((TAKE - pp) / SCRUB, 0.25), TAKE);
   var SCAN_END = tt, S = SCAN_END + 0.1;
-  T.panelsIn = [S, S + 0.8]; T.fullOut = [S + 0.4, S + 1.2]; T.scanOut = [S, S + 0.5];
+  T.panelsIn = [S, S + 0.8]; T.fullOut = [S + 0.2, S + 1.0]; T.scanOut = [S, S + 0.5];
   T.caps = S + 0.8; T.capDur = 0.6; T.capStep = 0.05;
   T.rest = T.caps + 5 * T.capStep + T.capDur;
-  T.HOLD = 6; T.LOOP = S + T.HOLD; T.loopOut = [T.LOOP - 0.6, T.LOOP];   // six panels held, then fade and start over
+  // The six clips sit as a 3 x 2 grid of horizontal frames, then fly into the app: clip 5 grows into the
+  // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
+  T.labels = [S + 0.5, S + 1.0];
+  T.toApp = [S + 4.0, S + 4.9];
+  T.LOOP = T.toApp[1] + 2.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
   // ---- elements ----
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
@@ -124,10 +129,9 @@
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
     var L = [-1, -1, -1, -1, -1, -1];
-    // push: clip 1 starts inside its tile, timed so it finishes as the scan moves on to clip 2
-    var D0 = Math.max(0, arrive[1] - LENS[0]), OFF0 = VARIANT === 'push' ? X.P - D0 : 0;
-    if (t < X.P) { if (VARIANT === 'push' && t >= D0) L[0] = t - D0; return L; }
-    if (t < S) { var c = clipAt(t); L[c] = t - arrive[c] + (c === 0 ? OFF0 : 0); return L; }
+    // clip 1 sits on its first frame through the wall and the zoom, and starts playing the moment it is full frame
+    if (t < X.F) return L;
+    if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.F : t - arrive[c]; return L; }
     for (var i = 0; i < 6; i++) L[i] = i === 5 ? t - arrive[5] : t - S;
     return L;
   }
@@ -136,6 +140,7 @@
   var sprite = new Image(); sprite.decoding = 'async';
   var posters = vids.map(function (v) { var im = new Image(); im.decoding = 'async'; im.src = v.getAttribute('poster'); return im; });
   var weld = posters[0];
+  var app = new Image(); app.decoding = 'async';
 
   // ---- the pre-scaled sheet: the archive concept's wall, gutters baked in, at the current size ----
   var sheet = document.createElement('canvas'), sctx = sheet.getContext('2d');
@@ -229,17 +234,53 @@
     if (a <= 0) return;
     ctx.globalAlpha = a; ctx.drawImage(frameOf(i), 0, 0, W, H); ctx.globalAlpha = 1;
   }
-  function drawPanels(a) {
+  // A picture cover-cropped into any rect; FOCAL keeps each clip's subject in frame when the rect is narrower.
+  function drawCover(i, x, y, w, h) {
+    var src = frameOf(i), sw0 = src.videoWidth || src.naturalWidth, sh0 = src.videoHeight || src.naturalHeight;
+    if (!sw0 || w <= 0 || h <= 0) return;
+    var sw = sw0, sh = sw0 * h / w; if (sh > sh0) { sh = sh0; sw = sh0 * w / h; }
+    var sx = Math.max(0, Math.min(sw0 - sw, FOCAL[i] * sw0 - sw / 2)), sy = (sh0 - sh) / 2;
+    ctx.drawImage(src, sx, sy, sw, sh, x, y, w, h);
+  }
+  function gridRect(i) {
+    var gap = Math.round(W * 0.012), cw = (W - gap * 2) / 3, ch = (H - gap) / 2;
+    return { x: (i % 3) * (cw + gap), y: Math.floor(i / 3) * (ch + gap), w: cw, h: ch };
+  }
+  // The app's Review screen (app-review.webp, 2400 x 1600 layout), fit to the frame's height, centred.
+  var APP_W = 2400, APP_H = 1600, APP_PLAYER = [422, 416, 1548, 815];
+  function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
+  function appRect(i) {
+    var b = appBox(), r = i === 0 ? APP_PLAYER : [18, 216 + 96 * i + 18, 96, 56];
+    return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
+  }
+  function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
+  var CAPS = ['3.7', '1.9', '2.7', '1.3', '1.0', '1.2'];
+  function drawLabel(i, rc, a) {
     if (a <= 0) return;
-    var gap = W * 0.018, pw = (W - gap * 5) / 6;
+    var fs = Math.round(Math.max(10 * dpr, W * 0.0095)), pad = Math.round(fs * 0.9);
+    ctx.save(); ctx.globalAlpha = a;
+    ctx.font = '500 ' + fs + 'px "JetBrains Mono", ui-monospace, monospace';
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#EBE5D8';
+    ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = fs * 0.6;
+    var txt = 'CLIP 0' + (i + 1) + '   ' + CAPS[i] + 's';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.14) + 'px';
+    ctx.fillText(txt, rc.x + pad, rc.y + rc.h - pad);
+    ctx.restore();
+  }
+  function drawGrid(a, t) {
+    if (a <= 0) return;
+    var e = inOut(seg(t, T.toApp)), la = out(seg(t, T.labels)) * (1 - clamp01(e * 3));
+    if (e > 0 && app.naturalWidth) {
+      var b = appBox(), sc = 1 + 0.04 * (1 - e), w = b.w * sc, h = b.h * sc;
+      ctx.globalAlpha = a * e; ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h); ctx.globalAlpha = 1;
+    }
     ctx.globalAlpha = a;
     for (var i = 0; i < 6; i++) {
-      var src = frameOf(i), sw0 = src.videoWidth || src.naturalWidth, sh0 = src.videoHeight || src.naturalHeight;
-      if (!sw0) continue;
-      var x = i * (pw + gap), cw = sh0 * pw / H, sx = Math.max(0, Math.min(sw0 - cw, FOCAL[i] * sw0 - cw / 2));
-      ctx.drawImage(src, sx, 0, cw, sh0, x, 0, pw, H);
+      var rc = e > 0 ? lerpRect(gridRect(i), appRect(i), e) : gridRect(i);
+      drawCover(i, rc.x, rc.y, rc.w, rc.h);
     }
     ctx.globalAlpha = 1;
+    for (var j = 0; j < 6; j++) drawLabel(j, gridRect(j), a * la);
   }
 
   // ---- one pure function of time ----
@@ -256,10 +297,6 @@
       setStyle(rail, 'rail', 'transform', 'translateX(' + (ph / TAKE * 100).toFixed(3) + '%)');
       var label = tc(ph); if (rightEl.textContent !== label) rightEl.textContent = label;
       for (var m = 0; m < marks.length; m++) setStyle(marks[m], 'm' + m, 'transform', 'scaleX(' + clamp01((ph - IN[m]) / LENS[m]).toFixed(4) + ')');
-    }
-    for (var j = 0; j < caps.length; j++) {
-      var a = T.caps + j * T.capStep;
-      setStyle(caps[j], 'c' + j, 'opacity', String(out(seg(t, [a, a + T.capDur])) * (1 - inOut(seg(t, T.loopOut)))));
     }
 
     // Canvas: the picture
@@ -293,7 +330,7 @@
     // SHRED, then SEND: the full frame under, the six panels dissolving up over it, the gaps opening to the page
     var full = 1 - inOut(seg(t, T.fullOut));
     drawFull(t < S ? clipAt(t) : 5, full);
-    drawPanels(inOut(seg(t, T.panelsIn)));
+    drawGrid(inOut(seg(t, T.panelsIn)), t);
   }
 
   // ---- video: load clip 1 with the wall (it's already playing inside its tile from t=0), then
@@ -317,7 +354,9 @@
     for (var i = 0; i < vids.length; i++) {
       var v = vids[i];
       if (L[i] >= 0) {
-        if (v.ended && t >= T.panelsIn[0]) { try { v.currentTime = 0; } catch (e) {} }   // panels up: keep every clip moving
+        // panels up: keep every clip moving. The last shot is also the full frame fading out under the
+        // panels, so it holds its final frame until that fade is done instead of jumping back mid-dissolve.
+        if (v.ended && t >= (i === 5 ? T.fullOut[1] : T.panelsIn[0])) { try { v.currentTime = 0; } catch (e) {} }
         if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
@@ -331,14 +370,15 @@
   }
   if (reduce) {
     whenImages(posters).then(function () {
-      size(); ready = true; render(T.rest + 1);
-      window.addEventListener('resize', function () { size(); ready = true; render(T.rest + 1); });
+      size(); ready = true; render(T.labels[1] + 0.1);
+      window.addEventListener('resize', function () { size(); ready = true; render(T.labels[1] + 0.1); });
       fig.dataset.issReady = '1';
     });
     return;
   }
 
   sprite.src = WALL.src;
+  app.src = MEDIA + 'app-review.webp?v=3';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
