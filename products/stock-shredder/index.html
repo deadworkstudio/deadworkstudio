@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261103b" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261103p" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
 <script src="https://js.stripe.com/v3/" defer></script>
@@ -287,7 +287,7 @@
     <div class="term" role="radiogroup" aria-label="Billing" data-term>
       <button type="button" class="term-opt is-active" role="radio" aria-checked="true" tabindex="0" data-term-opt="month"><span class="term-name">Monthly</span><span class="term-save">Cancel anytime</span></button>
       <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m6"><span class="term-name">6 Months</span><span class="term-save">Save 10%</span></button>
-      <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m12"><span class="term-name">12 Months</span><span class="term-save">Save 20%</span></button>
+      <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m12"><span class="term-name">12 Months</span><span class="term-save">Save 15%</span></button>
     </div>
     <p class="term-note" data-term-note aria-live="polite"><strong>Billed monthly.</strong> Cancel anytime. No fee.</p>
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
@@ -317,41 +317,41 @@
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>
-        <p class="pricing-price" data-monthly="25"><span class="num">$25</span>/mo</p>
+        <p class="pricing-price" data-monthly="29"><span class="num">$29</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="200">200 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="250">250 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.13 / clip</p>
+        <p class="pricing-per-clip">11.60¢ / clip</p>
         
         <button type="button" class="pill pill-outline" data-plan-button="starter">Get started</button>
       </div>
       <div class="pricing-card">
-        <span class="pricing-name">Creator</span>
-        <p class="pricing-price" data-monthly="50"><span class="num">$50</span>/mo</p>
+        <span class="pricing-name">Creator<span class="pricing-badge">Most popular</span></span>
+        <p class="pricing-price" data-monthly="69"><span class="num">$69</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="500">500 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="750">750 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-per-clip">9.20¢ / clip</p>
         
         <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
       </div>
       <div class="pricing-card">
-        <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
-        <p class="pricing-price" data-monthly="100"><span class="num">$100</span>/mo</p>
+        <span class="pricing-name">Pro</span>
+        <p class="pricing-price" data-monthly="129"><span class="num">$129</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="1500">1,500 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-per-clip">8.60¢ / clip</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="pro">Get started</button>
       </div>
       <div class="pricing-card">
         <span class="pricing-name">Studio</span>
-        <p class="pricing-price" data-monthly="200"><span class="num">$200</span>/mo</p>
+        <p class="pricing-price" data-monthly="199"><span class="num">$199</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="2500">2,500 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-per-clip">7.96¢ / clip</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li><li>Approve from your phone</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="studio">Get started</button>
       </div>
@@ -505,7 +505,7 @@
         <div class="faq-a" id="faq-a9" role="region" aria-labelledby="faq-q9" hidden><div class="faq-a-inner"><p>Open the app's Account menu to see it anytime, or have a copy emailed to you.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>What if I need more than 2,000 clips per month?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>What if I need more than 2,500 clips per month?</span><span class="faq-plus" aria-hidden="true"></span></button>
         <div class="faq-a" id="faq-a10" role="region" aria-labelledby="faq-q10" hidden><div class="faq-a-inner"><p>Get in touch about studio or team pricing. We'll put together a plan that fits your volume.</p></div></div>
       </div>
     </div>
@@ -565,7 +565,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261028b"></script>
+<script src="../../assets/js/checkout.js?v=20261103p"></script>
 <script src="../../assets/js/ss-page.js?v=20261103a"></script>
 <script src="../../assets/js/ss-hero.js?v=20261029b" defer></script>
 <script>
