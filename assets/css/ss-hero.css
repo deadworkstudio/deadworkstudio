@@ -84,3 +84,4 @@
   .iss-caps li { opacity: 1; }
 }
 .iss-u { text-transform: lowercase; }
+.iss-caps { display: none; }   /* the clip labels now sit on the frames themselves (ss-hero.js) */
