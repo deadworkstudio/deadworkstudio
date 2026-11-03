@@ -27,19 +27,29 @@
   // worker/src/billing.ts PRICE_CENTS — the Worker charges its own copy, never these, so a drift
   // here could only ever mislabel a price, never change what Stripe charges (and Stripe's own
   // form shows the real amount before anyone pays).
-  var CENTS = {
-    starter: { month: 2500, m6: 2200, m12: 2000 },
-    creator: { month: 5000, m6: 4500, m12: 4000 },
-    pro: { month: 10000, m6: 9000, m12: 8000 },
-    studio: { month: 20000, m6: 18000, m12: 16000 }
-  };
+  // Owner's launch table (2026-11-03): one base monthly price per plan; 6 months is 10% off and
+  // 12 months is 15% off, both still billed monthly. Every shown price is derived from these, never
+  // typed in by hand. Must match the payment Worker's worker/src/billing.ts (it charges its own copy).
+  var BASE_CENTS = { starter: 2900, creator: 6900, pro: 12900, studio: 19900 };
+  var DISCOUNT = { month: 0, m6: 0.10, m12: 0.15 };
+  var CENTS = {};
+  Object.keys(BASE_CENTS).forEach(function (plan) {
+    CENTS[plan] = {};
+    Object.keys(DISCOUNT).forEach(function (opt) {
+      CENTS[plan][opt] = Math.round(BASE_CENTS[plan] * (1 - DISCOUNT[opt]));
+    });
+  });
+  // Cost per clip in cents, two places: 11.60¢, 7.16¢.
+  function perClipText(cents, clips) {
+    return (cents / clips).toFixed(2) + '\u00a2 / clip';
+  }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
   // the terms paragraph under the grid and the text Stripe shows above its Subscribe button.
   var TERM_NOTE = {
     month: '<strong>Billed monthly.</strong> Cancel anytime. No fee.',
-    m6: '<strong>Billed monthly for 6 months.</strong> At least 10% off every payment. Renews for another 6 months unless you turn off auto-renew.',
-    m12: '<strong>Billed monthly for 12 months.</strong> 20% off every payment. Renews for another 12 months unless you turn off auto-renew.'
+    m6: '<strong>Billed monthly for 6 months.</strong> 10% off every payment. Can\'t be canceled early. Renews for another 6 months unless you turn off auto-renew.',
+    m12: '<strong>Billed monthly for 12 months.</strong> 15% off every payment. Can\'t be canceled early. Renews for another 12 months unless you turn off auto-renew.'
   };
   function usd(cents) {
     var whole = Math.floor(cents / 100);
@@ -115,7 +125,7 @@
       // contradicts the "clips reset on the 1st" note. Cost-per-clip DOES follow the option.
       if (clipsEl && perClipEl) {
         var monthlyClips = Number(clipsEl.getAttribute('data-clips-monthly'));
-        perClipEl.textContent = '$' + (perMonth / 100 / monthlyClips).toFixed(2) + ' / clip';
+        perClipEl.textContent = perClipText(perMonth, monthlyClips);
       }
     });
   }
