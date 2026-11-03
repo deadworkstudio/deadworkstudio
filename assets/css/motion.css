@@ -1,9 +1,10 @@
 /* DEADWORK — motion polish (2026-11-03).
 
    Loaded last on every page so it can retune timing without touching each page's layout rules.
+   Buttons keep their own page rules (Daniel, 2026-11-03: no lift on the download buttons).
    Two curves only:
      --ease-spring  a short ease-out that overshoots by a hair and settles. For small things the
-                    pointer is touching: a button lifting, a name nudging, a logo growing.
+                    pointer is touching: a name nudging, a logo growing, the FAQ plus turning.
      --ease-glide   a long, soft ease-out. For things arriving: menus, photos, sections on scroll.
    Everything here sits inside prefers-reduced-motion: no-preference, so anyone who has asked for
    less motion keeps each page's existing reduced-motion rules untouched.
@@ -14,15 +15,6 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-
-  /* ---- buttons: lift 2px with a slight overshoot, press back down fast ---- */
-  .pill, .btn, .hero-action {
-    transition: background-color 220ms var(--ease), color 120ms var(--ease), border-color 220ms var(--ease), transform 350ms var(--ease-spring);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .pill:not(.is-disabled):hover, .btn:hover, .hero-action:hover { transform: translateY(-2px); }
-  }
-  .pill:not(.is-disabled):active, .btn:active, .hero-action:active { transform: translateY(0) scale(.97); transition-duration: 220ms, 120ms, 220ms, 110ms; }
 
   /* ---- nav: underline draws in, dropdown glides down ---- */
   .nav-tab-trigger::after, .tab::after { transition: transform 320ms var(--ease-glide); }
