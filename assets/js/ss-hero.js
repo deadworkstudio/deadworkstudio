@@ -51,7 +51,7 @@
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
   var RATE = 1;
-  var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.7];                   // wall-clock time on each moment (moto-5 longest)
+  var DWELL = [0.7, 0.7, 0.7, 0.75, 1.35, 0.5];                   // wall-clock time on each moment (moto-5 longest)
   var SCRUB = 180;                                                 // take-seconds per second between moments
   var FOCAL = [0.667, 0.723, 0.712, 0.634, 0.388, 0.282];                // where each panel crops its clip (x, 0–1)
 
@@ -79,9 +79,11 @@
     seg_((IN[k] - pp) / SCRUB, IN[k]); arrive[k] = tt;
     seg_(DWELL[k], IN[k] + LENS[k]);
   }
-  seg_((TAKE - pp) / SCRUB, TAKE);
+  // The last shot is only 1.15 s long: zip the playhead to the end so the shot is still playing as the
+  // panels open, instead of running out, freezing, and jumping back to its start mid-split.
+  seg_(Math.min((TAKE - pp) / SCRUB, 0.25), TAKE);
   var SCAN_END = tt, S = SCAN_END + 0.1;
-  T.panelsIn = [S, S + 0.8]; T.fullOut = [S + 0.4, S + 1.2]; T.scanOut = [S, S + 0.5];
+  T.panelsIn = [S, S + 0.8]; T.fullOut = [S + 0.2, S + 1.0]; T.scanOut = [S, S + 0.5];
   T.caps = S + 0.8; T.capDur = 0.6; T.capStep = 0.05;
   T.rest = T.caps + 5 * T.capStep + T.capDur;
   T.HOLD = 6; T.LOOP = S + T.HOLD; T.loopOut = [T.LOOP - 0.6, T.LOOP];   // six panels held, then fade and start over
@@ -317,7 +319,9 @@
     for (var i = 0; i < vids.length; i++) {
       var v = vids[i];
       if (L[i] >= 0) {
-        if (v.ended && t >= T.panelsIn[0]) { try { v.currentTime = 0; } catch (e) {} }   // panels up: keep every clip moving
+        // panels up: keep every clip moving. The last shot is also the full frame fading out under the
+        // panels, so it holds its final frame until that fade is done instead of jumping back mid-dissolve.
+        if (v.ended && t >= (i === 5 ? T.fullOut[1] : T.panelsIn[0])) { try { v.currentTime = 0; } catch (e) {} }
         if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
