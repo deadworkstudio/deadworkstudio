@@ -410,7 +410,7 @@ function adminPageHtml(nonce: string): string {
   </div>
   <div id="dashboard" style="display: none">
     <div class="top-bar">
-      <img src="https://stockshredder.github.io/deadwork-logo.png" alt="DEADWORK">
+      <img src="https://deadworkstudio.com/assets/img/brand/deadwork-wordmark-bone.webp" alt="DEADWORK">
       <div id="mainTabs" style="display: flex; gap: 4px"></div>
     </div>
 
