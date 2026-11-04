@@ -722,3 +722,6 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .workflow > .section-sub { margin-bottom: 14px; }
 @media (min-width: 1000px) { .hero-proof { white-space: nowrap; } }
 .reviews-disclosure { margin-top: 6px; font-size: 13px; color: var(--ink-3); }
+
+/* The success heading gets focus from code (for screen readers); no box around it. */
+.checkout-success h3:focus { outline: none; }

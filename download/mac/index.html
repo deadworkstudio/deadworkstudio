@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Download Stock Shredder for Mac</title>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#EBE5D8;color:#0A0A09;font:16px/1.5 Archivo,system-ui,sans-serif;text-align:center;padding:16px}a{color:inherit}</style>
+</head>
+<body>
+<main>
+  <p>Your Mac download is starting.</p>
+  <p data-phone hidden>You're on a phone. Open this link on your Mac to download Stock Shredder.</p>
+  <p><a id="dl" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.18/Stock-Shredder-0.6.18-universal.dmg">Click here if it doesn't start</a></p>
+</main>
+<script>
+// Always the latest Mac build: same lookup the Stock Shredder page uses for its download buttons.
+(function () {
+  var link = document.getElementById('dl');
+  var phone = /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent);
+  if (phone) {
+    document.querySelector('[data-phone]').hidden = false;
+    document.querySelector('main p').hidden = true;
+    link.textContent = 'Download anyway';
+    return;
+  }
+  function go() { window.location.replace(link.href); }
+  fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releases/latest')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (release) {
+      var dmg = (release.assets || []).find(function (a) { return a.name.endsWith('.dmg'); });
+      if (dmg) link.href = dmg.browser_download_url;
+      go();
+    })
+    .catch(go);
+})();
+</script>
+</body>
+</html>

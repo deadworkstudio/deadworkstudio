@@ -196,6 +196,13 @@
   // Windows visitors get the .exe as the primary button and the .dmg as the small secondary
   // link, and vice versa for everyone else — navigator.userAgentData is the modern replacement
   // for sniffing the UA string; platform/userAgent cover browsers that don't support it yet.
+  function isPhoneVisitor() {
+    var ua = navigator.userAgent || '';
+    if (/iPhone|iPad|iPod|Android|Mobile/i.test(ua)) return true;
+    // iPadOS reports itself as a Mac; a touch screen gives it away.
+    return /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+  }
+
   function isWindowsVisitor() {
     if (navigator.userAgentData && navigator.userAgentData.platform) {
       return /win/i.test(navigator.userAgentData.platform);
@@ -294,7 +301,16 @@
     // Show the visitor's own platform as the big button, the other platform as a small secondary
     // link — macDownload/winDownload keep whatever the release-fetch script resolved as the
     // latest .dmg/.exe, so this only ever reorders/relabels them, never re-derives the URLs.
-    if (macDownload && winDownload) {
+    // Phones and tablets can't run the app: no download buttons there, just a pointer to the
+    // purchase email, which carries the key plus Mac and Windows download links.
+    var onPhone = isPhoneVisitor();
+    if (macDownload) macDownload.hidden = onPhone;
+    if (winDownload) winDownload.hidden = onPhone;
+    if (onPhone && successNote) {
+      successNote.textContent = (trial && trial.endsOnText ? 'Your trial runs until ' + trial.endsOnText + ' or 100 clips. ' : '') +
+        "We've emailed you this key and the Mac and Windows download links. Open that email on your computer to install Stock Shredder.";
+    }
+    if (macDownload && winDownload && !onPhone) {
       var onWindows = isWindowsVisitor();
       var primary = onWindows ? winDownload : macDownload;
       var secondary = onWindows ? macDownload : winDownload;
