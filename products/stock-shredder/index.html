@@ -31,8 +31,9 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261029e" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261025b" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261104b" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261103u" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
+<link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
 <script src="https://js.stripe.com/v3/" defer></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -92,52 +93,54 @@
   <section class="hero">
     <div class="hero-brand"><img class="hero-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" /></div>
     <h1>Raw footage into stock-ready clips.</h1>
-    <figure class="strip iss" data-iss aria-label="An archive of shots from 14 films; one film, Serenity Prayer, is opened and its motorcycle run cut down to six clips.">
+    <p class="hero-proof">Import hours of footage, review, grade, and export thousands of graded clips without doing it all by hand.</p>
+    <figure class="strip iss" data-iss aria-label="An archive of 360 shots; one film, Serenity Prayer, is opened and its motorcycle run cut down to six clips.">
       <div class="iss-pic">
         <canvas class="iss-canvas" data-iss-canvas aria-hidden="true"></canvas>
         <div class="iss-src" data-iss-src aria-hidden="true">
+          <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-5.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-5.mp4?v=3"></video>
+          <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-4.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-4.mp4?v=3"></video>
           <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-1.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-1.mp4?v=3"></video>
           <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-2.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-2.mp4?v=3"></video>
           <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-3.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-3.mp4?v=3"></video>
-          <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-4.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-4.mp4?v=3"></video>
-          <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-5.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-5.mp4?v=3"></video>
           <video muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/hero/moto-6.jpg?v=3" src="../../assets/img/products/stock-shredder/hero/moto-6.mp4?v=3"></video>
         </div>
       </div>
       <figcaption class="iss-row" aria-hidden="true">
-        <p class="iss-meta" data-iss-meta><span>Archive</span><span>14 films</span></p>
+        <p class="iss-meta" data-iss-meta><span>Archive</span><span>360 shots</span></p>
         <div class="iss-scan" data-iss-scan>
           <div class="iss-track"><span class="iss-line"></span><span class="iss-mark"></span><span class="iss-mark"></span><span class="iss-mark"></span><span class="iss-mark"></span><span class="iss-mark"></span><span class="iss-mark"></span><span class="iss-rail" data-iss-rail><span class="iss-head"></span></span></div>
           <span class="iss-l">SERENITY_PRAYER_V1</span>
           <span class="iss-r" data-iss-right>01:00:00</span>
         </div>
         <ol class="iss-caps" data-iss-caps>
-          <li><span class="iss-cw">Clip&nbsp;</span><span>01</span><span class="iss-ci">1:04</span><span class="iss-co">&ndash;1:07</span></li>
-          <li><span class="iss-cw">Clip&nbsp;</span><span>02</span><span class="iss-ci">1:08</span><span class="iss-co">&ndash;1:09</span></li>
-          <li><span class="iss-cw">Clip&nbsp;</span><span>03</span><span class="iss-ci">1:09</span><span class="iss-co">&ndash;1:10</span></li>
-          <li><span class="iss-cw">Clip&nbsp;</span><span>04</span><span class="iss-ci">1:10</span><span class="iss-co">&ndash;1:12</span></li>
-          <li><span class="iss-cw">Clip&nbsp;</span><span>05</span><span class="iss-ci">1:12</span><span class="iss-co">&ndash;1:16</span></li>
-          <li><span class="iss-cw">Clip&nbsp;</span><span>06</span><span class="iss-ci">1:17</span><span class="iss-co">&ndash;1:18</span></li>
+          <li><span class="iss-cw">Clip&nbsp;</span><span>01</span><span class="iss-ci">2.7<span class="iss-u">s</span></span></li>
+          <li><span class="iss-cw">Clip&nbsp;</span><span>02</span><span class="iss-ci">1.3<span class="iss-u">s</span></span></li>
+          <li><span class="iss-cw">Clip&nbsp;</span><span>03</span><span class="iss-ci">1.0<span class="iss-u">s</span></span></li>
+          <li><span class="iss-cw">Clip&nbsp;</span><span>04</span><span class="iss-ci">1.9<span class="iss-u">s</span></span></li>
+          <li><span class="iss-cw">Clip&nbsp;</span><span>05</span><span class="iss-ci">3.7<span class="iss-u">s</span></span></li>
+          <li><span class="iss-cw">Clip&nbsp;</span><span>06</span><span class="iss-ci">1.2<span class="iss-u">s</span></span></li>
         </ol>
       </figcaption>
     </figure>
     <div class="downloads">
-      <a id="download-mac" class="pill pill-solid" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.12/Stock-Shredder-0.6.12-universal.dmg"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Download for Mac</span></a>
+      <a id="download-mac" class="pill pill-solid" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.18/Stock-Shredder-0.6.18-universal.dmg"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Download for Mac</span></a>
       <a id="download-win" class="pill pill-outline" href="https://apps.microsoft.com/detail/9PHP98R0NRHG"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg><span>Download for Windows</span></a>
       <a id="download-iphone" class="pill pill-outline" href="https://apps.apple.com/app/stock-shredder/id6824343460"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote for iPhone</span></a>
       <a id="download-android" class="pill pill-outline" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.11/Stock-Shredder-Remote-1.2.apk"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote for Android</span></a>
     </div>
-    <p class="mono downloads-note">25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.12</span></p>
+    <p class="mono downloads-note">Mac and Windows &nbsp;&middot;&nbsp; 25 free clips &nbsp;&middot;&nbsp; <span id="download-version">Version 0.6.18</span></p>
   </section>
 
   <section class="film tone-dark" aria-label="On set">
-    <video class="film-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/ss-film-poster.jpg" data-film data-hd="../../assets/img/products/stock-shredder/ss-film-hd.mp4" aria-hidden="true"><source src="../../assets/img/products/stock-shredder/ss-film.mp4" type="video/mp4" /></video>
+    <video class="film-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/ss-film-poster.jpg?v=1103" data-film data-hd="../../assets/img/products/stock-shredder/ss-film-hd.mp4?v=1103" aria-hidden="true"><source src="../../assets/img/products/stock-shredder/ss-film.mp4?v=1103" type="video/mp4" /></video>
     <p class="film-line mono">By artists. For artists.</p>
   </section>
 
   <div class="pair tone-alt">
   <section class="workflow" aria-labelledby="workflow-title">
     <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
+    <p class="section-sub">Processed &amp; exported 1,000 graded 4K clips in under 4 hours.</p>
     <ol class="steps">
       <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Select</span><span class="step-d">Import your folder</span></li>
       <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Shred</span><span class="step-d">Finds and trims the keepers</span></li>
@@ -202,11 +205,11 @@
   <section class="remote" aria-labelledby="remote-title">
     <h2 class="mono">Stock Shredder Remote</h2>
     <p class="section-title" id="remote-title">Approve clips from your phone.</p>
-    <p class="section-sub">Approve or deny clips remotely from your phone via Studio.<br class="br-desk" /> Process footage anywhere without being at your computer.</p>
+    <p class="section-sub">Process footage anywhere without being at your computer.<br class="br-desk" /> Approve or deny clips from your phone while Stock Shredder runs on your Mac. Included with Studio.</p>
     <figure class="phone">
       <div class="phone-body">
         <span class="phone-island" aria-hidden="true"></span>
-        <div class="phone-screen"><div class="phone-screen-in"><video class="phone-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/remote-flow-poster.jpg?v=bh1" width="660" height="1344" aria-label="Recording of Stock Shredder Remote on iPhone: a Beverly Hills drone clip plays, Approve is tapped, then GO, and the Mac exports it — 1/1 clips complete." data-film><source src="../../assets/img/products/stock-shredder/remote-flow.mp4?v=bh1" type="video/mp4" /></video><span class="phone-ver" aria-hidden="true" data-latest-version>v0.6.12</span></div></div>
+        <div class="phone-screen"><div class="phone-screen-in"><video class="phone-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/remote-flow-poster.jpg?v=bh1" width="660" height="1344" aria-label="Recording of Stock Shredder Remote on iPhone: a Beverly Hills drone clip plays, Approve is tapped, then GO, and the Mac exports it — 1/1 clips complete." data-film><source src="../../assets/img/products/stock-shredder/remote-flow.mp4?v=bh1" type="video/mp4" /></video><span class="phone-ver" aria-hidden="true" data-latest-version>v0.6.18</span></div></div>
       </div>
     </figure>
     <div class="remote-cta">
@@ -221,10 +224,10 @@
       <div class="spec-row">
         <p class="spec-k mono">Platform</p>
         <div class="spec-v">
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg></span><span><strong>macOS</strong><br />Intel &amp; Apple Silicon</span></div>
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></span><span><strong>Windows</strong></span></div>
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />Remote app</span></div>
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />Remote app</span></div>
+          <a class="spec-plat" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.18/Stock-Shredder-0.6.18-universal.dmg" data-download="mac" aria-label="Download Stock Shredder for Mac"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg></span><span><strong>macOS</strong><br />Intel &amp; Apple Silicon</span></a>
+          <a class="spec-plat" href="https://apps.microsoft.com/detail/9PHP98R0NRHG" aria-label="Get Stock Shredder from the Microsoft Store"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></span><span><strong>Windows</strong></span></a>
+          <a class="spec-plat" href="https://apps.apple.com/app/stock-shredder/id6824343460" aria-label="Get the Stock Shredder Remote app on the App Store"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />Remote app</span></a>
+          <a class="spec-plat" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.11/Stock-Shredder-Remote-1.2.apk" data-download="android" aria-label="Download the Stock Shredder Remote app for Android"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />Remote app</span></a>
         </div>
       </div>
       <div class="spec-row">
@@ -232,14 +235,14 @@
         <div class="spec-v">
           <table class="speed">
             <caption class="sr-only">Speed on real footage</caption>
-            <thead><tr><th scope="col">Raw clips</th><th scope="col">Shots found</th><th scope="col">4K clips out</th><th scope="col">Total time</th></tr></thead>
+            <thead><tr><th scope="col">Footage in</th><th scope="col">Clips found</th><th scope="col">Shredded in</th><th scope="col">4K clips</th><th scope="col">Exported</th></tr></thead>
             <tbody>
-              <tr><td>48</td><td>126</td><td>100</td><td>33 min</td></tr>
-              <tr><td>256</td><td>500</td><td>500</td><td>2 h 50 min</td></tr>
-              <tr><td>640</td><td>1,003</td><td>1,000</td><td>6 h 11 min</td></tr>
+              <tr><td>64 min</td><td>240</td><td>12 min</td><td>100</td><td>12 min</td></tr>
+              <tr><td>214 min</td><td>897</td><td>39 min</td><td>500</td><td>111 min</td></tr>
+              <tr><td>367 min</td><td>1,504</td><td>64 min</td><td>1,000</td><td>171 min</td></tr>
             </tbody>
           </table>
-          <p class="spec-note spec-note-mono">Sony 4K footage with M3 Pro. Every clip exported Log + Graded ProRes 422 HQ + 2,000 files. All verified. 0 failed. Review time not included.</p>
+          <p class="spec-note spec-note-mono">Real Sony, DJI and GoPro footage on a MacBook Pro M3 Pro. Graded ProRes 422 HQ. 1,000 files, all verified. 0 failed. Review time not included.</p>
         </div>
       </div>
       <div class="spec-row">
@@ -266,7 +269,7 @@
 
   <section class="world tone-dark" data-world-map hidden aria-labelledby="world-title">
     <h2 class="section-title section-head head-dw" id="world-title">Clips <span class="shred-word">shredded</span> worldwide</h2>
-    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num>&mdash;</span></p>
+    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num></span></p>
     <div class="world-map">
       <img src="../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
       <div class="world-map-dots" data-world-map-dots></div>
@@ -276,20 +279,23 @@
   <section class="reviews" id="reviews" data-reviews-section hidden aria-labelledby="reviews-title">
     <h2 class="section-title section-head head-dw" id="reviews-title">Reviews</h2>
     <p class="reviews-count" data-reviews-count hidden></p>
+    <p class="reviews-disclosure">Reviewers earn clips for writing a review, whatever their rating.</p>
     <div class="reviews-list" data-reviews-list hidden></div>
     <p class="reviews-empty" data-reviews-empty hidden></p>
   </section>
 
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
-    <p class="section-sub">Unused clips roll over. Change plans anytime. Start with 25 free clips.</p>
+    <p class="section-sub">Unused clips roll over. Upgrade anytime. Start with 25 free clips.</p>
     <p class="pricing-error" data-pricing-error role="alert" tabindex="-1" hidden></p>
     <div class="term" role="radiogroup" aria-label="Billing" data-term>
       <button type="button" class="term-opt is-active" role="radio" aria-checked="true" tabindex="0" data-term-opt="month"><span class="term-name">Monthly</span><span class="term-save">Cancel anytime</span></button>
       <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m6"><span class="term-name">6 Months</span><span class="term-save">Save 10%</span></button>
-      <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m12"><span class="term-name">12 Months</span><span class="term-save">Save 20%</span></button>
+      <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m12"><span class="term-name">12 Months</span><span class="term-save">Save 15%</span></button>
     </div>
     <p class="term-note" data-term-note aria-live="polite"><strong>Billed monthly.</strong> Cancel anytime. No fee.</p>
+    <!-- SHRED trial box: hidden until the Nov 23-27 campaign. To bring it back, remove the <template> wrapper. -->
+    <template data-trial-offer-hold>
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
       <p class="mono trial-offer-eyebrow">SHRED</p>
       <h3 class="trial-offer-title">7 days or 100 clips, free.</h3>
@@ -301,7 +307,7 @@
       </form>
       <!-- §8.1's disclosure, full size next to the button — the site's own version adds the real
            end date, filled in from GET /offer's own endsOnText (never computed here). -->
-      <p class="trial-offer-disclosure">We'll save your card. <strong>$0 today.</strong> Your trial ends after 7 days or 100 clips, whichever comes first (<span data-trial-offer-date>{date}</span> at the latest). Nothing is ever charged unless you choose a plan. One trial per person, card and computer.</p>
+      <p class="trial-offer-disclosure">We'll save your card. <strong>$0 today.</strong> Your trial ends after 7 days or 100 clips, whichever comes first (<span data-trial-offer-date>7 days from today</span> at the latest). Nothing is ever charged unless you choose a plan. One trial per person, card and computer.</p>
       <p class="trial-offer-status" data-trial-offer-status role="status" aria-live="polite"></p>
       <p class="trial-offer-error" data-trial-offer-error role="alert" aria-live="assertive" tabindex="-1" hidden></p>
       <div class="trial-offer-resend">
@@ -314,44 +320,45 @@
         <p class="trial-offer-resend-status" data-trial-resend-status role="status" aria-live="polite"></p>
       </div>
     </div>
+    </template>
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>
-        <p class="pricing-price" data-monthly="25"><span class="num">$25</span>/mo</p>
+        <p class="pricing-price" data-monthly="29"><span class="num">$29</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="200">200 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="250">250 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.13 / clip</p>
+        <p class="pricing-per-clip">11.60¢ / clip</p>
         
         <button type="button" class="pill pill-outline" data-plan-button="starter">Get started</button>
       </div>
       <div class="pricing-card">
-        <span class="pricing-name">Creator</span>
-        <p class="pricing-price" data-monthly="50"><span class="num">$50</span>/mo</p>
+        <span class="pricing-name">Creator<span class="pricing-badge">Most popular</span></span>
+        <p class="pricing-price" data-monthly="69"><span class="num">$69</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="500">500 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="750">750 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-per-clip">9.20¢ / clip</p>
         
         <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
       </div>
       <div class="pricing-card">
-        <span class="pricing-name">Pro</span><span class="pricing-badge">Best value</span>
-        <p class="pricing-price" data-monthly="100"><span class="num">$100</span>/mo</p>
+        <span class="pricing-name">Pro</span>
+        <p class="pricing-price" data-monthly="129"><span class="num">$129</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="1000">1,000 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="1500">1,500 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-per-clip">8.60¢ / clip</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="pro">Get started</button>
       </div>
       <div class="pricing-card">
         <span class="pricing-name">Studio</span>
-        <p class="pricing-price" data-monthly="200"><span class="num">$200</span>/mo</p>
+        <p class="pricing-price" data-monthly="199"><span class="num">$199</span>/mo</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
-        <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
+        <p class="pricing-clips" data-clips-monthly="2500">2,500 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">$0.10 / clip</p>
+        <p class="pricing-per-clip">7.96¢ / clip</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li><li>Approve from your phone</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="studio">Get started</button>
       </div>
@@ -385,7 +392,7 @@
       <!-- Mac is the no-JS/fallback default below; showSuccess() in checkout.js swaps which of
            these two is the primary (solid) button based on the visitor's OS, reusing whatever
            the release-fetch script resolved for the hero's #download-mac/#download-win links. -->
-      <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.12/Stock-Shredder-0.6.12-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
+      <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.18/Stock-Shredder-0.6.18-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
       <a id="download-success-alt" href="https://apps.microsoft.com/detail/9PHP98R0NRHG" class="mono checkout-success-alt">Also for Windows</a>
       <!-- SHRED launch trial (§7.5): checkout.js's showSuccess() swaps this note's text (and the
            eyebrow above) when the completed checkout was a trial, not a paid plan. -->
@@ -397,7 +404,7 @@
     <h2 class="section-title section-head head-dw">Earn</h2>
     <p class="section-title" id="earn-title">Help other filmmakers find us. Get paid in clips.</p>
     <ul class="earn-grid">
-      <li><span class="earn-amt">250 clips</span><span>Write a website review</span></li>
+      <li><span class="earn-amt">250 clips</span><span>Write an honest website review</span></li>
       <li><span class="earn-amt">500 clips</span><span>Share about us on Instagram or TikTok</span></li>
       <li><span class="earn-amt">1,000 clips each</span><span>Refer a friend</span></li>
       <li><span class="earn-amt">1,500 clips</span><span>Record a YouTube review and walkthrough</span></li>
@@ -406,7 +413,7 @@
       <button class="pill pill-solid" type="button" data-earn-submit-open>Submit your link <span aria-hidden="true">&rarr;</span></button>
       <button class="pill pill-outline" type="button" data-review-open>Leave a review <span aria-hidden="true">&rarr;</span></button>
     </div>
-    <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account.</p>
+    <p class="earn-note">Once it's approved, you'll get an access code to add the clips to your account (needs a card on file). You earn the clips whatever your rating. Each reward once per person. Posts must be public and say you received clips, for example #ad. Referral clips arrive once your friend's plan renews.</p>
   </section>
 
   <div class="modal-overlay" data-earn-modal-overlay hidden>
@@ -490,22 +497,18 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Is there a free trial?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Yes. Every download includes the Free plan: 25 clips, no card needed. With a code like SHRED you can also try 7 days or 100 clips (whichever comes first) with a card on file. You're never charged unless you choose a plan.</p></div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a12" id="faq-q12"><span>What's SHRED?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a12" role="region" aria-labelledby="faq-q12" hidden><div class="faq-a-inner"><p>A launch code for a bigger free trial: 7 days or 100 clips. You add a card to start, $0 is charged, and nothing is ever charged unless you pick a plan when the trial ends. One per person, card and computer.</p></div></div>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Yes. Every download includes the Free plan: 25 clips.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>What's the iPhone app for?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><div class="faq-a-inner"><p>With Studio, you can approve or deny clips remotely from your phone. Process footage anywhere without being at your computer. <a href="https://apps.apple.com/app/stock-shredder/id6824343460">Get it on the App Store</a>.</p></div></div>
+        <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><div class="faq-a-inner"><p>Process footage anywhere without being at your computer. With Studio, you can approve or deny clips from your phone while Stock Shredder runs on your Mac. <a href="https://apps.apple.com/app/stock-shredder/id6824343460">Get it on the App Store</a>.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a9" id="faq-q9"><span>What if I lose my activation key?</span><span class="faq-plus" aria-hidden="true"></span></button>
         <div class="faq-a" id="faq-a9" role="region" aria-labelledby="faq-q9" hidden><div class="faq-a-inner"><p>Open the app's Account menu to see it anytime, or have a copy emailed to you.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>What if I need more than 2,000 clips per month?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>What if I need more than 2,500 clips per month?</span><span class="faq-plus" aria-hidden="true"></span></button>
         <div class="faq-a" id="faq-a10" role="region" aria-labelledby="faq-q10" hidden><div class="faq-a-inner"><p>Get in touch about studio or team pricing. We'll put together a plan that fits your volume.</p></div></div>
       </div>
     </div>
@@ -565,11 +568,11 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261028b"></script>
-<script src="../../assets/js/ss-page.js?v=20261029g"></script>
-<script src="../../assets/js/ss-hero.js?v=20261029b" defer></script>
+<script src="../../assets/js/checkout.js?v=20261103q"></script>
+<script src="../../assets/js/ss-page.js?v=20261103a"></script>
+<script src="../../assets/js/ss-hero.js?v=20261103f" defer></script>
 <script>
-// The hrefs (and "Version 0.6.1" note) above are the fallback for JS-disabled browsers or a
+// The hrefs (and "Version" note) above are the fallback for JS-disabled browsers or a
 // failed fetch below — this finds whatever the actual latest release is and points every download
 // button there instead (including the post-checkout success link, previously hardcoded to an old
 // version and missed by this script entirely), so this page never goes stale just because a new
@@ -583,6 +586,11 @@ fetch('https://api.github.com/repos/stockshredder/stock-shredder-releases/releas
     if (dmg) document.getElementById('download-mac').href = dmg.browser_download_url;
     if (dmg) document.getElementById('download-success').href = dmg.browser_download_url;
     if (apk) document.getElementById('download-android').href = apk.browser_download_url;
+    // the spec sheet's platform tiles download the same files
+    document.querySelectorAll('[data-download]').forEach(function (el) {
+      var asset = el.getAttribute('data-download') === 'mac' ? dmg : apk;
+      if (asset) el.href = asset.browser_download_url;
+    });
     var versionEl = document.getElementById('download-version');
     if (versionEl && release.tag_name && dmg) versionEl.textContent = 'Version ' + release.tag_name.replace(/^v/, '');
     // the version shown inside the phone recording follows the latest release too

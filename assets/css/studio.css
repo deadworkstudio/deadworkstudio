@@ -144,7 +144,7 @@ a[href$="handoff/"] .mega-menu-card-logo { height: clamp(52px, 5.2vw, 90px); }
   .mega-menu { transform: none !important; }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .poster-meta-left, .poster-meta-right { display: none; }
 }
 @media (max-width: 719px) {
@@ -275,23 +275,33 @@ main section { text-align: center; }
 .js-reveal .film.is-in .film-img.is-loaded { opacity: 1; transform: none; }
 .film::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(14,14,13,.15) 0%, rgba(14,14,13,0) 30%, rgba(14,14,13,0) 70%, rgba(14,14,13,.45) 100%); }
 
+/* fine film grain over the photo: dithers the dark sky so its smooth tones don't show as bands.
+   overlay blend on mid-grey noise keeps the average brightness unchanged */
+.film-grain { position: absolute; inset: 0; pointer-events: none; background: url('../img/mission/grain.png') 0 0 / 160px 160px repeat; mix-blend-mode: overlay; opacity: .55; }
+
 .film-split {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1fr 1fr;
-  width: min(100%, 1040px); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(40px, 5.6vw, 112px);
+  width: min(100%, 1480px); margin: 0 auto; align-items: start;
+  counter-reset: film;
   /* sits in the black sky between the light and the city */
   transform: translateY(-4%);
 }
-/* the divider sits on the row's exact centre (the page's centre line), not on the edge of the
-   right-hand paragraph, which is narrower than its column */
-.film-split::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line-2); }
+/* each column: a short index over a hairline, then the text, set flush left like a printed spec */
 .film-p {
-  padding: 4px clamp(24px, 3.6vw, 56px);
-  max-width: 34ch; justify-self: center;
-  font: 400 clamp(17px, 1.6vw, 23px)/1.5 var(--sans); letter-spacing: -.005em;
-  color: var(--ink); text-wrap: pretty;
+  counter-increment: film;
+  position: relative; margin: 0; padding-top: 40px;
+  border-top: 1px solid var(--line-2);
+  font: 400 clamp(16px, 1.32vw, 20px)/1.6 var(--sans); letter-spacing: -.003em;
+  color: var(--ink-2); text-align: left; text-wrap: pretty;
 }
-.film-p + .film-p { color: var(--ink-2); }
+.film-p::before {
+  content: counter(film, decimal-leading-zero);
+  position: absolute; top: -1px; left: 0; padding-top: 12px;
+  border-top: 1px solid var(--ink); width: 28px;
+  font: 500 11px/1 var(--mono); letter-spacing: .24em; color: var(--ink);
+}
+.film-p:first-child { color: var(--ink); }
 
 
 /* =========================================================================================
@@ -383,12 +393,10 @@ main section { text-align: center; }
 @media (max-width: 900px) {
   .film { height: auto; min-height: 100vh; min-height: 100svh; max-height: none; padding: 0 var(--gutter); }
   .film-img { object-position: 45% 50%; }
-  .film-split { grid-template-columns: 1fr; gap: 0; width: min(100%, 560px); transform: none; }
-  .film-split::before { display: none; }
-  .film-split > * + * { border-top: 1px solid var(--line-2); }
-  .film-p { max-width: none; padding: 28px 0; }
-  .film-split .film-p:first-child { padding-top: 0; }
-  .film-split .film-p:last-child { padding-bottom: 0; }
+  .film-split { grid-template-columns: 1fr; width: min(100%, 560px); transform: none; }
+  .film-split { row-gap: 28px; }
+  .film-p { padding-top: 30px; line-height: 1.5; }
+  .film-p::before { padding-top: 10px; }
   .js-reveal .film-split[data-reveal] { transform: translateY(10px); }
   .js-reveal .film-split[data-reveal].is-in { transform: none; }
   /* a soft dark field behind the text keeps the city lights from competing with it */
