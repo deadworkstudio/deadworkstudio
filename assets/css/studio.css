@@ -277,18 +277,17 @@ main section { text-align: center; }
 
 .film-split {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1fr 1fr;
-  width: min(100%, 1040px); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  width: min(100%, 1240px); margin: 0 auto;
   /* sits in the black sky between the light and the city */
   transform: translateY(-4%);
 }
-/* the divider sits on the row's exact centre (the page's centre line), not on the edge of the
-   right-hand paragraph, which is narrower than its column */
-.film-split::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line-2); }
+/* three columns, a hairline divider between each */
+.film-split > * + * { border-left: 1px solid var(--line-2); }
 .film-p {
   padding: 4px clamp(24px, 3.6vw, 56px);
-  max-width: 34ch; justify-self: center;
-  font: 400 clamp(17px, 1.6vw, 23px)/1.5 var(--sans); letter-spacing: -.005em;
+  max-width: none; justify-self: stretch;
+  font: 400 clamp(16px, 1.45vw, 21px)/1.5 var(--sans); letter-spacing: -.005em;
   color: var(--ink); text-wrap: pretty;
 }
 .film-p + .film-p { color: var(--ink-2); }
@@ -384,15 +383,14 @@ main section { text-align: center; }
   .film { height: auto; min-height: 100vh; min-height: 100svh; max-height: none; padding: 0 var(--gutter); }
   .film-img { object-position: 45% 50%; }
   .film-split { grid-template-columns: 1fr; gap: 0; width: min(100%, 560px); transform: none; }
-  .film-split::before { display: none; }
-  .film-split > * + * { border-top: 1px solid var(--line-2); }
+  .film-split > * + * { border-left: 0; border-top: 1px solid var(--line-2); }
   .film-p { max-width: none; padding: 28px 0; }
   .film-split .film-p:first-child { padding-top: 0; }
   .film-split .film-p:last-child { padding-bottom: 0; }
   .js-reveal .film-split[data-reveal] { transform: translateY(10px); }
   .js-reveal .film-split[data-reveal].is-in { transform: none; }
   /* a soft dark field behind the text keeps the city lights from competing with it */
-  .film::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 90% 46% at 50% 50%, rgba(14,14,13,.78) 0%, rgba(14,14,13,.5) 55%, rgba(14,14,13,0) 100%); }
+  .film::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 100% 62% at 50% 50%, rgba(14,14,13,.85) 0%, rgba(14,14,13,.6) 60%, rgba(14,14,13,0) 100%); }
   .film-split { z-index: 2; }
 }
 
