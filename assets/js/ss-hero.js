@@ -40,23 +40,24 @@
   var GUTTER = 0.035;                                              // near-black gutter, fraction of a tile
 
   // ---- the take ----
-  // Serenity Prayer (Caskey), 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
-  var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
-  // Played in this order: the zoom lands on the rider from behind (moto-5), then the pass under the trees
-  // (moto-4), then the rest in film order.
-  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71];             // each shot's in-point in the film (s)
-  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15];                 // each shot's length (s)
-  // The scan line shows only the stretch of the film around the six shots (not the whole 3:22), so the
+  // One continuous camera take from the Serenity Prayer shoot (ARRI, Day 2, card 2), 4:27 of the
+  // motorcycle run through the canyon; Stock Shredder pulls six 5 s moments out of it (moto-1..6, graded
+  // with the app's own ARRI LogC3 Natural look).
+  var TAKE = 267.2, FILE = 'A002C002_221010_C1UX';
+  // Played in this order: the zoom lands on the rider close from behind (2:28), then the rest in take order.
+  var IN = [148, 64, 76, 98, 162, 180];                           // each moment's in-point in the take (s)
+  var LENS = [5, 5, 5, 5, 5, 5];                                   // each moment's length (s)
+  // The scan line shows only the stretch of the take around the six moments (not the whole 4:27), so the
   // marks spread across the full width and you can watch it pick them; the timecode still reads the real time.
-  var VIEW0 = 62.5, VIEW1 = 80.5;
+  var VIEW0 = 58, VIEW1 = 191;
   function vx(p) { return Math.max(0, Math.min(100, (p - VIEW0) / (VIEW1 - VIEW0) * 100)); }
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
   var RATE = 1;
-  var DWELL = [1.75, 0.6, 0.45, 0.45, 0.45, 0.6];                 // wall-clock time on each moment (moto-5 longest)
+  var DWELL = [1.75, 0.6, 0.45, 0.45, 0.45, 0.6];                 // wall-clock time on each moment (the first, longest)
   var SCRUB = 260;                                                 // take-seconds per second between moments
-  var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282];                // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.47, 0.5, 0.48, 0.5, 0.52, 0.42];                      // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -258,7 +259,7 @@
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
-  var CAPS = ['3.7', '1.9', '2.7', '1.3', '1.0', '1.2'];
+  var CAPS = ['5.0', '5.0', '5.0', '5.0', '5.0', '5.0'];
   function drawLabel(i, rc, a) {
     if (a <= 0) return;
     var fs = Math.round(Math.max(10 * dpr, W * 0.0095)), pad = Math.round(fs * 0.9);
@@ -382,7 +383,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review.webp?v=3';
+  app.src = MEDIA + 'app-review.webp?v=4';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
