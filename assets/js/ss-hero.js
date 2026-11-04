@@ -46,6 +46,10 @@
   // (moto-4), then the rest in film order.
   var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71];             // each shot's in-point in the film (s)
   var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15];                 // each shot's length (s)
+  // The scan line shows only the stretch of the film around the six shots (not the whole 3:22), so the
+  // marks spread across the full width and you can watch it pick them; the timecode still reads the real time.
+  var VIEW0 = 62.5, VIEW1 = 80.5;
+  function vx(p) { return Math.max(0, Math.min(100, (p - VIEW0) / (VIEW1 - VIEW0) * 100)); }
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
@@ -99,7 +103,7 @@
   var marks = [].slice.call(fig.querySelectorAll('.iss-mark'));
   var rail = fig.querySelector('[data-iss-rail]'), rightEl = fig.querySelector('[data-iss-right]');
   var caps = [].slice.call(fig.querySelectorAll('[data-iss-caps] li'));
-  marks.forEach(function (m, i) { m.style.left = (IN[i] / TAKE * 100) + '%'; m.style.width = (LENS[i] / TAKE * 100) + '%'; });
+  marks.forEach(function (m, i) { m.style.left = vx(IN[i]) + '%'; m.style.width = (LENS[i] / (VIEW1 - VIEW0) * 100) + '%'; });
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var freeze = q.has('freeze');
@@ -294,7 +298,7 @@
     setStyle(scan, 'scan', 'opacity', String(scanA));
     if (scanA > 0) {
       var ph = playheadAt(t);
-      setStyle(rail, 'rail', 'transform', 'translateX(' + (ph / TAKE * 100).toFixed(3) + '%)');
+      setStyle(rail, 'rail', 'transform', 'translateX(' + vx(ph).toFixed(3) + '%)');
       var label = tc(ph); if (rightEl.textContent !== label) rightEl.textContent = label;
       for (var m = 0; m < marks.length; m++) setStyle(marks[m], 'm' + m, 'transform', 'scaleX(' + clamp01((ph - IN[m]) / LENS[m]).toFixed(4) + ')');
     }
