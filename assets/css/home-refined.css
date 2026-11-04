@@ -698,3 +698,30 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
 .hero-action:hover, .hero-action:focus-visible { background: #f2ede2; }
 .motion .hero-action { animation: fade 1s var(--ease) .7s both; }
 @media (max-width: 899px) { .hero-action { margin-top: 24px; } }
+
+/* ---------- Hero feature (2026-11-04, Daniel): Stock Shredder is the one live product, so it
+   gets a real purchase path right under the headline. Editorial, not a SaaS card: no box,
+   centered, hairline rules, one bone button. ---------- */
+.hero-feature {
+  display: grid; justify-items: center; gap: 12px; width: min(100%, 560px); margin-top: 36px; padding: 22px 0 0;
+  border-top: 1px solid var(--line-strong); text-align: center; position: relative; z-index: 2;
+}
+.hf-eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 11px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--bone-2); }
+.hf-eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--beta-green); box-shadow: 0 0 0 1px rgba(10,10,9,.35); }
+.hf-title { font: 400 clamp(26px, 2.6vw, 36px)/1 var(--font-display); text-transform: uppercase; letter-spacing: .01em; color: var(--bone); }
+.hf-sub { font: 400 15px/1.45 var(--font-body); color: var(--bone-2); }
+.hf-btn {
+  display: inline-flex; align-items: center; gap: 10px; height: 44px; margin-top: 8px; padding: 0 26px;
+  background: var(--bone); color: var(--ink); text-decoration: none;
+  font: 500 11px/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase;
+  transition: background .2s var(--ease);
+}
+.hf-btn:hover, .hf-btn:focus-visible { background: #f2ede2; }
+.motion .hero-feature { animation: fade 1s var(--ease) .7s both; }
+@media (max-width: 899px) {
+  .hero-feature { margin-top: 28px; padding-top: 20px; gap: 10px; }
+  .hf-title { font-size: 26px; text-wrap: balance; }
+  .hf-sub { text-wrap: balance; }
+  /* on a phone the feature is the call to action; the scroll cue would collide with it */
+  .hero-cue { display: none; }
+}
