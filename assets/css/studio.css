@@ -281,8 +281,8 @@ main section { text-align: center; }
 
 .film-split {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(36px, 4.4vw, 80px);
-  width: min(100%, 1180px); margin: 0 auto; align-items: start;
+  display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(40px, 5.6vw, 112px);
+  width: min(100%, 1480px); margin: 0 auto; align-items: start;
   counter-reset: film;
   /* sits in the black sky between the light and the city */
   transform: translateY(-4%);
