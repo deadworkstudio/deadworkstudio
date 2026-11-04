@@ -255,6 +255,8 @@
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
     var b = appBox(), r = i === 0 ? APP_PLAYER : [18, 216 + 96 * i + 18, 96, 56];
+    // The player keeps the full widescreen frame: full player width, 2.39:1, centred, nothing cropped.
+    if (i === 0) { var ph = r[2] / RATIO; r = [r[0], r[1] + (r[3] - ph) / 2, r[2], ph]; }
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
