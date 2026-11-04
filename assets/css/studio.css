@@ -275,6 +275,10 @@ main section { text-align: center; }
 .js-reveal .film.is-in .film-img.is-loaded { opacity: 1; transform: none; }
 .film::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(14,14,13,.15) 0%, rgba(14,14,13,0) 30%, rgba(14,14,13,0) 70%, rgba(14,14,13,.45) 100%); }
 
+/* fine film grain over the photo: dithers the dark sky so its smooth tones don't show as bands.
+   overlay blend on mid-grey noise keeps the average brightness unchanged */
+.film-grain { position: absolute; inset: 0; pointer-events: none; background: url('../img/mission/grain.png') 0 0 / 160px 160px repeat; mix-blend-mode: overlay; opacity: .55; }
+
 .film-split {
   position: relative; z-index: 1;
   display: grid; grid-template-columns: repeat(3, 1fr);
