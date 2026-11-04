@@ -94,13 +94,12 @@ img.film-video { filter: grayscale(.15) contrast(1.04); }
 /* Sound Driver: the artists and the work they've delivered sound for. Dark band because the
    client marks are bone-on-transparent, made for a dark ground. */
 main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh, 88px) !important; padding-bottom: clamp(56px, 8vh, 88px) !important; }
-.credits .artist-avatars { display: flex; justify-content: center; margin-bottom: 18px; }
+.credits .artist-avatars { display: flex; justify-content: center; gap: 12px; margin-bottom: 18px; }
 .credits .avatar { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid var(--line-2); background: #000; }
-.credits .avatar + .avatar { margin-left: -16px; }
 /* The source portraits are circles on a white square, not centered -- zoom each in on its own
    circle so no white shows at the edge. */
 .credits .avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.credits .avatar img[src$="artist-01.png"] { transform-origin: 56% 52.5%; transform: scale(1.52); }
+.credits .avatar img[src*="artist-01.png"] { transform-origin: 56.5% 50%; transform: scale(1.75); }
 .credits .avatar img[src$="artist-02.png"] { transform-origin: 49% 50.7%; transform: scale(1.36); }
 .client-logo-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center; justify-items: center; gap: clamp(28px, 3.5vw, 48px) clamp(24px, 4vw, 56px); max-width: 1100px; margin: clamp(28px, 4vh, 44px) auto 0; padding: 0; list-style: none; }
 .client-logo-grid img { display: block; height: 30px; width: auto; max-width: 100%; object-fit: contain; opacity: .7; transition: opacity .18s ease; }
