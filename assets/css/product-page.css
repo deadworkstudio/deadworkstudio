@@ -117,3 +117,7 @@ main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh,
   .client-logo-grid img[src$="bmw.png"], .client-logo-grid img[src$="spitfire-audio.png"] { height: 36px; }
   .client-logo-grid img[src$="nfl.png"], .client-logo-grid img[src$="paramount.png"] { height: 40px; }
 }
+
+/* app screens shown without a laptop frame: a hairline edge so dark screens hold their shape on dark sections */
+.feat-shot.has-edge img, .shot.has-edge img { box-shadow: 0 0 0 1px rgba(20,20,18,.14), 0 30px 60px -24px rgba(20,20,18,.45), 0 12px 24px -12px rgba(20,20,18,.3); }
+.tone-dark .feat-shot.is-flat.has-edge img { box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 30px 60px -24px rgba(0,0,0,.8); }
