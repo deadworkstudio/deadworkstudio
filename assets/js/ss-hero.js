@@ -95,7 +95,7 @@
   // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
   T.labels = [S + 0.5, S + 1.0];
   T.toApp = [S + 4.0, S + 4.9];
-  T.LOOP = T.toApp[1] + 2.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
+  T.LOOP = T.toApp[1] + 3.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
   // ---- elements ----
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
@@ -280,7 +280,9 @@
     var e = inOut(seg(t, T.toApp)), la = out(seg(t, T.labels)) * (1 - clamp01(e * 3));
     if (e > 0 && app.naturalWidth) {
       var b = appBox(), sc = 1 + 0.04 * (1 - e), w = b.w * sc, h = b.h * sc;
-      ctx.globalAlpha = a * e; ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h); ctx.globalAlpha = 1;
+      // the app's own dark background fills the whole widescreen frame, so no page shows beside the window
+      ctx.globalAlpha = a * e; ctx.fillStyle = '#0E0E0E'; ctx.fillRect(0, 0, W, H);
+      ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h); ctx.globalAlpha = 1;
     }
     ctx.globalAlpha = a;
     for (var i = 0; i < 6; i++) {
