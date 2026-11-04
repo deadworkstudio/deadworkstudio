@@ -78,7 +78,10 @@ img.film-video { filter: grayscale(.15) contrast(1.04); }
 }
 
 /* hero still (tools without screens yet) and a wide crop of a tall photo */
-.pp-hero-flat img { width: 100%; border-radius: 6px; box-shadow: 0 30px 60px -24px rgba(20,20,18,.45); }
+/* same box as Stock Shredder's hero strip (.strip in ss-page.css with SS's --hero-text, 2.39:1 from ss-hero.css) */
+.shot-hero.pp-hero-flat { width: min(100%, 1120px, calc((100vh - clamp(470px, 50vh, 560px)) * 2.3)); width: min(100%, 1120px, calc((100svh - clamp(470px, 50vh, 560px)) * 2.3)); margin: clamp(22px, 3.4vh, 40px) auto 0; }
+.pp-hero-flat img { display: block; width: 100%; height: auto; aspect-ratio: 2.39 / 1; object-fit: cover; object-position: 50% 50%; border-radius: 6px; box-shadow: 0 30px 60px -24px rgba(20,20,18,.45); }
+@media (max-width: 719px) { .shot-hero.pp-hero-flat { width: 100%; } }
 .feat-shot.is-crop img { aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 45%; }
 
 /* Handoff's mark is nearly square, so it reads small at the shared logo height */
