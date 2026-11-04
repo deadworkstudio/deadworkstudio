@@ -579,13 +579,21 @@
     var autoStart = function () {
       if (autoDone || autoOn) return;
       autoOn = true; nav.classList.add('is-auto'); nav.style.setProperty('--ix-auto', AUTO_MS + 'ms');
-      autoT = setTimeout(autoStep, cur < 0 ? 900 : 0);
+      autoT = setTimeout(autoStep, cur < 0 ? 900 : 250);
     };
     var autoPause = function () { if (!autoOn) return; clearTimeout(autoT); autoT = 0; autoOn = false; };
+    var autoBtn = tour.querySelector('[data-ix-auto]'), autoLbl = tour.querySelector('[data-ix-auto-label]');
+    var autoUi = function () { if (autoBtn) autoBtn.setAttribute('aria-checked', autoDone ? 'false' : 'true'); if (autoLbl) autoLbl.textContent = autoDone ? 'Off' : 'On'; };
     var autoStop = function () {
       if (autoDone) return; autoDone = true; clearTimeout(autoT); autoT = 0; autoOn = false;
-      nav.classList.remove('is-auto');
+      nav.classList.remove('is-auto'); autoUi();
     };
+    // the Auto tour switch: off = explore at your own pace (the current feature stays up); on = it plays again
+    if (autoBtn) autoBtn.addEventListener('click', function () {
+      if (autoDone) { autoDone = false; autoUi(); autoI = cur; if (inView) autoStart(); }
+      else autoStop();
+    });
+    autoUi();
     ['pointerdown', 'keydown'].forEach(function (ev) { nav.addEventListener(ev, autoStop, true); stage.addEventListener(ev, autoStop, true); });
     nav.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') autoStop(); }, true);
 
