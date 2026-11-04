@@ -736,3 +736,7 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   background: rgba(227, 178, 61, 0.14);
   color: inherit;
 }
+
+/* Privacy line under the downloads: plain sentence, not the mono label style. */
+.downloads-note.downloads-privacy { margin-top: 8px; font-family: var(--font-body, Archivo, system-ui, sans-serif); text-transform: none; letter-spacing: 0; font-size: 13px; line-height: 1.5; }
+.downloads-privacy a { color: inherit; }
