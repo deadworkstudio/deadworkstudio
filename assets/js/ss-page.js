@@ -270,7 +270,14 @@
     // so even a 670 px stage on a 2x screen needs ~3200 px of video (the old test, tour width x dpr > 1700,
     // left most laptops on the 1600 px file, which is what looked soft when zoomed)
     // (phones too now: the lifted feature is drawn from the recording at up to 3x, so it needs the pixels)
-    if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1000) {
+    // Phones get their own 2400 px H.264 copy: still sharp when a feature is lifted at 3x, but light
+    // enough for a phone to play smoothly (the 4320 px HEVC one stuttered on iPhone).
+    if (tour.getBoundingClientRect().width < 700) {
+      tour.querySelectorAll('video[data-phone]').forEach(function (v) {
+        var s = v.querySelector('source'); if (!s) return;
+        s.src = v.getAttribute('data-phone'); v.load();
+      });
+    } else if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1000) {
       // 4320 px HEVC where the browser plays it (Safari, most Chrome/Edge), so the zoomed-in features stay
       // sharp; 3600 px H.264 everywhere else (H.264 decoders top out around 4096 px wide)
       var hevc = !!document.createElement('video').canPlayType('video/mp4; codecs="hvc1.1.6.L180.B0"');
