@@ -1,0 +1,10 @@
+/* Status badges, every page (Daniel 2026-11-04): IN DEVELOPMENT = yellow box, LIVE = green box.
+   Loaded last so it wins over the older per-page badge styles. */
+.badge.badge-dev, .mm-meta .badge.badge-dev, body.dev-light .badge.badge-dev {
+  background: #E3B23D !important; border: 1px solid #E3B23D !important; color: #141412 !important;
+}
+.badge.badge-live, .mm-meta .badge.badge-live {
+  background: #8FD687 !important; border: 1px solid #8FD687 !important; color: #141412 !important;
+}
+.badge.badge-dev .badge-icon, .badge.badge-live .badge-icon { border-color: currentColor !important; }
+.badge.badge-live .badge-icon--filled, .mm-meta .badge.badge-live .badge-icon--filled { background: currentColor !important; }
