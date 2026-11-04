@@ -390,7 +390,7 @@ main section { text-align: center; }
   .js-reveal .film-split[data-reveal] { transform: translateY(10px); }
   .js-reveal .film-split[data-reveal].is-in { transform: none; }
   /* a soft dark field behind the text keeps the city lights from competing with it */
-  .film::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 100% 62% at 50% 50%, rgba(14,14,13,.85) 0%, rgba(14,14,13,.6) 60%, rgba(14,14,13,0) 100%); }
+  .film::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 90% 46% at 50% 50%, rgba(14,14,13,.78) 0%, rgba(14,14,13,.5) 55%, rgba(14,14,13,0) 100%); }
   .film-split { z-index: 2; }
 }
 
