@@ -63,6 +63,8 @@
 
   function renderPrices(option) {
     if (termNote) termNote.innerHTML = TERM_NOTE[option];
+    // 6/12-month terms are a real commitment: make the note stand out so nobody misses it.
+    if (termNote) termNote.classList.toggle('is-commitment', option !== 'month');
     // Swapping the number mid-transition (rather than before or after it) is what makes the
     // blur+fade read as one number smoothly becoming another instead of the old one vanishing
     // and a different one popping in once it's gone — see the emil-design-eng skill's note on
@@ -188,7 +190,10 @@
   var trialResendEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-resend-email]') : null;
   var trialResendSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-resend-submit]') : null;
   var trialResendStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-resend-status]') : null;
-  var DEFAULT_OFFER_CODE = 'SHRED'; // shown to everyone until Daniel says remove
+  var DEFAULT_OFFER_CODE = 'SHRED'; // launch offer, shown to everyone
+  // Launch offer runs through Dec 31, 2026 (Daniel, 2026-11-04): the box stops showing after
+  // 11:59 pm Pacific that night. The Worker stops accepting the code at the same moment.
+  var DEFAULT_OFFER_ENDS = Date.parse('2027-01-01T08:00:00Z');
   var currentOfferCode = null; // set once /offer confirms a real, active code
   var trialSubmitInFlight = false; // one in-flight /checkout(offer) request at a time
   var trialResendInFlight = false; // one in-flight /trial/resend-link request at a time
@@ -602,7 +607,7 @@
       }
     }
     if (code) checkOffer(code);
-    else checkOffer(DEFAULT_OFFER_CODE, true);
+    else if (Date.now() < DEFAULT_OFFER_ENDS) checkOffer(DEFAULT_OFFER_CODE, true);
   })();
 
   // Starts a trial (setup-mode) Checkout Session for the entered email. Unlike startCheckout
