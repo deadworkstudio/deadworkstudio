@@ -1,10 +1,18 @@
-/* Status badges, every page (Daniel 2026-11-04): IN DEVELOPMENT = yellow box, LIVE = green box.
+/* Status badges, every page (Daniel 2026-11-04): no outline box, just a small filled color square
+   before the words, like the homepage "Live now" line. In development = yellow, Live = green.
    Loaded last so it wins over the older per-page badge styles. */
-.badge.badge-dev, .mm-meta .badge.badge-dev, body.dev-light .badge.badge-dev {
-  background: #E3B23D !important; border: 1px solid #E3B23D !important; color: #141412 !important;
+.badge.badge-dev, .badge.badge-live, .mm-meta .badge.badge-dev, .mm-meta .badge.badge-live, body.dev-light .badge.badge-dev {
+  background: transparent !important; border: 0 !important; padding-left: 0 !important; padding-right: 0 !important;
 }
-.badge.badge-live, .mm-meta .badge.badge-live {
-  background: #8FD687 !important; border: 1px solid #8FD687 !important; color: #141412 !important;
+.badge.badge-dev .badge-icon, .mm-meta .badge.badge-dev .badge-icon {
+  background: #E3B23D !important; border: 0 !important;
 }
-.badge.badge-dev .badge-icon, .badge.badge-live .badge-icon { border-color: currentColor !important; }
-.badge.badge-live .badge-icon--filled, .mm-meta .badge.badge-live .badge-icon--filled { background: currentColor !important; }
+.badge.badge-live .badge-icon, .mm-meta .badge.badge-live .badge-icon {
+  background: #8FD687 !important; border: 0 !important;
+}
+
+/* homepage tools list uses .status instead of .badge: same simple square */
+.screen--tools .status, .screen--tools .status--live { background: transparent !important; padding: 0 !important; color: inherit; }
+.screen--tools .status::before { background: #E3B23D !important; border: 0 !important; width: 7px !important; height: 7px !important; margin-right: 8px !important; }
+.screen--tools .status--live::before { background: #8FD687 !important; }
+.mm-meta .badge.badge-live { color: #e6e0d3 !important; }
