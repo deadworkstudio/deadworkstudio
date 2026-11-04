@@ -721,3 +721,4 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 @media (max-width: 720px) { .hero-proof { font-size: 15px; margin-top: 10px; padding: 0 8px; } }
 .workflow > .section-sub { margin-bottom: 14px; }
 @media (min-width: 1000px) { .hero-proof { white-space: nowrap; } }
+.reviews-disclosure { margin-top: 6px; font-size: 13px; color: var(--ink-3); }
