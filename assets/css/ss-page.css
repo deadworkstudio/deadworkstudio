@@ -617,6 +617,9 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-feat[aria-pressed="true"] span { color: var(--ink); }
 .ix-feat[aria-pressed="true"]::after { transform: scaleX(1); }
 .ix-feat:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+/* self-playing tour: the bar under the active name fills over the time that feature is shown */
+.ix-nav.is-auto .ix-feat[aria-pressed="true"]::after { transition: none; animation: ix-auto var(--ix-auto, 4800ms) linear both; }
+@keyframes ix-auto { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .ix-stage { position: relative; margin-top: clamp(14px, 2.2vh, 24px); transform-origin: 50% 0; border-radius: 6px; overflow: hidden; isolation: isolate; background: #4C4A46; box-shadow: 0 30px 60px -28px rgba(20,20,18,.35); }
 /* magnify: the chosen controls scale up and move to the middle of the frame (transform only, so it stays smooth) */

@@ -263,7 +263,9 @@
   // ---- THE INTERFACE: point at a feature name to see that part of the real app ----
   // Mouse: hovering a name shows it, leaving the row clears it. Touch: tapping a name shows it,
   // tapping it again clears it. Keyboard: focusing a name shows it, arrows move along the row,
-  // leaving the row clears it. Nothing is highlighted at rest, and nothing cycles on its own.
+  // leaving the row clears it. Until someone touches it, the tour plays itself: when it scrolls into
+  // view it steps through each feature in turn (a bar fills under the active name), so visitors see
+  // there is something to explore. The first hover, tap, click or key stops it for good.
   (function () {
     var tour = document.querySelector('[data-ix-tour]'); if (!tour) return;
     // full-resolution recording on desktop and tablet screens. The features zoom the picture up to 2.4x,
@@ -567,6 +569,26 @@
       spot.classList.add('is-on');
     };
 
+    // ---- self-playing tour (stops for good on the first real interaction) ----
+    var AUTO_MS = 4800, autoT = 0, autoI = -1, autoOn = false, autoDone = !!reduce;
+    var autoStep = function () {
+      autoT = 0; if (autoDone || !inView) return;
+      autoI = (autoI + 1) % feats.length; show(autoI);
+      autoT = setTimeout(autoStep, AUTO_MS);
+    };
+    var autoStart = function () {
+      if (autoDone || autoOn) return;
+      autoOn = true; nav.classList.add('is-auto'); nav.style.setProperty('--ix-auto', AUTO_MS + 'ms');
+      autoT = setTimeout(autoStep, cur < 0 ? 900 : 0);
+    };
+    var autoPause = function () { if (!autoOn) return; clearTimeout(autoT); autoT = 0; autoOn = false; };
+    var autoStop = function () {
+      if (autoDone) return; autoDone = true; clearTimeout(autoT); autoT = 0; autoOn = false;
+      nav.classList.remove('is-auto');
+    };
+    ['pointerdown', 'keydown'].forEach(function (ev) { nav.addEventListener(ev, autoStop, true); stage.addEventListener(ev, autoStop, true); });
+    nav.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') autoStop(); }, true);
+
     nav.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType || 'mouse'; });
     feats.forEach(function (f, k) {
       f.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') show(k); });
@@ -592,7 +614,7 @@
       if (to === null) { if (e.key === 'Escape') show(-1); return; }
       e.preventDefault(); feats[(to + feats.length) % feats.length].focus();
     });
-    nav.addEventListener('focusout', function (e) { if (!nav.contains(e.relatedTarget) && lastPointer !== 'touch' && lastPointer !== 'pen') show(-1); });
+    nav.addEventListener('focusout', function (e) { if (autoDone && !nav.contains(e.relatedTarget) && lastPointer !== 'touch' && lastPointer !== 'pen') show(-1); });
 
     // the screen only plays while on screen
     if ('IntersectionObserver' in window) {
@@ -604,6 +626,10 @@
         if (inView && !reduce) { var p = (night ? dark : screen).play(); if (p && p.catch) p.catch(function () {}); }
         else { screen.pause(); if (dark) dark.pause(); }
       }, { threshold: 0.15 }).observe(tour);
+      // the self-playing tour runs only while most of the app is on screen, and picks up where it left off
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) autoStart(); else autoPause();
+      }, { threshold: 0.6 }).observe(stage);
     }
   })();
 
