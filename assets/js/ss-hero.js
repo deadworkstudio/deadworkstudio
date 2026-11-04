@@ -40,8 +40,8 @@
   var GUTTER = 0.035;                                              // near-black gutter, fraction of a tile
 
   // ---- the take ----
-  // Serenity Prayer (Caskey), 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
-  var TAKE = 202.4, FILE = 'SERENITY_PRAYER_V1';
+  // Motorcycle In The Mountains, 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
+  var TAKE = 202.4, FILE = 'MOTORCYCLE_IN_THE_MOUNTAINS';
   // Played in this order: the zoom lands on the rider from behind (moto-5), then the pass under the trees
   // (moto-4), then the rest in film order.
   var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71];             // each shot's in-point in the film (s)
@@ -382,7 +382,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review.webp?v=3';
+  app.src = MEDIA + 'app-review.webp?v=4';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
