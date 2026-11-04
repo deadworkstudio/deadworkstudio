@@ -326,36 +326,42 @@
       { r: [83.52, 9.82, 16.48, 90.18], dx: 70, dy: 0, s0: .96, at: .24 },         // inspector
       { r: [0, 0, 100, 9.82], dx: 0, dy: -40, s0: 1, at: .36 }                      // header
     ];
-    var buildP = -1, buildRaf = 0;
-    var drawBuild = function () {
+    // buildT is where scroll says the build should be; buildP glides after it each frame, so a mouse
+    // wheel's 100px jumps become one continuous motion instead of a few hard steps.
+    var buildP = -1, buildT = -1, buildRaf = 0, buildLast = 0;
+    var drawBuild = function (ts) {
       buildRaf = 0; if (!build) return;
+      var now = ts || performance.now(), dt = buildLast ? Math.min(64, now - buildLast) : 16; buildLast = now;
+      if (buildP < 0 || buildT < 0 || buildT >= 1 && cur >= 0) buildP = buildT;     // first paint / a lifted feature: no glide
+      else { buildP += (buildT - buildP) * (1 - Math.exp(-dt / 140)); if (Math.abs(buildT - buildP) < .002) buildP = buildT; }
       var p = buildP;
-      if (p >= 1 || p < 0) { stage.classList.remove('is-building'); return; }
+      if (p !== buildT) buildRaf = requestAnimationFrame(drawBuild);
+      if (p >= 1 || p < 0) { buildLast = 0; stage.classList.remove('is-building'); return; }
       stage.classList.add('is-building');
       var W = stage.clientWidth, H = stage.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
       if (build.width !== Math.round(W * dpr)) { build.width = Math.round(W * dpr); build.height = Math.round(H * dpr); }
       var src = screen.readyState >= 2 && screen.videoWidth ? screen : poster, sw = src.videoWidth || src.naturalWidth, sh = src.videoHeight || src.naturalHeight;
       bx.setTransform(1, 0, 0, 1, 0, 0); bx.clearRect(0, 0, build.width, build.height);
-      if (!sw) { buildRaf = requestAnimationFrame(drawBuild); return; }
+      if (!sw) { if (!buildRaf) buildRaf = requestAnimationFrame(drawBuild); return; }
       bx.scale(dpr, dpr);
       PIECES.forEach(function (pc) {
-        var e = 1 - Math.pow(1 - Math.max(0, Math.min(1, (p - pc.at) / .56)), 3); if (e <= 0) return;
+        var t = Math.max(0, Math.min(1, (p - pc.at) / .56)), e = t * t * (3 - 2 * t); if (e <= 0) return;   // soft in and soft out, no lurch at the start
         var r = pc.r, x = r[0] / 100 * W, y = r[1] / 100 * H, w = r[2] / 100 * W, h = r[3] / 100 * H, sc = pc.s0 + (1 - pc.s0) * e;
         bx.save(); bx.globalAlpha = e;
         bx.translate(x + w / 2 + pc.dx * (1 - e), y + h / 2 + pc.dy * (1 - e)); bx.scale(sc, sc);
         bx.drawImage(src, r[0] / 100 * sw, r[1] / 100 * sh, r[2] / 100 * sw, r[3] / 100 * sh, -w / 2, -h / 2, w, h);
         bx.restore();
       });
-      if (inView) buildRaf = requestAnimationFrame(drawBuild);                       // keep the pieces live while they settle
+      if (inView && !buildRaf) buildRaf = requestAnimationFrame(drawBuild);          // keep the pieces live while they settle
     };
     if (!reduce) {
       var ticking = false;
       var upd = function () {
         ticking = false;
         var r = stage.getBoundingClientRect(), vh = window.innerHeight;
-        var p = cur >= 0 ? 1 : Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.36)));   // done by the time it is a third of the way up; never mid-build under a lifted feature
+        var p = cur >= 0 ? 1 : Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.6)));    // spread over more scroll so each piece has room to travel; never mid-build under a lifted feature
         stage.style.setProperty('--p', p.toFixed(3));
-        if (build && p !== buildP) { buildP = p; if (!buildRaf) drawBuild(); }
+        if (build && p !== buildT) { buildT = p; if (!buildRaf) buildRaf = requestAnimationFrame(drawBuild); }
       };
       stage.classList.add(build ? 'is-built' : 'is-scrub');
       window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });

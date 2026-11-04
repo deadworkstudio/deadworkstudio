@@ -107,7 +107,7 @@ body.dev-v2 .dev-hero { padding-top: calc(var(--ss-sh) + clamp(16px, 2.6vh, 32px
 body.dev-v2 .dev-film { width: min(100%, 1120px, calc((100svh - var(--ss-hero-text)) * 2.3)); aspect-ratio: 2.39 / 1 !important; max-height: none; margin: clamp(22px, 3.4vh, 40px) auto 0; border-radius: 0; }
 body.dev-v2 .dev-status { display: flex; justify-content: center; margin: clamp(18px, 2.6vh, 30px) 0 clamp(28px, 4svh, 44px); }
 body.dev-v2 .dev-hero:not(:has(+ .dev-film)) { padding-bottom: clamp(28px, 4svh, 44px); }
-@media (max-width: 1100px) { body.dev-v2 .poster-meta-left, body.dev-v2 .poster-meta-right { display: none; } }
+@media (max-width: 1280px) { body.dev-v2 .poster-meta-left, body.dev-v2 .poster-meta-right { display: none; } }
 @media (max-width: 719px) {
   body.dev-v2 { --ss-sh: 110px; }
   body.dev-v2 .poster-head { grid-template-columns: 1fr; justify-items: center; row-gap: 0; padding: 14px 16px 8px; }

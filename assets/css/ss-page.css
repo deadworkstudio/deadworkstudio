@@ -215,6 +215,8 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 @media (max-width: 1023px) { .spec-v:has(.spec-plat) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .spec-plat { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line-2); font-size: 14px; line-height: 1.35; color: var(--ink-2); }
 .spec-plat strong { color: var(--ink); font-weight: 600; font-size: 16px; }
+a.spec-plat { text-decoration: none; transition: border-color 150ms ease, background-color 150ms ease; }
+a.spec-plat:hover, a.spec-plat:focus-visible { border-color: var(--ink); background: rgba(0, 0, 0, .03); }
 .spec-plat-ic { display: grid; place-items: center; width: 44px; height: 44px; color: var(--ink); }
 .tiles { display: flex; flex-wrap: wrap; gap: 8px; }
 .tiles li { padding: 8px 12px; border: 1px solid var(--line-2); font-size: 14px; color: var(--ink); background: rgba(255,255,255,.35); }
@@ -227,7 +229,7 @@ main > section.film { position: relative; padding: 0 !important; min-height: 100
 .speed { width: 100%; max-width: none; border-collapse: collapse; text-align: left; font-variant-numeric: tabular-nums; }
 .speed th { padding: 0 12px 10px 0; font: 500 10.5px/1.3 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); vertical-align: bottom; }
 .speed td { padding: 12px 12px 12px 0; border-top: 1px solid var(--line-2); font-size: 18px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
-.speed td:nth-child(3), .speed td:nth-child(4) { font-weight: 600; color: var(--ink); }
+.speed td:nth-child(2), .speed td:nth-child(4) { font-weight: 600; color: var(--ink); }
 /* the older spec-table phone rule stacks th/td into blocks; this table keeps its rows */
 @media (max-width: 719px) { .spec .speed tr { display: table-row; } .spec .speed th, .spec .speed td { display: table-cell; width: auto; } .spec .speed th { letter-spacing: .08em; padding: 0 8px 10px 0; } .spec .speed td { font-size: 15px; padding: 12px 8px 12px 0; white-space: normal; } }
 @media (max-width: 719px) { .spec-row { grid-template-columns: 1fr; gap: 12px; } .spec-v:has(.spec-plat) { grid-template-columns: 1fr; } }
@@ -364,6 +366,9 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .pricing-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 20px 8px; }
 .pricing-card + .pricing-card { border-left: 1px solid var(--line); }
 .pricing-name { font: 600 10.5px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+/* A badge inside the plan name sits just right of it, whatever the name's length. */
+.pricing-name { position: relative; }
+.pricing-name .pricing-badge { top: 50%; left: 100%; margin-left: 8px; transform: translateY(-50%); }
 .pricing-price { margin-top: 6px; font: 500 16px/1 var(--sans); color: var(--ink-2); transition: opacity 180ms var(--ease), filter 180ms var(--ease); }
 .pricing-price.is-swapping { opacity: 0; filter: blur(2px); }
 .pricing-price .num { font: 600 34px/1 var(--sans); letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -534,10 +539,11 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .pricing-grid, .earn-grid { margin: 26px -20px 0; }
   .term-opt { min-height: 60px; padding: 12px 4px; }
   .pricing-badge { position: static; display: inline-block; margin-left: 0; }
+  .pricing-name .pricing-badge { transform: none; margin-left: 10px; vertical-align: middle; }
   .upgrade-row { grid-template-columns: 1fr; margin: 30px 0 0; }
   .upgrade--kw, .upgrade--phone { grid-column: 1; border-left: 0; padding: 24px 0; }
 }
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .poster-meta-left, .poster-meta-right { display: none; }
 }
 @media (max-width: 719px) {
@@ -707,3 +713,12 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .foot-email a { display: inline-flex; align-items: center; min-height: 44px; }
   .foot-copy a { display: inline-block; padding: 15px 4px; margin: -15px 0; }
 }
+
+/* Page audit 2026-11-03: proof line under the hero headline, phone remote as a quiet secondary line */
+.hero-proof { max-width: none; margin: 14px auto 0; font-size: 17px; line-height: 1.5; color: var(--ink-2); text-align: center; }
+.downloads-remote { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--ink-3); text-align: center; }
+.downloads-remote a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 720px) { .hero-proof { font-size: 15px; margin-top: 10px; padding: 0 8px; } }
+.workflow > .section-sub { margin-bottom: 14px; }
+@media (min-width: 1000px) { .hero-proof { white-space: nowrap; } }
+.reviews-disclosure { margin-top: 6px; font-size: 13px; color: var(--ink-3); }
