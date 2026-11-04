@@ -54,7 +54,9 @@
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
   // strip never sits on a frozen frame.
   var RATE = 1;
-  var DWELL = [1.75, 0.6, 0.45, 0.45, 0.45, 0.6];                 // wall-clock time on each moment (moto-5 longest)
+  // Full screen shows only the first shot and the last one; the four between are marked on the scan line
+  // in a quick pass while the first shot keeps playing.
+  var DWELL = [1.6, 0.15, 0.15, 0.15, 0.15, 0.85];               // wall-clock time on each moment
   var SCRUB = 260;                                                 // take-seconds per second between moments
   var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282];                // where each panel crops its clip (x, 0–1)
 
@@ -128,14 +130,14 @@
     for (var i = 0; i < segs.length; i++) { var s = segs[i]; if (t < s.t1) return s.p0 + (s.p1 - s.p0) * ((t - s.t0) / (s.t1 - s.t0)); }
     return TAKE;
   }
-  function clipAt(t) { var c = 0; for (var i = 1; i < arrive.length; i++) if (t >= arrive[i]) c = i; return c; }
+  function clipAt(t) { return t >= arrive[5] ? 5 : 0; }          // full frame: first shot, then the last
 
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
     var L = [-1, -1, -1, -1, -1, -1];
-    // clip 1 sits on its first frame through the wall and the zoom, and starts playing the moment it is full frame
-    if (t < X.F) return L;
-    if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.F : t - arrive[c]; return L; }
+    // clip 1 sits on its first frame on the wall and starts playing as the zoom begins, so the zoom is never frozen
+    if (t < X.F) { if (t >= X.P) L[0] = t - X.P; return L; }
+    if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.P : t - arrive[c]; return L; }
     for (var i = 0; i < 6; i++) L[i] = i === 5 ? t - arrive[5] : t - S;
     return L;
   }
