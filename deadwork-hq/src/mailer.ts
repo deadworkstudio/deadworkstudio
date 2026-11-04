@@ -45,8 +45,9 @@ export async function sendMail(env: MailEnv, message: MailMessage): Promise<void
   })
 }
 
-// Same hosted logo footage-curator/worker's own EMAIL_LOGO_FOOTER points at — already public,
-// already the source of truth for every other image this project uses.
+// Hosted on deadworkstudio.com (the old stockshredder.github.io address died with the GitHub
+// account rename). PNG on white, not SVG: Gmail blocks SVG; transparent PNGs vanish in dark mode.
+// Same file the stock-shredder Worker footer uses.
 //
 // CAN-SPAM requires a valid physical postal address on commercial email (a PO Box is fine). No
 // real address has been provided yet — rather than ship a visible "[mailing address needed]"
@@ -54,4 +55,4 @@ export async function sendMail(env: MailEnv, message: MailMessage): Promise<void
 // TODO(Daniel): set this to your real mailing address, then the footer will include it again.
 const MAILING_ADDRESS: string | null = null
 export const EMAIL_LOGO_FOOTER =
-  `<div style="margin-top:32px;padding-top:16px;border-top:1px solid #333"><img src="https://stockshredder.github.io/deadwork-logo.png" alt="DEADWORK — Los Angeles, CA" width="160" style="display:block" />${MAILING_ADDRESS ? `<p style="margin-top:12px;font-size:11px;color:#888">${MAILING_ADDRESS}</p>` : ''}</div>`
+  `<div style="margin-top:32px;padding-top:16px;border-top:1px solid #333"><img src="https://deadworkstudio.com/assets/img/email/deadwork-logo-email.png" alt="DEADWORK — Los Angeles, CA" width="160" height="42" style="display:block;border:0;outline:none;text-decoration:none;height:42px;width:160px" />${MAILING_ADDRESS ? `<p style="margin-top:12px;font-size:11px;color:#888">${MAILING_ADDRESS}</p>` : ''}</div>`
