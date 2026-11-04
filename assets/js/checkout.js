@@ -188,6 +188,7 @@
   var trialResendEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-resend-email]') : null;
   var trialResendSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-resend-submit]') : null;
   var trialResendStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-resend-status]') : null;
+  var DEFAULT_OFFER_CODE = 'SHRED'; // shown to everyone until Daniel says remove
   var currentOfferCode = null; // set once /offer confirms a real, active code
   var trialSubmitInFlight = false; // one in-flight /checkout(offer) request at a time
   var trialResendInFlight = false; // one in-flight /trial/resend-link request at a time
@@ -534,7 +535,9 @@
   // (showPricingError, not the trial panel itself) rather than showing an empty/broken trial box.
   // §3: the real end date comes straight from the Worker's own endsOnText — this file never
   // computes it, just displays it.
-  function checkOffer(code) {
+  // `quiet` = the default SHRED offer shown to every visitor (no ?code= in the URL): if it's
+  // switched off in the Worker, the box just stays hidden, with no error and no scroll.
+  function checkOffer(code, quiet) {
     if (!trialOffer || !code) return;
     fetch(WORKER_URL + '/offer?code=' + encodeURIComponent(code))
       .then(function (res) {
@@ -542,6 +545,7 @@
       })
       .then(function (data) {
         if (!data || !data.valid) {
+          if (quiet) return;
           showPricingError((data && data.message) || "That code isn't active.");
           return;
         }
@@ -556,6 +560,7 @@
           if (data.endsOnText) el.textContent = data.endsOnText;
         });
         trialOffer.hidden = false;
+        if (quiet) return;
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         trialOffer.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
       })
@@ -581,6 +586,7 @@
       }
     }
     if (code) checkOffer(code);
+    else checkOffer(DEFAULT_OFFER_CODE, true);
   })();
 
   // Starts a trial (setup-mode) Checkout Session for the entered email. Unlike startCheckout
