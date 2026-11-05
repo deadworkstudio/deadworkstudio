@@ -318,6 +318,24 @@
         nightTimer = setTimeout(function () { dark.pause(); }, 400);
       }
     };
+    // Share: the Share screen recording (keywords for each exported clip) fades in over the Review one,
+    // from its start, and the Review recording pauses underneath until it fades back out
+    var shareV = tour.querySelector('[data-ix-share-screen]'), shareTimer = 0;
+    var setShare = function (on) {
+      if (!shareV) return;
+      clearTimeout(shareTimer);
+      if (on) {
+        if (shareV.preload === 'none') shareV.preload = 'auto';
+        if (!stage.classList.contains('is-share')) { try { shareV.currentTime = 0; } catch (e) {} }
+        if (!reduce && inView) { var p = shareV.play(); if (p && p.catch) p.catch(function () {}); }
+        stage.classList.add('is-share');
+        shareTimer = setTimeout(function () { if (stage.classList.contains('is-share')) screen.pause(); }, 280);
+      } else if (stage.classList.contains('is-share')) {
+        stage.classList.remove('is-share');
+        if (!reduce && inView && !stage.classList.contains('is-night')) { var r = screen.play(); if (r && r.catch) r.catch(function () {}); }
+        shareTimer = setTimeout(function () { shareV.pause(); }, 400);
+      }
+    };
     // warm the dark recording up once the section is near, so the first switch is instant
     if (dark && 'IntersectionObserver' in window) {
       var warm = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { dark.preload = 'auto'; warm.disconnect(); } }, { rootMargin: '400px 0px' });
@@ -524,7 +542,7 @@
     };
     var lift = function (btn) {
       if (!liftC) return;
-      if (!btn || btn.hasAttribute('data-ix-night')) {
+      if (!btn || btn.hasAttribute('data-ix-night') || btn.hasAttribute('data-ix-share')) {
         if (!liftC.classList.contains('is-on')) return;
         liftC.style.transform = liftC.dataset.from || ''; liftC.classList.remove('is-on'); stage.classList.remove('is-lifted');
         liftFeat = -1; if (cursorEl) cursorEl.style.opacity = '0';
@@ -561,12 +579,13 @@
       panels.forEach(function (p, k) { p.hidden = k !== i; });
       explain.classList.toggle('has-feat', i >= 0);
       setNight(i >= 0 && feats[i].hasAttribute('data-ix-night'));
+      setShare(i >= 0 && feats[i].hasAttribute('data-ix-share'));
       lift(i >= 0 ? feats[i] : null);
       if (i < 0) { spot.classList.remove('is-on'); return; }
       // a lifted feature leaves the whole app dimmed behind it (no hole, no ring); Day / Night keeps its ring
       var night = feats[i].hasAttribute('data-ix-night');
       aim(night || !liftC ? rectsFor(feats[i]) : rectsFor(feats[i]).map(function () { return [50, 50, 0, 0]; }));
-      spot.classList.add('is-on');
+      spot.classList.toggle('is-on', !feats[i].hasAttribute('data-ix-share'));   // Share shows its whole screen
     };
 
     // ---- self-playing tour (stops for good on the first real interaction) ----
@@ -631,6 +650,7 @@
         // Only the recording actually on screen plays — waking the other one back up here would
         // undo the single-decode optimization in setNight() above every time this refires.
         var night = stage.classList.contains('is-night');
+        if (shareV && stage.classList.contains('is-share')) { if (inView && !reduce) { var ps = shareV.play(); if (ps && ps.catch) ps.catch(function () {}); } else shareV.pause(); return; }
         if (inView && !reduce) { var p = (night ? dark : screen).play(); if (p && p.catch) p.catch(function () {}); }
         else { screen.pause(); if (dark) dark.pause(); }
       }, { threshold: 0.15 }).observe(tour);
