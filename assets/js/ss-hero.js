@@ -256,6 +256,7 @@
   // so it fills the whole hero frame. Player picture area and the clip-list thumbnails in that layout.
   var APP_W = 2640, APP_H = 1105, APP_PLAYER = [482, 256, 1672, 627];
   var APP_THUMB_Y = [163, 228.5, 294, 359.5, 425, 490.5], APP_THUMB = [12, 64, 36];
+  var APP_TRIM = [318, 2318];                                      // trim bar track x range (playhead 0 -> end)
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
     var b = appBox(), r = i === 0 ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
@@ -264,7 +265,7 @@
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
-  var CAPS = ['3.7', '1.9', '2.7', '1.3', '1.0', '1.2'];
+  var CAPS = ['8.7', '6.9', '7.7', '6.3', '6.0', '6.2'];   // shown lengths (Daniel: every clip reads 5 s+)
   function drawLabel(i, rc, a) {
     if (a <= 0) return;
     var fs = Math.round(Math.max(10 * dpr, W * 0.0095)), pad = Math.round(fs * 0.9);
@@ -284,7 +285,15 @@
       var b = appBox(), sc = 1 + 0.04 * (1 - e), w = b.w * sc, h = b.h * sc;
       // the app's own dark background fills the whole widescreen frame, so no page shows beside the window
       ctx.globalAlpha = a * e; ctx.fillStyle = '#0E0E0E'; ctx.fillRect(0, 0, W, H);
-      ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h); ctx.globalAlpha = 1;
+      ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h);
+      // the trim bar's playhead runs with the clip in the player (the capture has it erased)
+      var l0 = localTimes(t)[0], d0 = (vids[0] && vids[0].duration) || 3.74;
+      var p = l0 >= 0 ? (l0 % d0) / d0 : 0, ks = h / APP_H, ox = (W - w) / 2, oy = (H - h) / 2;
+      var px = ox + (APP_TRIM[0] + (APP_TRIM[1] - APP_TRIM[0]) * p) * ks;
+      ctx.fillStyle = '#C8584B';
+      ctx.fillRect(px - 1.5 * ks, oy + 982 * ks, 3 * ks, 46 * ks);
+      ctx.beginPath(); ctx.moveTo(px - 5 * ks, oy + 981 * ks); ctx.lineTo(px + 5 * ks, oy + 981 * ks); ctx.lineTo(px, oy + 988 * ks); ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = 1;
     }
     ctx.globalAlpha = a;
     for (var i = 0; i < 6; i++) {
@@ -390,7 +399,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review-wide.webp?v=1';
+  app.src = MEDIA + 'app-review-wide.webp?v=2';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
