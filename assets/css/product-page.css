@@ -121,3 +121,9 @@ main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh,
 /* app screens shown without a laptop frame: a hairline edge so dark screens hold their shape on dark sections */
 .feat-shot.has-edge img, .shot.has-edge img { box-shadow: 0 0 0 1px rgba(20,20,18,.14), 0 30px 60px -24px rgba(20,20,18,.45), 0 12px 24px -12px rgba(20,20,18,.3); }
 .tone-dark .feat-shot.is-flat.has-edge img { box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 30px 60px -24px rgba(0,0,0,.8); }
+
+/* hero with no screenshot (app screens held back): center the title block in the first screen */
+@media (min-width: 900px) and (min-height: 600px) {
+  .pp main > section.hero.pp-hero-text { justify-content: center; padding-bottom: 8vh !important; }
+}
+.pp-hero-text h1 { font-size: clamp(44px, 6vw, 92px); }
