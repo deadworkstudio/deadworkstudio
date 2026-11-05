@@ -496,8 +496,10 @@
     drawWeldOf(fctx, HERO_CLIP, 0, 0, W, H);
     var u = t - S, st = pStrip(), k, j;
     var open = inOut(seg(u, [P_END, P_D])), stripA = 1 - inOut(seg(u, [P_END - 0.1, P_END + 0.3]));
-    var fold = inOut(seg(u, [0, 0.55]));
+    // no fold: the take keeps playing where it is and dims back while the timeline draws in under it
+    var fold = out(seg(u, [0, 0.5])), dim = inOut(seg(u, [0.1, 0.6]));
     ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
+    if (dim < 1) { ctx.globalAlpha = 1 - dim; ctx.drawImage(full, 0, 0); ctx.globalAlpha = 1; }
     // empty slots, waiting
     if (fold > 0 && open < 1) {
       ctx.strokeStyle = 'rgba(235,229,216,' + (0.14 * fold * (1 - open)) + ')'; ctx.lineWidth = Math.max(1, dpr);
@@ -507,11 +509,9 @@
     if (stripA > 0) {
       ctx.save(); ctx.globalAlpha = stripA;
       var dy = H * 0.06 * (1 - stripA);
-      if (fold < 1) {                                               // the frame folding down into the strip
-        var fr = lerpRect({ x: 0, y: 0, w: W, h: H }, st, fold); ctx.drawImage(full, fr.x, fr.y, fr.w, fr.h);
-      }
-      if (fold > 0.6) {
-        var NC = 46, cw = st.w / NC, fa = clamp01((fold - 0.6) / 0.4);
+      if (fold > 0) {
+        var NC = 46, cw = st.w / NC, fa = 1;
+        ctx.save(); ctx.beginPath(); ctx.rect(st.x - st.h, 0, (st.w + st.h * 2) * fold, H); ctx.clip();   // draws in left to right
         ctx.globalAlpha = stripA * fa;
         for (var c = 0; c < NC; c++) {
           var film = VIEW0 + (c + 0.5) / NC * (VIEW1 - VIEW0), near = 0, bd = 1e9;
@@ -545,6 +545,7 @@
         ctx.fillStyle = 'rgba(235,229,216,.6)'; ctx.textAlign = 'left'; ctx.fillText(FILE, st.x, st.y + dy - st.h * 0.6);
         ctx.textAlign = 'right'; ctx.fillStyle = '#EBE5D8';
         ctx.fillText(pad2(done) + ' / 12 CLIPS    ' + tc(ph), st.x + st.w, st.y + dy - st.h * 0.6);
+        ctx.restore();
       }
       ctx.restore();
     }
