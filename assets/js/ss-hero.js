@@ -18,7 +18,7 @@
   var fig = document.querySelector('[data-iss]'); if (!fig) return;
 
   var MEDIA = '../../assets/img/products/stock-shredder/hero/';
-  var RATIO = 2.39;
+  var RATIO = 16 / 9;
 
   // ---- the wall (archive-wall.json, inlined so the page works from file://) ----
   // WEB-02: same breakpoint as the <link preload media> pair in the page head, so whichever one
@@ -44,11 +44,12 @@
   var TAKE = 202.4, FILE = 'MOTORCYCLE_IN_THE_MOUNTAINS';
   // Played in this order: the zoom lands on the rider from behind (moto-5), then the pass under the trees
   // (moto-4), then the rest in film order.
-  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71];             // each shot's in-point in the film (s)
-  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15];                 // each shot's length (s)
+  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71, 72.91, 70.87, 64.49, 68.37, 69.74, 77.71];   // each shot's in-point in the film (s)
+  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15, 3.74, 1.94, 2.69, 1.27, 1.03, 1.15];             // each shot's length (s)
+  var N = IN.length, LAST = N - 1;                                 // twelve clips; the last shot is the full frame that gets shredded
   // The scan line shows only the stretch of the film around the six shots (not the whole 3:22), so the
   // marks spread across the full width and you can watch it pick them; the timecode still reads the real time.
-  var VIEW0 = 62.5, VIEW1 = 80.5;
+  var VIEW0 = Math.min.apply(null, IN) - 2, VIEW1 = Math.max.apply(null, IN.map(function (v, i) { return v + LENS[i]; })) + 2;
   function vx(p) { return Math.max(0, Math.min(100, (p - VIEW0) / (VIEW1 - VIEW0) * 100)); }
   // The riding plays at its real 24 fps (slowing it in the browser showed ~14 frames a second and
   // stuttered). During the scan each plays once; once the six panels are up, each clip loops so the
@@ -56,9 +57,9 @@
   var RATE = 1;
   // Full screen shows only the first shot and the last one; the four between are marked on the scan line
   // in a quick pass while the first shot keeps playing.
-  var DWELL = [1.6, 0.15, 0.15, 0.15, 0.15, 0.85];               // wall-clock time on each moment
+  var DWELL = IN.map(function (v, i) { return i === 0 ? 1.6 : i === LAST ? 0.85 : 0.12; });   // wall-clock time on each moment
   var SCRUB = 260;                                                 // take-seconds per second between moments
-  var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282];                // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282, 0.388, 0.634, 0.667, 0.723, 0.712, 0.282];   // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -88,17 +89,23 @@
   // panels open, instead of running out, freezing, and jumping back to its start mid-split.
   seg_(Math.min((TAKE - pp) / SCRUB, 0.25), TAKE);
   var SCAN_END = tt, S = SCAN_END + 0.1;
-  T.panelsIn = [S, S + 0.8]; T.fullOut = [S + 0.2, S + 1.0]; T.scanOut = [S, S + 0.5];
+  // SHRED: red cut lines run across the full frame (the last shot) along the 4 x 3 grid, the pieces pull apart
+  // into the grid, and each piece is cut over to its own clip by a red line sweeping down it. No dissolves.
+  var COLS = 4, ROWS = 3;
+  T.cut = [S, S + 0.5]; T.part = [S + 0.5, S + 1.1];
+  T.reveal0 = S + 0.95; T.revealStep = 0.035; T.revealDur = 0.32;
+  T.split = [S, T.reveal0 + LAST * T.revealStep + T.revealDur];
+  T.panelsIn = T.split; T.fullOut = T.split; T.scanOut = [S, S + 0.5];
   T.caps = S + 0.8; T.capDur = 0.6; T.capStep = 0.05;
   T.rest = T.caps + 5 * T.capStep + T.capDur;
   // The six clips sit as a 3 x 2 grid of horizontal frames, then fly into the app: clip 5 grows into the
   // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
-  T.split = [S, S + 1.05];                                         // full frame settles into its tile, the others open like shutters
-  T.labels = [S + 1.0, S + 1.5];
-  T.toApp = [S + 4.0, S + 4.9];
+  T.labels = [T.split[1], T.split[1] + 0.45];
+  T.toApp = [T.split[1] + 2.9, T.split[1] + 3.8];
   T.LOOP = T.toApp[1] + 3.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
   // ---- elements ----
+  fig.issTimeline = T;                                             // for review tooling (?t=…&freeze)
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
   var vids = [].slice.call(fig.querySelectorAll('[data-iss-src] video'));
   vids.forEach(function (v) { v.defaultPlaybackRate = RATE; v.playbackRate = RATE; v.addEventListener('loadedmetadata', function () { v.playbackRate = RATE; }); });
@@ -131,15 +138,15 @@
     for (var i = 0; i < segs.length; i++) { var s = segs[i]; if (t < s.t1) return s.p0 + (s.p1 - s.p0) * ((t - s.t0) / (s.t1 - s.t0)); }
     return TAKE;
   }
-  function clipAt(t) { return t >= arrive[5] ? 5 : 0; }          // full frame: first shot, then the last
+  function clipAt(t) { return t >= arrive[LAST] ? LAST : 0; }    // full frame: first shot, then the last
 
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
-    var L = [-1, -1, -1, -1, -1, -1];
+    var L = IN.map(function () { return -1; });
     // clip 1 sits on its first frame on the wall and starts playing as the zoom begins, so the zoom is never frozen
     if (t < X.F) { if (t >= X.P) L[0] = t - X.P; return L; }
     if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.P : t - arrive[c]; return L; }
-    for (var i = 0; i < 6; i++) L[i] = i === 5 ? t - arrive[5] : t - S;
+    for (var i = 0; i < N; i++) L[i] = i === LAST ? t - arrive[LAST] : t - S;
     return L;
   }
 
@@ -250,8 +257,8 @@
     ctx.drawImage(src, sx, sy, sw, sh, x, y, w, h);
   }
   function gridRect(i) {
-    var gap = Math.round(W * 0.012), cw = (W - gap * 2) / 3, ch = (H - gap) / 2;
-    return { x: (i % 3) * (cw + gap), y: Math.floor(i / 3) * (ch + gap), w: cw, h: ch };
+    var gap = Math.round(W * 0.01), cw = (W - gap * (COLS - 1)) / COLS, ch = (H - gap * (ROWS - 1)) / ROWS;
+    return { x: (i % COLS) * (cw + gap), y: Math.floor(i / COLS) * (ch + gap), w: cw, h: ch };
   }
   // The app's Review screen captured in a widescreen window (app-review-wide.webp, 2640 x 1105, 2.39:1),
   // so it fills the whole hero frame. Player picture area and the clip-list thumbnails in that layout.
@@ -260,13 +267,13 @@
   var APP_TRIM = [318, 2318];                                      // trim bar track x range (playhead 0 -> end)
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
-    var b = appBox(), r = i === 0 ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
+    var b = appBox(), r = i === LAST ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
     // The player keeps the full widescreen frame: 2.39:1 fitted inside the player, centred, nothing cropped.
-    if (i === 0) { var pw = Math.min(r[2], r[3] * RATIO), ph = pw / RATIO; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
+    if (i === LAST) { var pw = Math.min(r[2], r[3] * RATIO), ph = pw / RATIO; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
-  var CAPS = ['8.7', '6.9', '7.7', '6.3', '6.0', '6.2'];   // shown lengths (Daniel: every clip reads 5 s+)
+  var CAPS = LENS.map(function (l) { return (l + 5).toFixed(1); });   // shown lengths (Daniel: every clip reads 5 s+)
   function drawLabel(i, rc, a) {
     if (a <= 0) return;
     // a quiet slate: soft shade along the bottom edge, small tracked type, number left and length right
@@ -293,7 +300,7 @@
       ctx.globalAlpha = a * e; ctx.fillStyle = '#0E0E0E'; ctx.fillRect(0, 0, W, H);
       ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h);
       // the trim bar's playhead runs with the clip in the player (the capture has it erased)
-      var l0 = localTimes(t)[0], d0 = (vids[0] && vids[0].duration) || 3.74;
+      var l0 = localTimes(t)[LAST], d0 = (vids[LAST] && vids[LAST].duration) || LENS[LAST];
       var p = l0 >= 0 ? (l0 % d0) / d0 : 0, ks = h / APP_H, ox = (W - w) / 2, oy = (H - h) / 2;
       var px = ox + (APP_TRIM[0] + (APP_TRIM[1] - APP_TRIM[0]) * p) * ks;
       ctx.fillStyle = '#C8584B';
@@ -302,12 +309,40 @@
       ctx.globalAlpha = 1;
     }
     ctx.globalAlpha = a;
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < N; i++) {
       var rc = e > 0 ? lerpRect(gridRect(i), appRect(i), e) : gridRect(i);
       drawCover(i, rc.x, rc.y, rc.w, rc.h);
     }
     ctx.globalAlpha = 1;
-    for (var j = 0; j < 6; j++) drawLabel(j, gridRect(j), a * la);
+    for (var j = 0; j < N; j++) drawLabel(j, gridRect(j), a * la);
+  }
+
+  // ---- SHRED: cut lines, pieces apart, each piece cut over to its own clip ----
+  function drawShred(t) {
+    var src = frameOf(LAST), vw = src.videoWidth || src.naturalWidth, vh = src.videoHeight || src.naturalHeight;
+    var ep = inOut(seg(t, T.part)), lw = Math.max(1, Math.round(1.5 * dpr)), RED = '#C8584B';
+    for (var k = 0; k < N; k++) {
+      var c = k % COLS, r = Math.floor(k / COLS), g = gridRect(k);
+      var piece = { x: c * W / COLS, y: r * H / ROWS, w: W / COLS, h: H / ROWS }, rc = lerpRect(piece, g, ep);
+      if (vw) ctx.drawImage(src, c * vw / COLS, r * vh / ROWS, vw / COLS, vh / ROWS, rc.x, rc.y, rc.w, rc.h);
+      var er = out(seg(t, [T.reveal0 + k * T.revealStep, T.reveal0 + k * T.revealStep + T.revealDur]));
+      if (er > 0) {
+        var hh = g.h * er;
+        ctx.save(); ctx.beginPath(); ctx.rect(g.x, g.y, g.w, hh); ctx.clip(); drawCover(k, g.x, g.y, g.w, g.h); ctx.restore();
+        if (er < 1) { ctx.fillStyle = RED; ctx.fillRect(g.x, g.y + hh - lw / 2, g.w, lw); }
+      }
+    }
+    if (ep > 0) return;
+    // the blades: three vertical cuts top to bottom, then two across, each a hairline with a bright tip
+    ctx.fillStyle = RED;
+    for (var v = 1; v < COLS; v++) {
+      var e = out(seg(t, [S + (v - 1) * 0.06, S + 0.3 + (v - 1) * 0.06])), x = Math.round(v * W / COLS - lw / 2);
+      if (e > 0) ctx.fillRect(x, 0, lw, H * e);
+    }
+    for (var h = 1; h < ROWS; h++) {
+      var e2 = out(seg(t, [S + 0.16 + (h - 1) * 0.06, S + 0.46 + (h - 1) * 0.06])), y = Math.round(h * H / ROWS - lw / 2);
+      if (e2 > 0) ctx.fillRect(0, y, W * e2, lw);
+    }
   }
 
   // ---- one pure function of time ----
@@ -354,22 +389,8 @@
       }
       return;
     }
-    // SHRED, then SEND: no dissolve. The full frame (the last shot) glides down into its own tile while the
-    // other five open from their centre lines like shutters, one after another, the gaps opening to the page.
     if (t < S) { drawFull(clipAt(t), 1); return; }
-    if (t < T.split[1]) {
-      var em = inOut(seg(t, [S, S + 0.85]));
-      for (var k = 0; k < 5; k++) {
-        var ek = inOut(seg(t, [S + 0.12 + k * 0.06, S + 0.72 + k * 0.06]));
-        if (ek <= 0) continue;
-        var g = gridRect(k), oh = g.h * ek;
-        ctx.save(); ctx.beginPath(); ctx.rect(g.x, g.y + (g.h - oh) / 2, g.w, oh); ctx.clip();
-        drawCover(k, g.x, g.y, g.w, g.h); ctx.restore();
-      }
-      var r5 = lerpRect({ x: 0, y: 0, w: W, h: H }, gridRect(5), em);
-      drawCover(5, r5.x, r5.y, r5.w, r5.h);
-      return;
-    }
+    if (t < T.split[1]) { drawShred(t); return; }
     drawGrid(1, t);
   }
 
@@ -378,7 +399,7 @@
   // small clips (~4 MB total) don't need the old loadAll() eager-preload-everything approach; the
   // real cost was asking for six files the instant the hero appeared instead of spreading the ask
   // out over the ~7 s it actually takes to reach each one. ----
-  var videoLoaded = [false, false, false, false, false, false];
+  var videoLoaded = IN.map(function () { return false; });
   var LOAD_LEAD = 1.5;   // seconds of wall-clock lead time before a clip is first needed
   function loadClip(i) {
     if (videoLoaded[i]) return; videoLoaded[i] = true;
@@ -396,7 +417,7 @@
       if (L[i] >= 0) {
         // panels up: keep every clip moving. The last shot is also the full frame fading out under the
         // panels, so it holds its final frame until that fade is done instead of jumping back mid-dissolve.
-        if (v.ended && t >= (i === 5 ? T.fullOut[1] : T.panelsIn[0])) { try { v.currentTime = 0; } catch (e) {} }
+        if (v.ended && t >= (i === LAST ? T.split[1] : S)) { try { v.currentTime = 0; } catch (e) {} }
         if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
