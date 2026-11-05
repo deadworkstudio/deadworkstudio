@@ -309,7 +309,10 @@
 
   function updatePayButton() {
     if (!bcoPay) return;
-    bcoPay.disabled = !brandedCanConfirm || brandedPaying;
+    // Solid as soon as Stripe's form is ready; Stripe checks the fields when Pay is pressed and
+    // marks anything missing right in the form (its own canConfirm stays false until the email,
+    // which we only hand over on Pay, is set).
+    bcoPay.disabled = !brandedActions || brandedPaying;
     bcoPay.textContent = brandedPaying ? 'Processing\u2026' : 'Pay ' + (brandedTotalText || '');
   }
 
@@ -496,7 +499,7 @@
         // The Worker successfully asked Stripe, and Stripe confirmed the charge did not go
         // through (e.g. a decline) — nothing to retry-confirm, so send them back to pick again.
         if (retryBtn) retryBtn.hidden = true;
-        showStatus("That charge didn't go through, so nothing was billed. Pick a plan below to try again.", true);
+        showGrid("That charge didn't go through, so nothing was billed. Pick a plan to try again.");
       })
       .catch(function () {
         // We don't know whether Stripe's charge succeeded — only that our Worker couldn't be
@@ -568,6 +571,8 @@
       });
   }
 
+  var BRANDED_AUTH = 'By paying, you allow DEADWORK STUDIO to charge your card on these terms.';
+
   // Stripe's fields drawn in the site's own type and colors: Archivo, square corners, ink on bone.
   var BRANDED_APPEARANCE = {
     theme: 'flat',
@@ -630,7 +635,7 @@
     if (bcoTotal) bcoTotal.textContent = brandedTotalText;
     // Until the Worker answers, the site's own wording for this option (the Worker's own copy of the
     // same terms replaces it a moment later).
-    if (bcoTerms) bcoTerms.innerHTML = TERM_NOTE[currentPlanInterval];
+    if (bcoTerms) bcoTerms.innerHTML = TERM_NOTE[currentPlanInterval] + ' ' + BRANDED_AUTH;
     updatePayButton();
   }
 
@@ -660,7 +665,7 @@
         if (run !== brandedRun) return;
         if (!data || !data.clientSecret || !data.sessionId) throw new Error('missing clientSecret');
         sessionId = data.sessionId;
-        if (bcoTerms && data.terms) bcoTerms.textContent = data.terms;
+        if (bcoTerms && data.terms) bcoTerms.textContent = data.terms + ' ' + BRANDED_AUTH;
         var sdk = getStripe().initCheckoutElementsSdk({
           clientSecret: data.clientSecret,
           elementsOptions: { appearance: BRANDED_APPEARANCE, fonts: brandedFonts() }
@@ -698,7 +703,10 @@
         express.mount(bcoExpress);
         brandedElements.push(express);
 
-        var payment = sdk.createPaymentElement({ layout: { type: 'accordion', radios: 'always', spacedAccordionItems: true } });
+        // Stripe's own card line ("...charge you according to the terms until you cancel") reads
+        // wrong next to a 6/12-month term that can't be canceled early, so the card line is ours
+        // instead (BRANDED_AUTH below the terms). Other methods keep Stripe's own wording.
+        var payment = sdk.createPaymentElement({ layout: { type: 'accordion', radios: 'always', spacedAccordionItems: true }, terms: { card: 'never' } });
         payment.on('ready', function () {
           if (bcoPayment) bcoPayment.classList.remove('checkout-panel-frame', 'is-loading');
         });
@@ -709,8 +717,10 @@
           if (run !== brandedRun) return;
           if (result.type !== 'success') throw new Error(result.error && result.error.message);
           brandedActions = result.actions;
-          // An email typed before Stripe finished loading still counts (Link looks it up).
-          if (bcoEmail && bcoEmail.value.trim()) brandedActions.updateEmail(bcoEmail.value.trim());
+          updatePayButton();
+          // The email goes to Stripe only when Pay is pressed: handing it over earlier makes
+          // Stripe tick its own "save my info with Link" box, which then demands a phone number
+          // and keeps Pay disabled with no visible reason.
         });
       })
       .catch(function (err) {
@@ -733,13 +743,6 @@
     // another site come back to this page with ?session_id= instead (see resumeFromReturn).
     teardownBranded();
     verifySession();
-  }
-
-  if (bcoEmail) {
-    bcoEmail.addEventListener('change', function () {
-      var email = bcoEmail.value.trim();
-      if (brandedActions && email) brandedActions.updateEmail(email);
-    });
   }
 
   if (bcoForm) {
