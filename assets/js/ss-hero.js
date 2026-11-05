@@ -613,10 +613,17 @@
         return;
       }
       ctx.fillStyle = '#0A0A09'; ctx.fillRect(0, 0, W, H);
-      var fs2 = Math.round(Math.max(9 * dpr, W * 0.0088)), lh = fs2 * 2.15, x0 = W * 0.2, x1 = W * 0.8, y0 = H * 0.5 - lh * 6.6;
+      // the list always fits its box: on a phone it widens to the edges, and the type shrinks until a file name,
+      // its bar and DONE sit side by side on one line, with all twelve rows inside the frame
+      var narrow = W / dpr < 700, x0 = narrow ? W * 0.06 : W * 0.2, x1 = narrow ? W * 0.94 : W * 0.8;
+      var fs2 = Math.round(Math.max(9 * dpr, W * 0.0088));
       ctx.save(); ctx.textBaseline = 'middle';
-      ctx.font = '500 ' + fs2 + 'px "JetBrains Mono", ui-monospace, monospace';
-      if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs2 * 0.16) + 'px';
+      function exFont() { ctx.font = '500 ' + fs2 + 'px "JetBrains Mono", ui-monospace, monospace'; if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs2 * 0.16) + 'px'; }
+      exFont();
+      var nameW = ctx.measureText(FILE + '_12.mov').width, stW = ctx.measureText('100%').width, need = nameW + stW + Math.max(W * 0.06, fs2 * 4) + fs2 * 3;
+      if (need > x1 - x0) { fs2 = Math.max(4, Math.floor(fs2 * (x1 - x0) / need)); exFont(); nameW = ctx.measureText(FILE + '_12.mov').width; stW = ctx.measureText('100%').width; }
+      var lh = Math.min(fs2 * 2.15, H * 0.86 / 13.6), y0 = H * 0.5 - lh * 6.6;
+      var bx = Math.max(W * 0.6, x0 + nameW + fs2 * 1.5), bw = Math.min(W * 0.14, x1 - stW - fs2 * 1.5 - bx);
       if (u < 2.35) {
         var ex0 = 0.45, done2 = 0;
         for (var i2 = 0; i2 < N; i2++) {
@@ -626,16 +633,16 @@
           var yy = y0 + (i2 + 1) * lh;
           ctx.textAlign = 'left'; ctx.fillStyle = pr >= 1 ? '#EBE5D8' : 'rgba(235,229,216,.7)';
           ctx.fillText(FILE + '_' + pad2(i2 + 1) + '.mov', x0, yy);
-          ctx.fillStyle = 'rgba(235,229,216,.14)'; ctx.fillRect(W * 0.6, yy - dpr, W * 0.14, 2 * dpr);
-          ctx.fillStyle = '#EBE5D8'; ctx.fillRect(W * 0.6, yy - dpr, W * 0.14 * pr, 2 * dpr);
+          ctx.fillStyle = 'rgba(235,229,216,.14)'; ctx.fillRect(bx, yy - dpr, bw, 2 * dpr);
+          ctx.fillStyle = '#EBE5D8'; ctx.fillRect(bx, yy - dpr, bw * pr, 2 * dpr);
           ctx.textAlign = 'right'; ctx.fillStyle = pr >= 1 ? '#8FD687' : 'rgba(235,229,216,.45)';
           ctx.fillText(pr >= 1 ? 'DONE' : Math.round(pr * 100) + '%', x1, yy);
           if (pr >= 1) done2++;
         }
-        ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(235,229,216,.55)'; ctx.fillText('EXPORT  ·  4K  ·  PRORES 422 HQ  ·  GRADED', x0, y0 - lh * 0.4);
+        ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(235,229,216,.55)'; ctx.fillText(narrow ? 'EXPORT  ·  4K  ·  PRORES 422 HQ' : 'EXPORT  ·  4K  ·  PRORES 422 HQ  ·  GRADED', x0, y0 - lh * 0.4);
         ctx.textAlign = 'right'; ctx.fillText(pad2(done2) + ' / 12', x1, y0 - lh * 0.4);
       } else {
-        var fb2 = Math.round(W * 0.03);
+        var fb2 = Math.round(Math.max(W * 0.03, fs2 * 1.9));
         ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(235,229,216,.55)';
         if (ssLogo.complete && ssLogo.naturalWidth) {               // the Stock Shredder logo heads the slate (Daniel)
           var lh2 = fb2 * 1.5, lw2 = lh2 * ssLogo.naturalWidth / ssLogo.naturalHeight;
