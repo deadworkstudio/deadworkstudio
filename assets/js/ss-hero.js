@@ -31,17 +31,13 @@
   var WALL_FILE = WALL_W === 800 ? 'archive-wall-800.webp' : 'archive-wall-1600.webp';
   var WALL_SCALE = WALL_W / WALL_FULL_W;
   var WALL = { src: MEDIA + WALL_FILE + '?v=1', cols: 24, rows: 20, tileW: WALL_TILE_W * WALL_SCALE, tileH: WALL_TILE_H * WALL_SCALE, total: 360 };
-  // Daniel: no image on the wall may repeat. The sprite holds 360 different shots (its last two rows
-  // repeat the first two, a few are near-identical frames of one shot), and a 20-wide window showed ~23
-  // rows, so the wall wrapped and rows came back. Now the window is 16 tiles wide (20 rows on screen over
-  // the whole drift), and every cell is laid out from WALL_MAP: 319 checked-distinct sprite cells
-  // (index = row * 24 + col), none of them the take itself, which only ever appears as the hero tile.
-  var VIEW_COLS = 16, FIRST_COL = 0;
-  var VIEW_ROWS = VIEW_COLS * WALL.tileW / (WALL.tileH * RATIO);   // ≈17.1
-  var HERO = { col: 8, row: 10 };                                  // the take's tile, centred on screen at rest
+  var VIEW_COLS = 20, FIRST_COL = 2;                               // the archive concept's window
+  var VIEW_ROWS = VIEW_COLS * WALL.tileW / (WALL.tileH * RATIO);   // ≈15.9
+  // The take's own frame (A002_C044_0217SC) sits at col 3,row 4, on the edge of the window. Its frame
+  // moves to the middle (col 11,row 9) as weld-1; the tile it displaces moves to col 3,row 4, so the wall
+  // still holds 480 different takes.
+  var HERO = { col: 11, row: 9 }, ORIG = { col: 3, row: 4 };
   var REST_TOP = HERO.row + 0.5 - VIEW_ROWS / 2;                   // that tile's row centred when the drift stops
-  var SHEET_ROWS = 20;                                             // rows laid out (the drift never shows more)
-  var WALL_MAP = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,98,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,122,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,146,147,148,149,151,152,153,154,157,158,159,160,161,162,163,164,165,170,171,172,173,174,175,176,177,178,179,181,182,183,184,185,186,187,188,189,194,195,196,197,198,199,200,201,202,204,206,207,208,209,210,211,212,213,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,242,243,244,245,246,248,249,251,252,253,254,255,256,258,259,260,261,266,267,268,269,271,272,274,275,276,277,278,279,280,281,283,284,285,290,291,292,293,294,295,298,299,300,301,302,303,304,305,306,308,309,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,339,340,341,342,343,344,345,346,347,348,349,351,352,353,354,355,356,357,362,363,364,366,367,368,369,370,371,372,373,374,375,376,377,378,380,381,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405];
   var GUTTER = 0.035;                                              // near-black gutter, fraction of a tile
 
   // ---- the take ----
@@ -54,10 +50,6 @@
   var N = IN.length, LAST = N - 1;
   var SHRED = 5;                                                   // the riding shot that fills the frame and gets cut into twelve
   var PLAYER = LAST;                                               // the clip that lands in the app's player (selected in the capture)
-  // clip 01 and the shred shot are the same riding moment, so the wall tile, the push and the full frame all
-  // use the shred shot: it starts as the push begins and plays once, start to end, then gets cut into twelve
-  // (Daniel: no repeating the shot, play its whole length).
-  var HERO_CLIP = SHRED;
   // The scan line shows only the stretch of the film around the six shots (not the whole 3:22), so the
   // marks spread across the full width and you can watch it pick them; the timecode still reads the real time.
   var VIEW0 = Math.min.apply(null, IN) - 2, VIEW1 = Math.max.apply(null, IN.map(function (v, i) { return v + LENS[i]; })) + 2;
@@ -99,11 +91,7 @@
   // The last shot is only 1.15 s long: zip the playhead to the end so the shot is still playing as the
   // panels open, instead of running out, freezing, and jumping back to its start mid-split.
   seg_(Math.min((TAKE - pp) / SCRUB, 0.25), TAKE);
-  // Fit the scan into the hero shot's own length so the cut lands right as the shot ends (one play, no loop).
-  var SCAN_END = X.P + LENS[HERO_CLIP] - 0.1, fitK = (SCAN_END - X.P) / (tt - X.P);
-  segs.forEach(function (s) { s.t0 = X.P + (s.t0 - X.P) * fitK; s.t1 = X.P + (s.t1 - X.P) * fitK; });
-  arrive = arrive.map(function (a) { return X.P + (a - X.P) * fitK; });
-  var S = SCAN_END + 0.1;
+  var SCAN_END = tt, S = SCAN_END + 0.1;
   // SHRED: red cut lines run across the full frame (the last shot) along the 4 x 3 grid, the pieces pull apart
   // into the grid, and each piece is cut over to its own clip by a red line sweeping down it. No dissolves.
   var COLS = 3, ROWS = 4;                                          // twelve widescreen tiles fill a 16:9 frame exactly
@@ -117,10 +105,7 @@
   // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
   T.labels = [T.split[1], T.split[1] + 0.45];
   T.toApp = [T.split[1] + 2.9, T.split[1] + 3.8];
-  // clip 12 starts from its first frame as it flies into the player and plays its whole length once;
-  // the loop ends with its last frame (Daniel: start at 0:00, play the entire clip).
-  T.playerIn = T.toApp[0];
-  T.LOOP = T.playerIn + LENS[PLAYER]; T.loopOut = [T.LOOP - 0.6, T.LOOP];
+  T.LOOP = T.toApp[1] + 3.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
   // ---- elements ----
   fig.issTimeline = T;                                             // for review tooling (?t=…&freeze)
@@ -157,32 +142,34 @@
     for (var i = 0; i < segs.length; i++) { var s = segs[i]; if (t < s.t1) return s.p0 + (s.p1 - s.p0) * ((t - s.t0) / (s.t1 - s.t0)); }
     return TAKE;
   }
+  function clipAt(t) { return t >= arrive[SHRED] ? SHRED : 0; }  // full frame: the first shot, then the one that gets shredded
 
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
     var L = IN.map(function () { return -1; });
-    // the hero shot sits on its first frame on the wall and starts playing as the zoom begins, then plays
-    // straight through the full frame (one take, never restarted) until it is cut
-    if (t < S) { if (t >= X.P) L[HERO_CLIP] = t - X.P; return L; }
-    for (var i = 0; i < N; i++) L[i] = i === HERO_CLIP ? t - X.P : i === PLAYER && t >= T.playerIn ? t - T.playerIn : t - S;
+    // clip 1 sits on its first frame on the wall and starts playing as the zoom begins, so the zoom is never frozen
+    if (t < X.F) { if (t >= X.P) L[0] = t - X.P; return L; }
+    if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.P : t - arrive[c]; return L; }
+    for (var i = 0; i < N; i++) L[i] = i === SHRED ? t - arrive[SHRED] : t - S;
     return L;
   }
 
   // ---- images: the wall sprite and the six first frames (posters; weld-1 is also the wall tile) ----
   var sprite = new Image(); sprite.decoding = 'async';
   var posters = vids.map(function (v) { var im = new Image(); im.decoding = 'async'; im.src = v.getAttribute('poster'); return im; });
+  var weld = posters[0];
   var app = new Image(); app.decoding = 'async';
 
   // ---- the pre-scaled sheet: the archive concept's wall, gutters baked in, at the current size ----
   var sheet = document.createElement('canvas'), sctx = sheet.getContext('2d');
   var W = 0, H = 0, tw = 0, th = 0, g = 0, dpr = 1, ready = false;
-  function cellSrc(c, r) {                                         // the sprite cell shown at sheet cell (c, r)
-    var n = r * VIEW_COLS + c; if (r > HERO.row || (r === HERO.row && c > HERO.col)) n--;   // the hero cell takes no sprite tile
-    var k = WALL_MAP[n % WALL_MAP.length]; return [k % WALL.cols, Math.floor(k / WALL.cols)];
+  function cellSrc(c, r) {                                         // the sprite cell shown at (c, r), after the swap
+    if (c === ORIG.col && r === ORIG.row) return [HERO.col, HERO.row];
+    return [c, r];
   }
   // weld-1 cover-cropped into a w x h picture: at rest it is an ordinary tile (no letterbox); during the
   // push its picture opens from the tile's shape to the full 2.39 frame, so it lands on the exact video frame.
-  function drawWeld(c, x, y, w, h) { drawWeldOf(c, HERO_CLIP, x, y, w, h); }
+  function drawWeld(c, x, y, w, h) { drawWeldOf(c, 0, x, y, w, h); }
   function drawWeldOf(c, i, x, y, w, h) {
     var src = frameOf(i), iw = src.videoWidth || src.naturalWidth, ih = src.videoHeight || src.naturalHeight; if (!iw) return;
     // fills the frame edge to edge (Daniel: no black bars): cover, trimming only the sides
@@ -198,10 +185,10 @@
     tw = W / VIEW_COLS; th = tw * WALL.tileH / WALL.tileW;
     g = Math.max(1, Math.round(tw * GUTTER));                      // ~2 px on desktop, 1 px on phones
     if (!sprite.naturalWidth) return;
-    sheet.width = Math.ceil(tw * VIEW_COLS); sheet.height = Math.ceil(th * SHEET_ROWS);
+    sheet.width = Math.ceil(tw * WALL.cols); sheet.height = Math.ceil(th * WALL.rows);
     sctx.fillStyle = '#0E0E0D'; sctx.fillRect(0, 0, sheet.width, sheet.height);
     sctx.imageSmoothingEnabled = true; sctx.imageSmoothingQuality = 'high';
-    for (var r = 0; r < SHEET_ROWS; r++) for (var c = 0; c < VIEW_COLS; c++) {
+    for (var r = 0; r < WALL.rows; r++) for (var c = 0; c < WALL.cols; c++) {
       var x = Math.round(c * tw), y = Math.round(r * th), x2 = Math.round((c + 1) * tw), y2 = Math.round((r + 1) * th);
       var dx = x + g / 2, dy = y + g / 2, dw = x2 - x - g, dh = y2 - y - g;
       if (c === HERO.col && r === HERO.row) {
@@ -216,7 +203,7 @@
 
   // The wall at rest scale, `top` rows at the top edge; it repeats vertically (archive concept).
   function drawWall(t) {
-    var sheetH = th * SHEET_ROWS, top = wallTop(t);
+    var sheetH = th * WALL.rows, top = wallTop(t);
     var oy = ((top * th) % sheetH + sheetH) % sheetH, ox = FIRST_COL * tw;
     ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
     for (var y = -oy; y < H; y += sheetH) ctx.drawImage(sheet, -ox, y);
@@ -245,7 +232,7 @@
       var rx = (c - FIRST_COL) * tw, ry = (r - REST_TOP) * th;     // rest-space corner of this cell
       var X0 = ox + (rx - ox) * z + gs / 2, Y0 = oy + (ry - oy) * z + gs / 2;
       var w = tw * z - gs, h = th * z - gs;
-      var rr = ((r % SHEET_ROWS) + SHEET_ROWS) % SHEET_ROWS, cc = ((c % VIEW_COLS) + VIEW_COLS) % VIEW_COLS;
+      var rr = ((r % WALL.rows) + WALL.rows) % WALL.rows, cc = ((c % WALL.cols) + WALL.cols) % WALL.cols;
       if (cc === HERO.col && rr === HERO.row) {
         if (e >= 1) { drawWeld(ctx, 0, 0, W, H); continue; }       // land exactly on the frame
         // The picture always covers whatever part of its tile is on screen (never a dark band), keeps
@@ -254,7 +241,7 @@
         var hw = Math.max(pcx - Math.max(X0, 0), Math.min(X0 + w, W) - pcx), hv = Math.max(pcy - Math.max(Y0, 0), Math.min(Y0 + h, H) - pcy);
         var pw = Math.max(2 * hw, 2 * hv * CLIP_R), ph = pw / CLIP_R;   // cover: no black above or below
         ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, w, h); ctx.clip(); ctx.fillStyle = '#0E0E0D'; ctx.fillRect(X0, Y0, w, h);
-        ctx.drawImage(frameOf(HERO_CLIP), pcx - pw / 2, pcy - ph / 2, pw, ph);   // the live video itself: no image-to-video swap
+        ctx.drawImage(frameOf(0), pcx - pw / 2, pcy - ph / 2, pw, ph);   // the live video itself: no image-to-video swap
         ctx.restore();
         continue;
       }
@@ -323,8 +310,8 @@
       ctx.globalAlpha = a * e; ctx.fillStyle = '#0E0E0E'; ctx.fillRect(0, 0, W, H);
       ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h);
       // the trim bar's playhead runs with the clip in the player (the capture has it erased)
-      var vp = vids[PLAYER], d0 = (vp && vp.duration) || LENS[PLAYER];
-      var p = t >= T.playerIn && vp && vp.readyState >= 1 ? Math.min(1, vp.currentTime / d0) : 0, ks = h / APP_H, ox = (W - w) / 2, oy = (H - h) / 2;
+      var l0 = localTimes(t)[PLAYER], d0 = (vids[PLAYER] && vids[PLAYER].duration) || LENS[PLAYER];
+      var p = l0 >= 0 ? (l0 % d0) / d0 : 0, ks = h / APP_H, ox = (W - w) / 2, oy = (H - h) / 2;
       var px = ox + (APP_TRIM[0] + (APP_TRIM[1] - APP_TRIM[0]) * p) * ks;
       ctx.fillStyle = '#EBE5D8';                                     // the dark theme's playhead: bone, a thin line under a small notch
       ctx.fillRect(px - 1.5 * K * ks, oy + APP_PH[0] * ks, 3 * K * ks, (APP_PH[1] - APP_PH[0]) * ks);
@@ -395,18 +382,18 @@
     if (t < X.F) {                                                  // IMPORT + the transition
       if (VARIANT === 'push' && t >= X.push[0]) {
         drawPush(inOut(seg(t, X.push)));
-        drawFull(HERO_CLIP, inOut(seg(t, X.xfade)));
+        drawFull(0, inOut(seg(t, X.xfade)));
       } else {
         drawWall(t);
         if (VARIANT === 'push') {
-          var sheetH = th * SHEET_ROWS, ty = (((HERO.row - wallTop(t)) * th) % sheetH + sheetH) % sheetH;
+          var sheetH = th * WALL.rows, ty = (((HERO.row - wallTop(t)) * th) % sheetH + sheetH) % sheetH;
           drawWeld(ctx, (HERO.col - FIRST_COL) * tw + g / 2, ty + g / 2, tw - g, th - g);
         }
         var hr = heroRest();
         if (VARIANT === 'fade' && t >= X.dim[0]) {
           ctx.fillStyle = 'rgba(14,14,13,' + (0.9 * inOut(seg(t, X.dim))) + ')'; ctx.fillRect(0, 0, W, H);
           ctx.drawImage(sheet, hr.sx, hr.sy, hr.w, hr.h, hr.dx, hr.dy, hr.w, hr.h);   // the tile stays lit, in place
-          drawFull(HERO_CLIP, inOut(seg(t, X.dissolve)));
+          drawFull(0, inOut(seg(t, X.dissolve)));
         } else if (VARIANT === 'cut' && t >= X.lift[0]) {
           ctx.fillStyle = 'rgba(14,14,13,' + (0.26 * inOut(seg(t, X.lift))) + ')'; ctx.fillRect(0, 0, W, H);
           ctx.drawImage(sheet, hr.sx, hr.sy, hr.w, hr.h, hr.dx, hr.dy, hr.w, hr.h);
@@ -414,7 +401,7 @@
       }
       return;
     }
-    if (t < S) { drawFull(HERO_CLIP, 1); return; }
+    if (t < S) { drawFull(clipAt(t), 1); return; }
     if (t < T.split[1]) { drawShred(t); return; }
     drawGrid(1, t);
   }
@@ -431,23 +418,18 @@
     var v = vids[i]; v.preload = 'auto'; v.load();
   }
   function loadScheduled(t) {
-    loadClip(HERO_CLIP);                                            // playing inside the wall tile from the push on
-    for (var i = 0; i < vids.length; i++) if (t >= arrive[i] - LOAD_LEAD) loadClip(i);
+    loadClip(0);                                                    // playing inside the wall tile from t = 0
+    for (var i = 1; i < vids.length; i++) if (t >= arrive[i] - LOAD_LEAD) loadClip(i);
   }
   function loadAll() { for (var i = 0; i < vids.length; i++) loadClip(i); }   // deep-link (?t=) fallback only
-  var playerRestarted = false;
   function syncVideos(t) {
     var L = localTimes(t);
-    // clip 12 rewinds to its first frame once, as it starts its flight into the player
-    if (t < T.playerIn) playerRestarted = false;
-    else if (!playerRestarted) { playerRestarted = true; var vp = vids[PLAYER]; try { vp.currentTime = 0; } catch (e) {} if (vp.paused) { var pp_ = vp.play(); if (pp_ && pp_.catch) pp_.catch(function () {}); } }
     for (var i = 0; i < vids.length; i++) {
       var v = vids[i];
       if (L[i] >= 0) {
-        // panels up: keep the short clips moving. The hero shot holds its last frame under the cut until the
-        // panels are up; clip 12 plays once in the player and holds its last frame (never loops back).
-        var loopFrom = i === HERO_CLIP ? T.split[1] : S;
-        if (v.ended && t >= loopFrom && !(i === PLAYER && t >= T.playerIn)) { try { v.currentTime = 0; } catch (e) {} }
+        // panels up: keep every clip moving. The last shot is also the full frame fading out under the
+        // panels, so it holds its final frame until that fade is done instead of jumping back mid-dissolve.
+        if (v.ended && t >= (i === SHRED ? T.split[1] : S)) { try { v.currentTime = 0; } catch (e) {} }
         if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
