@@ -595,7 +595,7 @@
       '.Input': { border: '1px solid rgba(20, 20, 18, .28)', boxShadow: 'none', padding: '13px 14px' },
       '.Input:focus': { border: '1px solid #141412', boxShadow: 'inset 0 0 0 1px #141412' },
       '.Input--invalid': { border: '1px solid #A3241D', boxShadow: 'none' },
-      '.Label': { fontFamily: '"JetBrains Mono", ui-monospace, Menlo, monospace', fontSize: '10.5px', fontWeight: '500', letterSpacing: '.2em', textTransform: 'uppercase', color: '#4A4741', marginBottom: '6px' },
+      '.Label': { fontSize: '13px', fontWeight: '400', color: '#4A4741', marginBottom: '6px' },
       '.Tab': { border: '1px solid rgba(20, 20, 18, .28)', boxShadow: 'none', backgroundColor: '#FBF9F4' },
       '.Tab:hover': { border: '1px solid #141412' },
       '.Tab--selected': { border: '1px solid #141412', boxShadow: 'inset 0 0 0 1px #141412', backgroundColor: '#FBF9F4' },
@@ -627,10 +627,10 @@
     if (bcoPrice) bcoPrice.textContent = usd(cents);
     if (bcoBill) {
       bcoBill.textContent = currentPlanInterval === 'month'
-        ? 'Billed monthly \u00b7 Cancel anytime'
-        : 'Billed monthly \u00b7 ' + TERM_MONTHS[currentPlanInterval] + '-month term';
+        ? 'Monthly \u00b7 Cancel anytime'
+        : TERM_MONTHS[currentPlanInterval] + '-month term';
     }
-    if (bcoClips) bcoClips.textContent = clips ? clips.toLocaleString('en-US') + ' clips a month' : '';
+    if (bcoClips) bcoClips.textContent = clips ? clips.toLocaleString('en-US') + ' clips / mo' : '';
     brandedTotalText = (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     if (bcoTotal) bcoTotal.textContent = brandedTotalText;
     // Until the Worker answers, the site's own wording for this option (the Worker's own copy of the
@@ -686,7 +686,10 @@
         var express = sdk.createExpressCheckoutElement({
           buttonHeight: 50,
           buttonTheme: { applePay: 'black', googlePay: 'black' },
-          layout: { maxColumns: 1 }
+          layout: { maxColumns: 1 },
+          // Only the one-tap options up top, so there's no "See more" row; everything else is in
+          // the list below.
+          paymentMethods: { amazonPay: 'never', paypal: 'never' }
         });
         express.on('ready', function (evt) {
           var any = evt && evt.availablePaymentMethods && Object.keys(evt.availablePaymentMethods).some(function (k) { return evt.availablePaymentMethods[k]; });
@@ -706,7 +709,7 @@
         // Stripe's own card line ("...charge you according to the terms until you cancel") reads
         // wrong next to a 6/12-month term that can't be canceled early, so the card line is ours
         // instead (BRANDED_AUTH below the terms). Other methods keep Stripe's own wording.
-        var payment = sdk.createPaymentElement({ layout: { type: 'accordion', radios: 'always', spacedAccordionItems: true }, terms: { card: 'never' } });
+        var payment = sdk.createPaymentElement({ layout: { type: 'accordion', radios: 'always', spacedAccordionItems: false }, terms: { card: 'never' } });
         payment.on('ready', function () {
           if (bcoPayment) bcoPayment.classList.remove('checkout-panel-frame', 'is-loading');
         });

@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261105g" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261105i" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -389,29 +389,23 @@
            Stripe's payment fields (Checkout Sessions + Elements). checkout.js fills and shows it. -->
       <div class="bco" data-bco hidden>
         <aside class="bco-summary" aria-label="Your plan">
-          <img class="bco-dw" src="../../assets/img/brand/deadwork-wordmark-bone-nr.webp" alt="DEADWORK" width="565" height="120" />
-          <img class="bco-logo" src="../../assets/img/products/stock-shredder/logo-bone.png" alt="Stock Shredder" width="600" height="161" />
-          <h3 class="bco-plan" data-bco-plan>Starter</h3>
+          <div class="bco-head">
+            <img class="bco-logo" src="../../assets/img/products/stock-shredder/logo-bone.png" alt="Stock Shredder" width="600" height="161" />
+            <h3 class="bco-plan" data-bco-plan>Starter</h3>
+          </div>
           <p class="bco-price"><span data-bco-price>$29</span><span class="bco-per">/mo</span></p>
-          <p class="mono bco-bill" data-bco-bill>Billed monthly</p>
-          <ul class="bco-facts">
-            <li data-bco-clips>250 clips a month</li>
-            <li>Mac and Windows</li>
-            <li>Your key arrives by email</li>
-          </ul>
-          <div class="bco-today"><span class="mono">Due today</span><span data-bco-total>$29.00</span></div>
+          <p class="bco-bill"><span data-bco-clips>250 clips / mo</span> &middot; <span data-bco-bill>Monthly &middot; Cancel anytime</span></p>
         </aside>
         <form class="bco-form" data-bco-form novalidate>
           <div class="bco-express" data-bco-express></div>
-          <p class="bco-or mono" data-bco-or hidden><span>Or pay another way</span></p>
-          <label class="bco-label mono" for="bco-email">Email</label>
-          <input id="bco-email" class="bco-input" type="email" autocomplete="email" inputmode="email" spellcheck="false" required data-bco-email placeholder="you@example.com" />
-          <p class="bco-hint">Your activation key and download links go here.</p>
+          <p class="bco-or" data-bco-or hidden><span>or pay another way</span></p>
+          <label class="bco-label" for="bco-email">Email</label>
+          <input id="bco-email" class="bco-input" type="email" autocomplete="email" inputmode="email" spellcheck="false" required data-bco-email placeholder="Where we send your key" />
           <div class="bco-payment" data-bco-payment></div>
           <p class="bco-terms" data-bco-terms></p>
           <p class="bco-error" data-bco-error role="alert" tabindex="-1" hidden></p>
           <button type="submit" class="bco-pay" data-bco-pay disabled>Pay</button>
-          <p class="bco-secure mono">Payments secured by Stripe</p>
+          <p class="bco-foot"><img class="bco-dw" src="../../assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="565" height="120" /><span class="mono">Secured by Stripe</span></p>
         </form>
       </div>
       <div class="checkout-panel-frame" id="checkout-frame"></div>
@@ -610,7 +604,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261105a"></script>
+<script src="../../assets/js/checkout.js?v=20261105c"></script>
 <script src="../../assets/js/ss-page.js?v=20261105d"></script>
 <script src="../../assets/js/ss-hero.js?v=20261105f" defer></script>
 <script>
