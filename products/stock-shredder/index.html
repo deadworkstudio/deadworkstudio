@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261105d" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261105e" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
-<script src="https://js.stripe.com/v3/" defer></script>
+<script src="https://js.stripe.com/dahlia/stripe.js" defer></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../assets/css/badges.css?v=1104b" />
 </head>
@@ -385,6 +385,34 @@
     <p class="pricing-terms">Monthly plans can be canceled anytime. No fee. You keep access until the end of your billing month. 6 and 12&nbsp;month plans are billed monthly for the full term and can't be canceled early. They renew for the same term unless you turn off auto-renew in Account.</p>
     <div class="checkout-panel" data-checkout-panel tabindex="-1" hidden>
       <p class="checkout-status" data-checkout-status role="status" aria-live="polite" hidden></p>
+      <!-- Branded plan checkout (2026-11-05): our own summary, email field and Pay button around
+           Stripe's payment fields (Checkout Sessions + Elements). checkout.js fills and shows it. -->
+      <div class="bco" data-bco hidden>
+        <aside class="bco-summary" aria-label="Your plan">
+          <p class="mono">Stock Shredder</p>
+          <h3 class="bco-plan" data-bco-plan>Starter</h3>
+          <p class="bco-price"><span data-bco-price>$29</span><span class="bco-per">/mo</span></p>
+          <p class="mono bco-bill" data-bco-bill>Billed monthly</p>
+          <ul class="bco-facts">
+            <li data-bco-clips>250 clips a month</li>
+            <li>Mac and Windows</li>
+            <li>Your key arrives by email</li>
+          </ul>
+          <div class="bco-today"><span class="mono">Due today</span><span data-bco-total>$29.00</span></div>
+        </aside>
+        <form class="bco-form" data-bco-form novalidate>
+          <div class="bco-express" data-bco-express></div>
+          <p class="bco-or mono" data-bco-or hidden><span>Or pay another way</span></p>
+          <label class="bco-label mono" for="bco-email">Email</label>
+          <input id="bco-email" class="bco-input" type="email" autocomplete="email" inputmode="email" spellcheck="false" required data-bco-email placeholder="you@example.com" />
+          <p class="bco-hint">Your activation key and download links go here.</p>
+          <div class="bco-payment" data-bco-payment></div>
+          <p class="bco-terms" data-bco-terms></p>
+          <p class="bco-error" data-bco-error role="alert" tabindex="-1" hidden></p>
+          <button type="submit" class="bco-pay" data-bco-pay disabled>Pay</button>
+          <p class="bco-secure mono">Payments secured by Stripe</p>
+        </form>
+      </div>
       <div class="checkout-panel-frame" id="checkout-frame"></div>
       <div class="checkout-panel-actions">
         <button type="button" class="pill pill-outline" data-checkout-retry hidden>Try again</button>
@@ -581,7 +609,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261104b"></script>
+<script src="../../assets/js/checkout.js?v=20261105a"></script>
 <script src="../../assets/js/ss-page.js?v=20261105d"></script>
 <script src="../../assets/js/ss-hero.js?v=20261105f" defer></script>
 <script>
