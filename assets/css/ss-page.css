@@ -755,3 +755,11 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .downloads-privacy a { color: inherit; }
 /* explanations: one clean line on desktop; phones wrap */
 @media (max-width: 899px) { .ix-p { white-space: normal; max-width: 46ch; } }
+
+/* Daniel 2026-11-05: tabs read as number+word pairs, switch sits closer to the text */
+.ix-feat { gap: 6px; letter-spacing: .14em; }
+.ix-feat span { letter-spacing: .06em; }
+.ix-explain { min-height: 0; }
+.ix-p { margin-top: 2px; }
+.ix-auto-row { margin-top: 0; }
+@media (max-width: 899px) { .ix-feat { gap: 5px; letter-spacing: .12em; } }
