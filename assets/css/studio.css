@@ -429,3 +429,13 @@ main section { text-align: center; }
 @media (prefers-reduced-motion: reduce) and (max-width: 900px) {
   .js-reveal .film-split[data-reveal] { transform: none; }
 }
+
+/* Daniel 2026-11-05: one heading above each column (The Grind / The Burnout / The Fix) */
+.film-p[data-word] { margin-top: clamp(44px, 3.4vw, 60px); }
+.film-p[data-word]::after {
+  content: attr(data-word);
+  position: absolute; left: 0; bottom: 100%; padding-bottom: clamp(14px, 1.2vw, 20px);
+  font: 400 clamp(26px, 2.2vw, 36px)/1 var(--anton); text-transform: uppercase; letter-spacing: .01em;
+  color: var(--ink); white-space: nowrap;
+}
+@media (max-width: 900px) { .film-p[data-word] { margin-top: 44px; } .film { padding-top: 200px; padding-bottom: 40px; } }
