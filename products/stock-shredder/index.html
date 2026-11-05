@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261105d" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261105l" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
-<script src="https://js.stripe.com/v3/" defer></script>
+<script src="https://js.stripe.com/dahlia/stripe.js" defer></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../assets/css/badges.css?v=1104b" />
 </head>
@@ -385,6 +385,29 @@
     <p class="pricing-terms">Monthly plans can be canceled anytime. No fee. You keep access until the end of your billing month. 6 and 12&nbsp;month plans are billed monthly for the full term and can't be canceled early. They renew for the same term unless you turn off auto-renew in Account.</p>
     <div class="checkout-panel" data-checkout-panel tabindex="-1" hidden>
       <p class="checkout-status" data-checkout-status role="status" aria-live="polite" hidden></p>
+      <!-- Branded plan checkout (2026-11-05): our own summary, email field and Pay button around
+           Stripe's payment fields (Checkout Sessions + Elements). checkout.js fills and shows it. -->
+      <div class="bco" data-bco hidden>
+        <aside class="bco-summary" aria-label="Your plan">
+          <div class="bco-head">
+            <img class="bco-logo" src="../../assets/img/products/stock-shredder/logo-bone.png" alt="Stock Shredder" width="600" height="161" />
+            <h3 class="bco-plan" data-bco-plan>Starter</h3>
+          </div>
+          <p class="bco-price"><span data-bco-price>$29</span><span class="bco-per">/mo</span></p>
+          <p class="bco-bill"><span data-bco-clips>250 clips / mo</span> &middot; <span data-bco-bill>Monthly &middot; Cancel anytime</span></p>
+        </aside>
+        <form class="bco-form" data-bco-form novalidate>
+          <div class="bco-express" data-bco-express></div>
+          <p class="bco-or" data-bco-or hidden><span>or pay another way</span></p>
+          <label class="bco-label" for="bco-email">Email</label>
+          <input id="bco-email" class="bco-input" type="email" autocomplete="email" inputmode="email" spellcheck="false" required data-bco-email placeholder="Where we send your key" />
+          <div class="bco-payment" data-bco-payment></div>
+          <p class="bco-terms" data-bco-terms></p>
+          <p class="bco-error" data-bco-error role="alert" tabindex="-1" hidden></p>
+          <button type="submit" class="bco-pay" data-bco-pay disabled>Pay</button>
+          <p class="bco-foot"><img class="bco-dw" src="../../assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="565" height="120" /><span class="mono">Secured by Stripe</span></p>
+        </form>
+      </div>
       <div class="checkout-panel-frame" id="checkout-frame"></div>
       <div class="checkout-panel-actions">
         <button type="button" class="pill pill-outline" data-checkout-retry hidden>Try again</button>
@@ -392,8 +415,12 @@
       </div>
     </div>
     <div class="checkout-success" data-checkout-success hidden>
-      <p class="mono" data-checkout-success-eyebrow>You're in</p>
-      <h3 tabindex="-1">Your activation key</h3>
+      <!-- After payment (or a SHRED trial start): a short welcome, the key, the download, three
+           next steps and the DEADWORK sign-off. checkout.js's showSuccess() fills in the name,
+           the trial wording and the phone version. -->
+      <img class="ws-logo" src="../../assets/img/products/stock-shredder/logo-black.png" alt="Stock Shredder" width="1200" height="322" />
+      <h3 class="ws-title" tabindex="-1" data-checkout-success-title>You're in.</h3>
+      <p class="ws-line" data-checkout-success-note>Thanks for the support. Here's your activation key.</p>
       <div class="activation-key-box">
         <code data-activation-key></code>
         <button type="button" class="pill pill-outline" data-copy-key>Copy</button>
@@ -403,9 +430,12 @@
            the release-fetch script resolved for the hero's #download-mac/#download-win links. -->
       <a id="download-success" href="https://github.com/stockshredder/stock-shredder-releases/releases/download/v0.6.18/Stock-Shredder-0.6.18-universal.dmg" class="pill pill-solid">Download Stock Shredder</a>
       <a id="download-success-alt" href="https://apps.microsoft.com/detail/9PHP98R0NRHG" class="mono checkout-success-alt">Also for Windows</a>
-      <!-- SHRED launch trial (§7.5): checkout.js's showSuccess() swaps this note's text (and the
-           eyebrow above) when the completed checkout was a trial, not a paid plan. -->
-      <p class="checkout-success-note" data-checkout-success-note>Paste this activation key when it asks. Full instructions are in the app.</p>
+      <ol class="ws-steps" data-checkout-success-steps>
+        <li>Install Stock Shredder.</li>
+        <li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li>
+        <li>Drop in a folder of raw footage and start shredding.</li>
+      </ol>
+      <p class="ws-sign">Create more. Manage less.<br />By Artists. For Artists.<span>DEADWORK STUDIO</span></p>
     </div>
   </section>
 
@@ -581,7 +611,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261104b"></script>
+<script src="../../assets/js/checkout.js?v=20261105d"></script>
 <script src="../../assets/js/ss-page.js?v=20261105i"></script>
 <script src="../../assets/js/ss-hero.js?v=20261105i" defer></script>
 <script>

@@ -8,6 +8,11 @@
 (function () {
   var WORKER_URL = 'https://stock-shredder-payments.stockshredder.workers.dev';
   var STRIPE_PUBLISHABLE_KEY = 'pk_live_51UIwxREHfnNaW3GQg8edd5eoY1Y3hQJDOKAZvbJiH2xLLjvoyIUdBTXiO55w31LCjPLcwozvcZIn10AlQkBCEh3h00gjfoagZc';
+  // Local testing only: a dev server on this machine talks to a local Worker in Stripe test mode.
+  if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+    WORKER_URL = 'http://localhost:8799';
+    STRIPE_PUBLISHABLE_KEY = 'pk_test_51UIwxREHfnNaW3GQ913S4kWMAxlgqjxZXMHiKrQYgJ7xK2GtFWkMknQum3EI2BID71pORSQGtQPOFM7QPY0CtLjS00JsMgXnmj';
+  }
 
   var PLANS = {
     starter: { name: 'Starter', price: 25 },
@@ -169,8 +174,9 @@
   var pricingError = document.querySelector('[data-pricing-error]');
   var keyEl = success.querySelector('[data-activation-key]');
   var copyBtn = success.querySelector('[data-copy-key]');
-  var successHeading = success.querySelector('h3');
-  var successEyebrow = success.querySelector('[data-checkout-success-eyebrow]');
+  var successTitle = success.querySelector('[data-checkout-success-title]');
+  var successHeading = successTitle;
+  var successSteps = success.querySelector('[data-checkout-success-steps]');
   var successNote = success.querySelector('[data-checkout-success-note]');
   var macDownload = document.getElementById('download-success');
   var winDownload = document.getElementById('download-success-alt');
@@ -222,6 +228,40 @@
     return stripe;
   }
 
+  // Branded plan checkout (2026-11-05): our own summary, email field and Pay button around Stripe's
+  // payment fields (Checkout Sessions with ui_mode 'elements'). The SHRED trial keeps Stripe's
+  // embedded form below.
+  var bco = panel.querySelector('[data-bco]');
+  var bcoForm = bco ? bco.querySelector('[data-bco-form]') : null;
+  var bcoPlan = bco ? bco.querySelector('[data-bco-plan]') : null;
+  var bcoPrice = bco ? bco.querySelector('[data-bco-price]') : null;
+  var bcoBill = bco ? bco.querySelector('[data-bco-bill]') : null;
+  var bcoClips = bco ? bco.querySelector('[data-bco-clips]') : null;
+  var bcoTotal = bco ? bco.querySelector('[data-bco-total]') : null;
+  var bcoExpress = bco ? bco.querySelector('[data-bco-express]') : null;
+  var bcoOr = bco ? bco.querySelector('[data-bco-or]') : null;
+  var bcoEmail = bco ? bco.querySelector('[data-bco-email]') : null;
+  var bcoPayment = bco ? bco.querySelector('[data-bco-payment]') : null;
+  var bcoTerms = bco ? bco.querySelector('[data-bco-terms]') : null;
+  var bcoError = bco ? bco.querySelector('[data-bco-error]') : null;
+  var bcoPay = bco ? bco.querySelector('[data-bco-pay]') : null;
+  var brandedSdk = null; // the Checkout Elements SDK instance for the open plan checkout
+  var brandedActions = null; // its loadActions() result (updateEmail / confirm)
+  var brandedElements = []; // mounted Payment / Express Checkout elements, destroyed on teardown
+  var brandedCanConfirm = false;
+  var brandedTotalText = '';
+  var brandedPaying = false;
+  var brandedRun = 0; // bumps on every start/teardown so a late async step can't touch a newer checkout
+
+  // Stripe's embedded form (the SHRED trial, and the fallback plan checkout). The dahlia Stripe.js
+  // this page loads for the branded checkout renamed initEmbeddedCheckout() to
+  // createEmbeddedCheckoutPage() and throws on the old name, so use whichever exists.
+  function initEmbedded(options) {
+    var s = getStripe();
+    if (typeof s.createEmbeddedCheckoutPage === 'function') return Promise.resolve(s.createEmbeddedCheckoutPage(options));
+    return s.initEmbeddedCheckout(options);
+  }
+
   var embeddedCheckout = null; // the mounted Stripe EmbeddedCheckout instance, so we can destroy it cleanly
   var sessionId = null; // the current Checkout Session id — reused by "Try again" so we never start a second session for one charge
   var currentPlanId = null;
@@ -244,7 +284,50 @@
     statusEl.classList.toggle('checkout-status-bad', !!isBad);
   }
 
+  function teardownBranded() {
+    brandedRun++;
+    brandedElements.forEach(function (el) {
+      try {
+        el.destroy();
+      } catch (err) {
+        // already gone
+      }
+    });
+    brandedElements = [];
+    brandedSdk = null;
+    brandedActions = null;
+    brandedCanConfirm = false;
+    brandedPaying = false;
+    if (!bco) return;
+    bco.hidden = true;
+    if (bcoExpress) bcoExpress.innerHTML = '';
+    if (bcoPayment) bcoPayment.innerHTML = '';
+    if (bcoOr) bcoOr.hidden = true;
+    showBrandedError('');
+    if (bcoPay) {
+      bcoPay.disabled = true;
+      bcoPay.removeAttribute('aria-busy');
+    }
+  }
+
+  function showBrandedError(message) {
+    if (!bcoError) return;
+    bcoError.textContent = message || '';
+    bcoError.hidden = !message;
+    if (message) bcoError.focus();
+  }
+
+  function updatePayButton() {
+    if (!bcoPay) return;
+    // Solid as soon as Stripe's form is ready; Stripe checks the fields when Pay is pressed and
+    // marks anything missing right in the form (its own canConfirm stays false until the email,
+    // which we only hand over on Pay, is set).
+    bcoPay.disabled = !brandedActions || brandedPaying;
+    bcoPay.textContent = brandedPaying ? 'Processing\u2026' : 'Pay ' + (brandedTotalText || '');
+  }
+
   function teardownCheckout() {
+    teardownBranded();
     if (embeddedCheckout) {
       try {
         embeddedCheckout.destroy();
@@ -256,6 +339,7 @@
     if (frame) {
       frame.innerHTML = '';
       frame.classList.remove('is-loading');
+      frame.hidden = false;
     }
   }
 
@@ -280,7 +364,7 @@
     }
   }
 
-  function showSuccess(activationKey, trial) {
+  function showSuccess(activationKey, trial, firstName) {
     teardownCheckout();
     panel.hidden = true;
     grid.hidden = true;
@@ -291,16 +375,22 @@
     if (trialOffer) trialOffer.hidden = true;
     if (keyEl) keyEl.textContent = activationKey;
 
-    // SHRED launch trial v2 (§8.7): a trial completion gets its own eyebrow/note copy instead of
-    // the paid-purchase wording — the activation key box and download buttons below are
-    // identical either way. endsOnText rides pre-formatted from the Worker (§3 — this file never
-    // computes its own end date), so there's no client-side date math here at all.
-    if (trial && trial.endsOnText) {
-      if (successEyebrow) successEyebrow.textContent = 'Trial started';
-      if (successNote) successNote.textContent = 'Your trial runs until ' + trial.endsOnText + ' or 100 clips. Nothing is charged unless you choose a plan.';
-    } else {
-      if (successEyebrow) successEyebrow.textContent = "You're in";
-      if (successNote) successNote.textContent = 'Paste this activation key when it asks. Full instructions are in the app.';
+    // A short welcome: "You're in, Macy." when the Worker knows a first name, else "You're in."
+    // endsOnText rides pre-formatted from the Worker (§3 — this file never computes its own end
+    // date). Phones can't run the app, so they get pointed at the email instead of downloads.
+    var name = (firstName || '').trim().split(/\s+/)[0];
+    var onPhone = isPhoneVisitor();
+    var isTrial = !!(trial && trial.endsOnText);
+    if (successTitle) successTitle.textContent = name ? "You're in, " + name + '.' : "You're in.";
+    if (successNote) {
+      successNote.textContent = isTrial
+        ? 'Your free trial runs until ' + trial.endsOnText + ' or 100 clips. Nothing is charged unless you pick a plan.'
+        : "Thanks for the support. Here's your activation key.";
+    }
+    if (successSteps) {
+      successSteps.innerHTML = onPhone
+        ? '<li>Open the email we just sent you on your computer.</li><li>Download Stock Shredder from it.</li><li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li>'
+        : '<li>Install Stock Shredder.</li><li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li><li>Drop in a folder of raw footage and start shredding.</li>';
     }
 
     // Show the visitor's own platform as the big button, the other platform as a small secondary
@@ -308,13 +398,8 @@
     // latest .dmg/.exe, so this only ever reorders/relabels them, never re-derives the URLs.
     // Phones and tablets can't run the app: no download buttons there, just a pointer to the
     // purchase email, which carries the key plus Mac and Windows download links.
-    var onPhone = isPhoneVisitor();
     if (macDownload) macDownload.hidden = onPhone;
     if (winDownload) winDownload.hidden = onPhone;
-    if (onPhone && successNote) {
-      successNote.textContent = (trial && trial.endsOnText ? 'Your trial runs until ' + trial.endsOnText + ' or 100 clips. ' : '') +
-        "We've emailed you this key and the Mac and Windows download links. Open that email on your computer to install Stock Shredder.";
-    }
     if (macDownload && winDownload && !onPhone) {
       var onWindows = isWindowsVisitor();
       var primary = onWindows ? winDownload : macDownload;
@@ -382,7 +467,7 @@
       })
       .then(function (data) {
         if (data && data.ok && data.customerId && data.planId && data.activationKey) {
-          showSuccess(data.activationKey, data.trial);
+          showSuccess(data.activationKey, data.trial, data.firstName);
           return;
         }
         // SHRED launch trial v2: a repeat-trial detection (email/card already used, or this email
@@ -425,7 +510,7 @@
         // The Worker successfully asked Stripe, and Stripe confirmed the charge did not go
         // through (e.g. a decline) — nothing to retry-confirm, so send them back to pick again.
         if (retryBtn) retryBtn.hidden = true;
-        showStatus("That charge didn't go through, so nothing was billed. Pick a plan below to try again.", true);
+        showGrid("That charge didn't go through, so nothing was billed. Pick a plan to try again.");
       })
       .catch(function () {
         // We don't know whether Stripe's charge succeeded — only that our Worker couldn't be
@@ -463,13 +548,18 @@
     // Stripe's embedded form takes a second or two to fetch and render — without this the panel
     // briefly shows nothing but the Cancel button. Show a loading state and the shimmer, and
     // bring the (possibly off-screen, especially on phones) panel into view before the form shows up.
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (bco && typeof getStripe().initCheckoutElementsSdk === 'function') {
+      startBrandedCheckout(planId);
+      panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+      return;
+    }
+
     showStatus('Loading secure checkout…', false);
     frame.classList.add('is-loading');
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
 
-    getStripe()
-      .initEmbeddedCheckout({
+    initEmbedded({
         fetchClientSecret: fetchClientSecret,
         onComplete: function () {
           verifySession();
@@ -490,6 +580,237 @@
         showGrid("Couldn't start checkout. Pick a plan to try again.");
       });
   }
+
+  var BRANDED_AUTH = 'By paying, you allow DEADWORK STUDIO to charge your card on these terms.';
+
+  // Stripe's fields drawn in the site's own type and colors: Archivo, square corners, ink on bone.
+  var BRANDED_APPEARANCE = {
+    theme: 'flat',
+    variables: {
+      fontFamily: 'Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif',
+      fontSizeBase: '16px',
+      colorPrimary: '#141412',
+      colorBackground: '#FBF9F4',
+      colorText: '#141412',
+      colorTextSecondary: '#4A4741',
+      colorTextPlaceholder: '#8A867E',
+      colorDanger: '#A3241D',
+      borderRadius: '0px',
+      spacingUnit: '4px',
+      gridRowSpacing: '14px',
+      focusBoxShadow: 'none',
+      focusOutline: 'none'
+    },
+    rules: {
+      '.Input': { border: '1px solid rgba(20, 20, 18, .28)', boxShadow: 'none', padding: '13px 14px' },
+      '.Input:focus': { border: '1px solid #141412', boxShadow: 'inset 0 0 0 1px #141412' },
+      '.Input--invalid': { border: '1px solid #A3241D', boxShadow: 'none' },
+      '.Label': { fontSize: '13px', fontWeight: '400', color: '#4A4741', marginBottom: '6px' },
+      '.Tab': { border: '1px solid rgba(20, 20, 18, .28)', boxShadow: 'none', backgroundColor: '#FBF9F4' },
+      '.Tab:hover': { border: '1px solid #141412' },
+      '.Tab--selected': { border: '1px solid #141412', boxShadow: 'inset 0 0 0 1px #141412', backgroundColor: '#FBF9F4' },
+      '.Tab--selected:focus': { boxShadow: 'inset 0 0 0 1px #141412' },
+      '.AccordionItem': { border: '1px solid rgba(20, 20, 18, .28)', boxShadow: 'none' },
+      '.Block': { border: '1px solid rgba(20, 20, 18, .28)', boxShadow: 'none' },
+      '.CheckboxInput': { border: '1px solid rgba(20, 20, 18, .5)' }
+    }
+  };
+
+  function brandedFonts() {
+    // Absolute https URLs: Stripe's fields load the font from inside their own frame (the site's
+    // font files allow any origin).
+    var base = 'https://deadworkstudio.com/';
+    return [
+      { family: 'Archivo', src: 'url(' + base + 'assets/fonts/archivo-variable.woff2)', weight: '100 900' },
+      { family: 'JetBrains Mono', src: 'url(' + base + 'assets/fonts/jetbrains-mono-500.woff2?v=20261027a)', weight: '500' }
+    ];
+  }
+
+  function fillBrandedSummary(planId) {
+    var plan = PLANS[planId];
+    var cents = CENTS[planId][currentPlanInterval];
+    var card = grid.querySelector('[data-plan-button="' + planId + '"]');
+    card = card && card.closest('.pricing-card');
+    var clipsEl = card && card.querySelector('.pricing-clips');
+    var clips = clipsEl ? Number(clipsEl.getAttribute('data-clips-monthly')) : 0;
+    if (bcoPlan) bcoPlan.textContent = plan.name;
+    if (bcoPrice) bcoPrice.textContent = usd(cents);
+    if (bcoBill) {
+      bcoBill.textContent = currentPlanInterval === 'month'
+        ? 'Monthly \u00b7 Cancel anytime'
+        : TERM_MONTHS[currentPlanInterval] + '-month term';
+    }
+    if (bcoClips) bcoClips.textContent = clips ? clips.toLocaleString('en-US') + ' clips / mo' : '';
+    brandedTotalText = (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    if (bcoTotal) bcoTotal.textContent = brandedTotalText;
+    // Until the Worker answers, the site's own wording for this option (the Worker's own copy of the
+    // same terms replaces it a moment later).
+    if (bcoTerms) bcoTerms.innerHTML = TERM_NOTE[currentPlanInterval] + ' ' + BRANDED_AUTH;
+    updatePayButton();
+  }
+
+  function startBrandedCheckout(planId) {
+    var run = brandedRun;
+    fillBrandedSummary(planId);
+    bco.hidden = false;
+    showStatus('', false);
+    if (bcoPayment) bcoPayment.classList.add('checkout-panel-frame', 'is-loading');
+
+    fetch(WORKER_URL + '/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        planId: planId,
+        billing: currentPlanInterval,
+        interval: currentPlanInterval === 'year' ? 'year' : 'month',
+        ui: 'custom',
+        returnUrl: location.origin + location.pathname
+      })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Checkout request failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (run !== brandedRun) return;
+        if (!data || !data.clientSecret || !data.sessionId) throw new Error('missing clientSecret');
+        sessionId = data.sessionId;
+        if (bcoTerms && data.terms) bcoTerms.textContent = data.terms + ' ' + BRANDED_AUTH;
+        var sdk = getStripe().initCheckoutElementsSdk({
+          clientSecret: data.clientSecret,
+          elementsOptions: { appearance: BRANDED_APPEARANCE, fonts: brandedFonts() }
+        });
+        brandedSdk = sdk;
+        sdk.on('change', function (session) {
+          if (run !== brandedRun) return;
+          brandedCanConfirm = !!session.canConfirm;
+          var t = session.total && session.total.total;
+          if (t && t.amount) {
+            brandedTotalText = t.amount;
+            if (bcoTotal) bcoTotal.textContent = t.amount;
+          }
+          updatePayButton();
+        });
+
+        // Link, Apple Pay, Google Pay and the like, as one tap, above the card form.
+        var express = sdk.createExpressCheckoutElement({
+          buttonHeight: 50,
+          buttonTheme: { applePay: 'black', googlePay: 'black' },
+          layout: { maxColumns: 1 },
+          // Only the one-tap options up top, so there's no "See more" row; everything else is in
+          // the list below.
+          paymentMethods: { amazonPay: 'never', paypal: 'never' }
+        });
+        express.on('ready', function (evt) {
+          var any = evt && evt.availablePaymentMethods && Object.keys(evt.availablePaymentMethods).some(function (k) { return evt.availablePaymentMethods[k]; });
+          if (bcoOr) bcoOr.hidden = !any;
+          if (bcoExpress && !any) bcoExpress.innerHTML = '';
+        });
+        express.on('confirm', function (evt) {
+          if (!brandedActions) return;
+          showBrandedError('');
+          brandedPaying = true;
+          updatePayButton();
+          brandedActions.confirm({ expressCheckoutConfirmEvent: evt, redirect: 'if_required' }).then(handleBrandedConfirm);
+        });
+        express.mount(bcoExpress);
+        brandedElements.push(express);
+
+        // Stripe's own card line ("...charge you according to the terms until you cancel") reads
+        // wrong next to a 6/12-month term that can't be canceled early, so the card line is ours
+        // instead (BRANDED_AUTH below the terms). Other methods keep Stripe's own wording.
+        var payment = sdk.createPaymentElement({ layout: { type: 'accordion', radios: 'always', spacedAccordionItems: false }, terms: { card: 'never' } });
+        payment.on('ready', function () {
+          if (bcoPayment) bcoPayment.classList.remove('checkout-panel-frame', 'is-loading');
+        });
+        payment.mount(bcoPayment);
+        brandedElements.push(payment);
+
+        return sdk.loadActions().then(function (result) {
+          if (run !== brandedRun) return;
+          if (result.type !== 'success') throw new Error(result.error && result.error.message);
+          brandedActions = result.actions;
+          updatePayButton();
+          // The email goes to Stripe only when Pay is pressed: handing it over earlier makes
+          // Stripe tick its own "save my info with Link" box, which then demands a phone number
+          // and keeps Pay disabled with no visible reason.
+        });
+      })
+      .catch(function (err) {
+        if (run !== brandedRun) return;
+        if (window.console) console.error('Branded checkout failed to start', err);
+        showGrid("Couldn't start checkout. Pick a plan to try again.");
+      });
+  }
+
+  function handleBrandedConfirm(result) {
+    if (!result) return;
+    if (result.type === 'error') {
+      brandedPaying = false;
+      updatePayButton();
+      if (bcoPay) bcoPay.removeAttribute('aria-busy');
+      showBrandedError((result.error && result.error.message) || "That payment didn't go through. Nothing was charged.");
+      return;
+    }
+    // Paid without leaving the page (cards, Link, wallets): finish here. Methods that hand off to
+    // another site come back to this page with ?session_id= instead (see resumeFromReturn).
+    teardownBranded();
+    verifySession();
+  }
+
+  if (bcoForm) {
+    bcoForm.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      if (!brandedActions || brandedPaying) return;
+      var email = bcoEmail ? bcoEmail.value.trim() : '';
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showBrandedError('Enter your email so we can send your activation key.');
+        if (bcoEmail) bcoEmail.focus();
+        return;
+      }
+      showBrandedError('');
+      brandedPaying = true;
+      updatePayButton();
+      if (bcoPay) bcoPay.setAttribute('aria-busy', 'true');
+      brandedActions.updateEmail(email).then(function (res) {
+        if (res && res.type === 'error') {
+          brandedPaying = false;
+          updatePayButton();
+          if (bcoPay) bcoPay.removeAttribute('aria-busy');
+          showBrandedError((res.error && res.error.message) || 'Check your email address.');
+          return;
+        }
+        return brandedActions.confirm({ redirect: 'if_required' }).then(handleBrandedConfirm);
+      });
+    });
+  }
+
+  // Back from a payment method that finishes on its own site (Klarna, Cash App Pay, Amazon Pay) or
+  // a bank check: Stripe returns here with ?session_id=. Confirm it the same way as an in-page payment.
+  (function resumeFromReturn() {
+    var returned = null;
+    try {
+      returned = new URLSearchParams(location.search).get('session_id');
+    } catch (err) {
+      returned = null;
+    }
+    if (!returned || !/^cs_(test|live)_/.test(returned)) return;
+    try {
+      var clean = new URL(location.href);
+      clean.searchParams.delete('session_id');
+      history.replaceState(null, '', clean.pathname + clean.search + '#pricing');
+    } catch (err) {
+      // fine, the id just stays in the address bar
+    }
+    sessionId = returned;
+    grid.hidden = true;
+    success.hidden = true;
+    panel.hidden = false;
+    if (frame) frame.hidden = true;
+    var pricingSection = document.getElementById('pricing');
+    if (pricingSection) pricingSection.scrollIntoView({ block: 'start' });
+    verifySession();
+  })();
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-plan-button]'), function (btn) {
     btn.addEventListener('click', function () {
@@ -682,8 +1003,7 @@
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
 
-        getStripe()
-          .initEmbeddedCheckout({
+        initEmbedded({
             // Already have the real clientSecret from the pre-flight call above — nothing left
             // to fetch, so this just hands it straight back.
             fetchClientSecret: function () {
