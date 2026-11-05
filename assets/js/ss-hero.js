@@ -246,8 +246,10 @@
   // Gutters grow with the square root of the zoom: the grid stays a contact sheet, never a heavy black cage.
   function drawPush(e, heroFn) {
     var cx = (HERO.col - FIRST_COL + 0.5) * tw, cy = (HERO.row - REST_TOP + 0.5) * th;   // tile centre at rest
-    var Z = W / tw;                                                // solve tw*Z - g*sqrt(Z) = W: picture width -> frame width
-    for (var n = 0; n < 6; n++) Z -= (tw * Z - g * Math.sqrt(Z) - W) / (tw - g / (2 * Math.sqrt(Z)));
+    // solve s*Z - g*sqrt(Z) = F for both sides, and take the larger: the tile lands covering the whole frame
+    // (no strip of the row above or below peeking in), trimming only its sides, like the full frame does
+    function solveZ(s, F) { var z = F / s; for (var n = 0; n < 6; n++) z -= (s * z - g * Math.sqrt(z) - F) / (s - g / (2 * Math.sqrt(z))); return z; }
+    var Z = Math.max(solveZ(tw, W), solveZ(th, H));
     var ox = (Z * cx - W / 2) / (Z - 1), oy = (Z * cy - H / 2) / (Z - 1);
     var z = Math.pow(Z, e), gs = g * Math.sqrt(z) * Math.pow(1 - e, 2);   // log-space: a steady push; gutters thin away as it lands
     ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
