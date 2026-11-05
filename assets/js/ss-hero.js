@@ -74,6 +74,7 @@
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
+  var CAPTURE = q.has('capture');                                  // review renders: videos are seeked, never played
   var VARIANT = ({ push: 1, fade: 1, cut: 1 })[q.get('v')] ? q.get('v') : 'push';
   // Options under review (Daniel 2026-11-05): ?splice=cuts|timeline|shutter|gate|clap and ?end=cut|tile|matte|approve|slate
   var SPLICE = ({ process: 1, cuts: 1, timeline: 1, shutter: 1, gate: 1, clap: 1 })[q.get('splice')] ? q.get('splice') : 'process';
@@ -136,7 +137,7 @@
 
   // ---- elements ----
   fig.issTimeline = T;                                             // for review tooling (?t=…&freeze)
-  var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
+  var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d', q.has('capture') ? { willReadFrequently: true } : undefined);   // capture: a software canvas, so seeked video frames always redraw
   var vids = [].slice.call(fig.querySelectorAll('[data-iss-src] video'));
   vids.forEach(function (v) { v.defaultPlaybackRate = RATE; v.playbackRate = RATE; v.addEventListener('loadedmetadata', function () { v.playbackRate = RATE; }); });
   var meta = fig.querySelector('[data-iss-meta]'), scan = fig.querySelector('[data-iss-scan]');
@@ -278,7 +279,7 @@
   }
 
   // ---- video frames ----
-  function frameOf(i) { var v = vids[i]; return v.readyState >= 2 || !(posters[i].complete && posters[i].naturalWidth) ? v : posters[i]; }
+  function frameOf(i) { var v = vids[i]; return CAPTURE || v.readyState >= 2 || !(posters[i].complete && posters[i].naturalWidth) ? v : posters[i]; }
   function drawFull(i, a) {
     if (a <= 0) return;
     ctx.globalAlpha = a; drawWeldOf(ctx, i, 0, 0, W, H); ctx.globalAlpha = 1;
@@ -776,7 +777,11 @@
   window.__iss = { T: T, X: X, arrive: arrive, SCAN_END: SCAN_END, S: S, variant: VARIANT, splice: SPLICE, end: END, RESTART: RESTART };
   // ---- capture: frame-exact renders for review videos (window.__issCap(t) -> JPEG data URL) ----
   if (q.has('capture')) {
-    var metas = vids.map(function (v) { return new Promise(function (res) { v.preload = 'auto'; v.addEventListener('loadeddata', res, { once: true }); v.addEventListener('error', res, { once: true }); v.load(); }); });
+    // each clip is fetched whole and played from memory, so every seek lands (a plain dev server can't serve byte ranges)
+    var metas = vids.map(function (v) { return new Promise(function (res) { v.preload = 'auto'; v.addEventListener('loadeddata', res, { once: true }); v.addEventListener('error', res, { once: true }); v.load(); }).then(function () {
+      return fetch(v.currentSrc).then(function (r) { return r.blob(); }).then(function (bl) { return new Promise(function (res) {
+        v.addEventListener('loadeddata', res, { once: true }); v.addEventListener('error', res, { once: true }); v.src = URL.createObjectURL(bl); v.load(); }); });
+    }); });
     Promise.all([imagesReady].concat(metas)).then(function () {
       size();
       window.__issCap = function (vt) {
@@ -787,7 +792,12 @@
           if (lt < 0) return;
           var v = vids[i], d = v.duration || LENS[i];
           var target = (i === HERO_CLIP && tt < T.split[1]) || (i === PLAYER && tt >= T.playerIn) ? Math.min(lt, d - 0.04) : lt % d;
-          if (Math.abs(v.currentTime - target) > 0.001) waits.push(new Promise(function (res) { v.addEventListener('seeked', res, { once: true }); v.currentTime = target; }));
+          if (Math.abs(v.currentTime - target) > 0.001) waits.push(new Promise(function (res) {
+            var done = false, fin = function () { if (!done) { done = true; res(); } };
+            if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(fin);   // the new frame is actually decoded
+            v.addEventListener('seeked', function () { setTimeout(fin, 250); }, { once: true });
+            v.currentTime = target;
+          }));
         });
         return Promise.all(waits).then(function () { lastDom = {}; render(tt); return canvas.toDataURL('image/jpeg', 0.92); });
       };
