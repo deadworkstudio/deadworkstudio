@@ -639,6 +639,9 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 /* Day / Night: the app's own dark-mode recording (same take, frame-aligned) fades in over the day one */
 .ix-dark { position: absolute; inset: 0; opacity: 0; background: #000; box-shadow: none; transition: opacity 260ms var(--ease); }
 .ix-stage.is-night .ix-dark { opacity: 1; }
+/* Share: the Share screen recording fades in over the Review one */
+.ix-share { position: absolute; inset: 0; opacity: 0; box-shadow: none; transition: opacity 260ms var(--ease); }
+.ix-stage.is-share .ix-share { opacity: 1; }
 /* highlight: the rest of the app dims hard, the chosen controls stay at full brightness inside a crisp two-tone frame */
 .ix-spot { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 160ms var(--ease); }
 .ix-spot.is-on { opacity: 1; }
@@ -695,7 +698,7 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .ix-explain { min-height: 7.6em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ix-spot, .ix-dark, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom, .ix-lift { transition: none !important; }
+  .ix-spot, .ix-dark, .ix-share, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom, .ix-lift { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
 }
 
