@@ -93,7 +93,8 @@
   T.rest = T.caps + 5 * T.capStep + T.capDur;
   // The six clips sit as a 3 x 2 grid of horizontal frames, then fly into the app: clip 5 grows into the
   // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
-  T.labels = [S + 0.5, S + 1.0];
+  T.split = [S, S + 1.05];                                         // full frame settles into its tile, the others open like shutters
+  T.labels = [S + 1.0, S + 1.5];
   T.toApp = [S + 4.0, S + 4.9];
   T.LOOP = T.toApp[1] + 3.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
@@ -278,7 +279,7 @@
     ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(235,229,216,.92)';
     if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.2) + 'px';
     var y = rc.y + rc.h - pad;
-    ctx.textAlign = 'left'; ctx.fillText('0' + (i + 1), rc.x + pad, y);
+    ctx.textAlign = 'left'; ctx.fillText('CLIP 0' + (i + 1), rc.x + pad, y);
     if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.04) + 'px';
     ctx.textAlign = 'right'; ctx.fillText(CAPS[i] + 's', rc.x + rc.w - pad, y);
     ctx.restore();
@@ -353,10 +354,23 @@
       }
       return;
     }
-    // SHRED, then SEND: the full frame under, the six panels dissolving up over it, the gaps opening to the page
-    var full = 1 - inOut(seg(t, T.fullOut));
-    drawFull(t < S ? clipAt(t) : 5, full);
-    drawGrid(inOut(seg(t, T.panelsIn)), t);
+    // SHRED, then SEND: no dissolve. The full frame (the last shot) glides down into its own tile while the
+    // other five open from their centre lines like shutters, one after another, the gaps opening to the page.
+    if (t < S) { drawFull(clipAt(t), 1); return; }
+    if (t < T.split[1]) {
+      var em = inOut(seg(t, [S, S + 0.85]));
+      for (var k = 0; k < 5; k++) {
+        var ek = inOut(seg(t, [S + 0.12 + k * 0.06, S + 0.72 + k * 0.06]));
+        if (ek <= 0) continue;
+        var g = gridRect(k), oh = g.h * ek;
+        ctx.save(); ctx.beginPath(); ctx.rect(g.x, g.y + (g.h - oh) / 2, g.w, oh); ctx.clip();
+        drawCover(k, g.x, g.y, g.w, g.h); ctx.restore();
+      }
+      var r5 = lerpRect({ x: 0, y: 0, w: W, h: H }, gridRect(5), em);
+      drawCover(5, r5.x, r5.y, r5.w, r5.h);
+      return;
+    }
+    drawGrid(1, t);
   }
 
   // ---- video: load clip 1 with the wall (it's already playing inside its tile from t=0), then
