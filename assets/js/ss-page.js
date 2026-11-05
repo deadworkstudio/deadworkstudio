@@ -507,13 +507,30 @@
     };
     window.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') ptr = [e.clientX, e.clientY]; }, { passive: true });
 
+    // Sharp stills for the lifted controls: each is a crop, at 5x, of a still of the same app screen
+    // (same layout, pixel-aligned with the recording), covering exactly that feature's lifted area. The
+    // controls are drawn from these instead of the recording, so text and edges stay crisp when magnified.
+    var LIFT_IMG = [], liftImgsAsked = false;
+    var loadLiftImgs = function () {
+      if (liftImgsAsked) return; liftImgsAsked = true;
+      for (var k = 0; k < 5; k++) { var im = new Image(); im.decoding = 'async'; im.src = '../../assets/img/products/stock-shredder/lift/lift-' + k + '.webp?v=1'; LIFT_IMG[k] = im; }
+    };
+    if ('IntersectionObserver' in window) {
+      var warmLift = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { loadLiftImgs(); warmLift.disconnect(); } }, { rootMargin: '600px 0px' });
+      warmLift.observe(tour);
+    } else loadLiftImgs();
+
     var liftDraw = function () {
       liftRaf = 0; if (!liftSrc) return;
       var v = stage.classList.contains('is-night') && dark ? dark : screen;
-      if (v.readyState >= 2 && v.videoWidth) {
-        var r = liftSrc, vw = v.videoWidth, vh = v.videoHeight, W = liftC.width, H = liftC.height;
+      var still = !stage.classList.contains('is-night') && LIFT_IMG[liftFeat];
+      if (still && !(still.complete && still.naturalWidth)) still = null;
+      if (still || (v.readyState >= 2 && v.videoWidth)) {
+        var r = liftSrc, W = liftC.width, H = liftC.height;
         liftX.globalAlpha = 1; liftX.globalCompositeOperation = 'source-over';
-        liftX.drawImage(v, r[0] / 100 * vw, r[1] / 100 * vh, r[2] / 100 * vw, r[3] / 100 * vh, 0, 0, W, H);
+        liftX.imageSmoothingQuality = 'high';
+        if (still) liftX.drawImage(still, 0, 0, W, H);
+        else liftX.drawImage(v, r[0] / 100 * v.videoWidth, r[1] / 100 * v.videoHeight, r[2] / 100 * v.videoWidth, r[3] / 100 * v.videoHeight, 0, 0, W, H);
         var sc = SCRIPTS[liftFeat], t = (performance.now() - liftAt) / 1000 - 0.75, cur = null;
         if (sc && !reduce && t >= 0) {
           t = t % sc.len;
@@ -562,7 +579,7 @@
       liftC.style.left = left + 'px'; liftC.style.top = top + 'px'; liftC.style.width = w + 'px'; liftC.style.height = h + 'px';
       liftC.width = Math.round(w * dpr); liftC.height = Math.round(h * dpr);
       liftSrc = [x0, y0, x1 - x0, y1 - y0]; liftC.dataset.from = from;
-      liftFeat = feats.indexOf(btn); liftAt = performance.now();
+      liftFeat = feats.indexOf(btn); liftAt = performance.now(); loadLiftImgs();
       if (!liftRaf) liftDraw(); else { cancelAnimationFrame(liftRaf); liftDraw(); }
       // from rest it rises out of its own spot; between features the card morphs from its last shape
       var start = prev ? 'translate(' + (prev[0] - left).toFixed(1) + 'px, ' + (prev[1] - top).toFixed(1) + 'px) scale(' + (prev[2] / w).toFixed(4) + ', ' + (prev[3] / h).toFixed(4) + ')' : from;
