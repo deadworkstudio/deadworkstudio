@@ -659,12 +659,6 @@
       e.preventDefault(); feats[(to + feats.length) % feats.length].focus();
     });
     nav.addEventListener('focusout', function (e) { if (autoDone && !nav.contains(e.relatedTarget) && lastPointer !== 'touch' && lastPointer !== 'pen') show(-1); });
-    // clicking off the tour (anywhere but the feature names, the open card or the Auto tour switch) puts the
-    // open feature away and stops the auto tour, so nothing keeps playing on its own (Daniel)
-    document.addEventListener('pointerdown', function (e) {
-      if (cur < 0 || nav.contains(e.target) || (liftC && liftC.contains(e.target)) || (autoBtn && autoBtn.contains(e.target))) return;
-      autoStop(); show(-1);
-    }, true);
 
     // the screen only plays while on screen
     if ('IntersectionObserver' in window) {
