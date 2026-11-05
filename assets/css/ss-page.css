@@ -824,3 +824,4 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-p { margin-top: 2px; }
 .ix-auto-row { margin-top: 0; }
 @media (max-width: 899px) { .ix-feat { gap: 5px; letter-spacing: .12em; } }
+.downloads .pill[hidden] { display: none; }
