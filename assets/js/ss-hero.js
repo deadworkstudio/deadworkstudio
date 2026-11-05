@@ -75,6 +75,10 @@
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
   var VARIANT = ({ push: 1, fade: 1, cut: 1 })[q.get('v')] ? q.get('v') : 'push';
+  // Options under review (Daniel 2026-11-05): ?splice=cuts|timeline|shutter|gate|clap and ?end=cut|tile|matte|approve|slate
+  var SPLICE = ({ cuts: 1, timeline: 1, shutter: 1, gate: 1, clap: 1 })[q.get('splice')] ? q.get('splice') : 'blade';
+  var END = ({ cut: 1, tile: 1, matte: 1, approve: 1, slate: 1 })[q.get('end')] ? q.get('end') : 'fade';
+  var looped = false;                                              // true once the hero has gone round once
   var T = { wallIn: [0, 0.4], cruiseEnd: 0.7, stop: 1.1 };
   var DRIFT_V = 7 / (3.8 + (5.8 - 3.8) / 2);                       // the archive concept's drift speed (rows/s)
   var DRIFT_ROWS = DRIFT_V * (T.cruiseEnd + (T.stop - T.cruiseEnd) / 2);
@@ -100,7 +104,8 @@
   // panels open, instead of running out, freezing, and jumping back to its start mid-split.
   seg_(Math.min((TAKE - pp) / SCRUB, 0.25), TAKE);
   // Fit the scan into the hero shot's own length so the cut lands right as the shot ends (one play, no loop).
-  var SCAN_END = X.P + LENS[HERO_CLIP] - 0.1, fitK = (SCAN_END - X.P) / (tt - X.P);
+  var SCAN_END = X.P + LENS[HERO_CLIP] - 1.1,   // the cut starts a second before the shot ends, so it never freezes
+      fitK = (SCAN_END - X.P) / (tt - X.P);
   segs.forEach(function (s) { s.t0 = X.P + (s.t0 - X.P) * fitK; s.t1 = X.P + (s.t1 - X.P) * fitK; });
   arrive = arrive.map(function (a) { return X.P + (a - X.P) * fitK; });
   var S = SCAN_END + 0.1;
@@ -110,6 +115,8 @@
   T.cut = [S, S + 0.5]; T.part = [S + 0.5, S + 1.1];
   T.reveal0 = S + 0.95; T.revealStep = 0.035; T.revealDur = 0.32;
   T.split = [S, T.reveal0 + LAST * T.revealStep + T.revealDur];
+  var SPLICE_D = { blade: 0, cuts: 1.5, timeline: 1.7, shutter: 1.2, gate: 1.5, clap: 0.9 }[SPLICE];
+  if (SPLICE_D) T.split = [S, S + SPLICE_D];
   T.panelsIn = T.split; T.fullOut = T.split; T.scanOut = [S, S + 0.5];
   T.caps = S + 0.8; T.capDur = 0.6; T.capStep = 0.05;
   T.rest = T.caps + 5 * T.capStep + T.capDur;
@@ -120,7 +127,11 @@
   // clip 12 starts from its first frame as it flies into the player and plays its whole length once;
   // the loop ends with its last frame (Daniel: start at 0:00, play the entire clip).
   T.playerIn = T.toApp[0];
-  T.LOOP = T.playerIn + LENS[PLAYER]; T.loopOut = [T.LOOP - 0.6, T.LOOP];
+  T.clipEnd = T.playerIn + LENS[PLAYER];
+  var END_D = { fade: 0, cut: 0.75, tile: 2.0, matte: 0.95, approve: 1.3, slate: 1.7 }[END];
+  T.LOOP = T.clipEnd + END_D;
+  T.loopOut = END === 'fade' ? [T.LOOP - 0.6, T.LOOP] : [1e9, 1e9 + 1];
+  var RESTART = { fade: 0, cut: 0.4, tile: 1.1, matte: 0, approve: 0, slate: 0.4 }[END];
 
   // ---- elements ----
   fig.issTimeline = T;                                             // for review tooling (?t=…&freeze)
@@ -164,7 +175,7 @@
     // the hero shot sits on its first frame on the wall and starts playing as the zoom begins, then plays
     // straight through the full frame (one take, never restarted) until it is cut
     if (t < S) { if (t >= X.P) L[HERO_CLIP] = t - X.P; return L; }
-    for (var i = 0; i < N; i++) L[i] = i === HERO_CLIP ? t - X.P : i === PLAYER && t >= T.playerIn ? t - T.playerIn : t - S;
+    for (var i = 0; i < N; i++) L[i] = i === HERO_CLIP ? t - X.P : i === PLAYER && t >= T.playerIn ? Math.min(t - T.playerIn, LENS[PLAYER] - 0.04) : t - S;
     return L;
   }
 
@@ -230,7 +241,7 @@
 
   // ---- push: one scale of the whole wall about a fixed point, so the tile's picture ends exactly on the frame ----
   // Gutters grow with the square root of the zoom: the grid stays a contact sheet, never a heavy black cage.
-  function drawPush(e) {
+  function drawPush(e, heroFn) {
     var cx = (HERO.col - FIRST_COL + 0.5) * tw, cy = (HERO.row - REST_TOP + 0.5) * th;   // tile centre at rest
     var Z = W / tw;                                                // solve tw*Z - g*sqrt(Z) = W: picture width -> frame width
     for (var n = 0; n < 6; n++) Z -= (tw * Z - g * Math.sqrt(Z) - W) / (tw - g / (2 * Math.sqrt(Z)));
@@ -247,6 +258,7 @@
       var w = tw * z - gs, h = th * z - gs;
       var rr = ((r % SHEET_ROWS) + SHEET_ROWS) % SHEET_ROWS, cc = ((c % VIEW_COLS) + VIEW_COLS) % VIEW_COLS;
       if (cc === HERO.col && rr === HERO.row) {
+        if (heroFn) { heroFn(X0, Y0, w, h, e); continue; }
         if (e >= 1) { drawWeld(ctx, 0, 0, W, H); continue; }       // land exactly on the frame
         // The picture always covers whatever part of its tile is on screen (never a dark band), keeps
         // its own 2.39 shape, and at the end of the push that is exactly the full frame.
@@ -314,7 +326,7 @@
     ctx.textAlign = 'right'; ctx.fillText(CAPS[i] + 's', rc.x + rc.w - pad, y);
     ctx.restore();
   }
-  function drawGrid(a, t) {
+  function drawGrid(a, t, skip) {
     if (a <= 0) return;
     var e = inOut(seg(t, T.toApp)), la = out(seg(t, T.labels)) * (1 - clamp01(e * 3));
     if (e > 0 && app.naturalWidth) {
@@ -333,6 +345,7 @@
     }
     ctx.globalAlpha = a;
     for (var i = 0; i < N; i++) {
+      if (i === skip) continue;
       var rc = e > 0 ? lerpRect(gridRect(i), appRect(i), e) : gridRect(i);
       drawCover(i, rc.x, rc.y, rc.w, rc.h);
     }
@@ -370,6 +383,141 @@
     }
   }
 
+  // ---- splice options (Daniel 2026-11-05): the riding shot is cut into twelve, five ways ----
+  function pieceRect(k) { var c = k % COLS, r = Math.floor(k / COLS); return { x: c * W / COLS, y: r * H / ROWS, w: W / COLS, h: H / ROWS }; }
+  function drawPiece(k, rc) { var p = pieceRect(k); ctx.drawImage(full, p.x, p.y, p.w, p.h, rc.x, rc.y, rc.w, rc.h); }
+  function clipIn(k, rc, fn) { ctx.save(); ctx.beginPath(); ctx.rect(rc.x, rc.y, rc.w, rc.h); ctx.clip(); fn(); ctx.restore(); }
+  var CUT_ORDER = [5, 0, 7, 2, 10, 3, 8, 1, 11, 4, 9, 6];
+  function drawSplice(t) {
+    if (full.width !== W || full.height !== H) { full.width = W; full.height = H; }
+    drawWeldOf(fctx, HERO_CLIP, 0, 0, W, H);
+    var u = t - S, k, rc, g0;
+    ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
+    if (SPLICE === 'cuts') {
+      // Editor's cuts: no lines, no motion. Twelve hard cuts, two frames apart, in edit order; then the gaps open.
+      var go = inOut(seg(u, [1.15, 1.45]));
+      for (k = 0; k < N; k++) {
+        rc = lerpRect(pieceRect(k), gridRect(k), go);
+        if (u >= 0.15 + CUT_ORDER.indexOf(k) / 12) drawCover(k, rc.x, rc.y, rc.w, rc.h); else drawPiece(k, rc);
+      }
+    } else if (SPLICE === 'timeline') {
+      // Into the timeline: the frame folds down into an edit bar, twelve marks land on it, and each clip rises out of its mark.
+      var e1 = inOut(seg(u, [0, 0.5])), bx = W * 0.04, bw = W * 0.92, by = H * 0.9, bh = Math.max(2, H * 0.012);
+      var barA = 1 - seg(u, [0.9, 1.3]);
+      if (barA > 0) {
+        var fr = lerpRect({ x: 0, y: 0, w: W, h: H }, { x: bx, y: by, w: bw, h: bh }, e1);
+        ctx.globalAlpha = barA; ctx.drawImage(full, fr.x, fr.y, fr.w, fr.h);
+        ctx.fillStyle = '#C8584B';
+        for (k = 0; k < N; k++) { var mk = out(seg(u, [0.3 + k * 0.02, 0.45 + k * 0.02])); if (mk > 0) ctx.fillRect(bx + bw * (k + 0.5) / N - 1, by - bh * 2 * mk, Math.max(2, dpr * 1.5), bh * 5 * mk); }
+        ctx.globalAlpha = 1;
+      }
+      for (k = 0; k < N; k++) {
+        var s1 = out(seg(u, [0.5 + k * 0.05, 1.05 + k * 0.05])); if (s1 <= 0) continue;
+        g0 = gridRect(k); var sw = W * 0.05, mx = bx + bw * (k + 0.5) / N;
+        rc = lerpRect({ x: mx - sw / 2, y: by - sw * g0.h / g0.w, w: sw, h: sw * g0.h / g0.w }, g0, s1);
+        drawCover(k, rc.x, rc.y, rc.w, rc.h);
+      }
+    } else if (SPLICE === 'shutter') {
+      // Rotary shutter: the frame parts into twelve, and a black shutter blade passes over each piece, leaving its own clip behind.
+      var gs = inOut(seg(u, [0, 0.3]));
+      for (k = 0; k < N; k++) {
+        var c = k % COLS, r = Math.floor(k / COLS); rc = lerpRect(pieceRect(k), gridRect(k), gs);
+        var st = 0.25 + (c + r * 1.2) * 0.07, sp = seg(u, [st, st + 0.24]);
+        if (sp <= 0) { drawPiece(k, rc); continue; }
+        if (sp >= 1) { drawCover(k, rc.x, rc.y, rc.w, rc.h); continue; }
+        var bw2 = rc.w * 0.35, bl = rc.x - bw2 + (rc.w + bw2) * sp;
+        clipIn(k, { x: rc.x, y: rc.y, w: Math.max(0, bl - rc.x), h: rc.h }, function () { drawCover(k, rc.x, rc.y, rc.w, rc.h); });
+        clipIn(k, { x: bl + bw2, y: rc.y, w: Math.max(0, rc.x + rc.w - bl - bw2), h: rc.h }, function () { drawPiece(k, rc); });
+        ctx.fillStyle = '#0A0A09'; ctx.fillRect(Math.max(rc.x, bl), rc.y, Math.min(rc.x + rc.w, bl + bw2) - Math.max(rc.x, bl), rc.h);
+      }
+    } else if (SPLICE === 'gate') {
+      // The gate: the frame opens into three columns, each column into four, then every piece cuts to its own clip, one frame apart.
+      var ea = inOut(seg(u, [0, 0.45])), eb = inOut(seg(u, [0.4, 0.85]));
+      for (k = 0; k < N; k++) {
+        var p0 = pieceRect(k); g0 = gridRect(k);
+        rc = { x: p0.x + (g0.x - p0.x) * ea, w: p0.w + (g0.w - p0.w) * ea, y: p0.y + (g0.y - p0.y) * eb, h: p0.h + (g0.h - p0.h) * eb };
+        if (u >= 0.9 + k / 24) drawCover(k, rc.x, rc.y, rc.w, rc.h); else drawPiece(k, rc);
+      }
+    } else if (SPLICE === 'clap') {
+      // Slate clap: a clapper stick swings shut across the top of the frame; on the clap it is twelve clips.
+      var shut = 0.33, sh = H * 0.075;
+      if (u < shut) {
+        ctx.drawImage(full, 0, 0);
+        var a = -0.5 * (1 - Math.pow(seg(u, [0, shut]), 2));
+        drawStick(a, 0, 1, sh);
+      } else {
+        for (k = 0; k < N; k++) { g0 = gridRect(k); drawCover(k, g0.x, g0.y, g0.w, g0.h); }
+        if (u < shut + 1 / 24) { ctx.fillStyle = 'rgba(245,242,235,.55)'; ctx.fillRect(0, 0, W, H); }
+        var lift = inOut(seg(u, [0.4, 0.75]));
+        if (lift < 1) drawStick(0, -sh * 1.6 * lift, 1 - lift, sh);
+      }
+    }
+  }
+  function drawStick(a, dy, alpha, sh) {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(0, sh + dy); ctx.rotate(a);
+    ctx.fillStyle = '#EBE5D8'; ctx.fillRect(0, -sh, W, sh);
+    ctx.fillStyle = '#0E0E0D';
+    for (var x = -sh; x < W + sh; x += sh * 1.6) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + sh * 0.8, 0); ctx.lineTo(x + sh * 1.6, -sh); ctx.lineTo(x + sh * 0.8, -sh); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+  }
+
+  // ---- ending options: what happens after the app has played clip 12 to its last frame ----
+  var snap = document.createElement('canvas'), snapCtx = snap.getContext('2d');
+  function appSnap(skip) {                                         // the app at the end of the take, as one picture
+    if (snap.width !== W || snap.height !== H) { snap.width = W; snap.height = H; }
+    var keep = ctx; ctx = snapCtx; ctx.clearRect(0, 0, W, H); drawGrid(1, T.clipEnd - 0.001, skip); ctx = keep;
+    return snap;
+  }
+  function drawMatte(m, lineA) {                                   // m: 0 open .. 1 closed to a line
+    var bh = H / 2 * m;
+    ctx.fillStyle = '#0A0A09'; ctx.fillRect(0, 0, W, bh); ctx.fillRect(0, H - bh, W, bh);
+    if (lineA > 0) { ctx.fillStyle = 'rgba(235,229,216,' + lineA + ')'; var lw = W * lineA; ctx.fillRect((W - lw) / 2, H / 2 - dpr, lw, 2 * dpr); }
+  }
+  function drawEnd(t) {
+    var u = t - T.clipEnd, b = appBox();
+    if (END === 'cut') {
+      // Cut to black: hold the last frame a beat, eight frames of black, cut straight into the archive.
+      if (u < 0.25) ctx.drawImage(appSnap(), 0, 0); else { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); }
+    } else if (END === 'tile') {
+      // Back to the archive: the app pulls back into its tile on the wall, one shot among the archive again, and it starts over.
+      var img = appSnap(), e = 1 - inOut(seg(u, [0.15, 1.4]));
+      drawPush(e, function (x, y, w, h) {
+        var sc = Math.max(w / W, h / H), pw = W * sc, ph = H * sc;
+        ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.drawImage(img, x + (w - pw) / 2, y + (h - ph) / 2, pw, ph); ctx.restore();
+      });
+    } else if (END === 'matte') {
+      // The matte closes: black bars close from top and bottom to a hairline, the line draws in, and it opens on the archive.
+      ctx.drawImage(appSnap(), 0, 0);
+      drawMatte(inOut(seg(u, [0.05, 0.6])), 1 - inOut(seg(u, [0.6, 0.9])));
+    } else if (END === 'approve') {
+      // Approved: the Approve button takes the press, the clip drops into the clip list, and it cuts back to the archive.
+      ctx.drawImage(appSnap(PLAYER), 0, 0);
+      var ab = { x: b.x + 433 * b.s, y: b.y + 1534 * b.s, w: 995 * b.s, h: 63 * b.s };
+      if (u < 0.12) { ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.fillRect(ab.x, ab.y, ab.w, ab.h); }
+      else { var gl = 1 - seg(u, [0.12, 0.5]); if (gl > 0) { ctx.fillStyle = 'rgba(190,240,180,' + (0.45 * gl) + ')'; ctx.fillRect(ab.x, ab.y, ab.w, ab.h); } }
+      var th12 = { x: b.x + APP_THUMB[0] * b.s, y: b.y + APP_THUMB_Y[PLAYER] * b.s, w: APP_THUMB[1] * b.s, h: APP_THUMB[2] * b.s };
+      var rp = lerpRect(appRect(PLAYER), th12, inOut(seg(u, [0.3, 0.85])));
+      drawCover(PLAYER, rp.x, rp.y, rp.w, rp.h);
+      if (u >= 1.1) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); }
+    } else if (END === 'slate') {
+      // Tail slate: cut to black, a quiet end slate, cut straight into the archive.
+      if (u < 0.2) { ctx.drawImage(appSnap(), 0, 0); return; }
+      ctx.fillStyle = '#0A0A09'; ctx.fillRect(0, 0, W, H);
+      var fs = Math.round(W * 0.011), fb = Math.round(W * 0.03);
+      ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(235,229,216,.55)';
+      ctx.font = '500 ' + fs + 'px "JetBrains Mono", ui-monospace, monospace';
+      if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.3) + 'px';
+      ctx.fillText(FILE, W / 2, H / 2 - fb * 0.9);
+      ctx.fillStyle = '#EBE5D8'; ctx.font = '500 ' + fb + 'px "JetBrains Mono", ui-monospace, monospace';
+      if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fb * 0.18) + 'px';
+      ctx.fillText('12 CLIPS', W / 2, H / 2 + fb * 0.35);
+      ctx.fillStyle = 'rgba(235,229,216,.55)'; ctx.font = '500 ' + fs + 'px "JetBrains Mono", ui-monospace, monospace';
+      if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.3) + 'px';
+      ctx.fillText('READY FOR EXPORT', W / 2, H / 2 + fb * 1.3);
+      ctx.restore();
+    }
+  }
+
   // ---- one pure function of time ----
   var lastDom = {};
   function setStyle(el, key, prop, val) { if (lastDom[key] !== val) { el.style[prop] = val; lastDom[key] = val; } }
@@ -389,6 +537,7 @@
     // Canvas: the picture
     if (!ready || !W) return;
     var wallA = out(seg(t, T.wallIn));
+    if (looped && END !== 'fade' && END !== 'approve') wallA = 1;   // these endings cut or open straight onto the wall
     setStyle(canvas, 'cv', 'opacity', String(t < T.wallIn[1] ? wallA : 1 - inOut(seg(t, T.loopOut))));
     ctx.clearRect(0, 0, W, H);
 
@@ -412,10 +561,12 @@
           ctx.drawImage(sheet, hr.sx, hr.sy, hr.w, hr.h, hr.dx, hr.dy, hr.w, hr.h);
         }
       }
+      if (END === 'matte' && looped && t < 0.6) drawMatte(1 - inOut(seg(t, [0, 0.6])), 0);
       return;
     }
     if (t < S) { drawFull(HERO_CLIP, 1); return; }
-    if (t < T.split[1]) { drawShred(t); return; }
+    if (t < T.split[1]) { if (SPLICE === 'blade') drawShred(t); else drawSplice(t); return; }
+    if (t >= T.clipEnd && END !== 'fade') { drawEnd(t); return; }
     drawGrid(1, t);
   }
 
@@ -473,6 +624,29 @@
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
+  window.__iss = { T: T, X: X, arrive: arrive, SCAN_END: SCAN_END, S: S, variant: VARIANT, splice: SPLICE, end: END, RESTART: RESTART };
+  // ---- capture: frame-exact renders for review videos (window.__issCap(t) -> JPEG data URL) ----
+  if (q.has('capture')) {
+    var metas = vids.map(function (v) { return new Promise(function (res) { v.preload = 'auto'; v.addEventListener('loadeddata', res, { once: true }); v.addEventListener('error', res, { once: true }); v.load(); }); });
+    Promise.all([imagesReady].concat(metas)).then(function () {
+      size();
+      window.__issCap = function (vt) {
+        var tt = vt; looped = false;
+        if (vt >= T.LOOP) { tt = vt - T.LOOP + RESTART; looped = true; }
+        var L = localTimes(tt), waits = [];
+        L.forEach(function (lt, i) {
+          if (lt < 0) return;
+          var v = vids[i], d = v.duration || LENS[i];
+          var target = (i === HERO_CLIP && tt < T.split[1]) || (i === PLAYER && tt >= T.playerIn) ? Math.min(lt, d - 0.04) : lt % d;
+          if (Math.abs(v.currentTime - target) > 0.001) waits.push(new Promise(function (res) { v.addEventListener('seeked', res, { once: true }); v.currentTime = target; }));
+        });
+        return Promise.all(waits).then(function () { lastDom = {}; render(tt); return canvas.toDataURL('image/jpeg', 0.92); });
+      };
+      fig.dataset.issReady = '1';
+    });
+    return;
+  }
+
   // ---- freeze: hold any moment for review, videos parked on the right frame ----
   if (freeze) {
     var L = localTimes(t0), pending = [];
@@ -504,7 +678,7 @@
     if (last !== null) clock += Math.min(0.1, (ts - last) / 1000);  // a dropped tab never skips a beat
     last = ts;
     loadScheduled(clock);
-    if (clock >= T.LOOP) { clock = 0; vids.forEach(function (v) { v.pause(); try { v.currentTime = 0; } catch (e) {} }); }
+    if (clock >= T.LOOP) { clock = RESTART; looped = true; vids.forEach(function (v) { v.pause(); try { v.currentTime = 0; } catch (e) {} }); }
     syncVideos(clock);
     render(clock);
     raf = requestAnimationFrame(frame);                              // keeps drawing the playing clips at rest
@@ -522,5 +696,4 @@
     }, { threshold: 0.1 }).observe(fig);
   });
 
-  window.__iss = { T: T, X: X, arrive: arrive, SCAN_END: SCAN_END, S: S, variant: VARIANT };
 })();
