@@ -268,14 +268,19 @@
   var CAPS = ['8.7', '6.9', '7.7', '6.3', '6.0', '6.2'];   // shown lengths (Daniel: every clip reads 5 s+)
   function drawLabel(i, rc, a) {
     if (a <= 0) return;
-    var fs = Math.round(Math.max(10 * dpr, W * 0.0095)), pad = Math.round(fs * 0.9);
+    // a quiet slate: soft shade along the bottom edge, small tracked type, number left and length right
+    var fs = Math.round(Math.max(9 * dpr, W * 0.0074)), pad = Math.round(fs * 1.5), sh = Math.round(fs * 5);
     ctx.save(); ctx.globalAlpha = a;
+    var gr = ctx.createLinearGradient(0, rc.y + rc.h - sh, 0, rc.y + rc.h);
+    gr.addColorStop(0, 'rgba(10,10,9,0)'); gr.addColorStop(1, 'rgba(10,10,9,.5)');
+    ctx.fillStyle = gr; ctx.fillRect(rc.x, rc.y + rc.h - sh, rc.w, sh);
     ctx.font = '500 ' + fs + 'px "JetBrains Mono", ui-monospace, monospace';
-    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#EBE5D8';
-    ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = fs * 0.6;
-    var txt = 'CLIP 0' + (i + 1) + '   ' + CAPS[i] + 's';
-    if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.14) + 'px';
-    ctx.fillText(txt, rc.x + pad, rc.y + rc.h - pad);
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(235,229,216,.92)';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.2) + 'px';
+    var y = rc.y + rc.h - pad;
+    ctx.textAlign = 'left'; ctx.fillText('0' + (i + 1), rc.x + pad, y);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.04) + 'px';
+    ctx.textAlign = 'right'; ctx.fillText(CAPS[i] + 's', rc.x + rc.w - pad, y);
     ctx.restore();
   }
   function drawGrid(a, t) {
