@@ -624,10 +624,10 @@
       if (autoDone) return; autoDone = true; clearTimeout(autoT); autoT = 0; autoOn = false;
       nav.classList.remove('is-auto'); autoUi();
     };
-    // the Auto tour switch: off = explore at your own pace (the current feature stays up); on = it plays again
+    // the Auto tour switch: off = everything stops at once and the open feature goes away (Daniel); on = it plays again
     if (autoBtn) autoBtn.addEventListener('click', function () {
       if (autoDone) { autoDone = false; autoUi(); autoI = cur; if (inView) autoStart(); }
-      else autoStop();
+      else { autoStop(); show(-1); }
     });
     autoUi();
     ['pointerdown', 'keydown'].forEach(function (ev) { nav.addEventListener(ev, autoStop, true); stage.addEventListener(ev, autoStop, true); });
