@@ -513,7 +513,7 @@
     var LIFT_IMG = [], liftImgsAsked = false;
     var loadLiftImgs = function () {
       if (liftImgsAsked) return; liftImgsAsked = true;
-      for (var k = 0; k < 5; k++) { var im = new Image(); im.decoding = 'async'; im.src = '../../assets/img/products/stock-shredder/lift/lift-' + k + '.webp?v=1'; LIFT_IMG[k] = im; }
+      for (var k = 0; k < 5; k++) { var im = new Image(); im.decoding = 'async'; im.src = '../../assets/img/products/stock-shredder/lift/lift-' + k + '.webp?v=2'; LIFT_IMG[k] = im; }
     };
     if ('IntersectionObserver' in window) {
       var warmLift = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { loadLiftImgs(); warmLift.disconnect(); } }, { rootMargin: '600px 0px' });
