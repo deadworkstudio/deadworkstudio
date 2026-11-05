@@ -41,13 +41,15 @@
   var GUTTER = 0.035;                                              // near-black gutter, fraction of a tile
 
   // ---- the take ----
-  // Motorcycle In The Mountains, 3:22 — the motorcycle run through the canyon, six real shots (moto-1..6).
+  // Motorcycle In The Mountains, 3:22. The scan opens on the rider from behind (01), marks each moment in a
+  // quick pass, and settles on the canyon shot (06), which is the frame that gets cut into twelve.
   var TAKE = 202.4, FILE = 'MOTORCYCLE_IN_THE_MOUNTAINS';
-  // Played in this order: the zoom lands on the rider from behind (moto-5), then the pass under the trees
-  // (moto-4), then the rest in film order.
-  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71, 72.91, 70.87, 64.49, 68.37, 69.74, 77.71];   // each shot's in-point in the film (s)
-  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15, 3.74, 1.94, 2.69, 1.27, 1.03, 1.15];             // each shot's length (s)
-  var N = IN.length, LAST = N - 1;                                 // twelve clips; the last shot is the full frame that gets shredded
+  // Twelve shots from the finished film (moto-01..12): the six riding moments, then six from later in the film.
+  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71, 183.0, 186.0, 118.0, 80.0, 126.0, 147.0];   // in-points in the film (s)
+  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15, 2.5, 2.5, 2.5, 2.0, 2.5, 2.0];                  // each shot's length (s)
+  var N = IN.length, LAST = N - 1;
+  var SHRED = 5;                                                   // the riding shot that fills the frame and gets cut into twelve
+  var PLAYER = LAST;                                               // the clip that lands in the app's player (selected in the capture)
   // The scan line shows only the stretch of the film around the six shots (not the whole 3:22), so the
   // marks spread across the full width and you can watch it pick them; the timecode still reads the real time.
   var VIEW0 = Math.min.apply(null, IN) - 2, VIEW1 = Math.max.apply(null, IN.map(function (v, i) { return v + LENS[i]; })) + 2;
@@ -58,9 +60,9 @@
   var RATE = 1;
   // Full screen shows only the first shot and the last one; the four between are marked on the scan line
   // in a quick pass while the first shot keeps playing.
-  var DWELL = IN.map(function (v, i) { return i === 0 ? 1.6 : i === LAST ? 0.85 : 0.12; });   // wall-clock time on each moment
+  var DWELL = IN.map(function (v, i) { return i === 0 ? 1.6 : i === SHRED ? 0.85 : 0.12; });   // wall-clock time on each moment
   var SCRUB = 260;                                                 // take-seconds per second between moments
-  var FOCAL = [0.388, 0.634, 0.667, 0.723, 0.712, 0.282, 0.388, 0.634, 0.667, 0.723, 0.712, 0.282];   // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.50, 0.68, 0.98, 0.60, 0.70, 0.50, 0.50, 0.58, 0.50, 0.50, 0.50, 0.22];   // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -140,7 +142,7 @@
     for (var i = 0; i < segs.length; i++) { var s = segs[i]; if (t < s.t1) return s.p0 + (s.p1 - s.p0) * ((t - s.t0) / (s.t1 - s.t0)); }
     return TAKE;
   }
-  function clipAt(t) { return t >= arrive[LAST] ? LAST : 0; }    // full frame: first shot, then the last
+  function clipAt(t) { return t >= arrive[SHRED] ? SHRED : 0; }  // full frame: the first shot, then the one that gets shredded
 
   // Where each video should be at time t (seconds into the clip), or -1 if it is not on screen.
   function localTimes(t) {
@@ -148,7 +150,7 @@
     // clip 1 sits on its first frame on the wall and starts playing as the zoom begins, so the zoom is never frozen
     if (t < X.F) { if (t >= X.P) L[0] = t - X.P; return L; }
     if (t < S) { var c = clipAt(t); L[c] = c === 0 ? t - X.P : t - arrive[c]; return L; }
-    for (var i = 0; i < N; i++) L[i] = i === LAST ? t - arrive[LAST] : t - S;
+    for (var i = 0; i < N; i++) L[i] = i === SHRED ? t - arrive[SHRED] : t - S;
     return L;
   }
 
@@ -265,16 +267,18 @@
     var gap = Math.round(W * 0.01), cw = (W - gap * (COLS - 1)) / COLS, ch = (H - gap * (ROWS - 1)) / ROWS;
     return { x: (i % COLS) * (cw + gap), y: Math.floor(i / COLS) * (ch + gap), w: cw, h: ch };
   }
-  // The app's Review screen captured in a widescreen window (app-review-wide.webp, 2640 x 1105, 2.39:1),
-  // so it fills the whole hero frame. Player picture area and the clip-list thumbnails in that layout.
-  var APP_W = 2640, APP_H = 1105, APP_PLAYER = [482, 256, 1672, 627];
-  var APP_THUMB_Y = [163, 228.5, 294, 359.5, 425, 490.5], APP_THUMB = [12, 64, 36];
-  var APP_TRIM = [318, 2318];                                      // trim bar track x range (playhead 0 -> end)
+  // app-review-169.webp: the Review screen in a 16:9 window (1920 x 1080 CSS) with all twelve clips listed,
+  // clip 12 selected. Numbers are in the webp's own pixels (2880 x 1620 = the 2x capture at 0.75).
+  var APP_W = 2880, APP_H = 1620, K = 0.75;
+  var APP_PLAYER = [580 * K, 553 * K, 2672 * K, 1119 * K];
+  var APP_THUMB_Y = [326, 457, 588, 719, 850, 981, 1112, 1243, 1374, 1505, 1636, 1767].map(function (y) { return y * K; });
+  var APP_THUMB = [24 * K, 128 * K, 72 * K];
+  var APP_TRIM = [620 * K, 3214 * K], APP_PH = [1866 * K, 1962 * K];   // trim track x range and the playhead's y span
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
-    var b = appBox(), r = i === LAST ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
+    var b = appBox(), r = i === PLAYER ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
     // The player keeps the full widescreen frame: 2.39:1 fitted inside the player, centred, nothing cropped.
-    if (i === LAST) { var pw = Math.min(r[2], r[3] * CLIP_R), ph = pw / CLIP_R; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
+    if (i === PLAYER) { var pw = Math.min(r[2], r[3] * CLIP_R), ph = pw / CLIP_R; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
@@ -305,12 +309,12 @@
       ctx.globalAlpha = a * e; ctx.fillStyle = '#0E0E0E'; ctx.fillRect(0, 0, W, H);
       ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h);
       // the trim bar's playhead runs with the clip in the player (the capture has it erased)
-      var l0 = localTimes(t)[LAST], d0 = (vids[LAST] && vids[LAST].duration) || LENS[LAST];
+      var l0 = localTimes(t)[PLAYER], d0 = (vids[PLAYER] && vids[PLAYER].duration) || LENS[PLAYER];
       var p = l0 >= 0 ? (l0 % d0) / d0 : 0, ks = h / APP_H, ox = (W - w) / 2, oy = (H - h) / 2;
       var px = ox + (APP_TRIM[0] + (APP_TRIM[1] - APP_TRIM[0]) * p) * ks;
-      ctx.fillStyle = '#C8584B';
-      ctx.fillRect(px - 1.5 * ks, oy + 982 * ks, 3 * ks, 46 * ks);
-      ctx.beginPath(); ctx.moveTo(px - 5 * ks, oy + 981 * ks); ctx.lineTo(px + 5 * ks, oy + 981 * ks); ctx.lineTo(px, oy + 988 * ks); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#EBE5D8';                                     // the dark theme's playhead: bone, a thin line under a small notch
+      ctx.fillRect(px - 1.5 * K * ks, oy + APP_PH[0] * ks, 3 * K * ks, (APP_PH[1] - APP_PH[0]) * ks);
+      ctx.beginPath(); ctx.moveTo(px - 9 * K * ks, oy + APP_PH[0] * ks); ctx.lineTo(px + 9 * K * ks, oy + APP_PH[0] * ks); ctx.lineTo(px, oy + (APP_PH[0] + 13 * K) * ks); ctx.closePath(); ctx.fill();
       ctx.globalAlpha = 1;
     }
     ctx.globalAlpha = a;
@@ -326,7 +330,7 @@
   var full = document.createElement('canvas'), fctx = full.getContext('2d');
   function drawShred(t) {
     if (full.width !== W || full.height !== H) { full.width = W; full.height = H; }
-    drawWeldOf(fctx, LAST, 0, 0, W, H);
+    drawWeldOf(fctx, SHRED, 0, 0, W, H);
     var ep = inOut(seg(t, T.part)), lw = Math.max(1, Math.round(1.5 * dpr)), RED = '#C8584B';
     for (var k = 0; k < N; k++) {
       var c = k % COLS, r = Math.floor(k / COLS), g = gridRect(k);
@@ -424,7 +428,7 @@
       if (L[i] >= 0) {
         // panels up: keep every clip moving. The last shot is also the full frame fading out under the
         // panels, so it holds its final frame until that fade is done instead of jumping back mid-dissolve.
-        if (v.ended && t >= (i === LAST ? T.split[1] : S)) { try { v.currentTime = 0; } catch (e) {} }
+        if (v.ended && t >= (i === SHRED ? T.split[1] : S)) { try { v.currentTime = 0; } catch (e) {} }
         if (v.paused && !v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       }
       else if (!v.paused) { v.pause(); try { v.currentTime = 0; } catch (e) {} }   // re-park on its first frame
@@ -446,7 +450,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review-wide.webp?v=2';
+  app.src = MEDIA + 'app-review-169.webp?v=1';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
