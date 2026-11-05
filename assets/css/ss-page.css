@@ -444,6 +444,9 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .bco-input { margin-bottom: 20px; width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 0; background: #FBF9F4; color: var(--ink); font: 400 16px/1 var(--sans); appearance: none; }
 .bco-input:focus { outline: none; border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 .bco-payment { min-height: 200px; }
+/* While Stripe's fields load: a quiet shimmer the size of the card form, so the space never sits empty. */
+.bco-payment.is-loading { min-height: 260px; background: linear-gradient(100deg, var(--bg-2) 30%, var(--line) 50%, var(--bg-2) 70%); background-size: 240% 100%; animation: checkout-shimmer 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .bco-payment.is-loading { animation: none; background: var(--bg-2); } }
 .bco-terms { margin: 22px 0 0; font-size: 12px; line-height: 1.5; color: var(--ink-3); }
 .bco-error { margin: 12px 0 0; font-size: 14px; color: #A3241D; }
 .bco-error:focus { outline: none; }

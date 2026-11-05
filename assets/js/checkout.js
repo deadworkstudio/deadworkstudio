@@ -251,6 +251,7 @@
   var brandedCanConfirm = false;
   var brandedTotalText = '';
   var brandedPaying = false;
+  var brandedFormReady = false; // Stripe's payment fields have finished loading
   var brandedRun = 0; // bumps on every start/teardown so a late async step can't touch a newer checkout
 
   // Stripe's embedded form (the SHRED trial, and the fallback plan checkout). The dahlia Stripe.js
@@ -298,6 +299,7 @@
     brandedActions = null;
     brandedCanConfirm = false;
     brandedPaying = false;
+    brandedFormReady = false;
     if (!bco) return;
     bco.hidden = true;
     if (bcoExpress) bcoExpress.innerHTML = '';
@@ -322,8 +324,8 @@
     // Solid as soon as Stripe's form is ready; Stripe checks the fields when Pay is pressed and
     // marks anything missing right in the form (its own canConfirm stays false until the email,
     // which we only hand over on Pay, is set).
-    bcoPay.disabled = !brandedActions || brandedPaying;
-    bcoPay.textContent = brandedPaying ? 'Processing\u2026' : 'Pay ' + (brandedTotalText || '');
+    bcoPay.disabled = !brandedActions || !brandedFormReady || brandedPaying;
+    bcoPay.textContent = brandedPaying ? 'Processing\u2026' : (brandedFormReady ? 'Pay ' + (brandedTotalText || '') : 'Loading\u2026');
   }
 
   function teardownCheckout() {
@@ -654,7 +656,7 @@
     fillBrandedSummary(planId);
     bco.hidden = false;
     showStatus('', false);
-    if (bcoPayment) bcoPayment.classList.add('checkout-panel-frame', 'is-loading');
+    if (bcoPayment) bcoPayment.classList.add('is-loading');
 
     fetch(WORKER_URL + '/checkout', {
       method: 'POST',
@@ -721,7 +723,9 @@
         // instead (BRANDED_AUTH below the terms). Other methods keep Stripe's own wording.
         var payment = sdk.createPaymentElement({ layout: { type: 'accordion', radios: 'always', spacedAccordionItems: false }, terms: { card: 'never' } });
         payment.on('ready', function () {
-          if (bcoPayment) bcoPayment.classList.remove('checkout-panel-frame', 'is-loading');
+          if (bcoPayment) bcoPayment.classList.remove('is-loading');
+          brandedFormReady = true;
+          updatePayButton();
         });
         payment.mount(bcoPayment);
         brandedElements.push(payment);
