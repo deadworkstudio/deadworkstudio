@@ -428,9 +428,10 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .bco { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); border: 1px solid var(--ink); background: var(--bg); text-align: left; }
 .bco[hidden] { display: none; }
 .bco-summary { display: flex; flex-direction: column; gap: 0; padding: 40px 36px; background: var(--ink); color: #F1ECE2; }
-.bco-head { --h: 44px; display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; min-width: 0; }
+.bco-head { --h: 44px; display: flex; align-items: flex-start; gap: calc(var(--h) * .24); flex-wrap: nowrap; min-width: 0; }
 .bco-logo { display: block; height: var(--h); width: auto; max-width: 64%; object-fit: contain; flex: 0 1 auto; }
-.bco-plan { margin: 0; flex: 0 0 auto; font: 400 calc(var(--h) * 1.02)/1 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; text-transform: uppercase; letter-spacing: .01em; color: #F1ECE2; white-space: nowrap; }
+/* The plan name as a solid bone label exactly the logo's height, so the two read as one mark. */
+.bco-plan { margin: 0; flex: 0 0 auto; box-sizing: border-box; height: var(--h); padding: 0 calc(var(--h) * .22); display: flex; align-items: center; background: #F1ECE2; color: #141412; font: 400 calc(var(--h) * .7)/1 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; text-transform: uppercase; letter-spacing: .01em; white-space: nowrap; }
 .bco-price { margin: 34px 0 0; font: 560 40px/1 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .bco-per { margin-left: 4px; font-size: 16px; font-weight: 400; color: #A9A499; }
 .bco-bill { margin: 12px 0 0; font-size: 14px; color: #A9A499; }
