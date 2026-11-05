@@ -393,6 +393,8 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .upgrade { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 26px 20px 30px; border-top: 1px solid var(--line); }
 .upgrade--kw { grid-column: 3; }
 .upgrade--phone { grid-column: 4; border-left: 1px solid var(--line); }
+/* The Pro/Studio row lines up under the plan cards, so it goes away with them during checkout and after purchase. */
+.pricing-grid[hidden] ~ .upgrade-row { display: none; }
 .upgrade .mono { color: var(--ink-3); }
 .upgrade h3 { margin-top: 8px; font: 560 18px/1.2 var(--sans); letter-spacing: -.015em; color: var(--ink); }
 .upgrade figcaption > p:last-child { margin: 8px auto 0; max-width: 30ch; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
