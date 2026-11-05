@@ -95,7 +95,7 @@
   // player, the other five shrink into the clip list. The app holds a couple of seconds, then it starts over.
   T.labels = [S + 0.5, S + 1.0];
   T.toApp = [S + 4.0, S + 4.9];
-  T.LOOP = T.toApp[1] + 2.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
+  T.LOOP = T.toApp[1] + 3.6; T.loopOut = [T.LOOP - 0.6, T.LOOP];
 
   // ---- elements ----
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d');
@@ -252,13 +252,15 @@
     var gap = Math.round(W * 0.012), cw = (W - gap * 2) / 3, ch = (H - gap) / 2;
     return { x: (i % 3) * (cw + gap), y: Math.floor(i / 3) * (ch + gap), w: cw, h: ch };
   }
-  // The app's Review screen (app-review.webp, 2400 x 1600 layout), fit to the frame's height, centred.
-  var APP_W = 2400, APP_H = 1600, APP_PLAYER = [422, 416, 1548, 815];
+  // The app's Review screen captured in a widescreen window (app-review-wide.webp, 2640 x 1105, 2.39:1),
+  // so it fills the whole hero frame. Player picture area and the clip-list thumbnails in that layout.
+  var APP_W = 2640, APP_H = 1105, APP_PLAYER = [482, 256, 1672, 627];
+  var APP_THUMB_Y = [163, 228.5, 294, 359.5, 425, 490.5], APP_THUMB = [12, 64, 36];
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
-    var b = appBox(), r = i === 0 ? APP_PLAYER : [18, 216 + 96 * i + 18, 96, 56];
-    // The player keeps the full widescreen frame: full player width, 2.39:1, centred, nothing cropped.
-    if (i === 0) { var ph = r[2] / RATIO; r = [r[0], r[1] + (r[3] - ph) / 2, r[2], ph]; }
+    var b = appBox(), r = i === 0 ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
+    // The player keeps the full widescreen frame: 2.39:1 fitted inside the player, centred, nothing cropped.
+    if (i === 0) { var pw = Math.min(r[2], r[3] * RATIO), ph = pw / RATIO; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
@@ -280,7 +282,9 @@
     var e = inOut(seg(t, T.toApp)), la = out(seg(t, T.labels)) * (1 - clamp01(e * 3));
     if (e > 0 && app.naturalWidth) {
       var b = appBox(), sc = 1 + 0.04 * (1 - e), w = b.w * sc, h = b.h * sc;
-      ctx.globalAlpha = a * e; ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h); ctx.globalAlpha = 1;
+      // the app's own dark background fills the whole widescreen frame, so no page shows beside the window
+      ctx.globalAlpha = a * e; ctx.fillStyle = '#0E0E0E'; ctx.fillRect(0, 0, W, H);
+      ctx.drawImage(app, (W - w) / 2, (H - h) / 2, w, h); ctx.globalAlpha = 1;
     }
     ctx.globalAlpha = a;
     for (var i = 0; i < 6; i++) {
@@ -386,7 +390,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review.webp?v=4';
+  app.src = MEDIA + 'app-review-wide.webp?v=1';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
