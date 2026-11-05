@@ -174,8 +174,9 @@
   var pricingError = document.querySelector('[data-pricing-error]');
   var keyEl = success.querySelector('[data-activation-key]');
   var copyBtn = success.querySelector('[data-copy-key]');
-  var successHeading = success.querySelector('h3');
-  var successEyebrow = success.querySelector('[data-checkout-success-eyebrow]');
+  var successTitle = success.querySelector('[data-checkout-success-title]');
+  var successHeading = successTitle;
+  var successSteps = success.querySelector('[data-checkout-success-steps]');
   var successNote = success.querySelector('[data-checkout-success-note]');
   var macDownload = document.getElementById('download-success');
   var winDownload = document.getElementById('download-success-alt');
@@ -251,6 +252,15 @@
   var brandedTotalText = '';
   var brandedPaying = false;
   var brandedRun = 0; // bumps on every start/teardown so a late async step can't touch a newer checkout
+
+  // Stripe's embedded form (the SHRED trial, and the fallback plan checkout). The dahlia Stripe.js
+  // this page loads for the branded checkout renamed initEmbeddedCheckout() to
+  // createEmbeddedCheckoutPage() and throws on the old name, so use whichever exists.
+  function initEmbedded(options) {
+    var s = getStripe();
+    if (typeof s.createEmbeddedCheckoutPage === 'function') return Promise.resolve(s.createEmbeddedCheckoutPage(options));
+    return s.initEmbeddedCheckout(options);
+  }
 
   var embeddedCheckout = null; // the mounted Stripe EmbeddedCheckout instance, so we can destroy it cleanly
   var sessionId = null; // the current Checkout Session id — reused by "Try again" so we never start a second session for one charge
@@ -354,7 +364,7 @@
     }
   }
 
-  function showSuccess(activationKey, trial) {
+  function showSuccess(activationKey, trial, firstName) {
     teardownCheckout();
     panel.hidden = true;
     grid.hidden = true;
@@ -365,16 +375,22 @@
     if (trialOffer) trialOffer.hidden = true;
     if (keyEl) keyEl.textContent = activationKey;
 
-    // SHRED launch trial v2 (§8.7): a trial completion gets its own eyebrow/note copy instead of
-    // the paid-purchase wording — the activation key box and download buttons below are
-    // identical either way. endsOnText rides pre-formatted from the Worker (§3 — this file never
-    // computes its own end date), so there's no client-side date math here at all.
-    if (trial && trial.endsOnText) {
-      if (successEyebrow) successEyebrow.textContent = 'Trial started';
-      if (successNote) successNote.textContent = 'Your trial runs until ' + trial.endsOnText + ' or 100 clips. Nothing is charged unless you choose a plan.';
-    } else {
-      if (successEyebrow) successEyebrow.textContent = "You're in";
-      if (successNote) successNote.textContent = 'Paste this activation key when it asks. Full instructions are in the app.';
+    // A short welcome: "You're in, Macy." when the Worker knows a first name, else "You're in."
+    // endsOnText rides pre-formatted from the Worker (§3 — this file never computes its own end
+    // date). Phones can't run the app, so they get pointed at the email instead of downloads.
+    var name = (firstName || '').trim().split(/\s+/)[0];
+    var onPhone = isPhoneVisitor();
+    var isTrial = !!(trial && trial.endsOnText);
+    if (successTitle) successTitle.textContent = name ? "You're in, " + name + '.' : "You're in.";
+    if (successNote) {
+      successNote.textContent = isTrial
+        ? 'Your free trial runs until ' + trial.endsOnText + ' or 100 clips. Nothing is charged unless you pick a plan.'
+        : "Thanks for the support. Here's your activation key.";
+    }
+    if (successSteps) {
+      successSteps.innerHTML = onPhone
+        ? '<li>Open the email we just sent you on your computer.</li><li>Download Stock Shredder from it.</li><li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li>'
+        : '<li>Install Stock Shredder.</li><li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li><li>Drop in a folder of raw footage and start shredding.</li>';
     }
 
     // Show the visitor's own platform as the big button, the other platform as a small secondary
@@ -382,13 +398,8 @@
     // latest .dmg/.exe, so this only ever reorders/relabels them, never re-derives the URLs.
     // Phones and tablets can't run the app: no download buttons there, just a pointer to the
     // purchase email, which carries the key plus Mac and Windows download links.
-    var onPhone = isPhoneVisitor();
     if (macDownload) macDownload.hidden = onPhone;
     if (winDownload) winDownload.hidden = onPhone;
-    if (onPhone && successNote) {
-      successNote.textContent = (trial && trial.endsOnText ? 'Your trial runs until ' + trial.endsOnText + ' or 100 clips. ' : '') +
-        "We've emailed you this key and the Mac and Windows download links. Open that email on your computer to install Stock Shredder.";
-    }
     if (macDownload && winDownload && !onPhone) {
       var onWindows = isWindowsVisitor();
       var primary = onWindows ? winDownload : macDownload;
@@ -456,7 +467,7 @@
       })
       .then(function (data) {
         if (data && data.ok && data.customerId && data.planId && data.activationKey) {
-          showSuccess(data.activationKey, data.trial);
+          showSuccess(data.activationKey, data.trial, data.firstName);
           return;
         }
         // SHRED launch trial v2: a repeat-trial detection (email/card already used, or this email
@@ -548,8 +559,7 @@
     frame.classList.add('is-loading');
     panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
 
-    getStripe()
-      .initEmbeddedCheckout({
+    initEmbedded({
         fetchClientSecret: fetchClientSecret,
         onComplete: function () {
           verifySession();
@@ -993,8 +1003,7 @@
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         panel.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
 
-        getStripe()
-          .initEmbeddedCheckout({
+        initEmbedded({
             // Already have the real clientSecret from the pre-flight call above — nothing left
             // to fetch, so this just hands it straight back.
             fetchClientSecret: function () {
