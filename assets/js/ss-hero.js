@@ -18,7 +18,8 @@
   var fig = document.querySelector('[data-iss]'); if (!fig) return;
 
   var MEDIA = '../../assets/img/products/stock-shredder/hero/';
-  var RATIO = 16 / 9;
+  var RATIO = 16 / 9;                                             // the whole frame (and the app window)
+  var CLIP_R = 2.39;                                               // the footage itself: always full widescreen, never cropped
 
   // ---- the wall (archive-wall.json, inlined so the page works from file://) ----
   // WEB-02: same breakpoint as the <link preload media> pair in the page head, so whichever one
@@ -91,7 +92,7 @@
   var SCAN_END = tt, S = SCAN_END + 0.1;
   // SHRED: red cut lines run across the full frame (the last shot) along the 4 x 3 grid, the pieces pull apart
   // into the grid, and each piece is cut over to its own clip by a red line sweeping down it. No dissolves.
-  var COLS = 4, ROWS = 3;
+  var COLS = 3, ROWS = 4;                                          // twelve widescreen tiles fill a 16:9 frame exactly
   T.cut = [S, S + 0.5]; T.part = [S + 0.5, S + 1.1];
   T.reveal0 = S + 0.95; T.revealStep = 0.035; T.revealDur = 0.32;
   T.split = [S, T.reveal0 + LAST * T.revealStep + T.revealDur];
@@ -132,6 +133,7 @@
 
   // ---- labels ----
   function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function pad2(n) { return pad(n); }
   function tc(s) { var f = Math.min(23, Math.floor((s % 1) * 24)); s = Math.floor(s); return pad(Math.floor(s / 60)) + ':' + pad(s % 60) + ':' + pad(f); }
   function playheadAt(t) {
     if (t <= segs[0].t0) return segs[0].p0;
@@ -165,10 +167,13 @@
   }
   // weld-1 cover-cropped into a w x h picture: at rest it is an ordinary tile (no letterbox); during the
   // push its picture opens from the tile's shape to the full 2.39 frame, so it lands on the exact video frame.
-  function drawWeld(c, x, y, w, h) {
-    var src = frameOf(0), iw = src.videoWidth || src.naturalWidth, ih = src.videoHeight || src.naturalHeight; if (!iw) return;
-    var sw = iw, sh = iw * h / w; if (sh > ih) { sh = ih; sw = ih * w / h; }
-    c.drawImage(src, (iw - sw) / 2, (ih - sh) / 2, sw, sh, x, y, w, h);
+  function drawWeld(c, x, y, w, h) { drawWeldOf(c, 0, x, y, w, h); }
+  function drawWeldOf(c, i, x, y, w, h) {
+    var src = frameOf(i), iw = src.videoWidth || src.naturalWidth, ih = src.videoHeight || src.naturalHeight; if (!iw) return;
+    // letterboxed, never cropped: the full widescreen picture across the width, black above and below
+    var ph = Math.min(h, w * ih / iw), pw = ph * iw / ih;
+    c.fillStyle = '#0E0E0D'; c.fillRect(x, y, w, h);
+    c.drawImage(src, x + (w - pw) / 2, y + (h - ph) / 2, pw, ph);
   }
   function size() {
     dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -231,8 +236,8 @@
         // its own 2.39 shape, and at the end of the push that is exactly the full frame.
         var pcx = X0 + w / 2, pcy = Y0 + h / 2;
         var hw = Math.max(pcx - Math.max(X0, 0), Math.min(X0 + w, W) - pcx), hv = Math.max(pcy - Math.max(Y0, 0), Math.min(Y0 + h, H) - pcy);
-        var ph = Math.max(2 * hv, 2 * hw / RATIO), pw = ph * RATIO;
-        ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, w, h); ctx.clip();
+        var pw = 2 * hw, ph = pw / CLIP_R;                         // width-fit: the widescreen picture, black above and below
+        ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, w, h); ctx.clip(); ctx.fillStyle = '#0E0E0D'; ctx.fillRect(X0, Y0, w, h);
         ctx.drawImage(frameOf(0), pcx - pw / 2, pcy - ph / 2, pw, ph);   // the live video itself: no image-to-video swap
         ctx.restore();
         continue;
@@ -246,7 +251,7 @@
   function frameOf(i) { var v = vids[i]; return v.readyState >= 2 ? v : posters[i]; }   // never a black frame
   function drawFull(i, a) {
     if (a <= 0) return;
-    ctx.globalAlpha = a; ctx.drawImage(frameOf(i), 0, 0, W, H); ctx.globalAlpha = 1;
+    ctx.globalAlpha = a; drawWeldOf(ctx, i, 0, 0, W, H); ctx.globalAlpha = 1;
   }
   // A picture cover-cropped into any rect; FOCAL keeps each clip's subject in frame when the rect is narrower.
   function drawCover(i, x, y, w, h) {
@@ -269,7 +274,7 @@
   function appRect(i) {
     var b = appBox(), r = i === LAST ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
     // The player keeps the full widescreen frame: 2.39:1 fitted inside the player, centred, nothing cropped.
-    if (i === LAST) { var pw = Math.min(r[2], r[3] * RATIO), ph = pw / RATIO; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
+    if (i === LAST) { var pw = Math.min(r[2], r[3] * CLIP_R), ph = pw / CLIP_R; r = [r[0] + (r[2] - pw) / 2, r[1] + (r[3] - ph) / 2, pw, ph]; }
     return { x: b.x + r[0] * b.s, y: b.y + r[1] * b.s, w: r[2] * b.s, h: r[3] * b.s };
   }
   function lerpRect(a, b, e) { return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e }; }
@@ -286,7 +291,7 @@
     ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(235,229,216,.92)';
     if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.2) + 'px';
     var y = rc.y + rc.h - pad;
-    ctx.textAlign = 'left'; ctx.fillText('CLIP 0' + (i + 1), rc.x + pad, y);
+    ctx.textAlign = 'left'; ctx.fillText('CLIP ' + pad2(i + 1), rc.x + pad, y);
     if ('letterSpacing' in ctx) ctx.letterSpacing = Math.round(fs * 0.04) + 'px';
     ctx.textAlign = 'right'; ctx.fillText(CAPS[i] + 's', rc.x + rc.w - pad, y);
     ctx.restore();
@@ -318,13 +323,15 @@
   }
 
   // ---- SHRED: cut lines, pieces apart, each piece cut over to its own clip ----
+  var full = document.createElement('canvas'), fctx = full.getContext('2d');
   function drawShred(t) {
-    var src = frameOf(LAST), vw = src.videoWidth || src.naturalWidth, vh = src.videoHeight || src.naturalHeight;
+    if (full.width !== W || full.height !== H) { full.width = W; full.height = H; }
+    drawWeldOf(fctx, LAST, 0, 0, W, H);
     var ep = inOut(seg(t, T.part)), lw = Math.max(1, Math.round(1.5 * dpr)), RED = '#C8584B';
     for (var k = 0; k < N; k++) {
       var c = k % COLS, r = Math.floor(k / COLS), g = gridRect(k);
       var piece = { x: c * W / COLS, y: r * H / ROWS, w: W / COLS, h: H / ROWS }, rc = lerpRect(piece, g, ep);
-      if (vw) ctx.drawImage(src, c * vw / COLS, r * vh / ROWS, vw / COLS, vh / ROWS, rc.x, rc.y, rc.w, rc.h);
+      ctx.drawImage(full, piece.x, piece.y, piece.w, piece.h, rc.x, rc.y, rc.w, rc.h);
       var er = out(seg(t, [T.reveal0 + k * T.revealStep, T.reveal0 + k * T.revealStep + T.revealDur]));
       if (er > 0) {
         var hh = g.h * er;
