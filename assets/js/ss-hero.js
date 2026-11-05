@@ -19,7 +19,7 @@
 
   var MEDIA = '../../assets/img/products/stock-shredder/hero/';
   var RATIO = 16 / 9;                                             // the whole frame (and the app window)
-  var CLIP_R = 2.39;                                               // the footage itself: always full widescreen, never cropped
+  var CLIP_R = 2.39;                                               // the footage's own shape (full frame covers the 16:9; tiles show it whole)
 
   // ---- the wall (archive-wall.json, inlined so the page works from file://) ----
   // WEB-02: same breakpoint as the <link preload media> pair in the page head, so whichever one
@@ -45,8 +45,8 @@
   // quick pass, and settles on the canyon shot (06), which is the frame that gets cut into twelve.
   var TAKE = 202.4, FILE = 'MOTORCYCLE_IN_THE_MOUNTAINS';
   // Twelve shots from the finished film (moto-01..12): the six riding moments, then six from later in the film.
-  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 77.71, 183.0, 186.0, 118.0, 80.0, 126.0, 147.0];   // in-points in the film (s)
-  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 1.15, 2.5, 2.5, 2.5, 2.0, 2.5, 2.0];                  // each shot's length (s)
+  var IN = [72.91, 70.87, 64.49, 68.37, 69.74, 72.90, 183.0, 186.0, 118.0, 80.0, 126.0, 78.95];   // in-points in the film (s)
+  var LENS = [3.74, 1.94, 2.69, 1.27, 1.03, 4.67, 2.5, 2.5, 2.5, 2.0, 2.5, 7.05];                  // each shot's length (s)
   var N = IN.length, LAST = N - 1;
   var SHRED = 5;                                                   // the riding shot that fills the frame and gets cut into twelve
   var PLAYER = LAST;                                               // the clip that lands in the app's player (selected in the capture)
@@ -60,9 +60,9 @@
   var RATE = 1;
   // Full screen shows only the first shot and the last one; the four between are marked on the scan line
   // in a quick pass while the first shot keeps playing.
-  var DWELL = IN.map(function (v, i) { return i === 0 ? 1.6 : i === SHRED ? 0.85 : 0.12; });   // wall-clock time on each moment
+  var DWELL = IN.map(function (v, i) { return i === 0 ? 1.6 : i === SHRED ? 0.7 : 0.12; });   // wall-clock time on each moment
   var SCRUB = 260;                                                 // take-seconds per second between moments
-  var FOCAL = [0.50, 0.68, 0.98, 0.60, 0.70, 0.50, 0.50, 0.58, 0.50, 0.50, 0.50, 0.22];   // where each panel crops its clip (x, 0–1)
+  var FOCAL = [0.50, 0.68, 0.98, 0.60, 0.70, 0.50, 0.50, 0.58, 0.50, 0.50, 0.50, 0.50];   // where each panel crops its clip (x, 0–1)
 
   // ---- variant + timeline (seconds) ----
   var q = new URLSearchParams(location.search);
@@ -172,10 +172,11 @@
   function drawWeld(c, x, y, w, h) { drawWeldOf(c, 0, x, y, w, h); }
   function drawWeldOf(c, i, x, y, w, h) {
     var src = frameOf(i), iw = src.videoWidth || src.naturalWidth, ih = src.videoHeight || src.naturalHeight; if (!iw) return;
-    // letterboxed, never cropped: the full widescreen picture across the width, black above and below
-    var ph = Math.min(h, w * ih / iw), pw = ph * iw / ih;
-    c.fillStyle = '#0E0E0D'; c.fillRect(x, y, w, h);
+    // fills the frame edge to edge (Daniel: no black bars): cover, trimming only the sides
+    var sc = Math.max(w / iw, h / ih), pw = iw * sc, ph = ih * sc;
+    c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip();
     c.drawImage(src, x + (w - pw) / 2, y + (h - ph) / 2, pw, ph);
+    c.restore();
   }
   function size() {
     dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -238,7 +239,7 @@
         // its own 2.39 shape, and at the end of the push that is exactly the full frame.
         var pcx = X0 + w / 2, pcy = Y0 + h / 2;
         var hw = Math.max(pcx - Math.max(X0, 0), Math.min(X0 + w, W) - pcx), hv = Math.max(pcy - Math.max(Y0, 0), Math.min(Y0 + h, H) - pcy);
-        var pw = 2 * hw, ph = pw / CLIP_R;                         // width-fit: the widescreen picture, black above and below
+        var pw = Math.max(2 * hw, 2 * hv * CLIP_R), ph = pw / CLIP_R;   // cover: no black above or below
         ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, w, h); ctx.clip(); ctx.fillStyle = '#0E0E0D'; ctx.fillRect(X0, Y0, w, h);
         ctx.drawImage(frameOf(0), pcx - pw / 2, pcy - ph / 2, pw, ph);   // the live video itself: no image-to-video swap
         ctx.restore();
@@ -270,10 +271,10 @@
   // app-review-169.webp: the Review screen in a 16:9 window (1920 x 1080 CSS) with all twelve clips listed,
   // clip 12 selected. Numbers are in the webp's own pixels (2880 x 1620 = the 2x capture at 0.75).
   var APP_W = 2880, APP_H = 1620, K = 0.75;
-  var APP_PLAYER = [580 * K, 553 * K, 2672 * K, 1119 * K];
+  var APP_PLAYER = [578 * K, 575 * K, 2676 * K, 1121 * K];
   var APP_THUMB_Y = [326, 457, 588, 719, 850, 981, 1112, 1243, 1374, 1505, 1636, 1767].map(function (y) { return y * K; });
   var APP_THUMB = [24 * K, 128 * K, 72 * K];
-  var APP_TRIM = [620 * K, 3214 * K], APP_PH = [1866 * K, 1962 * K];   // trim track x range and the playhead's y span
+  var APP_TRIM = [606 * K, 3226 * K], APP_PH = [1916 * K, 2008 * K];   // trim track x range and the playhead's y span
   function appBox() { var h = H, w = h * APP_W / APP_H; return { x: (W - w) / 2, y: 0, s: h / APP_H, w: w, h: h }; }
   function appRect(i) {
     var b = appBox(), r = i === PLAYER ? APP_PLAYER : [APP_THUMB[0], APP_THUMB_Y[i], APP_THUMB[1], APP_THUMB[2]];
@@ -450,7 +451,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review-169.webp?v=1';
+  app.src = MEDIA + 'app-review-169.webp?v=2';
   var imagesReady = whenImages([sprite].concat(posters));
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
 
