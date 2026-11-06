@@ -711,7 +711,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
       dot.style.top = ((MAP_LAT_TOP - loc.latitude) / (MAP_LAT_TOP - MAP_LAT_BOT) * 100) + '%';
       var size = 5 + (loc.count / maxCount) * 9;
       dot.style.width = size + 'px'; dot.style.height = size + 'px';
-      dot.title = loc.city + ', ' + loc.country;
+      dot.title = loc.city ? loc.city + ', ' + loc.country : loc.country; // the public stats carry no city names
       dotsEl.appendChild(dot);
     });
     section.hidden = false;
