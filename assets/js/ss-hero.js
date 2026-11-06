@@ -334,6 +334,18 @@
   function drawGrid(a, t, skip) {
     if (a <= 0) return;
     var e = inOut(seg(t, T.toApp)), la = out(seg(t, T.labels)) * (1 - clamp01(e * 3));
+    drawAppBg(a, e, t);
+    ctx.globalAlpha = a;
+    for (var i = 0; i < N; i++) {
+      if (i === skip) continue;
+      var rc = e > 0 ? lerpRect(gridRect(i), appRect(i), e) : gridRect(i);
+      drawCover(i, rc.x, rc.y, rc.w, rc.h);
+    }
+    ctx.globalAlpha = 1;
+    if (SPLICE !== 'process') for (var j = 0; j < N; j++) drawLabel(j, gridRect(j), a * la);
+  }
+  // the Review screen behind the clips, faded in by e (its own dark background fills the frame)
+  function drawAppBg(a, e, t) {
     if (e > 0 && app.complete && app.naturalWidth) {
       var b = appBox(), sc = 1 + 0.04 * (1 - e), w = b.w * sc, h = b.h * sc;
       // the app's own dark background fills the whole widescreen frame, so no page shows beside the window
@@ -348,14 +360,6 @@
       ctx.beginPath(); ctx.moveTo(px - 9 * K * ks, oy + APP_PH[0] * ks); ctx.lineTo(px + 9 * K * ks, oy + APP_PH[0] * ks); ctx.lineTo(px, oy + (APP_PH[0] + 13 * K) * ks); ctx.closePath(); ctx.fill();
       ctx.globalAlpha = 1;
     }
-    ctx.globalAlpha = a;
-    for (var i = 0; i < N; i++) {
-      if (i === skip) continue;
-      var rc = e > 0 ? lerpRect(gridRect(i), appRect(i), e) : gridRect(i);
-      drawCover(i, rc.x, rc.y, rc.w, rc.h);
-    }
-    ctx.globalAlpha = 1;
-    for (var j = 0; j < N; j++) drawLabel(j, gridRect(j), a * la);
   }
 
   // ---- SHRED: cut lines, pieces apart, each piece cut over to its own clip ----
@@ -477,13 +481,14 @@
     var travel = 0.05, dwell = 0.12;                               // one steady rhythm, no pauses (Daniel)
     pu += travel; P_EV[k] = { a: pu, b: pu + dwell, j: j }; pu += dwell;
   });
-  var P_LIFT = 0.4, P_END = pu + P_LIFT, P_D = P_END + 0.45;
+  var P_LIFT = 0.4, P_END = pu + P_LIFT, P_D = P_END + 0.9;   // last 0.9 s: the clips fly into the app
   function pStrip() { return { x: W * 0.04, y: H * 0.865, w: W * 0.92, h: H * 0.075 }; }
   function pX(film) { var s = pStrip(); return s.x + s.w * vx(film) / 100; }
   function pSlot(k, open) {                                        // the grid squeezed above the timeline, opening to full frame
     var g = gridRect(k), top = H * 0.03, avail = H * 0.8, sc = avail / H;
     var sq = { x: W * 0.5 + (g.x - W * 0.5) * sc, y: top + g.y * sc, w: g.w * sc, h: g.h * sc };
-    return lerpRect(sq, g, open);
+    // Daniel 2026-11-06: no twelve-up grid; once the last clip is picked they fly straight into the app
+    return lerpRect(sq, appRect(k), open);
   }
   function pPlayhead(u) {
     var prev = { film: VIEW0, at: 0.6 };
@@ -504,6 +509,7 @@
     var fold = out(seg(u, [0, 0.5])), dim = inOut(seg(u, [0.1, 0.6]));
     ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
     if (dim < 1) { ctx.globalAlpha = 1 - dim; ctx.drawImage(full, 0, 0); ctx.globalAlpha = 1; }
+    if (open > 0) drawAppBg(1, open, t);
     // empty slots, waiting
     if (fold > 0 && open < 1) {
       ctx.strokeStyle = 'rgba(235,229,216,' + (0.14 * fold * (1 - open)) + ')'; ctx.lineWidth = Math.max(1, dpr);
@@ -562,7 +568,7 @@
     }
   }
 
-  if (SPLICE === 'process') { T.split = [S, S + P_D]; T.labels = [T.split[1], T.split[1] + 0.45]; T.toApp = [T.split[1] + 2.9, T.split[1] + 3.8]; T.playerIn = T.toApp[0]; T.clipEnd = T.playerIn + LENS[PLAYER]; T.LOOP = T.clipEnd + END_D; if (END === 'fade') T.loopOut = [T.LOOP - 0.6, T.LOOP]; }
+  if (SPLICE === 'process') { T.split = [S, S + P_D]; T.labels = [T.split[1], T.split[1] + 0.001]; T.toApp = [T.split[1] - 0.002, T.split[1] - 0.001]; T.playerIn = S + P_END; T.clipEnd = T.playerIn + LENS[PLAYER]; T.LOOP = T.clipEnd + END_D; if (END === 'fade') T.loopOut = [T.LOOP - 0.6, T.LOOP]; }
 
   // ---- ending options: what happens after the app has played clip 12 to its last frame ----
   var snap = document.createElement('canvas'), snapCtx = snap.getContext('2d');
