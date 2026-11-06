@@ -756,6 +756,19 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .ix-feat { letter-spacing: .12em; gap: 5px; font-size: 10.5px; padding: 12px 0; }
   .ix-explain { min-height: 7.6em; }
 }
+/* phones: the whole app can't be read at phone width, so one tap opens the real recording full screen,
+   turned sideways to use the phone's full length; pinch to zoom from there */
+.ix-full-btn { display: none; }
+@media (max-width: 719px) {
+  .ix-full-btn { display: flex; align-items: center; justify-content: center; gap: 9px; margin: 14px auto 0; padding: 10px 14px; border: 0; background: none; cursor: pointer; font: 500 10.5px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+}
+.ix-full { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: #0E0E0D; overflow: hidden; }
+.ix-full[hidden] { display: none; }
+.ix-full-v { display: block; width: 100vw; height: auto; max-height: 100svh; object-fit: contain; }
+@media (orientation: portrait) {
+  .ix-full-v { position: absolute; left: 50%; top: 50%; width: 100svh; height: 100vw; max-height: none; max-width: none; transform: translate(-50%, -50%) rotate(90deg); }
+}
+.ix-full-x { position: absolute; top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(235,229,216,.35); border-radius: 50%; background: rgba(14,14,13,.6); color: #EBE5D8; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   .ix-spot, .ix-dark, .ix-share, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom, .ix-lift { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }

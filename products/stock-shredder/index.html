@@ -204,6 +204,7 @@
         <canvas class="ix-lift" aria-hidden="true" data-ix-lift></canvas>
         <span class="ix-cursor" aria-hidden="true" data-ix-cursor><svg viewBox="0 0 20 26" width="20" height="26"><path d="M2 1.5v19.2l4.6-4.4 3 7.1 3.3-1.4-3-6.9h6.4z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
       </figure>
+      <button type="button" class="ix-full-btn mono" data-ix-full-open><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/></svg>View full screen</button>
 
       <div class="ix-explain" id="ix-explain" aria-live="polite" data-ix-explain>
         <p class="ix-idle mono" data-ix-idle>Explore the interface.</p>
@@ -218,6 +219,10 @@
       <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-ix-auto>Auto tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>On</span></button></div>
     </div>
   </section>
+  <div class="ix-full" role="dialog" aria-modal="true" aria-label="Stock Shredder Review screen, full screen" hidden data-ix-full>
+    <video class="ix-full-v" muted loop playsinline preload="none" data-ix-full-video></video>
+    <button type="button" class="ix-full-x" aria-label="Close full screen" data-ix-full-close><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14"/></svg></button>
+  </div>
 
   <section class="remote" aria-labelledby="remote-title">
     <h2 class="mono">Stock Shredder Remote</h2>
@@ -618,7 +623,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/checkout.js?v=20261105e"></script>
-<script src="../../assets/js/ss-page.js?v=20261105m"></script>
+<script src="../../assets/js/ss-page.js?v=20261106b"></script>
 <script src="../../assets/js/ss-hero.js?v=20261105n" defer></script>
 <script>
 // The hrefs (and "Version" note) above are the fallback for JS-disabled browsers or a

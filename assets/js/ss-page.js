@@ -666,6 +666,28 @@
       autoStop(); show(-1);
     }, true);
 
+    // ---- phones: "View full screen" opens the recording that is showing (day, night or share), full size ----
+    var fullOpen = tour.querySelector('[data-ix-full-open]'), full = document.querySelector('[data-ix-full]');
+    if (fullOpen && full) {
+      var fullV = full.querySelector('[data-ix-full-video]'), fullX = full.querySelector('[data-ix-full-close]'), fullBack = null;
+      var fullClose = function () {
+        if (full.hidden) return;
+        fullV.pause(); full.hidden = true; document.documentElement.style.overflow = '';
+        if (fullBack) fullBack.focus();
+      };
+      var fullShow = function () {
+        var src = stage.classList.contains('is-share') && shareV ? shareV : stage.classList.contains('is-night') && dark ? dark : screen;
+        var url = src.currentSrc || (src.querySelector('source') || {}).src || src.getAttribute('data-phone');
+        if (fullV.getAttribute('src') !== url) { fullV.setAttribute('src', url); fullV.poster = src.getAttribute('poster') || ''; }
+        fullBack = document.activeElement; full.hidden = false; document.documentElement.style.overflow = 'hidden';
+        if (!reduce) { var p = fullV.play(); if (p && p.catch) p.catch(function () {}); }
+        fullX.focus();
+      };
+      fullOpen.addEventListener('click', function () { autoStop(); show(-1); fullShow(); });
+      fullX.addEventListener('click', fullClose);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fullClose(); });
+    }
+
     // the screen only plays while on screen
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
