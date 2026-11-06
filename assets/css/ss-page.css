@@ -229,7 +229,7 @@ a.spec-plat:hover, a.spec-plat:focus-visible { border-color: var(--ink); backgro
 .speed { width: 100%; max-width: none; border-collapse: collapse; text-align: left; font-variant-numeric: tabular-nums; }
 .speed th { padding: 0 12px 10px 0; font: 500 10.5px/1.3 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); vertical-align: bottom; white-space: nowrap; }
 .speed td { padding: 12px 12px 12px 0; border-top: 1px solid var(--line-2); font-size: 18px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
-.speed td:nth-child(1), .speed td:nth-child(6) { font-weight: 600; color: var(--ink); }
+.speed td:nth-child(1), .speed td:nth-child(7) { font-weight: 600; color: var(--ink); }
 /* one line per edge: the general .spec tr border-top doubled up with the td border (the line is see-through,
    so Safari drew a darker stub under the first column on iPhone). The table's own lines live on the cells. */
 .spec .speed tr { border-top: 0; }
