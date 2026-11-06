@@ -236,6 +236,10 @@ a.spec-plat:hover, a.spec-plat:focus-visible { border-color: var(--ink); backgro
 .spec .speed thead th { border-top: 1px solid var(--line-2); padding-top: 12px; }
 /* the older spec-table phone rule stacks th/td into blocks; this table keeps its rows */
 @media (max-width: 719px) { .spec .speed tr { display: table-row; } .spec .speed th, .spec .speed td { display: table-cell; width: auto; } .spec .speed th { letter-spacing: .08em; padding: 0 8px 10px 0; white-space: normal; } .spec .speed td { font-size: 15px; padding: 12px 8px 12px 0; white-space: nowrap; } .spec .speed th:nth-child(-n+5):not(:nth-child(3)), .spec .speed td:nth-child(-n+5):not(:nth-child(3)) { display: none; } }
+/* Tablets and small laptop windows (720-1179px): the 8-column speed table is ~800px wide and ran
+   off the right edge with the 180px label column beside it (every iPad, audit 2026-11-06). Here
+   its label sits above it, like on phones, and the headers may wrap, so every column stays on screen. */
+@media (min-width: 720px) and (max-width: 1179px) { .spec-row:has(.speed) { grid-template-columns: 1fr; gap: 12px; } .spec .speed th { letter-spacing: .08em; padding: 0 10px 10px 0; white-space: normal; } .spec .speed td { font-size: 16px; padding: 12px 10px 12px 0; } }
 @media (max-width: 719px) { .spec-row { grid-template-columns: 1fr; gap: 12px; } .spec-v:has(.spec-plat) { grid-template-columns: 1fr; } }
 
 /* ---- world map: dots load in ---- */

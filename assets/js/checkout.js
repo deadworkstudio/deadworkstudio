@@ -980,8 +980,13 @@
             showTrialError(data.error || "This trial couldn't be started.");
           } else if (result.status === 429) {
             showTrialError(data.error || 'Too many attempts. Try again in an hour.');
+          } else if (result.status === 400 && data.error) {
+            // A plain refusal of what was typed (e.g. not a real email address) reads fine as is.
+            showTrialError(data.error);
           } else {
-            showTrialError(data.error || "Couldn't start your trial. Please try again.");
+            // Server trouble (5xx, or a broken reply): never show the server's own wording, which
+            // is written for logs, not customers (audit 2026-11-06).
+            showTrialError("Couldn't start your trial. Nothing was charged. Please try again in a minute.");
           }
           return;
         }
@@ -1049,6 +1054,12 @@
       var email = (trialEmailInput.value || '').trim();
       if (!email) {
         showTrialError('Enter your email to start the trial.');
+        trialEmailInput.focus();
+        return;
+      }
+      // Catch an obvious typo here instead of a round trip (the server still checks properly).
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showTrialError('Check your email address. It should look like name@example.com.');
         trialEmailInput.focus();
         return;
       }
