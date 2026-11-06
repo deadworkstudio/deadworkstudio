@@ -274,9 +274,14 @@
     // (phones too now: the lifted feature is drawn from the recording at up to 3x, so it needs the pixels)
     // Phones get their own 2400 px H.264 copy: still sharp when a feature is lifted at 3x, but light
     // enough for a phone to play smoothly (the 4320 px HEVC one stuttered on iPhone).
-    if (tour.getBoundingClientRect().width < 700) {
+    // Phones (Daniel 2026-11-06): the real app filmed at its smallest window (1024 x 768, 4:3), so its text is
+    // about 1.6x bigger on a phone than in the 1650-wide desktop take. Its highlight boxes are data-rects-phone.
+    var PHONE = tour.getBoundingClientRect().width < 700;
+    if (PHONE) {
+      tour.classList.add('is-phone');
       tour.querySelectorAll('video[data-phone]').forEach(function (v) {
         var s = v.querySelector('source'); if (!s) return;
+        if (v.hasAttribute('data-phone-poster')) v.setAttribute('poster', v.getAttribute('data-phone-poster'));
         s.src = v.getAttribute('data-phone'); v.load();
       });
     } else if (tour.getBoundingClientRect().width * (window.devicePixelRatio || 1) > 1000) {
@@ -353,6 +358,7 @@
       { r: [83.52, 9.82, 16.48, 90.18], dx: 70, dy: 0, s0: .96, at: .24 },         // inspector
       { r: [0, 0, 100, 9.82], dx: 0, dy: -40, s0: 1, at: .36 }                      // header
     ];
+    if (PHONE) PIECES = [{ r: [0, 0, 100, 100], dx: 0, dy: 40, s0: .94, at: 0 }];   // the phone take has its own layout: it rises in whole
     // buildT is where scroll says the build should be; buildP glides after it each frame, so a mouse
     // wheel's 100px jumps become one continuous motion instead of a few hard steps.
     var buildP = -1, buildT = -1, buildRaf = 0, buildLast = 0;
@@ -404,8 +410,9 @@
     for (i = 0; i < POOL; i++) rings.push(mk(ringsG, 'ix-ring'));
     var now = null;
     var put = function (r) { for (var k = 0; k < POOL; k++) { var v = r[k]; [holes[k], outs[k], rings[k]].forEach(function (el) { el.setAttribute('x', v[0]); el.setAttribute('y', v[1]); el.setAttribute('width', Math.max(0, v[2])); el.setAttribute('height', Math.max(0, v[3])); el.style.opacity = v[2] > 0.05 ? 1 : 0; }); } };
+    var rectAttr = function (btn) { return btn.getAttribute(PHONE && btn.hasAttribute('data-rects-phone') ? 'data-rects-phone' : 'data-rects'); };
     var rectsFor = function (btn) {
-      var list = btn.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
+      var list = rectAttr(btn).split(';').map(function (t) { return t.split(',').map(Number); });
       var to = []; for (var k = 0; k < POOL; k++) to.push(list[k] ? list[k] : [list[0][0] + list[0][2] / 2, list[0][1] + list[0][3] / 2, 0, 0]);
       return to;
     };
@@ -523,7 +530,7 @@
     var liftDraw = function () {
       liftRaf = 0; if (!liftSrc) return;
       var v = stage.classList.contains('is-night') && dark ? dark : screen;
-      var still = !stage.classList.contains('is-night') && LIFT_IMG[liftFeat];
+      var still = PHONE ? (liftFeat === 0 && LIFT_IMG[0]) : !stage.classList.contains('is-night') && LIFT_IMG[liftFeat];
       if (still && !(still.complete && still.naturalWidth)) still = null;
       if (still || (v.readyState >= 2 && v.videoWidth)) {
         var r = liftSrc, W = liftC.width, H = liftC.height;
@@ -531,7 +538,7 @@
         liftX.imageSmoothingQuality = 'high';
         if (still) liftX.drawImage(still, 0, 0, W, H);
         else liftX.drawImage(v, r[0] / 100 * v.videoWidth, r[1] / 100 * v.videoHeight, r[2] / 100 * v.videoWidth, r[3] / 100 * v.videoHeight, 0, 0, W, H);
-        var sc = SCRIPTS[liftFeat], t = (performance.now() - liftAt) / 1000 - 0.75, cur = null;
+        var sc = PHONE ? null : SCRIPTS[liftFeat], t = (performance.now() - liftAt) / 1000 - 0.75, cur = null;
         if (sc && !reduce && t >= 0) {
           t = t % sc.len;
           var d = kit(liftX, r);
@@ -566,7 +573,7 @@
         setTimeout(function () { if (!liftC.classList.contains('is-on')) { liftSrc = null; cancelAnimationFrame(liftRaf); liftRaf = 0; } }, 560);
         return;
       }
-      var list = btn.getAttribute('data-rects').split(';').map(function (t) { return t.split(',').map(Number); });
+      var list = rectAttr(btn).split(';').map(function (t) { return t.split(',').map(Number); });
       var x0 = Math.min.apply(null, list.map(function (r) { return r[0]; })), y0 = Math.min.apply(null, list.map(function (r) { return r[1]; }));
       var x1 = Math.max.apply(null, list.map(function (r) { return r[0] + r[2]; })), y1 = Math.max.apply(null, list.map(function (r) { return r[1] + r[3]; }));
       // breathing room around the controls (the same margin on every side, on screen)

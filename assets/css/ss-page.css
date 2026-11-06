@@ -760,6 +760,9 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
   .ix-feat { letter-spacing: .12em; gap: 5px; font-size: 10.5px; padding: 12px 0; }
   .ix-explain { min-height: 7.6em; }
 }
+/* phones play the real app at its smallest window (4:3), so its text is bigger; the Share take stays 3:2, letterboxed */
+.ix-tour.is-phone .ix-screen { aspect-ratio: 4 / 3; }
+.ix-tour.is-phone .ix-share { object-fit: contain; background: #EBE5D8; }
 @media (prefers-reduced-motion: reduce) {
   .ix-spot, .ix-dark, .ix-share, .ix-feat, .ix-feat span, .ix-feat::after, .ix-idle, .ix-panel, .ix-zoom, .ix-lift { transition: none !important; }
   .ix-stage.is-scrub { opacity: 1; transform: none; }
