@@ -855,6 +855,10 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 // message below says "pending," not "posted."
 (function () {
   var REVIEWS_URL = 'https://stock-shredder-payments.stockshredder.workers.dev/reviews';
+  // Daniel 2026-11-06: no reviews on the page until there are at least 10 approved ones to show.
+  // Below that the whole section (count, average, cards) stays hidden. The "Leave a review" form
+  // further down keeps working, so reviews keep coming in and appear once the 10th is approved.
+  var MIN_REVIEWS_TO_SHOW = 10;
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function escapeHtml(str) {
@@ -870,7 +874,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
       var emptyEl = document.querySelector('[data-reviews-empty]');
       var countEl = document.querySelector('[data-reviews-count]');
       if (!listEl || !emptyEl) return;
-      if (!reviews || !reviews.length) {
+      if (!reviews || reviews.length < MIN_REVIEWS_TO_SHOW) {
         return;
       }
       if (countEl) {
