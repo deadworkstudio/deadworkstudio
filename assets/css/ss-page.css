@@ -501,6 +501,7 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .trial-offer-form input { flex: 1 1 240px; min-width: 0; padding: 13px 14px; border: 1px solid var(--line-2); border-radius: 6px; background: #FBF9F5; font: 16px/1.4 var(--sans); color: var(--ink); }
 /* The auto-renew disclosure (§8.1) - deliberately full-size body text, not small-print grey. */
 .trial-offer-disclosure { margin-top: 16px; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.trial-offer-disclosure.trial-offer-reminder { margin-top: 8px; font-size: 12.5px; opacity: .68; }
 .trial-offer-status { margin-top: 10px; font-size: 13px; color: var(--ink-3); min-height: 1em; }
 .trial-offer-error { margin-top: 12px; color: #A3241D; }
 /* "Already started a trial? Email me my plan link" - a quiet second path under the disclosure,
