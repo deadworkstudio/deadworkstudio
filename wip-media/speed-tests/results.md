@@ -30,11 +30,11 @@ Raw logs: T5 `STOCK_SHREDDER_TESTS/sony-1000-2026-11-05/` (run.log, state.json, 
 
 | Finished clips | Clips in (sources) | Shredded in | Export time | Total |
 |---|---|---|---|---|
-| 100 | 39 | 8.0 min | 8.4 min | **16.5 min** |
-| 500 | 184 | 29.7 min | 49.0 min | **1 h 19 min** |
+| 100 | 39 (125 moments found by then) | 8.0 min | 8.4 min | **16.5 min** |
+| 500 | 184 (501 moments) | 29.7 min | 49.0 min | **1 h 19 min** |
 | 1,000 (all 588 sources imported) | 588 (1,479 moments) | 86.7 min | 94.4 min | **3 h 01 min** |
-| 1,000 (only the 411 sources those clips came from) | 411 | 62.5 min | 94.4 min | **2 h 37 min** |
+| 1,000 (only the 411 sources those clips came from) | 411 (1,011 moments by the 416-file batch) | 62.5 min | 94.4 min | **2 h 37 min** |
 
 - **1,000 exported, 1,000 verified 3840x2160 ProRes 422 HQ graded, 0 failed.** 1.03 TB written.
-- All 205 clips from the "Cam A" / "Cam a" / "CAM A" card folders landed in one folder (`CAM A`), with no lost files: the bug that cost 24 clips in the first run is gone.
+- Clips from the three Cam A card spellings: Cam a 124, CAM A 56, Cam A 25 = 205; all 205 landed in one folder (`CAM A`), with no lost files: the bug that cost 24 clips in the first run is gone.
 - Export ran a bit slower than the first run (94.4 vs 82.4 min), and the "import everything" total is 3 h 01 min: comfortably **under 4 hours**, just over 3.
