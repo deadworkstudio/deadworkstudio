@@ -23,3 +23,18 @@
 All 24 said "Stock Shredder can't save to this folder right now." That message is the app's wording for an ENOENT error while the export folder still exists: the finished `.partial.mov` file was missing when the app went to rename it to its final name. First failure came after ~460 good clips. The drive stayed connected and had 497+ GB free throughout. Likely causes to check: the leftover-`.partial` cleanup racing with the second export running alongside it, or the test removing finished files as it went. Worth a follow-up fix before a customer hits it on a big batch.
 
 Raw logs: T5 `STOCK_SHREDDER_TESTS/sony-1000-2026-11-05/` (run.log, state.json, source-files.txt, machine-and-start.txt).
+
+## Rerun on the fix — 1,000 of 1,000, 0 failures (Nov 6)
+
+**Engine:** stock-shredder fix/luxury-polish-0622 @ fd68dff (PR #17, the case-insensitive export-folder fix). Same Mac, same 588 sources, same settings, fresh test folder `STOCK_SHREDDER_TESTS/sony-1000-fix-2026-11-06`. Started 05:57 UTC, finished ~09:00 UTC. Only Finder and Claude open.
+
+| Finished clips | Clips in (sources) | Shredded in | Export time | Total |
+|---|---|---|---|---|
+| 100 | 39 | 8.0 min | 8.4 min | **16.5 min** |
+| 500 | 184 | 29.7 min | 49.0 min | **1 h 19 min** |
+| 1,000 (all 588 sources imported) | 588 (1,479 moments) | 86.7 min | 94.4 min | **3 h 01 min** |
+| 1,000 (only the 411 sources those clips came from) | 411 | 62.5 min | 94.4 min | **2 h 37 min** |
+
+- **1,000 exported, 1,000 verified 3840x2160 ProRes 422 HQ graded, 0 failed.** 1.03 TB written.
+- All 205 clips from the "Cam A" / "Cam a" / "CAM A" card folders landed in one folder (`CAM A`), with no lost files: the bug that cost 24 clips in the first run is gone.
+- Export ran a bit slower than the first run (94.4 vs 82.4 min), and the "import everything" total is 3 h 01 min: comfortably **under 4 hours**, just over 3.
