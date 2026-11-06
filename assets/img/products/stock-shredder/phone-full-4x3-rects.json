@@ -1,0 +1,12 @@
+{
+ "frame": [1800, 1350],
+ "window_css": [1024, 768],
+ "units": "percent of the 4:3 frame, [x, y, w, h]",
+ "shortcuts": null,
+ "shortcuts_note": "The A/D/B shortcut list sits below the fold of the settings panel at this window size, so it is not visible in this video.",
+ "trim": [29.2, 65.49, 41.21, 25.26],
+ "export": [74.34, 15.84, 24.07, 29.07],
+ "looks": [74.34, 54.55, 24.07, 16.32],
+ "finetune": [74.34, 71.33, 24.07, 18.68],
+ "daynight": [93.75, 3.03, 3.91, 5.21]
+}
