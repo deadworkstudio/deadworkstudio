@@ -229,13 +229,13 @@ a.spec-plat:hover, a.spec-plat:focus-visible { border-color: var(--ink); backgro
 .speed { width: 100%; max-width: none; border-collapse: collapse; text-align: left; font-variant-numeric: tabular-nums; }
 .speed th { padding: 0 12px 10px 0; font: 500 10.5px/1.3 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); vertical-align: bottom; white-space: nowrap; }
 .speed td { padding: 12px 12px 12px 0; border-top: 1px solid var(--line-2); font-size: 18px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
-.speed td:nth-child(1), .speed td:nth-child(2) { font-weight: 600; color: var(--ink); }
+.speed td:nth-child(1), .speed td:nth-child(6) { font-weight: 600; color: var(--ink); }
 /* one line per edge: the general .spec tr border-top doubled up with the td border (the line is see-through,
    so Safari drew a darker stub under the first column on iPhone). The table's own lines live on the cells. */
 .spec .speed tr { border-top: 0; }
 .spec .speed thead th { border-top: 1px solid var(--line-2); padding-top: 12px; }
 /* the older spec-table phone rule stacks th/td into blocks; this table keeps its rows */
-@media (max-width: 719px) { .spec .speed tr { display: table-row; } .spec .speed th, .spec .speed td { display: table-cell; width: auto; } .spec .speed th { letter-spacing: .08em; padding: 0 8px 10px 0; white-space: normal; } .spec .speed td { font-size: 15px; padding: 12px 8px 12px 0; white-space: nowrap; } .spec .speed th:nth-child(n+4), .spec .speed td:nth-child(n+4) { display: none; } }
+@media (max-width: 719px) { .spec .speed tr { display: table-row; } .spec .speed th, .spec .speed td { display: table-cell; width: auto; } .spec .speed th { letter-spacing: .08em; padding: 0 8px 10px 0; white-space: normal; } .spec .speed td { font-size: 15px; padding: 12px 8px 12px 0; white-space: nowrap; } .spec .speed th:nth-child(-n+5):not(:first-child), .spec .speed td:nth-child(-n+5):not(:first-child) { display: none; } }
 @media (max-width: 719px) { .spec-row { grid-template-columns: 1fr; gap: 12px; } .spec-v:has(.spec-plat) { grid-template-columns: 1fr; } }
 
 /* ---- world map: dots load in ---- */
