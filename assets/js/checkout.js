@@ -53,8 +53,8 @@
   // the terms paragraph under the grid and the text Stripe shows above its Subscribe button.
   var TERM_NOTE = {
     month: '<strong>Billed monthly.</strong> Cancel anytime. No fee.',
-    m6: '<strong>Billed monthly for 6 months.</strong> 10% off every payment. Can\'t be canceled early. Renews for another 6 months unless you turn off auto-renew.',
-    m12: '<strong>Billed monthly for 12 months.</strong> 15% off every payment. Can\'t be canceled early. Renews for another 12 months unless you turn off auto-renew.'
+    m6: '<strong>Billed monthly for 6 months.</strong> 10% off every payment. Can\'t be canceled early. After that it continues month to month at the same price, cancel anytime.',
+    m12: '<strong>Billed monthly for 12 months.</strong> 15% off every payment. Can\'t be canceled early. After that it continues month to month at the same price, cancel anytime.'
   };
   function usd(cents) {
     var whole = Math.floor(cents / 100);
