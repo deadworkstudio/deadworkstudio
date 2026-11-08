@@ -9,6 +9,16 @@ SS="$BASE/stock-shredder/worker"
 HQ="$BASE/deadworkstudio/deadwork-hq"
 EXPECTED_LIVE="583f5a68"
 
+echo "== Getting the new code into $BASE (your other folders are not touched)"
+if [ -e "$BASE" ]; then echo "STOP: $BASE already exists. Nothing was changed. Tell Claude."; exit 1; fi
+mkdir -p "$BASE"
+cd "$BASE"
+git clone -q --depth 1 -b feat/one-daily-email https://github.com/deadworkstudio/stock-shredder stock-shredder
+git clone -q --depth 1 -b feat/one-daily-email https://github.com/deadworkstudio/deadworkstudio deadworkstudio
+(cd "$SS" && npm ci --silent && npx tsc --noEmit)
+(cd "$HQ" && npm ci --silent && npx tsc --noEmit)
+echo "Code ready."
+
 echo "== Checking the live payments system is still $EXPECTED_LIVE"
 cd "$SS"
 LIVE=$(npx wrangler deployments status 2>/dev/null | grep '%' | grep -Eo '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | head -1)
