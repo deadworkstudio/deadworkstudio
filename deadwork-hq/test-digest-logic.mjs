@@ -66,6 +66,7 @@ check('quiet-day subject says so plainly', quietDay?.subject === 'DEADWORK HQ da
 check('quiet-day body shows the paying-customer goal', quietDay?.text.includes('Paying customers now: 0 of 100'), quietDay?.text)
 const ssBusy = {
   sales: { headline: '2 new trials, 1 payment ($69)', lines: ['New SHRED trials: 2', 'Payments: 1, $69'], details: ['Jane <b>Doe</b>, Creator, $69'] },
+  website: { lines: ['Visitors: 120 (310 page visits)', 'From social media: 40 (Instagram 31, YouTube 9)'], sources: ['Instagram: 31', 'Direct: 30'] },
   updates: { text: 'Security alerts (possible sharing or cheating):\n  - x', html: '<p><strong>Security alerts (possible sharing or cheating):</strong></p><ul><li>x</li></ul>' }
 }
 const busy = buildCombinedDigest(buildDigestSummary([{ product: 'loadout' }], labels), ssBusy)
@@ -74,6 +75,7 @@ check('who paid is listed', busy?.text.includes('Who paid:') && busy?.text.inclu
 check('names are escaped in the html', busy?.html.includes('Jane &lt;b&gt;Doe&lt;/b&gt;') && !busy?.html.includes('<b>Doe'), busy?.html)
 check('Stock Shredder alerts carried over', busy?.text.includes('Security alerts'), busy?.text)
 check('site signups still broken down by product', busy?.text.includes('Website signups') && busy?.text.includes(': 1'), busy?.text)
+check('website visitors and social media shown', busy?.text.includes('Website (last 24 hours)') && busy?.text.includes('Instagram 31') && busy?.text.includes('Where visitors came from:'), busy?.text)
 const signupsOnly = buildCombinedDigest(buildDigestSummary([{ product: 'loadout' }], labels), null)
 check('if Stock Shredder cannot be reached, the signups email still goes out', signupsOnly?.subject === 'DEADWORK HQ daily digest — 1 new signup', signupsOnly?.subject)
 

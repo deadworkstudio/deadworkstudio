@@ -49,6 +49,8 @@ export function buildDigestSummary(newSignups: SignupLike[], productLabels: Reco
 export interface StockShredderDaily {
   sales: { headline: string; lines: string[]; details: string[] }
   updates: { text: string; html: string } | null
+  /** Site visits from the payments Worker's own visit log (Daniel 2026-11-08: page views + social). */
+  website?: { lines: string[]; sources: string[] } | null
 }
 
 function esc(text: string): string {
@@ -73,6 +75,14 @@ export function buildCombinedDigest(signups: DigestSummary | null, ss: StockShre
     if (ss.sales.details.length) {
       text.push('', 'Who paid:', ...ss.sales.details.map((d) => `  - ${d}`))
       html.push(`<p><strong>Who paid:</strong></p><ul>${ss.sales.details.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>`)
+    }
+    if (ss.website?.lines?.length) {
+      text.push('', 'Website (last 24 hours)', ...ss.website.lines.map((l) => `  ${l}`))
+      html.push(`<p><strong>Website</strong> (last 24 hours)</p><ul>${ss.website.lines.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>`)
+      if (ss.website.sources.length) {
+        text.push('', 'Where visitors came from:', ...ss.website.sources.map((l) => `  - ${l}`))
+        html.push(`<p><strong>Where visitors came from:</strong></p><ul>${ss.website.sources.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>`)
+      }
     }
     if (ss.updates) {
       text.push('', ss.updates.text)
