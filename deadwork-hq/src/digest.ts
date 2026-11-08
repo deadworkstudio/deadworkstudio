@@ -13,7 +13,7 @@
 
 import { listSignups, PRODUCT_LABELS, type Env } from './index'
 import { sendMail, EMAIL_LOGO_FOOTER } from './mailer'
-import { buildDigestSummary, type DigestSummary } from './digestSummary'
+import { buildDigestSummary, buildCombinedDigest, type DigestSummary, type StockShredderDaily } from './digestSummary'
 
 const DIGEST_LAST_SENT_KV_KEY = 'digest:last-sent-at'
 const DIGEST_RECIPIENT = 'deadworkstudio@gmail.com'
@@ -30,6 +30,8 @@ export interface DigestRunResult {
   hadNewActivity: boolean
   emailSent: boolean
   summary?: DigestSummary
+  /** True when Stock Shredder's part made it into the email. */
+  stockShredder?: boolean
 }
 
 /** The actual Cron Trigger handler's work (see index.ts's scheduled() export), plus a test-only
@@ -46,7 +48,9 @@ export async function runDailyDigest(env: Env, now: number = Date.now()): Promis
   const newSignups = signups.filter((s) => s.createdAt >= since)
 
   const summary = buildDigestSummary(newSignups, PRODUCT_LABELS)
-  if (!summary) return { hadNewActivity: false, emailSent: false }
+  const stockShredder = await fetchStockShredderDaily(env)
+  const email = buildCombinedDigest(summary, stockShredder)
+  if (!email) return { hadNewActivity: false, emailSent: false }
 
   // The watermark advances as soon as we've decided there's something to report — BEFORE
   // attempting the send — same ordering footage-curator/worker's own /report-issue (and its own
@@ -58,11 +62,34 @@ export async function runDailyDigest(env: Env, now: number = Date.now()): Promis
 
   let emailSent = false
   try {
-    await sendMail(env, { to: DIGEST_RECIPIENT, subject: summary.subject, text: summary.text, html: `${summary.html}${EMAIL_LOGO_FOOTER}` })
+    await sendMail(env, { to: DIGEST_RECIPIENT, subject: email.subject, text: email.text, html: `${email.html}${EMAIL_LOGO_FOOTER}` })
     emailSent = true
   } catch (err) {
     console.log('runDailyDigest: sendMail threw', err instanceof Error ? err.message : String(err))
   }
 
-  return { hadNewActivity: true, emailSent, summary }
+  return { hadNewActivity: true, emailSent, summary: summary ?? undefined, stockShredder: stockShredder !== null }
+}
+
+/** Daniel (2026-11-08): one morning email. Pulls Stock Shredder's daily numbers and alerts from the
+ *  payments Worker (service binding SS_PAYMENTS, token SS_DIGEST_TOKEN). Any failure returns null,
+ *  so the email still goes out with what this Worker has; the payments Worker keeps its own
+ *  alerts for the next pull, so nothing is lost. */
+async function fetchStockShredderDaily(env: Env): Promise<StockShredderDaily | null> {
+  if (!env.SS_PAYMENTS || !env.SS_DIGEST_TOKEN) return null
+  try {
+    const res = await env.SS_PAYMENTS.fetch('https://stock-shredder-payments/internal/daily-digest', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.SS_DIGEST_TOKEN}` }
+    })
+    if (!res.ok) {
+      console.log('fetchStockShredderDaily: status', res.status)
+      return null
+    }
+    const body = (await res.json()) as StockShredderDaily
+    return body?.sales ? body : null
+  } catch (err) {
+    console.log('fetchStockShredderDaily threw', err instanceof Error ? err.message : String(err))
+    return null
+  }
 }

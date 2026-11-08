@@ -30,7 +30,7 @@ await build({
   outfile: outFile,
   logLevel: 'error'
 })
-const { buildDigestSummary } = await import(pathToFileURL(outFile).href)
+const { buildDigestSummary, buildCombinedDigest } = await import(pathToFileURL(outFile).href)
 
 const labels = { loadout: 'Loadout', 'stock-shredder': 'Stock Shredder', general: 'General (Join page)' }
 
@@ -56,5 +56,25 @@ check('the subject line pluralizes correctly for more than one', mixed?.subject.
 
 const unknownProduct = buildDigestSummary([{ product: 'some-future-product' }], labels)
 check('a product with no known label still shows up, falling back to the raw slug', unknownProduct?.text.includes('some-future-product:'), unknownProduct?.text)
+
+// One morning email (Daniel 2026-11-08): site signups + Stock Shredder's trials, sales and alerts.
+const ssQuiet = { sales: { headline: '0 new trials, 0 payments', lines: ['New SHRED trials: 0', 'Payments: 0', 'Paying customers now: 0 of 100'], details: [] }, updates: null }
+check('nothing anywhere and no Stock Shredder part still means no email', buildCombinedDigest(null, null) === null)
+const quietDay = buildCombinedDigest(null, ssQuiet)
+check('a quiet day with Stock Shredder numbers still sends one email', quietDay !== null)
+check('quiet-day subject says so plainly', quietDay?.subject === 'DEADWORK HQ daily digest — 0 new signups · 0 new trials, 0 payments', quietDay?.subject)
+check('quiet-day body shows the paying-customer goal', quietDay?.text.includes('Paying customers now: 0 of 100'), quietDay?.text)
+const ssBusy = {
+  sales: { headline: '2 new trials, 1 payment ($69)', lines: ['New SHRED trials: 2', 'Payments: 1, $69'], details: ['Jane <b>Doe</b>, Creator, $69'] },
+  updates: { text: 'Security alerts (possible sharing or cheating):\n  - x', html: '<p><strong>Security alerts (possible sharing or cheating):</strong></p><ul><li>x</li></ul>' }
+}
+const busy = buildCombinedDigest(buildDigestSummary([{ product: 'loadout' }], labels), ssBusy)
+check('busy-day subject has signups and sales', busy?.subject === 'DEADWORK HQ daily digest — 1 new signup · 2 new trials, 1 payment ($69)', busy?.subject)
+check('who paid is listed', busy?.text.includes('Who paid:') && busy?.text.includes('Creator, $69'), busy?.text)
+check('names are escaped in the html', busy?.html.includes('Jane &lt;b&gt;Doe&lt;/b&gt;') && !busy?.html.includes('<b>Doe'), busy?.html)
+check('Stock Shredder alerts carried over', busy?.text.includes('Security alerts'), busy?.text)
+check('site signups still broken down by product', busy?.text.includes('Website signups') && busy?.text.includes(': 1'), busy?.text)
+const signupsOnly = buildCombinedDigest(buildDigestSummary([{ product: 'loadout' }], labels), null)
+check('if Stock Shredder cannot be reached, the signups email still goes out', signupsOnly?.subject === 'DEADWORK HQ daily digest — 1 new signup', signupsOnly?.subject)
 
 if (failed > 0) process.exit(1)

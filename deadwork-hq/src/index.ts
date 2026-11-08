@@ -51,6 +51,11 @@ export interface Env {
    *  independent of each other, same reasoning as syncToKit above). */
   GMAIL_USER?: string
   GMAIL_APP_PASSWORD?: string
+  /** Service binding to the stock-shredder-payments Worker (wrangler.toml [[services]]), so the
+   *  morning email can carry Stock Shredder's trials, sales and alerts (Daniel 2026-11-08). */
+  SS_PAYMENTS?: Fetcher
+  /** `wrangler secret put SS_DIGEST_TOKEN`: same value as DIGEST_TOKEN on stock-shredder-payments. */
+  SS_DIGEST_TOKEN?: string
 }
 
 const CORS_HEADERS: Record<string, string> = {

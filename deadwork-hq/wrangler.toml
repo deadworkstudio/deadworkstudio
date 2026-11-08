@@ -26,3 +26,10 @@ migrations_dir = "migrations"
 # `wrangler secret put` before it can actually send mail — see Env's own doc comment in index.ts.
 [triggers]
 crons = ["0 14 * * *"]
+
+# One morning email (Daniel 2026-11-08): the digest above also carries Stock Shredder's daily
+# trials, sales and alerts, pulled from the payments Worker's /internal/daily-digest route.
+# Needs `wrangler secret put SS_DIGEST_TOKEN` (same value as DIGEST_TOKEN on that Worker).
+[[services]]
+binding = "SS_PAYMENTS"
+service = "stock-shredder-payments"
