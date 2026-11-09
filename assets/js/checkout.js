@@ -14,11 +14,16 @@
     STRIPE_PUBLISHABLE_KEY = 'pk_test_51UIwxREHfnNaW3GQ913S4kWMAxlgqjxZXMHiKrQYgJ7xK2GtFWkMknQum3EI2BID71pORSQGtQPOFM7QPY0CtLjS00JsMgXnmj';
   }
 
+  // THE one table for Stock Shredder's plans on this site (2026-11-09 pre-launch fix). Every price,
+  // clip count, saving and cost per clip on the page is worked out from it when the page loads, so
+  // nothing typed into the HTML can drift. Must match the payment Worker (worker/src/billing.ts
+  // BASE_MONTHLY_CENTS + DISCOUNT_PERCENT, worker/src/index.ts FINAL_PLAN_CLIPS); the Worker's
+  // test-site-numbers.mjs fails if they ever differ. The Worker charges its own copy, never these.
   var PLANS = {
-    starter: { name: 'Starter', price: 25 },
-    creator: { name: 'Creator', price: 50 },
-    pro: { name: 'Pro', price: 100 },
-    studio: { name: 'Studio', price: 200 }
+    starter: { name: 'Starter', baseCents: 2900, clips: 250 },
+    creator: { name: 'Creator', baseCents: 6900, clips: 600 },
+    pro: { name: 'Pro', baseCents: 12900, clips: 1200 },
+    studio: { name: 'Studio', baseCents: 19900, clips: 2000 }
   };
 
   var grid = document.querySelector('[data-pricing-grid]');
@@ -35,16 +40,17 @@
   // Owner's launch table (2026-11-03): one base monthly price per plan; 6 months is 10% off and
   // 12 months is 15% off, both still billed monthly. Every shown price is derived from these, never
   // typed in by hand. Must match the payment Worker's worker/src/billing.ts (it charges its own copy).
-  var BASE_CENTS = { starter: 2900, creator: 6900, pro: 12900, studio: 19900 };
-  var DISCOUNT = { month: 0, m6: 0.10, m12: 0.15 };
+  // Percent off each payment, same as the Worker's DISCOUNT_PERCENT (whole numbers, so the
+  // rounding matches the Worker's Math.round(base * (100 - pct) / 100) to the cent).
+  var DISCOUNT_PERCENT = { month: 0, m6: 10, m12: 15 };
   var CENTS = {};
-  Object.keys(BASE_CENTS).forEach(function (plan) {
+  Object.keys(PLANS).forEach(function (plan) {
     CENTS[plan] = {};
-    Object.keys(DISCOUNT).forEach(function (opt) {
-      CENTS[plan][opt] = Math.round(BASE_CENTS[plan] * (1 - DISCOUNT[opt]));
+    Object.keys(DISCOUNT_PERCENT).forEach(function (opt) {
+      CENTS[plan][opt] = Math.round((PLANS[plan].baseCents * (100 - DISCOUNT_PERCENT[opt])) / 100);
     });
   });
-  // Cost per clip in cents, two places: 11.60¢, 7.16¢.
+  // Cost per clip in cents, two places: 11.60¢, 8.46¢.
   function perClipText(cents, clips) {
     return (cents / clips).toFixed(2) + '\u00a2 / clip';
   }
@@ -130,10 +136,12 @@
       // Clips are always shown as the monthly figure, whatever the option — a yearly total
       // (e.g. "2,400 clips / yr") read like the whole year's worth lands upfront, which
       // contradicts the "clips reset on the 1st" note. Cost-per-clip DOES follow the option.
-      if (clipsEl && perClipEl) {
-        var monthlyClips = Number(clipsEl.getAttribute('data-clips-monthly'));
-        perClipEl.textContent = perClipText(perMonth, monthlyClips);
+      var monthlyClips = PLANS[plan].clips;
+      if (clipsEl) {
+        clipsEl.setAttribute('data-clips-monthly', String(monthlyClips));
+        clipsEl.textContent = monthlyClips.toLocaleString('en-US') + ' clips / mo';
       }
+      if (perClipEl) perClipEl.textContent = perClipText(perMonth, monthlyClips);
     });
   }
 
@@ -631,10 +639,7 @@
   function fillBrandedSummary(planId) {
     var plan = PLANS[planId];
     var cents = CENTS[planId][currentPlanInterval];
-    var card = grid.querySelector('[data-plan-button="' + planId + '"]');
-    card = card && card.closest('.pricing-card');
-    var clipsEl = card && card.querySelector('.pricing-clips');
-    var clips = clipsEl ? Number(clipsEl.getAttribute('data-clips-monthly')) : 0;
+    var clips = plan ? plan.clips : 0;
     if (bcoPlan) bcoPlan.textContent = plan.name;
     if (bcoPrice) bcoPrice.textContent = usd(cents);
     if (bcoBill) {
