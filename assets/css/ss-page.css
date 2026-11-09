@@ -857,3 +857,9 @@ main > section.pp-feats { min-height: 0 !important; }
   .pp-feat-grid { grid-template-columns: 1fr; }
   .pp-feat-grid li:not(:nth-child(3n + 1)) { border-left: 0; }
 }
+
+/* Same 1,000 clips: speed video, wide on desktop, tall on phones */
+main > section.clock { min-height: 0 !important; padding: 0 !important; background: #0b0b0a; border-top-color: transparent; display: flex; justify-content: center; }
+.clock-video { display: block; width: 100%; max-width: 1920px; height: auto; background: #0b0b0a; }
+.clock-tall { display: none; }
+@media (max-width: 700px) { .clock-wide { display: none; } .clock-tall { display: block; max-height: 100svh; width: auto; max-width: 100%; } }
