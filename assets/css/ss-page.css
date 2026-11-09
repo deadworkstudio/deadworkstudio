@@ -306,6 +306,10 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .step-t { font: 600 11px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
 .step-d { font-size: 14px; color: var(--ink-2); }
 
+/* ---- auto-naming line ---- */
+main > section.naming { min-height: 0 !important; padding-top: clamp(56px, 8vh, 88px) !important; padding-bottom: clamp(56px, 8vh, 88px) !important; }
+.naming .section-sub { max-width: 52ch; margin-left: auto; margin-right: auto; }
+
 /* ---- Stock Shredder Remote: real app screen in a drawn phone frame ---- */
 .remote .section-sub { max-width: 52ch; margin-left: auto; margin-right: auto; }
 .phone { width: min(300px, 74vw); margin: 44px auto 0; }
