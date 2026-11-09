@@ -476,12 +476,13 @@
   // The first three are taken at reading speed, then it speeds up like an editor in rhythm. Then the
   // timeline drops away and the twelve open to full frame.
   var P_ORDER = IN.map(function (v, i) { return i; }).sort(function (a, b) { return IN[a] - IN[b] || a - b; });
-  var P_EV = [], pu = 0.6;
+  // Daniel 2026-11-09: no empty-grid beat; the first cut starts as the timeline draws in, and each clip lands faster.
+  var P_START = 0.2, P_EV = [], pu = P_START;
   P_ORDER.forEach(function (k, j) {
     var travel = 0.05, dwell = 0.12;                               // one steady rhythm, no pauses (Daniel)
     pu += travel; P_EV[k] = { a: pu, b: pu + dwell, j: j }; pu += dwell;
   });
-  var P_LIFT = 0.4, P_END = pu + P_LIFT, P_D = P_END + 0.9;   // last 0.9 s: the clips fly into the app
+  var P_LIFT = 0.28, P_END = pu + P_LIFT, P_D = P_END + 0.9;   // last 0.9 s: the clips fly into the app
   function pStrip() { return { x: W * 0.04, y: H * 0.865, w: W * 0.92, h: H * 0.075 }; }
   function pX(film) { var s = pStrip(); return s.x + s.w * vx(film) / 100; }
   function pSlot(k, open) {                                        // the grid squeezed above the timeline, opening to full frame
@@ -491,7 +492,7 @@
     return lerpRect(sq, appRect(k), open);
   }
   function pPlayhead(u) {
-    var prev = { film: VIEW0, at: 0.6 };
+    var prev = { film: VIEW0, at: P_START };
     for (var j = 0; j < P_ORDER.length; j++) {
       var k = P_ORDER[j], ev = P_EV[k];
       if (u < ev.a) return prev.film + (IN[k] - prev.film) * clamp01((u - prev.at) / (ev.a - prev.at));
@@ -506,7 +507,7 @@
     var u = t - S, st = pStrip(), k, j;
     var open = inOut(seg(u, [P_END, P_D])), stripA = 1 - inOut(seg(u, [P_END - 0.1, P_END + 0.3]));
     // no fold: the take keeps playing where it is and dims back while the timeline draws in under it
-    var fold = out(seg(u, [0, 0.5])), dim = inOut(seg(u, [0.1, 0.6]));
+    var fold = out(seg(u, [0, 0.3])), dim = inOut(seg(u, [0.05, 0.35]));
     ctx.fillStyle = '#0E0E0D'; ctx.fillRect(0, 0, W, H);
     if (dim < 1) { ctx.globalAlpha = 1 - dim; ctx.drawImage(full, 0, 0); ctx.globalAlpha = 1; }
     if (open > 0) drawAppBg(1, open, t);
