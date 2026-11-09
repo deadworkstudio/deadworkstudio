@@ -56,6 +56,13 @@ export interface Env {
   SS_PAYMENTS?: Fetcher
   /** `wrangler secret put SS_DIGEST_TOKEN`: same value as DIGEST_TOKEN on stock-shredder-payments. */
   SS_DIGEST_TOKEN?: string
+  /** Social numbers for the morning email (see socialStats.ts). All optional. */
+  YOUTUBE_API_KEY?: string
+  YOUTUBE_HANDLE?: string
+  INSTAGRAM_TOKEN?: string
+  TIKTOK_CLIENT_KEY?: string
+  TIKTOK_CLIENT_SECRET?: string
+  TIKTOK_REFRESH_TOKEN?: string
 }
 
 const CORS_HEADERS: Record<string, string> = {

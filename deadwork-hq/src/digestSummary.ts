@@ -60,8 +60,8 @@ function esc(text: string): string {
 /** Puts the site sign-ups and Stock Shredder's numbers into one email. With Stock Shredder's part
  *  present the email goes out every day (a quiet day still says so); without it, the old rule
  *  stands: no sign-ups, no email. */
-export function buildCombinedDigest(signups: DigestSummary | null, ss: StockShredderDaily | null): { subject: string; text: string; html: string } | null {
-  if (!signups && !ss) return null
+export function buildCombinedDigest(signups: DigestSummary | null, ss: StockShredderDaily | null, social: string[] = []): { subject: string; text: string; html: string } | null {
+  if (!signups && !ss && !social.length) return null
   const signupCount = signups?.totalNew ?? 0
   const subjectParts = [`${signupCount} new signup${signupCount === 1 ? '' : 's'}`]
   if (ss) subjectParts.push(ss.sales.headline)
@@ -89,6 +89,10 @@ export function buildCombinedDigest(signups: DigestSummary | null, ss: StockShre
       html.push(ss.updates.html)
     }
     text.push('')
+  }
+  if (social.length) {
+    text.push('Social media', ...social.map((l) => `  ${l}`), '')
+    html.push(`<p><strong>Social media</strong></p><ul>${social.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>`)
   }
   text.push('Website signups', signups ? signups.text.split('\n').slice(2).join('\n') : '0 new signups')
   html.push(`<p><strong>Website signups</strong></p>${signups ? signups.html : '<p>0 new signups</p>'}`)

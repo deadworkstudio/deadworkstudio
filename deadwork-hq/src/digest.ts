@@ -13,6 +13,7 @@
 
 import { listSignups, PRODUCT_LABELS, type Env } from './index'
 import { sendMail, EMAIL_LOGO_FOOTER } from './mailer'
+import { socialSection } from './socialStats'
 import { buildDigestSummary, buildCombinedDigest, type DigestSummary, type StockShredderDaily } from './digestSummary'
 
 const DIGEST_LAST_SENT_KV_KEY = 'digest:last-sent-at'
@@ -49,7 +50,13 @@ export async function runDailyDigest(env: Env, now: number = Date.now()): Promis
 
   const summary = buildDigestSummary(newSignups, PRODUCT_LABELS)
   const stockShredder = await fetchStockShredderDaily(env)
-  const email = buildCombinedDigest(summary, stockShredder)
+  let social: string[] = []
+  try {
+    social = await socialSection(env, now)
+  } catch (err) {
+    console.log('socialSection threw', err instanceof Error ? err.message : String(err))
+  }
+  const email = buildCombinedDigest(summary, stockShredder, social)
   if (!email) return { hadNewActivity: false, emailSent: false }
 
   // The watermark advances as soon as we've decided there's something to report — BEFORE

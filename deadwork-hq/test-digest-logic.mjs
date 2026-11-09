@@ -76,6 +76,9 @@ check('names are escaped in the html', busy?.html.includes('Jane &lt;b&gt;Doe&lt
 check('Stock Shredder alerts carried over', busy?.text.includes('Security alerts'), busy?.text)
 check('site signups still broken down by product', busy?.text.includes('Website signups') && busy?.text.includes(': 1'), busy?.text)
 check('website visitors and social media shown', busy?.text.includes('Website (last 24 hours)') && busy?.text.includes('Instagram 31') && busy?.text.includes('Where visitors came from:'), busy?.text)
+const withSocial = buildCombinedDigest(null, ssQuiet, ['Instagram: 1,204 followers (+12 since yesterday)'])
+check('social media section shown when there are numbers', withSocial?.text.includes('Social media') && withSocial?.html.includes('1,204 followers'), withSocial?.text)
+check('no social section when nothing is set up', !quietDay?.text.includes('Social media'), quietDay?.text)
 const signupsOnly = buildCombinedDigest(buildDigestSummary([{ product: 'loadout' }], labels), null)
 check('if Stock Shredder cannot be reached, the signups email still goes out', signupsOnly?.subject === 'DEADWORK HQ daily digest — 1 new signup', signupsOnly?.subject)
 
