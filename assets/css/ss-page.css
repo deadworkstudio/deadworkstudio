@@ -844,3 +844,16 @@ main > section.ix { min-height: 0 !important; padding-top: clamp(48px, 7vh, 72px
 .ix-auto-row { margin-top: 0; }
 @media (max-width: 899px) { .ix-feat { gap: 5px; letter-spacing: .12em; } }
 .downloads .pill[hidden] { display: none; }
+
+/* ---- features grid (same grid as the Scene Lock / Loadout pages) ---- */
+main > section.pp-feats { min-height: 0 !important; }
+.pp-feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1180px; margin: 12px auto 0; border-top: 1px solid var(--line-2); text-align: left; }
+.pp-feat-grid li { padding: 30px clamp(18px, 2.4vw, 34px) 34px; border-bottom: 1px solid var(--line-2); }
+.pp-feat-grid li:not(:nth-child(3n + 1)) { border-left: 1px solid var(--line-2); }
+.pp-feat-n { display: block; font-size: 12px; letter-spacing: .2em; color: var(--ink-3); }
+.pp-feat-h { margin-top: 14px; font: 600 clamp(19px, 1.5vw, 22px)/1.2 var(--sans); letter-spacing: -.015em; color: var(--ink); }
+.pp-feat-grid p { margin-top: 10px; max-width: 34ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+@media (max-width: 767px) {
+  .pp-feat-grid { grid-template-columns: 1fr; }
+  .pp-feat-grid li:not(:nth-child(3n + 1)) { border-left: 0; }
+}
