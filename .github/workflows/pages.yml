@@ -26,9 +26,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # Publish only the site itself. The repo also holds the HQ server code (deadwork-hq/),
+      # notes (README.md) and repo config; none of that belongs on deadworkstudio.com.
+      # New pages and folders are picked up automatically; add to this list only things that
+      # must never be served.
+      - name: Build the site folder
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          tar -cf - \
+            --exclude=.git --exclude=.github --exclude=.gitignore \
+            --exclude=deadwork-hq --exclude=node_modules \
+            --exclude='*.md' --exclude='*.ts' --exclude='*.mjs' --exclude='*.sql' \
+            --exclude='*.toml' --exclude=package.json --exclude=package-lock.json \
+            --exclude=tsconfig.json --exclude='.env*' --exclude='.dev.vars*' \
+            . | tar -xf - -C "$RUNNER_TEMP/site"
+          test -f "$RUNNER_TEMP/site/index.html" && test -f "$RUNNER_TEMP/site/CNAME" && test -f "$RUNNER_TEMP/site/.nojekyll"
+          ! test -e "$RUNNER_TEMP/site/deadwork-hq"
+          ! test -e "$RUNNER_TEMP/site/README.md"
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ${{ runner.temp }}/site
       - id: deployment
         uses: actions/deploy-pages@v4
         with:
