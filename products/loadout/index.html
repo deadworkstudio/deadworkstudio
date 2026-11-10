@@ -18,7 +18,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261104b" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261110a" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261110b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -110,6 +110,75 @@
     </ul>
   </section>
 
+  <!-- ===== CLOCK (HIDDEN ON PURPOSE) =====
+       Same idea as Stock Shredder's clock: one kit, Loadout vs by hand.
+       Stays hidden until the 10 Nov real-phone test gives measured numbers. Never invent them.
+       To turn it on: put the measured values in data-lo-app-seconds and data-lo-hand-minutes,
+       then delete the `hidden` attribute. lo-page.js keeps it hidden while either value is empty. -->
+  <section class="lo-clock tone-dark" aria-labelledby="clock-title" data-lo-clock data-lo-items="30" data-lo-app-seconds="" data-lo-hand-minutes="" hidden>
+    <h2 class="mono">Same 30 items</h2>
+    <p class="section-title" id="clock-title">Checked before the truck leaves.</p>
+    <div class="lo-clock-grid">
+      <div class="lo-clock-side is-app">
+        <span class="mono">With Loadout</span>
+        <p class="lo-clock-num"><span data-lo-clock-app></span><span class="lo-clock-unit">sec</span></p>
+      </div>
+      <div class="lo-clock-side">
+        <span class="mono">By hand</span>
+        <p class="lo-clock-num"><span data-lo-clock-hand></span><span class="lo-clock-unit">min</span></p>
+      </div>
+    </div>
+    <p class="mono lo-clock-note">Timed on iPhone. One kit, 30 items.</p>
+  </section>
+
+  <!-- ===== APP TOUR =====
+       Same pattern as Stock Shredder's interface tour (numbered names, spotlight, auto tour switch),
+       driven by lo-page.js. Uses data-lo-* hooks so ss-page.js leaves it alone. -->
+  <section class="lo-tour" aria-labelledby="tour-title">
+    <h2 class="section-title section-head head-dw" id="tour-title">The app</h2>
+    <p class="section-title">Every item, in plain sight.</p>
+
+    <div class="ix-tour lo-tour-wrap" data-lo-tour>
+      <ul class="ix-nav" aria-label="App features" data-lo-nav>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="0" data-rects="4,82.6,92,6.6"><span>01</span>Seen</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="1" data-rects="4,89.4,92,6.6"><span>02</span>Confirmed</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="2" data-rects="4,7.6,92,12.4;4,48.4,92,6.6"><span>03</span>Look-alikes</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="3" data-rects="4,41.6,92,6.6"><span>04</span>Missing</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="4" data-rects="3,26.6,94,13"><span>05</span>The count</button></li>
+      </ul>
+
+      <figure class="phone lo-tour-phone">
+        <div class="phone-body">
+          <span class="phone-island" aria-hidden="true"></span>
+          <div class="lo-tour-screen">
+            <!-- TOUR RECORDING GOES HERE: assets/img/products/loadout/lo-tour.mp4
+                 A real iPhone screen recording of a scan: items light up Seen, then one All packed tap
+                 turns them green. Portrait, same shape as the screenshot (1206 x 2622), H.264, no sound.
+                 When the file exists: move data-src to src on the <source>, remove `hidden` from the
+                 <video>, and delete the <img>. Then re-measure the data-rects above on the recording. -->
+            <img class="lo-tour-img" src="../../assets/img/products/loadout/screens/scan-states.webp" alt="Loadout on iPhone checking the Grip Package: 1 of 8, with Sandbags Missing, Apple box set Not sure, C-stand 1 Seen and C-stand 2 Confirmed." width="720" height="1565" loading="lazy" />
+            <video class="lo-tour-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/scan-states.webp" width="720" height="1565" aria-label="Recording of Loadout on iPhone: a scan marks items Seen, then one All packed tap confirms them." data-lo-tour-video hidden><source data-src="../../assets/img/products/loadout/lo-tour.mp4" type="video/mp4" /></video>
+            <svg class="ix-spot" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-lo-spot>
+              <defs><mask id="lo-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="#fff" /><g data-lo-holes></g></mask></defs>
+              <rect class="ix-dim" x="0" y="0" width="100" height="100" mask="url(#lo-mask)" />
+              <g data-lo-rings></g>
+            </svg>
+          </div>
+        </div>
+      </figure>
+
+      <div class="ix-explain" id="lo-tour-explain" aria-live="polite" data-lo-explain>
+        <p class="ix-idle mono" data-lo-idle>Explore the app.</p>
+        <div class="ix-panel" data-lo-panel="0" hidden><h3 class="section-title ix-h">Seen</h3><p class="ix-p">The camera spotted it. It stays Seen until you confirm.</p></div>
+        <div class="ix-panel" data-lo-panel="1" hidden><h3 class="section-title ix-h">Confirmed</h3><p class="ix-p">Green means you said it's in the case. One All packed tap does the rest.</p></div>
+        <div class="ix-panel" data-lo-panel="2" hidden><h3 class="section-title ix-h">Look-alikes</h3><p class="ix-p">Identical gear is never ticked on a guess. Tap to check it.</p></div>
+        <div class="ix-panel" data-lo-panel="3" hidden><h3 class="section-title ix-h">Missing</h3><p class="ix-p">Missing stays missing until it's back in the case.</p></div>
+        <div class="ix-panel" data-lo-panel="4" hidden><h3 class="section-title ix-h">The count</h3><p class="ix-p">Seen, not sure, missing, and what's left. At a glance.</p></div>
+      </div>
+      <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-lo-auto>Auto tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>On</span></button></div>
+    </div>
+  </section>
+
   <div class="pair tone-alt">
   <section class="workflow" aria-labelledby="workflow-title">
     <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
@@ -132,6 +201,29 @@
     </div>
   </section>
   </div>
+
+  <!-- ===== THE MOMENT =====
+       Loadout's answer to Stock Shredder's rename video: a missing lens caught before you leave.
+       Both pictures are real iPhone screens of the same A-Cam Package (trust-screens 07 and 05),
+       cropped to the checklist. No state here that the app doesn't have. -->
+  <section class="lo-moment tone-dark" aria-labelledby="moment-title">
+    <h2 class="section-title section-head head-dw">Before you leave</h2>
+    <p class="section-title" id="moment-title">Missing: 75mm.</p>
+    <p class="section-sub">Loadout flags it at the wrap check.<br class="br-desk" /> It stays missing until it's back in the case.</p>
+    <ol class="lo-moment-steps">
+      <li class="lo-moment-step">
+        <figure class="lo-moment-shot"><img src="../../assets/img/products/loadout/screens/moment-missing.webp" alt="Loadout on iPhone, A-Cam Package: 2 of 12 checked, 10 missing, with Signature Prime 50mm and Signature Prime 75mm marked Missing." width="800" height="687" loading="lazy" /></figure>
+        <p class="mono lo-moment-label"><span>01</span>Wrap check</p>
+        <p class="lo-moment-cap">Signature Prime 75mm <b class="lo-st is-missing">Missing</b></p>
+      </li>
+      <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>
+      <li class="lo-moment-step">
+        <figure class="lo-moment-shot"><img src="../../assets/img/products/loadout/screens/moment-found.webp" alt="Loadout on iPhone, same A-Cam Package: the All packed check, with Signature Prime 75mm now Confirmed." width="800" height="1157" loading="lazy" /></figure>
+        <p class="mono lo-moment-label"><span>02</span>Back in the case</p>
+        <p class="lo-moment-cap">Signature Prime 75mm <b class="lo-st is-found">Confirmed</b></p>
+      </li>
+    </ol>
+  </section>
 
   <section class="remote lo-scan" aria-labelledby="scan-title">
     <h2 class="mono">The scan</h2>
@@ -188,6 +280,18 @@
     </div>
   </section>
 
+  <!-- ===== REVIEWS (HIDDEN ON PURPOSE) =====
+       Same markup and same rule as Stock Shredder: nothing shows until there are 10+ approved reviews
+       (MIN_REVIEWS_TO_SHOW in lo-page.js). Below that the whole section stays hidden.
+       TODO: set LO_REVIEWS_URL in lo-page.js once the worker serves Loadout reviews. Do not point it at
+       Stock Shredder's /reviews, those are Stock Shredder reviews. Add a disclosure line here once the
+       Earn reward exists (Stock Shredder's says reviewers earn clips whatever their rating). -->
+  <section class="reviews lo-reviews" id="reviews" data-lo-reviews-section hidden aria-labelledby="reviews-title">
+    <h2 class="section-title section-head head-dw" id="reviews-title">Reviews</h2>
+    <p class="reviews-count" data-lo-reviews-count hidden></p>
+    <div class="reviews-list" data-lo-reviews-list hidden></div>
+  </section>
+
   <section class="lo-pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
     <p class="section-sub">14 days free. Every feature included.</p>
@@ -204,6 +308,27 @@
       </div>
     </div>
     <p class="pricing-terms">Subscribe inside the app after your free trial. Billed through the App Store. Manage or cancel anytime in your Apple account settings.</p>
+  </section>
+
+  <!-- ===== EARN (HIDDEN ON PURPOSE) =====
+       Copied from Stock Shredder's Earn layout. Stock Shredder pays in clips; Loadout has no clips.
+       TODO(Daniel): pick Loadout's own reward (for example free months), wire it to billing, then fill
+       the amounts below and turn the buttons into real actions. Until then nothing here charges, links
+       or submits, and the section stays hidden. Audience: film crews and photographers only. -->
+  <section class="earn lo-earn tone-dark" id="earn" hidden aria-labelledby="earn-title">
+    <h2 class="section-title section-head head-dw">Earn</h2>
+    <p class="section-title" id="earn-title">Help other film crews and photographers find Loadout.</p>
+    <ul class="earn-grid">
+      <li><span class="earn-amt" data-lo-reward="review">Reward TBD</span><span>Write an honest website review</span></li>
+      <li><span class="earn-amt" data-lo-reward="social">Reward TBD</span><span>Share about us on Instagram or TikTok</span></li>
+      <li><span class="earn-amt" data-lo-reward="referral">Reward TBD</span><span>Refer a friend</span></li>
+      <li><span class="earn-amt" data-lo-reward="youtube">Reward TBD</span><span>Record a YouTube review and walkthrough</span></li>
+    </ul>
+    <div class="earn-actions">
+      <button class="pill pill-solid is-disabled" type="button" disabled aria-disabled="true">Submit your link</button>
+      <button class="pill pill-outline is-disabled" type="button" disabled aria-disabled="true">Leave a review</button>
+    </div>
+    <p class="earn-note">Rules and reward details to come.</p>
   </section>
 
   <section class="faq" id="faq" aria-labelledby="faq-title">
@@ -300,6 +425,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261103a"></script>
+<script src="../../assets/js/lo-page.js?v=20261110a" defer></script>
 <script src="../../assets/js/notify.js?v=20261025b" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261106c" defer></script>
 </body>

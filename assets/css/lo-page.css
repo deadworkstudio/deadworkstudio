@@ -53,6 +53,46 @@
 .lo-notify .notify-status-bad { color: #B3261E; }
 .lo-notify .notify-status-good { color: #3D6E39; }
 
+/* ---- sections that ship hidden (clock, reviews, earn): hidden always wins ---- */
+.lo-clock[hidden], .lo-reviews[hidden], .lo-earn[hidden] { display: none !important; }
+
+/* ---- clock: 30 items, Loadout vs by hand (hidden until real numbers exist) ---- */
+.lo-clock-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 360px)); justify-content: center; margin: 40px auto 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.lo-clock-side { padding: 32px 24px 34px; }
+.lo-clock-side + .lo-clock-side { border-left: 1px solid var(--line-2); }
+.lo-clock-num { margin-top: 12px; font: 400 clamp(72px, 9vw, 132px)/.9 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lo-clock-side.is-app .lo-clock-num { color: var(--green, #8FD687); }
+.lo-clock-unit { margin-left: .18em; font: 500 13px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+.lo-clock-note { margin-top: 18px; color: var(--ink-3); }
+
+/* ---- app tour: Stock Shredder's ix-tour, holding a portrait phone ---- */
+.lo-tour-wrap { --ix-w: min(100%, 980px); }
+.lo-tour-phone { width: clamp(250px, 22vw, 300px); margin: clamp(22px, 3vh, 34px) auto 0; }
+.lo-tour-screen { position: relative; overflow: hidden; border-radius: 38px; background: #000; }
+.lo-tour .phone-body .lo-tour-img { display: block; padding-top: 0; border-radius: 0; }
+.lo-tour-video { display: block; width: 100%; height: auto; aspect-ratio: 720 / 1565; }
+.lo-tour-video[hidden], .lo-tour-img[hidden] { display: none; }
+.lo-tour .ix-spot { border-radius: 0; }
+.lo-tour .ix-explain { min-height: 5.6em; }
+.lo-tour .ix-p { white-space: normal; max-width: 44ch; }
+
+/* ---- the moment: a missing lens caught before you leave ---- */
+.lo-moment-steps { display: grid; grid-template-columns: minmax(0, 380px) auto minmax(0, 380px); justify-content: center; align-items: end; gap: 0 clamp(20px, 3.4vw, 56px); margin: 44px auto 0; }
+.lo-moment-step { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.lo-moment-shot { width: 100%; margin: 0; padding: 0 9px 9px; border-radius: 0 0 44px 44px; background: #0d0d0c; box-shadow: inset 0 -2px 0 #2a2a27, inset 2px 0 0 #2a2a27, inset -2px 0 0 #2a2a27, 0 40px 70px -34px rgba(0,0,0,.9);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 64px); mask-image: linear-gradient(to bottom, transparent 0, #000 64px); }
+.lo-moment-shot img { display: block; width: 100%; height: auto; border-radius: 0 0 36px 36px; }
+.lo-moment-label { margin-top: 26px; display: inline-flex; gap: 10px; }
+.lo-moment-label span { color: var(--ink-3); }
+.lo-moment-cap { margin-top: 8px; font-size: clamp(16px, 1.3vw, 19px); color: var(--ink); }
+.lo-st { margin-left: 8px; font: 600 11px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
+.lo-st.is-missing { color: #F08A80; }
+.lo-st.is-found { color: #8FD687; }
+.lo-moment-arrow { align-self: center; color: var(--ink-3); }
+
+/* ---- reviews / earn (hidden for now) ---- */
+.lo-earn .pill.is-disabled { pointer-events: none; }
+
 @media (max-width: 767px) {
   .lo-phones { gap: 10px; }
   .lo-phone-side { display: none; }
@@ -64,4 +104,10 @@
   .lo-plat { grid-template-columns: 1fr !important; }
   .lo-plans { grid-template-columns: 1fr; }
   .lo-plan + .lo-plan { border-left: 0; border-top: 1px solid var(--line-2); }
+  .lo-clock-grid { grid-template-columns: 1fr; }
+  .lo-clock-side + .lo-clock-side { border-left: 0; border-top: 1px solid var(--line-2); }
+  .lo-tour-phone { width: min(270px, 72vw); }
+  .lo-tour .ix-explain { min-height: 7.4em; }
+  .lo-moment-steps { grid-template-columns: minmax(0, 340px); gap: 0; }
+  .lo-moment-step + .lo-moment-arrow { margin: 22px 0 18px; transform: rotate(90deg); justify-self: center; }
 }
