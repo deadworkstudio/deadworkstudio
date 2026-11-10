@@ -33,7 +33,7 @@ subpath like `username.github.io/deadwork-site/`.
 
 ## Brand assets
 
-The source wordmark (`uploads/…ChatGPT_Image_Sep_28_2026…png`, black text on white, no
+The source wordmark (the original black-on-white PNG, no
 transparency) was processed into transparent PNGs using a plain luminance-to-alpha conversion
 (white background → 0 alpha, black ink → full alpha), then tinted:
 
