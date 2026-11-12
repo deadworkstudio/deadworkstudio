@@ -51,8 +51,10 @@
     });
   });
   // Cost per clip in cents, two places: 11.60¢, 8.46¢.
+  // Sales audit 2026-11-12: cents per clip made Creator look no better than Starter (11.60 vs
+  // 11.50). Show the time it saves instead, from the page's own "2 minutes per clip by hand".
   function perClipText(cents, clips) {
-    return (cents / clips).toFixed(2) + '\u00a2 / clip';
+    return 'About ' + Math.round(clips * 2 / 60) + ' hours of hand work saved a month';
   }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
@@ -1068,9 +1070,56 @@
         trialEmailInput.focus();
         return;
       }
+      // Sales audit 2026-11-12: the 7 days start when the card is saved, and a phone can't run the
+      // app. On phones the main button sends the link to their computer instead, so the clock
+      // starts where they'll use it. "Start now anyway" (data-trial-start-now) skips this. If the
+      // send fails for any reason (older server, network), fall back to starting the trial.
+      if (isPhoneVisitor() && !trialForm.hasAttribute('data-start-now')) {
+        sendTrialToComputer(email);
+        return;
+      }
       startTrialCheckout(email);
     });
   }
+
+  function sendTrialToComputer(email) {
+    trialSubmitInFlight = true;
+    if (trialSubmitBtn) { trialSubmitBtn.disabled = true; trialSubmitBtn.setAttribute('aria-busy', 'true'); }
+    showTrialError('');
+    showTrialStatus('Sending\u2026');
+    fetch(WORKER_URL + '/trial/send-to-computer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+      .then(function (res) {
+        trialSubmitInFlight = false;
+        if (trialSubmitBtn) { trialSubmitBtn.disabled = false; trialSubmitBtn.removeAttribute('aria-busy'); }
+        if (!res.ok) throw new Error('send failed ' + res.status);
+        showTrialStatus('Sent. Open it on your computer to get your 100 free clips. Your 7 days start there.');
+      })
+      .catch(function () {
+        trialSubmitInFlight = false;
+        if (trialSubmitBtn) { trialSubmitBtn.disabled = false; trialSubmitBtn.removeAttribute('aria-busy'); }
+        showTrialStatus('');
+        startTrialCheckout(email);
+      });
+  }
+
+  // Phones: relabel the trial button and offer the plain trial as a small link.
+  (function phoneTrialMode() {
+    if (!trialForm || !isPhoneVisitor()) return;
+    if (trialSubmitBtn) trialSubmitBtn.textContent = 'Send it to my computer';
+    var nowLink = document.querySelector('[data-trial-start-now]');
+    if (!nowLink) return;
+    nowLink.hidden = false;
+    nowLink.addEventListener('click', function () {
+      trialForm.setAttribute('data-start-now', '');
+      if (trialSubmitBtn) trialSubmitBtn.textContent = 'Start free trial';
+      nowLink.hidden = true;
+      if (trialEmailInput) trialEmailInput.focus();
+    });
+  })();
 
   // "Already started a trial? Email me my plan link" — a small second form, posting to
   // /trial/resend-link. Always the same on-screen acknowledgement regardless of whether the
