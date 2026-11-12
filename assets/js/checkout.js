@@ -487,6 +487,16 @@
         // saved card and emailed an explanation. Nothing was ever charged either way, so this
         // goes back to the trial box itself (not the generic checkout panel) with its specific
         // reason verbatim, rather than the generic "that charge didn't go through" message.
+        // Sales audit 2026-11-12: this email already pays on another account, so the Worker
+        // canceled and refunded the new plan and emailed them. Say so plainly.
+        if (data && data.duplicateRefunded) {
+          teardownCheckout();
+          panel.hidden = true;
+          success.hidden = true;
+          grid.hidden = false;
+          showPricingError(data.message || 'You already have a plan on this email, so this one was refunded in full.');
+          return;
+        }
         if (data && data.trialRejected) {
           teardownCheckout();
           panel.hidden = true;
@@ -783,7 +793,30 @@
       brandedPaying = true;
       updatePayButton();
       if (bcoPay) bcoPay.setAttribute('aria-busy', 'true');
-      brandedActions.updateEmail(email).then(function (res) {
+      // Sales audit 2026-11-12: stop a second subscription before the card is charged. Any
+      // failure of this check lets the payment go ahead (the Worker refunds a duplicate anyway).
+      fetch(WORKER_URL + '/checkout/email-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      })
+        .then(function (r) { return r.ok ? r.json() : { ok: true }; })
+        .catch(function () { return { ok: true }; })
+        .then(function (check) {
+          if (check && check.ok === false) {
+            brandedPaying = false;
+            updatePayButton();
+            if (bcoPay) bcoPay.removeAttribute('aria-busy');
+            showBrandedError(check.message || 'This email already has a Stock Shredder plan. Change it inside the app.');
+            return;
+          }
+          return payBranded(email);
+        });
+    });
+  }
+
+  function payBranded(email) {
+      return brandedActions.updateEmail(email).then(function (res) {
         if (res && res.type === 'error') {
           brandedPaying = false;
           updatePayButton();
@@ -793,7 +826,6 @@
         }
         return brandedActions.confirm({ redirect: 'if_required' }).then(handleBrandedConfirm);
       });
-    });
   }
 
   // Back from a payment method that finishes on its own site (Klarna, Cash App Pay, Amazon Pay) or
