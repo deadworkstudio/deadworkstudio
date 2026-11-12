@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
+<title>One card dump · Stock Shredder</title>
+<link rel="icon" href="/assets/img/brand/favicon.png" />
+<meta property="og:image" content="https://deadworkstudio.com/assets/video/watch/one-card-dump-poster.jpg" />
+<style>
+@font-face{font-family:'Anton';src:url('/assets/fonts/anton.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Archivo';src:url('/assets/fonts/archivo-variable.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('/assets/fonts/jetbrains-mono-400.woff2') format('woff2');font-display:swap}
+:root{--bg:#0A0A09;--fg:#EBE5D8;--muted:#9a9488;--line:#2a2925}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Archivo,system-ui,sans-serif;
+  padding:24px max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left))}
+main{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.mark{font-family:Anton,Impact,sans-serif;font-size:22px;letter-spacing:.04em;color:var(--fg);text-decoration:none}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000;border:1px solid var(--line)}
+h1{font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(32px,6vw,56px);line-height:1;margin:0;text-wrap:balance}
+p{margin:0;max-width:62ch;color:var(--muted)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+.btn{display:inline-block;padding:14px 22px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid var(--fg);color:var(--fg)}
+.btn.solid{background:var(--fg);color:var(--bg)}
+.small{font-size:14px}
+.small a{color:var(--fg)}
+a:focus-visible{outline:2px solid #E3B23D;outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><a class="mark" href="/products/stock-shredder/">DEADWORK</a><span class="eyebrow">Stock Shredder · 0:20</span></div>
+  <video id="v" muted playsinline autoplay controls preload="metadata" poster="/assets/video/watch/one-card-dump-poster.jpg">
+    <source src="/assets/video/watch/one-card-dump-720.mp4" type="video/mp4" />
+  </video>
+  <h1>One card dump. Named, graded, tagged.</h1>
+  <p>Camera files in. Real names, folders, both copies and keywords out.</p>
+  <div class="ctas">
+    <a class="btn solid" href="/download/mac/">Download for Mac</a>
+    <a class="btn" href="/download/windows/">Download for Windows</a>
+  </div>
+  <p class="small">Already installed? Open Stock Shredder and drop in a folder. New here? <a href="/products/stock-shredder/?code=SHRED#trial">Try 100 clips free</a>.</p>
+</main>
+<script>
+// Bigger screens get the 1080p file; phones keep the lighter 720p one.
+(function(){var v=document.getElementById('v');if(Math.max(screen.width,screen.height)*(window.devicePixelRatio||1)>=1600&&window.innerWidth>=900){v.querySelector('source').src='/assets/video/watch/one-card-dump-1080.mp4';v.load();}})();
+</script>
+<script src="/assets/js/ss-funnel.js?v=20261106c" defer></script>
+</body>
+</html>
