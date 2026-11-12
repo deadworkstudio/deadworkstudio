@@ -35,7 +35,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/site"
           tar -cf - \
             --exclude=.git --exclude=.github --exclude=.gitignore \
-            --exclude=deadwork-hq --exclude=node_modules \
+            --exclude=deadwork-hq --exclude=seo --exclude=node_modules \
             --exclude='*.md' --exclude='*.ts' --exclude='*.mjs' --exclude='*.sql' \
             --exclude='*.toml' --exclude=package.json --exclude=package-lock.json \
             --exclude=tsconfig.json --exclude='.env*' --exclude='.dev.vars*' \
@@ -43,6 +43,7 @@ jobs:
           test -f "$RUNNER_TEMP/site/index.html" && test -f "$RUNNER_TEMP/site/CNAME" && test -f "$RUNNER_TEMP/site/.nojekyll"
           ! test -e "$RUNNER_TEMP/site/deadwork-hq"
           ! test -e "$RUNNER_TEMP/site/README.md"
+          ! test -e "$RUNNER_TEMP/site/seo"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ runner.temp }}/site

@@ -1,0 +1,72 @@
+/* DEADWORK guides (seo/build.py). Loads after ss-page.css and reuses its tokens, header and
+   footer. Reading column, tables, steps and the end CTA. Mono text stays uppercase because the
+   self-hosted JetBrains Mono is subset to capitals, digits and punctuation. */
+.guide { background: #EBE5D8; }
+.guide .poster-head { background: rgba(235, 229, 216, .92); }
+.g-main { padding: calc(var(--sh-h) + clamp(40px, 7vw, 96px)) var(--gutter) 0; }
+.g-article { max-width: 760px; margin: 0 auto; }
+
+.g-head { padding-bottom: clamp(32px, 5vw, 56px); border-bottom: 1px solid var(--line-2); }
+.g-eyebrow { margin-bottom: 18px; }
+.g-title { font: 800 clamp(36px, 6.2vw, 68px)/1.0 var(--sans); font-stretch: 85%; letter-spacing: -.02em; text-transform: uppercase; }
+.g-dek { margin-top: 20px; font-size: clamp(18px, 2.2vw, 21px); line-height: 1.45; color: var(--ink-2); max-width: 36em; }
+.g-byline { margin-top: 22px; color: var(--ink-3); }
+.g-head-cta { margin-top: 26px; }
+
+.g-body { padding-top: clamp(28px, 4vw, 44px); font-size: 17.5px; line-height: 1.65; }
+.g-body > * + * { margin-top: 18px; }
+.g-body h2 { margin-top: clamp(48px, 7vw, 72px); font: 750 clamp(24px, 3.4vw, 32px)/1.12 var(--sans); font-stretch: 90%; letter-spacing: -.01em; }
+.g-body h2 + * { margin-top: 16px; }
+.g-body a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.g-body strong { font-weight: 650; }
+
+.g-answer { padding: 24px 26px; background: var(--ink); color: #EBE5D8; }
+.g-answer .mono { color: #E3B23D; margin-bottom: 12px; }
+.g-answer ol { list-style: decimal; padding-left: 1.3em; }
+.g-answer li + li { margin-top: 4px; }
+.g-answer p:last-child { margin-top: 14px; color: #CFC8B8; }
+
+.g-steps { counter-reset: step; }
+.g-steps li { counter-increment: step; position: relative; padding: 14px 0 14px 52px; border-top: 1px solid var(--line); }
+.g-steps li:last-child { border-bottom: 1px solid var(--line); }
+.g-steps li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 17px; font: 500 12px/1.4 var(--mono); letter-spacing: .14em; color: var(--ink-3); }
+
+.g-list li { position: relative; padding: 10px 0 10px 22px; }
+.g-list li::before { content: ''; position: absolute; left: 2px; top: 21px; width: 7px; height: 7px; background: var(--ink); }
+
+.g-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-top: 1px solid var(--ink); }
+.g-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.45; }
+.g-table th { text-align: left; padding: 12px 14px 12px 0; font: 500 10.5px/1.4 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+.g-table td { padding: 12px 14px 12px 0; vertical-align: top; border-bottom: 1px solid var(--line); }
+.g-table td:first-child { font-weight: 600; white-space: nowrap; }
+.g-table--num td { font-variant-numeric: tabular-nums; }
+.g-table--num td:nth-child(2) { font-weight: 650; }
+.g-source { font-size: 13.5px; color: var(--ink-3); }
+
+.g-figure img { width: 100%; border: 1px solid var(--line); }
+.g-figure--narrow img { width: auto; max-width: 100%; }
+.g-figure figcaption { margin-top: 10px; font: 500 10.5px/1.5 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+
+.g-cta { margin-top: clamp(56px, 8vw, 88px); padding: clamp(28px, 4vw, 44px); background: #F4F1EA; border: 1px solid var(--line-2); text-align: center; }
+.g-cta h2 { margin-top: 12px; font: 800 clamp(28px, 4.4vw, 44px)/1.02 var(--sans); font-stretch: 85%; text-transform: uppercase; }
+.g-cta p + p { margin-top: 14px; }
+.g-cta > p:nth-of-type(2) { color: var(--ink-2); }
+.g-cta .pill { margin-top: 8px; }
+.g-cta-note { font-size: 13.5px; color: var(--ink-3); }
+
+.g-faq { margin: clamp(56px, 8vw, 88px) 0 clamp(64px, 9vw, 112px); }
+.g-faq h2 { font: 750 clamp(24px, 3.4vw, 32px)/1.12 var(--sans); margin-bottom: 14px; }
+.g-faq-item { border-top: 1px solid var(--line-2); }
+.g-faq-item:last-child { border-bottom: 1px solid var(--line-2); }
+.g-faq-item summary { cursor: pointer; padding: 16px 28px 16px 0; font-weight: 600; list-style: none; position: relative; }
+.g-faq-item summary::-webkit-details-marker { display: none; }
+.g-faq-item summary::after { content: '+'; position: absolute; right: 2px; top: 13px; font: 400 20px/1 var(--mono); }
+.g-faq-item[open] summary::after { content: '\2013'; }
+.g-faq-item p { padding: 0 0 18px; color: var(--ink-2); }
+
+@media (max-width: 640px) {
+  .g-body { font-size: 16.5px; }
+  .g-answer { padding: 20px; }
+  .g-table { font-size: 14px; }
+  .g-head-cta .pill, .g-cta .pill { width: 100%; }
+}
