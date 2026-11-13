@@ -6,6 +6,11 @@
 // on local test servers.
 // Tag links so apps that hide the referrer still count: ?ref=instagram (optional &utm_campaign=reel-1).
 // Daniel's own devices: open any page once with ?internal=1 and they stop counting (?internal=0 undoes it).
+// Multi-day credit: the browser itself remembers its last visit from outside the site (the source
+// tag or the referring SITE, never the full address, plus when) in localStorage under dw-touch, for
+// 30 days. It never leaves the browser except inside a checkout request (checkout.js), so an
+// Instagram visit on Monday still gets credit for a purchase on Wednesday. Not a cookie: it is
+// never sent with page loads, and nothing is stored for GPC/DNT or ?internal=1 browsers.
 (function () {
   try {
     if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return;
@@ -19,6 +24,19 @@
     } catch (e) {}
     var tag = q.get('ref') || q.get('utm_source') || q.get('src') || '';
     var campaign = q.get('utm_campaign') || q.get('campaign') || '';
+    try {
+      var refOrigin = '';
+      try {
+        var ru = document.referrer ? new URL(document.referrer) : null;
+        if (ru && !/(^|\.)deadworkstudio\.com$|(^|\.)stockshredder\.workers\.dev$/.test(ru.hostname) && ru.hostname !== location.hostname) refOrigin = ru.protocol + '//' + ru.hostname;
+      } catch (e) {}
+      if (internal) localStorage.removeItem('dw-touch');
+      else if (tag || refOrigin) localStorage.setItem('dw-touch', JSON.stringify({ s: tag.slice(0, 40), c: campaign.slice(0, 60), r: refOrigin, t: Date.now() }));
+      else {
+        var old = JSON.parse(localStorage.getItem('dw-touch') || 'null');
+        if (old && !(Date.now() - old.t < 30 * 86400000)) localStorage.removeItem('dw-touch');
+      }
+    } catch (e) {}
     var url = 'https://stock-shredder-payments.stockshredder.workers.dev/t';
     var body = JSON.stringify({
       p: location.pathname,
