@@ -139,6 +139,10 @@
   fig.issTimeline = T;                                             // for review tooling (?t=…&freeze)
   var canvas = fig.querySelector('[data-iss-canvas]'), ctx = canvas.getContext('2d', q.has('capture') ? { willReadFrequently: true } : undefined);   // capture: a software canvas, so seeked video frames always redraw
   var vids = [].slice.call(fig.querySelectorAll('[data-iss-src] video'));
+  // Phones (same 767px breakpoint as the wall): 960px-wide copies of the twelve clips, about 1.8 MB
+  // in all instead of 8.3 MB, so the page opens fast on cell data. Set before anything plays
+  // (the tags are preload="none"), so the big files are never fetched on a phone.
+  if (WALL_W === 800) vids.forEach(function (v) { var src = v.getAttribute('src'); if (src && src.indexOf('/hero/phone/') < 0) v.setAttribute('src', src.replace('/hero/', '/hero/phone/')); });
   vids.forEach(function (v) { v.defaultPlaybackRate = RATE; v.playbackRate = RATE; v.addEventListener('loadedmetadata', function () { v.playbackRate = RATE; }); });
   var meta = fig.querySelector('[data-iss-meta]'), scan = fig.querySelector('[data-iss-scan]');
   var marks = [].slice.call(fig.querySelectorAll('.iss-mark'));
