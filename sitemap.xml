@@ -41,6 +41,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://deadworkstudio.com/legal/scene-lock-privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://deadworkstudio.com/legal/terms/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
