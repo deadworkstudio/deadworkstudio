@@ -259,6 +259,17 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-2); }
 .tools-grid li { border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
 .tools-grid li:nth-child(3n) { border-right: 0; }
+/* 2026-11-13: all six tools in one row on desktop (Daniel). Tiles go taller than wide so the
+   logos keep their size; name and status stack so nothing wraps awkwardly in the narrow tile. */
+@media (min-width: 1100px) {
+  .tools-grid { grid-template-columns: repeat(6, 1fr); }
+  .tools-grid li:nth-child(3n) { border-right: 1px solid var(--line-2); }
+  .tools-grid li:nth-child(6n) { border-right: 0; }
+  .tools-grid .tool { aspect-ratio: auto; height: clamp(300px, 21vw, 380px); padding: 22px 20px; gap: 16px; }
+  .tools-grid .tool-mark img { width: min(78%, 220px); max-height: clamp(64px, 6.5vw, 100px); }
+  .tools-grid .tool-meta { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 8px; min-height: 92px; }
+  .tools-grid .tool-name { font-size: 15px; }
+}
 .tool { position: relative; display: grid; grid-template-rows: 1fr auto; aspect-ratio: 1 / 0.82; padding: 28px; text-decoration: none; color: var(--ink); transition: background 200ms var(--ease); }
 .tool-mark { display: grid; place-items: center; }
 .tool-mark img { width: min(62%, 300px); height: auto; max-height: 120px; object-fit: contain; opacity: .9; transition: transform 200ms var(--ease), opacity 200ms var(--ease); }
@@ -872,10 +883,20 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .trial-offer-phone { margin: 10px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); text-align: center; }
 .trial-offer-now { display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--ink); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 .trial-offer-now[hidden], .trial-offer-phone[hidden], .trial-offer-dl[hidden] { display: none; }
-.ss-sticky { position: fixed; z-index: 90; left: 20px; bottom: 20px; display: flex; align-items: center; gap: 16px; padding: 8px 10px 8px 18px; background: var(--bg, #F2EFE8); border: 1px solid var(--line, rgba(20,20,18,.18)); box-shadow: 0 6px 24px rgba(0,0,0,.12); opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 200ms var(--ease, ease), transform 200ms var(--ease, ease); }
-.ss-sticky .ss-sticky-plans { order: -1; color: var(--ink-2); text-decoration: none; }
+.ss-sticky { position: fixed; z-index: 90; left: 20px; bottom: 20px; display: flex; align-items: center; gap: 8px; padding: 6px; background: #0F0F0E; border: 1px solid rgba(232,226,212,.18); box-shadow: 0 8px 28px rgba(0,0,0,.28); opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 200ms var(--ease, ease), transform 200ms var(--ease, ease); }
+/* 2026-11-13: same square, mono look as the homepage hero buttons (Daniel: the rounded pill read generic). */
+.ss-sticky a { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 22px; border-radius: 0; border: 0; font: 500 11px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background 200ms var(--ease, ease); }
+.ss-sticky .pill-solid { min-height: 0; background: #E8E2D4; color: #0F0F0E; }
+.ss-sticky .ss-sticky-plans { order: -1; color: #E8E2D4; box-shadow: inset 0 0 0 1px rgba(232,226,212,.45); }
+@media (any-hover: hover) and (any-pointer: fine) {
+  .ss-sticky .pill-solid:hover { background: #F2EDE2; }
+  .ss-sticky .ss-sticky-plans:hover { background: rgba(232,226,212,.12); }
+}
+.ss-sticky a:focus-visible { outline: 2px solid #E8E2D4; outline-offset: 2px; }
 .ss-sticky.is-on { opacity: 1; transform: none; pointer-events: auto; }
 @media (max-width: 719px) {
-  .ss-sticky { left: 12px; right: 12px; bottom: 12px; justify-content: space-between; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
+  .ss-sticky { left: 12px; right: 12px; bottom: 12px; padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)); }
+  .ss-sticky a { flex: 1 1 auto; padding: 0 14px; }
+  .ss-sticky .pill-solid { flex-grow: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .ss-sticky { transition: none; } }
