@@ -913,5 +913,9 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .fit-val { font-size: 13px; letter-spacing: .06em; }
 .fit-answer { font-size: 17px; line-height: 1.5; margin: 22px 0 0; }
 .fit-fine { font-size: 12px; color: var(--ink-3, #625E57); margin: 8px 0 0; }
-.pricing-card.is-fit { outline: 2px solid var(--ink); outline-offset: -2px; }
+.pricing-card.is-fit::before { content: 'Fits your footage'; position: absolute; top: -20px; left: 0; right: 0; text-align: center; font: 600 10px/1 var(--font-mono, monospace); letter-spacing: .14em; text-transform: uppercase; color: #2F9E44; }
+.pricing-card.is-fit { position: relative; background: #8FD687; outline: 1px solid #8FD687; transition: background-color .3s ease; }
+/* The plan the sliders pick is always a good fit: one steady green, no red. */
+.fit { --fit-c: #2F9E44; transition: border-color .3s ease, box-shadow .3s ease; }
+.fit-answer strong:first-child { color: var(--fit-c); }
 @media (max-width: 767px) { .fit-row { grid-template-columns: 1fr; } }

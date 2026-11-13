@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113q" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113s" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -173,9 +173,9 @@
   </section>
   </div>
 
-  <section class="clock" aria-label="Same 1,000 clips: 3 hours 1 minute with Stock Shredder, 33+ hours by hand">
-    <video class="clock-video clock-wide" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/clock-poster.jpg?v=3" width="1920" height="1080" data-film data-hd="../../assets/img/products/stock-shredder/clock-hd.mp4?v=3" aria-hidden="true"><source src="../../assets/img/products/stock-shredder/clock.mp4?v=3" type="video/mp4" /></video>
-    <video class="clock-video clock-tall" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/clock-tall-poster.jpg?v=3" width="1080" height="1920" data-film aria-hidden="true"><source src="../../assets/img/products/stock-shredder/clock-tall.mp4?v=3" type="video/mp4" /></video>
+  <section class="clock" aria-label="Same 1,000 clips: 3 hours 1 minute with Stock Shredder, 66+ hours by hand">
+    <video class="clock-video clock-wide" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/clock-poster.jpg?v=5" width="1920" height="1080" data-film data-hd="../../assets/img/products/stock-shredder/clock-hd.mp4?v=5" aria-hidden="true"><source src="../../assets/img/products/stock-shredder/clock.mp4?v=5" type="video/mp4" /></video>
+    <video class="clock-video clock-tall" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/clock-tall-poster.jpg?v=5" width="1080" height="1920" data-film aria-hidden="true"><source src="../../assets/img/products/stock-shredder/clock-tall.mp4?v=5" type="video/mp4" /></video>
   </section>
 
   <section class="interface ix" aria-labelledby="interface-title">
@@ -281,12 +281,12 @@
             <caption class="sr-only">Speed on real footage</caption>
             <thead><tr><th scope="col">Clips in</th><th scope="col">Moments found</th><th scope="col">4K clips</th><th scope="col">Shredded in</th><th scope="col">Exported</th><th scope="col">Failed</th><th scope="col">Stock Shredder</th><th scope="col">By hand</th></tr></thead>
             <tbody>
-              <tr><td>39</td><td>125</td><td>100</td><td>8 min</td><td>8 min</td><td>0</td><td>16 min</td><td>3+ hours</td></tr>
-              <tr><td>184</td><td>501</td><td>500</td><td>30 min</td><td>49 min</td><td>0</td><td>1 hr 19 min</td><td>16+ hours</td></tr>
-              <tr><td>588</td><td>1,479</td><td>1,000</td><td>87 min</td><td>94 min</td><td>0</td><td>3 hr 1 min</td><td>33+ hours</td></tr>
+              <tr><td>39</td><td>125</td><td>100</td><td>8 min</td><td>8 min</td><td>0</td><td>16 min</td><td>6+ hours</td></tr>
+              <tr><td>184</td><td>501</td><td>500</td><td>30 min</td><td>49 min</td><td>0</td><td>1 hr 19 min</td><td>33+ hours</td></tr>
+              <tr><td>588</td><td>1,479</td><td>1,000</td><td>87 min</td><td>94 min</td><td>0</td><td>3 hr 1 min</td><td>66+ hours</td></tr>
             </tbody>
           </table>
-          <p class="spec-note spec-note-mono">Real Sony FX6 and FX3 footage on a MacBook Pro M3 Pro, exported to an external SSD. Graded ProRes 422 HQ 4K. Review time not included. By hand: 2 mins per clip average.</p>
+          <p class="spec-note spec-note-mono">Real Sony FX6 and FX3 footage on a MacBook Pro M3 Pro, exported to an external SSD. Graded ProRes 422 HQ 4K. Review time not included. By hand: 4 mins per clip average (import, find the moment, color, export, naming, keywords).</p>
         </div>
       </div>
       <div class="spec-row">
@@ -381,8 +381,6 @@
           <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.3">ARRI</button>
           <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="1.9">DJI drone</button>
           <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">iPhone</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="3.7">GoPro</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">ProRes recorder</button>
         </div>
       </div>
       <div class="fit-row">
@@ -407,7 +405,7 @@
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="250">250 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">About 8 hours of hand work saved a month</p>
+        <p class="pricing-per-clip">About 17 hours of hand work saved a month</p>
         
         <button type="button" class="pill pill-outline" data-plan-button="starter">Get started</button>
       </div>
@@ -417,7 +415,7 @@
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="600">600 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">About 20 hours of hand work saved a month</p>
+        <p class="pricing-per-clip">About 40 hours of hand work saved a month</p>
         
         <button type="button" class="pill pill-outline" data-plan-button="creator">Get started</button>
       </div>
@@ -427,7 +425,7 @@
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="1200">1,200 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">About 40 hours of hand work saved a month</p>
+        <p class="pricing-per-clip">About 80 hours of hand work saved a month</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="pro">Get started</button>
       </div>
@@ -437,7 +435,7 @@
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
-        <p class="pricing-per-clip">About 67 hours of hand work saved a month</p>
+        <p class="pricing-per-clip">About 133 hours of hand work saved a month</p>
         <div class="pricing-inc"><p class="mono">Includes</p><ul><li>Copy-paste keywords</li><li>Approve from your phone</li></ul></div>
         <button type="button" class="pill pill-outline" data-plan-button="studio">Get started</button>
       </div>
@@ -696,7 +694,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261113d"></script>
+<script src="../../assets/js/checkout.js?v=20261113e"></script>
 <script src="/assets/js/ss-funnel.js?v=20261113a" defer></script>
 <script src="../../assets/js/ss-page.js?v=20261106c"></script>
 <script src="../../assets/js/ss-hero.js?v=20261113a" defer></script>
@@ -1161,7 +1159,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   // footage (528.6 min -> 1,479 clips), times each format's minutes per TB from published data rates:
   // Sony / Panasonic 4K All-Intra ~240 Mbps ~9 h/TB, Canon XF-AVC Intra ~410 Mbps ~5.4 h, Blackmagic BRAW
   // 6K ~2.4 h, RED 6K-8K R3D MQ ~56-99 min, ARRI ProRes 4444 UHD ~2 h (ARRIRAW ~53 min), DJI H.264/H.265
-  // 200 Mbps ~11 h, iPhone ProRes 4K ~3 h, GoPro 100 Mbps ~22 h, ProRes 422 HQ 4K ~3 h.
+  // 200 Mbps ~11 h, iPhone ProRes 4K ~3 h.
   var CLIPS_PER_GB = 1.5;
   var cams = box.querySelectorAll('[data-fit-cam]'), fine = box.querySelector('[data-fit-fine]');
   var PLANS = [['starter', 'Starter', 250], ['creator', 'Creator', 600], ['pro', 'Pro', 1200], ['studio', 'Studio', 2000]];
@@ -1179,17 +1177,18 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     var need = monthly + backlog / 3;
     var plan = PLANS[PLANS.length - 1];
     for (var i = 0; i < PLANS.length; i++) { if (PLANS[i][2] >= need) { plan = PLANS[i]; break; } }
-    document.querySelectorAll('.pricing-card').forEach(function (c) { c.classList.toggle('is-fit', Boolean(c.querySelector('[data-plan-button="' + plan[0] + '"]'))); });
+    // The plan that fits is filled green (Daniel 2026-11-13).
+    var picked = Boolean(monthly || backlog);
+    PLANS.forEach(function (pl) {
+      var card = (document.querySelector('[data-plan-button="' + pl[0] + '"]') || {}).closest ? document.querySelector('[data-plan-button="' + pl[0] + '"]').closest('.pricing-card') : null;
+      if (!card) return;
+      card.classList.toggle('is-fit', picked && pl[0] === plan[0]);
+    });
     if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
-    var spare = plan[2] - monthly;
-    var months = backlog ? (spare > 0 ? Math.ceil(backlog / spare) : null) : 0;
     var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
-    if (backlog) line += ', plus ' + n(backlog) + ' waiting on your drives';
+    if (backlog) line += ' + ' + n(backlog) + ' waiting on your drives';
     line += '. ';
-    if (backlog && months) line += 'Your drives are cleared in about ' + months + ' month' + (months === 1 ? '' : 's') + '. ';
-    if (need > plan[2]) line += 'That is more than Studio covers, so get in touch and we will put together a bigger plan. ';
-    else if (backlog && !months) line += 'Your drives clear slowly on this plan. ';
-    line += 'That saves about <strong>' + n((Math.min(need, plan[2])) * 2 / 60) + ' hours</strong> of hand work a month.';
+    line += 'That saves you about <strong>' + n((Math.min(need, plan[2])) * 4 / 60) + ' hours</strong> a month.';
     out.innerHTML = line;
   }
   cams.forEach(function (b) {

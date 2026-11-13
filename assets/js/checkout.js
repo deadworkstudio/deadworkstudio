@@ -64,9 +64,9 @@
   });
   // Cost per clip in cents, two places: 11.60¢, 8.46¢.
   // Sales audit 2026-11-12: cents per clip made Creator look no better than Starter (11.60 vs
-  // 11.50). Show the time it saves instead, from the page's own "2 minutes per clip by hand".
+  // 11.50). Show the time it saves instead, from the page's own "4 minutes per clip by hand".
   function perClipText(cents, clips) {
-    return 'About ' + Math.round(clips * 2 / 60) + ' hours of hand work saved a month';
+    return 'About ' + Math.round(clips * 4 / 60) + ' hours of hand work saved a month';
   }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
