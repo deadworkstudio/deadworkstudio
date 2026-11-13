@@ -115,7 +115,7 @@ main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh,
 .client-logo-grid img[src$="nba.png"] { height: 50px; }
 /* heavy solid wordmarks read bigger than the rest at the same height */
 .client-logo-grid img[src$="hulu.png"], .client-logo-grid img[src$="kia.png"] { height: 24px; }
-.client-logo-grid img[src$="new-york-knicks.png"], .client-logo-grid img[src$="kansas-city-chiefs.png"], .client-logo-grid img[src$="mercedes-benz.png"], .client-logo-grid img[src$="warner-bros.png"], .client-logo-grid img[src$="history.png"], .client-logo-grid img[src$="jack-daniels.png"], .client-logo-grid img[src$="on-running.png"], .client-logo-grid img[src$="new-balance.png"] { height: 44px; }
+.client-logo-grid img[src$="new-york-knicks.png"], .client-logo-grid img[src$="kansas-city-chiefs.png"], .client-logo-grid img[src$="mercedes-benz.png"], .client-logo-grid img[src$="warner-bros.png"], .client-logo-grid img[src$="history.png"], .client-logo-grid img[src$="jack-daniels.png"], .client-logo-grid img[src$="on-running.png"], .client-logo-grid img[src$="new-balance.png"], .client-logo-grid img[src$="corona.png"], .client-logo-grid img[src$="xyz-films.png"] { height: 44px; }
 /* a lone logo on the last row of the 5-wide grid sits in the middle column */
 @media (min-width: 761px) { .client-logo-grid li:last-child:nth-child(5n+1) { grid-column: 3; } }
 @media (max-width: 760px) {
@@ -126,7 +126,7 @@ main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh,
   .client-logo-grid img[src$="alfa-romeo.png"], .client-logo-grid img[src$="john-deere.png"], .client-logo-grid img[src$="nhl.png"] { height: 36px; }
   .client-logo-grid img[src$="nba.png"] { height: 40px; }
   .client-logo-grid img[src$="hulu.png"], .client-logo-grid img[src$="kia.png"] { height: 19px; }
-  .client-logo-grid img[src$="new-york-knicks.png"], .client-logo-grid img[src$="kansas-city-chiefs.png"], .client-logo-grid img[src$="mercedes-benz.png"], .client-logo-grid img[src$="warner-bros.png"], .client-logo-grid img[src$="history.png"], .client-logo-grid img[src$="jack-daniels.png"], .client-logo-grid img[src$="on-running.png"], .client-logo-grid img[src$="new-balance.png"] { height: 36px; }
+  .client-logo-grid img[src$="new-york-knicks.png"], .client-logo-grid img[src$="kansas-city-chiefs.png"], .client-logo-grid img[src$="mercedes-benz.png"], .client-logo-grid img[src$="warner-bros.png"], .client-logo-grid img[src$="history.png"], .client-logo-grid img[src$="jack-daniels.png"], .client-logo-grid img[src$="on-running.png"], .client-logo-grid img[src$="new-balance.png"], .client-logo-grid img[src$="corona.png"], .client-logo-grid img[src$="xyz-films.png"] { height: 36px; }
 }
 
 /* app screens shown without a laptop frame: a hairline edge so dark screens hold their shape on dark sections */
