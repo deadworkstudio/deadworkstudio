@@ -909,17 +909,12 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .fit-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); }
 .fit-field { display: grid; gap: 10px; min-width: 0; }
 .fit-q { font-size: 15px; }
-.fit-field input[type=range] { width: 100%; accent-color: var(--fit-c, var(--ink)); }
+.fit-field input[type=range] { width: 100%; accent-color: var(--ink); }
 .fit-val { font-size: 13px; letter-spacing: .06em; }
 .fit-answer { font-size: 17px; line-height: 1.5; margin: 22px 0 0; }
 .fit-fine { font-size: 12px; color: var(--ink-3, #625E57); margin: 8px 0 0; }
 .pricing-card.is-fit { outline: 3px solid var(--fit-c, var(--ink)); outline-offset: -3px; transition: outline-color .3s ease; }
-/* Red -> green as the fitting plan grows. */
-.fit { --fit-c: var(--ink); border-top: 4px solid var(--fit-c); transition: border-color .3s ease; }
-.fit[data-tier="starter"], body:has(.fit[data-tier="starter"]) { --fit-c: #C8201A; }
-.fit[data-tier="creator"], body:has(.fit[data-tier="creator"]) { --fit-c: #D9661C; }
-.fit[data-tier="pro"], body:has(.fit[data-tier="pro"]) { --fit-c: #B9A116; }
-.fit[data-tier="studio"], body:has(.fit[data-tier="studio"]) { --fit-c: #2F9E44; }
-.fit input[type=range] { accent-color: var(--fit-c); }
-.fit-answer strong:first-child { color: var(--fit-c); transition: color .3s ease; }
+/* The plan the sliders pick is always a good fit: one steady green, no red. */
+.fit { --fit-c: #2F9E44; }
+.fit-answer strong:first-child { color: var(--fit-c); }
 @media (max-width: 767px) { .fit-row { grid-template-columns: 1fr; } }
