@@ -365,6 +365,8 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 .term-name { font: 600 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
 .term-save { font: 500 9.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--green); }
 .term-opt[data-term-opt="month"] .term-save { color: var(--ink-3); }
+.term-lock { font: 500 9px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.term-opt.is-active .term-lock { color: rgba(244, 241, 234, .6); }
 .term-opt.is-active { background: var(--ink); color: var(--bg); }
 .term-opt.is-active .term-save { color: #8FD687; }
 .term-opt.is-active[data-term-opt="month"] .term-save { color: rgba(244, 241, 234, .6); }
