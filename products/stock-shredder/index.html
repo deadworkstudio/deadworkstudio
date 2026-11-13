@@ -381,7 +381,6 @@
           <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.3">ARRI</button>
           <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="1.9">DJI drone</button>
           <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">iPhone</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">ProRes recorder</button>
         </div>
       </div>
       <div class="fit-row">
@@ -1160,7 +1159,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   // footage (528.6 min -> 1,479 clips), times each format's minutes per TB from published data rates:
   // Sony / Panasonic 4K All-Intra ~240 Mbps ~9 h/TB, Canon XF-AVC Intra ~410 Mbps ~5.4 h, Blackmagic BRAW
   // 6K ~2.4 h, RED 6K-8K R3D MQ ~56-99 min, ARRI ProRes 4444 UHD ~2 h (ARRIRAW ~53 min), DJI H.264/H.265
-  // 200 Mbps ~11 h, iPhone ProRes 4K ~3 h, ProRes 422 HQ 4K ~3 h.
+  // 200 Mbps ~11 h, iPhone ProRes 4K ~3 h.
   var CLIPS_PER_GB = 1.5;
   var cams = box.querySelectorAll('[data-fit-cam]'), fine = box.querySelector('[data-fit-fine]');
   var PLANS = [['starter', 'Starter', 250], ['creator', 'Creator', 600], ['pro', 'Pro', 1200], ['studio', 'Studio', 2000]];
