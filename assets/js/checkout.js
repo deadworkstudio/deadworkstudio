@@ -979,6 +979,16 @@
   // fetchClientSecret callback) so a 409/429/network failure from the Worker can be shown right
   // in the trial box, with the panel never opening at all — fail fast, instead of Stripe's
   // embedded form opening and only then failing to mount.
+  // Sales audit 2026-11-12: when the app opens this page from "Start SHRED" it adds ?claim= (a
+  // random code only the app knows) and ?email=. The claim rides along on the trial checkout so
+  // the app can pick up the key by itself, no copy and paste. The email just saves typing.
+  var appParams = new URLSearchParams(window.location.search);
+  var appClaim = /^[A-Za-z0-9_-]{24,80}$/.test(appParams.get('claim') || '') ? appParams.get('claim') : null;
+  var appEmail = appParams.get('email') || '';
+  if (trialEmailInput && appEmail && !trialEmailInput.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(appEmail) && appEmail.length < 200) {
+    trialEmailInput.value = appEmail;
+  }
+
   function startTrialCheckout(email) {
     if (!currentOfferCode || !frame || trialSubmitInFlight) return;
     trialSubmitInFlight = true;
@@ -992,7 +1002,7 @@
     fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ offer: currentOfferCode, email: email })
+      body: JSON.stringify(appClaim ? { offer: currentOfferCode, email: email, claim: appClaim } : { offer: currentOfferCode, email: email })
     })
       .then(function (res) {
         return res.json().then(function (data) {
