@@ -1177,6 +1177,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     var need = monthly + backlog / 3;
     var plan = PLANS[PLANS.length - 1];
     for (var i = 0; i < PLANS.length; i++) { if (PLANS[i][2] >= need) { plan = PLANS[i]; break; } }
+    box.classList.toggle('is-picked', Boolean(monthly || backlog));
     document.querySelectorAll('.pricing-card').forEach(function (c) { c.classList.toggle('is-fit', Boolean(c.querySelector('[data-plan-button="' + plan[0] + '"]'))); });
     if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
     var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
