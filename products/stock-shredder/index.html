@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113q" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -368,6 +368,38 @@
       </div>
     </div>
     <p class="pricing-every">Every plan: auto-naming, stock-site checks, stabilize, grain removal, every export size, unused clips roll over.</p>
+    <div class="fit" data-fit>
+      <p class="mono fit-eyebrow">Which plan fits</p>
+      <div class="fit-cams" role="radiogroup" aria-label="What you shoot on">
+        <span class="fit-q">What you shoot on</span>
+        <div class="fit-cam-row">
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="true" data-fit-cam="1.5">Sony</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.9">Canon</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="1.5">Panasonic</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.4">Blackmagic</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.2">RED</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.3">ARRI</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="1.9">DJI drone</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">iPhone</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="3.7">GoPro</button>
+          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">ProRes recorder</button>
+        </div>
+      </div>
+      <div class="fit-row">
+        <label class="fit-field">
+          <span class="fit-q">New footage you shoot each month</span>
+          <input type="range" min="0" max="17" step="1" value="3" data-fit-new aria-describedby="fit-new-val">
+          <span class="fit-val mono" id="fit-new-val" data-fit-new-val></span>
+        </label>
+        <label class="fit-field">
+          <span class="fit-q">Footage already sitting on your drives</span>
+          <input type="range" min="0" max="9" step="1" value="3" data-fit-drive aria-describedby="fit-drive-val">
+          <span class="fit-val mono" id="fit-drive-val" data-fit-drive-val></span>
+        </label>
+      </div>
+      <p class="fit-answer" data-fit-answer aria-live="polite"></p>
+      <p class="fit-fine" data-fit-fine></p>
+    </div>
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>
@@ -1117,6 +1149,56 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !overlay.hidden) closeLightbox();
   });
+})();
+</script>
+<script>
+// Which plan fits (sales ideas 2026-11-13): new footage a month + footage on drives -> plan + hours saved.
+(function () {
+  var box = document.querySelector('[data-fit]'); if (!box) return;
+  var NEW = [0, 50, 100, 250, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 8000, 10000, 15000, 20000, 30000, 50000];   // GB a month, up to 50 TB
+  var DRIVE = [0, 100, 250, 500, 1000, 2000, 5000, 10000, 20000, 50000];               // GB on drives
+  // Clips per GB by camera (research 2026-11-13): our Sony test found ~2.8 clips per minute of
+  // footage (528.6 min -> 1,479 clips), times each format's minutes per TB from published data rates:
+  // Sony / Panasonic 4K All-Intra ~240 Mbps ~9 h/TB, Canon XF-AVC Intra ~410 Mbps ~5.4 h, Blackmagic BRAW
+  // 6K ~2.4 h, RED 6K-8K R3D MQ ~56-99 min, ARRI ProRes 4444 UHD ~2 h (ARRIRAW ~53 min), DJI H.264/H.265
+  // 200 Mbps ~11 h, iPhone ProRes 4K ~3 h, GoPro 100 Mbps ~22 h, ProRes 422 HQ 4K ~3 h.
+  var CLIPS_PER_GB = 1.5;
+  var cams = box.querySelectorAll('[data-fit-cam]'), fine = box.querySelector('[data-fit-fine]');
+  var PLANS = [['starter', 'Starter', 250], ['creator', 'Creator', 600], ['pro', 'Pro', 1200], ['studio', 'Studio', 2000]];
+  var inNew = box.querySelector('[data-fit-new]'), inDrive = box.querySelector('[data-fit-drive]');
+  var outNew = box.querySelector('[data-fit-new-val]'), outDrive = box.querySelector('[data-fit-drive-val]'), out = box.querySelector('[data-fit-answer]');
+  function size(gb) { return gb === 0 ? 'None' : gb < 1000 ? gb + ' GB' : (gb / 1000).toLocaleString() + ' TB'; }
+  function n(v) { return Math.round(v).toLocaleString(); }
+  function update() {
+    var gbNew = NEW[+inNew.value], gbDrive = DRIVE[+inDrive.value];
+    fine.textContent = 'Estimate: about ' + n(CLIPS_PER_GB * 1000) + ' finished clips per TB of this footage, from our own test (about 3 clips per minute of footage) and published data rates. Your footage will vary.';
+    outNew.textContent = size(gbNew) + (gbNew ? ' a month' : '');
+    outDrive.textContent = size(gbDrive);
+    var monthly = gbNew * CLIPS_PER_GB, backlog = gbDrive * CLIPS_PER_GB;
+    // Clear the backlog in about 3 months on top of new footage, so the drives actually empty.
+    var need = monthly + backlog / 3;
+    var plan = PLANS[PLANS.length - 1];
+    for (var i = 0; i < PLANS.length; i++) { if (PLANS[i][2] >= need) { plan = PLANS[i]; break; } }
+    document.querySelectorAll('.pricing-card').forEach(function (c) { c.classList.toggle('is-fit', Boolean(c.querySelector('[data-plan-button="' + plan[0] + '"]'))); });
+    if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
+    var spare = plan[2] - monthly;
+    var months = backlog ? (spare > 0 ? Math.ceil(backlog / spare) : null) : 0;
+    var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
+    if (backlog) line += ', plus ' + n(backlog) + ' waiting on your drives';
+    line += '. ';
+    if (backlog && months) line += 'Your drives are cleared in about ' + months + ' month' + (months === 1 ? '' : 's') + '. ';
+    if (need > plan[2]) line += 'That is more than Studio covers, so get in touch and we will put together a bigger plan. ';
+    else if (backlog && !months) line += 'Your drives clear slowly on this plan. ';
+    line += 'That saves about <strong>' + n((Math.min(need, plan[2])) * 2 / 60) + ' hours</strong> of hand work a month.';
+    out.innerHTML = line;
+  }
+  cams.forEach(function (b) {
+    b.addEventListener('click', function () {
+      cams.forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); });
+      CLIPS_PER_GB = parseFloat(b.getAttribute('data-fit-cam')); update();
+    });
+  });
+  inNew.addEventListener('input', update); inDrive.addEventListener('input', update); update();
 })();
 </script>
 </body>

@@ -898,3 +898,20 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
   .ss-sticky .pill-solid { flex-grow: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .ss-sticky { transition: none; } }
+
+/* Which plan fits (sales ideas 2026-11-13) */
+.fit { max-width: 980px; margin: clamp(24px, 4vh, 40px) auto clamp(28px, 4vh, 44px); padding: clamp(20px, 3vw, 32px); border: 1px solid var(--line); text-align: left; }
+.fit-eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3, #625E57); margin: 0 0 16px; }
+.fit-cams { display: grid; gap: 10px; margin: 0 0 22px; }
+.fit-cam-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.fit-cam { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 9px 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 0; cursor: pointer; }
+.fit-cam[aria-checked="true"] { background: var(--ink); color: var(--bg, #F4F1EA); border-color: var(--ink); }
+.fit-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); }
+.fit-field { display: grid; gap: 10px; min-width: 0; }
+.fit-q { font-size: 15px; }
+.fit-field input[type=range] { width: 100%; accent-color: var(--ink); }
+.fit-val { font-size: 13px; letter-spacing: .06em; }
+.fit-answer { font-size: 17px; line-height: 1.5; margin: 22px 0 0; }
+.fit-fine { font-size: 12px; color: var(--ink-3, #625E57); margin: 8px 0 0; }
+.pricing-card.is-fit { outline: 2px solid var(--ink); outline-offset: -2px; }
+@media (max-width: 767px) { .fit-row { grid-template-columns: 1fr; } }
