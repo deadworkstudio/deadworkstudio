@@ -898,3 +898,21 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
   .ss-sticky .pill-solid { flex-grow: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .ss-sticky { transition: none; } }
+
+/* Before and after (sales ideas 2026-11-13) */
+.ba { padding: clamp(56px, 9vh, 96px) var(--gutter); text-align: center; }
+.ba-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(20px, 3vw, 40px); max-width: 1180px; margin: clamp(24px, 4vh, 40px) auto 0; text-align: left; align-items: start; }
+.ba-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3, #625E57); margin: 0 0 10px; }
+.ba-raw { position: relative; }
+.ba-raw img { display: block; width: 100%; height: auto; filter: saturate(.25) contrast(.62) brightness(1.18); }
+.ba-raw span, .ba-tile span { display: block; font-size: 11px; margin-top: 8px; color: var(--ink-3, #625E57); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ba-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.ba-tile img, .ba-raw img { display: block; width: 100%; aspect-ratio: 2.39; height: auto; object-fit: cover; }
+.ba-more { font-size: 11px; color: var(--ink-3, #625E57); margin: 10px 0 0; }
+.ba-cta { margin-top: clamp(24px, 4vh, 40px); }
+.ba-fine { font-size: 13px; color: var(--ink-3, #625E57); margin: 12px auto 0; max-width: 460px; }
+@media (max-width: 767px) {
+  .ba-grid { grid-template-columns: 1fr; }
+  .ba-tiles { grid-template-columns: repeat(2, 1fr); }
+}
+.ba-grid > *, .ba-tile { min-width: 0; margin: 0; }
