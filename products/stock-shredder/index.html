@@ -1182,9 +1182,9 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     document.querySelectorAll('.pricing-card').forEach(function (c) { c.classList.toggle('is-fit', Boolean(c.querySelector('[data-plan-button="' + plan[0] + '"]'))); });
     if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
     var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
-    if (backlog) line += ', plus ' + n(backlog) + ' waiting on your drives. Every month you work through more of them alongside your new footage';
+    if (backlog) line += ' + ' + n(backlog) + ' waiting on your drives';
     line += '. ';
-    line += 'That saves about <strong>' + n((Math.min(need, plan[2])) * 2 / 60) + ' hours</strong> of hand work a month.';
+    line += 'That saves you about <strong>' + n((Math.min(need, plan[2])) * 2 / 60) + ' hours</strong> a month.';
     out.innerHTML = line;
   }
   cams.forEach(function (b) {
