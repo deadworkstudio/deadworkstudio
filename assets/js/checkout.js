@@ -51,8 +51,10 @@
     });
   });
   // Cost per clip in cents, two places: 11.60¢, 8.46¢.
+  // Sales audit 2026-11-12: cents per clip made Creator look no better than Starter (11.60 vs
+  // 11.50). Show the time it saves instead, from the page's own "2 minutes per clip by hand".
   function perClipText(cents, clips) {
-    return (cents / clips).toFixed(2) + '\u00a2 / clip';
+    return 'About ' + Math.round(clips * 2 / 60) + ' hours of hand work saved a month';
   }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
@@ -485,6 +487,16 @@
         // saved card and emailed an explanation. Nothing was ever charged either way, so this
         // goes back to the trial box itself (not the generic checkout panel) with its specific
         // reason verbatim, rather than the generic "that charge didn't go through" message.
+        // Sales audit 2026-11-12: this email already pays on another account, so the Worker
+        // canceled and refunded the new plan and emailed them. Say so plainly.
+        if (data && data.duplicateRefunded) {
+          teardownCheckout();
+          panel.hidden = true;
+          success.hidden = true;
+          grid.hidden = false;
+          showPricingError(data.message || 'You already have a plan on this email, so this one was refunded in full.');
+          return;
+        }
         if (data && data.trialRejected) {
           teardownCheckout();
           panel.hidden = true;
@@ -781,7 +793,30 @@
       brandedPaying = true;
       updatePayButton();
       if (bcoPay) bcoPay.setAttribute('aria-busy', 'true');
-      brandedActions.updateEmail(email).then(function (res) {
+      // Sales audit 2026-11-12: stop a second subscription before the card is charged. Any
+      // failure of this check lets the payment go ahead (the Worker refunds a duplicate anyway).
+      fetch(WORKER_URL + '/checkout/email-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      })
+        .then(function (r) { return r.ok ? r.json() : { ok: true }; })
+        .catch(function () { return { ok: true }; })
+        .then(function (check) {
+          if (check && check.ok === false) {
+            brandedPaying = false;
+            updatePayButton();
+            if (bcoPay) bcoPay.removeAttribute('aria-busy');
+            showBrandedError(check.message || 'This email already has a Stock Shredder plan. Change it inside the app.');
+            return;
+          }
+          return payBranded(email);
+        });
+    });
+  }
+
+  function payBranded(email) {
+      return brandedActions.updateEmail(email).then(function (res) {
         if (res && res.type === 'error') {
           brandedPaying = false;
           updatePayButton();
@@ -791,7 +826,6 @@
         }
         return brandedActions.confirm({ redirect: 'if_required' }).then(handleBrandedConfirm);
       });
-    });
   }
 
   // Back from a payment method that finishes on its own site (Klarna, Cash App Pay, Amazon Pay) or
@@ -945,6 +979,16 @@
   // fetchClientSecret callback) so a 409/429/network failure from the Worker can be shown right
   // in the trial box, with the panel never opening at all — fail fast, instead of Stripe's
   // embedded form opening and only then failing to mount.
+  // Sales audit 2026-11-12: when the app opens this page from "Start SHRED" it adds ?claim= (a
+  // random code only the app knows) and ?email=. The claim rides along on the trial checkout so
+  // the app can pick up the key by itself, no copy and paste. The email just saves typing.
+  var appParams = new URLSearchParams(window.location.search);
+  var appClaim = /^[A-Za-z0-9_-]{24,80}$/.test(appParams.get('claim') || '') ? appParams.get('claim') : null;
+  var appEmail = appParams.get('email') || '';
+  if (trialEmailInput && appEmail && !trialEmailInput.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(appEmail) && appEmail.length < 200) {
+    trialEmailInput.value = appEmail;
+  }
+
   function startTrialCheckout(email) {
     if (!currentOfferCode || !frame || trialSubmitInFlight) return;
     trialSubmitInFlight = true;
@@ -958,7 +1002,7 @@
     fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ offer: currentOfferCode, email: email })
+      body: JSON.stringify(appClaim ? { offer: currentOfferCode, email: email, claim: appClaim } : { offer: currentOfferCode, email: email })
     })
       .then(function (res) {
         return res.json().then(function (data) {
@@ -1068,9 +1112,56 @@
         trialEmailInput.focus();
         return;
       }
+      // Sales audit 2026-11-12: the 7 days start when the card is saved, and a phone can't run the
+      // app. On phones the main button sends the link to their computer instead, so the clock
+      // starts where they'll use it. "Start now anyway" (data-trial-start-now) skips this. If the
+      // send fails for any reason (older server, network), fall back to starting the trial.
+      if (isPhoneVisitor() && !trialForm.hasAttribute('data-start-now')) {
+        sendTrialToComputer(email);
+        return;
+      }
       startTrialCheckout(email);
     });
   }
+
+  function sendTrialToComputer(email) {
+    trialSubmitInFlight = true;
+    if (trialSubmitBtn) { trialSubmitBtn.disabled = true; trialSubmitBtn.setAttribute('aria-busy', 'true'); }
+    showTrialError('');
+    showTrialStatus('Sending\u2026');
+    fetch(WORKER_URL + '/trial/send-to-computer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+      .then(function (res) {
+        trialSubmitInFlight = false;
+        if (trialSubmitBtn) { trialSubmitBtn.disabled = false; trialSubmitBtn.removeAttribute('aria-busy'); }
+        if (!res.ok) throw new Error('send failed ' + res.status);
+        showTrialStatus('Sent. Open it on your computer to get your 100 free clips. Your 7 days start there.');
+      })
+      .catch(function () {
+        trialSubmitInFlight = false;
+        if (trialSubmitBtn) { trialSubmitBtn.disabled = false; trialSubmitBtn.removeAttribute('aria-busy'); }
+        showTrialStatus('');
+        startTrialCheckout(email);
+      });
+  }
+
+  // Phones: relabel the trial button and offer the plain trial as a small link.
+  (function phoneTrialMode() {
+    if (!trialForm || !isPhoneVisitor()) return;
+    if (trialSubmitBtn) trialSubmitBtn.textContent = 'Send it to my computer';
+    var nowLink = document.querySelector('[data-trial-start-now]');
+    if (!nowLink) return;
+    nowLink.hidden = false;
+    nowLink.addEventListener('click', function () {
+      trialForm.setAttribute('data-start-now', '');
+      if (trialSubmitBtn) trialSubmitBtn.textContent = 'Start free trial';
+      nowLink.hidden = true;
+      if (trialEmailInput) trialEmailInput.focus();
+    });
+  })();
 
   // "Already started a trial? Email me my plan link" — a small second form, posting to
   // /trial/resend-link. Always the same on-screen acknowledgement regardless of whether the
