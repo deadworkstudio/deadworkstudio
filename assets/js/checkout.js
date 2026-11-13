@@ -7,6 +7,18 @@
 // No backend changes needed; the Worker's CORS is wide open for this.
 (function () {
   var WORKER_URL = 'https://stock-shredder-payments.stockshredder.workers.dev';
+  // The browser's remembered last outside visit (ss-funnel.js), sent only with a checkout so the
+  // sale is credited to where this person first came from, even days later. Nothing for GPC/DNT.
+  function lastTouch() {
+    try {
+      if (navigator.globalPrivacyControl === true || navigator.doNotTrack === '1') return undefined;
+      var t = JSON.parse(localStorage.getItem('dw-touch') || 'null');
+      if (!t || typeof t.t !== 'number' || !(Date.now() - t.t < 30 * 86400000)) return undefined;
+      return { s: String(t.s || '').slice(0, 40), c: String(t.c || '').slice(0, 60), r: String(t.r || '').slice(0, 120), t: t.t };
+    } catch (e) {
+      return undefined;
+    }
+  }
   var STRIPE_PUBLISHABLE_KEY = 'pk_live_51UIwxREHfnNaW3GQg8edd5eoY1Y3hQJDOKAZvbJiH2xLLjvoyIUdBTXiO55w31LCjPLcwozvcZIn10AlQkBCEh3h00gjfoagZc';
   // Local testing only: a dev server on this machine talks to a local Worker in Stripe test mode.
   if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
@@ -435,7 +447,7 @@
       headers: { 'Content-Type': 'application/json' },
       // `interval` too, for a Worker that predates `billing` — but the Worker must be deployed
       // first anyway, or 6/12-month buyers would be charged the monthly price.
-      body: JSON.stringify({ planId: currentPlanId, billing: currentPlanInterval, interval: currentPlanInterval === 'year' ? 'year' : 'month' })
+      body: JSON.stringify({ planId: currentPlanId, billing: currentPlanInterval, interval: currentPlanInterval === 'year' ? 'year' : 'month', touch: lastTouch() })
     })
       .then(function (res) {
         if (!res.ok) throw new Error('Checkout request failed: ' + res.status);
@@ -671,7 +683,8 @@
         billing: currentPlanInterval,
         interval: currentPlanInterval === 'year' ? 'year' : 'month',
         ui: 'custom',
-        returnUrl: location.origin + location.pathname
+        returnUrl: location.origin + location.pathname,
+        touch: lastTouch()
       })
     })
       .then(function (res) {
@@ -958,7 +971,7 @@
     fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ offer: currentOfferCode, email: email })
+      body: JSON.stringify({ offer: currentOfferCode, email: email, touch: lastTouch() })
     })
       .then(function (res) {
         return res.json().then(function (data) {
