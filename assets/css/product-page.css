@@ -111,6 +111,8 @@ main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh,
 /* Round/badge marks carry less ink than a wordmark of the same height, so they get a bit more. */
 .client-logo-grid img[src$="bmw.png"], .client-logo-grid img[src$="spitfire-audio.png"] { height: 44px; }
 .client-logo-grid img[src$="nfl.png"], .client-logo-grid img[src$="paramount.png"] { height: 50px; }
+/* a lone logo on the last row of the 5-wide grid sits in the middle column */
+@media (min-width: 761px) { .client-logo-grid li:last-child:nth-child(5n+1) { grid-column: 3; } }
 @media (max-width: 760px) {
   .client-logo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 20px; }
   .client-logo-grid img { height: 24px; }
