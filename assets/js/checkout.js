@@ -388,8 +388,64 @@
     }
   }
 
+  // "How did you hear about us?" (Daniel 2026-11-13). One optional tap on the "You're in" screen,
+  // tied to the Checkout session that just finished (the Worker only accepts a finished one, and
+  // only for that session's own email). Never blocks anything: any failure still says thanks.
+  var heardBox = success ? success.querySelector('[data-heard]') : null;
+  var heardSent = false;
+  function sendHeard(heardSessionId, answer, detail) {
+    if (heardSent) return;
+    heardSent = true;
+    var thanks = heardBox.querySelector('[data-heard-thanks]');
+    var other = heardBox.querySelector('[data-heard-other]');
+    Array.prototype.forEach.call(heardBox.querySelectorAll('[data-heard-opt]'), function (b) {
+      b.disabled = true;
+      b.setAttribute('aria-pressed', b.getAttribute('data-heard-opt') === answer ? 'true' : 'false');
+    });
+    if (other) other.hidden = true;
+    if (thanks) thanks.textContent = 'Thanks, that helps a lot.';
+    try {
+      fetch(WORKER_URL + '/heard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: heardSessionId, answer: answer, detail: detail || undefined }),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {
+      // optional question: nothing to do
+    }
+  }
+  function showHeardQuestion(heardSessionId) {
+    if (!heardBox || !heardSessionId || heardSent) return;
+    heardBox.hidden = false;
+    var other = heardBox.querySelector('[data-heard-other]');
+    var detail = heardBox.querySelector('[data-heard-detail]');
+    Array.prototype.forEach.call(heardBox.querySelectorAll('[data-heard-opt]'), function (b) {
+      b.onclick = function () {
+        var answer = b.getAttribute('data-heard-opt');
+        if (answer === 'other' && other) {
+          Array.prototype.forEach.call(heardBox.querySelectorAll('[data-heard-opt]'), function (x) {
+            x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+          });
+          other.hidden = false;
+          if (detail) detail.focus();
+          return;
+        }
+        sendHeard(heardSessionId, answer);
+      };
+    });
+    if (other) {
+      other.onsubmit = function (evt) {
+        evt.preventDefault();
+        sendHeard(heardSessionId, 'other', detail ? detail.value.trim().slice(0, 120) : '');
+      };
+    }
+  }
+
   function showSuccess(activationKey, trial, firstName) {
+    var finishedSessionId = sessionId;
     teardownCheckout();
+    showHeardQuestion(finishedSessionId);
     panel.hidden = true;
     grid.hidden = true;
     success.hidden = false;
