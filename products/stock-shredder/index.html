@@ -1181,14 +1181,9 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     for (var i = 0; i < PLANS.length; i++) { if (PLANS[i][2] >= need) { plan = PLANS[i]; break; } }
     document.querySelectorAll('.pricing-card').forEach(function (c) { c.classList.toggle('is-fit', Boolean(c.querySelector('[data-plan-button="' + plan[0] + '"]'))); });
     if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
-    var spare = plan[2] - monthly;
-    var months = backlog ? (spare > 0 ? Math.ceil(backlog / spare) : null) : 0;
     var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
-    if (backlog) line += ', plus ' + n(backlog) + ' waiting on your drives';
+    if (backlog) line += ', plus ' + n(backlog) + ' waiting on your drives. Every month you work through more of them alongside your new footage';
     line += '. ';
-    if (backlog && months) line += 'Your drives are cleared in about ' + months + ' month' + (months === 1 ? '' : 's') + '. ';
-    if (need > plan[2]) line += 'That is more than Studio covers, so get in touch and we will put together a bigger plan. ';
-    else if (backlog && !months) line += 'Your drives clear slowly on this plan. ';
     line += 'That saves about <strong>' + n((Math.min(need, plan[2])) * 2 / 60) + ' hours</strong> of hand work a month.';
     out.innerHTML = line;
   }
