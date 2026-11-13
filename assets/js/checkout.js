@@ -59,8 +59,8 @@
   // the terms paragraph under the grid and the text Stripe shows above its Subscribe button.
   var TERM_NOTE = {
     month: '<strong>Billed monthly.</strong> Cancel anytime. No fee.',
-    m6: '<strong>Billed monthly for 6 months.</strong> 10% off every payment. Can\'t be canceled early. After that it continues month to month at the same price, cancel anytime.',
-    m12: '<strong>Billed monthly for 12 months.</strong> 15% off every payment. Can\'t be canceled early. After that it continues month to month at the same price, cancel anytime.'
+    m6: '<strong>6-month commitment. Can\'t be canceled early.</strong> Billed monthly for 6 months at 10% off every payment. After 6 months it continues month to month at the same price, and from then on you can cancel anytime.',
+    m12: '<strong>12-month commitment. Can\'t be canceled early.</strong> Billed monthly for 12 months at 15% off every payment. After 12 months it continues month to month at the same price, and from then on you can cancel anytime.'
   };
   function usd(cents) {
     var whole = Math.floor(cents / 100);
@@ -645,7 +645,7 @@
     if (bcoBill) {
       bcoBill.textContent = currentPlanInterval === 'month'
         ? 'Monthly \u00b7 Cancel anytime'
-        : TERM_MONTHS[currentPlanInterval] + '-month term';
+        : TERM_MONTHS[currentPlanInterval] + '-month commitment \u00b7 No early cancel';
     }
     if (bcoClips) bcoClips.textContent = clips ? clips.toLocaleString('en-US') + ' clips / mo' : '';
     brandedTotalText = (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
