@@ -913,9 +913,12 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .fit-val { font-size: 13px; letter-spacing: .06em; }
 .fit-answer { font-size: 17px; line-height: 1.5; margin: 22px 0 0; }
 .fit-fine { font-size: 12px; color: var(--ink-3, #625E57); margin: 8px 0 0; }
-.pricing-card.is-fit { outline: 3px solid #2F9E44; outline-offset: -3px; transition: outline-color .3s ease; }
+.pricing-card.is-short { outline: 2px solid #C8201A; outline-offset: -2px; position: relative; }
+.pricing-card.is-short::before { content: 'Too small for your footage'; position: absolute; top: -20px; left: 0; right: 0; text-align: center; font: 600 10px/1 var(--font-mono, monospace); letter-spacing: .14em; text-transform: uppercase; color: #C8201A; }
+.pricing-card.is-short > * { opacity: .55; }
+.pricing-card.is-fit::before { content: 'Fits your footage'; position: absolute; top: -20px; left: 0; right: 0; text-align: center; font: 600 10px/1 var(--font-mono, monospace); letter-spacing: .14em; text-transform: uppercase; color: #2F9E44; }
+.pricing-card.is-fit { position: relative; outline: 3px solid #2F9E44; outline-offset: -3px; transition: outline-color .3s ease; }
 /* The plan the sliders pick is always a good fit: one steady green, no red. */
 .fit { --fit-c: #2F9E44; transition: border-color .3s ease, box-shadow .3s ease; }
-.fit.is-picked { border-color: var(--fit-c); box-shadow: inset 0 0 0 1px var(--fit-c); }
 .fit-answer strong:first-child { color: var(--fit-c); }
 @media (max-width: 767px) { .fit-row { grid-template-columns: 1fr; } }

@@ -1177,8 +1177,14 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     var need = monthly + backlog / 3;
     var plan = PLANS[PLANS.length - 1];
     for (var i = 0; i < PLANS.length; i++) { if (PLANS[i][2] >= need) { plan = PLANS[i]; break; } }
-    box.classList.toggle('is-picked', Boolean(monthly || backlog));
-    document.querySelectorAll('.pricing-card').forEach(function (c) { c.classList.toggle('is-fit', Boolean(c.querySelector('[data-plan-button="' + plan[0] + '"]'))); });
+    // Green = the plan that fits; red = plans too small for this footage (Daniel 2026-11-13).
+    var picked = Boolean(monthly || backlog);
+    PLANS.forEach(function (pl) {
+      var card = (document.querySelector('[data-plan-button="' + pl[0] + '"]') || {}).closest ? document.querySelector('[data-plan-button="' + pl[0] + '"]').closest('.pricing-card') : null;
+      if (!card) return;
+      card.classList.toggle('is-fit', picked && pl[0] === plan[0]);
+      card.classList.toggle('is-short', picked && pl[2] < need && pl[0] !== plan[0]);
+    });
     if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
     var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
     if (backlog) line += ' + ' + n(backlog) + ' waiting on your drives';
