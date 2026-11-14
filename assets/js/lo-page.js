@@ -192,17 +192,22 @@
   new IntersectionObserver(function (entries) { bar.classList.toggle('is-on', !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0); }).observe(top);
 })();
 
-// ---- ADDING GEAR rings: the capture ring fills once when the photos come into view, then shows its check ----
+// ---- ADDING GEAR rings: the capture ring fills each time the photos come into view, then shows its check ----
 // Without JS, or with reduced motion, the finished ring and check simply show (that is the CSS default).
 (function () {
   var strip = document.querySelector('[data-lo-capture-rings]'); if (!strip) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) return;
   strip.classList.add('is-armed');
+  // Plays each time the photos come back into view: it resets only once they are fully off screen
+  // (so it never flickers at the edge), and the reset is instant because only .is-on carries transitions.
   var io = new IntersectionObserver(function (es) {
-    if (!es[0].isIntersecting) return;
-    io.disconnect();
-    requestAnimationFrame(function () { strip.classList.add('is-on'); });
-  }, { threshold: 0.45 });
+    var e = es[0];
+    if (e.intersectionRatio >= 0.45) {
+      if (!strip.classList.contains('is-on')) requestAnimationFrame(function () { strip.classList.add('is-on'); });
+    } else if (!e.isIntersecting) {
+      strip.classList.remove('is-on');
+    }
+  }, { threshold: [0, 0.45] });
   io.observe(strip);
 })();
