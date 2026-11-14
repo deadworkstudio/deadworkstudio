@@ -265,3 +265,22 @@ main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; p
   .lo .pricing-terms { margin-top: 16px; }
   .lo .lo-price-cta { margin-top: 18px; }
 }
+
+/* ---- under the hood: eight short lines, each one checked against the app's code ---- */
+.lo-tech-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 1180px; margin: clamp(24px, 4vh, 40px) auto 0; border-top: 1px solid var(--line-2); text-align: left; }
+.lo-tech-grid li { display: flex; flex-direction: column; gap: 12px; padding: clamp(18px, 2.6vh, 28px) clamp(16px, 2vw, 28px); border-bottom: 1px solid var(--line-2); }
+.lo-tech-grid li:not(:nth-child(4n + 1)) { border-left: 1px solid var(--line-2); }
+.lo-tech-k { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+.lo-tech-k::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 10px; vertical-align: 1px; background: #8FD687; }
+.lo-tech-grid p { font: 500 clamp(17px, 1.35vw, 20px)/1.3 var(--sans); letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+@media (max-width: 1023px) {
+  .lo-tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lo-tech-grid li:not(:nth-child(4n + 1)) { border-left: 0; }
+  .lo-tech-grid li:nth-child(2n) { border-left: 1px solid var(--line-2); }
+}
+@media (max-width: 539px) {
+  .lo-tech-grid { grid-template-columns: 1fr; }
+  .lo-tech-grid li:nth-child(2n) { border-left: 0; }
+  .lo-tech-grid li { flex-direction: row; align-items: baseline; gap: 14px; padding: 14px 4px; }
+  .lo-tech-k { flex: 0 0 104px; }
+}

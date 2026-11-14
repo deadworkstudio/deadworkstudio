@@ -19,7 +19,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114h" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114i" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -246,6 +246,24 @@
     <!-- PHOTO SLOT (the app): a real scan with one item missing, the list showing it as Missing. 4:5.
          Files: photos/missing-800.jpg, missing-1200.jpg. To turn on: add both files, delete `hidden`. -->
     <figure class="lo-photo lo-photo-side" data-lo-photo hidden><picture><img src="../../assets/img/products/loadout/photos/missing-800.jpg" srcset="../../assets/img/products/loadout/photos/missing-800.jpg 800w, ../../assets/img/products/loadout/photos/missing-1200.jpg 1200w" sizes="(max-width: 767px) calc(100vw - 32px), 480px" alt="Loadout on iPhone over a camera case with one lens left out, the list showing it as Missing." width="1200" height="1500" loading="lazy" decoding="async" /></picture></figure>
+  </section>
+
+  <!-- ===== UNDER THE HOOD: each line is checked against the app's code (build 5, d6e21a5e). Evidence, file:line,
+       is in the 14 Nov polish-2 report. Rules: nothing the code doesn't do, no speed or accuracy numbers, no AI wording.
+       Crew is off in build 5, so nothing here mentions sharing. ===== -->
+  <section class="lo-tech" aria-labelledby="tech-title">
+    <h2 class="section-title section-head head-dw" id="tech-title">Under the hood</h2>
+    <p class="section-title">The parts you never see.</p>
+    <ul class="lo-tech-grid">
+      <li><span class="mono lo-tech-k">On device</span><p>Runs on the iPhone. Works with no signal.</p></li>
+      <li><span class="mono lo-tech-k">Vision</span><p>Built on Apple's Vision framework.</p></li>
+      <li><span class="mono lo-tech-k">Labels</span><p>Reads printed labels as a second check.</p></li>
+      <li><span class="mono lo-tech-k">Seen</span><p>Only marks what the camera has seen.</p></li>
+      <li><span class="mono lo-tech-k">Low light</span><p>Turns on the light when the case is dark.</p></li>
+      <li><span class="mono lo-tech-k">Voice</span><p>Say an item's name to check it. Speech stays on the phone.</p></li>
+      <li><span class="mono lo-tech-k">Haptics</span><p>Custom haptics for all clear and for missing.</p></li>
+      <li><span class="mono lo-tech-k">iCloud</span><p>Syncs through your own private iCloud.</p></li>
+    </ul>
   </section>
 
   <div class="pair tone-alt">
