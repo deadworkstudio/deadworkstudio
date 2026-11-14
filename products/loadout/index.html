@@ -18,7 +18,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114b" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114c" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -84,7 +84,8 @@
 <main id="main" data-cta="wait" data-event="loadout_page_view">
   <section class="hero">
     <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/loadout.png" alt="Loadout" width="1366" height="466" /></div>
-    <h1>Every piece of gear accounted for.<br />Before you leave.</h1>
+    <h1>Never leave gear behind.</h1>
+    <p class="lo-hero-tag">Every piece of gear accounted for. Before you leave.</p>
     <p class="mono lo-hero-for">For film crews, videographers and photographers</p>
     <p class="section-sub lo-hero-sub">Pan your phone across the packed case. Loadout marks what it sees and lists what's missing.</p>
     <div class="downloads lo-cta" id="top-cta" data-lo-cta>
@@ -103,10 +104,11 @@
       </form>
     </div>
     <p class="mono downloads-note"><span class="lo-cta-live">14 days free &nbsp;&middot;&nbsp; iPhone &nbsp;&middot;&nbsp; App Store</span><span class="lo-cta-wait">Coming to iPhone &nbsp;&middot;&nbsp; 14 days free</span></p>
-    <figure class="lo-phones" aria-label="Loadout on iPhone: the gear list, the All accounted for screen, and the list of kits.">
-      <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-gear.webp" alt="" width="588" height="1280" /></div></div>
-      <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-accounted.webp" alt="" width="588" height="1280" /></div></div>
-      <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-kits.webp" alt="" width="588" height="1280" /></div></div>
+    <!-- Hero screens: rendered in the iOS Simulator from the Loadout build with demo kits (A-Cam, Grip, Sound). -->
+    <figure class="lo-phones" aria-label="Loadout on iPhone: the A-Cam Package kit with 12 of 12 clear, the All accounted for screen, and the list of kits.">
+      <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/kit-600.webp" srcset="../../assets/img/products/loadout/screens/v2/kit-600.webp 600w, ../../assets/img/products/loadout/screens/v2/kit-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
+      <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="(max-width: 767px) 62vw, 270px" alt="" width="900" height="1957" fetchpriority="high" /></div></div>
+      <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/kits-600.webp" srcset="../../assets/img/products/loadout/screens/v2/kits-600.webp 600w, ../../assets/img/products/loadout/screens/v2/kits-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
     </figure>
   </section>
 
@@ -141,11 +143,11 @@
   </section>
 
   <section class="remote lo-scan" aria-labelledby="scan-title">
-    <h2 class="mono">The scan</h2>
-    <p class="section-title" id="scan-title">Pan the case. Watch it tick.</p>
+    <h2 class="section-title section-head head-dw" id="scan-title">The scan</h2>
+    <p class="section-title">Pan the case. Watch it tick.</p>
     <p class="section-sub">Everything the camera sees is marked Seen.<br class="br-desk" /> Tap All packed to confirm. Look-alikes and anything it misses, you check by hand.</p>
     <figure class="phone lo-real lo-scan-phone">
-      <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/lo-scan-poster.webp" width="588" height="1280" aria-label="Screen recording of Loadout on iPhone: the camera pans across a packed case, items are marked Seen one by one, All packed confirms them, and the green All accounted for screen appears." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan.mp4" type="video/mp4" /></video></div>
+      <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/v2/scan-poster-588.webp" width="588" height="1280" aria-label="Screen recording of Loadout on iPhone: the camera pans across a packed case, items are marked Seen one by one, All packed confirms them, and the green All accounted for screen appears." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v2.mp4" type="video/mp4" /></video></div>
       <figcaption class="mono lo-scan-note">Real scan, recorded on iPhone. Sped up 2.5x.</figcaption>
     </figure>
   </section>
@@ -208,7 +210,7 @@
         <div class="phone-body">
           <span class="phone-island" aria-hidden="true"></span>
           <div class="lo-tour-screen">
-            <img class="lo-tour-img" src="../../assets/img/products/loadout/screens/app-scan.webp" alt="Loadout on iPhone scanning a case: 6 of 9 Seen, a Seen Glasses label, two prompts to tap Glasses and Skinny drive, and a checklist with Seen and Not checked rows." width="588" height="1280" loading="lazy" />
+            <img class="lo-tour-img" src="../../assets/img/products/loadout/screens/v2/scan-588.webp" alt="Loadout on iPhone scanning a case: 6 of 9 Seen, a Seen Glasses label, two prompts to tap Glasses and Skinny drive, and a checklist with Seen and Not checked rows." width="588" height="1280" loading="lazy" />
             <svg class="ix-spot" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-lo-spot>
               <defs><mask id="lo-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="#fff" /><g data-lo-holes></g></mask></defs>
               <rect class="ix-dim" x="0" y="0" width="100" height="100" mask="url(#lo-mask)" />
@@ -246,30 +248,30 @@
     <p class="section-title" id="add-title">Circle it once. That's all.</p>
     <p class="section-sub">Aim the ring at an item and the camera takes a short look around it.<br class="br-desk" /> Add one item, or a whole bag, item after item.</p>
     <ol class="lo-moment-steps lo-add-steps">
-      <li class="lo-moment-step"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-circle.webp" alt="Loadout on iPhone: a ring on the camera view fills as it looks around a grey coaster, with the prompt Flip it over." width="588" height="1280" loading="lazy" /></div></div>
+      <li class="lo-moment-step"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/circle-588.webp" alt="Loadout on iPhone: a ring on the camera view fills as it looks around a grey coaster, with the prompt Flip it over." width="588" height="1280" loading="lazy" decoding="async" /></div></div>
         <p class="mono lo-moment-label"><span>01</span>The ring fills</p></li>
       <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>
-      <li class="lo-moment-step"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-circle-done.webp" alt="Loadout on iPhone: the ring shows a check mark and the line Captured, aim at the next item." width="588" height="1280" loading="lazy" /></div></div>
+      <li class="lo-moment-step"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/circle-done-588.webp" alt="Loadout on iPhone: the ring shows a check mark over the coaster, the line Captured, aim at the next item, and a Done, 1 item button." width="588" height="1280" loading="lazy" decoding="async" /></div></div>
         <p class="mono lo-moment-label"><span>02</span>Captured</p></li>
     </ol>
   </section>
 
-  <!-- ===== THE MOMENT: real screens from the same scan as the video above ===== -->
+  <!-- ===== THE MOMENT: Simulator renders of the real build (demo A-Cam Package, 12 items). The viewfinder is black because the Simulator has no camera; replace step 01 with a still from the real shoot. ===== -->
   <section class="lo-moment tone-dark" aria-labelledby="moment-title">
     <h2 class="section-title section-head head-dw">Before you leave</h2>
     <p class="section-title" id="moment-title">One tap. Everything in the case.</p>
     <p class="section-sub">When the camera has seen every item, you confirm.<br class="br-desk" /> Anything it hasn't seen stays on the list.</p>
     <ol class="lo-moment-steps">
       <li class="lo-moment-step">
-        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-allpacked.webp" alt="Loadout on iPhone: All 9 seen, with a tile for each item and an All packed button." width="588" height="1280" loading="lazy" /></div></div>
+        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/allpacked-600.webp" srcset="../../assets/img/products/loadout/screens/v2/allpacked-600.webp 600w, ../../assets/img/products/loadout/screens/v2/allpacked-900.webp 900w" sizes="250px" alt="Loadout on iPhone scanning the A-Cam Package: 12 seen, Camera Body and two V-Mount batteries waiting for a tap, and an All packed button." width="900" height="1957" loading="lazy" decoding="async" /></div></div>
         <p class="mono lo-moment-label"><span>01</span>All seen</p>
-        <p class="lo-moment-cap">Tap any that look wrong. Then All packed.</p>
+        <p class="lo-moment-cap">Tap the look-alikes. Then All packed.</p>
       </li>
       <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>
       <li class="lo-moment-step">
-        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/app-accounted.webp" alt="Loadout on iPhone: a green screen reading 9 of 9, All accounted for, saved on this phone." width="588" height="1280" loading="lazy" /></div></div>
+        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="250px" alt="Loadout on iPhone: a green screen reading 12 of 12, All accounted for, A-Cam Package, saved on this phone." width="900" height="1957" loading="lazy" decoding="async" /></div></div>
         <p class="mono lo-moment-label"><span>02</span>Accounted for</p>
-        <p class="lo-moment-cap">Nine of nine. Saved on this phone.</p>
+        <p class="lo-moment-cap">Twelve of twelve. Saved on this phone.</p>
       </li>
     </ol>
   </section>

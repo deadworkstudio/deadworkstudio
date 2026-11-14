@@ -6,9 +6,7 @@
 .lo-phones .phone { margin: 0; }
 .lo-phone-main { width: clamp(200px, 19vw, 270px) !important; }
 .lo-phone-side { width: clamp(170px, 16vw, 230px) !important; opacity: .92; }
-.lo-phones .phone-body { border-radius: 40px; padding: 9px; }
-.lo-phones .phone-body img { border-radius: 32px; padding-top: 0; }
-.lo-phones .phone-island { top: 18px; height: 20px; }
+/* every phone on the page uses the one frame from ss-page.css (.phone-body: 11px bezel, 48px corner; screen 38px) */
 .lo .phone-body img { padding-top: 0; }
 
 /* not live yet: same pill, no click */
@@ -28,6 +26,7 @@
 /* why loadout: five differentiators in one row on desktop */
 .lo-why .lo-feat-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .lo-why .lo-feat-grid li:not(:first-child) { border-left: 1px solid var(--line-2); }
+.lo-hero-tag { margin-top: 12px; font: 500 clamp(19px, 1.7vw, 24px)/1.25 var(--sans); letter-spacing: -.015em; color: var(--ink-2); text-wrap: balance; }
 .lo-hero-sub { margin-top: 8px; }
 .lo-hero-for { margin-top: 10px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); text-wrap: balance; }
 
@@ -110,7 +109,6 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
 /* ---- real app screens and recordings: the island and status area are already in the picture ---- */
 .lo-real .phone-island { display: none; }
 .lo-real .phone-body img, .lo-real .phone-body video { display: block; width: 100%; height: auto; padding-top: 0; border-radius: 38px; background: #000; }
-.lo-phones .lo-real .phone-body img { border-radius: 32px; }
 .lo-scan-phone { position: relative; }
 .lo-scan-video { aspect-ratio: 588 / 1280; }
 .lo-scan-note { margin-top: 16px; text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
