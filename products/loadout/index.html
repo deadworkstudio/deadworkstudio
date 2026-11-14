@@ -19,7 +19,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114i" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114j" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -165,7 +165,10 @@
     <figure class="lo-photo lo-photo-side" data-lo-photo hidden><picture><img src="../../assets/img/products/loadout/photos/scan-800.jpg" srcset="../../assets/img/products/loadout/photos/scan-800.jpg 800w, ../../assets/img/products/loadout/photos/scan-1200.jpg 1200w" sizes="(max-width: 767px) calc(100vw - 32px), 480px" alt="An iPhone held over an open gear case shows Loadout's green All accounted for screen." width="1200" height="1500" loading="lazy" decoding="async" /></picture></figure>
   </section>
 
-  <section class="lo-cta-band" aria-label="Get Loadout">
+  <!-- CTA band colour: one attribute. data-band="ink" (near-black band, bone text, bone button; the Adding gear black),
+       "green-button" (bone band, brand green #8FD687 button with black text), or "green" (green band, black text,
+       black button with bone text; echoes the app's All accounted for screen). Remove it for the old bone band. -->
+  <section class="lo-cta-band" data-band="ink" aria-label="Get Loadout">
     <p class="lo-cta-band-line">Know it's all in the case.</p>
     <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
     <a class="pill pill-solid lo-cta-wait" href="#top-cta">Get notified</a>

@@ -284,3 +284,20 @@ main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; p
   .lo-tech-grid li { flex-direction: row; align-items: baseline; gap: 14px; padding: 14px 4px; }
   .lo-tech-k { flex: 0 0 104px; }
 }
+
+/* ---- CTA band colour: switch with data-band on .lo-cta-band (see the comment in the HTML) ----
+   ink:          #0E0E0D band, #F1ECE2 text and button (button text #0E0E0D)   text 16.4:1, button 16.4:1
+   green-button: bone band, #8FD687 button with #0E0E0D text and border         button text 11.2:1 (button edge on bone only 1.5:1, the black border carries it)
+   green:        #8FD687 band, #0E0E0D text, #0E0E0D button with #F1ECE2 text   text 11.2:1, button 16.4:1 */
+.lo-cta-band[data-band="ink"] { --bg: #0E0E0D; --ink: #F1ECE2; --line-2: transparent; background: var(--bg); color: var(--ink); border-color: transparent; }
+.lo-cta-band[data-band="green"] { --bg: #8FD687; --ink: #0E0E0D; --line-2: transparent; background: var(--bg); color: var(--ink); border-color: transparent; }
+.lo-cta-band[data-band="green"] .pill-solid { background: #0E0E0D; border-color: #0E0E0D; color: #F1ECE2; }
+.lo-cta-band[data-band="green-button"] .pill-solid { background: #8FD687; border-color: #0E0E0D; color: #0E0E0D; }
+.lo-cta-band .pill-solid:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.lo-cta-band[data-band="ink"] .pill-solid:focus-visible { outline-color: #F1ECE2; }
+.lo-cta-band[data-band="green"] .pill-solid:focus-visible { outline-color: #0E0E0D; }
+@media (hover: hover) {
+  .lo-cta-band[data-band="ink"] .pill-solid:hover { background: #fff; border-color: #fff; color: #0E0E0D; }
+  .lo-cta-band[data-band="green"] .pill-solid:hover { background: #000; border-color: #000; color: #fff; }
+  .lo-cta-band[data-band="green-button"] .pill-solid:hover { background: #A6E09F; color: #0E0E0D; }
+}
