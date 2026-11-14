@@ -182,3 +182,31 @@ main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; p
 .notify-platform-opt span { flex: 1; display: inline-flex; align-items: center; justify-content: center; padding: 0 18px; border: 1px solid currentColor; border-radius: 999px; font-size: 15px; opacity: .75; }
 .notify-platform-opt input:checked + span { opacity: 1; font-weight: 600; box-shadow: inset 0 0 0 1px currentColor; }
 .notify-platform-opt input:focus-visible + span { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* ---- adding gear: the app's capture ring drawn over each photo (an illustration of the step, not a screenshot) ----
+   Matches CaptureRing in the app (BulkAddView.swift): track white 35% 3pt, arc bone #EBE5D8 5pt with square ends,
+   filling clockwise from the top, then a bold check; outside the circle a dark scrim (the app's is 55%, here lighter).
+   Stroke widths are in the photo's 100-unit grid, so they scale with the photo and stay sharp at any pixel density.
+   Default = the finished ring with its check (no JS, reduced motion). lo-page.js adds .is-armed then .is-on to play it once. */
+.lo-ring-photo { position: relative; display: block; overflow: hidden; }
+.lo-ring { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.lo-ring-scrim { fill: rgba(0, 0, 0, .4); }
+/* widths follow the app's proportions of the ring's diameter (--d, in grid units): track 1.2%, arc 2%, check 2.8% */
+.lo-ring { --sw: 1; }
+.lo-ring-track { fill: none; stroke: rgba(255, 255, 255, .35); stroke-width: calc(var(--d) * .012 * var(--sw)); }
+.lo-ring-fill { fill: none; stroke: #EBE5D8; stroke-width: calc(var(--d) * .02 * var(--sw)); stroke-linecap: butt; stroke-dasharray: 100; stroke-dashoffset: 0; }
+.lo-ring-check { fill: none; stroke: #EBE5D8; stroke-width: calc(var(--d) * .028 * var(--sw)); stroke-linecap: round; stroke-linejoin: round; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 1.2px rgba(0, 0, 0, .55)); }
+@media (max-width: 767px) { .lo-ring { --sw: 1.5; } }
+@media (prefers-reduced-motion: no-preference) {
+  .lo-gear-strip.is-armed .lo-ring-fill { stroke-dashoffset: 100; }
+  .lo-gear-strip.is-armed .lo-ring-check { opacity: 0; transform: scale(.4); }
+  .lo-gear-strip.is-armed .lo-ring-scrim { opacity: 0; }
+  .lo-ring-scrim { transition: opacity 400ms ease-out; }
+  .lo-gear-strip.is-on .lo-ring-scrim { opacity: 1; }
+  .lo-gear-strip.is-on .lo-ring-fill { stroke-dashoffset: 0; transition: stroke-dashoffset 1500ms cubic-bezier(.33, 0, .2, 1) 300ms; }
+  .lo-gear-strip.is-on .lo-ring-check { opacity: 1; transform: none; transition: opacity 200ms ease-out 1800ms, transform 350ms cubic-bezier(.34, 1.56, .64, 1) 1800ms; }
+  .lo-gear-strip.is-on li:nth-child(2) .lo-ring-fill { transition-delay: 550ms; }
+  .lo-gear-strip.is-on li:nth-child(2) .lo-ring-check { transition-delay: 2050ms; }
+  .lo-gear-strip.is-on li:nth-child(3) .lo-ring-fill { transition-delay: 800ms; }
+  .lo-gear-strip.is-on li:nth-child(3) .lo-ring-check { transition-delay: 2300ms; }
+}

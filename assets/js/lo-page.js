@@ -191,3 +191,18 @@
   bar.hidden = false;
   new IntersectionObserver(function (entries) { bar.classList.toggle('is-on', !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0); }).observe(top);
 })();
+
+// ---- ADDING GEAR rings: the capture ring fills once when the photos come into view, then shows its check ----
+// Without JS, or with reduced motion, the finished ring and check simply show (that is the CSS default).
+(function () {
+  var strip = document.querySelector('[data-lo-capture-rings]'); if (!strip) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+  strip.classList.add('is-armed');
+  var io = new IntersectionObserver(function (es) {
+    if (!es[0].isIntersecting) return;
+    io.disconnect();
+    requestAnimationFrame(function () { strip.classList.add('is-on'); });
+  }, { threshold: 0.45 });
+  io.observe(strip);
+})();

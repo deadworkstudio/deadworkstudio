@@ -19,7 +19,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114f" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114g" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -263,11 +263,15 @@
     <h2 class="section-title section-head head-dw">Adding gear</h2>
     <p class="section-title" id="add-title">Circle it once. That's all.</p>
     <p class="section-sub">Aim the ring at an item and the camera takes a short look around it.<br class="br-desk" /> Add one item, or a whole bag, item after item.</p>
-    <!-- Real gear, photographed by Daniel on iPhone (photos, not app screens). 4:5, 480w and 960w WebP, metadata stripped. -->
-    <ul class="lo-gear-strip" aria-label="Real gear you would add">
-      <li><img src="../../assets/img/products/loadout/photos/gear-rangefinder-480.webp" srcset="../../assets/img/products/loadout/photos/gear-rangefinder-480.webp 480w, ../../assets/img/products/loadout/photos/gear-rangefinder-960.webp 960w" sizes="(max-width: 767px) 30vw, 300px" alt="A silver rangefinder camera held in one hand." width="960" height="1200" loading="lazy" decoding="async" /><span class="mono">Camera</span></li>
-      <li><img src="../../assets/img/products/loadout/photos/gear-ssd-480.webp" srcset="../../assets/img/products/loadout/photos/gear-ssd-480.webp 480w, ../../assets/img/products/loadout/photos/gear-ssd-960.webp 960w" sizes="(max-width: 767px) 30vw, 300px" alt="Three portable SSDs side by side on a black table." width="960" height="1200" loading="lazy" decoding="async" /><span class="mono">Media</span></li>
-      <li><img src="../../assets/img/products/loadout/photos/gear-drives-480.webp" srcset="../../assets/img/products/loadout/photos/gear-drives-480.webp 480w, ../../assets/img/products/loadout/photos/gear-drives-960.webp 960w" sizes="(max-width: 767px) 30vw, 300px" alt="Two 3.5 inch hard drives on a black table." width="960" height="1200" loading="lazy" decoding="async" /><span class="mono">Drives</span></li>
+    <!-- Real gear, photographed by Daniel on iPhone (photos, not app screens). 4:5, 480w and 960w WebP, metadata stripped.
+         The ring on each photo is drawn in SVG (not baked into the image): an illustration of the capture step, matching the
+         app's CaptureRing (BulkAddView.swift): a faint 3pt track, a 5pt bone arc that fills clockwise from the top, then a check.
+         Each SVG uses the photo's own 100 x 125 grid; move a ring by changing cx/cy/r on its circles and the hole in its scrim.
+         lo-page.js plays the fill once in view; without JS or with reduced motion the finished ring and check show. -->
+    <ul class="lo-gear-strip" aria-label="Real gear you would add" data-lo-capture-rings>
+      <li><span class="lo-ring-photo"><img src="../../assets/img/products/loadout/photos/gear-rangefinder-480.webp" srcset="../../assets/img/products/loadout/photos/gear-rangefinder-480.webp 480w, ../../assets/img/products/loadout/photos/gear-rangefinder-960.webp 960w" sizes="(max-width: 767px) 30vw, 300px" alt="A silver rangefinder camera held in one hand." width="960" height="1200" loading="lazy" decoding="async" /><svg class="lo-ring" viewBox="0 0 100 125" style="--d:88" aria-hidden="true" focusable="false"><path class="lo-ring-scrim" fill-rule="evenodd" d="M0 0H100V125H0Z M10 62.5a44 44 0 1 0 88 0a44 44 0 1 0 -88 0Z" /><circle class="lo-ring-track" cx="54" cy="62.5" r="44" /><circle class="lo-ring-fill" cx="54" cy="62.5" r="44" pathLength="100" transform="rotate(-90 54 62.5)" /><polyline class="lo-ring-check" points="43.5,63.0 50.7,70.0 65.0,55.7" /></svg></span><span class="mono">Camera</span></li>
+      <li><span class="lo-ring-photo"><img src="../../assets/img/products/loadout/photos/gear-ssd-480.webp" srcset="../../assets/img/products/loadout/photos/gear-ssd-480.webp 480w, ../../assets/img/products/loadout/photos/gear-ssd-960.webp 960w" sizes="(max-width: 767px) 30vw, 300px" alt="Three portable SSDs side by side on a black table." width="960" height="1200" loading="lazy" decoding="async" /><svg class="lo-ring" viewBox="0 0 100 125" style="--d:58" aria-hidden="true" focusable="false"><path class="lo-ring-scrim" fill-rule="evenodd" d="M0 0H100V125H0Z M23 64a29 29 0 1 0 58 0a29 29 0 1 0 -58 0Z" /><circle class="lo-ring-track" cx="52" cy="64" r="29" /><circle class="lo-ring-fill" cx="52" cy="64" r="29" pathLength="100" transform="rotate(-90 52 64)" /><polyline class="lo-ring-check" points="45.1,64.4 49.8,68.9 59.2,59.5" /></svg></span><span class="mono">Media</span></li>
+      <li><span class="lo-ring-photo"><img src="../../assets/img/products/loadout/photos/gear-drives-480.webp" srcset="../../assets/img/products/loadout/photos/gear-drives-480.webp 480w, ../../assets/img/products/loadout/photos/gear-drives-960.webp 960w" sizes="(max-width: 767px) 30vw, 300px" alt="Two 3.5 inch hard drives on a black table." width="960" height="1200" loading="lazy" decoding="async" /><svg class="lo-ring" viewBox="0 0 100 125" style="--d:76" aria-hidden="true" focusable="false"><path class="lo-ring-scrim" fill-rule="evenodd" d="M0 0H100V125H0Z M0 82a38 38 0 1 0 76 0a38 38 0 1 0 -76 0Z" /><circle class="lo-ring-track" cx="38" cy="82" r="38" /><circle class="lo-ring-fill" cx="38" cy="82" r="38" pathLength="100" transform="rotate(-90 38 82)" /><polyline class="lo-ring-check" points="29.0,82.5 35.1,88.5 47.5,76.1" /></svg></span><span class="mono">Drives</span></li>
     </ul>
     <p class="mono lo-gear-note">Real gear. Photographed on iPhone.</p>
     <!-- Hidden: the only circle-capture footage is a dark, soft test recording (a coaster).
@@ -528,7 +532,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261103a"></script>
-<script src="../../assets/js/lo-page.js?v=20261114a" defer></script>
+<script src="../../assets/js/lo-page.js?v=20261114b" defer></script>
 <script src="../../assets/js/notify.js?v=20261114a" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261113a" defer></script>
 </body>
