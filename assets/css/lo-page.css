@@ -29,6 +29,7 @@
 .lo-why .lo-feat-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .lo-why .lo-feat-grid li:not(:first-child) { border-left: 1px solid var(--line-2); }
 .lo-hero-sub { margin-top: 8px; }
+.lo-hero-for { margin-top: 10px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); text-wrap: balance; }
 
 .lo-plat { grid-template-columns: repeat(2, minmax(0, 260px)) !important; }
 
