@@ -12,6 +12,10 @@
     var input = form.querySelector('[data-notify-email]');
     // Optional in the markup: a form without the first-name field still works and sends no name.
     var nameInput = form.querySelector('[data-notify-name]');
+    // Optional iPhone / Android radios (Loadout). None picked sends no platform.
+    var platformInputs = form.querySelectorAll('[data-notify-platform]');
+    var formSource = form.getAttribute('data-notify-form-source') || '';
+    var successMessage = form.getAttribute('data-notify-success') || "You're on the list.";
     var button = form.querySelector('[data-notify-submit]');
     var status = form.querySelector('[data-notify-status]');
     var honeypot = form.querySelector('[data-notify-hp]');
@@ -81,7 +85,8 @@
       }
 
       var firstName = nameInput ? (nameInput.value || '').trim() : '';
-      if (nameInput && !firstName) {
+      // The name is only mandatory when the markup says so (`required`); Loadout's is optional.
+      if (nameInput && nameInput.required && !firstName) {
         showStatus('Enter your first name.', 'error');
         nameInput.setAttribute('aria-invalid', 'true');
         nameInput.focus();
@@ -106,6 +111,14 @@
       // Lead-source tracking: where someone came from, captured automatically — no new field for
       // the visitor to fill in. Deliberately simple: the raw referrer (or 'direct' when there
       // isn't one) and the page path the form lived on, not real UTM-parameter parsing.
+      var platform = '';
+      Array.prototype.forEach.call(platformInputs, function (r) { if (r.checked) platform = r.value; });
+      var utm = {};
+      try {
+        var qs = new URLSearchParams(location.search);
+        ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (qs.get(k)) utm[k] = qs.get(k); });
+      } catch (e) { /* old browser: no utm */ }
+
       fetch(WORKER_URL + '/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -115,7 +128,10 @@
           product: product,
           company: honeypot ? honeypot.value : '',
           source: document.referrer || 'direct',
-          page: location.pathname
+          page: location.pathname,
+          platform: platform,
+          form: formSource,
+          utm: utm
         })
       })
         .then(function (res) {
@@ -125,7 +141,7 @@
         .then(function (data) {
           if (!data || !data.ok) throw new Error('Unexpected response');
           form.reset();
-          showStatus("You're on the list.", 'good');
+          showStatus(successMessage, 'good');
         })
         .catch(function () {
           showStatus("Something went wrong. Try again.", 'error');

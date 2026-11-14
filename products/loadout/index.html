@@ -19,7 +19,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114e" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114f" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -94,11 +94,16 @@
            (here and in the Pricing section) with the real App Store URL. Until then they scroll to Pricing. -->
       <a id="download-iphone" class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_hero_cta_click"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Start your 14-day free trial</span></a>
       <a class="pill pill-outline lo-cta-live" href="#notify">Android is coming</a>
-      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" novalidate>
+      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="hero" data-notify-success="You're on the list. One email when it's out." novalidate>
         <label class="sr-only" for="notify-name-top">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-top" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
+        <input class="notify-input notify-name" type="text" id="notify-name-top" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
         <label class="sr-only" for="notify-email-top">Email address</label>
         <input class="notify-input" type="email" id="notify-email-top" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <fieldset class="notify-platform">
+          <legend>Which phone? (optional)</legend>
+          <label class="notify-platform-opt"><input type="radio" name="platform-top" value="iphone" data-notify-platform /><span>iPhone</span></label>
+          <label class="notify-platform-opt"><input type="radio" name="platform-top" value="android" data-notify-platform /><span>Android</span></label>
+        </fieldset>
         <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
         <button class="pill pill-solid notify-submit" type="submit" data-notify-submit data-event="loadout_hero_cta_click">Get notified</button>
         <p class="notify-status" role="status" aria-live="polite" id="notify-status-top" data-notify-status hidden></p>
@@ -152,8 +157,8 @@
     <p class="section-title">Pan the case. Watch it tick.</p>
     <p class="section-sub">Everything the camera sees is marked Seen.<br class="br-desk" /> Tap All packed to confirm. Look-alikes and anything it misses, you check by hand.</p>
     <figure class="phone lo-real lo-scan-phone">
-      <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/v2/scan-poster-588.webp" width="588" height="1280" aria-label="Screen recording of Loadout on iPhone: the camera pans across a packed case, items are marked Seen one by one, All packed confirms them, and the green All accounted for screen appears." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v2.mp4" type="video/mp4" /></video></div>
-      <figcaption class="mono lo-scan-note">Real scan, recorded on iPhone. Sped up 2.5x.</figcaption>
+      <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/v2/scan-poster-v3.jpg" width="588" height="1277" aria-label="Screen recording of Loadout on iPhone: the camera pans across a packed Pelican case and items are marked Seen one by one, look-alike drives wait for a tap, then a later moment of the same scan: the last item is Seen, All packed, and the green All accounted for screen." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v3.mp4" type="video/mp4" /></video></div>
+      <figcaption class="mono lo-scan-note">Two moments from one real scan, recorded on iPhone. First part sped up 2x.</figcaption>
     </figure>
     <!-- PHOTO SLOT (the scan): phone held over an open case, screen showing ALL ACCOUNTED FOR. 4:5.
          Files: photos/scan-800.jpg, scan-1200.jpg. To turn on: add both files, delete `hidden`. -->
@@ -372,11 +377,16 @@
     <p class="pricing-terms">14-day free trial in the app, no card needed to start it. After the trial, subscribe in the app. The subscription renews automatically and is billed through the App Store. Cancel anytime in iPhone Settings &gt; Apple ID &gt; Subscriptions. iPhone only for now.</p>
     <div class="lo-price-cta">
       <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
-      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" novalidate>
+      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="pricing" data-notify-success="You're on the list. One email when it's out." novalidate>
         <label class="sr-only" for="notify-name-price">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-price" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
+        <input class="notify-input notify-name" type="text" id="notify-name-price" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
         <label class="sr-only" for="notify-email-price">Email address</label>
         <input class="notify-input" type="email" id="notify-email-price" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <fieldset class="notify-platform">
+          <legend>Which phone? (optional)</legend>
+          <label class="notify-platform-opt"><input type="radio" name="platform-price" value="iphone" data-notify-platform /><span>iPhone</span></label>
+          <label class="notify-platform-opt"><input type="radio" name="platform-price" value="android" data-notify-platform /><span>Android</span></label>
+        </fieldset>
         <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
         <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Get notified</button>
         <p class="notify-status" role="status" aria-live="polite" id="notify-status-price" data-notify-status hidden></p>
@@ -444,11 +454,16 @@
     </div>
     <div class="lo-notify" id="notify" aria-labelledby="notify-title">
     <p class="mono lo-notify-head" id="notify-title"><span class="lo-cta-wait">Be first to know when Loadout is on the App Store</span><span class="lo-cta-live">Android is coming. Get an email the day it is out</span></p>
-    <form class="notify-form" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" novalidate>
+    <form class="notify-form" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="notify" data-notify-success="You're on the list. One email when it's out." novalidate>
       <label class="sr-only" for="notify-name-loadout">First name</label>
-      <input class="notify-input notify-name" type="text" id="notify-name-loadout" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
+      <input class="notify-input notify-name" type="text" id="notify-name-loadout" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
       <label class="sr-only" for="notify-email-loadout">Email address</label>
       <input class="notify-input" type="email" id="notify-email-loadout" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+      <fieldset class="notify-platform">
+        <legend>Which phone? (optional)</legend>
+        <label class="notify-platform-opt"><input type="radio" name="platform-loadout" value="iphone" data-notify-platform /><span>iPhone</span></label>
+        <label class="notify-platform-opt"><input type="radio" name="platform-loadout" value="android" data-notify-platform /><span>Android</span></label>
+      </fieldset>
       <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
       <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
       <p class="notify-status" role="status" aria-live="polite" id="notify-status-loadout" data-notify-status hidden></p>
@@ -514,7 +529,7 @@
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261103a"></script>
 <script src="../../assets/js/lo-page.js?v=20261114a" defer></script>
-<script src="../../assets/js/notify.js?v=20261025b" defer></script>
+<script src="../../assets/js/notify.js?v=20261114a" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261113a" defer></script>
 </body>
 </html>
