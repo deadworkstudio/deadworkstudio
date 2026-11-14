@@ -167,3 +167,10 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
 @media (max-width: 767px) { .lo-photo-hero { width: calc(100% - 32px); } }
 /* Adding gear without its phones (stills hidden until the real shoot): no full-screen empty band */
 main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; padding: clamp(72px, 11vh, 120px) 24px !important; }
+
+/* ---- adding gear: three real photos of the kind of gear you add (photos, not app screens) ---- */
+.lo-gear-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 300px)); justify-content: center; gap: clamp(10px, 1.6vw, 22px); margin: clamp(32px, 5vh, 48px) auto 0; padding: 0 16px; }
+.lo-gear-strip li { margin: 0; }
+.lo-gear-strip img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; background: #1b1b19; }
+.lo-gear-strip span { display: block; margin-top: 12px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+.lo-gear-note { margin-top: 18px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
