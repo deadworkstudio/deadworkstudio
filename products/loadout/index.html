@@ -81,7 +81,7 @@
      data-cta="live"  = App Store approved: App Store button + "Start your 14-day free trial".
      To launch, change only the value on the next line from "wait" to "live", then put the real App Store URL
      on the [data-appstore] links (see the TODO in the hero). Hero, mid-page, pricing and the mobile sticky bar all follow it. -->
-<main id="main" data-cta="wait">
+<main id="main" data-cta="wait" data-event="loadout_page_view">
   <section class="hero">
     <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/loadout.png" alt="Loadout" width="1366" height="466" /></div>
     <h1>Every piece of gear accounted for.<br />Before you leave.</h1>
@@ -89,15 +89,15 @@
     <div class="downloads lo-cta" id="top-cta" data-lo-cta>
       <!-- TODO(Daniel): when Apple approves Loadout 1.0, replace href="#pricing" on BOTH [data-appstore] links
            (here and in the Pricing section) with the real App Store URL. Until then they scroll to Pricing. -->
-      <a id="download-iphone" class="pill pill-solid lo-cta-live" href="#pricing" data-appstore><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Start your 14-day free trial</span></a>
+      <a id="download-iphone" class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_hero_cta_click"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Start your 14-day free trial</span></a>
       <a class="pill pill-outline lo-cta-live" href="#notify">Android is coming</a>
-      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" novalidate>
+      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" novalidate>
         <label class="sr-only" for="notify-name-top">First name</label>
         <input class="notify-input notify-name" type="text" id="notify-name-top" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
         <label class="sr-only" for="notify-email-top">Email address</label>
         <input class="notify-input" type="email" id="notify-email-top" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
         <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Get notified</button>
+        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit data-event="loadout_hero_cta_click">Get notified</button>
         <p class="notify-status" role="status" aria-live="polite" id="notify-status-top" data-notify-status hidden></p>
       </form>
     </div>
@@ -151,7 +151,7 @@
 
   <section class="lo-cta-band" aria-label="Get Loadout">
     <p class="lo-cta-band-line">Know it's all in the case.</p>
-    <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore>Start your 14-day free trial</a>
+    <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
     <a class="pill pill-solid lo-cta-wait" href="#top-cta">Get notified</a>
   </section>
 
@@ -331,25 +331,25 @@
     <div class="reviews-list" data-lo-reviews-list hidden></div>
   </section>
 
-  <section class="lo-pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
+  <section class="lo-pricing tone-alt" id="pricing" data-event="loadout_pricing_view" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
     <p class="section-sub">14 days free. Every feature included.</p>
     <div class="lo-plans">
-      <div class="lo-plan">
+      <div class="lo-plan" data-event="loadout_monthly_select">
         <span class="mono lo-plan-name">Monthly</span>
         <p class="lo-plan-price"><span class="num">$12.99</span>/mo</p>
         <p class="mono lo-plan-note">Cancel anytime</p>
       </div>
-      <div class="lo-plan is-best">
-        <span class="mono lo-plan-name">Yearly <span class="lo-plan-tag">Save 36%</span></span>
+      <div class="lo-plan is-best" data-event="loadout_yearly_select">
+        <span class="mono lo-plan-name">Yearly <span class="lo-plan-tag">Save 35%</span></span>
         <p class="lo-plan-price"><span class="num">$99.99</span>/yr</p>
         <p class="mono lo-plan-note">$8.33 / mo</p>
       </div>
     </div>
-    <p class="pricing-terms">Subscribe inside the app after your free trial. Billed through the App Store. Manage or cancel anytime in your Apple account settings.</p>
+    <p class="pricing-terms">14-day free trial in the app, no card needed to start it. After the trial, subscribe in the app. The subscription renews automatically and is billed through the App Store. Cancel anytime in iPhone Settings &gt; Apple ID &gt; Subscriptions. iPhone only for now.</p>
     <div class="lo-price-cta">
-      <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore>Start your 14-day free trial</a>
-      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" novalidate>
+      <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
+      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" novalidate>
         <label class="sr-only" for="notify-name-price">First name</label>
         <input class="notify-input notify-name" type="text" id="notify-name-price" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
         <label class="sr-only" for="notify-email-price">Email address</label>
@@ -421,7 +421,7 @@
     </div>
     <div class="lo-notify" id="notify" aria-labelledby="notify-title">
     <p class="mono lo-notify-head" id="notify-title"><span class="lo-cta-wait">Be first to know when Loadout is on the App Store</span><span class="lo-cta-live">Android is coming. Get an email the day it is out</span></p>
-    <form class="notify-form" data-notify-form data-notify-product="loadout" novalidate>
+    <form class="notify-form" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" novalidate>
       <label class="sr-only" for="notify-name-loadout">First name</label>
       <input class="notify-input notify-name" type="text" id="notify-name-loadout" name="first_name" placeholder="First name" autocomplete="given-name" maxlength="80" required data-notify-name />
       <label class="sr-only" for="notify-email-loadout">Email address</label>
@@ -465,7 +465,7 @@
     </ul>
   </section>
 <div class="lo-sticky" data-lo-sticky hidden>
-  <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore>Start your 14-day free trial</a>
+  <a class="pill pill-solid lo-cta-live" href="#pricing" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
   <a class="pill pill-solid lo-cta-wait" href="#top-cta">Get notified</a>
 </div>
 </main>
