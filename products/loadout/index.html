@@ -10,6 +10,7 @@
 <meta property="og:url" content="https://deadworkstudio.com/products/loadout/" />
 <meta property="og:title" content="Loadout - Every piece of gear accounted for" />
 <meta property="og:description" content="Every piece of gear accounted for, before you leave. Pan your iPhone across a packed case and Loadout marks what it sees. Kits, rentals and wrap day. 14 days free." />
+<!-- og:image slot: when the real photo exists, export photos/share-loadout-photo.jpg at 1200x630 and point og:image at it (twitter:card reuses og:image). -->
 <meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-loadout.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
@@ -18,7 +19,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261113p" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114c" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114d" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -110,6 +111,10 @@
       <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="(max-width: 767px) 62vw, 270px" alt="" width="900" height="1957" fetchpriority="high" /></div></div>
       <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/kits-600.webp" srcset="../../assets/img/products/loadout/screens/v2/kits-600.webp 600w, ../../assets/img/products/loadout/screens/v2/kits-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
     </figure>
+    <!-- PHOTO SLOT (hero): over-the-shoulder, phone scanning a packed case. 3:2 desktop, 4:5 phone.
+         Files: photos/hero-1600.jpg, hero-2400.jpg (3:2) and hero-m-720.jpg, hero-m-1080.jpg (4:5).
+         To turn on: add the four files, then delete the `hidden` attribute below. Recipe: Loadout Launch Assets/loadout-page-images-report.md -->
+    <figure class="lo-photo lo-photo-hero" data-lo-photo hidden><picture><source media="(max-width: 767px)" srcset="../../assets/img/products/loadout/photos/hero-m-720.jpg 720w, ../../assets/img/products/loadout/photos/hero-m-1080.jpg 1080w" sizes="100vw" width="1080" height="1350" /><img src="../../assets/img/products/loadout/photos/hero-1600.jpg" srcset="../../assets/img/products/loadout/photos/hero-1600.jpg 1600w, ../../assets/img/products/loadout/photos/hero-2400.jpg 2400w" sizes="(max-width: 1240px) calc(100vw - 48px), 1180px" alt="Over the shoulder: a crew member pans an iPhone running Loadout across a packed camera case." width="2400" height="1600" loading="lazy" decoding="async" /></picture></figure>
   </section>
 
   <section class="film tone-dark" aria-label="On set">
@@ -150,6 +155,9 @@
       <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/v2/scan-poster-588.webp" width="588" height="1280" aria-label="Screen recording of Loadout on iPhone: the camera pans across a packed case, items are marked Seen one by one, All packed confirms them, and the green All accounted for screen appears." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v2.mp4" type="video/mp4" /></video></div>
       <figcaption class="mono lo-scan-note">Real scan, recorded on iPhone. Sped up 2.5x.</figcaption>
     </figure>
+    <!-- PHOTO SLOT (the scan): phone held over an open case, screen showing ALL ACCOUNTED FOR. 4:5.
+         Files: photos/scan-800.jpg, scan-1200.jpg. To turn on: add both files, delete `hidden`. -->
+    <figure class="lo-photo lo-photo-side" data-lo-photo hidden><picture><img src="../../assets/img/products/loadout/photos/scan-800.jpg" srcset="../../assets/img/products/loadout/photos/scan-800.jpg 800w, ../../assets/img/products/loadout/photos/scan-1200.jpg 1200w" sizes="(max-width: 767px) calc(100vw - 32px), 480px" alt="An iPhone held over an open gear case shows Loadout's green All accounted for screen." width="1200" height="1500" loading="lazy" decoding="async" /></picture></figure>
   </section>
 
   <section class="lo-cta-band" aria-label="Get Loadout">
@@ -229,6 +237,9 @@
       </div>
       <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-lo-auto>Auto tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>On</span></button></div>
     </div>
+    <!-- PHOTO SLOT (the app): a real scan with one item missing, the list showing it as Missing. 4:5.
+         Files: photos/missing-800.jpg, missing-1200.jpg. To turn on: add both files, delete `hidden`. -->
+    <figure class="lo-photo lo-photo-side" data-lo-photo hidden><picture><img src="../../assets/img/products/loadout/photos/missing-800.jpg" srcset="../../assets/img/products/loadout/photos/missing-800.jpg 800w, ../../assets/img/products/loadout/photos/missing-1200.jpg 1200w" sizes="(max-width: 767px) calc(100vw - 32px), 480px" alt="Loadout on iPhone over a camera case with one lens left out, the list showing it as Missing." width="1200" height="1500" loading="lazy" decoding="async" /></picture></figure>
   </section>
 
   <div class="pair tone-alt">
@@ -247,7 +258,9 @@
     <h2 class="section-title section-head head-dw">Adding gear</h2>
     <p class="section-title" id="add-title">Circle it once. That's all.</p>
     <p class="section-sub">Aim the ring at an item and the camera takes a short look around it.<br class="br-desk" /> Add one item, or a whole bag, item after item.</p>
-    <ol class="lo-moment-steps lo-add-steps">
+    <!-- Hidden: the only circle-capture footage is a dark, soft test recording (a coaster).
+         Swap in two stills from the real shoot (shot 3 in the report), then delete `hidden`. -->
+    <ol class="lo-moment-steps lo-add-steps" hidden>
       <li class="lo-moment-step"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/circle-588.webp" alt="Loadout on iPhone: a ring on the camera view fills as it looks around a grey coaster, with the prompt Flip it over." width="588" height="1280" loading="lazy" decoding="async" /></div></div>
         <p class="mono lo-moment-label"><span>01</span>The ring fills</p></li>
       <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>

@@ -157,3 +157,13 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
   .lo-moment-steps { grid-template-columns: minmax(0, 340px); gap: 0; }
   .lo-moment-step + .lo-moment-arrow { margin: 22px 0 18px; transform: rotate(90deg); justify-self: center; }
 }
+
+/* ---- photo slots: real phone-POV photos from the shoot. Each slot ships `hidden` until its files exist. ---- */
+.lo-photo { margin: clamp(32px, 5vh, 56px) auto 0; }
+.lo-photo[hidden] { display: none; }
+.lo-photo img { display: block; width: 100%; height: auto; background: var(--line-2); }
+.lo-photo-hero { width: min(1180px, calc(100% - 48px)); }
+.lo-photo-side { width: min(480px, calc(100% - 32px)); }
+@media (max-width: 767px) { .lo-photo-hero { width: calc(100% - 32px); } }
+/* Adding gear without its phones (stills hidden until the real shoot): no full-screen empty band */
+main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; padding: clamp(72px, 11vh, 120px) 24px !important; }
