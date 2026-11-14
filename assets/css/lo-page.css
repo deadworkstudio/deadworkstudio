@@ -93,8 +93,55 @@
 /* ---- reviews / earn (hidden for now) ---- */
 .lo-earn .pill.is-disabled { pointer-events: none; }
 
+/* ---- CTA state: <main data-cta="wait|live"> picks which call to action shows (see the comment in the HTML) ---- */
+[data-cta="wait"] .lo-cta-live, [data-cta="live"] .lo-cta-wait { display: none !important; }
+.lo-cta .notify-form, .lo-price-cta .notify-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; max-width: 640px; margin: 0 auto; }
+.lo-cta .notify-input, .lo-price-cta .notify-input { flex: 1 1 190px; min-height: 48px; padding: 0 18px; border: 1px solid rgba(20, 20, 18, .5); background: transparent; color: var(--ink); font: 16px/1.4 var(--sans); border-radius: 999px; }
+.lo-cta .notify-input::placeholder, .lo-price-cta .notify-input::placeholder { color: var(--ink-3); }
+.lo-cta .notify-hp, .lo-price-cta .notify-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lo-cta .notify-status, .lo-price-cta .notify-status { flex-basis: 100%; margin-top: 4px; font-size: 14px; }
+.lo-price-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 28px; }
+.lo-price-note { color: var(--ink-3); }
+.lo-cta-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 26px; padding: 34px 24px; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !important; flex-direction: row !important; flex-wrap: wrap; justify-content: center !important; }
+.lo-cta-band-line { font: 600 clamp(22px, 2.2vw, 30px)/1.1 var(--sans); letter-spacing: -.02em; color: var(--ink); }
+
+/* ---- real app screens and recordings: the island and status area are already in the picture ---- */
+.lo-real .phone-island { display: none; }
+.lo-real .phone-body img, .lo-real .phone-body video { display: block; width: 100%; height: auto; padding-top: 0; border-radius: 38px; background: #000; }
+.lo-phones .lo-real .phone-body img { border-radius: 32px; }
+.lo-scan-phone { position: relative; }
+.lo-scan-video { aspect-ratio: 588 / 1280; }
+.lo-scan-note { margin-top: 16px; text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+
+/* ---- the problem: without / with ---- */
+.lo-vs { display: grid; grid-template-columns: repeat(2, minmax(0, 420px)); justify-content: center; max-width: 900px; margin: 36px auto 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); text-align: left; }
+.lo-vs-col { padding: 28px clamp(18px, 2.4vw, 34px) 30px; }
+.lo-vs-col + .lo-vs-col { border-left: 1px solid var(--line-2); }
+.lo-vs-col h3 { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+.lo-vs-col.is-with h3 { color: var(--ink); }
+.lo-vs-col li { padding: 11px 0; border-bottom: 1px solid var(--line-2); font-size: 16px; line-height: 1.4; color: var(--ink-2); }
+.lo-vs-col li:last-child { border-bottom: 0; }
+.lo-vs-col.is-with li { color: var(--ink); }
+
+/* ---- add gear + before you leave: two real phones ---- */
+.lo-moment-steps .phone, .lo-add-steps .phone { width: min(250px, 66vw); margin: 0; }
+.lo-add-steps { margin-top: 44px; }
+.lo-moment-steps { grid-template-columns: minmax(0, 260px) auto minmax(0, 260px) !important; }
+
+/* ---- mobile sticky call to action ---- */
+.lo-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: none; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(244, 241, 234, .94); border-top: 1px solid var(--line-2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.lo-sticky .pill { width: 100%; justify-content: center; min-height: 46px; }
+.lo-sticky.is-on { display: block; }
+@media (min-width: 768px) { .lo-sticky.is-on { display: none; } }
+
 @media (max-width: 767px) {
   .lo-phones { gap: 10px; }
+  .lo-vs { grid-template-columns: 1fr; }
+  .lo-vs-col + .lo-vs-col { border-left: 0; border-top: 1px solid var(--line-2); }
+  .lo-moment-steps { grid-template-columns: minmax(0, 260px) !important; }
+  .lo-cta-band { flex-direction: column; }
+  body.lo { padding-bottom: 70px; }
   .lo-phone-side { display: none; }
   .lo-phone-main { width: min(240px, 62vw) !important; }
   .lo-feat-grid { grid-template-columns: 1fr; }

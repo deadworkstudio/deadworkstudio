@@ -169,3 +169,25 @@
     })
     .catch(function () {});
 })();
+
+
+// ---- THE SCAN video: plays while on screen, never autoplays under reduced motion (the poster stays) ----
+(function () {
+  var vid = document.querySelector('[data-lo-scan-video]'); if (!vid) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { vid.controls = true; return; }
+  if (!('IntersectionObserver' in window)) { vid.controls = true; return; }
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { vid.preload = 'auto'; vid.play().catch(function () { vid.controls = true; }); } else { vid.pause(); }
+    });
+  }, { threshold: 0.35 }).observe(vid);
+})();
+
+// ---- mobile sticky call to action: shows once the top call to action has scrolled out of view ----
+(function () {
+  var bar = document.querySelector('[data-lo-sticky]'), top = document.getElementById('top-cta');
+  if (!bar || !top || !('IntersectionObserver' in window)) return;
+  bar.hidden = false;
+  new IntersectionObserver(function (entries) { bar.classList.toggle('is-on', !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0); }).observe(top);
+})();
