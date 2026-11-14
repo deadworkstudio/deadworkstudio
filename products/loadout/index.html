@@ -213,17 +213,18 @@
 
     <div class="ix-tour lo-tour-wrap" data-lo-tour>
       <ul class="ix-nav" aria-label="App features" data-lo-nav>
-        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="0" data-rects="38,7,24,6"><span>01</span>The count</button></li>
-        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="1" data-rects="30,14,40,9.6"><span>02</span>Seen</button></li>
-        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="2" data-rects="47,25.5,46,5.2;50,35.2,46,5.2"><span>03</span>Your tap</button></li>
-        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="3" data-rects="2,66.5,96,31"><span>04</span>The list</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="0" data-rects="40,7,20,7.6"><span>01</span>The count</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="1" data-rects="23,14,54,10.6"><span>02</span>Seen</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="2" data-rects="4,74.4,39,6;45.3,74.4,39.6,6;42.8,90.2,39.5,6"><span>03</span>Your tap</button></li>
+        <li><button type="button" class="ix-feat" aria-pressed="false" aria-controls="lo-tour-explain" data-lo-feat="3" data-rects="2,64.6,96,32.2"><span>04</span>The list</button></li>
       </ul>
 
       <figure class="phone lo-real lo-tour-phone">
         <div class="phone-body">
           <span class="phone-island" aria-hidden="true"></span>
           <div class="lo-tour-screen">
-            <img class="lo-tour-img" src="../../assets/img/products/loadout/screens/v2/scan-588.webp" alt="Loadout on iPhone scanning a case: 6 of 9 Seen, a Seen Glasses label, two prompts to tap Glasses and Skinny drive, and a checklist with Seen and Not checked rows." width="588" height="1280" loading="lazy" />
+            <!-- Frame at 3:40.69 of the owner's 14 Nov screen recording (real Pelican case scan), grabbed at full size with zero tolerance. -->
+            <img class="lo-tour-img" src="../../assets/img/products/loadout/screens/v2/tour-6of10-588.webp" srcset="../../assets/img/products/loadout/screens/v2/tour-6of10-588.webp 588w, ../../assets/img/products/loadout/screens/v2/tour-6of10-1176.webp 1176w" sizes="(max-width: 1023px) 72vw, 300px" alt="Loadout on iPhone scanning a Pelican case: 6 of 10, 6 Seen, a Seen Skinny Drive 1 label over portable SSDs, and a checklist where two Skinny Drives and a Square Drive wait for a tap to confirm." width="588" height="1278" loading="lazy" decoding="async" />
             <svg class="ix-spot" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" data-lo-spot>
               <defs><mask id="lo-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="#fff" /><g data-lo-holes></g></mask></defs>
               <rect class="ix-dim" x="0" y="0" width="100" height="100" mask="url(#lo-mask)" />
@@ -235,10 +236,10 @@
 
       <div class="ix-explain" id="lo-tour-explain" aria-live="polite" data-lo-explain>
         <p class="ix-idle mono" data-lo-idle>Explore the app.</p>
-        <div class="ix-panel" data-lo-panel="0" hidden><h3 class="section-title ix-h">The count</h3><p class="ix-p">How many of the kit are checked so far. Nine items, six Seen.</p></div>
+        <div class="ix-panel" data-lo-panel="0" hidden><h3 class="section-title ix-h">The count</h3><p class="ix-p">How far through the kit you are. Ten items, six Seen so far.</p></div>
         <div class="ix-panel" data-lo-panel="1" hidden><h3 class="section-title ix-h">Seen</h3><p class="ix-p">The camera spotted it. It stays Seen until you confirm it.</p></div>
-        <div class="ix-panel" data-lo-panel="2" hidden><h3 class="section-title ix-h">Your tap</h3><p class="ix-p">When you can see it in the case, one tap checks it. The camera never decides for you.</p></div>
-        <div class="ix-panel" data-lo-panel="3" hidden><h3 class="section-title ix-h">The list</h3><p class="ix-p">Every item in the kit. Seen on top, Not checked until it is.</p></div>
+        <div class="ix-panel" data-lo-panel="2" hidden><h3 class="section-title ix-h">Your tap</h3><p class="ix-p">Look-alike drives wait for you. When you can see it in the case, one tap confirms it.</p></div>
+        <div class="ix-panel" data-lo-panel="3" hidden><h3 class="section-title ix-h">The list</h3><p class="ix-p">Every item in the kit. Look-alikes are grouped, each with its own tap.</p></div>
       </div>
       <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-lo-auto>Auto tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>On</span></button></div>
     </div>
