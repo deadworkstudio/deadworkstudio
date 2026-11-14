@@ -117,6 +117,9 @@
       try {
         var qs = new URLSearchParams(location.search);
         ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (qs.get(k)) utm[k] = qs.get(k); });
+        // A tagged link like ?ref=instagram (see Loadout's tracked links) counts as the utm source
+        // when the link has no utm_source of its own, so the signup list shows where it came from.
+        if (!utm.utm_source && qs.get('ref')) utm.utm_source = qs.get('ref');
       } catch (e) { /* old browser: no utm */ }
 
       fetch(WORKER_URL + '/notify', {
@@ -142,6 +145,9 @@
           if (!data || !data.ok) throw new Error('Unexpected response');
           form.reset();
           showStatus(successMessage, 'good');
+          // Tell the page's analytics (lo-analytics.js) a signup really saved: form name and platform
+          // only, never the email or name. Nothing listens on pages without analytics.
+          try { form.dispatchEvent(new CustomEvent('dw:notify-success', { bubbles: true, detail: { product: product, form: formSource, platform: platform || 'none' } })); } catch (e) {}
         })
         .catch(function () {
           showStatus("Something went wrong. Try again.", 'error');
