@@ -1,0 +1,168 @@
+/* =====================================================================
+   Handoff V2 product + support pages — "Industrial Monolith" layer.
+   Loads after ss-page.css + product-page.css and only adds what the V2
+   story needs. Everything is scoped under body.hf2 so no other page moves.
+
+   Borrowed from the app's Direction A design system:
+   - Anton, uppercase, for the one big statement per section
+   - square corners, 2px / 8px ink rules, mono labels
+   - status colour only with a glyph + a word, never colour alone
+   - DEADWORK green #8FD687 (ink #07130A); #3D6E39 for green text on bone
+   ===================================================================== */
+
+.hf2 {
+  /* Status palette (app tokens, Daylight) */
+  --hf-ok: #8FD687;   --hf-ok-ink: #07130A;
+  --hf-bad: #C42F1F;  --hf-bad-ink: #F3EEE3;
+  --hf-warn: #E2A43A; --hf-warn-ink: #140F05;
+  --hf-off: #A9A396;  --hf-off-ink: #100F0D;
+  --hf-ok-mark: #3D6E39;
+  --hf-display: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --hf-rule: 8px;
+}
+
+/* ---------- Statement type (Anton, caps) ---------- */
+.hf2 .hf-statement {
+  font-family: var(--hf-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -.005em;
+  line-height: 1;               /* Anton cap = .86em: 1 leaves a clean .14em gap */
+  color: var(--ink);
+}
+.hf2 .hf-eyebrow { display: block; font: 500 11px/1.4 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ---------- Hero ---------- */
+.hf2 main > section.hero { min-height: 0; }
+.hf2 .hero h1.hf-statement {
+  margin-top: clamp(18px, 2.4vh, 28px);
+  font-size: clamp(44px, min(7.4vw, 9.6vh), 116px);
+  letter-spacing: -.005em;
+}
+.hf2 .hero h1 .hf-line { display: block; }
+.hf2 .hero h1 .hf-line--ok { color: var(--hf-ok-mark); }
+.hf2 .hero .hero-lede { white-space: normal; max-width: 50ch; margin-top: clamp(14px, 2vh, 22px); font-size: clamp(16px, 1.25vw, 19px); }
+.hf2 .shot-hero { width: min(100%, 1080px); }
+.hf2 .shot-cap { display: block; margin-top: 14px; text-align: center; color: var(--ink-3); }
+
+/* ---------- Positioning band: the one 8px rule on the page ---------- */
+.hf2 main > section.hf-creed { text-align: left; }
+.hf2 .hf-creed-inner { width: min(100%, 1180px); margin: 0 auto; padding-top: clamp(20px, 3vh, 32px); border-top: var(--hf-rule) solid var(--ink); }
+.hf2 .hf-creed .hf-statement { font-size: clamp(34px, 6.4vw, 104px); }
+@media (max-width: 560px) { .hf2 .hf-creed .hf-statement { font-size: 9.2vw; } }
+.hf2 .hf-creed .hf-statement span { display: block; }
+.hf2 .hf-creed .hf-statement .is-dim { color: var(--ink-3); }
+.hf2 .hf-creed p.hf-creed-sub { margin-top: clamp(20px, 3vh, 32px); max-width: 52ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); }
+
+/* ---------- How it works: four numbered steps ---------- */
+.hf2 .hf-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: min(100%, 1180px); margin: clamp(28px, 4vh, 44px) auto 0; border-top: 2px solid var(--ink); text-align: left; }
+.hf2 .hf-steps li { padding: 24px clamp(16px, 2vw, 28px) 28px; }
+.hf2 .hf-steps li + li { border-left: 1px solid var(--line-2); }
+.hf2 .hf-step-n { display: block; font: 400 clamp(44px, 4.4vw, 64px)/1 var(--hf-display); color: var(--ink); }
+.hf2 .hf-step-t { display: block; margin-top: 16px; font: 800 13px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.hf2 .hf-step-d { display: block; margin-top: 10px; max-width: 30ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.hf2 .hf-jobs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(100%, 1180px); margin: clamp(24px, 3vh, 36px) auto 0; text-align: left; }
+.hf2 .hf-jobs li { padding: 18px clamp(16px, 2vw, 28px); border: 2px solid var(--ink); }
+.hf2 .hf-jobs li + li { border-left-width: 0; }
+.hf2 .hf-job-k { display: block; font: 700 13px/1 var(--sans); letter-spacing: .16em; color: var(--ink); }
+.hf2 .hf-job-d { display: block; margin-top: 8px; font: 500 12px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+@media (max-width: 900px) {
+  .hf2 .hf-steps { grid-template-columns: 1fr 1fr; }
+  .hf2 .hf-steps li:nth-child(3) { border-left: 0; }
+  .hf2 .hf-steps li:nth-child(n + 3) { border-top: 1px solid var(--line-2); }
+}
+@media (max-width: 560px) {
+  .hf2 .hf-steps { grid-template-columns: 1fr; }
+  .hf2 .hf-steps li + li { border-left: 0; border-top: 1px solid var(--line-2); }
+  .hf2 .hf-jobs { grid-template-columns: 1fr; }
+  .hf2 .hf-jobs li + li { border-left-width: 2px; border-top-width: 0; }
+}
+
+/* ---------- The four results (flood tiles) ---------- */
+.hf2 .hf-verdicts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: min(100%, 1180px); margin: clamp(28px, 4vh, 44px) auto 0; text-align: left; }
+.hf2 .hf-v { display: flex; flex-direction: column; min-height: 260px; padding: 22px 22px 24px; background: var(--g); color: var(--i); }
+.hf2 .hf-v--ok   { --g: var(--hf-ok);   --i: var(--hf-ok-ink); }
+.hf2 .hf-v--warn { --g: var(--hf-warn); --i: var(--hf-warn-ink); }
+.hf2 .hf-v--bad  { --g: var(--hf-bad);  --i: var(--hf-bad-ink); }
+.hf2 .hf-v--off  { --g: var(--hf-off);  --i: var(--hf-off-ink); }
+.hf2 .hf-v-tag { display: flex; align-items: center; gap: 10px; font: 700 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+.hf2 .hf-glyph { flex: none; width: 22px; height: 22px; }
+.hf2 .hf-v-word { margin-top: clamp(40px, 6vh, 72px); font: 400 clamp(30px, 2.6vw, 40px)/1 var(--hf-display); text-transform: uppercase; white-space: nowrap; }
+.hf2 .hf-v p { margin-top: 12px; font-size: 15px; line-height: 1.45; color: inherit; }
+@media (max-width: 1023px) { .hf2 .hf-verdicts { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px)  { .hf2 .hf-verdicts { grid-template-columns: 1fr; } .hf2 .hf-v { min-height: 0; } .hf2 .hf-v-word { margin-top: 28px; } }
+
+/* product screens: square corners, a hair edge instead of a soft card */
+.hf2 .feat-duo, .hf2 .hf-trio { width: min(100%, 1180px); }
+.hf2 .hf-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); margin: clamp(24px, 3vh, 36px) auto 0; }
+.hf2 .feat-duo img, .hf2 .hf-trio img, .hf2 .feat-shot.is-flat img { border-radius: 0; box-shadow: 0 0 0 1px rgba(20,20,18,.16), 0 24px 48px -28px rgba(20,20,18,.5); }
+.hf2 .hf-trio figcaption, .hf2 .feat-duo figcaption { margin-top: 12px; text-align: left; }
+@media (max-width: 719px) { .hf2 .hf-trio { grid-template-columns: 1fr; } }
+@media (min-width: 900px) and (min-height: 600px) { .hf2 .feat-duo { width: min(100%, 1180px); } }
+
+/* ---------- The 2-copy rule ---------- */
+.hf2 .hf-rule-row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: center; width: min(100%, 1180px); margin: 0 auto; text-align: left; }
+.hf2 .hf-rule-row .feat-num { margin-bottom: 18px; }
+.hf2 .hf-rule-row .hf-statement { font-size: clamp(48px, 6vw, 96px); }
+.hf2 .hf-rule-row .section-sub { max-width: 46ch; margin-top: 18px; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; }
+.hf2 .hf-ledger { border-top: 2px solid var(--ink); }
+.hf2 .hf-ledger li { display: grid; grid-template-columns: 22px 1fr auto; gap: 14px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line-2); }
+.hf2 .hf-ledger b { display: block; font: 800 15px/1.2 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.hf2 .hf-ledger small { display: block; margin-top: 4px; font: 500 11px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.hf2 .hf-ledger .hf-out { font: 700 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.hf2 .hf-out--ok { color: var(--hf-ok-mark); }
+.hf2 .hf-out--warn { color: #7A5000; }
+@media (max-width: 860px) { .hf2 .hf-rule-row { grid-template-columns: 1fr; } }
+
+/* ---------- Crew ---------- */
+.hf2 .hf-crew { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(32px, 6vw, 96px); align-items: center; width: min(100%, 1080px); margin: 0 auto; text-align: left; }
+.hf2 .hf-crew .section-title { margin-top: 4px; }
+.hf2 .hf-crew .section-sub { max-width: 46ch; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; }
+.hf2 .hf-phone { width: clamp(220px, 24vw, 300px); }
+.hf2 .hf-phone img { display: block; width: 100%; border-radius: 36px; box-shadow: 0 0 0 7px #1b1b1d, 0 0 0 8px #3a3a3d, 0 34px 60px -26px rgba(0,0,0,.85); }
+.hf2 .hf-phone figcaption { margin-top: 22px; text-align: center; }
+.hf2 .hf-crew-list { margin-top: 24px; border-top: 1px solid var(--line-2); }
+.hf2 .hf-crew-list li { display: grid; grid-template-columns: 22px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line-2); font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.hf2 .hf-crew-list b { color: var(--ink); font-weight: 600; }
+.hf2 .hf-soon { display: inline-block; margin-left: 8px; padding: 3px 7px 2px; border: 1px dashed currentColor; font: 500 10px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; vertical-align: 2px; color: var(--ink-2); white-space: nowrap; }
+@media (max-width: 760px) {
+  .hf2 .hf-crew { grid-template-columns: 1fr; }
+  .hf2 .hf-phone { margin: 0 auto; width: min(260px, 72vw); }
+}
+.hf2 .tone-dark .hf-glyph rect[fill="currentColor"] { fill: currentColor; }
+
+/* ---------- Square status glyph colours outside floods ---------- */
+.hf2 .hf-g-ok { color: var(--hf-ok-mark); }
+.hf2 .tone-dark .hf-g-ok { color: var(--hf-ok); }
+.hf2 .hf-g-ink { color: var(--ink); }
+.hf2 .hf-g-soon { color: var(--ink-3); }
+
+/* ---------- Feature grid / spec / pricing tweaks to match the square system ---------- */
+.hf2 .pp-feat-grid { border-top: 2px solid var(--ink); }
+.hf2 .hf-plan, .hf2 .hf-plans .hf-plan { border-width: 2px; }
+.hf2 .hf-plan-price b { font: 400 56px/1 var(--hf-display); letter-spacing: 0; }
+.hf2 .pp-notify .notify-input, .hf2 .pp-notify .notify-submit { border-radius: 0; }
+.hf2 .hf-foot-note { margin-top: 18px; color: var(--ink-3); }
+
+/* ---------- Support page ---------- */
+.hf2.legal-page .legal-main h2 { font-family: var(--hf-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0; font-size: clamp(26px, 3vw, 36px); line-height: 1; }
+.hf2 .hf-sup-states { display: grid; gap: 0; margin-top: 20px; border-top: 2px solid var(--dev-ink, #141412); }
+.hf2 .hf-sup-states li { display: grid; grid-template-columns: 112px 1fr; gap: 18px; align-items: start; margin: 0; padding: 16px 0; border-bottom: 1px solid var(--dev-line-strong, rgba(20,20,18,.24)); list-style: none; }
+.hf2 .legal-main ul.hf-sup-states { list-style: none; padding-left: 0; }
+.hf2 .hf-chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px 6px; background: var(--g); color: var(--i); font: 700 11px/1 'Archivo', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.hf2 .hf-chip .hf-glyph { width: 14px; height: 14px; }
+.hf2 .hf-sup-states p { margin-top: 0 !important; }
+.hf2 .legal-main ol.hf-sup-steps { list-style: none; padding-left: 0; counter-reset: s; }
+.hf2 .hf-sup-steps li { position: relative; padding-left: 44px; counter-increment: s; }
+.hf2 .hf-sup-steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: -2px; font: 400 22px/1 var(--hf-display); color: var(--dev-ink, #141412); }
+.hf2 .hf-sup-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.hf2 .hf-sup-toc a { padding: 8px 12px; border: 2px solid var(--dev-ink, #141412); color: var(--dev-ink, #141412); font: 500 11px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; }
+.hf2 .hf-sup-toc a:hover, .hf2 .hf-sup-toc a:focus-visible { background: var(--dev-ink, #141412); color: var(--dev-bg, #F4F1EA); }
+.hf2 .hf-sup-mail { margin-top: 28px; padding: 20px 22px; border: 2px solid var(--dev-ink, #141412); }
+.hf2 .hf-sup-mail p { margin-top: 6px !important; }
+.hf2 .hf-sup-mail p:first-child { margin-top: 0 !important; }
+.hf2 .legal-main h2[id] { scroll-margin-top: 120px; }
+@media (max-width: 560px) { .hf2 .hf-sup-states li { grid-template-columns: 1fr; gap: 10px; } }
+
+/* keep centred intro copy to a readable measure */
+.hf2 .hf-how > .section-sub, .hf2 .hf-results > .section-sub { max-width: 60ch; margin-left: auto; margin-right: auto; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; }
