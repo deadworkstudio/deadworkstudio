@@ -52,7 +52,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261115u" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261115w" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -370,17 +370,17 @@
     <p class="pricing-every">すべてのプランに含まれるもの：自動命名、ストックサイト向けチェック、手ブレ補正、ノイズ除去、すべての書き出しサイズ、未使用クリップの繰り越し。</p>
     <div class="fit" data-fit>
       <p class="mono fit-eyebrow">あなたに合うプラン</p>
-      <div class="fit-cams" role="radiogroup" aria-label="使っているカメラ">
-        <span class="fit-q">使っているカメラ</span>
+      <div class="fit-cams" role="group" aria-label="使っているカメラ (複数選択可)">
+        <span class="fit-q">使っているカメラ <span class="fit-hint">複数選択可</span></span>
         <div class="fit-cam-row">
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="true" data-fit-cam="1.5">Sony</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.9">Canon</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="1.5">Panasonic</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.4">Blackmagic</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.2">RED</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.3">ARRI</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="1.9">DJI ドローン</button>
-          <button type="button" class="fit-cam mono" role="radio" aria-checked="false" data-fit-cam="0.5">iPhone</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="true" data-fit-cam="1.5">Sony</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="0.9">Canon</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="1.5">Panasonic</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="0.4">Blackmagic</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="0.2">RED</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="0.3">ARRI</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="1.9">DJI ドローン</button>
+          <button type="button" class="fit-cam mono" role="checkbox" aria-checked="false" data-fit-cam="0.5">iPhone</button>
         </div>
       </div>
       <div class="fit-row">
@@ -1238,10 +1238,20 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     return '<span class="fit-term">' + T('On {months} months: <strong>{price}/mo</strong>, {save} less than paying monthly.', { months: months, price: money(cents), save: money((base - cents) * months) }) + '</span>';
   }
   document.addEventListener('ss:term', function () { update(); });
+  // Pick all that apply (2026-11-15): with several cameras, assume the footage is split evenly
+  // between them and use the average clips per GB. At least one stays picked.
+  function camRate() {
+    var on = Array.prototype.filter.call(cams, function (o) { return o.getAttribute('aria-checked') === 'true'; });
+    if (!on.length) return 1.5;
+    return on.reduce(function (t, o) { return t + parseFloat(o.getAttribute('data-fit-cam')); }, 0) / on.length;
+  }
   cams.forEach(function (b) {
     b.addEventListener('click', function () {
-      cams.forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); });
-      CLIPS_PER_GB = parseFloat(b.getAttribute('data-fit-cam')); update();
+      var wasOn = b.getAttribute('aria-checked') === 'true';
+      var count = Array.prototype.filter.call(cams, function (o) { return o.getAttribute('aria-checked') === 'true'; }).length;
+      if (wasOn && count === 1) return;
+      b.setAttribute('aria-checked', String(!wasOn));
+      CLIPS_PER_GB = camRate(); update();
     });
   });
   inNew.addEventListener('input', update); inDrive.addEventListener('input', update); update();

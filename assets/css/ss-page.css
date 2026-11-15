@@ -944,3 +944,25 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .fit-term strong { color: var(--ink); }
 /* Phones: room under the footer so the sticky "100 free clips" bar never covers the language picker. */
 @media (max-width: 719px) { .poster-foot { padding-bottom: calc(32px + 80px + env(safe-area-inset-bottom, 0px)); } }
+/* Plan finder, compact (Daniel 2026-11-15: "see the plans + which plan fits, less wasted space";
+   "when I adjust the data it shifts the page"). Fixed width, and the answer area has a fixed
+   height so moving a slider never moves anything below it. Wide screens: inputs left, answer right. */
+.fit { width: 100%; box-sizing: border-box; margin: 22px auto 0; padding: 22px 24px; }
+.fit-eyebrow { margin-bottom: 12px; }
+.fit-cams { margin-bottom: 16px; }
+.fit-cam { padding: 7px 10px; font-size: 11px; }
+.fit-answer { margin-top: 18px; min-height: 152px; }
+@media (min-width: 720px) { .fit-answer { min-height: 82px; } }
+@media (min-width: 960px) {
+  .fit { max-width: 1180px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: 40px; align-items: start;
+         grid-template-areas: "eye ans" "cams ans" "row fine"; }
+  .fit-eyebrow { grid-area: eye; }
+  .fit-cams { grid-area: cams; }
+  .fit-row { grid-area: row; }
+  .fit-answer { grid-area: ans; margin: 0; min-height: 150px; padding-left: 32px; border-left: 1px solid var(--line); font-size: 18px; }
+  .fit-fine { grid-area: fine; align-self: end; padding-left: 32px; border-left: 1px solid var(--line); margin: 0; padding-top: 8px; font-size: 11.5px; }
+}
+.term-eyebrow { margin-top: 26px; }
+.term-note + .pricing-grid { margin-top: 30px; }
+.fit-hint { margin-left: 8px; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3, #625E57); }
+@media (min-width: 960px) { .fit-cam-row { gap: 6px; } .fit-cam { padding: 7px 8px; letter-spacing: .05em; } }
