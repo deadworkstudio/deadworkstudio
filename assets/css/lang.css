@@ -39,3 +39,10 @@
 @media (pointer: coarse) {
   .lang-menu a { min-height: 44px; }
 }
+
+/* Footer picker (2026-11-15): a quiet "globe + language" button at the foot of the page; the
+   menu opens upward. Overrides the top-bar placement above. */
+.lang-foot { position: relative; display: flex; justify-content: center; grid-column: 1 / -1; width: 100%; margin: 14px 0 0; }
+.lang-foot .lang-trigger { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 6px 12px; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); background: none; color: inherit; font: 500 11px/1 var(--font-mono, 'JetBrains Mono', ui-monospace, Menlo, monospace); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.lang-foot .lang-trigger:hover, .lang-foot .lang-trigger[aria-expanded="true"] { border-color: currentColor; }
+.lang-foot .lang-menu { top: auto; bottom: calc(100% + 6px); right: auto; left: 50%; transform: translateX(-50%); text-transform: none; letter-spacing: normal; }

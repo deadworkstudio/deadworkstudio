@@ -43,7 +43,7 @@ LANGS = [
     ('ja', 'ja', '日本語', '日本語'),
 ]
 OG_LOCALE = {'en': 'en_US', 'es': 'es_ES', 'fr': 'fr_FR', 'de': 'de_DE', 'it': 'it_IT', 'zh': 'zh_CN', 'ja': 'ja_JP'}
-ASSET_V = '20261115b'
+ASSET_V = '20261115f'
 
 HEAD_RE = re.compile(r'\n?<!-- i18n:head -->.*?<!-- /i18n:head -->', re.S)
 PICK_RE = re.compile(r'\n?\s*<!-- i18n:picker -->.*?<!-- /i18n:picker -->', re.S)
@@ -73,9 +73,10 @@ def picker(page, lang):
         attrs = f' aria-current="true"' if code == lang else ''
         items.append(f'<li><a href="{url_of(page, code)}" hreflang="{hl}" lang="{hl}" data-lang="{code}"{attrs}>'
                      f'<span>{name}</span><span class="lang-code">{short}</span></a></li>')
-    return ('\n      <!-- i18n:picker --><div class="nav-tab lang-tab" data-lang-picker>'
-            f'<button class="nav-tab-trigger lang-trigger" type="button" aria-haspopup="true" aria-expanded="false" '
-            f'aria-label="Language: {cur[3]}">{cur[2]}</button>'
+    # In the footer since 2026-11-15 (Daniel: "Move it to the footer"); it opens upward from there.
+    return ('\n    <!-- i18n:picker --><div class="lang-tab lang-foot" data-lang-picker>'
+            f'<button class="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false" '
+            f'aria-label="Language: {cur[3]}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5c-2.6-2.7-3.9-5.9-3.9-9.5s1.3-6.8 3.9-9.5z"/></svg><span>{cur[3]}</span></button>'
             f'<ul class="lang-menu" hidden>{"".join(items)}</ul></div><!-- /i18n:picker -->')
 
 
@@ -90,11 +91,12 @@ def add_head(src, block):
 
 
 def add_picker(src, block):
-    m = re.search(r'<nav class="nav-tabs nav-tabs--post"[^>]*>', src)
-    if not m:
-        return src
-    end = src.index('</nav>', m.end())
-    return src[:end] + block + '\n    ' + src[end:]
+    # Last thing in the page's footer; pages without one (download pages) get it at the end of <main>.
+    for close in ('</footer>', '</main>', '</body>'):
+        end = src.rfind(close)
+        if end != -1:
+            return src[:end] + block + '\n  ' + src[end:]
+    return src
 
 
 def translate_segments(src, table, missing):
