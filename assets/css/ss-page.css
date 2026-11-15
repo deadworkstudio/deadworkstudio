@@ -989,3 +989,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .kw-film { position: absolute; left: .294%; top: .336%; width: 99.34%; height: auto; aspect-ratio: 1352 / 760; object-fit: cover; border-radius: 6px 6px 0 0; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
 .kw-film.is-playing { opacity: 1; }
 .upgrade-shot--phone video { display: block; width: 104px; height: auto; border-radius: 15px; }
+/* Phone is as tall as the keyword card beside it (Daniel 2026-11-15 "match phone to screen size").
+   Card = min(column, 340px) wide at 1360:1192; phone frame adds 5px padding top and bottom. */
+.upgrade--kw, .upgrade--phone { container-type: inline-size; }
+.upgrade-shot--phone img, .upgrade-shot--phone video { width: auto; height: calc(min(100cqw, 340px) * 1192 / 1360 - 10px); aspect-ratio: 660 / 1344; }
