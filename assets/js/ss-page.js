@@ -448,7 +448,7 @@
     var lerp = function (a, b, e) { return a + (b - a) * e; };
     var THUMB_W = 0.486, THUMB_H = 1.7;
     var sliderX = function (r, v, min, max) { return r[0] + THUMB_W / 2 + (v - min) / (max - min) * (r[2] - THUMB_W); };
-    var STRENGTH = [88.67, 40.14, 7.82, 1.45], EXPOSURE = [88.67, 51.16, 7.82, 1.45], CONTRAST = [88.67, 53.34, 7.82, 1.45], TRACK = [18.36, 89.36, 63.03, 3.27];
+    var STRENGTH = [88.67, 38.0, 7.82, 1.45], EXPOSURE = [88.67, 48.27, 7.82, 1.45], CONTRAST = [88.67, 50.45, 7.82, 1.45], TRACK = [18.36, 89.36, 63.03, 3.27];
     var BOX8K = [84.79, 23.47, 0.79, 1.18], BOX6K = [94.57, 20.84, 0.79, 1.18], KEYS = [[87.45, 'A'], [89.82, 'D'], [92.18, 'B'], [94.55, 'I O'], [96.91, 'Space']];
     // way(t) = [x, y, down] from waypoints [t, x, y, down]; eased between them
     var way = function (pts, t) {
@@ -470,13 +470,13 @@
           var a = 1 - span(t, 5.6, 6.1); if (a <= 0) return; d.alpha(a);
           if (t >= 0.95) d.check(BOX8K); if (t >= 1.95) d.check(BOX6K);
         } },
-      { len: 6.8, pts: [[0, 92, 45, 0], [0.8, 96.25, 40.86, 0], [0.9, 96.25, 40.86, 1], [2.1, sliderX(STRENGTH, 55, 0, 100), 40.86, 1], [2.3, sliderX(STRENGTH, 55, 0, 100), 40.86, 0], [3.9, sliderX(STRENGTH, 55, 0, 100), 40.86, 0], [4.0, sliderX(STRENGTH, 55, 0, 100), 40.86, 1], [5.0, 96.25, 40.86, 1], [5.1, 96.25, 40.86, 0], [5.8, 93, 45, 0]],
-        draw: function (d, t) {                                                     // 04 looks: strength down, then back
+      { len: 6.8, pts: [[0, 92, 43, 0], [0.8, sliderX(STRENGTH, 0, 0, 100), 38.73, 0], [0.9, sliderX(STRENGTH, 0, 0, 100), 38.73, 1], [2.1, sliderX(STRENGTH, 60, 0, 100), 38.73, 1], [2.3, sliderX(STRENGTH, 60, 0, 100), 38.73, 0], [3.9, sliderX(STRENGTH, 60, 0, 100), 38.73, 0], [4.0, sliderX(STRENGTH, 60, 0, 100), 38.73, 1], [5.0, sliderX(STRENGTH, 0, 0, 100), 38.73, 1], [5.1, sliderX(STRENGTH, 0, 0, 100), 38.73, 0], [5.8, 93, 43, 0]],
+        draw: function (d, t) {                                                     // 04 looks: strength up, then back (11.14.26 rests at 0%)
           if (t < 0.9 || t > 5.05) return;
-          var v = t < 4 ? lerp(100, 55, io(span(t, 0.9, 2.1))) : lerp(55, 100, io(span(t, 4.0, 5.0)));
+          var v = t < 4 ? lerp(0, 60, io(span(t, 0.9, 2.1))) : lerp(60, 0, io(span(t, 4.0, 5.0)));
           d.slider(STRENGTH, v, 0, 100, Math.round(v) + '%');
         } },
-      { len: 7.0, pts: [[0, 92, 58, 0], [0.8, 92.58, 51.88, 0], [0.9, 92.58, 51.88, 1], [2.0, sliderX(EXPOSURE, 0.8, -2, 2), 51.88, 1], [2.2, sliderX(EXPOSURE, 0.8, -2, 2), 51.88, 0], [2.9, 92.58, 54.06, 0], [3.0, 92.58, 54.06, 1], [4.0, sliderX(CONTRAST, 30, -100, 100), 54.06, 1], [4.2, sliderX(CONTRAST, 30, -100, 100), 54.06, 0], [4.9, 95, 58.5, 0]],
+      { len: 7.0, pts: [[0, 92, 55, 0], [0.8, 92.58, 48.98, 0], [0.9, 92.58, 48.98, 1], [2.0, sliderX(EXPOSURE, 0.8, -2, 2), 48.98, 1], [2.2, sliderX(EXPOSURE, 0.8, -2, 2), 48.98, 0], [2.9, 92.58, 51.16, 0], [3.0, 92.58, 51.16, 1], [4.0, sliderX(CONTRAST, 30, -100, 100), 51.16, 1], [4.2, sliderX(CONTRAST, 30, -100, 100), 51.16, 0], [4.9, 95, 55.5, 0]],
         draw: function (d, t) {                                                     // 05 fine-tune: exposure up, contrast up
           var a = 1 - span(t, 6.0, 6.5); if (a <= 0 || t < 0.9) return; d.alpha(a);
           var ex = lerp(0, 0.8, io(span(t, 0.9, 2.0))); d.slider(EXPOSURE, ex, -2, 2, ex.toFixed(1));
