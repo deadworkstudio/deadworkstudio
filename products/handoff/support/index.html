@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#F4F1EA" />
 <title>Handoff - Support</title>
 <link rel="canonical" href="https://deadworkstudio.com/products/handoff/support/" />
-<meta name="description" content="Get help with Handoff and the Handoff Remote iPhone app." />
+<meta name="description" content="Help with Handoff: copying a card, what green, amber, red and grey mean, the 2-copy rule, pairing a phone, notifications and moving to a new computer." />
 <link rel="icon" href="../../../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../../../assets/img/brand/apple-touch-icon.png" />
 <link rel="preload" as="image" href="../../../assets/img/brand/deadwork-wordmark-black-nr.webp" />
@@ -51,8 +51,10 @@ body.legal-page .poster { height: auto; }
 </style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../../assets/css/badges.css?v=1104b" />
+<link rel="stylesheet" href="../../../assets/css/handoff-v2.css?v=20261114a" />
 </head>
-<body class="dev-light legal-page" data-chat-widget>
+<body class="dev-light legal-page hf2" data-chat-widget>
+<a class="skip" href="#main">Skip to content</a>
 <div class="poster">
   <header class="poster-head">
     <span class="poster-meta-left">06 Tools</span>
@@ -102,29 +104,96 @@ body.legal-page .poster { height: auto; }
     </div>
   </header>
 
-  <main class="poster-panel legal-main">
+  <main class="poster-panel legal-main" id="main">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <symbol id="g-ok" viewBox="0 0 22 22"><rect width="22" height="22" fill="currentColor"/><path d="M5.5 11.5l3.6 3.6 7.4-8" fill="none" style="stroke:var(--gk,#F4F1EA)" stroke-width="2.4" stroke-linecap="square"/></symbol>
+      <symbol id="g-bad" viewBox="0 0 22 22"><rect width="22" height="22" fill="currentColor"/><path d="M6.5 6.5l9 9M15.5 6.5l-9 9" fill="none" style="stroke:var(--gk,#F4F1EA)" stroke-width="2.4"/></symbol>
+      <symbol id="g-warn" viewBox="0 0 22 22"><path d="M11 1.5L21 20.5H1z" fill="currentColor"/><path d="M11 8v6" style="stroke:var(--gk,#F4F1EA)" stroke-width="2.4"/><rect x="9.8" y="15.6" width="2.4" height="2.4" style="fill:var(--gk,#F4F1EA)"/></symbol>
+      <symbol id="g-off" viewBox="0 0 22 22"><rect width="22" height="22" fill="currentColor"/><path d="M8.5 6.5v9M13.5 6.5v9" style="stroke:var(--gk,#F4F1EA)" stroke-width="2.4"/></symbol>
+    </svg>
     <div class="wrap-narrow">
       <p class="eyebrow kicker">Support</p>
       <h1 class="display" style="font-size: clamp(32px, 5vw, 56px); margin-top: 8px;">Handoff Support</h1>
-      <p class="lede" style="margin-top: 32px;">Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we will reply within 2 business days. Tell us your computer (Mac or Windows), your Handoff version, and what happened.</p>
+      <p class="lede" style="margin-top: 24px;">Plug in, let Handoff find your card and hard drives, click once, and wait for the colour. Most answers are below.</p>
 
-      <h2>Pairing the iPhone app</h2>
+      <div class="hf-sup-mail">
+        <p><strong>Still stuck?</strong> Email <a href="mailto:deadworkstudio@gmail.com?subject=Handoff%20support">deadworkstudio@gmail.com</a> and we will reply within 2 business days.</p>
+        <p>Tell us your Mac, your Handoff version, and what colour the window turned. If it turned red or grey, the <em>Report a problem</em> button fills in the copy's details for you.</p>
+      </div>
+
+      <nav class="hf-sup-toc" aria-label="On this page">
+        <a href="#copy">Copying a card</a>
+        <a href="#colours">The colours</a>
+        <a href="#two-copies">2-copy rule</a>
+        <a href="#phone">Pairing a phone</a>
+        <a href="#alerts">Notifications</a>
+        <a href="#new-computer">New computer</a>
+        <a href="#subscription">Subscription</a>
+      </nav>
+
+      <h2 id="copy">Copying a card</h2>
+      <p>There is nothing to set up first.</p>
+      <ol class="hf-sup-steps">
+        <li><strong>Plug in</strong> the camera card and your backup hard drives.</li>
+        <li><strong>Handoff finds them by itself</strong> and opens on the card: what is on it, and which hard drives it will copy to. It picks the same hard drives as last time.</li>
+        <li><strong>Click once</strong> to copy. To use different hard drives, choose Change first.</li>
+        <li><strong>Wait for the colour.</strong> Every file is read back from each hard drive and checked against the card with xxHash64. When it ends, the whole window turns one colour.</li>
+      </ol>
+      <p>There are three jobs. <strong>Copy</strong> takes a card to your hard drives. <strong>Backup</strong> copies one hard drive to another. <strong>Transfer</strong> sends footage from a hard drive to an editor or post house.</p>
+      <p>You don't need the internet to copy or check. Phones need a connection to get alerts.</p>
+
+      <h2 id="colours">What the colours mean</h2>
+      <ul class="hf-sup-states">
+        <li><span><span class="hf-chip" style="--g:#8FD687;--i:#07130A;--gk:#8FD687"><svg class="hf-glyph" aria-hidden="true"><use href="#g-ok"/></svg>Green</span></span><p><strong>Safe.</strong> Every clip is verified on 2 separate hard drives. You can format the card.</p></li>
+        <li><span><span class="hf-chip" style="--g:#E2A43A;--i:#140F05;--gk:#E2A43A"><svg class="hf-glyph" aria-hidden="true"><use href="#g-warn"/></svg>Amber</span></span><p><strong>Not safe yet. Don't format.</strong> The copy is good, but there aren't enough copies. Usually only one hard drive was used. Choose <em>Add a second copy</em> and it turns green once the second copy is verified.</p></li>
+        <li><span><span class="hf-chip" style="--g:#C42F1F;--i:#F3EEE3;--gk:#C42F1F"><svg class="hf-glyph" aria-hidden="true"><use href="#g-bad"/></svg>Red</span></span><p><strong>Don't format.</strong> Something didn't match. The window says which hard drive and which clips. Plug the hard drive back in if it came loose, then re-copy just those clips. The clips that matched stay as they are. If the same hard drive fails again, use another one.</p></li>
+        <li><span><span class="hf-chip" style="--g:#A9A396;--i:#100F0D;--gk:#A9A396"><svg class="hf-glyph" aria-hidden="true"><use href="#g-off"/></svg>Grey</span></span><p><strong>Interrupted. Don't format.</strong> The copy stopped before the end, for example the Mac lost power. Open Handoff with the card and hard drives plugged in and choose <em>Resume</em>. It keeps what was already verified and carries on.</p></li>
+      </ul>
+      <p>Only green means the card is safe to format. Every colour also shows a symbol and a word, so you never have to judge by colour alone.</p>
+
+      <h2 id="two-copies">The 2-copy rule</h2>
+      <p>One copy is not a backup. A hard drive can fail, get dropped or go missing, so Handoff only turns green when every clip is verified on 2 separate hard drives.</p>
       <ul>
-        <li>On your computer, open Handoff, go to Phones and choose Pair a phone. A code appears.</li>
-        <li>On your iPhone, open Handoff Remote and scan the code. You can also type the code instead.</li>
-        <li>The code works for 5 minutes. If it expires, make a new one.</li>
-        <li>No computer yet? Tap See a demo in the iPhone app.</li>
+        <li>Copy to one hard drive and the card ends amber, "not safe yet". It never turns green with fewer copies than your rule.</li>
+        <li>You can change the number of copies from 1 to 5 in Settings (the gear, top right). Set it once per production.</li>
+        <li>Pick hard drives that are really separate. Two folders on the same hard drive count as one copy.</li>
       </ul>
 
-      <h2>No notifications</h2>
-      <p>Turn notifications on for Handoff Remote in iPhone Settings, then unpair and pair again.</p>
+      <h2 id="phone">Pairing a phone</h2>
+      <ul>
+        <li>On your Mac, open Handoff, go to <strong>Crew</strong> and choose <strong>Add a phone</strong>. A code appears.</li>
+        <li>On your iPhone, open the free Handoff app and scan the code. You can also type the code instead.</li>
+        <li>The code works for 5 minutes. If it runs out, make a new one.</li>
+        <li>Add as many phones as you like. Every phone is free, and phones can watch but never change a copy.</li>
+        <li>Android is coming, with alerts.</li>
+      </ul>
 
-      <h2>Subscription</h2>
-      <p>One subscription covers one computer, and any number of phones can watch it for free.</p>
-      <p><strong>Moving to a new computer.</strong> Open Handoff on the new computer, choose <em>I already subscribed</em>, and enter your email. We send you a 6-digit code. Enter it, then choose <em>Sign out and use here</em>. Your old computer is signed out, even if it is lost or broken.</p>
-      <p><strong>Manage or cancel</strong> from the Handoff license card in Handoff settings. Your footage and history stay yours if you cancel.</p>
+      <h2 id="alerts">No notifications</h2>
+      <ul>
+        <li>On the iPhone, open Settings, then Notifications, then Handoff, and turn on Allow Notifications.</li>
+        <li>Check the phone has a connection. The Mac copies offline, but alerts need the internet to reach your phone.</li>
+        <li>Still nothing? Remove the phone in <strong>Crew</strong> on the Mac, then pair it again.</li>
+      </ul>
+      <p>When it works, your phone buzzes the moment a card turns green or red.</p>
 
-      <p class="legal-nav"><a href="../../../home/">&larr; Back to DEADWORK</a> &middot; <a href="../">Handoff</a> &middot; <a href="../../../legal/handoff-privacy/">Privacy</a></p>
+      <h2 id="new-computer">Moving to a new computer</h2>
+      <p>One subscription covers one computer. To move it:</p>
+      <ol class="hf-sup-steps">
+        <li>Open Handoff on the new computer and choose <em>I already subscribed</em>.</li>
+        <li>Enter your email. We email you a 6-digit code.</li>
+        <li>Enter the code, then choose <em>Sign out and use here</em>.</li>
+      </ol>
+      <p>Your old computer is signed out, even if it is lost or broken. Your phones stay free; pair them with the new computer from <strong>Crew</strong>.</p>
+
+      <h2 id="subscription">Subscription</h2>
+      <ul>
+        <li>$15 a month or $129 a year, with a 14-day free trial and no card needed.</li>
+        <li>One computer per subscription, with unlimited phones.</li>
+        <li>Manage or cancel from the Handoff license card in Settings.</li>
+        <li>If your subscription ends, you can't start new cards. Copies in progress, re-copy, History, reports and your footage keep working. Your footage and History stay yours.</li>
+      </ul>
+
+      <p class="legal-nav"><a href="../../../home/">&larr; Back to DEADWORK</a> &middot; <a href="../">Handoff</a> &middot; <a href="../../../legal/terms/">Terms</a> &middot; <a href="../../../legal/handoff-privacy/">Privacy</a></p>
     </div>
   </main>
 

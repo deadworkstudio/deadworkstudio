@@ -49,7 +49,7 @@
 .hf2 main > section.hf-creed { text-align: left; }
 .hf2 .hf-creed-inner { width: min(100%, 1180px); margin: 0 auto; padding-top: clamp(20px, 3vh, 32px); border-top: var(--hf-rule) solid var(--ink); }
 .hf2 .hf-creed .hf-statement { font-size: clamp(34px, 6.4vw, 104px); }
-@media (max-width: 560px) { .hf2 .hf-creed .hf-statement { font-size: 9.2vw; } }
+@media (max-width: 560px) { .hf2 .hf-creed .hf-statement { font-size: 7.6vw; } }
 .hf2 .hf-creed .hf-statement span { display: block; }
 .hf2 .hf-creed .hf-statement .is-dim { color: var(--ink-3); }
 .hf2 .hf-creed p.hf-creed-sub { margin-top: clamp(20px, 3vh, 32px); max-width: 52ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); }
@@ -166,3 +166,6 @@
 
 /* keep centred intro copy to a readable measure */
 .hf2 .hf-how > .section-sub, .hf2 .hf-results > .section-sub { max-width: 60ch; margin-left: auto; margin-right: auto; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; }
+/* support page: its shell has no skip-link style of its own — hide until focused */
+.hf2.legal-page > .skip { position: absolute; left: 16px; top: 8px; z-index: 100; padding: 8px 12px; background: var(--dev-ink, #141412); color: var(--dev-bg, #F4F1EA); font: 500 12px/1 'JetBrains Mono', ui-monospace, monospace; }
+.hf2.legal-page > .skip:not(:focus) { clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; padding: 0; }
