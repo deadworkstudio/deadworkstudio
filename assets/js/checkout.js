@@ -80,6 +80,11 @@
     m6: '<strong>6-month commitment. Can\'t be canceled early.</strong> Billed monthly for 6 months at 10% off every payment. After 6 months it continues month to month at the same price, and from then on you can cancel anytime.',
     m12: '<strong>12-month commitment. Can\'t be canceled early.</strong> Billed monthly for 12 months at 15% off every payment. After 12 months it continues month to month at the same price, and from then on you can cancel anytime.'
   };
+  var TERM_NOTE_SHORT = {
+    month: 'Billed monthly. Cancel anytime.',
+    m6: 'Billed monthly for 6 months, then month to month. No early cancel.',
+    m12: 'Billed monthly for 12 months, then month to month. No early cancel.'
+  };
   function usd(cents) {
     var whole = Math.floor(cents / 100);
     var rem = cents % 100;
@@ -94,9 +99,10 @@
   var currentInterval = (activeTerm && activeTerm.getAttribute('data-term-opt')) || 'month'; // one of month | m6 | m12
 
   function renderPrices(option) {
-    if (termNote) termNote.innerHTML = T(TERM_NOTE[option]);
-    // 6/12-month terms are a real commitment: make the note stand out so nobody misses it.
-    if (termNote) termNote.classList.toggle('is-commitment', option !== 'month');
+    // Daniel 2026-11-15: the big yellow box read as off-putting next to the prices. Above the cards
+    // it's one quiet line; the full TERM_NOTE wording shows in checkout, right above Pay.
+    if (termNote) termNote.innerHTML = T(TERM_NOTE_SHORT[option]);
+    if (termNote) termNote.classList.remove('is-commitment');
     // Swapping the number mid-transition (rather than before or after it) is what makes the
     // blur+fade read as one number smoothly becoming another instead of the old one vanishing
     // and a different one popping in once it's gone — see the emil-design-eng skill's note on

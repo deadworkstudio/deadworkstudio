@@ -939,6 +939,6 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .term-eyebrow + .term { margin-top: 12px; }
 .term-opt { position: relative; }
 .term-best { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); padding: 3px 7px; background: #8FD687; color: #0B0B0A; font: 700 8.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
-.term-note + .pricing-grid { margin-top: 48px; }
+.term-note + .pricing-grid { margin-top: 40px; }
 .fit-term { display: block; margin-top: 8px; font-size: .82em; color: var(--ink-2); }
 .fit-term strong { color: var(--ink); }
