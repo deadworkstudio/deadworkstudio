@@ -234,7 +234,7 @@ main section { text-align: center; }
   font-size: clamp(60px, 15.4vw, 236px); line-height: .9; letter-spacing: -.004em;
   color: var(--ink);
 }
-.opener-line { display: block; overflow: hidden; padding-bottom: .03em; }
+.opener-line { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
 .opener-line-in { display: block; }
 /* a single hairline drops from the headline toward the film: the page's spine */
 .opener-rule {

@@ -235,13 +235,13 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
    ===================================================================================== */
 .film-shade { background: linear-gradient(180deg, rgba(6,6,5,0.55), rgba(6,6,5,0.25) 40%, rgba(6,6,5,0.55) 80%, var(--ink)); }
 .hero { display: grid; align-content: center; justify-items: center; text-align: center; padding-bottom: 6vh; position: relative; }
-.hero-title { font: 400 clamp(64px, 11.4vw, 200px)/0.86 var(--font-display); letter-spacing: -0.005em; }
+.hero-title { font: 400 clamp(64px, 11.4vw, 200px)/0.94 var(--font-display); letter-spacing: -0.005em; }
 .hero-lede { margin-top: 28px; font-size: clamp(16px, 1.35vw, 20px); color: var(--bone-body); }
 .hero-cue { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); }
 .motion .hero-line { animation: rise 1.2s var(--ease-out) both; }
 .motion .hero-line + .hero-line { animation-delay: .1s; }
 .motion .hero-lede, .motion .hero-cue { animation: fade 1s var(--ease) .6s both; }
-@keyframes rise { from { opacity: 0; transform: translateY(0.2em); clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 -10% 0); } }
+@keyframes rise { from { opacity: 0; transform: translateY(0.2em); clip-path: inset(-20% -5% 100% -5%); } to { clip-path: inset(-20% -5% -20% -5%); } }
 @keyframes fade { from { opacity: 0; } }
 
 /* ---------- Screen 2: three tools · DEADWORK · three tools ---------- */

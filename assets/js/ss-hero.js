@@ -305,7 +305,7 @@
   // app-review-169.webp: the Review screen in a 16:9 window (1920 x 1080 CSS) with all twelve clips listed,
   // clip 12 selected. Numbers are in the webp's own pixels (2880 x 1620 = the 2x capture at 0.75).
   var APP_W = 2880, APP_H = 1620, K = 0.75;
-  var APP_PLAYER = [578 * K, 575 * K, 2676 * K, 1121 * K];
+  var APP_PLAYER = [578 * K, 556 * K, 2676 * K, 1120 * K];
   var APP_THUMB_Y = [326, 457, 588, 719, 850, 981, 1112, 1243, 1374, 1505, 1636, 1767].map(function (y) { return y * K; });
   var APP_THUMB = [24 * K, 128 * K, 72 * K];
   var APP_TRIM = [606 * K, 3226 * K], APP_PH = [1916 * K, 2008 * K];   // trim track x range and the playhead's y span
@@ -789,7 +789,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review-169.webp?v=2';
+  app.src = MEDIA + 'app-review-169.webp?v=3';
   // start as soon as the wall and the hero shot's first frame are in; the rest arrive while the wall plays
   var imagesReady = whenImages([sprite, posters[HERO_CLIP]]);
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
