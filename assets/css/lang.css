@@ -1,0 +1,41 @@
+/* Language picker: a small code in the top bar ("EN") that opens the 7 languages.
+   It reuses .nav-tab-trigger for the code itself, so it matches each page's own nav. */
+.lang-tab { position: relative; }
+.lang-tab .lang-trigger { font-variant-numeric: tabular-nums; }
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 60;
+  min-width: 152px;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #f0eadf;
+  color: inherit;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  box-shadow: 0 10px 30px rgba(10, 10, 9, 0.12);
+}
+.lang-menu[hidden] { display: none; }
+.lang-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 40px;
+  padding: 0 14px;
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, Menlo, monospace);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.lang-menu a:hover, .lang-menu a:focus-visible { background: color-mix(in srgb, currentColor 8%, transparent); outline: none; }
+.lang-menu a[aria-current="true"]::after { content: ''; width: 6px; height: 6px; background: currentColor; }
+.lang-menu .lang-code { opacity: 0.55; }
+@media (max-width: 719px) {
+  .lang-menu { right: auto; left: 50%; transform: translateX(-50%); }
+}
+@media (pointer: coarse) {
+  .lang-menu a { min-height: 44px; }
+}

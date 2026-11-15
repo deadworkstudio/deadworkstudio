@@ -2,6 +2,18 @@
 <html lang="en" data-product="stock-shredder">
 <head>
 <meta charset="UTF-8" />
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://deadworkstudio.com/products/stock-shredder/" />
+<link rel="alternate" hreflang="es" href="https://deadworkstudio.com/es/products/stock-shredder/" />
+<link rel="alternate" hreflang="fr" href="https://deadworkstudio.com/fr/products/stock-shredder/" />
+<link rel="alternate" hreflang="de" href="https://deadworkstudio.com/de/products/stock-shredder/" />
+<link rel="alternate" hreflang="it" href="https://deadworkstudio.com/it/products/stock-shredder/" />
+<link rel="alternate" hreflang="zh-Hans" href="https://deadworkstudio.com/zh/products/stock-shredder/" />
+<link rel="alternate" hreflang="ja" href="https://deadworkstudio.com/ja/products/stock-shredder/" />
+<link rel="alternate" hreflang="x-default" href="https://deadworkstudio.com/products/stock-shredder/" />
+<link rel="stylesheet" href="/assets/css/lang.css?v=20261115b" />
+<script src="/assets/js/lang.js?v=20261115b"></script>
+<!-- /i18n:head -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#F4F1EA" />
 <title>DEADWORK - Stock Shredder</title>
@@ -68,6 +80,8 @@
       <div class="nav-tab" data-nav-tab>
         <a class="nav-tab-trigger" href="../../studio/">Studio</a>
       </div>
+    
+      <!-- i18n:picker --><div class="nav-tab lang-tab" data-lang-picker><button class="nav-tab-trigger lang-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language: English">EN</button><ul class="lang-menu" hidden><li><a href="/products/stock-shredder/" hreflang="en" lang="en" data-lang="en" aria-current="true"><span>English</span><span class="lang-code">EN</span></a></li><li><a href="/es/products/stock-shredder/" hreflang="es" lang="es" data-lang="es"><span>Español</span><span class="lang-code">ES</span></a></li><li><a href="/fr/products/stock-shredder/" hreflang="fr" lang="fr" data-lang="fr"><span>Français</span><span class="lang-code">FR</span></a></li><li><a href="/de/products/stock-shredder/" hreflang="de" lang="de" data-lang="de"><span>Deutsch</span><span class="lang-code">DE</span></a></li><li><a href="/it/products/stock-shredder/" hreflang="it" lang="it" data-lang="it"><span>Italiano</span><span class="lang-code">IT</span></a></li><li><a href="/zh/products/stock-shredder/" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh"><span>简体中文</span><span class="lang-code">中文</span></a></li><li><a href="/ja/products/stock-shredder/" hreflang="ja" lang="ja" data-lang="ja"><span>日本語</span><span class="lang-code">日本語</span></a></li></ul></div><!-- /i18n:picker -->
     </nav>
     <span class="poster-meta-right">Est. Los Angeles</span>
 
@@ -714,7 +728,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261113h"></script>
+<script src="../../assets/js/checkout.js?v=20261115a"></script>
 <script src="/assets/js/ss-funnel.js?v=20261113a" defer></script>
 <script src="../../assets/js/ss-page.js?v=20261106c"></script>
 <script src="../../assets/js/ss-hero.js?v=20261113a" defer></script>
@@ -1173,6 +1187,9 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 // Which plan fits (sales ideas 2026-11-13): new footage a month + footage on drives -> plan + hours saved.
 (function () {
   var box = document.querySelector('[data-fit]'); if (!box) return;
+  // Words for the page's language (assets/js/lang.js); English when there is no translation.
+  var T = function (k, v) { return window.DW_T ? window.DW_T(k, v) : String(k).replace(/\{(\w+)\}/g, function (m, n) { return v && n in v ? v[n] : m; }); };
+
   var NEW = [0, 50, 100, 250, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 8000, 10000, 15000, 20000, 30000, 50000];   // GB a month, up to 50 TB
   var DRIVE = [0, 100, 250, 500, 1000, 2000, 5000, 10000, 20000, 50000];               // GB on drives
   // Clips per GB by camera (research 2026-11-13): our Sony test found ~2.8 clips per minute of
@@ -1185,12 +1202,12 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   var PLANS = [['starter', 'Starter', 250], ['creator', 'Creator', 600], ['pro', 'Pro', 1200], ['studio', 'Studio', 2000]];
   var inNew = box.querySelector('[data-fit-new]'), inDrive = box.querySelector('[data-fit-drive]');
   var outNew = box.querySelector('[data-fit-new-val]'), outDrive = box.querySelector('[data-fit-drive-val]'), out = box.querySelector('[data-fit-answer]');
-  function size(gb) { return gb === 0 ? 'None' : gb < 1000 ? gb + ' GB' : (gb / 1000).toLocaleString() + ' TB'; }
+  function size(gb) { return gb === 0 ? T('None') : gb < 1000 ? gb + ' GB' : (gb / 1000).toLocaleString() + ' TB'; }
   function n(v) { return Math.round(v).toLocaleString(); }
   function update() {
     var gbNew = NEW[+inNew.value], gbDrive = DRIVE[+inDrive.value];
-    fine.textContent = 'Estimate: about ' + n(CLIPS_PER_GB * 1000) + ' finished clips per TB of this footage, from our own test (about 3 clips per minute of footage) and published data rates. Your footage will vary.';
-    outNew.textContent = size(gbNew) + (gbNew ? ' a month' : '');
+    fine.textContent = T('Estimate: about {n} finished clips per TB of this footage, from our own test (about 3 clips per minute of footage) and published data rates. Your footage will vary.', { n: n(CLIPS_PER_GB * 1000) });
+    outNew.textContent = gbNew ? T('{size} a month', { size: size(gbNew) }) : size(gbNew);
     outDrive.textContent = size(gbDrive);
     var monthly = gbNew * CLIPS_PER_GB, backlog = gbDrive * CLIPS_PER_GB;
     // Clear the backlog in about 3 months on top of new footage, so the drives actually empty.
@@ -1204,11 +1221,12 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
       if (!card) return;
       card.classList.toggle('is-fit', picked && pl[0] === plan[0]);
     });
-    if (!monthly && !backlog) { out.innerHTML = 'Move the sliders to see your plan.'; return; }
-    var line = '<strong>' + plan[1] + '</strong> ' + (need > plan[2] ? 'is our biggest plan' : 'fits') + '. About ' + n(monthly) + ' new clips a month';
-    if (backlog) line += ' + ' + n(backlog) + ' waiting on your drives';
-    line += '. ';
-    line += 'That saves you about <strong>' + n((Math.min(need, plan[2])) * 4 / 60) + ' hours</strong> a month.';
+    if (!monthly && !backlog) { out.innerHTML = T('Move the sliders to see your plan.'); return; }
+    var line = T(need > plan[2] ? '<strong>{plan}</strong> is our biggest plan.' : '<strong>{plan}</strong> fits.', { plan: plan[1] }) + ' ';
+    line += backlog
+      ? T('About {monthly} new clips a month + {backlog} waiting on your drives.', { monthly: n(monthly), backlog: n(backlog) })
+      : T('About {monthly} new clips a month.', { monthly: n(monthly) });
+    line += ' ' + T('That saves you about <strong>{hours} hours</strong> a month.', { hours: n((Math.min(need, plan[2])) * 4 / 60) });
     out.innerHTML = line;
   }
   cams.forEach(function (b) {

@@ -6,6 +6,9 @@
 // key is live-mode, so this publishable key must match or Stripe.js rejects the session outright).
 // No backend changes needed; the Worker's CORS is wide open for this.
 (function () {
+  // Words for the page's language (assets/js/lang.js); English when there is no translation.
+  var T = function (k, v) { return window.DW_T ? window.DW_T(k, v) : String(k).replace(/\{(\w+)\}/g, function (m, n) { return v && n in v ? v[n] : m; }); };
+
   var WORKER_URL = 'https://stock-shredder-payments.stockshredder.workers.dev';
   // The browser's remembered last outside visit (ss-funnel.js), sent only with a checkout so the
   // sale is credited to where this person first came from, even days later. Nothing for GPC/DNT.
@@ -66,7 +69,7 @@
   // Sales audit 2026-11-12: cents per clip made Creator look no better than Starter (11.60 vs
   // 11.50). Show the time it saves instead, from the page's own "4 minutes per clip by hand".
   function perClipText(cents, clips) {
-    return 'About ' + Math.round(clips * 4 / 60) + ' hours of hand work saved a month';
+    return T('About {hours} hours of hand work saved a month', { hours: Math.round(clips * 4 / 60) });
   }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
@@ -87,7 +90,7 @@
   var currentInterval = 'month'; // one of month | m6 | m12
 
   function renderPrices(option) {
-    if (termNote) termNote.innerHTML = TERM_NOTE[option];
+    if (termNote) termNote.innerHTML = T(TERM_NOTE[option]);
     // 6/12-month terms are a real commitment: make the note stand out so nobody misses it.
     if (termNote) termNote.classList.toggle('is-commitment', option !== 'month');
     // Swapping the number mid-transition (rather than before or after it) is what makes the
@@ -109,7 +112,7 @@
       var perMonth = option === 'year' ? Math.round(cents / 12) : cents;
 
       var apply = function () {
-        priceEl.innerHTML = '<span class="num">' + usd(cents) + '</span>' + (option === 'year' ? '/yr' : '/mo');
+        priceEl.innerHTML = '<span class="num">' + usd(cents) + '</span>' + (option === 'year' ? T('/yr') : T('/mo'));
 
         // The "save" line is always rendered (never [hidden]) so its height is reserved whether
         // or not it currently has text — toggling a class instead of hidden means switching
@@ -124,8 +127,8 @@
             saveEl.setAttribute('aria-hidden', 'true');
           } else {
             saveEl.textContent = option === 'year'
-              ? 'Save ' + usd(row.month * 12 - cents) + '/yr'
-              : 'Save ' + usd((row.month - cents) * TERM_MONTHS[option]) + ' over ' + TERM_MONTHS[option] + ' mo';
+              ? T('Save {amount}/yr', { amount: usd(row.month * 12 - cents) })
+              : T('Save {amount} over {months} mo', { amount: usd((row.month - cents) * TERM_MONTHS[option]), months: TERM_MONTHS[option] });
             saveEl.classList.add('is-visible');
             saveEl.removeAttribute('aria-hidden');
           }
@@ -134,8 +137,8 @@
         // confused: annual says "One payment today" and what it works out to per month.
         if (billEl) {
           billEl.innerHTML = option === 'year'
-            ? 'One payment today<br><span class="pricing-equiv">Works out to ' + usd(perMonth) + '/mo</span>'
-            : option === 'month' ? 'Billed monthly' : 'Billed monthly &middot; ' + TERM_MONTHS[option] + '-month term';
+            ? T('One payment today<br><span class="pricing-equiv">Works out to {amount}/mo</span>', { amount: usd(perMonth) })
+            : option === 'month' ? T('Billed monthly') : T('Billed monthly &middot; {months}-month term', { months: TERM_MONTHS[option] });
         }
         priceEl.classList.remove('is-swapping');
       };
@@ -153,7 +156,7 @@
       var monthlyClips = PLANS[plan].clips;
       if (clipsEl) {
         clipsEl.setAttribute('data-clips-monthly', String(monthlyClips));
-        clipsEl.textContent = monthlyClips.toLocaleString('en-US') + ' clips / mo';
+        clipsEl.textContent = T('{clips} clips / mo', { clips: monthlyClips.toLocaleString('en-US') });
       }
       if (perClipEl) perClipEl.textContent = perClipText(perMonth, monthlyClips);
     });
@@ -461,7 +464,7 @@
     var name = (firstName || '').trim().split(/\s+/)[0];
     var onPhone = isPhoneVisitor();
     var isTrial = !!(trial && trial.endsOnText);
-    if (successTitle) successTitle.textContent = name ? "You're in, " + name + '.' : "You're in.";
+    if (successTitle) successTitle.textContent = name ? T("You're in, {name}.", { name: name }) : T("You're in.");
     if (successNote) {
       successNote.textContent = isTrial
         ? 'Your free trial runs until ' + trial.endsOnText + ' or 100 clips. Nothing is charged unless you pick a plan.'
@@ -724,10 +727,10 @@
     if (bcoPrice) bcoPrice.textContent = usd(cents);
     if (bcoBill) {
       bcoBill.textContent = currentPlanInterval === 'month'
-        ? 'Monthly \u00b7 Cancel anytime'
-        : TERM_MONTHS[currentPlanInterval] + '-month commitment \u00b7 No early cancel';
+        ? T('Monthly \u00b7 Cancel anytime')
+        : T('{months}-month commitment \u00b7 No early cancel', { months: TERM_MONTHS[currentPlanInterval] });
     }
-    if (bcoClips) bcoClips.textContent = clips ? clips.toLocaleString('en-US') + ' clips / mo' : '';
+    if (bcoClips) bcoClips.textContent = clips ? T('{clips} clips / mo', { clips: clips.toLocaleString('en-US') }) : '';
     brandedTotalText = (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     if (bcoTotal) bcoTotal.textContent = brandedTotalText;
     // Until the Worker answers, the site's own wording for this option (the Worker's own copy of the
