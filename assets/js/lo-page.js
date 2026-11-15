@@ -65,11 +65,31 @@
       });
     });
   };
+  // steps with data-lo-img show their own real screen; the others show the scan frame in the markup
+  var shot = tour.querySelector('.lo-tour-img');
+  var base = shot && { src: shot.getAttribute('src'), srcset: shot.getAttribute('srcset'), alt: shot.getAttribute('alt') };
+  var screen = function (btn) {
+    if (!shot) return;
+    var alt = btn && btn.getAttribute('data-lo-img');
+    var want = alt ? { src: alt, srcset: btn.getAttribute('data-lo-srcset') || alt, alt: btn.getAttribute('data-lo-alt') || '' } : base;
+    if (shot.getAttribute('src') === want.src) return;
+    shot.setAttribute('srcset', want.srcset); shot.setAttribute('src', want.src); shot.setAttribute('alt', want.alt);
+  };
+  // fetch the other screens once the tour is near, so a step never shows a half-loaded image
+  var warm = function () {
+    feats.forEach(function (f) { var u = f.getAttribute('data-lo-img'); if (u) { var im = new Image(); im.sizes = shot ? shot.sizes : ''; im.srcset = f.getAttribute('data-lo-srcset') || ''; im.src = u; } });
+    warm = function () {};
+  };
+  if ('IntersectionObserver' in window) {
+    var wio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { wio.disconnect(); warm(); } }, { rootMargin: '400px 0px' });
+    wio.observe(tour);
+  } else warm();
   var show = function (i) {
     if (i === cur) return; cur = i;
     feats.forEach(function (f, k) { f.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
     panels.forEach(function (p, k) { p.hidden = k !== i; });
     explain.classList.toggle('has-feat', i >= 0);
+    screen(i < 0 ? null : feats[i]);
     if (i < 0) { spot.classList.remove('is-on'); return; }
     aim(feats[i]); spot.classList.add('is-on');
   };
@@ -190,6 +210,46 @@
   if (!bar || !top || !('IntersectionObserver' in window)) return;
   bar.hidden = false;
   new IntersectionObserver(function (entries) { bar.classList.toggle('is-on', !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0); }).observe(top);
+})();
+
+// ---- floating "14 days free" button (bottom left, Stock Shredder's .ss-sticky look) ----
+// Shows once the top signup has scrolled up out of view. Hidden again while any signup form (or, when live,
+// the pricing App Store button) is on screen, so it never sits over the thing it points to.
+// Waitlist state: the click scrolls to the top Get notified form and puts the cursor in the email box.
+(function () {
+  var bar = document.querySelector('[data-lo-float]'), top = document.getElementById('top-cta');
+  if (!bar || !top || !('IntersectionObserver' in window)) return;
+  var main = document.querySelector('main[data-cta]');
+  var live = function () { return main && main.getAttribute('data-cta') === 'live'; };
+  var topGone = false, onScreen = 0;
+  var sync = function () {
+    var show = topGone && onScreen === 0;
+    bar.classList.toggle('is-on', show);
+    bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+    [].forEach.call(bar.querySelectorAll('a'), function (a) { a.tabIndex = show ? 0 : -1; });
+  };
+  new IntersectionObserver(function (es) {
+    topGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync();
+  }).observe(top);
+  // the other signup spots: pricing (form or App Store button) and the FAQ notify form
+  var spots = [document.querySelector('.lo-price-cta'), document.getElementById('notify')].filter(Boolean);
+  var vis = new Map();
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { vis.set(e.target, e.isIntersecting); });
+    onScreen = 0; vis.forEach(function (v) { if (v) onScreen++; }); sync();
+  }, { rootMargin: '0px 0px -10% 0px' });
+  spots.forEach(function (n) { io.observe(n); });
+
+  var jump = bar.querySelector('[data-lo-float-jump]');
+  if (jump) jump.addEventListener('click', function (e) {
+    if (live()) return;
+    var form = top.querySelector('[data-notify-form]'); if (!form) return;
+    e.preventDefault();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    var email = form.querySelector('[data-notify-email]');
+    if (email) setTimeout(function () { try { email.focus({ preventScroll: true }); } catch (x) { email.focus(); } }, reduce ? 0 : 450);
+  });
 })();
 
 // ---- ADDING GEAR rings: the capture ring fills each time the photos come into view, then shows its check ----

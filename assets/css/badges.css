@@ -16,3 +16,9 @@
 .screen--tools .status::before { background: #E3B23D !important; border: 0 !important; width: 7px !important; height: 7px !important; margin-right: 8px !important; }
 .screen--tools .status--live::before { background: #8FD687 !important; }
 .mm-meta .badge.badge-live { color: #e6e0d3 !important; }
+
+/* "Available now" in the tools grid: the same green square as Live, same size and gap as the yellow In development one */
+.tool-meta .tool-live { display: inline-flex; align-items: center; gap: 6px; }
+.tool-meta .tool-live .badge-icon { display: inline-block; width: 8px; height: 8px; flex-shrink: 0; background: #8FD687 !important; border: 0 !important; }
+/* tools grid cards: the status always gets its own line under the stage name, whatever its length */
+.tool-status .badge { flex-basis: 100%; }

@@ -301,3 +301,14 @@ main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; p
   .lo-cta-band[data-band="green"] .pill-solid:hover { background: #000; border-color: #000; color: #fff; }
   .lo-cta-band[data-band="green-button"] .pill-solid:hover { background: #A6E09F; color: #0E0E0D; }
 }
+
+/* ---- hero: the "Coming to iPhone / 14 days free" line sits under the phones (2026-11-14) ---- */
+.hero .lo-phones-note { margin-top: clamp(14px, 2.2vh, 22px); }
+
+/* ---- floating "14 days free" button: the look and motion come from .ss-sticky (ss-page.css).
+   It replaces the old phone-only sticky bar, which stays in the markup but never shows. ---- */
+[data-lo-float] ~ [data-lo-sticky] { display: none !important; }
+.lo-float { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+@media (max-width: 719px) { .lo-float { bottom: 12px; } }
+/* room under the footer so the float never sits on top of it at the end of the page */
+.lo .poster-foot { padding-bottom: calc(32px + 72px + env(safe-area-inset-bottom, 0px)); }

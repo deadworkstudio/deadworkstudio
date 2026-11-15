@@ -10,6 +10,7 @@
 // Events (each fires at most once per page load):
 //   loadout_page_view        the page opened               (the <main data-event> attribute)
 //   loadout_hero_cta_click   top button clicked            (data-event on the hero button / link)
+//   loadout_float_cta_click  floating "14 days free" button clicked (bottom left)
 //   loadout_app_download_click  App Store link clicked     (data-event, ready for when the link exists)
 //   loadout_monthly_select / loadout_yearly_select  a price card clicked
 //   loadout_pricing_view     pricing section scrolled into view
@@ -52,7 +53,7 @@
     send(main ? main.getAttribute('data-event') : 'loadout_page_view');
 
     // 2. clicks, by the markup's own data-event names
-    var CLICKS = { loadout_hero_cta_click: 1, loadout_app_download_click: 1, loadout_monthly_select: 1, loadout_yearly_select: 1 };
+    var CLICKS = { loadout_hero_cta_click: 1, loadout_float_cta_click: 1, loadout_app_download_click: 1, loadout_monthly_select: 1, loadout_yearly_select: 1 };
     document.addEventListener('click', function (ev) {
       var el = ev.target && ev.target.closest ? ev.target.closest('[data-event]') : null;
       var name = el && el.getAttribute('data-event');
