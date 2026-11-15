@@ -343,14 +343,14 @@
 
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
-    <p class="section-sub">Unused clips roll over for 2 months. Upgrade anytime. Start with 100 free clips.</p>
+    <p class="section-sub">Every plan: auto-naming, stock-site checks, stabilize, grain removal, all export sizes. Unused clips roll over 2 months.</p>
     <p class="pricing-error" data-pricing-error role="alert" tabindex="-1" hidden></p>
     <!-- SHRED trial box: on for everyone since 2026-11-04 (Daniel: "until I say remove"). To hide again, wrap it in <template data-trial-offer-hold>. -->
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
       <p class="trial-offer-dl" data-trial-dl-note hidden>While it downloads, grab your 100 free clips.</p>
       <p class="mono trial-offer-eyebrow">SHRED launch offer</p>
       <h3 class="trial-offer-title">100 free clips. 7 days.</h3>
-      <p class="trial-offer-sub"><strong>$0 today.</strong> Your card stops repeat trials and is never charged.</p>
+      <p class="trial-offer-sub"><strong>$0 today. Nothing renews.</strong> Your card only blocks repeat trials.</p>
       <form class="trial-offer-form" data-trial-offer-form novalidate>
         <label class="sr-only" for="trial-email">Your email</label>
         <input type="email" id="trial-email" placeholder="Your email" autocomplete="email" required data-trial-email />
@@ -359,9 +359,8 @@
       <!-- §8.1's disclosure, full size next to the button — the site's own version adds the real
            end date, filled in from GET /offer's own endsOnText (never computed here). -->
       <p class="trial-offer-phone" data-trial-phone-note hidden>On your phone? We'll email the link so your 7 days start on your computer. <button type="button" class="trial-offer-now" data-trial-start-now hidden>Start now anyway</button></p>
-      <p class="trial-offer-disclosure"><strong>Nothing renews.</strong> Pick a plan only if you want one.</p>
-      <p class="trial-offer-disclosure trial-offer-fine">Use them by <span data-trial-offer-date>7 days from today</span>. Keywords included in the trial; on plans they come with Pro and Studio. Start any time before December 31, 2026. One trial per person, card and computer.</p>
-      <p class="trial-offer-disclosure trial-offer-reminder">Don't finish? We'll send you one reminder the next day. Unsubscribe anytime.</p>
+      <p class="trial-offer-disclosure trial-offer-fine">Use by <span data-trial-offer-date>7 days from today</span>. Keywords included. Offer ends Dec 31, 2026. One per person, card and computer.</p>
+      <p class="trial-offer-disclosure trial-offer-reminder">One reminder email if you don't finish. Unsubscribe anytime.</p>
       <p class="trial-offer-status" data-trial-offer-status role="status" aria-live="polite"></p>
       <p class="trial-offer-error" data-trial-offer-error role="alert" aria-live="assertive" tabindex="-1" hidden></p>
       <div class="trial-offer-resend">
@@ -374,7 +373,6 @@
         <p class="trial-offer-resend-status" data-trial-resend-status role="status" aria-live="polite"></p>
       </div>
     </div>
-    <p class="pricing-every">Every plan: auto-naming, stock-site checks, stabilize, grain removal, every export size, unused clips roll over.</p>
     <div class="fit" data-fit>
       <p class="mono fit-eyebrow">Which plan fits</p>
       <div class="fit-cams" role="group" aria-label="What you shoot on (pick all that apply)">
@@ -456,7 +454,7 @@
         <button type="button" class="pill pill-outline" data-plan-button="studio">Get started</button>
       </div>
     </div>
-    <p class="pricing-existing">Already have Stock Shredder? Change plans inside the app (Upgrade) so you're never billed twice. On a trial? Use the plan link we emailed you.</p>
+    <p class="pricing-existing">Already a customer? Change plans in the app so you're never billed twice.</p>
     <div class="upgrade-row" aria-label="What Pro and Studio add">
       <figure class="upgrade upgrade--kw">
         <figcaption><p class="mono">Pro &middot; Studio</p><h3>Copy-paste keywords</h3><p>Every exported clip gets stock-ready keywords. One click copies them into your upload.</p></figcaption>
@@ -464,10 +462,10 @@
       </figure>
       <figure class="upgrade upgrade--phone">
         <figcaption><p class="mono">Studio</p><h3>Approve from your phone</h3><p>Approve or deny clips from your phone while your computer does the shredding.</p></figcaption>
-        <div class="upgrade-shot upgrade-shot--phone"><img src="../../assets/img/products/stock-shredder/remote-import.jpg?v=nb1" width="660" height="1344" loading="lazy" alt="Stock Shredder Remote on iPhone, ready to pick footage from your computer." /></div>
+        <div class="upgrade-shot upgrade-shot--phone"><img src="../../assets/img/products/stock-shredder/remote-flow-poster.jpg?v=nb1" width="660" height="1344" loading="lazy" alt="Stock Shredder Remote on iPhone reviewing a Beverly Hills drone clip, with Approve and Deny." /></div>
       </figure>
     </div>
-    <p class="pricing-terms"><strong>Monthly:</strong> cancel anytime, no fee. You keep access until the end of your billing month. <strong>6 and 12&nbsp;months:</strong> a commitment. They're billed monthly for the full term and can't be canceled early. Once the term ends they continue month to month at the same price, and from then on you can cancel anytime. We'll email you 30 days before the term ends.</p>
+    <p class="pricing-terms"><strong>Monthly:</strong> access until the end of your billing month. <strong>6 and 12&nbsp;months:</strong> we email you 30 days before the term ends.</p>
     <div class="checkout-panel" data-checkout-panel tabindex="-1" hidden>
       <p class="checkout-status" data-checkout-status role="status" aria-live="polite" hidden></p>
       <!-- Branded plan checkout (2026-11-05): our own summary, email field and Pay button around
@@ -1212,7 +1210,7 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   function n(v) { return Math.round(v).toLocaleString(); }
   function update() {
     var gbNew = NEW[+inNew.value], gbDrive = DRIVE[+inDrive.value];
-    fine.textContent = T('Estimate: about {n} finished clips per TB of this footage, from our own test (about 3 clips per minute of footage) and published data rates. Your footage will vary.', { n: n(CLIPS_PER_GB * 1000) });
+    fine.textContent = T('Estimate: about {n} clips per TB, from our own test and published data rates.', { n: n(CLIPS_PER_GB * 1000) });
     outNew.textContent = gbNew ? T('{size} a month', { size: size(gbNew) }) : size(gbNew);
     outDrive.textContent = size(gbDrive);
     var monthly = gbNew * CLIPS_PER_GB, backlog = gbDrive * CLIPS_PER_GB;
@@ -1230,9 +1228,9 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     if (!monthly && !backlog) { out.innerHTML = T('Move the sliders to see your plan.'); return; }
     var line = T(need > plan[2] ? '<strong>{plan}</strong> is our biggest plan.' : '<strong>{plan}</strong> fits.', { plan: plan[1] }) + ' ';
     line += backlog
-      ? T('About {monthly} new clips a month + {backlog} waiting on your drives.', { monthly: n(monthly), backlog: n(backlog) })
-      : T('About {monthly} new clips a month.', { monthly: n(monthly) });
-    line += ' ' + T('That saves you about <strong>{hours} hours</strong> a month.', { hours: n((Math.min(need, plan[2])) * HAND_MINUTES_PER_CLIP / 60) });
+      ? T('{monthly} new clips a month + {backlog} on your drives.', { monthly: n(monthly), backlog: n(backlog) })
+      : T('{monthly} new clips a month.', { monthly: n(monthly) });
+    line += ' ' + T('Saves about <strong>{hours} hours</strong> a month.', { hours: n((Math.min(need, plan[2])) * HAND_MINUTES_PER_CLIP / 60) });
     line += termLine(plan[0], plan[1]);
     // Wide screens show the estimate note right under the answer, in the same block, so there's no gap.
     line += '<span class="fit-fine-in">' + fine.innerHTML + '</span>';
@@ -1252,10 +1250,10 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
     var pct = +active.getAttribute('data-term-pct'), months = +active.getAttribute('data-term-months');
     if (!pct) {
       var bestPct = +best.getAttribute('data-term-pct'), bestCents = Math.round(base * (100 - bestPct) / 100);
-      return '<span class="fit-term">' + T('Lock in 12 months and pay <strong>{price}/mo</strong> instead. That\'s {save} less over the year.', { price: money(bestCents), save: money((base - bestCents) * 12) }) + '</span>';
+      return '<span class="fit-term">' + T('Or <strong>{price}/mo</strong> on 12 months, saving {save}.', { price: money(bestCents), save: money((base - bestCents) * 12) }) + '</span>';
     }
     var cents = Math.round(base * (100 - pct) / 100);
-    return '<span class="fit-term">' + T('On {months} months: <strong>{price}/mo</strong>, {save} less than paying monthly.', { months: months, price: money(cents), save: money((base - cents) * months) }) + '</span>';
+    return '<span class="fit-term">' + T('<strong>{price}/mo</strong> on {months} months, saving {save}.', { months: months, price: money(cents), save: money((base - cents) * months) }) + '</span>';
   }
   document.addEventListener('ss:term', function () { update(); });
   // Pick all that apply (2026-11-15): with several cameras, assume the footage is split evenly
