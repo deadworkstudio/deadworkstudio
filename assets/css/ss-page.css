@@ -983,3 +983,9 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .fit-head { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 14px; row-gap: 6px; margin: 0 0 2px; }
 .fit-head .fit-eyebrow { margin: 0; }
 .fit-head .fit-hint { margin-left: 0; }
+/* Pricing extras move on a good connection (Daniel 2026-11-15): the drone clip plays inside the keyword
+   card's photo (photo area = 4..1355 x 4..763 of the 1360 x 1192 card), and the phone plays the Remote recording. */
+.upgrade-shot--kw { position: relative; }
+.kw-film { position: absolute; left: .294%; top: .336%; width: 99.34%; height: auto; aspect-ratio: 1352 / 760; object-fit: cover; border-radius: 6px 6px 0 0; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+.kw-film.is-playing { opacity: 1; }
+.upgrade-shot--phone video { display: block; width: 104px; height: auto; border-radius: 15px; }

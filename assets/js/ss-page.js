@@ -239,6 +239,9 @@
     // full-resolution film only on wide or high-density screens
     if (v.hasAttribute('data-hd') && window.innerWidth * (window.devicePixelRatio || 1) > 2000) { var hs = v.querySelector('source'); if (hs) { hs.src = v.getAttribute('data-hd'); v.load(); } }
     if (reduce || !('IntersectionObserver' in window)) return;
+    // data-film-fast: only on a good connection (no Data Saver, not 2G/3G); otherwise the still stays
+    if (v.hasAttribute('data-film-fast')) { var nc = navigator.connection; if (nc && (nc.saveData || /(^|-)(2g|3g)$/.test(nc.effectiveType || ''))) return; }
+    v.addEventListener('playing', function () { v.classList.add('is-playing'); });
     new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); }); }, { threshold: 0.2 }).observe(v);
   });
 
