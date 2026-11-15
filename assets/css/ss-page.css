@@ -955,14 +955,20 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 @media (min-width: 720px) { .fit-answer { min-height: 82px; } }
 @media (min-width: 960px) {
   .fit { max-width: 1180px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: 40px; align-items: start;
-         grid-template-areas: "eye ans" "cams ans" "row fine"; }
+         grid-template-areas: "eye ans" "cams ans" "row fine"; grid-template-rows: auto auto 1fr; }
+  .fit-row { align-self: end; }
   .fit-eyebrow { grid-area: eye; }
   .fit-cams { grid-area: cams; }
   .fit-row { grid-area: row; }
-  .fit-answer { grid-area: ans; margin: 0; min-height: 150px; padding-left: 32px; border-left: 1px solid var(--line); font-size: 18px; }
+  .fit-answer { grid-area: ans; margin: 0; min-height: 0; padding-left: 32px; border-left: 1px solid var(--line); font-size: 18px; }
   .fit-fine { grid-area: fine; align-self: end; padding-left: 32px; border-left: 1px solid var(--line); margin: 0; padding-top: 8px; font-size: 11.5px; }
+  .fit-cams { margin-bottom: 18px; }
+  .fit-answer, .fit-fine { border-left: 0; padding-left: 0; }
+  .fit { column-gap: 48px; }
 }
 .term-eyebrow { margin-top: 26px; }
 .term-note + .pricing-grid { margin-top: 30px; }
 .fit-hint { margin-left: 8px; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3, #625E57); }
 @media (min-width: 960px) { .fit-cam-row { gap: 6px; } .fit-cam { padding: 7px 8px; letter-spacing: .05em; } }
+@media (min-width: 960px) { .fit-answer { min-height: 112px; } }
+@media (min-width: 960px) and (max-width: 1199px) { .fit-answer { min-height: 162px; } }
