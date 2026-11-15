@@ -49,7 +49,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261115x" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261115y" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -1234,6 +1234,8 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
       : T('About {monthly} new clips a month.', { monthly: n(monthly) });
     line += ' ' + T('That saves you about <strong>{hours} hours</strong> a month.', { hours: n((Math.min(need, plan[2])) * HAND_MINUTES_PER_CLIP / 60) });
     line += termLine(plan[0], plan[1]);
+    // Wide screens show the estimate note right under the answer, in the same block, so there's no gap.
+    line += '<span class="fit-fine-in">' + fine.innerHTML + '</span>';
     out.innerHTML = line;
   }
   // The fitting plan's price on the billing option picked above the cards (Daniel 2026-11-15:

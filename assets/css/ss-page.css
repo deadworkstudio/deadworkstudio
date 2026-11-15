@@ -955,7 +955,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 @media (min-width: 720px) { .fit-answer { min-height: 82px; } }
 @media (min-width: 960px) {
   .fit { max-width: 1180px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: 40px; align-items: start;
-         grid-template-areas: "eye ans" "cams ans" "row fine"; grid-template-rows: auto auto 1fr; }
+         grid-template-areas: "eye ans" "cams ans" "row ans"; grid-template-rows: auto auto 1fr; }
   .fit-row { align-self: end; }
   .fit-eyebrow { grid-area: eye; }
   .fit-cams { grid-area: cams; }
@@ -972,3 +972,10 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 @media (min-width: 960px) { .fit-cam-row { gap: 6px; } .fit-cam { padding: 7px 8px; letter-spacing: .05em; } }
 @media (min-width: 960px) { .fit-answer { min-height: 112px; } }
 @media (min-width: 960px) and (max-width: 1199px) { .fit-answer { min-height: 162px; } }
+/* The estimate note lives inside the answer block on wide screens (no gap between them). */
+.fit-fine-in { display: none; }
+@media (min-width: 960px) {
+  .fit-fine { display: none; }
+  .fit-fine-in { display: block; margin-top: 14px; font-size: 11.5px; line-height: 1.5; color: var(--ink-3, #625E57); }
+  .fit-answer { min-height: 0; }
+}
