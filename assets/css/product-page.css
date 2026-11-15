@@ -137,3 +137,16 @@ main > section.credits { min-height: 0 !important; padding-top: clamp(56px, 8vh,
   .pp main > section.hero.pp-hero-text { justify-content: center; padding-bottom: 8vh !important; }
 }
 .pp-hero-text h1 { font-size: clamp(44px, 6vw, 92px); }
+
+
+/* Handoff pricing section */
+.hf-pricing { padding: 72px 24px; max-width: 880px; margin: 0 auto; text-align: center; }
+.hf-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0 24px; }
+.hf-plan { border: 1px solid currentColor; padding: 24px 20px; text-align: left; }
+.hf-plan-k { margin: 0 0 8px; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+.hf-plan-price { margin: 0 0 8px; display: flex; align-items: baseline; gap: 8px; }
+.hf-plan-price b { font-size: 48px; line-height: 1; }
+.hf-plan-note { margin: 0; font-size: 14px; opacity: .8; }
+.hf-terms { list-style: none; margin: 0 auto; padding: 0; max-width: 620px; text-align: left; display: grid; gap: 8px; font-size: 15px; }
+.hf-pricing-status { margin: 28px 0 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+@media (max-width: 620px) { .hf-plans { grid-template-columns: 1fr; } .hf-plan-price b { font-size: 40px; } }
