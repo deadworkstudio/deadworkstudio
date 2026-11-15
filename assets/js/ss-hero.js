@@ -789,7 +789,7 @@
   }
 
   sprite.src = WALL.src;
-  app.src = MEDIA + 'app-review-169.webp?v=3';
+  app.src = MEDIA + 'app-review-169.webp?v=4';
   // start as soon as the wall and the hero shot's first frame are in; the rest arrive while the wall plays
   var imagesReady = whenImages([sprite, posters[HERO_CLIP]]);
   window.addEventListener('resize', function () { size(); render(freeze ? t0 : clock); });
