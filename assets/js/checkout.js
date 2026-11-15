@@ -67,9 +67,10 @@
   });
   // Cost per clip in cents, two places: 11.60¢, 8.46¢.
   // Sales audit 2026-11-12: cents per clip made Creator look no better than Starter (11.60 vs
-  // 11.50). Show the time it saves instead, from the page's own "4 minutes per clip by hand".
+  // 11.50). Show the time it saves instead, at 2 minutes per clip by hand (Daniel 2026-11-15,
+  // back from 4; same figure as the plan finder's HAND_MINUTES_PER_CLIP).
   function perClipText(cents, clips) {
-    return T('About {hours} hours of hand work saved a month', { hours: Math.round(clips * 4 / 60) });
+    return T('About {hours} hours of hand work saved a month', { hours: Math.round(clips * 2 / 60) });
   }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
@@ -87,7 +88,10 @@
 
   var termGroup = document.querySelector('[data-term]');
   var termNote = document.querySelector('[data-term-note]');
-  var currentInterval = 'month'; // one of month | m6 | m12
+  // Starts on whichever option the markup marks active (12 months since 2026-11-15), so the page's
+  // default lives in one place.
+  var activeTerm = termGroup && termGroup.querySelector('[data-term-opt].is-active');
+  var currentInterval = (activeTerm && activeTerm.getAttribute('data-term-opt')) || 'month'; // one of month | m6 | m12
 
   function renderPrices(option) {
     if (termNote) termNote.innerHTML = T(TERM_NOTE[option]);
@@ -178,6 +182,8 @@
       });
       if (focus) btn.focus();
       renderPrices(currentInterval);
+      // The plan finder above the cards quotes the fitting plan's price on this term.
+      try { document.dispatchEvent(new CustomEvent('ss:term', { detail: { option: currentInterval } })); } catch (e) { /* old browser: finder keeps its last line */ }
     };
     Array.prototype.forEach.call(termOpts, function (btn, i) {
       btn.addEventListener('click', function () { selectTerm(btn, false); });

@@ -932,3 +932,13 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .fit { --fit-c: #2F9E44; transition: border-color .3s ease, box-shadow .3s ease; }
 .fit-answer strong:first-child { color: var(--fit-c); }
 @media (max-width: 767px) { .fit-row { grid-template-columns: 1fr; } }
+
+/* Billing selector right above the plan cards (2026-11-15): eyebrow, "Best price" tag on 12 months,
+   and the plan finder's price-on-this-term line. */
+.term-eyebrow { margin: 34px auto 0; text-align: center; font: 600 10.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+.term-eyebrow + .term { margin-top: 12px; }
+.term-opt { position: relative; }
+.term-best { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); padding: 3px 7px; background: #8FD687; color: #0B0B0A; font: 700 8.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.term-note + .pricing-grid { margin-top: 48px; }
+.fit-term { display: block; margin-top: 8px; font-size: .82em; color: var(--ink-2); }
+.fit-term strong { color: var(--ink); }
