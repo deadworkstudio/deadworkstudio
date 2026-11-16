@@ -70,8 +70,15 @@
       var menu = tab.querySelector('.lang-menu');
       if (!btn || !menu) return;
       function open() {
-        var bg = getComputedStyle(document.body).backgroundColor;
-        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') menu.style.backgroundColor = bg;
+        // Paint the menu with the colour actually behind the picker (the nearest opaque ancestor),
+        // not the page body's: on the homepage the body is near-black but the footer sits on a light
+        // panel, which used to give a black menu with black text.
+        var bg = '';
+        for (var el = tab; el; el = el.parentElement) {
+          var c = getComputedStyle(el).backgroundColor;
+          if (c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') { bg = c; break; }
+        }
+        if (bg) menu.style.backgroundColor = bg;
         menu.hidden = false; btn.setAttribute('aria-expanded', 'true');
       }
       function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }

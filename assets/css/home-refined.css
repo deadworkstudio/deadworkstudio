@@ -238,6 +238,8 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 .hero-title { font: 400 clamp(64px, 11.4vw, 200px)/0.94 var(--font-display); letter-spacing: -0.005em; }
 .hero-lede { margin-top: 28px; font-size: clamp(16px, 1.35vw, 20px); color: var(--bone-body); }
 .hero-cue { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); }
+/* keep the statement and buttons clear of the "06 Tools" cue, which sits at the bottom of the hero (it used to run under the buttons on short laptop windows and in longer languages) */
+@media (min-width: 900px) { .hero { padding-bottom: calc(6vh + 120px); } }
 .motion .hero-line { animation: rise 1.2s var(--ease-out) both; }
 .motion .hero-line + .hero-line { animation-delay: .1s; }
 .motion .hero-lede, .motion .hero-cue { animation: fade 1s var(--ease) .6s both; }
