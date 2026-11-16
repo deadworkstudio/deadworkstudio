@@ -19,6 +19,20 @@
     if (playing && playing.catch) playing.catch(function () {});
   }
 
+  // Once the hero has scrolled out of view, switch its film layer off completely (pause the video and
+  // hide the layer). iOS Safari can leave a video that has a CSS filter painted as a black box over
+  // the content below it, and there is nothing to see up there anyway.
+  var filmLayer = document.querySelector('.screen--hero .film');
+  if (filmLayer && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      var visible = entries[entries.length - 1].isIntersecting;
+      filmLayer.style.visibility = visible ? '' : 'hidden';
+      if (!hero) return;
+      if (visible) { if (!reduce.matches && hero.paused && hero.readyState > 1) { var p = hero.play(); if (p && p.catch) p.catch(function () {}); } }
+      else if (!hero.paused) hero.pause();
+    }, { threshold: 0 }).observe(document.querySelector('.screen--hero'));
+  }
+
   /* ------------------------------------------------------------------ Nav tabs */
   // The Pre-Production / Production / Post-Production tabs and their mega-menu are the site's
   // own (nav-dropdown.js: opens on hover with a real mouse, click/keyboard/touch otherwise).
