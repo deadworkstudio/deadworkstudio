@@ -138,6 +138,10 @@
         })
       })
         .then(function (res) {
+          // 429 (rate limit) and 400 (the server rejected the address) get their own plain message
+          // instead of the generic one, which made people retry pointlessly (2026-11-15 audit).
+          if (res.status === 429) { var e429 = new Error('rate'); e429.kind = 'rate'; throw e429; }
+          if (res.status === 400) { var e400 = new Error('bad'); e400.kind = 'bad'; throw e400; }
           if (!res.ok) throw new Error('Notify request failed: ' + res.status);
           return res.json();
         })
@@ -149,8 +153,10 @@
           // only, never the email or name. Nothing listens on pages without analytics.
           try { form.dispatchEvent(new CustomEvent('dw:notify-success', { bubbles: true, detail: { product: product, form: formSource, platform: platform || 'none' } })); } catch (e) {}
         })
-        .catch(function () {
-          showStatus("Something went wrong. Try again.", 'error');
+        .catch(function (err) {
+          if (err && err.kind === 'rate') showStatus('Too many sign-ups from this network. Try again in an hour.', 'error');
+          else if (err && err.kind === 'bad') { showStatus("That doesn't look like a valid email address.", 'bad'); setTimeout(function () { input.focus(); }, 0); }
+          else showStatus("Couldn't reach the sign-up server. Check your connection and try again.", 'error');
         })
         .then(function () {
           setBusy(false);

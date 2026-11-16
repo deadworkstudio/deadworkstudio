@@ -16,15 +16,21 @@
 <!-- /i18n:head -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#F4F1EA" />
-<title>DEADWORK - Handoff</title>
-<meta name="description" content="Every file. Verified. Handoff copies your camera cards to your backup hard drives, checks every file, and tells you in one colour when the card is safe to format. Team notified. In development for Mac, with a free iPhone app." />
+<title>Handoff - Verified card copies your crew can see | DEADWORK</title>
+<meta name="description" content="Handoff copies camera cards and hard drives, reads every file back to verify it, and turns green only when the card is safe to format. Your crew&#39;s phones and a read-only link show the result. Coming to Mac, with a free iPhone app." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://deadworkstudio.com/products/handoff/" />
 <link rel="canonical" href="https://deadworkstudio.com/products/handoff/" />
-<meta property="og:title" content="DEADWORK - Handoff" />
-<meta property="og:description" content="Every file. Verified. Handoff copies your camera cards to your backup hard drives, checks every file, and tells you in one colour when the card is safe to format. Team notified. In development for Mac, with a free iPhone app." />
+<meta property="og:title" content="Handoff - Every file verified. Everyone knows." />
+<meta property="og:description" content="Handoff copies camera cards and hard drives, reads every file back to verify it, and turns green only when the card is safe to format. Your crew&#39;s phones and a read-only link show the result. Coming to Mac, with a free iPhone app." />
 <meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-handoff.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta property="og:site_name" content="DEADWORK" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:title" content="Handoff - Every file verified. Everyone knows." />
+<meta name="twitter:description" content="Handoff copies camera cards and hard drives, reads every file back to verify it, and turns green only when the card is safe to format. Your crew&#39;s phones and a read-only link show the result. Coming to Mac, with a free iPhone app." />
+<meta name="twitter:image" content="https://deadworkstudio.com/assets/img/brand/share-handoff.jpg" />
 <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
@@ -36,9 +42,10 @@
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <link rel="preload" href="../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/handoff-v2.css?v=20261115a" />
-<link rel="stylesheet" href="../../assets/css/hf-page.css?v=20261115a" />
+<link rel="stylesheet" href="../../assets/css/hf-page.css?v=20261115b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../assets/css/badges.css?v=1104b" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Handoff","applicationCategory":"BusinessApplication","operatingSystem":"macOS, iOS","description":"Handoff copies camera cards and hard drives, reads every file back to verify it with xxHash64, and shows one result: green when the card is safe to format. The crew follows along on a free iPhone app, and a read-only link shares the result.","publisher":{"@type":"Organization","name":"DEADWORK STUDIO","url":"https://deadworkstudio.com/"},"url":"https://deadworkstudio.com/products/handoff/"}</script>
 </head>
 <body class="ss lo hf2 hf">
 <a class="skip" href="#main">Skip to content</a>
@@ -104,260 +111,303 @@
   <symbol id="g-soon" viewBox="0 0 22 22"><rect x="1" y="1" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3.5 3"/></symbol>
 </svg>
 
-<main id="main">
-  <!-- ============ HERO: the owner's words, then the real app copying a card ============ -->
-  <section class="hero">
+<main id="main" data-event="handoff_page_view">
+  <!-- ============ 1. HERO: the promise, the waitlist, and the product doing it (Mac + phone, in sync) ============ -->
+  <section class="hero hf-hero" data-hf-sec="hero">
     <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/handoff.png" alt="Handoff" width="956" height="736" /></div>
-    <h1>Every file. Verified.</h1>
-    <p class="lo-hero-tag">Camera cards copied to every drive, checked file by file. Team notified.</p>
-    <p class="section-sub lo-hero-sub">Handoff copies your camera cards to your backup hard drives, checks every file, and tells you in one colour when the card is safe to format.</p>
-    <p class="hf-hero-status"><span class="badge badge-dev"><span class="badge-icon"></span>Processing</span></p>
-    <div class="downloads lo-cta" id="top-cta">
-      <form class="notify-form" data-notify-form data-notify-product="handoff" data-notify-form-source="hero" data-notify-success="You're on the list. One email when Handoff is out." novalidate>
-        <label class="sr-only" for="notify-name-top">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-top" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
+    <h1 class="hf-statement hf-h1"><span>Every file verified.</span> <span>Everyone knows.</span></h1>
+    <p class="hf-lede">Handoff copies your camera cards and hard drives, reads every file back to prove it landed, and turns green only when the card is safe to format. Your crew's phones get the same answer, so nobody has to ask.</p>
+    <div class="hf-cta" id="top-cta">
+      <form class="notify-form hf-form" data-notify-form data-notify-product="handoff" data-notify-form-source="hero" data-notify-success="You're on the list. We'll email you when Handoff launches." novalidate>
         <label class="sr-only" for="notify-email-top">Email address</label>
-        <input class="notify-input" type="email" id="notify-email-top" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
+        <input class="notify-input" type="email" id="notify-email-top" name="email" placeholder="you@email.com" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="send" required data-notify-email />
         <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
+        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me at launch</button>
         <p class="notify-status" role="status" aria-live="polite" id="notify-status-top" data-notify-status hidden></p>
       </form>
+      <p class="hf-cta-note"><span class="badge badge-dev"><span class="badge-icon"></span>Processing</span><span class="mono">Not out yet &middot; 14 days free at launch, no card</span></p>
     </div>
-    <!-- Screen recording of the real Handoff app (offload build, Night), driven by the verify-ui-a harness:
-         sample card A004 (9 clips) to two RAM-disk hard drives, ARCHIVE 1 and ARCHIVE 2. The frames in the
-         window are DEADWORK b-roll. Copying part sped up 2.1x. Plays muted inline when in view (ss-page.js
-         [data-film]); with reduced motion the poster stays. -->
-    <figure class="hf-screen hf-screen-hero">
-      <video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-copy-poster.jpg?v=1" width="1440" height="900" data-film aria-label="Screen recording of Handoff copying card A004 to two hard drives. A giant number counts up to 100 over frames of the card's footage, then the whole window turns green: A004 IS SAFE, every clip verified on 2 hard drives."><source src="../../assets/img/products/handoff/rec/hf-copy.mp4?v=1" type="video/mp4" /></video>
-    </figure>
-    <p class="mono downloads-note lo-phones-note">Recorded in the app &nbsp;&middot;&nbsp; sample card &nbsp;&middot;&nbsp; Mac &nbsp;&middot;&nbsp; Free iPhone app &nbsp;&middot;&nbsp; Android coming</p>
-  </section>
-
-  <section class="film tone-dark" aria-label="On set">
-    <video class="film-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-film-poster.jpg?v=1" data-film aria-hidden="true"><source src="../../assets/img/products/handoff/rec/hf-film.mp4?v=1" type="video/mp4" /></video>
-    <p class="film-line mono">By artists. For artists.</p>
-  </section>
-
-  <!-- ============ THE PROBLEM ============ -->
-  <section class="lo-problem" aria-labelledby="problem-title">
-    <h2 class="section-title section-head head-dw" id="problem-title">One bad copy and the footage is gone</h2>
-    <p class="section-sub">Cards get copied at the end of a long day, under a deadline.<br class="br-desk" /> Handoff does the copying, proves every file landed, and tells the people waiting on it.</p>
-    <div class="lo-vs">
-      <div class="lo-vs-col">
-        <h3 class="mono">Without Handoff</h3>
-        <ul>
-          <li>Drag the card over and hope</li>
-          <li>Nobody reads the copy back</li>
-          <li>One hard drive, called a backup</li>
-          <li>The producer texts to ask</li>
-        </ul>
+    <!-- Real recordings, played together and kept in sync by hf-page.js: the Mac app (offload build, Night) copying
+         sample card A004 to two hard drives, and the iPhone app (simulator, demo data set to the same card) showing
+         the same copy. The phone's frames are real app screens stepped at the moments the Mac's number changes. -->
+    <figure class="hf-duo" data-hf-duo>
+      <div class="hf-duo-mac">
+        <video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-copy-poster.jpg?v=1" width="1440" height="900" data-hf-sync="mac" aria-label="The Handoff Mac app copying card A004 to two hard drives. A giant number counts the clips verified so far, up to 100, then the whole window turns green: A004 IS SAFE. Every clip verified on 2 hard drives."><source src="../../assets/img/products/handoff/rec/hf-copy.mp4?v=1" type="video/mp4" /></video>
       </div>
-      <div class="lo-vs-col is-with">
-        <h3 class="mono">With Handoff</h3>
-        <ul>
-          <li>Plug in. One click copies to every hard drive</li>
-          <li>Every file read back and matched with xxHash64</li>
-          <li>Green only with 2 verified copies</li>
-          <li>The crew's phones buzz green or red</li>
-        </ul>
+      <div class="hf-duo-phone hf-ph">
+        <video muted loop playsinline preload="none" poster="../../assets/img/products/handoff/tour/phone-copy-poster.jpg?v=1" width="600" height="1304" data-hf-sync="phone" aria-label="The free Handoff iPhone app following the same copy: the verified percentage climbs, then the screen turns green: A004 IS SAFE, verified 2 of 2 copies."><source src="../../assets/img/products/handoff/tour/phone-copy.mp4?v=1" type="video/mp4" /></video>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ NO SETUP: card found by itself, one click ============ -->
-  <section class="remote hf-found" aria-labelledby="found-title">
-    <h2 class="section-title section-head head-dw">No setup</h2>
-    <p class="section-title" id="found-title">Plug in. Click once. Walk away.</p>
-    <p class="section-sub">Put a card in and Handoff opens on it by itself: what is on the card, which hard drives it will copy to,<br class="br-desk" /> and whether they meet your copy rule. One click starts it. Next time, it copies to the same drives.</p>
-    <figure class="hf-screen">
-      <video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-found-poster.jpg?v=1" width="1440" height="900" data-film aria-label="Screen recording of Handoff: the window says Ready to offload, card A004 is plugged in and Handoff opens on it, copying to ARCHIVE 1 and ARCHIVE 2. Start verified copy is clicked and the copy begins."><source src="../../assets/img/products/handoff/rec/hf-found.mp4?v=1" type="video/mp4" /></video>
-      <figcaption class="mono lo-scan-note">Recorded in the app &middot; sample card</figcaption>
+      <figcaption class="mono hf-cap">Recorded in the Mac and iPhone apps &middot; sample card &middot; copying sped up</figcaption>
     </figure>
   </section>
 
-  <section class="lo-cta-band" data-band="ink" aria-label="Get notified">
-    <p class="lo-cta-band-line">Know the card is safe.</p>
-    <a class="pill pill-solid" href="#top-cta">Get notified</a>
+  <!-- ============ 2. WHY COPYING ISN'T ENOUGH: the questions on set, answered ============ -->
+  <section class="hf-why tone-alt" aria-labelledby="why-title" data-hf-sec="why">
+    <h2 class="section-title section-head head-dw" id="why-title">Copied isn't checked</h2>
+    <p class="section-title">Dragging files is free. Knowing it worked isn't.</p>
+    <div class="hf-qa" role="table" aria-label="Questions on set, and how Handoff answers each one">
+      <div class="hf-qa-head" role="row"><span class="mono" role="columnheader">Without Handoff</span><span class="mono" role="columnheader">With Handoff</span></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Did everything finish copying?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Every file is read back from each hard drive and matched to the card.</p></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Are both drives actually good?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Green only when your copy rule is met. 2 verified copies by default.</p></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Can I clear this card?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Green says format. Amber, red or grey say don't.</p></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Which files failed?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Red names the hard drive and the clips. Re-copy just those.</p></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Did it stop halfway?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>An interrupted copy ends grey, never green. Resume where it stopped.</p></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Where's the record?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>In History, and as a PDF report and MHL file on every hard drive.</p></div>
+      <div class="hf-qa-row" role="row"><p class="hf-q" role="cell">Why is the producer asking again?</p><p class="hf-a" role="cell"><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Their phone already shows it. Or send them a read-only link.</p></div>
+    </div>
   </section>
 
-  <!-- ============ WHILE IT COPIES: two real frames, copying then safe ============ -->
-  <section class="lo-moment hf-moment tone-dark" aria-labelledby="copy-title">
-    <h2 class="section-title section-head head-dw">While it copies</h2>
-    <p class="section-title" id="copy-title">The whole window is the progress bar.</p>
-    <p class="section-sub">One giant number, readable from across the cart. Behind it, the window fills with frames of your own footage,<br class="br-desk" /> but only clips already read back and matched on every hard drive. Copied is not the same as checked.</p>
-    <ol class="lo-moment-steps hf-steps-2">
-      <li class="lo-moment-step">
-        <figure class="hf-screen"><img src="../../assets/img/products/handoff/rec/still-copying.jpg?v=1" alt="Handoff copying card A004: a giant 66 over a frame of the card's footage, an aerial shot of a beach, filling two thirds of the window. 6 of 9 clips copied, verified 6 of 9 on ARCHIVE 1 and ARCHIVE 2." width="1440" height="900" loading="lazy" decoding="async" /></figure>
-        <p class="mono lo-moment-label"><span>01</span>Copying</p>
-        <p class="lo-moment-cap">The number only counts checked clips.</p>
-      </li>
-      <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>
-      <li class="lo-moment-step">
-        <figure class="hf-screen"><img src="../../assets/img/products/handoff/rec/still-green-night.jpg?v=1" alt="The whole Handoff window turns green: A004 IS SAFE. Verified, 2 of 2 required copies. Every clip verified on 2 hard drives, ARCHIVE 1 and ARCHIVE 2 each 9 of 9 matched." width="1440" height="900" loading="lazy" decoding="async" /></figure>
-        <p class="mono lo-moment-label"><span>02</span>Safe</p>
-        <p class="lo-moment-cap">Every clip verified on 2 hard drives. Format the card.</p>
-      </li>
-    </ol>
-    <p class="mono lo-scan-note">Frames from the recording above &middot; sample card</p>
+  <!-- ============ 3. THE INTERACTIVE DEMO: six steps, each one real app footage ============ -->
+  <section class="hf-tour-sec" aria-labelledby="tour-title" data-hf-sec="tour">
+    <h2 class="section-title section-head head-dw" id="tour-title">See it work</h2>
+    <p class="section-title">From card to proof in six steps.</p>
+    <div class="hf-tour" data-hf-tour>
+      <div class="ix-nav hf-tour-nav" role="tablist" aria-label="Handoff, step by step" data-hf-nav>
+        <button type="button" class="ix-feat" role="tab" id="hf-t0" aria-selected="true" aria-controls="hf-p0" data-hf-step="0" data-name="connect"><span>01</span>Connect</button>
+        <button type="button" class="ix-feat" role="tab" id="hf-t1" aria-selected="false" aria-controls="hf-p1" tabindex="-1" data-hf-step="1" data-name="transfer"><span>02</span>Transfer</button>
+        <button type="button" class="ix-feat" role="tab" id="hf-t2" aria-selected="false" aria-controls="hf-p2" tabindex="-1" data-hf-step="2" data-name="verify"><span>03</span>Verify</button>
+        <button type="button" class="ix-feat" role="tab" id="hf-t3" aria-selected="false" aria-controls="hf-p3" tabindex="-1" data-hf-step="3" data-name="confirm"><span>04</span>Confirm</button>
+        <button type="button" class="ix-feat" role="tab" id="hf-t4" aria-selected="false" aria-controls="hf-p4" tabindex="-1" data-hf-step="4" data-name="notify"><span>05</span>Notify</button>
+        <button type="button" class="ix-feat" role="tab" id="hf-t5" aria-selected="false" aria-controls="hf-p5" tabindex="-1" data-hf-step="5" data-name="record"><span>06</span>Record</button>
+      </div>
+
+      <div class="hf-stage" data-hf-stage>
+        <!-- 01 CONNECT -->
+        <div class="hf-pane is-on" id="hf-p0" role="tabpanel" aria-labelledby="hf-t0" data-hf-pane="0">
+          <div class="hf-media"><video muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-found-poster.jpg?v=1" width="1440" height="900" aria-label="Card A004 is plugged in and Handoff opens on it by itself: 9 clips, 127 MB, read-only. Below, two hard drives found by themselves, ARCHIVE 1 and ARCHIVE 2, and the button Start verified copy."><source src="../../assets/img/products/handoff/rec/hf-found.mp4?v=1" type="video/mp4" /></video></div>
+          <div class="hf-say"><h3 class="hf-say-h">Plug in. Handoff finds it.</h3><p>Put in a card and Handoff opens on it by itself: what's on it, which hard drives it will copy to, and whether that meets your copy rule. Cards and hard drives are told apart automatically.</p><p class="mono hf-src">Mac app &middot; recorded &middot; sample card</p></div>
+        </div>
+        <!-- 02 TRANSFER -->
+        <div class="hf-pane" id="hf-p1" role="tabpanel" aria-labelledby="hf-t1" data-hf-pane="1" hidden>
+          <div class="hf-media"><picture><source media="(max-width: 699px)" srcset="../../assets/img/products/handoff/tour/mac-modes-phone.jpg?v=1" /><img src="../../assets/img/products/handoff/tour/mac-modes.jpg?v=1" alt="Handoff's Change screen: COPY A004 TO 2 HARD DRIVES. Three jobs to choose from: Copy, card to hard drives, verified; Backup, hard drive to another drive; Transfer, hard drive to editor or post. ARCHIVE 1 and ARCHIVE 2 are ticked, each with room to spare. Checks: meets your 2-copy rule, separate physical disks, fits on every hard drive, every clip read back and checked." width="1440" height="900" loading="lazy" decoding="async" /></picture></div>
+          <div class="hf-say"><h3 class="hf-say-h">Copy, back up or transfer.</h3><p>Copy a card to your hard drives, back up one hard drive to another, or transfer to an editor or post house. Tick the hard drives, add a label if you like, and start.</p><p class="mono hf-src">Mac app &middot; screenshot &middot; sample card</p></div>
+        </div>
+        <!-- 03 VERIFY -->
+        <div class="hf-pane" id="hf-p2" role="tabpanel" aria-labelledby="hf-t2" data-hf-pane="2" hidden>
+          <div class="hf-media"><img src="../../assets/img/products/handoff/rec/still-copying.jpg?v=1" alt="Handoff copying card A004: a giant 66 over a frame of the card's own footage. 6 of 9 clips copied; ARCHIVE 1 verified 6 of 9, ARCHIVE 2 verified 6 of 9." width="1440" height="900" loading="lazy" decoding="async" /></div>
+          <div class="hf-say"><h3 class="hf-say-h">Checked, not just copied.</h3><p>Every file is read back from every hard drive and matched to the card with xxHash64. The big number only counts what has been proven, never what has merely been written.</p><p class="mono hf-src">Mac app &middot; recorded &middot; sample card</p></div>
+        </div>
+        <!-- 04 CONFIRM: four results, one at a time -->
+        <div class="hf-pane hf-pane-states" id="hf-p3" role="tabpanel" aria-labelledby="hf-t3" data-hf-pane="3" hidden>
+          <div class="hf-media" data-hf-states>
+            <img data-hf-state-media="ok" class="is-on" src="../../assets/img/products/handoff/rec/still-green-night.jpg?v=1" alt="The whole window turns green: A004 IS SAFE. Verified, 2 of 2 required copies. ARCHIVE 1 and ARCHIVE 2 each 9 of 9 matched." width="1440" height="900" loading="lazy" decoding="async" />
+            <video data-hf-state-media="warn" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-amber-poster.jpg?v=1" width="1440" height="900" aria-label="Card A005 copied to one hard drive only. The window turns amber: A005 IS NOT SAFE YET. Only 1 of 2 required copies are verified. Button: Add a second copy."><source src="../../assets/img/products/handoff/rec/hf-amber.mp4?v=1" type="video/mp4" /></video>
+            <video data-hf-state-media="bad" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-red-poster.jpg?v=1" width="1440" height="900" aria-label="ARCHIVE 2 is disconnected mid-copy and the window turns red: DO NOT FORMAT A006. 6 clips failed on ARCHIVE 2, ARCHIVE 1 has every clip verified. Button: Re-copy 6 clips to ARCHIVE 2."><source src="../../assets/img/products/handoff/rec/hf-red.mp4?v=1" type="video/mp4" /></video>
+            <img data-hf-state-media="off" src="../../assets/img/products/handoff/rec/still-grey-night.jpg?v=1" alt="The window turns grey: A007 WAS INTERRUPTED. Stopped before every clip was verified. Buttons: Resume copy, Start over." width="1440" height="900" loading="lazy" decoding="async" />
+          </div>
+          <div class="hf-say">
+            <div class="hf-chips" role="group" aria-label="Show a result">
+              <button type="button" class="hf-chip-btn" aria-pressed="true" data-hf-state="ok" style="--g:var(--hf-ok);--i:var(--hf-ok-ink)"><svg class="hf-glyph" aria-hidden="true" style="--gk:var(--hf-ok)"><use href="#g-ok"/></svg>Green</button>
+              <button type="button" class="hf-chip-btn" aria-pressed="false" data-hf-state="warn" style="--g:var(--hf-warn);--i:var(--hf-warn-ink)"><svg class="hf-glyph" aria-hidden="true" style="--gk:var(--hf-warn)"><use href="#g-warn"/></svg>Amber</button>
+              <button type="button" class="hf-chip-btn" aria-pressed="false" data-hf-state="bad" style="--g:var(--hf-bad);--i:var(--hf-bad-ink)"><svg class="hf-glyph" aria-hidden="true" style="--gk:var(--hf-bad)"><use href="#g-bad"/></svg>Red</button>
+              <button type="button" class="hf-chip-btn" aria-pressed="false" data-hf-state="off" style="--g:var(--hf-off);--i:var(--hf-off-ink)"><svg class="hf-glyph" aria-hidden="true" style="--gk:var(--hf-off)"><use href="#g-off"/></svg>Grey</button>
+            </div>
+            <p data-hf-state-text="ok"><b>Safe.</b> Every clip verified on the copies your rule asks for. Format the card.</p>
+            <p data-hf-state-text="warn" hidden><b>Not safe yet.</b> The copy is good but a copy short. Add one more and it turns green.</p>
+            <p data-hf-state-text="bad" hidden><b>Do not format.</b> It names the hard drive and the clips that failed. Re-copy just those.</p>
+            <p data-hf-state-text="off" hidden><b>Interrupted.</b> The Mac lost power, slept or quit mid-copy. Resume, and it carries on from what's already verified.</p>
+            <p class="mono hf-src">Mac app &middot; recorded &middot; sample cards</p>
+          </div>
+        </div>
+        <!-- 05 NOTIFY: the same card on the crew's phones -->
+        <div class="hf-pane" id="hf-p4" role="tabpanel" aria-labelledby="hf-t4" data-hf-pane="4" hidden>
+          <div class="hf-media hf-media-phones">
+            <figure class="hf-ph"><img src="../../assets/img/products/handoff/tour/ph-lock.jpg?v=1" alt="iPhone lock screen with Handoff's live card: HANDOFF LIVE, FEAR BEFORE, A004 at 66, copying to 2 hard drives, 5 of 9 clips, safe only when it says safe, under a minute left." width="600" height="1304" loading="lazy" decoding="async" /><figcaption class="mono">Lock screen, while it copies</figcaption></figure>
+            <figure class="hf-ph"><img src="../../assets/img/products/handoff/tour/ph-safe.jpg?v=1" alt="The Handoff iPhone app turns green: VERIFIED 2 OF 2 COPIES. A004 IS SAFE. All 9 clips verified on 2 hard drives, ARCHIVE 1 and ARCHIVE 2 each 9 of 9." width="600" height="1304" loading="lazy" decoding="async" /><figcaption class="mono">The result</figcaption></figure>
+          </div>
+          <div class="hf-say"><h3 class="hf-say-h">The crew's phones know.</h3><p>The free iPhone app follows every card live, keeps a live card on the lock screen while it copies, and alerts each person when it turns green or red. Phones only watch: nobody can change a copy from one.</p><p class="mono hf-src">iPhone app &middot; simulator &middot; demo data</p></div>
+        </div>
+        <!-- 06 RECORD -->
+        <div class="hf-pane" id="hf-p5" role="tabpanel" aria-labelledby="hf-t5" data-hf-pane="5" hidden>
+          <div class="hf-media"><picture><source media="(max-width: 699px)" srcset="../../assets/img/products/handoff/tour/mac-history-phone.jpg?v=1" /><img src="../../assets/img/products/handoff/tour/mac-history.jpg?v=1" alt="Handoff History: today, Day 1, 1 card, 1 safe, 126 MB. Search by card, clip or label; filters for all days, Day 1 and not safe. A004, 9 clips, 2 of 2 copies, verified. The detail shows ARCHIVE 1 and ARCHIVE 2 each 9 of 9 matched with xxHash64, copy started and finished times, and buttons: View report, Export PDF, Share with crew." width="1440" height="900" loading="lazy" decoding="async" /></picture></div>
+          <div class="hf-say"><h3 class="hf-say-h">Saved for good.</h3><p>Every card lands in History with its day, hard drives and result. Search it, export a PDF or CSV report, or share a read-only link with someone who wasn't there.</p><p class="mono hf-src">Mac app &middot; screenshot &middot; sample card</p></div>
+        </div>
+      </div>
+      <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-hf-auto>Auto tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-hf-auto-label>On</span></button></div>
+    </div>
   </section>
 
-  <!-- ============ THE RESULT: four colours, two of them recorded ============ -->
-  <section class="hf-results tone-alt" aria-labelledby="results-title">
-    <h2 class="section-title section-head head-dw">The result</h2>
-    <p class="section-title" id="results-title">Four colours. Each one tells you what to do.</p>
-    <p class="section-sub">When a copy ends, the whole window fills with one colour and a plain sentence. Every colour comes with a symbol and a word, so it reads the same on a bright set or a dark one.</p>
+  <section class="lo-cta-band" data-band="ink" aria-label="Get the launch email">
+    <p class="lo-cta-band-line">Know it's done. Without asking.</p>
+    <a class="pill pill-solid" href="#notify" data-hf-cta="band">Notify me at launch</a>
+  </section>
+
+  <!-- ============ 4. PROMISE 01: VERIFIED COMPLETION (the four results + the copy rule) ============ -->
+  <section class="hf-promise hf-verified" id="verified" aria-labelledby="verified-title" data-hf-sec="verified">
+    <p class="mono hf-kicker">01 &middot; Verified</p>
+    <h2 class="hf-statement hf-big" id="verified-title">Green means safe.<br /> Nothing else does.</h2>
+    <p class="hf-sub">Handoff doesn't stop at "copy finished". It reads every file back from every hard drive, matches it to the card, and only then gives you one of four answers.</p>
     <ul class="hf-verdicts">
       <li class="hf-v hf-v--ok" style="--gk:var(--hf-ok)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-ok"/></svg>Green</span>
         <span class="hf-v-word">Safe.</span>
-        <p>Every clip is verified on 2 separate hard drives. You can format the card.</p>
+        <p>Every clip verified on the number of copies your rule asks for. You can format the card.</p>
       </li>
       <li class="hf-v hf-v--warn" style="--gk:var(--hf-warn)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-warn"/></svg>Amber</span>
         <span class="hf-v-word">Not safe yet.</span>
-        <p>The copy is good, but one copy short. Add one more and it turns green.</p>
+        <p>What was copied is good, but more verified copies are needed. Add one and it turns green.</p>
       </li>
       <li class="hf-v hf-v--bad" style="--gk:var(--hf-bad)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-bad"/></svg>Red</span>
         <span class="hf-v-word">Don't format.</span>
-        <p>It failed. It names the hard drive and the clips. Re-copy just those.</p>
+        <p>It failed. It names the hard drive and the clips. Re-copy only those.</p>
       </li>
       <li class="hf-v hf-v--off" style="--gk:var(--hf-off)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-off"/></svg>Grey</span>
         <span class="hf-v-word">Interrupted.</span>
-        <p>Power cut or a cable pulled. Resume, and it picks up where it stopped.</p>
+        <p>The Mac lost power, slept or quit mid-copy. Resume and it picks up from what's verified.</p>
       </li>
     </ul>
-    <div class="hf-trio">
-      <figure class="hf-screen"><video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-amber-poster.jpg?v=1" width="1440" height="900" data-film aria-label="Screen recording: card A005 is found, the copy is changed to one hard drive, ARCHIVE 1, and when it ends the window turns amber: A005 IS NOT SAFE YET, only 1 of 2 required copies verified. Button: Add a second copy."><source src="../../assets/img/products/handoff/rec/hf-amber.mp4?v=1" type="video/mp4" /></video><figcaption class="mono">Amber &middot; one copy is not a backup</figcaption></figure>
-      <figure class="hf-screen"><video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/rec/hf-red-poster.jpg?v=1" width="1440" height="900" data-film aria-label="Screen recording: card A006 copies to two hard drives, ARCHIVE 2 fails mid-copy, and the window turns red: DO NOT FORMAT A006. 6 clips failed on ARCHIVE 2, ARCHIVE 1 has every clip verified. Button: Re-copy 6 clips to ARCHIVE 2."><source src="../../assets/img/products/handoff/rec/hf-red.mp4?v=1" type="video/mp4" /></video><figcaption class="mono">Red &middot; re-copy just the failed clips</figcaption></figure>
-      <figure class="hf-screen"><img src="../../assets/img/products/handoff/rec/still-grey-night.jpg?v=1" alt="The Handoff window turns grey: A007 WAS INTERRUPTED. Stopped before every clip was verified. Buttons: Resume copy, Start over." width="1440" height="900" loading="lazy" decoding="async" /><figcaption class="mono">Grey &middot; resume where it stopped</figcaption></figure>
-    </div>
-    <p class="mono lo-scan-note">Recorded in the app &middot; sample cards &middot; copying sped up</p>
-  </section>
-
-  <!-- ============ THE COPY RULE ============ -->
-  <section class="hf-rule" aria-labelledby="rule-title">
-    <h2 class="section-title section-head head-dw" id="rule-title">The copy rule</h2>
-    <p class="section-title">2 copies before safe.</p>
     <div class="hf-rule-row">
-      <div>
-        <p class="section-sub">Green means every clip is verified on 2 separate hard drives. Your production can ask for anywhere from 1 to 5. One copy short and the card ends amber: not safe yet, never green.</p>
-        <p class="section-sub">Backing up or transferring from a hard drive? The original can count as one copy, but only when Handoff confirms it is a hard drive. A card never counts. Green then says <b>Original + 1 copy &mdash; keep the original</b>, and it never tells you to format.</p>
+      <div class="hf-rule-copy">
+        <h3 class="hf-h3">The copy rule</h3>
+        <p>Green needs every clip verified on 2 separate hard drives. Change it from 1 to 5 in Settings. Two folders on the same physical disk only count once.</p>
+        <p>Backing up or transferring from a hard drive? The original can count as one copy, but only when Handoff confirms it is a hard drive. A card never counts. Green then says <b>Original + 1 copy &mdash; keep the original</b>, and never tells you to format.</p>
       </div>
-      <ul class="hf-ledger" aria-label="Example: how many copies a card has">
+      <ul class="hf-ledger" aria-label="Examples of the copy rule at its default of 2">
         <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-ok"/></svg><span><b>Archive 1 + Archive 2</b><small>2 of 2 copies &middot; every clip matched</small></span><span class="hf-out hf-out--ok">Safe</span></li>
-        <li><svg class="hf-glyph" style="color:#7A5000" aria-hidden="true"><use href="#g-warn"/></svg><span><b>Archive 1 only</b><small>1 of 2 copies &middot; add one more</small></span><span class="hf-out hf-out--warn">Not safe yet</span></li>
+        <li><svg class="hf-glyph hf-g-warn" aria-hidden="true"><use href="#g-warn"/></svg><span><b>Archive 1 only</b><small>1 of 2 copies &middot; add one more</small></span><span class="hf-out hf-out--warn">Not safe yet</span></li>
         <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-ok"/></svg><span><b>Original hard drive + 1 copy</b><small>Backup or transfer &middot; keep the original</small></span><span class="hf-out hf-out--ok">Safe</span></li>
-        <li><svg class="hf-glyph hf-g-soon" aria-hidden="true"><use href="#g-soon"/></svg><span><b>Your rule</b><small>1 to 5 copies &middot; set once per production</small></span><span class="hf-out">Setting</span></li>
+        <li><svg class="hf-glyph hf-g-ink" aria-hidden="true"><use href="#g-done"/></svg><span><b>Your rule</b><small>1 to 5 copies &middot; one setting in Settings</small></span><span class="hf-out">Setting</span></li>
       </ul>
     </div>
   </section>
 
-  <div class="pair tone-alt">
-  <section class="workflow" aria-labelledby="workflow-title">
-    <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
-    <ol class="steps">
-      <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Plug in</span><span class="step-d">Card and hard drives, found by themselves</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">One click</span><span class="step-d">Same hard drives as last time</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Checked</span><span class="step-d">Every file read back, xxHash64</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">One answer</span><span class="step-d">Green, amber, red or grey</span></li>
-    </ol>
-  </section>
-  </div>
-
-  <!-- ============ HISTORY: the real History screen after the two recorded cards ============ -->
-  <section class="remote hf-history" aria-labelledby="history-title">
-    <h2 class="section-title section-head head-dw">The record</h2>
-    <p class="section-title" id="history-title">Every card, on file. For good.</p>
-    <p class="section-sub">History is a permanent record of the production: every card, every hard drive, every result.<br class="br-desk" /> Each card leaves a PDF custody report and an MHL checksum file on every hard drive, for post houses and insurers. The report only says "safe" when the card was green.</p>
-    <figure class="hf-screen">
-      <img src="../../assets/img/products/handoff/rec/still-history-day.jpg?v=1" alt="Handoff History: today, 2 cards, 1 safe, 1 not safe yet, 158 MB. A005, 4 clips, 1 of 2 copies, not safe yet. A004, 9 clips, 2 of 2 copies, verified. The A005 detail shows ARCHIVE 1 at 4 of 4 matched and buttons for the report, PDF export and sharing with the crew." width="1440" height="900" loading="lazy" decoding="async" />
-      <figcaption class="mono lo-scan-note">Real app screen &middot; sample cards</figcaption>
+  <!-- ============ 5. PROMISE 02: NO MORE SECOND-GUESSING (History, reports, checksum files) ============ -->
+  <section class="hf-promise hf-record tone-alt" id="history" aria-labelledby="history-title" data-hf-sec="history">
+    <p class="mono hf-kicker">02 &middot; No more second-guessing</p>
+    <h2 class="hf-statement hf-big" id="history-title">Every card has a history.</h2>
+    <p class="hf-sub">Copying leaves you a folder of files. Handoff leaves proof: which files matched, on which hard drives, and when. Nobody has to remember, and nobody has to open the footage to check.</p>
+    <figure class="hf-screen hf-record-shot">
+      <picture><source media="(max-width: 699px)" srcset="../../assets/img/products/handoff/tour/mac-history-phone.jpg?v=1" /><img src="../../assets/img/products/handoff/tour/mac-history.jpg?v=1" alt="Handoff History with card A004 open: ARCHIVE 1 and ARCHIVE 2 each 9 of 9 matched with xxHash64, copy started and finished, and buttons for the report, PDF export and sharing." width="1440" height="900" loading="lazy" decoding="async" /></picture>
+      <figcaption class="mono">Mac app &middot; screenshot &middot; sample card</figcaption>
     </figure>
-  </section>
-
-  <!-- ============ CREW ============ -->
-  <section class="remote hf-crew-sec tone-dark" aria-labelledby="crew-title">
-    <h2 class="section-title section-head head-dw">The crew</h2>
-    <p class="section-title" id="crew-title">Phones buzz green. Or red.</p>
-    <p class="section-sub">Walk away from the cart. The free iPhone app shows every card as it copies and buzzes the moment it turns green or red.<br class="br-desk" /> Add as many phones as you like. Phones only watch: nobody can change a copy from one.</p>
-    <div class="hf-crew">
-      <ul class="hf-crew-list">
-        <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>iPhone, free.</b> Live progress in the app, a live card on the lock screen while a card copies, and an alert the moment it turns green or red.</span></li>
-        <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>Each person picks their alerts.</b> Safe, failed, not safe yet, interrupted, and the lock-screen card. Set per phone.</span></li>
-        <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>Share links.</b> A read-only page for a producer, client or insurer: the result and nothing else, no footage. It expires after 1, 7 or 30 days, and you can revoke it at any time.</span></li>
-        <li><svg class="hf-glyph hf-g-soon" aria-hidden="true"><use href="#g-soon"/></svg><span><b>Android</b><span class="hf-soon">Coming</span><br />The Android app is on the way, with alerts.</span></li>
-      </ul>
-      <div class="hf-phones">
-        <figure class="hf-phone"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/handoff/v2/p01-night.jpg" alt="Product screen on iPhone: the lock screen shows a Handoff alert, A003 verified and safe, 156 clips matched on Shuttle A and RAID Master, and a live card A004 copying at 44 percent." width="390" height="844" loading="lazy" decoding="async" /></div></div><figcaption class="mono">Lock screen &middot; design, sample data</figcaption></figure>
-        <figure class="hf-phone"><div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/handoff/v2/share-page.jpg" alt="Share page on a phone: Day 03, Fear Before. A004 IS SAFE. Verified. 318 of 318 clips matched, 412 GB, 2 verified copies, verified at 5:24 PM. Shuttle A and RAID Master each 318 of 318. A note says it is a record, not live, and contains no footage." width="390" height="844" loading="lazy" decoding="async" /></div></div><figcaption class="mono">Share link &middot; sample data</figcaption></figure>
+    <div class="hf-cols3">
+      <div>
+        <h3 class="hf-h3">On file for every card</h3>
+        <ul class="hf-list">
+          <li>Production label and shoot day</li>
+          <li>Card name, date and time</li>
+          <li>Source and every hard drive it went to</li>
+          <li>Clips matched on each hard drive</li>
+          <li>The result, and what went wrong if it failed</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="hf-h3">Left on every hard drive</h3>
+        <ul class="hf-list">
+          <li>A PDF custody report with every file's xxHash64. It only says safe when the card was green.</li>
+          <li>MHL checksum files, legacy and ASC MHL, for post to check delivery</li>
+          <li>A CSV of the same list</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="hf-h3">Find it later</h3>
+        <ul class="hf-list">
+          <li>Search by card, clip or label</li>
+          <li>Filter by day, or by not safe</li>
+          <li>Wrap report as PDF or CSV</li>
+          <li>Footage catalog as CSV</li>
+          <li>Kept until you delete it</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- ============ ON SET ============ -->
-  <section class="lo-feats tone-alt" aria-labelledby="feats-title">
-    <h2 class="section-title section-head head-dw" id="feats-title">On set</h2>
-    <ul class="lo-feat-grid">
-      <li><span class="mono lo-feat-n">01</span><h3 class="lo-feat-h">Read back, not trusted</h3><p>Every file is read back from each hard drive and checked against the card with xxHash64.</p></li>
-      <li><span class="mono lo-feat-n">02</span><h3 class="lo-feat-h">Two copies or it isn't green</h3><p>Green needs every clip verified on 2 separate hard drives. Set 1 to 5 for your production.</p></li>
-      <li><span class="mono lo-feat-n">03</span><h3 class="lo-feat-h">Re-copy just what failed</h3><p>Red names the hard drive and the clips. Re-copy only those. Everything that matched stays.</p></li>
-      <li><span class="mono lo-feat-n">04</span><h3 class="lo-feat-h">Resume after a stop</h3><p>Lost power or a pulled cable ends grey, not lost. Resume and it carries on.</p></li>
-      <li><span class="mono lo-feat-n">05</span><h3 class="lo-feat-h">Proof on every hard drive</h3><p>A PDF custody report and an MHL checksum file, left next to the footage.</p></li>
-      <li><span class="mono lo-feat-n">06</span><h3 class="lo-feat-h">Works offline</h3><p>Copying and checking need no internet. A field, a desert, a basement stage.</p></li>
+  <!-- ============ 6. PROMISE 03: EVERYONE STAYS INFORMED (live phones vs a shareable record) ============ -->
+  <section class="hf-promise hf-crew-sec tone-dark" id="crew" aria-labelledby="crew-title" data-hf-sec="crew">
+    <p class="mono hf-kicker">03 &middot; Everyone knows</p>
+    <h2 class="hf-statement hf-big" id="crew-title">Stop asking if it's done.</h2>
+    <p class="hf-sub">Two ways to keep people in the loop: the crew's phones follow the copy live, and anyone else gets a read-only record of the result.</p>
+    <div class="hf-two">
+      <article class="hf-way">
+        <p class="mono hf-way-k"><span class="hf-dot is-live" aria-hidden="true"></span>Live &middot; while it copies</p>
+        <h3 class="hf-way-h">On the crew's phones</h3>
+        <div class="hf-ways-media hf-media-phones">
+          <figure class="hf-ph"><img src="../../assets/img/products/handoff/tour/ph-lock.jpg?v=1" alt="iPhone lock screen with Handoff's live card for A004 at 66, copying to 2 hard drives." width="600" height="1304" loading="lazy" decoding="async" /></figure>
+          <figure class="hf-ph"><img src="../../assets/img/products/handoff/tour/ph-failed.jpg?v=1" alt="The Handoff iPhone app turns red: FAILED, ARCHIVE 2. DO NOT FORMAT A004. 6 clips failed on ARCHIVE 2; ARCHIVE 1 has all 9, verified. The drive was disconnected." width="600" height="1304" loading="lazy" decoding="async" /></figure>
+        </div>
+        <ul class="hf-list">
+          <li><b>Free iPhone app.</b> Live progress, and a live card on the lock screen while a card copies.</li>
+          <li><b>An alert when it's done.</b> Safe, failed, not safe yet or interrupted. Each person picks which they get.</li>
+          <li><b>Watch only.</b> Phones can't start, stop or change a copy.</li>
+          <li><b>As many phones as you like.</b> Pair one with a QR code from the Mac.</li>
+          <li><b>Same Wi-Fi, no internet?</b> With the app open, it still shows progress from the Mac. Lock-screen alerts need internet.</li>
+        </ul>
+        <p class="mono hf-src">iPhone app &middot; simulator &middot; demo data &middot; awaiting Apple approval <span class="hf-soon">Android coming</span></p>
+      </article>
+      <article class="hf-way">
+        <p class="mono hf-way-k"><span class="hf-dot" aria-hidden="true"></span>Record &middot; once it has a result</p>
+        <h3 class="hf-way-h">A link for producers, clients and insurers</h3>
+        <div class="hf-ways-media hf-share-media">
+          <figure class="hf-share-mac"><img src="../../assets/img/products/handoff/tour/mac-share-dialog.jpg?v=1" alt="Handoff's Share with crew dialog for A004: make a link anyone can open, with no sign-in, that shows the result and nothing else. Link lasts 1 day, 7 days or 30 days. Link ready, with Copy and Open. Links for this card: Fear Before, Day 1, with Copy and Revoke." width="720" height="1015" loading="lazy" decoding="async" /></figure>
+          <figure class="hf-ph"><img src="../../assets/img/products/handoff/tour/share-page.jpg?v=1" alt="The share page on a phone: FEAR BEFORE, DAY 1. A004 IS SAFE. Verified. Clips matched 9 of 9, size 132 MB, 2 verified copies, verified at 6:34 PM. Drive by drive: ARCHIVE 1 and ARCHIVE 2 each 9 of 9. Note: this is a record, not live, and contains no footage." width="780" height="1624" loading="lazy" decoding="async" /></figure>
+        </div>
+        <ul class="hf-list">
+          <li><b>One read-only page per card.</b> No sign-in, no app.</li>
+          <li><b>A snapshot, not a live feed.</b> It shows the result as it was when you made the link: clips matched on each hard drive, size, copies and time.</li>
+          <li><b>No footage.</b> No file names, no folders. They can confirm the result without access to anything private.</li>
+          <li><b>You stay in control.</b> Links expire after 1, 7 or 30 days, and you can revoke one at any time.</li>
+        </ul>
+        <p class="mono hf-src">Mac app and share page &middot; rendered from the app &middot; sample card</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 7. TRUST: built for the cart (offline, read-only, separate disks...) ============ -->
+  <section class="hf-trust" aria-labelledby="trust-title" data-hf-sec="trust">
+    <h2 class="section-title section-head head-dw" id="trust-title">Built for the cart</h2>
+    <p class="section-title">Works where you work.</p>
+    <ul class="lo-feat-grid hf-feat-grid">
+      <li><span class="mono lo-feat-n">01</span><h3 class="lo-feat-h">No internet needed to copy</h3><p>Copying and checking run on the Mac. A field, a desert, a basement stage.</p></li>
+      <li><span class="mono lo-feat-n">02</span><h3 class="lo-feat-h">Read-only on the card</h3><p>Nothing is ever written to your camera card.</p></li>
+      <li><span class="mono lo-feat-n">03</span><h3 class="lo-feat-h">Two copies means two disks</h3><p>Two folders on the same physical disk count once, so a backup is really a backup.</p></li>
+      <li><span class="mono lo-feat-n">04</span><h3 class="lo-feat-h">Re-copy just what failed</h3><p>Clips that already matched are read back, never rewritten.</p></li>
+      <li><span class="mono lo-feat-n">05</span><h3 class="lo-feat-h">Resume after a stop</h3><p>An interrupted copy keeps what was verified, checks it again, then carries on.</p></li>
+      <li><span class="mono lo-feat-n">06</span><h3 class="lo-feat-h">Warns before it's too late</h3><p>On battery, it tells you to keep the lid open until it says safe.</p></li>
+    </ul>
+  </section>
+
+  <!-- ============ 8. WHO IT'S FOR: what changes for each person on the job ============ -->
+  <section class="hf-roles tone-alt" aria-labelledby="roles-title" data-hf-sec="roles">
+    <h2 class="section-title section-head head-dw" id="roles-title">Who it's for</h2>
+    <p class="section-title">From camera to post. Accounted for.</p>
+    <ul class="hf-role-grid">
+      <li><span class="mono hf-role-k">DIT &middot; data wrangler</span><p>Plug in, click once, walk away. Green tells you when to format. No more re-checking folders at wrap.</p></li>
+      <li><span class="mono hf-role-k">Producer</span><p>Watch every card turn green from your phone, instead of calling the cart.</p></li>
+      <li><span class="mono hf-role-k">Director &middot; DP</span><p>Know the day's footage is safe before you leave set.</p></li>
+      <li><span class="mono hf-role-k">Editor &middot; post</span><p>Know when media is ready, with MHL checksum files on the hard drive to check what arrived.</p></li>
+      <li><span class="mono hf-role-k">Client &middot; insurer</span><p>A read-only link and a custody report that show what was verified, without any footage.</p></li>
     </ul>
   </section>
 
   <!-- ============ SPEC SHEET ============ -->
-  <section class="spec" aria-labelledby="spec-title">
+  <section class="spec" aria-labelledby="spec-title" data-hf-sec="spec">
     <h2 class="section-title section-head head-dw" id="spec-title">Spec sheet</h2>
     <div class="specs">
       <div class="spec-row">
         <p class="spec-k mono">Platform</p>
         <div class="spec-v hf-plat">
           <div class="spec-plat"><span class="spec-plat-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.930 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.640-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg></span><span><strong>macOS</strong><br />Copies and checks</span></div>
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />Free &middot; live + alerts</span></div>
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.340 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />Coming, with alerts</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />Free &middot; watch only</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.340 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />Coming</span></div>
         </div>
       </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Jobs</p>
-        <div class="spec-v"><ul class="tiles tiles-mono"><li>Copy &middot; card to hard drives</li><li>Backup &middot; hard drive to hard drive</li><li>Transfer &middot; to editor or post</li></ul></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Copies</p>
-        <div class="spec-v"><ul class="tiles"><li>2 verified copies for green</li><li>Set 1 to 5 per production</li></ul>
-          <p class="spec-note">One copy short ends amber, "not safe yet". Never green. A backup from a confirmed hard drive can count the original: "Original + 1 copy, keep the original."</p></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Check</p>
-        <div class="spec-v"><ul class="tiles tiles-mono"><li>xxHash64</li><li>Read back from each hard drive</li></ul></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Results</p>
-        <div class="spec-v"><ul class="tiles tiles-mono"><li>Green &middot; safe</li><li>Amber &middot; not safe yet</li><li>Red &middot; don't format</li><li>Grey &middot; interrupted</li></ul></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Records</p>
-        <div class="spec-v"><ul class="tiles tiles-raw"><li>History</li><li>PDF custody report</li><li>MHL on every hard drive</li></ul></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Crew</p>
-        <div class="spec-v"><ul class="tiles tiles-raw"><li>Live progress</li><li>Lock-screen live card</li><li>Green or red alerts</li><li>Share links &middot; 1, 7 or 30 days</li></ul>
-          <p class="spec-note">Phones watch only. Share links are read-only, can be revoked, and never contain footage.</p></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Internet</p>
-        <div class="spec-v"><p class="spec-headline">Not needed to copy or check.</p><p class="spec-note">Phones need a connection to get alerts.</p></div>
-      </div>
+      <div class="spec-row"><p class="spec-k mono">Jobs</p><div class="spec-v"><ul class="tiles tiles-mono"><li>Copy &middot; card to hard drives</li><li>Backup &middot; hard drive to hard drive</li><li>Transfer &middot; to editor or post</li></ul></div></div>
+      <div class="spec-row"><p class="spec-k mono">Check</p><div class="spec-v"><ul class="tiles tiles-mono"><li>xxHash64</li><li>Read back from every hard drive</li><li>Card read-only</li></ul></div></div>
+      <div class="spec-row"><p class="spec-k mono">Copy rule</p><div class="spec-v"><ul class="tiles"><li>2 verified copies for green</li><li>Set 1 to 5</li></ul></div></div>
+      <div class="spec-row"><p class="spec-k mono">Results</p><div class="spec-v"><ul class="tiles tiles-mono"><li>Green &middot; safe</li><li>Amber &middot; not safe yet</li><li>Red &middot; don't format</li><li>Grey &middot; interrupted</li></ul></div></div>
+      <div class="spec-row"><p class="spec-k mono">Records</p><div class="spec-v"><ul class="tiles tiles-raw"><li>History</li><li>PDF custody report</li><li>MHL &middot; legacy + ASC MHL</li><li>CSV</li></ul></div></div>
+      <div class="spec-row"><p class="spec-k mono">Crew</p><div class="spec-v"><ul class="tiles tiles-raw"><li>Live progress</li><li>Lock-screen live card</li><li>Result alerts</li><li>Share links &middot; 1, 7 or 30 days</li></ul></div></div>
+      <div class="spec-row"><p class="spec-k mono">Languages</p><div class="spec-v"><p class="spec-headline">English, Spanish, French, German, Italian, Japanese, Chinese.</p></div></div>
     </div>
   </section>
 
-  <!-- ============ PRICING AT LAUNCH (Loadout's two-plan layout; nothing to buy yet) ============ -->
-  <section class="lo-pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
+  <!-- ============ 9. PRICING AT LAUNCH (nothing to buy yet) + the path from list to trial ============ -->
+  <section class="lo-pricing tone-alt" id="pricing" aria-labelledby="pricing-title" data-hf-sec="pricing">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing at launch</h2>
-    <p class="section-sub">One plan. Every feature. 14 days free at launch, no card needed.</p>
+    <p class="section-sub">One plan. Every feature. Try it free for 14 days, no card needed.</p>
     <div class="lo-plans">
       <div class="lo-plan">
         <span class="mono lo-plan-name">Monthly</span>
@@ -370,36 +420,39 @@
         <p class="mono lo-plan-note">At launch &middot; $10.75 / mo</p>
       </div>
     </div>
-    <p class="pricing-terms">One computer, unlimited phones. The 14-day free trial has every feature and starts the first time you open Handoff. If a subscription ends, you can't start new cards; copies in progress, re-copy, History, reports and your footage keep working. If a payment fails, there are 7 days to fix it before new cards pause. Handoff is priced on its own, separate from the other DEADWORK tools.</p>
-    <div class="lo-price-cta">
-      <form class="notify-form" data-notify-form data-notify-product="handoff" data-notify-form-source="pricing" data-notify-success="You're on the list. One email when Handoff is out." novalidate>
-        <label class="sr-only" for="notify-name-price">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-price" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
-        <label class="sr-only" for="notify-email-price">Email address</label>
-        <input class="notify-input" type="email" id="notify-email-price" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
-        <p class="notify-status" role="status" aria-live="polite" id="notify-status-price" data-notify-status hidden></p>
-      </form>
-      <p class="mono lo-price-note">Handoff is not out yet. There is nothing to download or buy today.</p>
-    </div>
+    <ul class="hf-incl" aria-label="Included">
+      <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>One computer</li>
+      <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Unlimited phones, free app</li>
+      <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>Every feature</li>
+      <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-done"/></svg>History and reports keep working if you stop paying</li>
+    </ul>
+    <ol class="hf-path" aria-label="How to get it">
+      <li><span class="hf-path-n">1</span><b>Join the list</b><span>Just your email.</span></li>
+      <li><span class="hf-path-n">2</span><b>Launch email</b><span>We tell you when it's out.</span></li>
+      <li><span class="hf-path-n">3</span><b>14 days free</b><span>Starts when you first open it. No card.</span></li>
+    </ol>
+    <p class="pricing-terms">The trial has every feature. If a subscription ends, you can't start new cards; copies in progress, re-copy, History, reports and your footage keep working. If a payment fails, there are 7 days to fix it. Handoff is priced on its own, separate from the other DEADWORK tools. Prices are what we plan to charge at launch.</p>
   </section>
 
   <!-- ============ FAQ ============ -->
-  <section class="faq" id="faq" aria-labelledby="faq-title">
+  <section class="faq" id="faq" aria-labelledby="faq-title" data-hf-sec="faq">
     <h2 class="section-title section-head head-dw" id="faq-title">FAQ</h2>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-price" id="faq-q-price"><span>How much is it?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a-price" role="region" aria-labelledby="faq-q-price" hidden><div class="faq-a-inner"><p>At launch: $15 a month or $129 a year, with a 14-day free trial and no card needed. One plan, every feature, one computer, with unlimited phones. It is not on sale yet.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>When is it out?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>Not yet. The Mac app is being finished and the free iPhone app is waiting on Apple. There is nothing to download or buy today. <a href="#notify">Leave your email</a> and we'll tell you when it launches.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-price" id="faq-q-price"><span>How much will it cost?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a-price" role="region" aria-labelledby="faq-q-price" hidden><div class="faq-a-inner"><p>At launch: $15 a month or $129 a year, after a 14-day free trial with no card needed. One plan, every feature, one computer, unlimited phones.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-diff" id="faq-q-diff"><span>Why not just drag the files over?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a-diff" role="region" aria-labelledby="faq-q-diff" hidden><div class="faq-a-inner"><p>Dragging tells you the copy finished, not that every file arrived intact. Handoff reads each file back from each hard drive and matches it to the card, checks you have enough separate copies, keeps a record, and tells the people waiting on it.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>When can I format the card?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>When the window turns green and says the card is safe. Green means every clip was read back from 2 separate hard drives and matched the card. Amber, red or grey all mean don't format yet.</p></div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-one" id="faq-q-one"><span>Why did one copy end amber?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a-one" role="region" aria-labelledby="faq-q-one" hidden><div class="faq-a-inner"><p>One copy is not a backup. Handoff needs 2 verified copies on separate hard drives before it calls a card safe. Add a second copy and it turns green. You can change the number of copies, from 1 to 5, in Settings.</p></div></div>
+        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>When the window turns green and says the card is safe. Green means every clip was read back and matched on the number of separate hard drives your copy rule asks for, 2 unless you change it. Amber, red or grey all mean don't format yet.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-orig" id="faq-q-orig"><span>I'm backing up a hard drive. Does the original count?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -407,42 +460,48 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>What if a hard drive is unplugged mid-copy?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><div class="faq-a-inner"><p>The window turns red, names the hard drive and lists the clips that didn't make it. Plug it back in and re-copy just those clips. If the whole computer stops, it ends grey instead, and you can resume.</p></div></div>
+        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><div class="faq-a-inner"><p>The window turns red, names the hard drive and lists the clips that didn't make it. Plug it back in and re-copy just those clips. If the whole copy stops, for example the Mac loses power, it ends grey instead, and you can resume.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What do post houses and insurers get?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Each card leaves a PDF custody report and an MHL checksum file on every hard drive. The report only says "safe" for a green card. History keeps the full record of the production. You can also send a read-only share link: it shows the result and nothing else, expires after 1, 7 or 30 days, and can be revoked.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-share" id="faq-q-share"><span>Is a share link live?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a-share" role="region" aria-labelledby="faq-q-share" hidden><div class="faq-a-inner"><p>No. A share link is a record of one card's result at the moment you made it, so it can only be made once the card has a result. For live progress, pair a phone with the free iPhone app. Links expire after 1, 7 or 30 days and can be revoked; they never contain footage, file names or folders.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-off" id="faq-q-off"><span>Does it need the internet?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a-off" role="region" aria-labelledby="faq-q-off" hidden><div class="faq-a-inner"><p>No. Copying and checking work offline. Phones need a connection to get alerts.</p></div></div>
+        <div class="faq-a" id="faq-a-off" role="region" aria-labelledby="faq-q-off" hidden><div class="faq-a-inner"><p>Not to copy or check: that all happens on the Mac. A phone on the same Wi-Fi as the Mac still sees live progress. Lock-screen alerts, pairing a phone and share links need internet. Handoff also needs to go online once to start the trial, and at least every 14 days to check the subscription.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-phone" id="faq-q-phone"><span>Can someone stop a copy from their phone?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a-phone" role="region" aria-labelledby="faq-q-phone" hidden><div class="faq-a-inner"><p>No. Phones only watch. Each person chooses which alerts they get, and the Mac can remove a phone at any time.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What do post houses and insurers get?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Each card leaves a PDF custody report, MHL checksum files and a CSV on every hard drive. The report only says "safe" for a green card. From History you can export wrap reports, or send a read-only share link.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Does it work with my camera?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><div class="faq-a-inner"><p>Handoff copies whatever is on the card, so it works with any camera and any format.</p></div></div>
+        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><div class="faq-a-inner"><p>Handoff copies whatever is on the card, file for file, so the camera and format don't matter.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-android" id="faq-q-android"><span>Is it on Android?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a-android" role="region" aria-labelledby="faq-q-android" hidden><div class="faq-a-inner"><p>The Android app is coming, with alerts. Today the phone app is iPhone, and phones only watch: the copying happens on the Mac. <a href="#notify">Leave your email</a> and we'll tell you when it's out.</p></div></div>
+        <div class="faq-a" id="faq-a-android" role="region" aria-labelledby="faq-q-android" hidden><div class="faq-a-inner"><p>An Android app is coming. At launch the phone app is iPhone. The copying always happens on the Mac.</p></div></div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>When is it out?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>Not yet. The Mac app is being finished and the free iPhone app is waiting on Apple. There is nothing to download today. Leave your email and you will be the first to know.</p></div></div>
-      </div>
-    </div>
-    <div class="lo-notify" id="notify" aria-labelledby="notify-title">
-      <p class="mono lo-notify-head" id="notify-title">Be first to know when Handoff is out</p>
-      <form class="notify-form" data-notify-form data-notify-product="handoff" data-notify-form-source="notify" data-notify-success="You're on the list. One email when Handoff is out." novalidate>
-        <label class="sr-only" for="notify-name-handoff">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-handoff" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
-        <label class="sr-only" for="notify-email-handoff">Email address</label>
-        <input class="notify-input" type="email" id="notify-email-handoff" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
-        <p class="notify-status" role="status" aria-live="polite" id="notify-status-handoff" data-notify-status hidden></p>
-      </form>
     </div>
     <p class="faq-chat">Still have a question? <a href="mailto:deadworkstudio@gmail.com?subject=Handoff%20question" class="faq-chat-link">Email us</a> &middot; <a href="support/" class="faq-chat-link">Handoff support</a></p>
+  </section>
+
+  <!-- ============ 10. FINAL CTA ============ -->
+  <section class="hf-final tone-dark" id="notify" aria-labelledby="notify-title" data-hf-sec="final">
+    <h2 class="hf-statement hf-big" id="notify-title">The transfer is done.<br /> Everyone knows.</h2>
+    <p class="hf-sub">Handoff isn't out yet. Leave your email and we'll tell you the day it launches, with 14 days free to try it.</p>
+    <form class="notify-form hf-form" data-notify-form data-notify-product="handoff" data-notify-form-source="notify" data-notify-success="You're on the list. We'll email you when Handoff launches." novalidate>
+      <label class="sr-only" for="notify-email-handoff">Email address</label>
+      <input class="notify-input" type="email" id="notify-email-handoff" name="email" placeholder="you@email.com" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="send" required data-notify-email />
+      <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
+      <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me at launch</button>
+      <p class="notify-status" role="status" aria-live="polite" id="notify-status-handoff" data-notify-status hidden></p>
+    </form>
+    <p class="mono hf-final-note">Mac &middot; free iPhone app &middot; $15/mo or $129/yr at launch</p>
   </section>
 
   <section class="tools" aria-labelledby="tools-title">
@@ -474,8 +533,8 @@
       </a></li>
     </ul>
   </section>
-
 </main>
+
 
 <footer class="poster-foot">
     <p class="foot-email" data-live-clock></p>
@@ -498,7 +557,9 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261103a"></script>
-<script src="../../assets/js/notify.js?v=20261114b" defer></script>
+<script src="../../assets/js/notify.js?v=20261115a" defer></script>
+<script src="../../assets/js/hf-page.js?v=20261115a" defer></script>
+<script src="../../assets/js/hf-analytics.js?v=20261115a" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261113a" defer></script>
 </body>
 </html>
