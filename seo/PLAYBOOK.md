@@ -30,6 +30,8 @@ Stock Shredder first. Loadout and Set Control get waitlist pages later.
 
 ## Rules
 
+- HIDDEN (Daniel, Nov 16): guides are never linked from the site's menus or pages. Google finds them only through sitemap.xml (+ Search Console).
+
 - Zero AI words. Say "naming service" / "auto-naming".
 - Never Daniel's last name or the LLC. Byline is DEADWORK STUDIO.
 - Loadout, Set Control and other in-development products: waitlist CTA only, never a buy link.
