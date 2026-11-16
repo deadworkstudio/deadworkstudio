@@ -14,6 +14,17 @@
     var duo = document.querySelector('[data-hf-duo]'); if (!duo) return;
     var mac = duo.querySelector('[data-hf-sync="mac"]'), phone = duo.querySelector('[data-hf-sync="phone"]');
     if (!mac || !phone) return;
+    // pick the recording for this screen: device pixels the hero will actually fill
+    var dpr = window.devicePixelRatio || 1;
+    [mac, phone].forEach(function (v) {
+      var px = (v.getBoundingClientRect().width || 300) * dpr;
+      var big = v === mac ? 1700 : 99999, mid = v === mac ? 1100 : 400;
+      var src = (px > big && v.getAttribute('data-src-4k')) || (px > mid && v.getAttribute('data-src-2k')) || v.getAttribute('data-src-1k') || v.getAttribute('data-src-2k');
+      if (!src) return;
+      var s = document.createElement('source'); s.src = src; s.type = 'video/mp4'; v.appendChild(s);
+      // reduced motion: nothing plays, so show the end result (green) instead of the 0 it starts on
+      if (reduce && v.getAttribute('data-poster-still')) v.setAttribute('poster', v.getAttribute('data-poster-still'));
+    });
     var inView = false;
     function sync() {
       if (!(phone.readyState >= 1)) return;
