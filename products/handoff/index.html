@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="../../assets/css/product-page.css?v=20261115a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <link rel="preload" href="../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="../../assets/css/handoff-v2.css?v=20261114a" />
+<link rel="stylesheet" href="../../assets/css/handoff-v2.css?v=20261115a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../assets/css/badges.css?v=1104b" />
 </head>
@@ -115,7 +115,7 @@
     <p class="hero-lede">Handoff copies your camera cards to your backup hard drives, checks every file, and tells you in one colour when the card is safe to format.</p>
     <span class="badge badge-dev"><span class="badge-icon"></span>Processing</span>
     <figure class="shot shot-hero mbp"><span class="mbp-lid"><span class="mbp-screen"><img src="../../assets/img/products/handoff/v2/a06-day.jpg" alt="Product screen: the whole Handoff window turns green and reads A004 IS SAFE. All 318 clips verified on 2 hard drives, Shuttle A and RAID Master, each 318 of 318 matched." width="1440" height="900" fetchpriority="high" /></span><span class="mbp-notch" aria-hidden="true"></span></span><span class="mbp-base" aria-hidden="true"><span class="mbp-lip"></span></span></figure>
-    <p class="mono shot-cap">Product screen &middot; sample data &middot; share links arrive in V2</p>
+    <p class="mono shot-cap">Product screen &middot; sample data</p>
     <div class="pp-notify">
       <form class="notify-form" data-notify-form data-notify-product="handoff" novalidate>
         <label class="sr-only" for="notify-name-handoff-top">First name</label>
@@ -171,9 +171,9 @@
 
   <section class="feat" aria-labelledby="feat-progress">
     <h2 class="mono feat-num">03 &middot; While it copies</h2>
-    <p class="section-title" id="feat-progress">One square per clip. Copied is not the same as checked.</p>
-    <p class="section-sub">Watch each clip land and get checked on every hard drive. A clip only counts once it has been read back and matched.</p>
-    <figure class="feat-shot mbp"><span class="mbp-lid"><span class="mbp-screen"><img src="../../assets/img/products/handoff/v2/a04-day.jpg" alt="Product screen: A004 copying to Shuttle A and RAID Master, 44 percent. 141 of 318 clips copied, 132 verified on both hard drives, one square per clip." width="1440" height="900" loading="lazy" /></span><span class="mbp-notch" aria-hidden="true"></span></span><span class="mbp-base" aria-hidden="true"><span class="mbp-lip"></span></span></figure>
+    <p class="section-title" id="feat-progress">The whole window is the progress bar.</p>
+    <p class="section-sub">One giant number, readable from across the cart. Behind it, the window fills from the left with real frames of your footage, but only footage that is already checked on every hard drive. Copied is not the same as checked, so a clip only counts once it has been read back and matched.</p>
+    <figure class="feat-shot mbp"><span class="mbp-lid"><span class="mbp-screen"><img src="../../assets/img/products/handoff/v2/flood-night.jpg" alt="Product screen in night mode: card A004 copying to 2 hard drives. A giant 66 sits over a frame of the card's footage, an aerial shot of a beach, filling the left two thirds of the window. Below: card A004, 6 of 9 clips copied, Archive 1 and Archive 2 each verified 6 of 9." width="1440" height="900" loading="lazy" /></span><span class="mbp-notch" aria-hidden="true"></span></span><span class="mbp-base" aria-hidden="true"><span class="mbp-lip"></span></span></figure>
     <p class="mono shot-cap">Product screen &middot; sample data</p>
   </section>
 
@@ -191,12 +191,12 @@
       <li class="hf-v hf-v--warn" style="--gk:var(--hf-warn)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-warn"/></svg>Amber</span>
         <span class="hf-v-word">Not safe yet.</span>
-        <p>The copy is good, but there aren't enough copies yet. Add one more and it turns green.</p>
+        <p>The copy is good, but one copy short. Add one more and it turns green.</p>
       </li>
       <li class="hf-v hf-v--bad" style="--gk:var(--hf-bad)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-bad"/></svg>Red</span>
         <span class="hf-v-word">Don't format.</span>
-        <p>It names the hard drive and the clips that failed. Re-copy just those.</p>
+        <p>It failed. It names the hard drive and the clips. Re-copy just those.</p>
       </li>
       <li class="hf-v hf-v--off" style="--gk:var(--hf-off)">
         <span class="hf-v-tag"><svg class="hf-glyph" aria-hidden="true"><use href="#g-off"/></svg>Grey</span>
@@ -218,11 +218,13 @@
       <div>
         <h2 class="mono feat-num" style="text-align:left">05 &middot; The copy rule</h2>
         <p class="hf-statement" id="rule-title">2 copies<br />before safe.</p>
-        <p class="section-sub">Green means every clip is verified on 2 separate hard drives. Your production can ask for anywhere from 1 to 5. Copy to fewer than that and the card ends amber: not safe yet, never green.</p>
+        <p class="section-sub">Green means every clip is verified on 2 separate hard drives. Your production can ask for anywhere from 1 to 5. One copy short and the card ends amber: not safe yet, never green.</p>
+        <p class="section-sub">Backing up or transferring from a hard drive? The original can count as one copy, but only when Handoff confirms it is a hard drive. A card never counts. Green then says <b>Original + 1 copy &mdash; keep the original</b>, and it never tells you to format.</p>
       </div>
       <ul class="hf-ledger" aria-label="Example: how many copies a card has">
         <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-ok"/></svg><span><b>Shuttle A + RAID Master</b><small>2 of 2 copies &middot; every clip matched</small></span><span class="hf-out hf-out--ok">Safe</span></li>
         <li><svg class="hf-glyph" style="color:#7A5000" aria-hidden="true"><use href="#g-warn"/></svg><span><b>Shuttle A only</b><small>1 of 2 copies &middot; add one more</small></span><span class="hf-out hf-out--warn">Not safe yet</span></li>
+        <li><svg class="hf-glyph hf-g-ok" aria-hidden="true"><use href="#g-ok"/></svg><span><b>Original hard drive + 1 copy</b><small>Backup or transfer &middot; keep the original</small></span><span class="hf-out hf-out--ok">Safe</span></li>
         <li><svg class="hf-glyph hf-g-soon" aria-hidden="true"><use href="#g-soon"/></svg><span><b>Your rule</b><small>1 to 5 copies &middot; set once per production</small></span><span class="hf-out">Setting</span></li>
       </ul>
     </div>
@@ -232,9 +234,9 @@
   <section class="feat" aria-labelledby="feat-history">
     <h2 class="mono feat-num">06 &middot; The record</h2>
     <p class="section-title" id="feat-history">Every card, on file. For good.</p>
-    <p class="section-sub">History is a permanent record of the production: every card, every hard drive, every result. Each card leaves a PDF custody report and an MHL checksum file on every hard drive, for post houses and insurers.</p>
+    <p class="section-sub">History is a permanent record of the production: every card, every hard drive, every result. Each card leaves a PDF custody report and an MHL checksum file on every hard drive, for post houses and insurers. The report only says "safe" when the card was green.</p>
     <figure class="feat-shot mbp"><span class="mbp-lid"><span class="mbp-screen"><img src="../../assets/img/products/handoff/v2/a10-day.jpg" alt="Product screen: History for the production Fear Before. Day 03, five cards: four verified on 2 of 2 hard drives, B001 not safe yet with 1 of 2. A004 detail shows each hard drive at 318 of 318 and a timeline." width="1440" height="900" loading="lazy" /></span><span class="mbp-notch" aria-hidden="true"></span></span><span class="mbp-base" aria-hidden="true"><span class="mbp-lip"></span></span></figure>
-    <p class="mono shot-cap">Product screen &middot; sample data &middot; share links arrive in V2</p>
+    <p class="mono shot-cap">Product screen &middot; sample data</p>
   </section>
 
   <!-- ============ CREW ============ -->
@@ -243,14 +245,19 @@
       <div>
         <h2 class="mono">07 &middot; The crew</h2>
         <p class="section-title" id="crew-title">Phones buzz green. Or red.</p>
-        <p class="section-sub">Walk away from the cart. The free iPhone app shows every card as it copies, and buzzes the moment it turns green or red. Add as many phones as you like.</p>
+        <p class="section-sub">Walk away from the cart. The free iPhone app shows every card as it copies and buzzes the moment it turns green or red. Add as many phones as you like. Phones only watch: nobody can change a copy from one.</p>
         <ul class="hf-crew-list">
-          <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>iPhone, free.</b> Live progress on the lock screen, and an alert for every result.</span></li>
+          <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>iPhone, free.</b> Live progress in the app, a live card on the lock screen while a card copies, and an alert the moment it turns green or red.</span></li>
+          <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>Each person picks their alerts.</b> Safe, failed, not safe yet, interrupted, and the lock-screen card. Set per phone.</span></li>
+          <li><svg class="hf-glyph hf-g-ok" aria-hidden="true" style="--gk:#0E0E0D"><use href="#g-ok"/></svg><span><b>Share links.</b> A read-only page for a producer, client or insurer: the result and nothing else, no footage. It expires after 1, 7 or 30 days, and you can revoke it at any time.</span></li>
           <li><svg class="hf-glyph hf-g-soon" aria-hidden="true"><use href="#g-soon"/></svg><span><b>Android</b><span class="hf-soon">Coming</span><br />The Android app is on the way, with alerts.</span></li>
-          <li><svg class="hf-glyph hf-g-soon" aria-hidden="true"><use href="#g-soon"/></svg><span><b>Share links</b><span class="hf-soon">Coming in V2</span><br />A read-only page for a producer, client or insurer, showing the result and nothing else. Links expire.</span></li>
         </ul>
       </div>
-      <figure class="hf-phone"><img src="../../assets/img/products/handoff/v2/p01-night.jpg" alt="Product screen on iPhone: the lock screen shows a Handoff alert, A003 verified and safe, 156 clips matched on Shuttle A and RAID Master, and a live card A004 copying at 44 percent." width="390" height="844" loading="lazy" /><figcaption class="mono">Product screen &middot; sample data</figcaption></figure>
+      <div class="hf-phones">
+        <figure class="hf-phone"><img src="../../assets/img/products/handoff/v2/p01-night.jpg" alt="Product screen on iPhone: the lock screen shows a Handoff alert, A003 verified and safe, 156 clips matched on Shuttle A and RAID Master, and a live card A004 copying at 44 percent." width="390" height="844" loading="lazy" /><figcaption class="mono">Lock screen</figcaption></figure>
+        <figure class="hf-phone"><img src="../../assets/img/products/handoff/v2/share-page.jpg" alt="Share page on a phone: Day 03, Fear Before. A004 IS SAFE. Verified. 318 of 318 clips matched, 412 GB, 2 verified copies, verified at 5:24 PM. Shuttle A and RAID Master each 318 of 318. A note says it is a record, not live, and contains no footage." width="390" height="844" loading="lazy" /><figcaption class="mono">Share link</figcaption></figure>
+        <p class="mono shot-cap hf-phones-cap">Product screens &middot; sample data</p>
+      </div>
     </div>
   </section>
 
@@ -281,12 +288,12 @@
       </div>
       <div class="spec-row">
         <p class="spec-k mono">Jobs</p>
-        <div class="spec-v"><ul class="tiles tiles-mono"><li>Copy &middot; card to hard drives</li><li>Backup &middot; drive to drive</li><li>Transfer &middot; to editor or post</li></ul></div>
+        <div class="spec-v"><ul class="tiles tiles-mono"><li>Copy &middot; card to hard drives</li><li>Backup &middot; hard drive to hard drive</li><li>Transfer &middot; to editor or post</li></ul></div>
       </div>
       <div class="spec-row">
         <p class="spec-k mono">Copies</p>
         <div class="spec-v"><ul class="tiles"><li>2 verified copies for green</li><li>Set 1 to 5 per production</li></ul>
-          <p class="spec-note">One copy ends amber, "not safe yet". Never green.</p></div>
+          <p class="spec-note">One copy short ends amber, "not safe yet". Never green. A backup from a confirmed hard drive can count the original: "Original + 1 copy, keep the original."</p></div>
       </div>
       <div class="spec-row">
         <p class="spec-k mono">Check</p>
@@ -301,6 +308,11 @@
         <div class="spec-v"><ul class="tiles tiles-raw"><li>History</li><li>PDF custody report</li><li>MHL on every hard drive</li></ul></div>
       </div>
       <div class="spec-row">
+        <p class="spec-k mono">Crew</p>
+        <div class="spec-v"><ul class="tiles tiles-raw"><li>Live progress</li><li>Lock-screen live card</li><li>Green or red alerts</li><li>Share links &middot; 1, 7 or 30 days</li></ul>
+          <p class="spec-note">Phones watch only. Share links are read-only, can be revoked, and never contain footage.</p></div>
+      </div>
+      <div class="spec-row">
         <p class="spec-k mono">Internet</p>
         <div class="spec-v"><p class="spec-headline">Not needed to copy or check.</p><p class="spec-note">Phones need a connection to get alerts.</p></div>
       </div>
@@ -309,27 +321,27 @@
 
   <!-- ============ PRICING (unchanged facts) ============ -->
   <section class="hf-pricing" id="pricing" aria-labelledby="pricing-title">
-    <h2 class="mono feat-num">Pricing</h2>
+    <h2 class="mono feat-num">Pricing at launch</h2>
     <p class="section-title" id="pricing-title">One plan. Every feature.</p>
-    <p class="section-sub">Try Handoff free for 14 days, no card needed. Then choose monthly or yearly. Handoff is priced on its own, separate from the other DEADWORK tools.</p>
+    <p class="section-sub">Here is what Handoff will cost when it launches. You can't buy it yet. At launch you get a 14-day free trial, no card needed, then monthly or yearly. Handoff is priced on its own, separate from the other DEADWORK tools.</p>
     <div class="hf-plans">
       <div class="hf-plan">
-        <p class="mono hf-plan-k">Yearly</p>
+        <p class="mono hf-plan-k">Yearly &middot; at launch</p>
         <p class="hf-plan-price"><b>$129</b><span>per year</span></p>
         <p class="hf-plan-note">About 28% less than paying monthly. One computer, unlimited phones.</p>
       </div>
       <div class="hf-plan">
-        <p class="mono hf-plan-k">Monthly</p>
+        <p class="mono hf-plan-k">Monthly &middot; at launch</p>
         <p class="hf-plan-price"><b>$15</b><span>per month</span></p>
         <p class="hf-plan-note">Cancel anytime. Good for a few jobs a year. One computer, unlimited phones.</p>
       </div>
     </div>
     <ul class="hf-terms">
-      <li>14-day free trial with every feature. It starts the first time you open Handoff.</li>
-      <li>If your subscription ends, you can't start new cards. Copies in progress, re-copy, History, reports and your footage keep working.</li>
-      <li>If a payment fails, you get 7 days to fix it before new cards pause.</li>
+      <li>14-day free trial with every feature. It will start the first time you open Handoff.</li>
+      <li>If a subscription ends, you can't start new cards. Copies in progress, re-copy, History, reports and your footage keep working.</li>
+      <li>If a payment fails, there are 7 days to fix it before new cards pause.</li>
     </ul>
-    <p class="hf-pricing-status mono">Handoff is not open for purchase yet. Leave your email above and you will be the first to know.</p>
+    <p class="hf-pricing-status mono">Handoff is not out yet. There is nothing to download or buy today. Leave your email above and you will be the first to know.</p>
   </section>
 
   <!-- ============ FAQ ============ -->
@@ -338,15 +350,19 @@
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-price" id="faq-q-price"><span>How much is it?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a-price" role="region" aria-labelledby="faq-q-price" hidden><div class="faq-a-inner"><p>$15 a month or $129 a year, with a 14-day free trial and no card needed. One plan, every feature, one computer, with unlimited phones.</p></div></div>
+        <div class="faq-a" id="faq-a-price" role="region" aria-labelledby="faq-q-price" hidden><div class="faq-a-inner"><p>At launch: $15 a month or $129 a year, with a 14-day free trial and no card needed. One plan, every feature, one computer, with unlimited phones. It is not on sale yet.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>When can I format the card?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>When the window turns green. Green means every clip was read back from 2 separate hard drives and matched the card. Amber, red or grey all mean don't format yet.</p></div></div>
+        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>When the window turns green and says the card is safe. Green means every clip was read back from 2 separate hard drives and matched the card. Amber, red or grey all mean don't format yet.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-one" id="faq-q-one"><span>Why did one copy end amber?</span><span class="faq-plus" aria-hidden="true"></span></button>
         <div class="faq-a" id="faq-a-one" role="region" aria-labelledby="faq-q-one" hidden><div class="faq-a-inner"><p>One copy is not a backup. Handoff needs 2 verified copies on separate hard drives before it calls a card safe. Add a second copy and it turns green. You can change the number of copies, from 1 to 5, in Settings.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-orig" id="faq-q-orig"><span>I'm backing up a hard drive. Does the original count?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a-orig" role="region" aria-labelledby="faq-q-orig" hidden><div class="faq-a-inner"><p>It can. For a backup or transfer from a hard drive, the original counts as one copy, but only when Handoff confirms it is a hard drive. A card never counts. With one verified copy on top, it turns green and says "Original + 1 copy &mdash; keep the original". It never tells you to format the original.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>What if a hard drive is unplugged mid-copy?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -354,7 +370,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What do post houses and insurers get?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Each card leaves a PDF custody report and an MHL checksum file on every hard drive. History keeps the full record of the production. Read-only share links that expire are coming in V2.</p></div></div>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Each card leaves a PDF custody report and an MHL checksum file on every hard drive. The report only says "safe" for a green card. History keeps the full record of the production. You can also send a read-only share link: it shows the result and nothing else, expires after 1, 7 or 30 days, and can be revoked.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-off" id="faq-q-off"><span>Does it need the internet?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -366,7 +382,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>When is it out?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>Handoff is in development. Leave your email and you will be the first to know.</p></div></div>
+        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>Not yet. The Mac app is being finished and the free iPhone app is waiting on Apple. There is nothing to download today. Leave your email and you will be the first to know.</p></div></div>
       </div>
     </div>
     <p class="faq-chat">Still have a question? <a href="mailto:deadworkstudio@gmail.com?subject=Handoff%20question" class="faq-chat-link" data-faq-chat-open>Chat with us</a> &middot; <a href="support/" class="faq-chat-link">Handoff support</a></p>
@@ -437,8 +453,6 @@
     </div>
     <p class="foot-note">By artists. For artists.</p>
     <p class="foot-copy">2026 DEADWORK STUDIO</p>
-  
-  
     <!-- i18n:picker --><div class="lang-tab lang-foot" data-lang-picker><button class="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language: English"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5c-2.6-2.7-3.9-5.9-3.9-9.5s1.3-6.8 3.9-9.5z"/></svg><span>English</span></button><ul class="lang-menu" hidden><li><a href="/products/handoff/" hreflang="en" lang="en" data-lang="en" aria-current="true"><span>English</span><span class="lang-code">EN</span></a></li><li><a href="/es/products/handoff/" hreflang="es" lang="es" data-lang="es"><span>Español</span><span class="lang-code">ES</span></a></li><li><a href="/fr/products/handoff/" hreflang="fr" lang="fr" data-lang="fr"><span>Français</span><span class="lang-code">FR</span></a></li><li><a href="/de/products/handoff/" hreflang="de" lang="de" data-lang="de"><span>Deutsch</span><span class="lang-code">DE</span></a></li><li><a href="/it/products/handoff/" hreflang="it" lang="it" data-lang="it"><span>Italiano</span><span class="lang-code">IT</span></a></li><li><a href="/zh/products/handoff/" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh"><span>简体中文</span><span class="lang-code">中文</span></a></li><li><a href="/ja/products/handoff/" hreflang="ja" lang="ja" data-lang="ja"><span>日本語</span><span class="lang-code">日本語</span></a></li></ul></div><!-- /i18n:picker -->
     <p class="foot-legal"><a href="support/">Support</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">Terms</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/handoff-privacy/">Privacy</a></p>
   </footer>

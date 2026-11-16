@@ -125,9 +125,18 @@
 .hf2 .hf-crew-list li { display: grid; grid-template-columns: 22px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line-2); font-size: 15px; line-height: 1.45; color: var(--ink-2); }
 .hf2 .hf-crew-list b { color: var(--ink); font-weight: 600; }
 .hf2 .hf-soon { display: inline-block; margin-left: 8px; padding: 3px 7px 2px; border: 1px dashed currentColor; font: 500 10px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; vertical-align: 2px; color: var(--ink-2); white-space: nowrap; }
+/* Two phones side by side: the lock screen and a share link */
+.hf2 .hf-phones { display: grid; grid-template-columns: repeat(2, clamp(170px, 17vw, 240px)); column-gap: clamp(20px, 2.4vw, 36px); align-items: start; }
+.hf2 .hf-phones .hf-phone { width: auto; }
+.hf2 .hf-phones .hf-phone img { border-radius: clamp(24px, 2.4vw, 34px); }
+.hf2 .hf-phones .hf-phone figcaption { margin-top: 18px; }
+.hf2 .hf-phones-cap { grid-column: 1 / -1; margin-top: 10px; text-align: center; }
 @media (max-width: 760px) {
   .hf2 .hf-crew { grid-template-columns: 1fr; }
   .hf2 .hf-phone { margin: 0 auto; width: min(260px, 72vw); }
+  .hf2 .hf-phones { justify-content: center; grid-template-columns: repeat(2, minmax(0, 200px)); column-gap: 20px; }
+  .hf2 .hf-phones .hf-phone { width: 100%; margin: 0; }
+  .hf2 .hf-phones .hf-phone img { border-radius: 22px; box-shadow: 0 0 0 5px #1b1b1d, 0 0 0 6px #3a3a3d, 0 24px 40px -20px rgba(0,0,0,.85); }
 }
 .hf2 .tone-dark .hf-glyph rect[fill="currentColor"] { fill: currentColor; }
 
