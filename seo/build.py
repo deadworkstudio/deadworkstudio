@@ -94,7 +94,9 @@ def chrome():
     page = (ROOT / "products/stock-shredder/index.html").read_text()
     header = re.search(r'<header class="poster-head".*?</header>', page, re.S).group(0)
     footer = re.search(r'<footer class="poster-foot">.*?</footer>', page, re.S).group(0)
-    return header, footer
+    # Guides are English only: drop the language picker (it links to the SS page's translations).
+    strip = lambda h: re.sub(r"<!-- i18n:picker -->.*?<!-- /i18n:picker -->", "", h, flags=re.S)
+    return strip(header), strip(footer)
 
 
 def human(d):
