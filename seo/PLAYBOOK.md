@@ -71,6 +71,18 @@ Re-rank once Search Console has 2 to 4 weeks of data.
 | 10 | Set Control (waitlist) | digital call sheet with crew confirmations | Digital Call Sheets That Show Who Confirmed | Differentiator: who got the change and confirmed | Dec |
 | 11 | Set Control (waitlist) | StudioBinder alternative / call sheet app | StudioBinder Alternatives for Small Crews | High-intent comparison | Dec |
 
+## Growth plan (Daniel, Nov 16)
+
+Benchmark: a founder at ~$18k/month from SEO runs ~200 posts, 30 landing pages, 4-5 languages.
+
+- Articles: 1 a week now. Move to 2 a week once Search Console shows which ones bring trials.
+- Landing pages: ~30 for Stock Shredder, one each, drafted alongside the weekly article:
+  - Stock sites: Adobe Stock, Pond5, Shutterstock, Artgrid, Storyblocks, Getty/iStock, Motion Array, Envato, Filmsupply, Blackbox.
+  - Cameras: Sony, DJI, ARRI, RED, Blackmagic, Canon, Panasonic, GoPro, drones.
+  - Competitors / jobs: Xpiks, StockSubmitter, Premiere Pro batch export, Resolve, keywording tools.
+- Languages: the site is in 7. Translate an article only after it proves itself in English.
+- Everything stays hidden from the site menus. Sitemap + Search Console + Bing only.
+
 ## Later (separate project, not now)
 
 ChatGPT and Claude app directories (one DEADWORK connector for all products, starting with account
