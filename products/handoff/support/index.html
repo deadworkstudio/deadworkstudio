@@ -115,6 +115,7 @@ body.legal-page .poster { height: auto; }
       <p class="eyebrow kicker">Support</p>
       <h1 class="display" style="font-size: clamp(32px, 5vw, 56px); margin-top: 8px;">Handoff Support</h1>
       <p class="lede" style="margin-top: 24px;">Plug in, let Handoff find your card and hard drives, click once, and wait for the colour. Most answers are below.</p>
+      <p class="hf-sup-launch"><strong>Handoff isn't out yet.</strong> There is nothing to download or install today. This page explains how it will work when it launches. <a href="../#main">Leave your email on the Handoff page</a> to hear first.</p>
 
       <div class="hf-sup-mail">
         <p><strong>Still stuck?</strong> Email <a href="mailto:deadworkstudio@gmail.com?subject=Handoff%20support">deadworkstudio@gmail.com</a> and we will reply within 2 business days.</p>
@@ -127,6 +128,7 @@ body.legal-page .poster { height: auto; }
         <a href="#two-copies">2-copy rule</a>
         <a href="#phone">Pairing a phone</a>
         <a href="#alerts">Notifications</a>
+        <a href="#share">Share links</a>
         <a href="#new-computer">New computer</a>
         <a href="#subscription">Subscription</a>
       </nav>
@@ -137,16 +139,16 @@ body.legal-page .poster { height: auto; }
         <li><strong>Plug in</strong> the camera card and your backup hard drives.</li>
         <li><strong>Handoff finds them by itself</strong> and opens on the card: what is on it, and which hard drives it will copy to. It picks the same hard drives as last time.</li>
         <li><strong>Click once</strong> to copy. To use different hard drives, choose Change first.</li>
-        <li><strong>Wait for the colour.</strong> Every file is read back from each hard drive and checked against the card with xxHash64. When it ends, the whole window turns one colour.</li>
+        <li><strong>Wait for the colour.</strong> While it copies, the whole window is the progress bar: a big number, and real frames of the footage that is already checked. Every file is read back from each hard drive and checked against the card with xxHash64. When it ends, the whole window turns one colour.</li>
       </ol>
       <p>There are three jobs. <strong>Copy</strong> takes a card to your hard drives. <strong>Backup</strong> copies one hard drive to another. <strong>Transfer</strong> sends footage from a hard drive to an editor or post house.</p>
       <p>You don't need the internet to copy or check. Phones need a connection to get alerts.</p>
 
       <h2 id="colours">What the colours mean</h2>
       <ul class="hf-sup-states">
-        <li><span><span class="hf-chip" style="--g:#8FD687;--i:#07130A;--gk:#8FD687"><svg class="hf-glyph" aria-hidden="true"><use href="#g-ok"/></svg>Green</span></span><p><strong>Safe.</strong> Every clip is verified on 2 separate hard drives. You can format the card.</p></li>
-        <li><span><span class="hf-chip" style="--g:#E2A43A;--i:#140F05;--gk:#E2A43A"><svg class="hf-glyph" aria-hidden="true"><use href="#g-warn"/></svg>Amber</span></span><p><strong>Not safe yet. Don't format.</strong> The copy is good, but there aren't enough copies. Usually only one hard drive was used. Choose <em>Add a second copy</em> and it turns green once the second copy is verified.</p></li>
-        <li><span><span class="hf-chip" style="--g:#C42F1F;--i:#F3EEE3;--gk:#C42F1F"><svg class="hf-glyph" aria-hidden="true"><use href="#g-bad"/></svg>Red</span></span><p><strong>Don't format.</strong> Something didn't match. The window says which hard drive and which clips. Plug the hard drive back in if it came loose, then re-copy just those clips. The clips that matched stay as they are. If the same hard drive fails again, use another one.</p></li>
+        <li><span><span class="hf-chip" style="--g:#8FD687;--i:#07130A;--gk:#8FD687"><svg class="hf-glyph" aria-hidden="true"><use href="#g-ok"/></svg>Green</span></span><p><strong>Safe.</strong> Every clip is verified on 2 separate hard drives. You can format the card. For a backup or transfer from a hard drive, green may say <em>Original + 1 copy &mdash; keep the original</em> instead (see below). That one never means format.</p></li>
+        <li><span><span class="hf-chip" style="--g:#E2A43A;--i:#140F05;--gk:#E2A43A"><svg class="hf-glyph" aria-hidden="true"><use href="#g-warn"/></svg>Amber</span></span><p><strong>Not safe yet. Don't format.</strong> The copy is good, but it is one copy short. Usually only one hard drive was used. Choose <em>Add a second copy</em> and it turns green once the second copy is verified.</p></li>
+        <li><span><span class="hf-chip" style="--g:#C42F1F;--i:#F3EEE3;--gk:#C42F1F"><svg class="hf-glyph" aria-hidden="true"><use href="#g-bad"/></svg>Red</span></span><p><strong>Failed. Don't format.</strong> Something didn't match. The window says which hard drive and which clips. Plug the hard drive back in if it came loose, then re-copy just those clips. The clips that matched stay as they are. If the same hard drive fails again, use another one.</p></li>
         <li><span><span class="hf-chip" style="--g:#A9A396;--i:#100F0D;--gk:#A9A396"><svg class="hf-glyph" aria-hidden="true"><use href="#g-off"/></svg>Grey</span></span><p><strong>Interrupted. Don't format.</strong> The copy stopped before the end, for example the Mac lost power. Open Handoff with the card and hard drives plugged in and choose <em>Resume</em>. It keeps what was already verified and carries on.</p></li>
       </ul>
       <p>Only green means the card is safe to format. Every colour also shows a symbol and a word, so you never have to judge by colour alone.</p>
@@ -158,6 +160,8 @@ body.legal-page .poster { height: auto; }
         <li>You can change the number of copies from 1 to 5 in Settings (the gear, top right). Set it once per production.</li>
         <li>Pick hard drives that are really separate. Two folders on the same hard drive count as one copy.</li>
       </ul>
+      <h3>Backing up a hard drive: original + 1 copy</h3>
+      <p>For a <strong>Backup</strong> or <strong>Transfer</strong> from a hard drive, the original can count as one of the copies, but only when Handoff confirms it is a hard drive. A card never counts as a copy. With the original plus one verified copy, the window turns green and says <em>Original + 1 copy &mdash; keep the original</em>. It never tells you to format. Keep the original until your production has the copies it needs.</p>
 
       <h2 id="phone">Pairing a phone</h2>
       <ul>
@@ -165,6 +169,7 @@ body.legal-page .poster { height: auto; }
         <li>On your iPhone, open the free Handoff app and scan the code. You can also type the code instead.</li>
         <li>The code works for 5 minutes. If it runs out, make a new one.</li>
         <li>Add as many phones as you like. Every phone is free, and phones can watch but never change a copy.</li>
+        <li>The iPhone app will be free on the App Store when Handoff launches. It is waiting on Apple's review now.</li>
         <li>Android is coming, with alerts.</li>
       </ul>
 
@@ -174,10 +179,20 @@ body.legal-page .poster { height: auto; }
         <li>Check the phone has a connection. The Mac copies offline, but alerts need the internet to reach your phone.</li>
         <li>Still nothing? Remove the phone in <strong>Crew</strong> on the Mac, then pair it again.</li>
       </ul>
-      <p>When it works, your phone buzzes the moment a card turns green or red.</p>
+      <p>When it works, your phone buzzes the moment a card turns green or red, and shows a live card on the lock screen while a card copies.</p>
+      <p>Each person picks what their phone is told: safe, failed, not safe yet, interrupted, and the lock-screen card. Change it in the iPhone app's settings, or on the Mac in <strong>Crew</strong>.</p>
+
+      <h2 id="share">Share links</h2>
+      <p>A share link is a read-only web page for a producer, client or insurer. It shows the card's result, clip count and each hard drive's check, and nothing else: no footage and no file names.</p>
+      <ul>
+        <li>Make one from a finished card with <em>Share with crew</em>, or from History.</li>
+        <li>Choose how long it works: 1, 7 or 30 days.</li>
+        <li>To stop a link early, go to <strong>Crew</strong>, find it under Share links and choose <strong>Revoke</strong>. It stops opening at once.</li>
+        <li>The page is a record of what was checked at that time. It doesn't update live.</li>
+      </ul>
 
       <h2 id="new-computer">Moving to a new computer</h2>
-      <p>One subscription covers one computer. To move it:</p>
+      <p>One subscription will cover one computer. To move it:</p>
       <ol class="hf-sup-steps">
         <li>Open Handoff on the new computer and choose <em>I already subscribed</em>.</li>
         <li>Enter your email. We email you a 6-digit code.</li>
@@ -187,7 +202,7 @@ body.legal-page .poster { height: auto; }
 
       <h2 id="subscription">Subscription</h2>
       <ul>
-        <li>$15 a month or $129 a year, with a 14-day free trial and no card needed.</li>
+        <li>At launch: $15 a month or $129 a year, with a 14-day free trial and no card needed. It isn't on sale yet.</li>
         <li>One computer per subscription, with unlimited phones.</li>
         <li>Manage or cancel from the Handoff license card in Settings.</li>
         <li>If your subscription ends, you can't start new cards. Copies in progress, re-copy, History, reports and your footage keep working. Your footage and History stay yours.</li>

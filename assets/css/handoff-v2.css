@@ -178,3 +178,6 @@
 /* support page: its shell has no skip-link style of its own — hide until focused */
 .hf2.legal-page > .skip { position: absolute; left: 16px; top: 8px; z-index: 100; padding: 8px 12px; background: var(--dev-ink, #141412); color: var(--dev-bg, #F4F1EA); font: 500 12px/1 'JetBrains Mono', ui-monospace, monospace; }
 .hf2.legal-page > .skip:not(:focus) { clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; padding: 0; }
+/* Not-launched note on the support page: dashed, like the "Coming" tags */
+.hf2 .hf-sup-launch { margin-top: 20px !important; padding: 14px 18px; border: 1px dashed currentColor; font-size: 15px; line-height: 1.5; }
+.hf2.legal-page h3 { margin-top: 28px; font: 700 17px/1.3 var(--sans, 'Archivo', sans-serif); }
