@@ -1,0 +1,69 @@
+/* =====================================================================
+   Handoff product page (2026-11-15 rework): built like Loadout and Stock Shredder.
+   Loads after ss-page.css + lo-page.css (body.lo gives the same section rhythm and
+   laptop fit) and handoff-v2.css (status tiles, copy-rule ledger, glyphs, crew list).
+   This file only adds the one new piece, .hf-screen: a Mac app recording or screen
+   shown bare, the way Stock Shredder's interface tour shows its screens (no laptop).
+   ===================================================================== */
+
+/* ---------- the Mac screen: square-ish corners, hair edge, soft drop (= .ix-screen) ---------- */
+.hf-screen { position: relative; width: min(100%, 1080px); margin: clamp(24px, 4vh, 40px) auto 0; }
+.hf-screen > img, .hf-screen > video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #141412; box-shadow: 0 30px 60px -28px rgba(20, 20, 18, .45); }
+.tone-dark .hf-screen > img, .tone-dark .hf-screen > video { box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .8); }
+.hf-screen figcaption { margin-top: 14px; }
+
+/* hero: the copy recording sits under the sign-up, like Loadout's phones */
+.hf .hero h1 { text-wrap: balance; }
+.hf-hero-status { margin-top: 16px; }
+.hf .hero .lo-cta { margin-top: 18px; }
+.hf-screen-hero { width: min(100%, 1180px); margin-top: clamp(28px, 4.4vh, 48px); }
+
+/* ---------- while it copies: two real frames, copying then safe ---------- */
+.hf .lo-moment-steps.hf-steps-2 { grid-template-columns: minmax(0, 520px) auto minmax(0, 520px) !important; width: min(100%, 1180px); align-items: start; }
+.hf-steps-2 .hf-screen { width: 100%; margin: 0; }
+.hf-steps-2 .lo-moment-arrow { align-self: center; margin-top: -40px; }
+.hf-moment .lo-scan-note { margin-top: 26px; }
+
+/* ---------- the result: tiles, then two recordings and one still ---------- */
+.hf .hf-trio .hf-screen { width: 100%; margin: 0; }
+.hf .hf-trio figcaption { text-align: left; }
+.hf-results .lo-scan-note { margin-top: 22px; }
+
+/* ---------- copy rule: centred heading like every section, the row below ---------- */
+.hf .hf-rule-row { margin-top: clamp(24px, 4vh, 40px); align-items: start; }
+.hf .hf-rule-row .section-sub:first-child { margin-top: 0; }
+
+/* ---------- crew: heading centred, list | two real phone frames ---------- */
+.hf .hf-crew { margin-top: clamp(28px, 4vh, 44px); width: min(100%, 1080px); }
+.hf .hf-crew-list { margin-top: 0; }
+.hf .hf-phone img { box-shadow: none; }
+.hf .hf-phones .hf-phone img { border-radius: 38px; }
+.hf .hf-phones .phone { width: 100%; margin: 0; }
+.hf .hf-phones .phone-body { padding: 8px; border-radius: 40px; }
+.hf .hf-phones .phone-body img { border-radius: 32px; }
+
+/* spec sheet: three platforms */
+.hf .spec-v.hf-plat { grid-template-columns: repeat(3, minmax(0, 220px)) !important; }
+
+/* no floating button on this page, so no extra room under the footer */
+.hf .poster-foot { padding-bottom: 32px; }
+
+/* ---------- laptop fit (same idea as lo-page.css): heading + screen fit one window ---------- */
+@media (min-width: 900px) and (min-height: 600px) {
+  .hf .hf-found .hf-screen, .hf .hf-history .hf-screen { width: min(100%, 1080px, calc((100svh - var(--sh-h) - var(--lo-pb) - var(--hf-stack, 300px)) * 1.6)); }
+  .hf .hf-found { --hf-stack: 290px; }
+  .hf .hf-history { --hf-stack: 320px; }
+  .hf .hf-steps-2 .hf-screen { width: min(100%, calc((100svh - var(--sh-h) - var(--lo-pb) - 380px) * 1.6)); margin: 0 auto; }
+}
+
+@media (max-width: 900px) {
+  .hf .lo-moment-steps.hf-steps-2 { grid-template-columns: minmax(0, 560px) !important; justify-content: center; }
+  .hf-steps-2 .lo-moment-arrow { margin: 22px 0 18px; transform: rotate(90deg); justify-self: center; }
+}
+@media (max-width: 767px) {
+  body.hf.lo { padding-bottom: 0; }
+  .hf .spec-v.hf-plat { grid-template-columns: 1fr !important; }
+  .hf .hf-phones .phone-body { padding: 6px; border-radius: 30px; }
+  .hf .hf-phones .phone-body img { border-radius: 24px; }
+}
+@media (max-width: 719px) { .hf .poster-foot { padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); } }
