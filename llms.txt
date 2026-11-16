@@ -1,0 +1,34 @@
+# DEADWORK
+
+> DEADWORK STUDIO makes software for filmmakers. Create more. Manage less.
+> Stock Shredder is our released product: a Mac and Windows app that turns raw video footage into stock-ready clips.
+
+## Stock Shredder
+
+- [Stock Shredder](https://deadworkstudio.com/products/stock-shredder/): turn raw footage into stock-ready clips. Download, pricing, FAQ.
+- What it does: point it at a folder of raw footage. It finds the usable moments and trims them, sets aside broken, empty and too-shaky clips, flags logos, HDR, wrong frame rates and footage under 2K, applies looks for ARRI, DJI, RED and Sony or your own LUT, stabilizes, removes grain, and exports ProRes up to 8K (graded, log, or both in one pass). Every clip gets a name, its own folder and copy-paste keywords for stock sites.
+- You review: approve, deny and trim each clip from the keyboard. Studio plan users can also approve from the iPhone or Android Remote app.
+- Measured speed: 1,000 graded 4K ProRes clips shredded and exported in 3 hours 1 minute on a MacBook Pro M3 Pro (review time not included). About 33 hours by hand at 2 minutes per clip.
+- Platforms: macOS (Intel and Apple Silicon) and Windows (Microsoft Store). Remote app for iPhone and Android.
+- Formats: MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS and more. Blackmagic RAW natively. RED R3D with REDCINE-X Pro installed. ARRIRAW with ARRI's free ART CMD. CinemaDNG on macOS.
+- Not supported yet: Canon Cinema RAW Light, Nikon N-RAW. It does not upload to stock sites; you upload and paste the keywords yourself.
+- Privacy: videos stay on your computer. A few small still frames per shot go to an outside naming service so clips get names and keywords.
+- Pricing (USD, per month): Starter $29 (250 clips), Creator $69 (600 clips), Pro $129 (1,200 clips, keywords), Studio $199 (2,000 clips, keywords, approve from phone). 6 and 12 month terms save 10% and 15%.
+- Free trial: 100 free clips to use within 7 days, keywords included, for trials started before December 31, 2026. Card saved to verify, never charged for the trial.
+- One computer per subscription.
+
+## Guides
+
+- [How to Turn Raw Footage Into Stock Clips](https://deadworkstudio.com/guides/raw-footage-to-stock-clips/): every step from card dump to upload-ready clip, by hand and with Stock Shredder.
+
+## In development (not available yet, waitlist only)
+
+- [Loadout](https://deadworkstudio.com/products/loadout/): iPhone gear check for film crews.
+- [Handoff](https://deadworkstudio.com/products/handoff/): camera card copies verified file by file.
+- [Set Control](https://deadworkstudio.com/products/set-control/): call sheets that show who confirmed.
+- [Scene Lock](https://deadworkstudio.com/products/scene-lock/): storyboards, shot lists and blocking.
+- [Sound Driver](https://deadworkstudio.com/products/sound-driver/): sound for your edit from our own library.
+
+## Contact
+
+- deadworkstudio@gmail.com
