@@ -108,7 +108,7 @@ main > section.hf-tour-sec { padding-bottom: clamp(48px, 7vh, 72px); }
 .hf [data-hf-states] > .is-on { opacity: 1; }
 .hf .hf-media-phones { display: flex; justify-content: center; align-items: center; gap: clamp(16px, 3vw, 40px); padding: 6% 4% 3%; background: #0E0E0D; }
 .hf .hf-media-phones .hf-ph { width: min(26%, 210px); }
-.hf .hf-media-phones .hf-ph > img { box-shadow: 0 0 0 5px #1b1b1d, 0 0 0 6px #3a3a3d; }
+.hf .hf-media-phones .hf-ph > img, .hf .hf-media-phones .hf-ph > video { box-shadow: 0 0 0 5px #1b1b1d, 0 0 0 6px #3a3a3d; }
 .hf .hf-media-phones figcaption { margin-top: 14px; color: #A9A499; }
 .hf .hf-say-h { font: 400 clamp(28px, 2.6vw, 40px)/1 var(--hf-display); text-transform: uppercase; color: var(--ink); text-wrap: balance; }
 .hf .hf-say p { margin-top: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-2); }

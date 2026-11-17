@@ -42,6 +42,21 @@
     }, { threshold: 0.25 }).observe(duo);
   })();
 
+  // ---- team section: real iPhone recordings. The file loads only when the phone comes into view, plays
+  // while on screen and pauses off it; with reduced motion it never loads and the poster shows the result.
+  [].forEach.call(document.querySelectorAll('video[data-hf-loop]'), function (v) {
+    if (reduce) { if (v.getAttribute('data-poster-still')) v.setAttribute('poster', v.getAttribute('data-poster-still')); return; }
+    if (!hasIO) return;
+    var loaded = false;
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) { pause(v); return; }
+        if (!loaded) { loaded = true; var s = document.createElement('source'); s.src = v.getAttribute('data-hf-loop'); s.type = 'video/mp4'; v.appendChild(s); v.load(); }
+        play(v);
+      });
+    }, { threshold: 0.25 }).observe(v);
+  });
+
   // ---- the tour: tabs (click, tap, arrow keys), plus an auto tour until the first interaction ----
   (function () {
     var tour = document.querySelector('[data-hf-tour]'); if (!tour) return;
