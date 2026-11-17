@@ -8,8 +8,12 @@
 <!-- Short share link for the SHRED trial (docs/superpowers/specs/2026-10-26-shred-trial-design.md,
      §6.1): deadworkstudio.com/stock-shredder/?code=SHRED redirects straight to the real product
      page's pricing section with the query string (and the code in it) carried along. -->
+<!-- 2026-11-17: someone who just types deadworkstudio.com/stock-shredder should land at the TOP of
+     the product page, not scrolled down to the trial box. Only a link that carries a code
+     (?code=SHRED) jumps to #trial; everything else opens at the top. -->
 <script>
-  location.replace('../products/stock-shredder/' + location.search + '#trial');
+  var hasCode = /[?&]code=/i.test(location.search);
+  location.replace('../products/stock-shredder/' + location.search + (hasCode ? '#trial' : ''));
 </script>
 </head>
 <body>
