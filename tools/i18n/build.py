@@ -30,7 +30,7 @@ HERE = os.path.dirname(__file__)
 SITE = 'https://deadworkstudio.com'
 
 PAGES = ['home/', 'studio/', 'download/mac/', 'download/windows/'] + [
-    f'products/{p}/' for p in ('stock-shredder', 'handoff', 'loadout', 'scene-lock', 'set-control', 'sound-driver')]
+    f'products/{p}/' for p in ('stock-shredder', 'handoff', 'loadout', 'scene-lock', 'set-control', 'sound-driver')] + ['products/handoff/support/']
 
 # (folder, hreflang / html lang, short code shown in the bar, name in its own language)
 LANGS = [
@@ -43,7 +43,7 @@ LANGS = [
     ('ja', 'ja', '日本語', '日本語'),
 ]
 OG_LOCALE = {'en': 'en_US', 'es': 'es_ES', 'fr': 'fr_FR', 'de': 'de_DE', 'it': 'it_IT', 'zh': 'zh_CN', 'ja': 'ja_JP'}
-ASSET_V = '20261115f'
+ASSET_V = '20261116b'
 
 HEAD_RE = re.compile(r'\n?<!-- i18n:head -->.*?<!-- /i18n:head -->', re.S)
 PICK_RE = re.compile(r'\n?\s*<!-- i18n:picker -->.*?<!-- /i18n:picker -->', re.S)
