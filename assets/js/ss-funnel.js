@@ -5,7 +5,11 @@
 // resets every day (see /legal/privacy/). Skipped for Global Privacy Control / Do Not Track, and
 // on local test servers.
 // Tag links so apps that hide the referrer still count: ?ref=instagram (optional &utm_campaign=reel-1).
-// Daniel's own devices: open any page once with ?internal=1 and they stop counting (?internal=0 undoes it).
+// Team devices: open any page once with ?internal=1 and that browser stops counting (?internal=0
+// undoes it). A short note confirms it, and the flag is taken out of the address bar so a copied
+// link never carries it to a customer. The server also skips other browsers on the same internet
+// connection for 7 days (Safari vs Chrome, the Instagram in-app browser) and removes this browser's
+// visits from today and yesterday (worker/src/teamDevices.ts).
 // Multi-day credit: the browser itself remembers its last visit from outside the site (the source
 // tag or the referring SITE, never the full address, plus when) in localStorage under dw-touch, for
 // 30 days. It never leaves the browser except inside a checkout request (checkout.js), so an
@@ -14,14 +18,37 @@
 (function () {
   try {
     if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return;
-    if (navigator.globalPrivacyControl === true || navigator.doNotTrack === '1') return;
     var q = new URLSearchParams(location.search);
     var internal = false;
+    var flag = q.get('internal');
     try {
-      if (q.get('internal') === '1') localStorage.setItem('dw-internal', '1');
-      if (q.get('internal') === '0') localStorage.removeItem('dw-internal');
+      if (flag === '1') localStorage.setItem('dw-internal', '1');
+      if (flag === '0') localStorage.removeItem('dw-internal');
       internal = localStorage.getItem('dw-internal') === '1';
     } catch (e) {}
+    if (flag === '1' || flag === '0') {
+      if (flag === '1') internal = true; // counts as team even where the browser refuses storage
+      try {
+        q.delete('internal');
+        var rest = q.toString();
+        history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+      } catch (e) {}
+      var note = function () {
+        try {
+          var d = document.createElement('div');
+          d.setAttribute('role', 'status');
+          d.textContent = flag === '1'
+            ? 'This browser is set as DEADWORK team. Your visits no longer count in the site numbers.'
+            : 'This browser counts as a normal visitor again.';
+          d.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:2147483647;max-width:calc(100% - 32px);box-sizing:border-box;padding:12px 18px;border-radius:10px;background:#111;color:#fff;font:500 14px/1.4 -apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35);text-align:center';
+          document.body.appendChild(d);
+          setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 7000);
+        } catch (e) {}
+      };
+      if (document.body) note(); else document.addEventListener('DOMContentLoaded', note);
+    }
+    // GPC / Do Not Track browsers send nothing at all (the team note above still shows).
+    if (navigator.globalPrivacyControl === true || navigator.doNotTrack === '1') return;
     var tag = q.get('ref') || q.get('utm_source') || q.get('src') || '';
     var campaign = q.get('utm_campaign') || q.get('campaign') || '';
     try {
@@ -41,6 +68,8 @@
     var body = JSON.stringify({
       p: location.pathname,
       i: internal ? 1 : 0,
+      n: flag === '1' ? 1 : 0,
+      x: flag === '0' ? 1 : 0,
       r: (document.referrer || '').slice(0, 300),
       s: tag.slice(0, 40),
       c: campaign.slice(0, 60)
