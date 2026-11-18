@@ -83,6 +83,26 @@ Benchmark: a founder at ~$18k/month from SEO runs ~200 posts, 30 landing pages, 
 - Languages: the site is in 7. Translate an article only after it proves itself in English.
 - Everything stays hidden from the site menus. Sitemap + Search Console + Bing only.
 
+## Landing pages (Stock Shredder, Nov 18)
+
+Same build as the guides (seo/articles -> guides/<slug>/), same hidden rule, eyebrow "Stock Shredder · For ...".
+One per week next to the weekly article. Each goes live only on Daniel's "put it live".
+No paid keyword tool, so order is by buyer fit, who we already email (drone + Sony shooters), and how much the page
+can say that article 2 doesn't already say (avoid near-duplicate pages).
+
+| # | Type | Target search | Page | Status |
+|---|---|---|---|---|
+| L1 | Stock site | prepare video for adobe stock / adobe stock video contributor | adobe-stock-video-workflow | Draft (Nov 30 slot) |
+| L2 | Camera | sell drone footage on stock sites / dji drone footage stock / fpv stock footage | drone-footage-for-stock | Draft (Dec 7 slot) |
+| L3 | Camera | sony fx3 stock footage workflow / s-log3 stock footage | sony-slog3-stock-footage | Draft (Dec 14 slot) |
+| L4 | Competitor | xpiks alternative (video) | Merge with article #3 rather than a second page | Not started |
+| L5 | Stock site | shutterstock video contributor upload | Needs its own angle (keywords, editorial, 48 fps) to avoid duplicating article 2 | Not started |
+| L6 | Stock site | pond5 video upload / sell footage on pond5 | Pond5 pricing you set, file names, 8K | Not started |
+| L7 | Camera | blackmagic raw stock footage / braw stock | BRAW read natively | Not started |
+| L8 | Camera | red r3d stock footage | Needs REDCINE-X Pro installed, say so | Not started |
+| L9 | Competitor | premiere pro batch export clips for stock | Fair compare, overlaps article #4 | Not started |
+| L10 | Stock site | storyblocks / getty istock video contributor | Check each site's own rules first | Not started |
+
 ## Later (separate project, not now)
 
 ChatGPT and Claude app directories (one DEADWORK connector for all products, starting with account
