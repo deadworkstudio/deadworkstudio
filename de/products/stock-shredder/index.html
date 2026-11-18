@@ -392,14 +392,14 @@
       <p class="fit-fine" data-fit-fine></p>
     </div>
     <!-- Billing selector sits right above the plan cards (Daniel 2026-11-15: people should see the 6/12-month
-         lock-in next to the prices, not above the trial box). 12 months is pre-selected. -->
+         lock-in next to the prices, not above the trial box). Monthly is pre-selected since 2026-11-18 (Daniel: "Monthly first"); 12 months stays one tap away as Best price. -->
     <p class="mono term-eyebrow">Binden und sparen</p>
     <div class="term" role="radiogroup" aria-label="Abrechnung" data-term>
-      <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="month" data-term-pct="0" data-term-months="0"><span class="term-name">Monatlich</span></button>
+      <button type="button" class="term-opt is-active" role="radio" aria-checked="true" tabindex="0" data-term-opt="month" data-term-pct="0" data-term-months="0"><span class="term-name">Monatlich</span></button>
       <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m6" data-term-pct="10" data-term-months="6"><span class="term-name">6 Monate</span><span class="term-save">10 % sparen</span></button>
-      <button type="button" class="term-opt is-active" role="radio" aria-checked="true" tabindex="0" data-term-opt="m12" data-term-pct="15" data-term-months="12"><span class="term-best">Bester Preis</span><span class="term-name">12 Monate</span><span class="term-save">15 % sparen</span></button>
+      <button type="button" class="term-opt" role="radio" aria-checked="false" tabindex="-1" data-term-opt="m12" data-term-pct="15" data-term-months="12"><span class="term-best">Bester Preis</span><span class="term-name">12 Monate</span><span class="term-save">15 % sparen</span></button>
     </div>
-    <p class="term-note" data-term-note aria-live="polite">12 Monate monatlich abgerechnet, danach monatlich. Keine vorzeitige Kündigung.</p>
+    <p class="term-note" data-term-note aria-live="polite">Monatlich abgerechnet. Jederzeit kündbar.</p>
     <div class="pricing-grid" data-pricing-grid>
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>

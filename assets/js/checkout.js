@@ -93,7 +93,7 @@
 
   var termGroup = document.querySelector('[data-term]');
   var termNote = document.querySelector('[data-term-note]');
-  // Starts on whichever option the markup marks active (12 months since 2026-11-15), so the page's
+  // Starts on whichever option the markup marks active (Monthly since 2026-11-18; was 12 months from 2026-11-15), so the page's
   // default lives in one place.
   var activeTerm = termGroup && termGroup.querySelector('[data-term-opt].is-active');
   var currentInterval = (activeTerm && activeTerm.getAttribute('data-term-opt')) || 'month'; // one of month | m6 | m12
