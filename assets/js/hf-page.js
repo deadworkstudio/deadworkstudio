@@ -26,14 +26,28 @@
       if (reduce && v.getAttribute('data-poster-still')) v.setAttribute('poster', v.getAttribute('data-poster-still'));
     });
     var inView = false;
+    // Both files share one timeline (frame N of each shows the same number), so the phone is held to
+    // the Mac's time: a big gap is a seek, a small one is closed by nudging the phone's playback speed.
+    // Checked every frame while playing, so the two stay within a frame or two of each other.
     function sync() {
-      if (!(phone.readyState >= 1)) return;
-      var d = Math.abs(phone.currentTime - mac.currentTime);
-      if (d > 0.2 && d < (phone.duration || 99) - 0.2) { try { phone.currentTime = mac.currentTime; } catch (e) {} }
+      if (!(phone.readyState >= 1) || !(mac.readyState >= 1)) return;
+      var dur = mac.duration || phone.duration || 0;
+      var d = phone.currentTime - mac.currentTime;
+      if (dur && Math.abs(d) > dur / 2) d -= d > 0 ? dur : -dur; // one of them has just looped
+      if (Math.abs(d) > 0.25) { try { phone.currentTime = mac.currentTime; } catch (e) {} phone.playbackRate = 1; }
+      else if (Math.abs(d) > 0.015) phone.playbackRate = Math.max(0.85, Math.min(1.15, 1 - d * 3));
+      else if (phone.playbackRate !== 1) phone.playbackRate = 1;
     }
-    mac.addEventListener('timeupdate', sync);
+    var ticking = false;
+    function tick() {
+      if (mac.paused || mac.ended) { ticking = false; return; }
+      sync();
+      if (mac.requestVideoFrameCallback) mac.requestVideoFrameCallback(tick); else requestAnimationFrame(tick);
+    }
+    function startTick() { if (!ticking) { ticking = true; tick(); } }
     mac.addEventListener('seeked', sync);
-    mac.addEventListener('playing', function () { if (inView) play(phone); sync(); });
+    mac.addEventListener('playing', function () { if (inView) play(phone); sync(); startTick(); });
+    phone.addEventListener('playing', sync);
     mac.addEventListener('pause', function () { pause(phone); });
     if (reduce || !hasIO) return;
     new IntersectionObserver(function (es) {
