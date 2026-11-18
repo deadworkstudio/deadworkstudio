@@ -731,3 +731,10 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
   /* on a phone the feature is the call to action; the scroll cue would collide with it */
   .hero-cue { display: none; }
 }
+
+/* Footer legal + contact line (site audit 2026-11-18): Contact · Terms · Privacy under the tagline */
+.foot-legal a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.foot-legal a:hover, .foot-legal a:focus-visible { color: var(--bone); }
+.screen--tools .foot-legal a:hover, .screen--tools .foot-legal a:focus-visible { color: var(--ink-text); }
+.foot-legal .sep { margin: 0 .6em; }
+@media (max-width: 767px) { .foot-legal a { display: inline-block; padding: 12px 2px; margin: -12px 0; } }
