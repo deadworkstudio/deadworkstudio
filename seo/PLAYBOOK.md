@@ -99,7 +99,7 @@ Benchmark: a founder at ~$18k/month from SEO runs ~200 posts, 30 landing pages, 
 ## Landing pages (Stock Shredder, Nov 18)
 
 Same build as the guides (seo/articles -> guides/<slug>/), same hidden rule, eyebrow "Stock Shredder · For ...".
-One per week next to the weekly article. Each goes live only on Daniel's "put it live".
+Cadence (Daniel, Nov 18): 2 new pages a week, one article plus one landing page. Each goes live only on Daniel's "put it live".
 No paid keyword tool, so order is by buyer fit, who we already email (drone + Sony shooters), and how much the page
 can say that article 2 doesn't already say (avoid near-duplicate pages).
 
