@@ -21,7 +21,7 @@ Stock Shredder first. Loadout and Set Control get waitlist pages later.
 - A real workflow comparison: the by-hand way vs the DEADWORK way, step by step.
 - Measured numbers only. Stock Shredder: the spec sheet benchmark (100 clips 16 min vs 3+ hrs,
   500 = 1 hr 19 min vs 16+ hrs, 1,000 = 3 hr 1 min vs 33+ hrs, review not included).
-- An honest "where it falls short" section and a "when the other way makes sense" section.
+- A "What to know before you start." section (Daniel, Nov 17: not "where it falls short"): intro "Stock Shredder handles the repetitive parts. A few things stay with you." then 4 bullets that each end on a plus (you review, you pick what sells, you upload, format list). No "computer only" / "needs a connection" bullets. Plus a "when the other way makes sense" section.
 - At least 2 real app screenshots from `assets/img/products/<product>/`.
 - Sources linked for any outside rule (stock site specs etc.), with the month checked.
 - The tracked CTA (added by the build): `?ref=guide&utm_campaign=<slug>`.
@@ -50,6 +50,19 @@ Stock Shredder first. Loadout and Set Control get waitlist pages later.
 
 Also recommended: verify deadworkstudio.com in Google Search Console (DNS record on Cloudflare)
 to see real search terms, impressions and clicks per article.
+
+## Angle (Daniel, Nov 17)
+
+Write for people searching because stock prep takes too long: "how to save time", "stock footage taking forever",
+"edit stock footage faster". Lead every article with the time problem and the hours saved. Pain-first articles go
+ahead of spec/how-to topics in the queue below.
+
+| # | Product | Target search | Article |
+|---|---|---|---|
+| P1 | SS | how to edit stock footage faster / speed up stock footage workflow | How to Prepare Stock Footage Faster (1,000 Clips in 3 Hours) |
+| P2 | SS | stock footage takes too long / why is stock footage so slow | Why Stock Footage Prep Takes So Long, and How to Cut It Down |
+| P3 | SS | batch process stock footage / process hundreds of clips at once | How to Process Hundreds of Stock Clips at Once |
+| P4 | SS | how many stock clips per week / stock footage side income time | How to Upload More Stock Clips Each Week Without Losing Your Weekends |
 
 ## Keyword list (priority order)
 
