@@ -1010,7 +1010,13 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .lockflow.is-anim li { opacity: .45; }
 .lockflow.is-anim li.is-on { opacity: 1; color: var(--ink); }
 .lockflow li.is-on .lockflow-n { background: #3D6E39; color: #fff; box-shadow: none; }
-.remote-stage { display: flex; justify-content: center; align-items: flex-end; gap: clamp(16px, 4vw, 44px); margin-top: 36px; }
+.remote-stage { --gap: clamp(16px, 4vw, 44px); display: flex; justify-content: center; align-items: flex-end; gap: var(--gap); margin-top: 36px; }
+/* Phone alone, centered, with the watch tucked behind it; when the phone locks they slide apart. */
+.remote-stage .phone { position: relative; z-index: 2; transition: transform .9s cubic-bezier(.65,0,.25,1); }
+.lock-watch { position: relative; z-index: 1; transition: transform .9s cubic-bezier(.65,0,.25,1), opacity .6s ease; }
+.remote-stage.is-anim .phone { transform: translateX(var(--phone-shift, 0px)); }
+.remote-stage.is-anim .lock-watch { transform: translateX(var(--watch-shift, 0px)) scale(.9); opacity: 0; }
+.remote-stage.is-anim.is-split .phone, .remote-stage.is-anim.is-split .lock-watch { transform: none; opacity: 1; }
 .remote-stage .phone { margin: 0; flex: none; }
 .remote-stage .phone-screen { position: relative; }
 .remote-lock-note { max-width: 46ch; margin: 22px auto 0; text-align: center; font-size: 15px; color: var(--ink-3); }
@@ -1027,24 +1033,20 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .la-bar { height: 1.6cqw; min-height: 4px; margin: 3.4cqw 0; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
 .la-bar > span { display: block; height: 100%; width: 100%; border-radius: inherit; background: #8FD687; transform-origin: left center; transform: scaleX(.3); will-change: transform; }
 .la-foot { font-size: 4.4cqw; color: rgba(255,255,255,.6); font-variant-numeric: tabular-nums; }
-.roll { display: inline-block; position: relative; overflow: hidden; vertical-align: bottom; height: 1.2em; line-height: 1.2em; }
-.roll > span { display: block; text-align: right; }
-.roll > span.in { position: absolute; right: 0; top: 0; transform: translateY(100%); }
-.roll.go > span { transition: transform .2s cubic-bezier(.2,.8,.2,1); }
-.roll.go > span.out { transform: translateY(-100%); }
-.roll.go > span.in { transform: none; }
-[data-lockrow].is-anim .la-card, [data-lockrow].is-anim .wa-card { opacity: 0; transform: translateY(14px) scale(.97); }
-[data-lockrow].is-s2 .la-card, [data-lockrow].is-s3 .wa-card { opacity: 1; transform: none; }
+[data-lockrow].is-anim .la-card, [data-lockrow].is-anim .wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+[data-lockrow].is-s2 .la-card, [data-lockrow].is-s3 .wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
 .lock-watch { margin: 0; flex: none; width: min(150px, 30vw); }
 .watch-body { position: relative; box-sizing: border-box; padding: 9px; border-radius: 38px; background: #0d0d0c; box-shadow: inset 0 0 0 2px #2a2a27, 0 30px 50px -26px rgba(20,20,18,.55); }
 .watch-body::after { content: ''; position: absolute; right: -5px; top: 30%; width: 6px; height: 18%; border-radius: 3px; background: #2a2a27; }
-.watch-screen { aspect-ratio: 396 / 484; border-radius: 30px; background: #000; color: #fff; overflow: hidden; container-type: inline-size; font-family: -apple-system, system-ui, 'SF Pro Text', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; padding: 9% 7% 7%; box-sizing: border-box; }
+.watch-screen { aspect-ratio: 396 / 484; border-radius: 30px; color: #fff; overflow: hidden; container-type: inline-size; font-family: -apple-system, system-ui, 'SF Pro Text', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; padding: 10% 9% 9%; box-sizing: border-box; background: radial-gradient(130% 90% at 50% 0%, #1f2a1d 0%, #10120f 55%, #050505 100%); }
 /* padding in % (not cqw): cqw on the container itself resolves against an outer container. */
-.watch-time { text-align: right; font-size: 10cqw; font-weight: 600; }
-.wa-card { margin-top: auto; padding: 7cqw 7cqw 6cqw; border-radius: 13cqw; background: #1c1c1e; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
-.wa-top svg { width: 11cqw; height: 11cqw; color: #8FD687; flex: none; }
-.wa-pct { font-size: 15cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
-.wa-card .la-bar { height: 3.4cqw; margin: 4cqw 0; }
-.wa-foot { font-size: 7.6cqw; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.wa-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.lock-watch img.wa-logo { display: block; height: 11cqw; width: auto; }
+.watch-time { font-size: 10cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
+.wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+.wa-top { justify-content: flex-start; }
+.wa-pct { line-height: 1; letter-spacing: -.02em; font-size: 30cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
+.wa-card .la-bar { height: 4cqw; margin: 6cqw 0 5cqw; }
+.wa-foot { font-size: 8.4cqw; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
 @media (max-width: 520px) { .remote-stage .phone { width: 58vw; } .lock-watch { width: 30vw; } .lockflow { gap: 6px 16px; font-size: 13.5px; } }
-@media (prefers-reduced-motion: reduce) { .roll.go > span { transition: none; } }
+@media (prefers-reduced-motion: reduce) { 
