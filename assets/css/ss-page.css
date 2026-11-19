@@ -1078,3 +1078,8 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .lock-watch img.wd-logo { display: block; width: 74cqw; height: auto; }
 .wd-pct { font: 400 36cqw/.95 Anton, 'Archivo', sans-serif; letter-spacing: 0; color: #fff; margin: 3cqw 0 1cqw; font-variant-numeric: tabular-nums; }
 .wd-meta { font: 500 7cqw/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.78); white-space: nowrap; }
+/* Smooth slide: screen moves as one layer with the frame, and a thin bezel lip hides any edge gap */
+.remote-stage .phone-body { transform: translateZ(0); }
+.remote-stage .phone-screen { transform: translateZ(0); -webkit-mask-image: -webkit-radial-gradient(white, black); isolation: isolate; }
+.remote-stage.is-locked .phone-screen { background: #0d0d0c; }
+.remote-stage .phone-body::after { content: ''; position: absolute; inset: 11px; border-radius: 38px; box-shadow: 0 0 0 1px #0d0d0c, inset 0 0 0 1.5px #0d0d0c; pointer-events: none; z-index: 4; }
