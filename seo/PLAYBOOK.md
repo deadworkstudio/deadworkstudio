@@ -105,7 +105,7 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 
 | # | Type | Target search | Page | Status |
 |---|---|---|---|---|
-| L1 | Stock site | prepare video for adobe stock / adobe stock video contributor | adobe-stock-video-workflow | Draft (Nov 30 slot) |
+| L1 | Stock site | prepare video for adobe stock / adobe stock video contributor | adobe-stock-video-workflow | LIVE Nov 18 |
 | L2 | Camera | sell drone footage on stock sites / dji drone footage stock / fpv stock footage | drone-footage-for-stock | Draft (Dec 7 slot) |
 | L3 | Camera | sony fx3 stock footage workflow / s-log3 stock footage | sony-slog3-stock-footage | Draft (Dec 14 slot) |
 | L4 | Competitor | xpiks alternative (video) | Merge with article #3 rather than a second page | Not started |

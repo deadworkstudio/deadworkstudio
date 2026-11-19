@@ -100,7 +100,7 @@
     <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/loadout.png" alt="Loadout" width="1366" height="466" /></div>
     <h1>機材を二度と置き忘れない。</h1>
     <p class="lo-hero-tag">すべての機材を確認。出発する前に。</p>
-    <p class="mono lo-hero-for">映像クルー、ビデオグラファー、フォトグラファーのために</p>
+    <p class="mono lo-hero-for">映像制作チーム、ビデオグラファー、フォトグラファーのために</p>
     <p class="section-sub lo-hero-sub">詰め終わったケースの上でスマートフォンを動かすだけ。Loadout が見えたものにチェックを付け、足りないものを一覧にします。</p>
     <div class="downloads lo-cta" id="top-cta" data-lo-cta>
       <!-- TODO(Daniel): when Apple approves Loadout 1.0, replace href="/ja/products/loadout/#pricing" on BOTH [data-appstore] links
@@ -363,7 +363,7 @@
       <div class="spec-row">
         <p class="spec-k mono">プラットフォーム</p>
         <div class="spec-v lo-plat">
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />App Store</span></div>
+          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />App Store<span class="lo-cta-wait">（近日公開）</span></span></div>
           <div class="spec-plat"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />近日公開</span></div>
         </div>
       </div>
@@ -443,7 +443,7 @@
        or submits, and the section stays hidden. Audience: film crews and photographers only. -->
   <section class="earn lo-earn tone-dark" id="earn" hidden aria-labelledby="earn-title">
     <h2 class="section-title section-head head-dw">クリップを獲得</h2>
-    <p class="section-title" id="earn-title">ほかの映像クルーやフォトグラファーに Loadout を紹介してください。</p>
+    <p class="section-title" id="earn-title">ほかの映像制作チームやフォトグラファーに Loadout を紹介してください。</p>
     <ul class="earn-grid">
       <li><span class="earn-amt" data-lo-reward="review">特典は未定</span><span>サイトに率直なレビューを書く</span></li>
       <li><span class="earn-amt" data-lo-reward="social">特典は未定</span><span>Instagram や TikTok で紹介する</span></li>
@@ -537,12 +537,12 @@
         <span class="tool-meta"><span class="tool-name">Stock Shredder</span><span class="tool-status"><span class="mono">ポストプロダクション &middot; <span class="tool-live"><span class="badge-icon" aria-hidden="true"></span>公開中</span></span></span></span> </a></li>
     </ul>
   </section>
-<!-- Floating "14 days free" button, bottom left: same look and behaviour as Stock Shredder's "100 free clips" one
+<!-- Floating button ("Get notified" while data-cta="wait", "14 days free" once live; Daniel 2026-11-18), bottom left: same look and behaviour as Stock Shredder's "100 free clips" one
      (.ss-sticky in ss-page.css; lo-page.js shows it once the top signup has scrolled away, hides it while a signup
      form is on screen). Follows <main data-cta>: "wait" scrolls to the top Get notified form,
      "live" is an App Store link like the other [data-appstore] links. It replaces the old phone-only bar below. -->
 <div class="ss-sticky lo-float" data-lo-float aria-hidden="true">
-  <a class="pill pill-solid lo-cta-live" href="/ja/products/loadout/#pricing" data-appstore data-event="loadout_float_cta_click" tabindex="-1">14日間無料</a> <a class="pill pill-solid lo-cta-wait" href="/ja/products/loadout/#top-cta" data-event="loadout_float_cta_click" data-lo-float-jump tabindex="-1">14日間無料</a>
+  <a class="pill pill-solid lo-cta-live" href="/ja/products/loadout/#pricing" data-appstore data-event="loadout_float_cta_click" tabindex="-1">14日間無料</a> <a class="pill pill-solid lo-cta-wait" href="/ja/products/loadout/#top-cta" data-event="loadout_float_cta_click" data-lo-float-jump tabindex="-1">通知を受け取る</a>
 </div>
 <div class="lo-sticky" data-lo-sticky hidden>
   <a class="pill pill-solid lo-cta-live" href="/ja/products/loadout/#pricing" data-appstore data-event="loadout_app_download_click">14日間の無料トライアルを開始</a> <a class="pill pill-solid lo-cta-wait" href="/ja/products/loadout/#top-cta">通知を受け取る</a>
@@ -564,6 +564,7 @@
     </div>
     <p class="foot-note">By artists. For artists.</p>
     <p class="foot-copy">2026 DEADWORK STUDIO</p>
+    <p class="foot-legal"><a href="../../../ja/studio/#contact">お問い合わせ</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../../legal/terms/">利用規約</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../../legal/privacy/">プライバシー</a></p>
   
     <!-- i18n:picker --><div class="lang-tab lang-foot" data-lang-picker><button class="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language: 日本語"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5c-2.6-2.7-3.9-5.9-3.9-9.5s1.3-6.8 3.9-9.5z"/></svg><span>日本語</span></button><ul class="lang-menu" hidden><li><a href="/products/loadout/" hreflang="en" lang="en" data-lang="en"><span>English</span><span class="lang-code">EN</span></a></li><li><a href="/es/products/loadout/" hreflang="es" lang="es" data-lang="es"><span>Español</span><span class="lang-code">ES</span></a></li><li><a href="/fr/products/loadout/" hreflang="fr" lang="fr" data-lang="fr"><span>Français</span><span class="lang-code">FR</span></a></li><li><a href="/de/products/loadout/" hreflang="de" lang="de" data-lang="de"><span>Deutsch</span><span class="lang-code">DE</span></a></li><li><a href="/it/products/loadout/" hreflang="it" lang="it" data-lang="it"><span>Italiano</span><span class="lang-code">IT</span></a></li><li><a href="/zh/products/loadout/" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh"><span>简体中文</span><span class="lang-code">中文</span></a></li><li><a href="/ja/products/loadout/" hreflang="ja" lang="ja" data-lang="ja" aria-current="true"><span>日本語</span><span class="lang-code">日本語</span></a></li></ul></div><!-- /i18n:picker -->
   </footer>

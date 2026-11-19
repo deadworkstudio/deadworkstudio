@@ -93,7 +93,7 @@
 
   var termGroup = document.querySelector('[data-term]');
   var termNote = document.querySelector('[data-term-note]');
-  // Starts on whichever option the markup marks active (12 months since 2026-11-15), so the page's
+  // Starts on whichever option the markup marks active (Monthly since 2026-11-18; was 12 months from 2026-11-15), so the page's
   // default lives in one place.
   var activeTerm = termGroup && termGroup.querySelector('[data-term-opt].is-active');
   var currentInterval = (activeTerm && activeTerm.getAttribute('data-term-opt')) || 'month'; // one of month | m6 | m12
@@ -1020,7 +1020,7 @@
         }
         currentOfferCode = data.code;
         try {
-          sessionStorage.setItem('ss-offer', data.code);
+          if (!quiet) sessionStorage.setItem('ss-offer', data.code);
         } catch (err) {
           // Private browsing / storage disabled — the code still works for this one page view,
           // it just won't survive a reload without the query string.
@@ -1047,6 +1047,10 @@
     } catch (err) {
       code = null;
     }
+    // Only a ?code= typed into the link scrolls to the trial box. A code remembered from an
+    // earlier page view in this tab (sessionStorage) still applies, but quietly, so coming back
+    // to this page (home page buttons, the menu) opens at the top. Daniel 2026-11-18.
+    var fromUrl = !!code;
     if (!code) {
       try {
         code = sessionStorage.getItem('ss-offer');
@@ -1054,7 +1058,7 @@
         code = null;
       }
     }
-    if (code) checkOffer(code);
+    if (code) checkOffer(code, !fromUrl);
     else if (Date.now() < DEFAULT_OFFER_ENDS) checkOffer(DEFAULT_OFFER_CODE, true);
   })();
 
