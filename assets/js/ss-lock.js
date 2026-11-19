@@ -35,12 +35,14 @@
   var tpl = row.getAttribute('data-left-tpl') || '%@ left';
   var pctEls = row.querySelectorAll('[data-la-pct]'), fillEls = row.querySelectorAll('[data-la-fill]');
   var leftEls = row.querySelectorAll('[data-la-left]'), doneEls = row.querySelectorAll('[data-la-done]');
+  var edgeEls = row.querySelectorAll('[data-la-edge]');   // watch face D: the screen edge is the progress line
   var last = { pct: -1, done: -1 };
 
   function mmss(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
   function paint(f) {
     var pct = Math.floor(f * 100 + 1e-9), done = Math.floor(f * TOTAL + 1e-9);
     fillEls.forEach(function (el) { el.style.transform = 'scaleX(' + f.toFixed(4) + ')'; });
+    edgeEls.forEach(function (el) { el.style.strokeDasharray = f >= 0.999 ? 'none' : (f * 100).toFixed(2) + ' 100'; el.style.opacity = f > 0.002 ? 1 : 0; });
     if (pct !== last.pct) { last.pct = pct; pctEls.forEach(function (el) { el.textContent = pct + '%'; }); }
     if (done !== last.done) {
       last.done = done;
