@@ -1070,10 +1070,10 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 /* Watch face D, "Edge ring" (Daniel picked 2026-11-19): the clip being shredded behind, the whole
    screen edge is the progress line, Stock Shredder wordmark + big Anton percent centered. */
 .watch-screen.wd { position: relative; padding: 8%; align-items: center; justify-content: center; text-align: center; background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.3) 50%, rgba(0,0,0,.75)), #10120f url('../img/products/stock-shredder/lock-wallpaper.jpg?v=lk3') center 40% / cover no-repeat; }
-.wd-edge { position: absolute; inset: 3cqw; width: calc(100% - 6cqw); height: calc(100% - 6cqw); overflow: visible; }
-.wd-edge rect { fill: none; stroke-width: 2.4; vector-effect: non-scaling-stroke; }
-.wd-edge .wd-track { stroke: rgba(255,255,255,.18); stroke-width: 3px; }
-.wd-edge .wd-fill { stroke: #8FD687; stroke-width: 3px; stroke-linecap: round; stroke-dasharray: 30 100; }
+.wd-edge { position: absolute; inset: 2.5cqw; border-radius: calc(30px - 2.5cqw); padding: 3px; --p: .3;
+  background: conic-gradient(from 0deg, #8FD687 calc(var(--p) * 360deg), rgba(255,255,255,.2) 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; }
 .wd .wa-card.wd-in { position: relative; flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .lock-watch img.wd-logo { display: block; width: 74cqw; height: auto; }
 .wd-pct { font: 400 36cqw/.95 Anton, 'Archivo', sans-serif; letter-spacing: 0; color: #fff; margin: 3cqw 0 1cqw; font-variant-numeric: tabular-nums; }

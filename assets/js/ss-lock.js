@@ -42,7 +42,7 @@
   function paint(f) {
     var pct = Math.floor(f * 100 + 1e-9), done = Math.floor(f * TOTAL + 1e-9);
     fillEls.forEach(function (el) { el.style.transform = 'scaleX(' + f.toFixed(4) + ')'; });
-    edgeEls.forEach(function (el) { el.style.strokeDasharray = f >= 0.999 ? 'none' : (f * 100).toFixed(2) + ' 100'; el.style.opacity = f > 0.002 ? 1 : 0; });
+    edgeEls.forEach(function (el) { el.style.setProperty('--p', f.toFixed(4)); });
     if (pct !== last.pct) { last.pct = pct; pctEls.forEach(function (el) { el.textContent = pct + '%'; }); }
     if (done !== last.done) {
       last.done = done;
