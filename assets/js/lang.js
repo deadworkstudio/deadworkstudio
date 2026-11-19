@@ -58,6 +58,10 @@
       var url = new URL(alts[want], location.href);
       url.search = location.search;
       url.hash = location.hash;
+      // Keep where the visitor came from (Instagram, Google...) for ss-funnel.js on the next page.
+      try {
+        if (document.referrer && new URL(document.referrer).hostname !== location.hostname) sessionStorage.setItem('dw-ref', document.referrer.slice(0, 300));
+      } catch (e) {}
       location.replace(url.toString());
       return;
     }

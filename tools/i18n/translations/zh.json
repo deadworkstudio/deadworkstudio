@@ -1365,7 +1365,8 @@
   "macOS (Intel &amp; Apple Silicon) and Windows. The Remote app is on iPhone (<a href=\"https://apps.apple.com/app/stock-shredder/id6824343460\">App Store</a>) and Android.": "macOS（Intel 和 Apple 芯片）以及 Windows。Remote 应用支持 iPhone（<a href=\"https://apps.apple.com/app/stock-shredder/id6824343460\">App Store</a>）和 Android。",
   "tools designed to eliminate busywork so creatives can stay creative.": "为消除繁琐杂务而设计的工具，让创作者专注创作。",
   "xxHash64": "xxHash64",
-  "you@email.com": "you@email.com"
+  "you@email.com": "you@email.com",
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "打开应用，点击<strong>已经有激活密钥了？</strong>，然后粘贴你的密钥。"
  },
  "script": {
   "/mo": "/月",
@@ -1449,6 +1450,16 @@
   "{monthly} new clips a month + {backlog} on your drives.": "每月 {monthly} 个新片段 + 硬盘里 {backlog} 个。",
   "{monthly} new clips a month.": "每月 {monthly} 个新片段。",
   "{months}-month commitment · No early cancel": "{months} 个月承诺期 · 不可提前取消",
-  "{size} a month": "每月 {size}"
+  "{size} a month": "每月 {size}",
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "打开应用，点击<strong>已经有激活密钥了？</strong>，然后粘贴你的密钥。",
+  "Open the email we just sent you on your computer.": "在电脑上打开我们刚发给你的邮件。",
+  "Download Stock Shredder from it.": "从邮件中下载 Stock Shredder。",
+  "Install Stock Shredder.": "安装 Stock Shredder。",
+  "Drop in a folder of raw footage and start shredding.": "拖入一个原始素材文件夹，开始处理。",
+  "Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.": "你的免费试用到 {date} 或用完 100 个片段为止。除非你选择套餐，否则不会收费。",
+  "That code isn't active, but you can still get 100 free clips below.": "这个代码已失效，但你仍可以在下方领取 100 个免费片段。",
+  "Check your email address. It should look like name@example.com.": "请检查你的邮箱地址，格式应类似 name@example.com。",
+  "100 free clips": "100 个免费片段",
+  "Couldn't send it. Tap Start now anyway to start here.": "发送失败。点按“仍然立即开始”在这里开始。"
  }
 }

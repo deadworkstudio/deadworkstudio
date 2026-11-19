@@ -49,12 +49,25 @@
     }
     // GPC / Do Not Track browsers send nothing at all (the team note above still shows).
     if (navigator.globalPrivacyControl === true || navigator.doNotTrack === '1') return;
+    // Trial signups 2026-11-19: the language redirect (lang.js) and the /stock-shredder/ short link
+    // replace the address, so document.referrer on the page that pings is our own site and an
+    // Instagram visit used to count as Direct. They leave the outside referrer here for one hop.
+    var carried = '';
+    try {
+      carried = sessionStorage.getItem('dw-ref') || '';
+      if (carried) sessionStorage.removeItem('dw-ref');
+    } catch (e) {}
+    var referrer = document.referrer || '';
+    try {
+      var own = !referrer || /(^|\.)deadworkstudio\.com$/.test(new URL(referrer).hostname) || new URL(referrer).hostname === location.hostname;
+      if (own && carried) referrer = carried;
+    } catch (e) {}
     var tag = q.get('ref') || q.get('utm_source') || q.get('src') || '';
     var campaign = q.get('utm_campaign') || q.get('campaign') || '';
     try {
       var refOrigin = '';
       try {
-        var ru = document.referrer ? new URL(document.referrer) : null;
+        var ru = referrer ? new URL(referrer) : null;
         if (ru && !/(^|\.)deadworkstudio\.com$|(^|\.)stockshredder\.workers\.dev$/.test(ru.hostname) && ru.hostname !== location.hostname) refOrigin = ru.protocol + '//' + ru.hostname;
       } catch (e) {}
       if (internal) localStorage.removeItem('dw-touch');
@@ -70,11 +83,30 @@
       i: internal ? 1 : 0,
       n: flag === '1' ? 1 : 0,
       x: flag === '0' ? 1 : 0,
-      r: (document.referrer || '').slice(0, 300),
+      r: referrer.slice(0, 300),
       s: tag.slice(0, 40),
       c: campaign.slice(0, 60)
     });
     if (navigator.sendBeacon) navigator.sendBeacon(url, new Blob([body], { type: 'text/plain' }));
     else fetch(url, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' });
+    // Trial signups 2026-11-19: page steps (button clicks, trial attempts, downloads) on the same
+    // cookie-free beacon, as 'ev:<name>' (no leading slash, so an older Worker drops it). The server keeps only names it knows and
+    // counts each once per person per day (worker/src/siteAnalytics.ts SITE_EVENTS). Same rules as
+    // the visit: nothing for team browsers, GPC/DNT or local test servers (we returned above).
+    if (!internal) {
+      window.dwEvent = function (name) {
+        try {
+          if (!/^[a-z0-9-]{1,40}$/.test(name)) return;
+          var b = JSON.stringify({ p: 'ev:' + name, i: 0, n: 0, x: 0, r: '', s: '', c: '' });
+          if (navigator.sendBeacon) navigator.sendBeacon(url, new Blob([b], { type: 'text/plain' }));
+          else fetch(url, { method: 'POST', body: b, keepalive: true, mode: 'no-cors' });
+        } catch (e) {}
+      };
+      var queued = window.dwQueue || [];
+      window.dwQueue = [];
+      for (var qi = 0; qi < queued.length && qi < 20; qi++) window.dwEvent(queued[qi]);
+    }
   } catch (e) {}
 })();
+// Callers use window.dwEvent && window.dwEvent('name'), so a page without this file (or a team,
+// GPC or local browser) simply sends nothing.
