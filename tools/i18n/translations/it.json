@@ -1459,6 +1459,7 @@
   "Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.": "La tua prova gratuita dura fino al {date} o 100 clip. Non paghi nulla a meno che tu non scelga un piano.",
   "That code isn't active, but you can still get 100 free clips below.": "Questo codice non è attivo, ma puoi comunque ottenere 100 clip gratis qui sotto.",
   "Check your email address. It should look like name@example.com.": "Controlla il tuo indirizzo email. Dovrebbe essere tipo nome@esempio.com.",
-  "100 free clips": "100 clip gratis"
+  "100 free clips": "100 clip gratis",
+  "Couldn't send it. Tap Start now anyway to start here.": "Invio non riuscito. Tocca «Inizia comunque ora» per iniziare qui."
  }
 }

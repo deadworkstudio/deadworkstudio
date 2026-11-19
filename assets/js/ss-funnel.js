@@ -102,6 +102,9 @@
           else fetch(url, { method: 'POST', body: b, keepalive: true, mode: 'no-cors' });
         } catch (e) {}
       };
+      var queued = window.dwQueue || [];
+      window.dwQueue = [];
+      for (var qi = 0; qi < queued.length && qi < 20; qi++) window.dwEvent(queued[qi]);
     }
   } catch (e) {}
 })();

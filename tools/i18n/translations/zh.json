@@ -1459,6 +1459,7 @@
   "Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.": "你的免费试用到 {date} 或用完 100 个片段为止。除非你选择套餐，否则不会收费。",
   "That code isn't active, but you can still get 100 free clips below.": "这个代码已失效，但你仍可以在下方领取 100 个免费片段。",
   "Check your email address. It should look like name@example.com.": "请检查你的邮箱地址，格式应类似 name@example.com。",
-  "100 free clips": "100 个免费片段"
+  "100 free clips": "100 个免费片段",
+  "Couldn't send it. Tap Start now anyway to start here.": "发送失败。点按“仍然立即开始”在这里开始。"
  }
 }

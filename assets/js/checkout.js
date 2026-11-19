@@ -11,9 +11,12 @@
 
   var WORKER_URL = 'https://stock-shredder-payments.stockshredder.workers.dev';
   // Trial signups 2026-11-19: one page step on the cookie-free beacon (ss-funnel.js dwEvent).
+  // ss-funnel.js loads with defer and can arrive after an early step (landing on #trial), so steps
+  // wait in window.dwQueue until it is ready; it sends them then. Team/GPC/DNT browsers never send.
   function step(name) {
     try {
       if (window.dwEvent) window.dwEvent(name);
+      else (window.dwQueue = window.dwQueue || []).push(name);
     } catch (e) {}
   }
   // The browser's remembered last outside visit (ss-funnel.js), sent only with a checkout so the
@@ -463,6 +466,18 @@
     }
   }
 
+  // The Worker's endsOnText is English ("November 26, 2026 at 8:10 AM Pacific"). On a translated page
+  // show the same moment in the page's language, still in Pacific time (trial signups 2026-11-19).
+  function trialEndText(trial) {
+    var lang = (document.documentElement.lang || 'en').toLowerCase();
+    if (lang.indexOf('en') === 0 || typeof trial.endsAt !== 'number' || !window.Intl) return trial.endsOnText;
+    try {
+      return new Intl.DateTimeFormat(document.documentElement.lang, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles', timeZoneName: 'short' }).format(new Date(trial.endsAt));
+    } catch (e) {
+      return trial.endsOnText;
+    }
+  }
+
   function showSuccess(activationKey, trial, firstName) {
     var finishedSessionId = sessionId;
     teardownCheckout();
@@ -486,7 +501,7 @@
     if (successTitle) successTitle.textContent = name ? T("You're in, {name}.", { name: name }) : T("You're in.");
     if (successNote) {
       successNote.textContent = isTrial
-        ? T('Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.', { date: trial.endsOnText })
+        ? T('Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.', { date: trialEndText(trial) })
         : T("Thanks for the support. Here's your activation key.");
     }
     if (successSteps) {
@@ -1286,7 +1301,7 @@
         return res.json().catch(function () { return {}; }).then(function (data) {
           showTrialStatus('');
           step(res.status === 429 ? 'trial-rate-limited' : 'trial-error');
-          showTrialError(res.status === 429 ? T('Too many attempts. Try again in an hour.') : (data && data.error) || T("Couldn't reach us. Try again."));
+          showTrialError(res.status === 429 ? T('Too many attempts. Try again in an hour.') : res.status === 400 ? T('Check your email address. It should look like name@example.com.') : T("Couldn't send it. Tap Start now anyway to start here."));
         });
       })
       .catch(function () {

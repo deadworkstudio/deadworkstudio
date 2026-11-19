@@ -1458,7 +1458,8 @@
   "Drop in a folder of raw footage and start shredding.": "Arrastra una carpeta de metraje en bruto y empieza a procesar.",
   "Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.": "Tu prueba gratis dura hasta el {date} o 100 clips. No se cobra nada a menos que elijas un plan.",
   "That code isn't active, but you can still get 100 free clips below.": "Ese código no está activo, pero aún puedes conseguir 100 clips gratis abajo.",
-  "Check your email address. It should look like name@example.com.": "Revisa tu correo. Debería ser como nombre@ejemplo.com.",
-  "100 free clips": "100 clips gratis"
+  "Check your email address. It should look like name@example.com.": "Revisa tu dirección de correo. Debe tener el formato nombre@ejemplo.com.",
+  "100 free clips": "100 clips gratis",
+  "Couldn't send it. Tap Start now anyway to start here.": "No se pudo enviar. Toca «Empezar ahora de todos modos» para empezar aquí."
  }
 }
