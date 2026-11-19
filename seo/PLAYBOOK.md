@@ -145,7 +145,7 @@ Daily: the next ready draft is offered to Daniel; one new row is drafted so abou
 | 6 | blackmagic raw stock footage | blackmagic-raw-stock-footage | Draft ready |
 | 7 | red r3d stock footage | red-r3d-stock-footage | Draft ready |
 | 8 | storyblocks video contributor | storyblocks-video-contributor | Draft ready |
-| 9 | xpiks alternative | xpiks-alternative | To draft |
+| 9 | xpiks alternative | xpiks-alternative | Draft ready |
 | 10 | automatic stock footage clipping software | automatic-stock-footage-clipping | To draft |
 | 11 | batch process stock footage / hundreds of clips at once | batch-process-stock-footage | To draft |
 | 12 | how to keyword stock footage (and how many keywords) | keyword-stock-footage | To draft |
