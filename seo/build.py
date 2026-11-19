@@ -39,7 +39,7 @@ CTAS = {
         "eyebrow": "Launch offer · Code SHRED",
         "title": "Try it on your own archive.",
         "text": "100 free clips. 7 days to use them. Keywords included. Mac and Windows.",
-        "note": "Card saved to verify you, never charged. Start any time before December 31, 2026.",
+        "note": "No card needed, just your name and email. Start any time before December 31, 2026.",
     },
     "loadout": {
         "href": "../../products/loadout/?ref=guide&utm_campaign={slug}#notify",
