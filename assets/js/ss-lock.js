@@ -40,7 +40,12 @@
 
   function mmss(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
   function paint(f) {
-    var pct = Math.floor(f * 100 + 1e-9), done = Math.floor(f * TOTAL + 1e-9);
+    // The percent counts through every number 0-100 with none skipped (Daniel: "goes fully 1-100
+    // smooth"): on a slow frame it steps one at a time and catches up, instead of jumping.
+    var target = Math.floor(f * 100 + 1e-9);
+    var pct = f === 0 ? 0 : (last.pct < 0 || target <= last.pct ? target : Math.min(target, last.pct + 1));
+    if (f >= 1) pct = Math.min(100, last.pct + 1);
+    var done = Math.floor(f * TOTAL + 1e-9);
     fillEls.forEach(function (el) { el.style.transform = 'scaleX(' + f.toFixed(4) + ')'; });
     edgeEls.forEach(function (el) { el.style.setProperty('--p', f.toFixed(4)); });
     if (pct !== last.pct) { last.pct = pct; pctEls.forEach(function (el) { el.textContent = pct + '%'; }); }
