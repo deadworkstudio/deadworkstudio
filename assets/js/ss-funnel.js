@@ -90,14 +90,14 @@
     if (navigator.sendBeacon) navigator.sendBeacon(url, new Blob([body], { type: 'text/plain' }));
     else fetch(url, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' });
     // Trial signups 2026-11-19: page steps (button clicks, trial attempts, downloads) on the same
-    // cookie-free beacon, as a pretend path /ev/<name>/. The server keeps only names it knows and
+    // cookie-free beacon, as 'ev:<name>' (no leading slash, so an older Worker drops it). The server keeps only names it knows and
     // counts each once per person per day (worker/src/siteAnalytics.ts SITE_EVENTS). Same rules as
     // the visit: nothing for team browsers, GPC/DNT or local test servers (we returned above).
     if (!internal) {
       window.dwEvent = function (name) {
         try {
           if (!/^[a-z0-9-]{1,40}$/.test(name)) return;
-          var b = JSON.stringify({ p: '/ev/' + name + '/', i: 0, n: 0, x: 0, r: '', s: '', c: '' });
+          var b = JSON.stringify({ p: 'ev:' + name, i: 0, n: 0, x: 0, r: '', s: '', c: '' });
           if (navigator.sendBeacon) navigator.sendBeacon(url, new Blob([b], { type: 'text/plain' }));
           else fetch(url, { method: 'POST', body: b, keepalive: true, mode: 'no-cors' });
         } catch (e) {}
