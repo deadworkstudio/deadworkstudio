@@ -233,6 +233,9 @@
   var trialOffer = document.querySelector('[data-trial-offer]');
   var trialForm = trialOffer ? trialOffer.querySelector('[data-trial-offer-form]') : null;
   var trialEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-email]') : null;
+  // No-card trial (Daniel 2026-11-19): the box asks for a first name too, and the Worker starts the
+  // trial with no card when the request says noCard. A page without the name field keeps the card flow.
+  var trialNameInput = trialOffer ? trialOffer.querySelector('[data-trial-name]') : null;
   var trialErrorEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-error]') : null;
   var trialStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-status]') : null;
   var trialDateEls = trialOffer ? trialOffer.querySelectorAll('[data-trial-offer-date]') : [];
@@ -1131,6 +1134,16 @@
     trialEmailInput.value = appEmail;
   }
 
+  function trialBody(email) {
+    var body = { offer: currentOfferCode, email: email, touch: lastTouch() };
+    if (appClaim) body.claim = appClaim;
+    if (trialNameInput) {
+      body.name = (trialNameInput.value || '').trim();
+      body.noCard = true;
+    }
+    return body;
+  }
+
   function startTrialCheckout(email) {
     if (!currentOfferCode || !frame || trialSubmitInFlight) return;
     trialSubmitInFlight = true;
@@ -1144,7 +1157,7 @@
     fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(appClaim ? { offer: currentOfferCode, email: email, claim: appClaim, touch: lastTouch() } : { offer: currentOfferCode, email: email, touch: lastTouch() })
+      body: JSON.stringify(trialBody(email))
     })
       .then(function (res) {
         return res.json().then(function (data) {
@@ -1158,6 +1171,22 @@
           trialSubmitBtn.removeAttribute('aria-busy');
         }
         showTrialStatus('');
+        // No-card trial: the Worker started it already and sent back the key. (A Worker without
+        // the no-card code answers with a card Checkout below instead, so nothing breaks.)
+        if (result.ok && result.data && result.data.noCard && result.data.activationKey) {
+          sessionId = result.data.sessionId || null;
+          currentCheckoutIsTrial = true;
+          showSuccess(result.data.activationKey, result.data.trial, result.data.firstName);
+          var reduceMotionNc = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (success && success.scrollIntoView) success.scrollIntoView({ block: 'start', behavior: reduceMotionNc ? 'auto' : 'smooth' });
+          return;
+        }
+        if (result.status === 400 && result.data && result.data.code === 'name' && trialNameInput) {
+          step('trial-invalid-name');
+          showTrialError(T('Enter your first name.'));
+          trialNameInput.focus();
+          return;
+        }
         if (!result.ok || !result.data || !result.data.clientSecret || !result.data.sessionId) {
           var data = result.data || {};
           step(result.status === 409 && data.code === 'not_eligible' ? 'trial-not-eligible' : result.status === 429 ? 'trial-rate-limited' : 'trial-error');
@@ -1246,6 +1275,15 @@
       evt.preventDefault();
       if (trialSubmitInFlight) return;
       var email = (trialEmailInput.value || '').trim();
+      // On a phone the main button only emails the link to their computer, where they type the
+      // name, so the name is only needed when the trial really starts here.
+      var phoneSend = isPhoneVisitor() && !trialForm.hasAttribute('data-start-now');
+      if (trialNameInput && !phoneSend && !(trialNameInput.value || '').trim()) {
+        step('trial-invalid-name');
+        showTrialError(T('Enter your first name.'));
+        trialNameInput.focus();
+        return;
+      }
       if (!email) {
         step('trial-invalid-email');
         showTrialError('Enter your email to start the trial.');
@@ -1318,14 +1356,18 @@
   (function phoneTrialMode() {
     if (!trialForm || !isPhoneVisitor()) return;
     if (trialSubmitBtn) trialSubmitBtn.textContent = 'Send it to my computer';
+    // Sending the link needs only the email; the name field comes back for "Start now anyway".
+    if (trialNameInput) trialNameInput.hidden = true;
     var nowLink = document.querySelector('[data-trial-start-now]');
     if (!nowLink) return;
     nowLink.hidden = false;
     nowLink.addEventListener('click', function () {
       trialForm.setAttribute('data-start-now', '');
+      if (trialNameInput) trialNameInput.hidden = false;
       if (trialSubmitBtn) trialSubmitBtn.textContent = 'Start free trial';
       nowLink.hidden = true;
-      if (trialEmailInput) trialEmailInput.focus();
+      if (trialNameInput && !trialNameInput.value) trialNameInput.focus();
+      else if (trialEmailInput) trialEmailInput.focus();
     });
   })();
 
