@@ -1014,29 +1014,30 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .lockflow li.is-on .lockflow-n { background: #3D6E39; color: #fff; box-shadow: none; }
 .remote-stage { --gap: clamp(16px, 4vw, 44px); display: flex; justify-content: center; align-items: flex-end; gap: var(--gap); margin-top: 36px; }
 /* Phone alone, centered, with the watch tucked behind it; when the phone locks they slide apart. */
-.remote-stage .phone { position: relative; z-index: 2; transition: transform .5s cubic-bezier(.22,1,.36,1); will-change: transform; backface-visibility: hidden; }
-.lock-watch { position: relative; z-index: 1; transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .3s ease; will-change: transform; backface-visibility: hidden; }
+/* Apple's iOS sheet curve, ~1 s: a slow, weighted glide rather than a snap (Daniel: "think apple"). */
+.remote-stage .phone { position: relative; z-index: 2; transition: transform 1s cubic-bezier(.32,.72,0,1); will-change: transform; backface-visibility: hidden; }
+.lock-watch { position: relative; z-index: 1; transition: transform 1.05s cubic-bezier(.32,.72,0,1), filter 1.05s cubic-bezier(.32,.72,0,1); will-change: transform; backface-visibility: hidden; }
 .remote-stage.is-anim .phone { transform: translate3d(var(--phone-shift, 0px), 0, 0); }
-.remote-stage.is-anim .lock-watch { transform: translate3d(var(--watch-shift, 0px), 0, 0) scale(.92); }
+.remote-stage.is-anim .lock-watch { transform: translate3d(var(--watch-shift, 0px), 10px, 0) scale(.9); filter: brightness(.82); }
 /* At rest the watch peeks out from behind the phone (Daniel: "it can stay there at the beginning"). */
-.remote-stage.is-anim.is-split .phone, .remote-stage.is-anim.is-split .lock-watch { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+.remote-stage.is-anim.is-split .phone, .remote-stage.is-anim.is-split .lock-watch { transform: translate3d(0, 0, 0) scale(1); filter: none; }
 .remote-stage .phone { margin: 0; flex: none; }
 .remote-stage .phone-screen { position: relative; }
 .remote-lock-note { max-width: 46ch; margin: 22px auto 0; text-align: center; font-size: 15px; color: var(--ink-3); }
-.lock-screen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: #1a1d18 url('../img/products/stock-shredder/lock-wallpaper.jpg?v=lk3') center / cover no-repeat; opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }
+.lock-screen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: #1a1d18 url('../img/products/stock-shredder/lock-wallpaper.jpg?v=lk3') center / cover no-repeat; opacity: 0; visibility: hidden; transition: opacity .45s ease, visibility 0s linear .45s; }
 .lock-screen::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 34%, rgba(0,0,0,0) 55%, rgba(0,0,0,.3) 100%); }
 .lock-screen > * { position: relative; }
-[data-lockrow].is-locked .lock-screen { opacity: 1; visibility: visible; transition: opacity .2s ease, visibility 0s; }
+[data-lockrow].is-locked .lock-screen { opacity: 1; visibility: visible; transition: opacity .35s ease, visibility 0s; }
 .lock-date { padding-top: 22cqw; text-align: center; font-size: 5.6cqw; font-weight: 600; opacity: .92; }
 .lock-time { text-align: center; font-size: 26cqw; font-weight: 700; line-height: 1; letter-spacing: -.02em; margin-top: 1cqw; }
-.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 22cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.88); box-shadow: 0 0 0 1px rgba(255,255,255,.06); transition: opacity .35s ease, transform .5s cubic-bezier(.22,1,.36,1); }
+.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 22cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.88); box-shadow: 0 0 0 1px rgba(255,255,255,.06); transition: opacity .5s ease, transform .8s cubic-bezier(.32,.72,0,1); }
 .la-top, .la-foot, .wa-top, .wa-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .lock-screen img.la-logo { display: block; height: 6.2cqw; width: auto; padding: 0; border-radius: 0; background: none; }
 .la-count { font-size: 4.6cqw; font-weight: 600; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .la-bar { height: 1.6cqw; min-height: 4px; margin: 3.4cqw 0; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
 .la-bar > span { display: block; height: 100%; width: 100%; border-radius: inherit; background: #8FD687; transform-origin: left center; transform: scaleX(.3); will-change: transform; backface-visibility: hidden; }
 .la-foot { font-size: 5.2cqw; color: rgba(255,255,255,.6); font-variant-numeric: tabular-nums; }
-[data-lockrow].is-anim .la-card, [data-lockrow].is-anim .wa-card { opacity: 0; transform: translateY(14px) scale(.97); }
+[data-lockrow].is-anim .la-card, [data-lockrow].is-anim .wa-card { opacity: 0; transform: translate3d(0, 16px, 0) scale(.96); }
 [data-lockrow].is-s2 .la-card, [data-lockrow].is-s3 .wa-card { opacity: 1; transform: none; }
 .lock-watch { margin: 0; flex: none; width: min(165px, 30vw); }
 .watch-body { position: relative; box-sizing: border-box; padding: 9px; border-radius: 38px; background: #0d0d0c; box-shadow: inset 0 0 0 2px #2a2a27, 0 30px 50px -26px rgba(20,20,18,.55); }
@@ -1047,7 +1048,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .wa-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .lock-watch img.wa-logo { display: block; height: 11cqw; width: auto; }
 .watch-time { font-size: 10cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
-.wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .35s ease, transform .5s cubic-bezier(.22,1,.36,1); }
+.wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .5s ease, transform .8s cubic-bezier(.32,.72,0,1); }
 .wa-top { justify-content: flex-start; }
 .wa-pct { line-height: 1; letter-spacing: -.02em; font-size: 30cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
 .wa-card .la-bar { height: 4cqw; margin: 6cqw 0 5cqw; }
@@ -1056,7 +1057,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 @media (prefers-reduced-motion: reduce) { .remote-stage .phone, .lock-watch, .phone-island { transition: none !important; } }
 /* Dynamic Island while the export runs: scissors left, small bar + percent right, like the app's
    compact island (ExportActivityWidgetLiveActivity.swift). Widens when the phone locks. */
-.remote-stage .phone-island { display: flex; align-items: center; justify-content: space-between; padding: 0 10px; box-sizing: border-box; width: 64%; clip-path: inset(0 25.8% round 999px); transition: clip-path .5s cubic-bezier(.22,1,.36,1); }
+.remote-stage .phone-island { display: flex; align-items: center; justify-content: space-between; padding: 0 10px; box-sizing: border-box; width: 64%; clip-path: inset(0 25.8% round 999px); transition: clip-path .8s cubic-bezier(.32,.72,0,1); }
 .remote-stage.is-locked .phone-island { clip-path: inset(0 0 round 999px); }
 .di-l, .di-r { display: flex; align-items: center; gap: 5px; opacity: 0; transition: opacity .3s ease; }
 .remote-stage.is-s2 .di-l, .remote-stage.is-s2 .di-r { opacity: 1; transition-delay: .15s; }

@@ -28,9 +28,10 @@
 
   var TOTAL = 40, SEC_PER_CLIP = 9;               // the card's story: 40 clips, about 6 minutes
   var LOCK_AT = 4.0;                              // playhead hits the end of the clip in remote-flow.mp4
-  // The lock + slide-out is one 0.5 s snap, and the count lands on 100% exactly 10 s after the
-  // phone locks (Daniel 2026-11-19), then a short hold and a 0.5 s slide back.
-  var LAND_MS = 100, SPLIT_MS = 100, RUN_START = 650, RUN_MS = 9350, HOLD_MS = 1200, JOIN_MS = 500;
+  // Whole loop ~13.2 s (Daniel 2026-11-19 "13-15 seconds max"): clip plays 0-4 s, phone locks at
+  // 4 s, the reveal glides for 1 s on Apple's iOS sheet curve, the count lands on 100% at 10 s of
+  // the loop (6 s after lock), holds 2 s, then glides back together in 1.2 s.
+  var LAND_MS = 120, SPLIT_MS = 150, RUN_START = 700, RUN_MS = 5300, HOLD_MS = 2000, JOIN_MS = 1200;
   var tpl = row.getAttribute('data-left-tpl') || '%@ left';
   var pctEls = row.querySelectorAll('[data-la-pct]'), fillEls = row.querySelectorAll('[data-la-fill]');
   var leftEls = row.querySelectorAll('[data-la-left]'), doneEls = row.querySelectorAll('[data-la-done]');
