@@ -28,10 +28,10 @@
 
   var TOTAL = 40, SEC_PER_CLIP = 9;               // the card's story: 40 clips, about 6 minutes
   var LOCK_AT = 4.0;                              // playhead hits the end of the clip in remote-flow.mp4
-  // Whole loop ~13.2 s (Daniel 2026-11-19 "13-15 seconds max"): clip plays 0-4 s, phone locks at
-  // 4 s, the reveal glides for 1 s on Apple's iOS sheet curve, the count lands on 100% at 10 s of
-  // the loop (6 s after lock), holds 2 s, then glides back together in 1.2 s.
-  var LAND_MS = 120, SPLIT_MS = 150, RUN_START = 700, RUN_MS = 5300, HOLD_MS = 2000, JOIN_MS = 1200;
+  // Whole loop ~11.5 s (Daniel 2026-11-19): clip plays 0-4 s, phone locks at 4 s, the reveal glides
+  // for 1 s on Apple's iOS sheet curve, the count lands on 100% at 9 s of the loop (5 s after lock),
+  // holds 2 s, then snaps back to the starting placement in 0.45 s.
+  var LAND_MS = 120, SPLIT_MS = 150, RUN_START = 700, RUN_MS = 4300, HOLD_MS = 2000, JOIN_MS = 450;
   var tpl = row.getAttribute('data-left-tpl') || '%@ left';
   var pctEls = row.querySelectorAll('[data-la-pct]'), fillEls = row.querySelectorAll('[data-la-fill]');
   var leftEls = row.querySelectorAll('[data-la-left]'), doneEls = row.querySelectorAll('[data-la-done]');
@@ -98,9 +98,9 @@
       if (el >= LAND_MS && !row.classList.contains('is-s2')) step(2);
       if (el >= SPLIT_MS && !row.classList.contains('is-s3')) step(3);
       paint(Math.max(0, Math.min(1, (el - RUN_START) / RUN_MS)));
-      if (el > RUN_START + RUN_MS + HOLD_MS) { phase = 'join'; t0 = now; row.classList.remove('is-split'); }
+      if (el > RUN_START + RUN_MS + HOLD_MS) { phase = 'join'; t0 = now; row.classList.add('is-joining'); row.classList.remove('is-split'); }
     } else if (phase === 'join') {
-      if (now - t0 > JOIN_MS) startVideo();
+      if (now - t0 > JOIN_MS) { row.classList.remove('is-joining'); startVideo(); }
     }
     raf = requestAnimationFrame(frame);
   }

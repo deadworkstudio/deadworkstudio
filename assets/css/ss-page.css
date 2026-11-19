@@ -1065,3 +1065,5 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .di-bar { width: 26px; height: 5px; border-radius: 99px; background: rgba(255,255,255,.25); overflow: hidden; }
 .di-bar > span { display: block; width: 100%; height: 100%; background: #8FD687; transform-origin: left center; transform: scaleX(.3); }
 .di-r [data-la-pct] { font: 600 12px/1 -apple-system, system-ui, 'SF Pro Text', sans-serif; color: #fff; font-variant-numeric: tabular-nums; min-width: 3.2ch; text-align: right; }
+/* Going back is quick: 0.45 s to the starting placement (Daniel: "go quickly back"). */
+.remote-stage.is-joining .phone, .remote-stage.is-joining .lock-watch { transition-duration: .45s; transition-timing-function: cubic-bezier(.4,0,.2,1); }
