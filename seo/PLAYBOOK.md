@@ -99,7 +99,7 @@ Benchmark: a founder at ~$18k/month from SEO runs ~200 posts, 30 landing pages, 
 ## Landing pages (Stock Shredder, Nov 18)
 
 Same build as the guides (seo/articles -> guides/<slug>/), same hidden rule, eyebrow "Stock Shredder · For ...".
-Cadence (Daniel, Nov 18): 2 new pages a week, one article plus one landing page. Each goes live only on Daniel's "put it live".
+Cadence: superseded by the daily queue below (Daniel, Nov 19). Each goes live only on Daniel's "put it live".
 No paid keyword tool, so order is by buyer fit, who we already email (drone + Sony shooters), and how much the page
 can say that article 2 doesn't already say (avoid near-duplicate pages).
 
@@ -115,6 +115,81 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 | L8 | Camera | red r3d stock footage | red-r3d-stock-footage (says REDCINE-X Pro needed) | Draft (Jan 11 slot) |
 | L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock (overlaps article #4, pick one) | Draft (Jan 18 slot) |
 | L10 | Stock site | storyblocks / getty istock video contributor | storyblocks-video-contributor; Getty/iStock not drafted (spec page didn't load Nov 19) | Draft (Jan 25 slot) |
+
+## Daily queue (Daniel, Nov 19: "post everyday")
+
+ONE list for every Stock Shredder page from now on. It replaces the P1-P4 list, the keyword list, the L1-L10 list
+and the growth plan's 30 landing pages + 50 blog topics. Those ~85 ideas were merged so that each row below answers a
+DIFFERENT search. Rule: before drafting, check the row's search isn't already answered by a live page. If it is,
+skip the row or merge it in, never publish a second page for the same search.
+
+Already live (don't redo): raw-footage-to-stock-clips, stock-footage-requirements-adobe-pond5-shutterstock,
+prepare-stock-footage-faster, adobe-stock-video-workflow.
+
+Merged away as repeats: P2 "why it takes so long", P4 "upload more each week" and "upload stock footage faster"
+(all = prepare-stock-footage-faster). "Grade S-Log3" (= Sony page). "Grade D-Log M" and "drone pilot workflow"
+(= drone page). "Batch export in Premiere", "Stock Shredder vs Premiere" and "batch export separate ProRes files"
+(= Premiere page). Camera articles that repeated camera landing pages (BRAW, RED, ARRI, Canon, iPhone). "How many
+keywords" (inside the keywords page). "Check for logos" (inside the rejections page). "Find the sellable moments"
+(inside automatic clipping). Hard drive setup + backup (one page).
+
+Daily: the next ready draft is offered to Daniel; one new row is drafted so about 5 drafts stay ready.
+
+| # | Target search | Page (slug) | Status |
+|---|---|---|---|
+| 1 | sell drone footage on stock sites | drone-footage-for-stock | Draft ready |
+| 2 | sony fx3 stock footage workflow | sony-slog3-stock-footage | Draft ready |
+| 3 | sell footage on pond5 | pond5-video-upload | Draft ready |
+| 4 | shutterstock video contributor upload | shutterstock-video-contributor | Draft ready |
+| 5 | premiere pro batch export clips for stock | premiere-pro-batch-export-stock | Draft ready |
+| 6 | blackmagic raw stock footage | blackmagic-raw-stock-footage | Draft ready |
+| 7 | red r3d stock footage | red-r3d-stock-footage | Draft ready |
+| 8 | storyblocks video contributor | storyblocks-video-contributor | Draft ready |
+| 9 | xpiks alternative | xpiks-alternative | To draft |
+| 10 | automatic stock footage clipping software | automatic-stock-footage-clipping | To draft |
+| 11 | batch process stock footage / hundreds of clips at once | batch-process-stock-footage | To draft |
+| 12 | how to keyword stock footage (and how many keywords) | keyword-stock-footage | To draft |
+| 13 | why stock footage gets rejected | stock-footage-rejection-reasons | To draft |
+| 14 | sell old footage archive | sell-old-footage-archive | To draft |
+| 15 | best software for stock footage contributors | best-stock-footage-software | To draft |
+| 16 | davinci resolve batch export clips for stock | resolve-batch-export-stock | To draft |
+| 17 | how long should stock footage clips be | stock-clip-length | To draft |
+| 18 | pond5 vs adobe stock vs shutterstock for video | pond5-vs-adobe-stock-vs-shutterstock | To draft |
+| 19 | upload log or graded footage to stock | log-vs-graded-stock-footage | To draft |
+| 20 | grade log footage in bulk / apply LUT to many clips | bulk-grade-log-footage | To draft |
+| 21 | how to write stock footage titles | stock-footage-titles | To draft |
+| 22 | how to name stock footage files | name-stock-footage-files | To draft |
+| 23 | prores vs h264 for stock footage | prores-vs-h264-stock | To draft |
+| 24 | best frame rate for stock footage | stock-footage-frame-rate | To draft |
+| 25 | 4k vs hd stock footage | 4k-vs-hd-stock-footage | To draft |
+| 26 | getty images istock video contributor | getty-istock-video-contributor | To draft |
+| 27 | envato motion array video contributor | envato-motion-array-contributor | To draft |
+| 28 | arri footage for stock / arriraw | arri-stock-footage | To draft |
+| 29 | canon footage for stock | canon-stock-footage | To draft |
+| 30 | panasonic v-log stock footage | panasonic-vlog-stock-footage | To draft |
+| 31 | iphone footage for stock sites | iphone-stock-footage | To draft |
+| 32 | gopro footage for stock | gopro-stock-footage | To draft |
+| 33 | stabilize stock footage in bulk | stabilize-stock-footage | To draft |
+| 34 | remove grain from stock footage | remove-grain-stock-footage | To draft |
+| 35 | model and property releases for stock video | stock-video-releases | To draft |
+| 36 | exclusive vs non-exclusive stock footage | exclusive-vs-non-exclusive-stock | To draft |
+| 37 | slow motion stock footage | slow-motion-stock-footage | To draft |
+| 38 | timelapse and hyperlapse for stock | timelapse-stock-footage | To draft |
+| 39 | how many clips from one shoot day | clips-per-shoot-day | To draft |
+| 40 | shoot more sellable stock on every job | shoot-sellable-stock | To draft |
+| 41 | wedding videographer extra footage to stock | wedding-footage-to-stock | To draft |
+| 42 | travel footage to stock | travel-footage-to-stock | To draft |
+| 43 | process footage overnight | process-footage-overnight | To draft |
+| 44 | hard drive setup and backup for a stock archive | stock-footage-drive-setup | To draft |
+| 45 | stocksubmitter alternative | stocksubmitter-alternative | To draft |
+| 46 | blackbox video contributor | blackbox-video-contributor | To draft |
+| 47 | how much stock footage to make $1,000 a month (sourced) | stock-footage-income | To draft |
+| 48 | how we tested 1,000 clips in 3 hours | 1000-clips-benchmark | To draft |
+| 49 | stock footage trends 2027 (from the sites' own reports) | stock-footage-trends-2027 | To draft |
+| 50 | stock footage glossary | stock-footage-glossary | To draft |
+
+Held: price your time, taxes and payouts (needs sourcing care), year-in-review (needs real sales data),
+Artgrid/Filmsupply (curated, check they take open submissions first).
 
 ## Later (separate project, not now)
 
