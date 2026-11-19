@@ -52,7 +52,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261118a" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261119lk15" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -259,12 +259,42 @@
     <h2 class="mono">Stock Shredder Remote</h2>
     <p class="section-title" id="remote-title">Aprueba clips desde tu teléfono.</p>
     <p class="section-sub">Procesa metraje desde cualquier lugar sin estar delante del ordenador.<br class="br-desk" /> Aprueba o rechaza clips desde tu teléfono mientras Stock Shredder trabaja en tu Mac o PC. Incluido con Studio.</p>
-    <figure class="phone">
-      <div class="phone-body">
-        <span class="phone-island" aria-hidden="true"></span>
-        <div class="phone-screen"><div class="phone-screen-in"><video class="phone-video" muted loop playsinline preload="none" poster="../../assets/img/products/stock-shredder/remote-flow-poster.jpg?v=nb2" width="660" height="1344" aria-label="Grabación de Stock Shredder Remote en iPhone: se reproduce un clip de dron de Beverly Hills, se toca Aprobar y luego GO, y el Mac lo exporta: 1/1 clips completados." data-film><source src="../../assets/img/products/stock-shredder/remote-flow.mp4?v=nb2" type="video/mp4" /></video><span class="phone-ver" aria-hidden="true" data-latest-version></span></div></div>
-      </div>
-    </figure>
+    <ol class="lockflow" aria-hidden="true">
+      <li data-step="1"><span class="lockflow-n mono">1</span>Aprueba y toca GO</li>
+      <li data-step="2"><span class="lockflow-n mono">2</span>Bloquea el teléfono</li>
+      <li data-step="3"><span class="lockflow-n mono">3</span>Mira tu reloj</li>
+    </ol>
+    <div class="remote-stage" data-lockrow data-left-tpl="%@ restante">
+      <figure class="phone">
+        <div class="phone-body">
+          <span class="phone-island" aria-hidden="true"><span class="di-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></span><span class="di-r"><span class="di-bar"><span data-la-fill></span></span><span data-la-pct>30%</span></span></span>
+          <div class="phone-screen"><div class="phone-screen-in"><video class="phone-video" muted playsinline preload="none" poster="../../assets/img/products/stock-shredder/remote-flow-poster.jpg?v=nb2" width="660" height="1344" aria-label="Grabación de Stock Shredder Remote en iPhone: se reproduce un clip de dron de Beverly Hills, se toca Aprobar y luego GO, y el Mac lo exporta: 1/1 clips completados." data-lock-video><source src="../../assets/img/products/stock-shredder/remote-flow.mp4?v=nb2" type="video/mp4" /></video><span class="phone-ver" aria-hidden="true" data-latest-version></span></div>
+          <div class="lock-screen" aria-hidden="true">
+            <div class="lock-date" data-lock-date>jueves, 19 de noviembre</div>
+            <div class="lock-time" data-lock-time>9:41</div>
+            <div class="la-card">
+              <div class="la-top"><img class="la-logo" src="../../assets/img/products/stock-shredder/logo-bone.png" alt="" width="600" height="161" loading="lazy" decoding="async" /><span class="la-count"><span data-la-done>12</span>/40 CLIPS</span></div>
+              <div class="la-bar"><span data-la-fill></span></div>
+              <div class="la-foot"><span data-la-pct>30%</span><span data-la-left>4:12 restante</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </figure>
+      <figure class="lock-watch">
+        <div class="watch-body" role="img" aria-label="Apple Watch con el mismo progreso de exportación de Stock Shredder.">
+          <div class="watch-screen wd" aria-hidden="true">
+            <span class="wd-edge" data-la-edge></span>
+            <div class="wa-card wd-in">
+              <img class="wd-logo" src="../../assets/img/products/stock-shredder/logo-bone.png" alt="" width="600" height="161" loading="lazy" decoding="async" />
+              <span class="wd-pct" data-la-pct>30%</span>
+              <span class="wd-meta"><span data-la-done>12</span>/40 · <span data-la-left>4:12 restante</span></span>
+            </div>
+          </div>
+        </div>
+      </figure>
+    </div>
+    <p class="remote-lock-note">Cada exportación sigue avanzando en tu pantalla de bloqueo y en tu Apple Watch, incluso con la app cerrada.</p>
     <div class="remote-cta">
       <a class="pill pill-outline" href="https://apps.apple.com/app/stock-shredder/id6824343460"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Remote para iPhone</span></a> <a class="pill pill-outline" href="/es/products/stock-shredder/#download-android"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg><span>Remote para Android</span></a>
     </div>
@@ -1259,5 +1289,6 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   inNew.addEventListener('input', update); inDrive.addEventListener('input', update); update();
 })();
 </script>
+<script src="../../assets/js/ss-lock.js?v=20261119lk16" defer></script>
 </body>
 </html>
