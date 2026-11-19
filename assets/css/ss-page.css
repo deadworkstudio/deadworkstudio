@@ -386,6 +386,9 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
 @media (any-hover: hover) and (any-pointer: fine) { .term-opt:not(.is-active):hover { background: var(--bg-2); } }
 .term-note { max-width: 640px; margin: 12px auto 0; min-height: 1.5em; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
 .term-note strong { color: var(--ink); font-weight: 600; }
+/* Founding price (Daniel 2026-11-18): plans started by Dec 31, 2026 keep their price for as long as they stay subscribed. Remove this line in January 2027. */
+.term-founding { max-width: 640px; margin: 6px auto 0; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+.term-founding strong { color: var(--ink); font-weight: 600; }
 .pricing-bill { font: 600 10.5px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
 .pricing-bill .pricing-equiv { display: inline-block; margin-top: 2px; font: 500 13px/1.4 var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-2); }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: 30px calc(-1 * var(--gutter)) 0; }
@@ -939,7 +942,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .term-eyebrow + .term { margin-top: 12px; }
 .term-opt { position: relative; }
 .term-best { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); padding: 3px 7px; background: #8FD687; color: #0B0B0A; font: 700 8.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
-.term-note + .pricing-grid { margin-top: 40px; }
+.term-note + .pricing-grid, .term-founding + .pricing-grid { margin-top: 40px; }
 .fit-term { display: block; margin-top: 8px; font-size: .82em; color: var(--ink-2); }
 .fit-term strong { color: var(--ink); }
 /* Phones: room under the footer so the sticky "100 free clips" bar never covers the language picker. */
@@ -967,7 +970,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
   .fit { column-gap: 48px; }
 }
 .term-eyebrow { margin-top: 26px; }
-.term-note + .pricing-grid { margin-top: 30px; }
+.term-note + .pricing-grid, .term-founding + .pricing-grid { margin-top: 30px; }
 .fit-hint { margin-left: 8px; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3, #625E57); }
 @media (min-width: 960px) { .fit-cam-row { gap: 6px; } .fit-cam { padding: 7px 8px; letter-spacing: .05em; } }
 @media (min-width: 960px) { .fit-answer { min-height: 112px; } }
