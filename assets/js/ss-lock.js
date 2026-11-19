@@ -1,7 +1,7 @@
 /* Stock Shredder Remote: the phone recording turns into the lock screen, then the phone and the
    Apple Watch slide apart to show both working together (Daniel 2026-11-19).
    Loop while on screen:
-     1. phone alone, centered; the recording plays the clip            step 1
+     1. phone in front, watch peeking from behind; the recording plays  step 1
      2. the moment the clip's playhead reaches the end of its timeline
         (LOCK_AT in the recording), the phone locks and the export
         card lands on the lock screen                                  step 2
@@ -55,13 +55,15 @@
       li.classList.toggle('is-on', n === 1 ? k === 1 : k >= 2 && k <= n);
     });
   }
-  // Offsets that center the phone alone and tuck the watch behind it.
+  // Offsets that tuck the watch partly behind the phone at rest.
   function measure() {
     if (!phone || !watch) return;
     var gap = parseFloat(getComputedStyle(row).columnGap) || 0;
     var pw = phone.offsetWidth, ww = watch.offsetWidth;
-    row.style.setProperty('--phone-shift', ((ww + gap) / 2) + 'px');
-    row.style.setProperty('--watch-shift', (-(gap + ww / 2 + pw / 2) + (ww + gap) / 2) + 'px');
+    // At rest ~45% of the watch peeks out to the right of the phone and the pair is centered.
+    var tuck = gap + ww * 0.55;
+    row.style.setProperty('--phone-shift', (tuck / 2) + 'px');
+    row.style.setProperty('--watch-shift', (-tuck / 2) + 'px');
   }
 
   paint(0.3);
