@@ -137,7 +137,7 @@ Daily: the next ready draft is offered to Daniel; one new row is drafted so abou
 
 | # | Target search | Page (slug) | Status |
 |---|---|---|---|
-| 1 | sell drone footage on stock sites | drone-footage-for-stock | Draft ready |
+| 1 | sell drone footage on stock sites | drone-footage-for-stock | LIVE Nov 19 |
 | 2 | sony fx3 stock footage workflow | sony-slog3-stock-footage | Draft ready |
 | 3 | sell footage on pond5 | pond5-video-upload | Draft ready |
 | 4 | shutterstock video contributor upload | shutterstock-video-contributor | Draft ready |
