@@ -13,6 +13,8 @@
      (?code=SHRED) jumps to #trial; everything else opens at the top. -->
 <script>
   var hasCode = /[?&]code=/i.test(location.search);
+  // Keep where the visitor came from for ss-funnel.js on the product page (trial signups 2026-11-19).
+  try { if (document.referrer && new URL(document.referrer).hostname !== location.hostname) sessionStorage.setItem('dw-ref', document.referrer.slice(0, 300)); } catch (e) {}
   location.replace('../products/stock-shredder/' + location.search + (hasCode ? '#trial' : ''));
 </script>
 </head>
@@ -24,6 +26,6 @@
        working the same as the JS redirect instead of silently dropping the trial. -->
   <p><a href="../products/stock-shredder/?code=SHRED#trial">Continue to Stock Shredder</a></p>
 </noscript>
-<script src="/assets/js/ss-funnel.js?v=20261117a" defer></script>
+<script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 </body>
 </html>

@@ -43,7 +43,7 @@ LANGS = [
     ('ja', 'ja', '日本語', '日本語'),
 ]
 OG_LOCALE = {'en': 'en_US', 'es': 'es_ES', 'fr': 'fr_FR', 'de': 'de_DE', 'it': 'it_IT', 'zh': 'zh_CN', 'ja': 'ja_JP'}
-ASSET_V = '20261116b'
+ASSET_V = '20261119a'
 
 HEAD_RE = re.compile(r'\n?<!-- i18n:head -->.*?<!-- /i18n:head -->', re.S)
 PICK_RE = re.compile(r'\n?\s*<!-- i18n:picker -->.*?<!-- /i18n:picker -->', re.S)

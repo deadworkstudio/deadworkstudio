@@ -1365,7 +1365,8 @@
   "macOS (Intel &amp; Apple Silicon) and Windows. The Remote app is on iPhone (<a href=\"https://apps.apple.com/app/stock-shredder/id6824343460\">App Store</a>) and Android.": "macOS (Intel e Apple Silicon) e Windows. L'app Remote è disponibile su iPhone (<a href=\"https://apps.apple.com/app/stock-shredder/id6824343460\">App Store</a>) e Android.",
   "tools designed to eliminate busywork so creatives can stay creative.": "strumenti pensati per eliminare il lavoro noioso, così i creativi possono restare creativi.",
   "xxHash64": "xxHash64",
-  "you@email.com": "tu@email.com"
+  "you@email.com": "tu@email.com",
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "Aprilo, fai clic su <strong>Hai già una chiave di attivazione?</strong> e incolla la chiave."
  },
  "script": {
   "/mo": "/mese",
@@ -1449,6 +1450,15 @@
   "{monthly} new clips a month + {backlog} on your drives.": "{monthly} nuove clip al mese + {backlog} sui tuoi dischi.",
   "{monthly} new clips a month.": "{monthly} nuove clip al mese.",
   "{months}-month commitment · No early cancel": "Impegno di {months} mesi · Nessuna disdetta anticipata",
-  "{size} a month": "{size} al mese"
+  "{size} a month": "{size} al mese",
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "Aprilo, fai clic su <strong>Hai già una chiave di attivazione?</strong> e incolla la chiave.",
+  "Open the email we just sent you on your computer.": "Apri sul computer l'email che ti abbiamo appena inviato.",
+  "Download Stock Shredder from it.": "Scarica Stock Shredder da lì.",
+  "Install Stock Shredder.": "Installa Stock Shredder.",
+  "Drop in a folder of raw footage and start shredding.": "Trascina una cartella di girato grezzo e inizia.",
+  "Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.": "La tua prova gratuita dura fino al {date} o 100 clip. Non paghi nulla a meno che tu non scelga un piano.",
+  "That code isn't active, but you can still get 100 free clips below.": "Questo codice non è attivo, ma puoi comunque ottenere 100 clip gratis qui sotto.",
+  "Check your email address. It should look like name@example.com.": "Controlla il tuo indirizzo email. Dovrebbe essere tipo nome@esempio.com.",
+  "100 free clips": "100 clip gratis"
  }
 }

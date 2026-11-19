@@ -1365,7 +1365,8 @@
   "macOS (Intel &amp; Apple Silicon) and Windows. The Remote app is on iPhone (<a href=\"https://apps.apple.com/app/stock-shredder/id6824343460\">App Store</a>) and Android.": "macOS（Intel と Apple シリコン）と Windows。Remote アプリは iPhone（<a href=\"https://apps.apple.com/app/stock-shredder/id6824343460\">App Store</a>）と Android に対応しています。",
   "tools designed to eliminate busywork so creatives can stay creative.": "面倒な作業をなくし、クリエイターが創ることに集中できるよう設計されたツール。",
   "xxHash64": "xxHash64",
-  "you@email.com": "you@email.com"
+  "you@email.com": "you@email.com",
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "アプリを開き、<strong>アクティベーションキーをお持ちですか？</strong>をクリックしてキーを貼り付けます。"
  },
  "script": {
   "/mo": "/月",
@@ -1449,6 +1450,15 @@
   "{monthly} new clips a month + {backlog} on your drives.": "毎月 {monthly} 本の新規クリップ + ドライブに {backlog} 本。",
   "{monthly} new clips a month.": "毎月 {monthly} 本の新規クリップ。",
   "{months}-month commitment · No early cancel": "{months}か月の期間契約 · 途中解約不可",
-  "{size} a month": "月{size}"
+  "{size} a month": "月{size}",
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "アプリを開き、<strong>アクティベーションキーをお持ちですか？</strong>をクリックしてキーを貼り付けます。",
+  "Open the email we just sent you on your computer.": "お送りしたメールをパソコンで開きます。",
+  "Download Stock Shredder from it.": "メールから Stock Shredder をダウンロードします。",
+  "Install Stock Shredder.": "Stock Shredder をインストールします。",
+  "Drop in a folder of raw footage and start shredding.": "撮影素材のフォルダをドロップして、処理を始めましょう。",
+  "Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.": "無料トライアルは {date} まで、または 100 クリップまでです。プランを選ばない限り請求はありません。",
+  "That code isn't active, but you can still get 100 free clips below.": "このコードは無効ですが、下から100クリップ無料で受け取れます。",
+  "Check your email address. It should look like name@example.com.": "メールアドレスを確認してください。name@example.com のような形式です。",
+  "100 free clips": "100クリップ無料"
  }
 }
