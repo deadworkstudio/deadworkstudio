@@ -686,7 +686,9 @@ main > section.tools { --bg: #EBE5D8; background: var(--bg); padding: clamp(56px
   .hero .downloads .pill { min-height: 44px; }
   .hero .downloads-note { margin-top: 12px; }
   /* remote: phone height follows the window height */
-  .phone { width: min(300px, calc((100svh - var(--sh-h) - 15vh - 260px) * 0.47)); margin-top: 28px; }
+  .phone { width: min(300px, calc((100svh - var(--sh-h) - 15vh - 300px) * 0.47)); margin-top: 28px; }
+  .lock-watch { width: min(150px, calc((100svh - var(--sh-h) - 15vh - 300px) * 0.235)); }
+  .remote-stage { margin-top: 24px; }
   .remote-cta { margin-top: 24px; }
   .world-map { width: min(100%, 1040px, calc((100svh - var(--sh-h) - 15vh - 230px) * 2.69)); }
   .faq-q { min-height: 40px; padding: 7px 0; }
@@ -997,53 +999,52 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .upgrade--kw, .upgrade--phone { container-type: inline-size; }
 .upgrade-shot--phone img, .upgrade-shot--phone video { width: auto; height: calc(min(100cqw, 340px) * 1192 / 1360 - 10px); aspect-ratio: 660 / 1344; }
 
-/* Lock screen + Apple Watch (Daniel 2026-11-19 "show the lock screen somewhere for the phone",
-   "add a watch update too"). Rebuilt in HTML from the iPhone app's own Live Activity layout
-   (ExportActivityWidgetLiveActivity.swift): wordmark, X/Y CLIPS, green bar, percent, time left.
-   Wallpaper = DEADWORK background (bone lockup on near-black), Daniel 2026-11-19.
-   Plays as a workflow: 1 approve + GO, 2 card lands on the lock screen and counts clips,
-   3 the watch picks it up. Driven by assets/js/ss-lock.js. */
-.lockrow { margin: 64px auto 0; max-width: 760px; }
-.lockrow-say { text-align: center; max-width: 46ch; margin: 0 auto; }
-.lockrow-h { font-size: clamp(22px, 3vw, 28px); line-height: 1.2; margin: 0 0 10px; }
-.lockrow-say p { margin: 0; color: var(--ink-3); }
-.lockrow-devices { display: flex; justify-content: center; align-items: flex-end; gap: clamp(20px, 5vw, 56px); margin-top: 36px; }
-.lockrow figure { margin: 0; }
-.lockrow figcaption { margin-top: 14px; text-align: center; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
-.lock-phone { width: min(260px, 58vw); }
-.lock-phone .phone-body { padding: 10px; border-radius: 44px; }
-.lock-screen { position: relative; aspect-ratio: 660 / 1380; border-radius: 35px; overflow: hidden; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: radial-gradient(120% 70% at 50% 42%, #2a2925 0%, #141412 55%, #0a0a09 100%); }
-.lock-screen > * { position: relative; }
-.lock-date { padding-top: 22cqw; text-align: center; font-size: 5.6cqw; font-weight: 600; opacity: .92; }
-.lock-time { text-align: center; font-size: 26cqw; font-weight: 700; line-height: 1; letter-spacing: -.02em; margin-top: 1cqw; }
-.lock-phone .phone-body img.lock-mark { position: absolute; left: 50%; top: 52%; width: 66%; height: auto; padding: 0; border-radius: 0; background: none; transform: translate(-50%, -50%); opacity: .92; pointer-events: none; }
-.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 22cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.88); box-shadow: 0 0 0 1px rgba(255,255,255,.06); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
-[data-lockrow].is-anim .la-card, [data-lockrow].is-anim .wa-card { opacity: 0; transform: translateY(14px) scale(.97); }
-[data-lockrow].is-s2 .la-card, [data-lockrow].is-s3 .wa-card { opacity: 1; transform: none; }
-.la-count.is-tick, .wa-pct.is-tick { animation: la-tick .35s ease; }
-@keyframes la-tick { 0% { color: #8FD687; } 100% { color: inherit; } }
+/* Remote phone becomes the lock screen, Apple Watch beside it (Daniel 2026-11-19: "turn the phone
+   into the lock screen into this video + watch next to it", "numbers flow so much smoother",
+   "use a real background"). The recording plays approve + GO, then the phone locks: the Live
+   Activity card (rebuilt from ExportActivityWidgetLiveActivity.swift) counts clips on our own
+   Beverly Hills drone shot, and the watch picks it up. Driven by assets/js/ss-lock.js. */
 .lockflow { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 28px; margin: 28px auto 0; padding: 0; font-size: 15px; color: var(--ink-3); }
 .lockflow li { display: flex; align-items: center; gap: 8px; transition: color .3s ease, opacity .3s ease; }
-.lockflow-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; box-shadow: inset 0 0 0 1.5px currentColor; transition: background .3s ease, color .3s ease, box-shadow .3s ease; }
-[data-lockrow].is-anim .lockflow li { opacity: .45; }
-[data-lockrow].is-anim .lockflow li.is-on { opacity: 1; color: var(--ink, #141412); }
+.lockflow-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; letter-spacing: 0; box-shadow: inset 0 0 0 1.5px currentColor; transition: background .3s ease, color .3s ease, box-shadow .3s ease; }
+.lockflow.is-anim li { opacity: .45; }
+.lockflow.is-anim li.is-on { opacity: 1; color: var(--ink); }
 .lockflow li.is-on .lockflow-n { background: #3D6E39; color: #fff; box-shadow: none; }
+.remote-stage { display: flex; justify-content: center; align-items: flex-end; gap: clamp(16px, 4vw, 44px); margin-top: 36px; }
+.remote-stage .phone { margin: 0; flex: none; }
+.remote-stage .phone-screen { position: relative; }
+.remote-lock-note { max-width: 46ch; margin: 22px auto 0; text-align: center; font-size: 15px; color: var(--ink-3); }
+.lock-screen { position: absolute; inset: 0; z-index: 0; overflow: hidden; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: #1a1d18 url('../img/products/stock-shredder/lock-wallpaper.jpg?v=lk3') center / cover no-repeat; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
+.lock-screen::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 34%, rgba(0,0,0,0) 55%, rgba(0,0,0,.3) 100%); }
+.lock-screen > * { position: relative; }
+[data-lockrow].is-locked .lock-screen { opacity: 1; visibility: visible; transition: opacity .6s ease, visibility 0s; }
+.lock-date { padding-top: 22cqw; text-align: center; font-size: 5.6cqw; font-weight: 600; opacity: .92; }
+.lock-time { text-align: center; font-size: 26cqw; font-weight: 700; line-height: 1; letter-spacing: -.02em; margin-top: 1cqw; }
+.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 22cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.88); box-shadow: 0 0 0 1px rgba(255,255,255,.06); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
 .la-top, .la-foot, .wa-top, .wa-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-.lock-phone .phone-body img.la-logo { display: block; height: 5.4cqw; width: auto; padding: 0; border-radius: 0; background: none; }
-.la-count { font-size: 3.9cqw; font-weight: 600; color: rgba(255,255,255,.6); white-space: nowrap; }
+.lock-screen img.la-logo { display: block; height: 5.4cqw; width: auto; padding: 0; border-radius: 0; background: none; }
+.la-count { font-size: 3.9cqw; font-weight: 600; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .la-bar { height: 1.6cqw; min-height: 4px; margin: 3.4cqw 0; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
-.la-bar > span { display: block; height: 100%; border-radius: inherit; background: #8FD687; transition: width .8s linear; }
+.la-bar > span { display: block; height: 100%; width: 100%; border-radius: inherit; background: #8FD687; transform-origin: left center; transform: scaleX(.3); will-change: transform; }
 .la-foot { font-size: 4.4cqw; color: rgba(255,255,255,.6); font-variant-numeric: tabular-nums; }
-.lock-watch { width: min(150px, 34vw); }
+.roll { display: inline-block; position: relative; overflow: hidden; vertical-align: bottom; height: 1.2em; line-height: 1.2em; }
+.roll > span { display: block; text-align: right; }
+.roll > span.in { position: absolute; right: 0; top: 0; transform: translateY(100%); }
+.roll.go > span { transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+.roll.go > span.out { transform: translateY(-100%); }
+.roll.go > span.in { transform: none; }
+[data-lockrow].is-anim .la-card, [data-lockrow].is-anim .wa-card { opacity: 0; transform: translateY(14px) scale(.97); }
+[data-lockrow].is-s2 .la-card, [data-lockrow].is-s3 .wa-card { opacity: 1; transform: none; }
+.lock-watch { margin: 0; flex: none; width: min(150px, 30vw); }
 .watch-body { position: relative; box-sizing: border-box; padding: 9px; border-radius: 38px; background: #0d0d0c; box-shadow: inset 0 0 0 2px #2a2a27, 0 30px 50px -26px rgba(20,20,18,.55); }
 .watch-body::after { content: ''; position: absolute; right: -5px; top: 30%; width: 6px; height: 18%; border-radius: 3px; background: #2a2a27; }
 .watch-screen { aspect-ratio: 396 / 484; border-radius: 30px; background: #000; color: #fff; overflow: hidden; container-type: inline-size; font-family: -apple-system, system-ui, 'SF Pro Text', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; padding: 9% 7% 7%; box-sizing: border-box; }
 /* padding in % (not cqw): cqw on the container itself resolves against an outer container. */
 .watch-time { text-align: right; font-size: 10cqw; font-weight: 600; }
-.wa-card { transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); margin-top: auto; padding: 7cqw 7cqw 6cqw; border-radius: 13cqw; background: #1c1c1e; }
+.wa-card { margin-top: auto; padding: 7cqw 7cqw 6cqw; border-radius: 13cqw; background: #1c1c1e; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
 .wa-top svg { width: 11cqw; height: 11cqw; color: #8FD687; flex: none; }
 .wa-pct { font-size: 15cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
 .wa-card .la-bar { height: 3.4cqw; margin: 4cqw 0; }
 .wa-foot { font-size: 7.6cqw; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
-@media (max-width: 520px) { .lockrow { margin-top: 48px; } .lockrow-devices { gap: 16px; } }
-@media (prefers-reduced-motion: reduce) { .la-bar > span { transition: none; } }
+@media (max-width: 520px) { .remote-stage .phone { width: 58vw; } .lock-watch { width: 30vw; } .lockflow { gap: 6px 16px; font-size: 13.5px; } }
+@media (prefers-reduced-motion: reduce) { .roll.go > span { transition: none; } }
