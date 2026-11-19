@@ -1275,7 +1275,10 @@
       evt.preventDefault();
       if (trialSubmitInFlight) return;
       var email = (trialEmailInput.value || '').trim();
-      if (trialNameInput && !(trialNameInput.value || '').trim()) {
+      // On a phone the main button only emails the link to their computer, where they type the
+      // name, so the name is only needed when the trial really starts here.
+      var phoneSend = isPhoneVisitor() && !trialForm.hasAttribute('data-start-now');
+      if (trialNameInput && !phoneSend && !(trialNameInput.value || '').trim()) {
         step('trial-invalid-name');
         showTrialError(T('Enter your first name.'));
         trialNameInput.focus();
@@ -1353,14 +1356,18 @@
   (function phoneTrialMode() {
     if (!trialForm || !isPhoneVisitor()) return;
     if (trialSubmitBtn) trialSubmitBtn.textContent = 'Send it to my computer';
+    // Sending the link needs only the email; the name field comes back for "Start now anyway".
+    if (trialNameInput) trialNameInput.hidden = true;
     var nowLink = document.querySelector('[data-trial-start-now]');
     if (!nowLink) return;
     nowLink.hidden = false;
     nowLink.addEventListener('click', function () {
       trialForm.setAttribute('data-start-now', '');
+      if (trialNameInput) trialNameInput.hidden = false;
       if (trialSubmitBtn) trialSubmitBtn.textContent = 'Start free trial';
       nowLink.hidden = true;
-      if (trialEmailInput) trialEmailInput.focus();
+      if (trialNameInput && !trialNameInput.value) trialNameInput.focus();
+      else if (trialEmailInput) trialEmailInput.focus();
     });
   })();
 
