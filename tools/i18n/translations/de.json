@@ -1461,6 +1461,11 @@
   "That code isn't active, but you can still get 100 free clips below.": "Dieser Code ist nicht aktiv, aber du kannst dir unten trotzdem 100 Gratis-Clips holen.",
   "Check your email address. It should look like name@example.com.": "Prüf deine E-Mail-Adresse. Sie sollte so aussehen: name@beispiel.de.",
   "100 free clips": "100 Gratis-Clips",
-  "Couldn't send it. Tap Start now anyway to start here.": "Senden hat nicht geklappt. Tippe auf „Trotzdem jetzt starten“, um hier zu beginnen."
+  "Couldn't send it. Tap Start now anyway to start here.": "Senden hat nicht geklappt. Tippe auf „Trotzdem jetzt starten“, um hier zu beginnen.",
+  "We sent your activation key to {email}. Your free trial runs until {date} or 100 clips.": "Wir haben deinen Aktivierungsschlüssel an {email} geschickt. Deine kostenlose Testphase läuft bis {date} oder 100 Clips.",
+  "your email": "deine E-Mail-Adresse",
+  "Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.": "Öffne es, klicke auf <strong>Hast du bereits einen Aktivierungsschlüssel?</strong> und füge den Schlüssel aus unserer E-Mail ein.",
+  "Too many new trials from this network today. Try again tomorrow.": "Heute zu viele neue Testphasen aus diesem Netzwerk. Versuch es morgen wieder.",
+  "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "Nutze deine normale E-Mail-Adresse. Dorthin schicken wir deinen Aktivierungsschlüssel, und Wegwerf-Adressen können keine Testphase starten."
  }
 }
