@@ -114,27 +114,19 @@
     }
   }
 
-  // ---- support chat: loads after the first scroll, tap or key press, never on page load ----
-  // Same approach as the Stock Shredder product page (ss-page.js) — every page that loads this
-  // file and has a [data-chat-widget] marker opts in, instead of each page pasting its own
-  // Tawk.to snippet (which ran immediately on load, before anyone had asked for it). Launcher
-  // position/visibility is unchanged — same customStyle values the old inline snippets used.
+  // ---- support chat: DEADWORK's own chat box (assets/js/dw-chat.js, replaced Tawk.to) ----
+  // Loads after the first scroll, tap or key press, never on page load. Every page that loads this
+  // file and has a [data-chat-widget] marker opts in. Launcher sits 50px up, same spot Tawk used.
   if (document.querySelector('[data-chat-widget]') && location.protocol !== 'file:') {
     var chatLoaded = false;
     var loadChat = function () {
       if (chatLoaded) return; chatLoaded = true;
       ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.removeEventListener(ev, loadChat); });
-      window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
-      window.Tawk_API.customStyle = { visibility: { desktop: { position: 'br', xOffset: 20, yOffset: 50 }, mobile: { position: 'br', xOffset: 10, yOffset: 50 } } };
+      window.DWChatConfig = window.DWChatConfig || { bottom: 50 };
+      var me = document.querySelector('script[src*="assets/js/main.js"]');
       var s = document.createElement('script');
-      // D-6: crossorigin="*" isn't a real value (only "anonymous"/"use-credentials" are), and an
-      // invalid value still puts the script in CORS mode, requiring embed.tawk.to to answer with
-      // an Access-Control-Allow-Origin header — which it doesn't, for a plain widget-loader
-      // script that was never fetched for its response content. That's the exact "blocked by
-      // CORS policy" console error. A normal cross-origin <script src> load (no crossorigin
-      // attribute at all) doesn't need CORS headers and is how every other third-party widget
-      // script on the web loads.
-      s.async = true; s.src = 'https://embed.tawk.to/6abff587e0dd3b34c4626702/1k3ute618'; s.charset = 'UTF-8';
+      s.async = true;
+      s.src = (me ? me.src.replace(/main\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261119a';
       document.body.appendChild(s);
     };
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
