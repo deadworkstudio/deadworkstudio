@@ -75,7 +75,7 @@ Re-rank once Search Console has 2 to 4 weeks of data.
 | 1 | SS | turn raw footage into stock footage / how to prepare footage for stock sites | How to Turn Raw Footage Into Stock Clips | Exact problem SS solves; results today are thin forum threads | Nov 16 (draft ready) |
 | 2 | SS | Adobe Stock / Pond5 / Shutterstock video requirements | How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock | High-volume how-to; we can give one checklist across sites. Artgrid looks curated (not open upload), verify before naming it | Nov 18 |
 | 3 | SS | Xpiks alternative | Best Xpiks Alternatives for Stock Footage Creators | xpiks.com redirected to a domain-for-sale page on Nov 12, 2026: users need a replacement now. Xpiks was keywords/upload only, so be clear SS covers video prep + keywords, not photo upload | Nov 20 |
-| 4 | SS | batch export clips Premiere Pro stock footage | Stock Shredder vs Manual Editing in Premiere Pro | People already fighting batch export in Premiere forums | Nov 22 |
+| 4 | SS | batch export clips Premiere Pro stock footage | Stock Shredder vs Manual Editing in Premiere Pro | Merged into landing page L9 (premiere-pro-batch-export-stock, Daniel Nov 19). No separate article | Done as L9 |
 | 5 | SS | best software for stock footage contributors | Best Software for Processing Thousands of Stock Footage Clips | Roundup; Premiere, Resolve, keyword tools, SS, each with its real job | Nov 23 |
 | 6 | SS | stock footage keywords / how to keyword video | How to Keyword Stock Footage Without Typing All Day | Pro/Studio keyword feature | Dec |
 | 7 | SS | how long should stock footage clips be | Stock Clip Length: What Sites Want | Short, high-volume question; links to #1 | Dec |
@@ -113,7 +113,7 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 | L6 | Stock site | pond5 video upload / sell footage on pond5 | pond5-video-upload (angle: file names, size caps, payout; video pricing is tiered) | Draft (Dec 21 slot) |
 | L7 | Camera | blackmagic raw stock footage / braw stock | blackmagic-raw-stock-footage | Draft (Jan 4 slot) |
 | L8 | Camera | red r3d stock footage | red-r3d-stock-footage (says REDCINE-X Pro needed) | Draft (Jan 11 slot) |
-| L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock (overlaps article #4, pick one) | Draft (Jan 18 slot) |
+| L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock, titled "Stock Shredder vs Manual Editing in Premiere Pro" (replaces article #4) | Draft (Jan 18 slot) |
 | L10 | Stock site | storyblocks / getty istock video contributor | storyblocks-video-contributor; Getty/iStock not drafted (spec page didn't load Nov 19) | Draft (Jan 25 slot) |
 
 ## Daily queue (Daniel, Nov 19: "post everyday")
