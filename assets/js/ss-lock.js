@@ -28,10 +28,10 @@
 
   var TOTAL = 40, SEC_PER_CLIP = 9;               // the card's story: 40 clips, about 6 minutes
   var LOCK_AT = 4.0;                              // playhead hits the end of the clip in remote-flow.mp4
-  // Whole loop ~11.5 s (Daniel 2026-11-19): clip plays 0-4 s, phone locks at 4 s, the reveal glides
+  // Whole loop ~10.5 s (Daniel 2026-11-19): clip plays 0-4 s, phone locks at 4 s, the reveal glides
   // for 1 s on Apple's iOS sheet curve, the count lands on 100% at 9 s of the loop (5 s after lock),
-  // holds 2 s, then snaps back to the starting placement in 0.45 s.
-  var LAND_MS = 120, SPLIT_MS = 150, RUN_START = 700, RUN_MS = 4300, HOLD_MS = 2000, JOIN_MS = 450;
+  // holds 1 s, then snaps back to the starting placement in 0.45 s.
+  var LAND_MS = 120, SPLIT_MS = 150, RUN_START = 700, RUN_MS = 4300, HOLD_MS = 1000, JOIN_MS = 450;
   var tpl = row.getAttribute('data-left-tpl') || '%@ left';
   var pctEls = row.querySelectorAll('[data-la-pct]'), fillEls = row.querySelectorAll('[data-la-fill]');
   var leftEls = row.querySelectorAll('[data-la-left]'), doneEls = row.querySelectorAll('[data-la-done]');
