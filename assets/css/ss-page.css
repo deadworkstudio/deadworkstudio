@@ -996,3 +996,42 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
    Card = min(column, 340px) wide at 1360:1192; phone frame adds 5px padding top and bottom. */
 .upgrade--kw, .upgrade--phone { container-type: inline-size; }
 .upgrade-shot--phone img, .upgrade-shot--phone video { width: auto; height: calc(min(100cqw, 340px) * 1192 / 1360 - 10px); aspect-ratio: 660 / 1344; }
+
+/* Lock screen + Apple Watch (Daniel 2026-11-19 "show the lock screen somewhere for the phone",
+   "add a watch update too"). Rebuilt in HTML from the iPhone app's own Live Activity layout
+   (ExportActivityWidgetLiveActivity.swift): wordmark, X/Y CLIPS, green bar, percent, time left.
+   Wallpaper is our own photo (bg.jpg). */
+.lockrow { margin: 64px auto 0; max-width: 760px; }
+.lockrow-say { text-align: center; max-width: 46ch; margin: 0 auto; }
+.lockrow-h { font-size: clamp(22px, 3vw, 28px); line-height: 1.2; margin: 0 0 10px; }
+.lockrow-say p { margin: 0; color: var(--muted, #6d675d); }
+.lockrow-devices { display: flex; justify-content: center; align-items: flex-end; gap: clamp(20px, 5vw, 56px); margin-top: 36px; }
+.lockrow figure { margin: 0; }
+.lockrow figcaption { margin-top: 14px; text-align: center; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted, #6d675d); }
+.lock-phone { width: min(260px, 58vw); }
+.lock-phone .phone-body { padding: 10px; border-radius: 44px; }
+.lock-screen { position: relative; aspect-ratio: 660 / 1380; border-radius: 35px; overflow: hidden; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: #000 url('../img/products/stock-shredder/bg.jpg?v=lk1') center / cover no-repeat; }
+.lock-screen::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 38%, rgba(0,0,0,.35) 100%); }
+.lock-screen > * { position: relative; }
+.lock-date { padding-top: 22cqw; text-align: center; font-size: 5.6cqw; font-weight: 600; opacity: .92; }
+.lock-time { text-align: center; font-size: 26cqw; font-weight: 700; line-height: 1; letter-spacing: -.02em; margin-top: 1cqw; }
+.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 30cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.86); }
+.la-top, .la-foot, .wa-top, .wa-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.lock-phone .phone-body img.la-logo { display: block; height: 5.4cqw; width: auto; padding: 0; border-radius: 0; background: none; }
+.la-count { font-size: 3.9cqw; font-weight: 600; color: rgba(255,255,255,.6); white-space: nowrap; }
+.la-bar { height: 1.6cqw; min-height: 4px; margin: 3.4cqw 0; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
+.la-bar > span { display: block; height: 100%; border-radius: inherit; background: #8FD687; transition: width .8s linear; }
+.la-foot { font-size: 4.4cqw; color: rgba(255,255,255,.6); font-variant-numeric: tabular-nums; }
+.lock-watch { width: min(150px, 34vw); }
+.watch-body { position: relative; box-sizing: border-box; padding: 9px; border-radius: 38px; background: #0d0d0c; box-shadow: inset 0 0 0 2px #2a2a27, 0 30px 50px -26px rgba(20,20,18,.55); }
+.watch-body::after { content: ''; position: absolute; right: -5px; top: 30%; width: 6px; height: 18%; border-radius: 3px; background: #2a2a27; }
+.watch-screen { aspect-ratio: 396 / 484; border-radius: 30px; background: #000; color: #fff; overflow: hidden; container-type: inline-size; font-family: -apple-system, system-ui, 'SF Pro Text', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; padding: 9% 7% 7%; box-sizing: border-box; }
+/* padding in % (not cqw): cqw on the container itself resolves against an outer container. */
+.watch-time { text-align: right; font-size: 10cqw; font-weight: 600; }
+.wa-card { margin-top: auto; padding: 7cqw 7cqw 6cqw; border-radius: 13cqw; background: #1c1c1e; }
+.wa-top svg { width: 11cqw; height: 11cqw; color: #8FD687; flex: none; }
+.wa-pct { font-size: 15cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
+.wa-card .la-bar { height: 3.4cqw; margin: 4cqw 0; }
+.wa-foot { font-size: 7.6cqw; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 520px) { .lockrow { margin-top: 48px; } .lockrow-devices { gap: 16px; } }
+@media (prefers-reduced-motion: reduce) { .la-bar > span { transition: none; } }
