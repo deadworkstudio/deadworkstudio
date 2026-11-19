@@ -1012,8 +1012,8 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .lockflow li.is-on .lockflow-n { background: #3D6E39; color: #fff; box-shadow: none; }
 .remote-stage { --gap: clamp(16px, 4vw, 44px); display: flex; justify-content: center; align-items: flex-end; gap: var(--gap); margin-top: 36px; }
 /* Phone alone, centered, with the watch tucked behind it; when the phone locks they slide apart. */
-.remote-stage .phone { position: relative; z-index: 2; transition: transform .9s cubic-bezier(.65,0,.25,1); }
-.lock-watch { position: relative; z-index: 1; transition: transform .9s cubic-bezier(.65,0,.25,1), opacity .6s ease; }
+.remote-stage .phone { position: relative; z-index: 2; transition: transform .5s cubic-bezier(.2,.9,.1,1); }
+.lock-watch { position: relative; z-index: 1; transition: transform .5s cubic-bezier(.2,.9,.1,1), opacity .3s ease; }
 .remote-stage.is-anim .phone { transform: translateX(var(--phone-shift, 0px)); }
 .remote-stage.is-anim .lock-watch { transform: translateX(var(--watch-shift, 0px)) scale(.92); }
 /* At rest the watch peeks out from behind the phone (Daniel: "it can stay there at the beginning"). */
@@ -1021,13 +1021,13 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .remote-stage .phone { margin: 0; flex: none; }
 .remote-stage .phone-screen { position: relative; }
 .remote-lock-note { max-width: 46ch; margin: 22px auto 0; text-align: center; font-size: 15px; color: var(--ink-3); }
-.lock-screen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: #1a1d18 url('../img/products/stock-shredder/lock-wallpaper.jpg?v=lk3') center / cover no-repeat; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
+.lock-screen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; container-type: inline-size; color: #fff; font-family: -apple-system, system-ui, 'SF Pro Display', 'Helvetica Neue', sans-serif; background: #1a1d18 url('../img/products/stock-shredder/lock-wallpaper.jpg?v=lk3') center / cover no-repeat; opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }
 .lock-screen::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 34%, rgba(0,0,0,0) 55%, rgba(0,0,0,.3) 100%); }
 .lock-screen > * { position: relative; }
-[data-lockrow].is-locked .lock-screen { opacity: 1; visibility: visible; transition: opacity .6s ease, visibility 0s; }
+[data-lockrow].is-locked .lock-screen { opacity: 1; visibility: visible; transition: opacity .2s ease, visibility 0s; }
 .lock-date { padding-top: 22cqw; text-align: center; font-size: 5.6cqw; font-weight: 600; opacity: .92; }
 .lock-time { text-align: center; font-size: 26cqw; font-weight: 700; line-height: 1; letter-spacing: -.02em; margin-top: 1cqw; }
-.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 22cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.88); box-shadow: 0 0 0 1px rgba(255,255,255,.06); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+.la-card { position: absolute; left: 4.5cqw; right: 4.5cqw; bottom: 22cqw; padding: 5.5cqw; border-radius: 8cqw; background: rgba(0,0,0,.88); box-shadow: 0 0 0 1px rgba(255,255,255,.06); transition: opacity .3s ease, transform .4s cubic-bezier(.2,.9,.1,1); }
 .la-top, .la-foot, .wa-top, .wa-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .lock-screen img.la-logo { display: block; height: 5.4cqw; width: auto; padding: 0; border-radius: 0; background: none; }
 .la-count { font-size: 3.9cqw; font-weight: 600; color: rgba(255,255,255,.6); white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -1045,7 +1045,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .wa-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .lock-watch img.wa-logo { display: block; height: 11cqw; width: auto; }
 .watch-time { font-size: 10cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
-.wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+.wa-card { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; transition: opacity .3s ease, transform .4s cubic-bezier(.2,.9,.1,1); }
 .wa-top { justify-content: flex-start; }
 .wa-pct { line-height: 1; letter-spacing: -.02em; font-size: 30cqw; font-weight: 600; font-variant-numeric: tabular-nums; }
 .wa-card .la-bar { height: 4cqw; margin: 6cqw 0 5cqw; }
@@ -1054,10 +1054,10 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 @media (prefers-reduced-motion: reduce) { .remote-stage .phone, .lock-watch, .phone-island { transition: none !important; } }
 /* Dynamic Island while the export runs: scissors left, small bar + percent right, like the app's
    compact island (ExportActivityWidgetLiveActivity.swift). Widens when the phone locks. */
-.remote-stage .phone-island { display: flex; align-items: center; justify-content: space-between; padding: 0 10px; box-sizing: border-box; transition: width .5s cubic-bezier(.2,.8,.2,1); container-type: inline-size; }
+.remote-stage .phone-island { display: flex; align-items: center; justify-content: space-between; padding: 0 10px; box-sizing: border-box; transition: width .4s cubic-bezier(.2,.9,.1,1); container-type: inline-size; }
 .remote-stage.is-locked .phone-island { width: 64%; }
 .di-l, .di-r { display: flex; align-items: center; gap: 5px; opacity: 0; transition: opacity .3s ease; }
-.remote-stage.is-s2 .di-l, .remote-stage.is-s2 .di-r { opacity: 1; transition-delay: .25s; }
+.remote-stage.is-s2 .di-l, .remote-stage.is-s2 .di-r { opacity: 1; transition-delay: .15s; }
 .di-l svg { width: 14px; height: 14px; color: #8FD687; }
 .di-bar { width: 26px; height: 5px; border-radius: 99px; background: rgba(255,255,255,.25); overflow: hidden; }
 .di-bar > span { display: block; width: 100%; height: 100%; background: #8FD687; transform-origin: left center; transform: scaleX(.3); }

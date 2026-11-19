@@ -28,8 +28,9 @@
 
   var TOTAL = 40, SEC_PER_CLIP = 9;               // the card's story: 40 clips, about 6 minutes
   var LOCK_AT = 4.0;                              // playhead hits the end of the clip in remote-flow.mp4
-  // Lock screen + watch display lasts 10 s in total (Daniel 2026-11-19): 1.3 + 6.7 + 1.2 + 0.8.
-  var LAND_MS = 500, SPLIT_MS = 900, RUN_START = 1300, RUN_MS = 6700, HOLD_MS = 1200, JOIN_MS = 800;
+  // Lock screen + watch display lasts 10 s in total (Daniel 2026-11-19), and the lock + slide-out
+  // is one 0.5 s snap ("this movement needs to be like .5 seconds snap"): 0.65 + 7.65 + 1.2 + 0.5.
+  var LAND_MS = 100, SPLIT_MS = 100, RUN_START = 650, RUN_MS = 7650, HOLD_MS = 1200, JOIN_MS = 500;
   var tpl = row.getAttribute('data-left-tpl') || '%@ left';
   var pctEls = row.querySelectorAll('[data-la-pct]'), fillEls = row.querySelectorAll('[data-la-fill]');
   var leftEls = row.querySelectorAll('[data-la-left]'), doneEls = row.querySelectorAll('[data-la-done]');
