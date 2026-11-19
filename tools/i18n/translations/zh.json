@@ -1461,6 +1461,13 @@
   "That code isn't active, but you can still get 100 free clips below.": "这个代码已失效，但你仍可以在下方领取 100 个免费片段。",
   "Check your email address. It should look like name@example.com.": "请检查你的邮箱地址，格式应类似 name@example.com。",
   "100 free clips": "100 个免费片段",
-  "Couldn't send it. Tap Start now anyway to start here.": "发送失败。点按“仍然立即开始”在这里开始。"
+  "Couldn't send it. Tap Start now anyway to start here.": "发送失败。点按“仍然立即开始”在这里开始。",
+  "We sent your activation key to {email}. Your free trial runs until {date} or 100 clips.": "我们已将激活密钥发送至 {email}。免费试用到 {date} 或 100 个片段为止。",
+  "your email": "你的邮箱",
+  "Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.": "打开应用，点击<strong>已经有激活密钥了？</strong>，然后粘贴邮件里的密钥。",
+  "Too many new trials from this network today. Try again tomorrow.": "今天此网络的新试用过多。请明天再试。",
+  "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "请使用你的常用邮箱。我们会把激活密钥发到那里，临时邮箱无法开始试用。",
+  "This email can't start a new trial. If it already has one, we just emailed the key again. Otherwise, pick a plan below.": "此邮箱无法开始新的试用。如果它已有试用，我们刚刚重新发送了密钥。否则，请在下方选择方案。",
+  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "你的试用已开通，但含有密钥的邮件未能发送。请一分钟后再试，我们会重新发送。"
  }
 }

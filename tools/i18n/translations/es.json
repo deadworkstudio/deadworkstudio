@@ -1461,6 +1461,13 @@
   "That code isn't active, but you can still get 100 free clips below.": "Ese código no está activo, pero aún puedes conseguir 100 clips gratis abajo.",
   "Check your email address. It should look like name@example.com.": "Revisa tu dirección de correo. Debe tener el formato nombre@ejemplo.com.",
   "100 free clips": "100 clips gratis",
-  "Couldn't send it. Tap Start now anyway to start here.": "No se pudo enviar. Toca «Empezar ahora de todos modos» para empezar aquí."
+  "Couldn't send it. Tap Start now anyway to start here.": "No se pudo enviar. Toca «Empezar ahora de todos modos» para empezar aquí.",
+  "We sent your activation key to {email}. Your free trial runs until {date} or 100 clips.": "Enviamos tu clave de activación a {email}. Tu prueba gratuita dura hasta el {date} o 100 clips.",
+  "your email": "tu correo",
+  "Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.": "Ábrelo, haz clic en <strong>¿Ya tienes una clave de activación?</strong> y pega la clave de nuestro correo.",
+  "Too many new trials from this network today. Try again tomorrow.": "Demasiadas pruebas nuevas desde esta red hoy. Inténtalo mañana.",
+  "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "Usa tu correo de siempre. Ahí te enviamos tu clave de activación, y los correos temporales no pueden empezar una prueba.",
+  "This email can't start a new trial. If it already has one, we just emailed the key again. Otherwise, pick a plan below.": "Este correo no puede empezar una prueba nueva. Si ya tiene una, acabamos de enviarle la clave otra vez. Si no, elige un plan abajo.",
+  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "Tu prueba está lista, pero no pudimos enviar el correo con tu clave. Inténtalo de nuevo en un minuto y te la reenviamos."
  }
 }

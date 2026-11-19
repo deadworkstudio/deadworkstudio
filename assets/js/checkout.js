@@ -481,7 +481,7 @@
     }
   }
 
-  function showSuccess(activationKey, trial, firstName) {
+  function showSuccess(activationKey, trial, firstName, sentTo) {
     var finishedSessionId = sessionId;
     teardownCheckout();
     showHeardQuestion(finishedSessionId);
@@ -492,7 +492,11 @@
     // trial — or any purchase — has actually completed; leaving it visible behind the success
     // panel let someone immediately try to start a second trial from the same page.
     if (trialOffer) trialOffer.hidden = true;
-    if (keyEl) keyEl.textContent = activationKey;
+    if (keyEl) keyEl.textContent = activationKey || '';
+    // Confirmed email (2026-11-19): a no-card trial's key only goes to the inbox, never this page.
+    var keyByEmail = !activationKey;
+    var keyBox = keyEl ? keyEl.closest('.activation-key-box') : null;
+    if (keyBox) keyBox.hidden = keyByEmail;
 
     // A short welcome: "You're in, Macy." when the Worker knows a first name, else "You're in."
     // endsOnText rides pre-formatted from the Worker (§3 — this file never computes its own end
@@ -503,7 +507,9 @@
     if (isTrial) step('trial-done');
     if (successTitle) successTitle.textContent = name ? T("You're in, {name}.", { name: name }) : T("You're in.");
     if (successNote) {
-      successNote.textContent = isTrial
+      successNote.textContent = keyByEmail
+        ? T('We sent your activation key to {email}. Your free trial runs until {date} or 100 clips.', { email: sentTo || T('your email'), date: trialEndText(trial) })
+        : isTrial
         ? T('Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.', { date: trialEndText(trial) })
         : T("Thanks for the support. Here's your activation key.");
     }
@@ -512,6 +518,7 @@
       // (Account only shows a key you already have). The key goes in "Already have an activation
       // key?", the same words as the welcome email (worker customerEmail.ts PASTE_KEY_TEXT).
       var pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste your key.') + '</li>';
+      if (keyByEmail && !onPhone) pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.') + '</li>';
       successSteps.innerHTML = onPhone
         ? '<li>' + T('Open the email we just sent you on your computer.') + '</li><li>' + T('Download Stock Shredder from it.') + '</li>' + pasteStep
         : '<li>' + T('Install Stock Shredder.') + '</li>' + pasteStep + '<li>' + T('Drop in a folder of raw footage and start shredding.') + '</li>';
@@ -1173,10 +1180,10 @@
         showTrialStatus('');
         // No-card trial: the Worker started it already and sent back the key. (A Worker without
         // the no-card code answers with a card Checkout below instead, so nothing breaks.)
-        if (result.ok && result.data && result.data.noCard && result.data.activationKey) {
+        if (result.ok && result.data && result.data.noCard && (result.data.activationKey || result.data.emailSent)) {
           sessionId = result.data.sessionId || null;
           currentCheckoutIsTrial = true;
-          showSuccess(result.data.activationKey, result.data.trial, result.data.firstName);
+          showSuccess(result.data.activationKey || null, result.data.trial, result.data.firstName, trialEmailInput ? (trialEmailInput.value || '').trim() : '');
           var reduceMotionNc = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (success && success.scrollIntoView) success.scrollIntoView({ block: 'start', behavior: reduceMotionNc ? 'auto' : 'smooth' });
           return;
@@ -1196,11 +1203,16 @@
             // identical "See plans below instead." on top just repeated the same instruction
             // twice in one sentence. Link "See plans" to #pricing for real instead, matching the
             // spec's own error-mapping note (§5.4 step 5 / §7 item 3).
-            showTrialErrorWithPricingLink(data.error || "This email can't start a SHRED trial.");
+            showTrialErrorWithPricingLink(T(data.error || "This email can't start a SHRED trial."));
+          } else if (result.status === 502 && data.code === 'email_failed') {
+            // The trial exists but its key email didn't go out; trying again re-sends it.
+            showTrialError(T("Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it."));
           } else if (result.status === 409) {
             showTrialError(data.error || "This trial couldn't be started.");
           } else if (result.status === 429) {
-            showTrialError(data.error || 'Too many attempts. Try again in an hour.');
+            showTrialError(data.code === 'network_cap' ? T('Too many new trials from this network today. Try again tomorrow.') : data.error || 'Too many attempts. Try again in an hour.');
+          } else if (result.status === 400 && data.code === 'disposable') {
+            showTrialError(T("Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial."));
           } else if (result.status === 400 && data.error) {
             // A plain refusal of what was typed (e.g. not a real email address) reads fine as is.
             showTrialError(data.error);

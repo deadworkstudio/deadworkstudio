@@ -1461,6 +1461,13 @@
   "That code isn't active, but you can still get 100 free clips below.": "このコードは無効ですが、下のフォームから100クリップを無料で受け取れます。",
   "Check your email address. It should look like name@example.com.": "メールアドレスを確認してください。name@example.com のような形式です。",
   "100 free clips": "100クリップ無料",
-  "Couldn't send it. Tap Start now anyway to start here.": "送信できませんでした。「このまま今すぐ始める」をタップしてここで始めてください。"
+  "Couldn't send it. Tap Start now anyway to start here.": "送信できませんでした。「このまま今すぐ始める」をタップしてここで始めてください。",
+  "We sent your activation key to {email}. Your free trial runs until {date} or 100 clips.": "アクティベーションキーを {email} に送信しました。無料トライアルは {date} まで、または100クリップまでです。",
+  "your email": "あなたのメールアドレス",
+  "Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.": "アプリを開き、<strong>アクティベーションキーをお持ちですか？</strong>をクリックして、メールに記載のキーを貼り付けてください。",
+  "Too many new trials from this network today. Try again tomorrow.": "本日このネットワークからの新規トライアルが多すぎます。明日もう一度お試しください。",
+  "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "普段お使いのメールアドレスを入力してください。キーはそこに送られます。使い捨てメールではトライアルを始められません。",
+  "This email can't start a new trial. If it already has one, we just emailed the key again. Otherwise, pick a plan below.": "このメールアドレスでは新しいトライアルを始められません。すでにトライアルがある場合は、キーを再送しました。そうでなければ、下のプランを選んでください。",
+  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "トライアルは準備できましたが、キーのメールを送信できませんでした。1分後にもう一度お試しください。再送します。"
  }
 }
