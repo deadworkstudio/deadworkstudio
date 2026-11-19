@@ -60,7 +60,7 @@
     '.dwc-input{width:100%;height:44px;padding:0 12px;background:var(--dwc-raised);border:1px solid var(--dwc-line);color:var(--dwc-bone);font:400 16px/1 var(--dwc-body);border-radius:0}',
     '.dwc-input:focus{border-color:var(--dwc-bone2);outline:none}',
     '.dwc-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}',
-    '.dwc-btn{height:46px;border:0;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
+    '.dwc-btn{height:46px;border:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
     '.dwc-btn:hover{background:#fff}',
     '.dwc-btn[disabled]{opacity:.5;cursor:default}',
     '.dwc-note{margin:0;font:400 12.5px/1.45 var(--dwc-body);color:var(--dwc-bone3)}',
@@ -80,7 +80,7 @@
     '.dwc-foot{display:flex;justify-content:space-between;align-items:center;padding:0 16px 10px;font:400 10px/1 var(--dwc-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dwc-bone3)}',
     '.dwc-foot button{background:none;border:0;padding:4px 0;color:var(--dwc-bone3);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}',
     '.dwc-foot button:hover{color:var(--dwc-bone)}',
-    '@media (max-width:520px){.dwc-panel{right:0;bottom:0;width:100%;max-width:none;height:100%;max-height:none;height:100dvh;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}.dwc-launch{right:12px}.dwc-panel.is-open~.dwc-launch{display:none}}',
+    '@media (max-width:520px){.dwc-launch{height:40px;padding:0 14px 0 12px;gap:8px;font-size:10px;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px))}.dwc-panel{right:0;bottom:0;width:100%;max-width:none;height:100%;max-height:none;height:100dvh;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}.dwc-launch{right:12px}.dwc-panel.is-open~.dwc-launch{display:none}}',
     '@media (prefers-reduced-motion:reduce){.dwc-panel,.dwc-launch{transition:none}}',
     cfg.hideLauncherBelow ? '@media (max-width:' + cfg.hideLauncherBelow + 'px){.dwc-launch{display:none}}' : ''
   ].join('\n');
@@ -108,7 +108,7 @@
 
   var dotL = h('i', { class: 'dwc-dot' });
   var badge = h('span', { class: 'dwc-badge', hidden: '' });
-  var launch = h('button', { class: 'dwc-launch', type: 'button', 'aria-label': t.open, 'aria-expanded': 'false' }, [dotL, h('span', { text: t.launcher }), badge]);
+  var launch = h('button', { class: 'dwc-launch', type: 'button', 'aria-label': t.open, 'aria-expanded': 'false' }, [dotL, h('span', { class: 'dwc-launch-label', text: t.launcher }), badge]);
 
   var dotH = h('i', { class: 'dwc-dot' });
   var statusText = h('b', { style: 'font-weight:500' });
