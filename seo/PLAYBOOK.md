@@ -108,13 +108,13 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 | L1 | Stock site | prepare video for adobe stock / adobe stock video contributor | adobe-stock-video-workflow | Draft (Nov 30 slot) |
 | L2 | Camera | sell drone footage on stock sites / dji drone footage stock / fpv stock footage | drone-footage-for-stock | Draft (Dec 7 slot) |
 | L3 | Camera | sony fx3 stock footage workflow / s-log3 stock footage | sony-slog3-stock-footage | Draft (Dec 14 slot) |
-| L4 | Competitor | xpiks alternative (video) | Merge with article #3 rather than a second page | Not started |
-| L5 | Stock site | shutterstock video contributor upload | Needs its own angle (keywords, editorial, 48 fps) to avoid duplicating article 2 | Not started |
-| L6 | Stock site | pond5 video upload / sell footage on pond5 | Pond5 pricing you set, file names, 8K | Not started |
-| L7 | Camera | blackmagic raw stock footage / braw stock | BRAW read natively | Not started |
-| L8 | Camera | red r3d stock footage | Needs REDCINE-X Pro installed, say so | Not started |
-| L9 | Competitor | premiere pro batch export clips for stock | Fair compare, overlaps article #4 | Not started |
-| L10 | Stock site | storyblocks / getty istock video contributor | Check each site's own rules first | Not started |
+| L4 | Competitor | xpiks alternative (video) | Merge with article #3 rather than a second page | Folded into article #3, no separate page |
+| L5 | Stock site | shutterstock video contributor upload | shutterstock-video-contributor (angle: 7-50 keywords, sentence descriptions, editorial) | Draft (Dec 28 slot) |
+| L6 | Stock site | pond5 video upload / sell footage on pond5 | pond5-video-upload (angle: file names, size caps, payout; video pricing is tiered) | Draft (Dec 21 slot) |
+| L7 | Camera | blackmagic raw stock footage / braw stock | blackmagic-raw-stock-footage | Draft (Jan 4 slot) |
+| L8 | Camera | red r3d stock footage | red-r3d-stock-footage (says REDCINE-X Pro needed) | Draft (Jan 11 slot) |
+| L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock (overlaps article #4, pick one) | Draft (Jan 18 slot) |
+| L10 | Stock site | storyblocks / getty istock video contributor | storyblocks-video-contributor; Getty/iStock not drafted (spec page didn't load Nov 19) | Draft (Jan 25 slot) |
 
 ## Later (separate project, not now)
 
