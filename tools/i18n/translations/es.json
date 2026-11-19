@@ -1466,6 +1466,8 @@
   "your email": "tu correo",
   "Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.": "Ábrelo, haz clic en <strong>¿Ya tienes una clave de activación?</strong> y pega la clave de nuestro correo.",
   "Too many new trials from this network today. Try again tomorrow.": "Demasiadas pruebas nuevas desde esta red hoy. Inténtalo mañana.",
-  "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "Usa tu correo de siempre. Ahí te enviamos tu clave de activación, y los correos temporales no pueden empezar una prueba."
+  "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "Usa tu correo de siempre. Ahí te enviamos tu clave de activación, y los correos temporales no pueden empezar una prueba.",
+  "This email can't start a new trial. If it already has one, we just emailed the key again. Otherwise, pick a plan below.": "Este correo no puede empezar una prueba nueva. Si ya tiene una, acabamos de enviarle la clave otra vez. Si no, elige un plan abajo.",
+  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "Tu prueba está lista, pero no pudimos enviar el correo con tu clave. Inténtalo de nuevo en un minuto y te la reenviamos."
  }
 }

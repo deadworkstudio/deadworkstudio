@@ -1203,7 +1203,10 @@
             // identical "See plans below instead." on top just repeated the same instruction
             // twice in one sentence. Link "See plans" to #pricing for real instead, matching the
             // spec's own error-mapping note (§5.4 step 5 / §7 item 3).
-            showTrialErrorWithPricingLink(data.error || "This email can't start a SHRED trial.");
+            showTrialErrorWithPricingLink(T(data.error || "This email can't start a SHRED trial."));
+          } else if (result.status === 502 && data.code === 'email_failed') {
+            // The trial exists but its key email didn't go out; trying again re-sends it.
+            showTrialError(T("Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it."));
           } else if (result.status === 409) {
             showTrialError(data.error || "This trial couldn't be started.");
           } else if (result.status === 429) {
