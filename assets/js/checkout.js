@@ -251,6 +251,7 @@
   // Chat "Send trial link" (Daniel 11-20): #trial&for=<base64 {n,e}> fills in their first name and
   // email, then the address bar goes back to #trial so the email isn't left in history.
   (function () {
+    if (!/^#trial\b/.test(location.hash)) return; // #chat&for=… belongs to the chat box (dw-chat.js)
     var m = /[#&]for=([A-Za-z0-9_-]+)/.exec(location.hash);
     if (!m) return;
     try {
