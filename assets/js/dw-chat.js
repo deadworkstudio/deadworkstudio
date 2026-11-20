@@ -39,7 +39,7 @@
     '.dwc-launch{position:fixed;right:20px;bottom:' + bottom + 'px;z-index:2147483000;display:flex;align-items:center;gap:10px;height:46px;padding:0 18px 0 16px;background:var(--dwc-ink);color:var(--dwc-bone);border:1px solid var(--dwc-line2);font:600 11px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:border-color .16s,transform .16s}',
     '.dwc-launch:hover{border-color:var(--dwc-bone)}',
     '.dwc-launch:focus-visible,.dwc button:focus-visible,.dwc input:focus-visible,.dwc textarea:focus-visible{outline:2px solid var(--dwc-bone);outline-offset:2px}',
-    '.dwc-dot{width:8px;height:8px;border-radius:0;background:#e3b23d;flex:none}',
+    '.dwc-dot{width:8px;height:8px;border-radius:0;background:var(--dwc-bone3);flex:none}',
     '.dwc-dot.is-here{background:var(--dwc-green)}',
     '.dwc-badge{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--dwc-blood);color:#fff;font:600 10px/18px var(--dwc-mono);letter-spacing:0;text-align:center}',
     '.dwc-launch[hidden],.dwc-badge[hidden]{display:none}',
