@@ -747,9 +747,9 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261120cpc"></script>
+<script src="../../assets/js/checkout.js?v=20261120chat2"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
-<script src="../../assets/js/ss-page.js?v=20261120i"></script>
+<script src="../../assets/js/ss-page.js?v=20261120k"></script>
 <script src="../../assets/js/ss-hero.js?v=20261115c" defer></script>
 <script>
 // The hrefs above point at GitHub's stable "latest" link (releases/latest/download/
@@ -806,7 +806,7 @@ fetch('https://api.github.com/repos/deadworkstudio/stock-shredder-releases/relea
   }
   // Arriving on #trial (home page button, emails): the box only shows once the offer is confirmed,
   // so the browser's own anchor jump misses it. Wait for it, then scroll.
-  if (location.hash === '#trial') {
+  if (/^#trial/.test(location.hash)) {
     var tries = 0;
     var waitBox = setInterval(function () {
       var box = document.querySelector('[data-trial-offer]');
