@@ -306,6 +306,7 @@
     open = true;
     if (!built) { built = true; if (state) showChat(false); else showForm(); }
     else if (state) { poll(); startPoll(); }
+    checkStatus();
     panel.classList.add('is-open'); panel.setAttribute('aria-hidden', 'false');
     launch.setAttribute('aria-expanded', 'true'); launch.setAttribute('aria-label', t.close);
     badge.hidden = true; badge.textContent = '';
@@ -326,7 +327,11 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) closePanel(); });
 
   // first status for the dot; a returning visitor with a chat also gets their replies
-  api('/chat/status').then(function (d) { if (d.ok) setHere(d.here); }).catch(function () {});
+  // Asks the server whether the team is in: on load, every time the box opens, and every
+  // 30 seconds while it is open, so flipping Here/Away in the inbox shows up on the site.
+  function checkStatus() { api('/chat/status').then(function (d) { if (d.ok) setHere(d.here); }).catch(function () {}); }
+  checkStatus();
+  setInterval(function () { if (open && !document.hidden) checkStatus(); }, 30000);
   if (state) { lastActivity = Date.now(); poll(); startPoll(); }
 
   window.DWChat = { open: openPanel, close: closePanel };
