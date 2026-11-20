@@ -56,11 +56,12 @@
     '.dwc-x:hover{color:var(--dwc-bone)}',
     '.dwc-body{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}',
     '.dwc-form{padding:22px 20px;display:flex;flex-direction:column;gap:16px;overflow:auto}',
+    '.dwc-form>*{flex-shrink:0}',
     '.dwc-label{display:block;font:500 10.5px/1 var(--dwc-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dwc-bone2);margin-bottom:8px}',
     '.dwc-input{width:100%;height:44px;padding:0 12px;background:var(--dwc-raised);border:1px solid var(--dwc-line);color:var(--dwc-bone);font:400 16px/1 var(--dwc-body);border-radius:0}',
     '.dwc-input:focus{border-color:var(--dwc-bone2);outline:none}',
     '.dwc-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}',
-    '.dwc-btn{height:46px;border:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
+    '.dwc-btn{height:46px;min-height:46px;flex-shrink:0;border:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
     '.dwc-btn:hover{background:#fff}',
     '.dwc-btn[disabled]{opacity:.5;cursor:default}',
     '.dwc-away,.dwc-awayonly{display:none}',
@@ -141,7 +142,17 @@
     if (formBtn && !state) formBtn.textContent = here ? t.start : t.sendMail;
     if (root) root.classList.toggle('dwc-is-away', !here);
   }
-  setHere(false);
+  // Until the server answers, guess from the posted hours (Mon to Fri, 9 AM to 6 PM Central),
+  // so the box never says the team is out during the day just because the check is slow.
+  function inHours() {
+    try {
+      var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short', hour: 'numeric', hour12: false }).formatToParts(new Date());
+      var wd = '', hr = 0;
+      parts.forEach(function (p) { if (p.type === 'weekday') wd = p.value; if (p.type === 'hour') hr = Number(p.value) % 24; });
+      return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].indexOf(wd) !== -1 && hr >= 9 && hr < 18;
+    } catch (e) { return false; }
+  }
+  setHere(inHours());
 
   // ---- network ----
   function api(path, body) {

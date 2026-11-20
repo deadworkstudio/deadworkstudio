@@ -129,7 +129,8 @@
   });
 
   // ---- support chat: DEADWORK's own chat box (assets/js/dw-chat.js, replaced Tawk.to) ----
-  // Loads after the first scroll, tap or key press, never on page load. On phones (<=719px) the
+  // Loads as soon as the page has finished loading (or on the first scroll, tap or key press if that
+  // comes first). On phones (<=719px) the
   // floating button stays hidden (it would sit on plan buttons and FAQ text); the "Chat with us"
   // link at the end of the FAQ opens the same box there and on desktop.
   var CHAT_PHONE_MAX = 719;
@@ -144,10 +145,14 @@
     var me = document.querySelector('script[src*="assets/js/ss-page.js"]');
     var s = document.createElement('script');
     s.async = true;
-    s.src = (me ? me.src.replace(/ss-page\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261120b';
+    s.src = (me ? me.src.replace(/ss-page\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261120c';
     document.body.appendChild(s);
   }
-  if (location.protocol !== 'file:') ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
+  if (location.protocol !== 'file:') {
+    ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
+    var chatSoon = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(loadChat, { timeout: 1200 }); };
+    if (document.readyState === 'complete') chatSoon(); else window.addEventListener('load', chatSoon, { once: true });
+  }
 
   // Real href (a mailto: to the studio inbox), so the click is never a dead end if the chat box
   // can't load (blocker, outage): give it a couple of seconds, then fall back to email.
