@@ -1367,7 +1367,11 @@
   "tools designed to eliminate busywork so creatives can stay creative.": "des outils conçus pour éliminer les tâches ingrates et laisser les créatifs créer.",
   "xxHash64": "xxHash64",
   "you@email.com": "vous@email.com",
-  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "Ouvrez-le, cliquez sur <strong>Vous avez déjà une clé d'activation ?</strong> et collez votre clé."
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "Ouvrez-le, cliquez sur <strong>Vous avez déjà une clé d'activation ?</strong> et collez votre clé.",
+  "11.60¢ per clip": "11.60 ¢ par clip",
+  "11.50¢ per clip": "11.50 ¢ par clip",
+  "10.75¢ per clip": "10.75 ¢ par clip",
+  "9.95¢ per clip": "9.95 ¢ par clip"
  },
  "script": {
   "/mo": "/mois",
@@ -1468,6 +1472,7 @@
   "Too many new trials from this network today. Try again tomorrow.": "Trop de nouveaux essais depuis ce réseau aujourd’hui. Réessayez demain.",
   "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "Utilisez votre e-mail habituel. Nous y envoyons votre clé d’activation, et les adresses jetables ne peuvent pas lancer d’essai.",
   "This email can't start a new trial. If it already has one, we just emailed the key again. Otherwise, pick a plan below.": "Cet e-mail ne peut pas lancer un nouvel essai. S’il en a déjà un, nous venons de renvoyer la clé. Sinon, choisissez un forfait ci-dessous.",
-  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "Votre essai est prêt, mais l’e-mail avec votre clé n’a pas pu partir. Réessayez dans une minute et nous le renverrons."
+  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "Votre essai est prêt, mais l’e-mail avec votre clé n’a pas pu partir. Réessayez dans une minute et nous le renverrons.",
+  "{cents}¢ per clip": "{cents} ¢ par clip"
  }
 }

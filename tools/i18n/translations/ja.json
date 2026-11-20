@@ -1367,7 +1367,11 @@
   "tools designed to eliminate busywork so creatives can stay creative.": "面倒な作業をなくし、クリエイターが創ることに集中できるよう設計されたツール。",
   "xxHash64": "xxHash64",
   "you@email.com": "you@email.com",
-  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "アプリを開き、<strong>アクティベーションキーをお持ちですか？</strong>をクリックしてキーを貼り付けます。"
+  "Open it, click <strong>Already have an activation key?</strong> and paste your key.": "アプリを開き、<strong>アクティベーションキーをお持ちですか？</strong>をクリックしてキーを貼り付けます。",
+  "11.60¢ per clip": "1クリップあたり11.60セント",
+  "11.50¢ per clip": "1クリップあたり11.50セント",
+  "10.75¢ per clip": "1クリップあたり10.75セント",
+  "9.95¢ per clip": "1クリップあたり9.95セント"
  },
  "script": {
   "/mo": "/月",
@@ -1468,6 +1472,7 @@
   "Too many new trials from this network today. Try again tomorrow.": "本日このネットワークからの新規トライアルが多すぎます。明日もう一度お試しください。",
   "Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial.": "普段お使いのメールアドレスを入力してください。キーはそこに送られます。使い捨てメールではトライアルを始められません。",
   "This email can't start a new trial. If it already has one, we just emailed the key again. Otherwise, pick a plan below.": "このメールアドレスでは新しいトライアルを始められません。すでにトライアルがある場合は、キーを再送しました。そうでなければ、下のプランを選んでください。",
-  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "トライアルは準備できましたが、キーのメールを送信できませんでした。1分後にもう一度お試しください。再送します。"
+  "Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it.": "トライアルは準備できましたが、キーのメールを送信できませんでした。1分後にもう一度お試しください。再送します。",
+  "{cents}¢ per clip": "1クリップあたり{cents}セント"
  }
 }
