@@ -349,7 +349,7 @@
 
   <section class="world tone-dark" data-world-map hidden aria-labelledby="world-title">
     <h2 class="section-title section-head head-dw" id="world-title">全球已<span class="shred-word">处理</span>的片段</h2>
-    <p class="world-count" data-shred-count data-counter-live="false"><span class="world-count-num" data-shred-num></span></p>
+    <p class="world-count" data-shred-count data-counter-live="auto"><span class="world-count-num" data-shred-num></span></p>
     <div class="world-map">
       <img src="../../assets/img/products/stock-shredder/world-dots.svg" alt="" width="1000" height="372" />
       <div class="world-map-dots" data-world-map-dots></div>
@@ -863,11 +863,11 @@ fetch('https://api.github.com/repos/deadworkstudio/stock-shredder-releases/relea
 // Windows: the buttons go to the Microsoft Store listing, which Microsoft signs and updates,
 // so there's no SmartScreen warning to explain and nothing for the release fetch above to swap.
 
-// World map of real signup locations (city-level counts only, see the Worker's listLeadLocations).
-// Always shows Daniel's pinned places (MAP_PINS below) and adds real signups elsewhere. The section itself
-// shows in local review (opened from disk, or ?preview=map) so the layout can be judged; in
-// production it stays hidden until there is real data. The "clips shredded" counter is NOT wired
-// to anything yet and is never shown with a made-up number.
+// World map of where Stock Shredder is used: Daniel's pinned places (MAP_PINS below), real signups
+// (whole-degree cells, see the Worker's listLeadLocations) and, since 2026-11-20, countries where clips
+// were shredded (country only, see the Worker's clipCountries.ts). Daniel 2026-11-20: "Keep clips away
+// until we hit 5k, until then show the map!" So the map always shows, and the clips number only
+// appears once the real counter reaches COUNTER_MIN.
 var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
 (function () {
   var section = document.querySelector('[data-world-map]');
@@ -875,7 +875,16 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   var preview = location.protocol === 'file:' || /[?&]preview=map\b/.test(location.search);
   if (preview) { section.hidden = false; section.classList.add('is-preview'); }
   // Places Daniel set by hand; real signups elsewhere are added on top of these.
-  var MIN_MAP_PLACES = 25;
+  var COUNTER_MIN = 5000;
+  // Rough middle of each country, for clips placed by country only. A country not listed here is
+  // simply left off the map.
+  var COUNTRY_POINTS = {
+    US: [39.5, -98.4], CA: [56, -106], MX: [23.6, -102.5], BR: [-10.8, -52.9], AR: [-35.4, -65.2], CL: [-33.5, -70.7], CO: [4.1, -72.9], PE: [-9.2, -75], VE: [7, -66.2], EC: [-1.4, -78.4], UY: [-32.8, -56], CR: [9.9, -84.1], PA: [8.5, -80.1], GT: [15.7, -90.3], DO: [18.9, -70.5], PR: [18.2, -66.5], JM: [18.1, -77.3],
+    GB: [53, -1.5], IE: [53.2, -8.2], FR: [46.6, 2.4], DE: [51.1, 10.4], NL: [52.2, 5.5], BE: [50.6, 4.6], LU: [49.8, 6.1], CH: [46.8, 8.2], AT: [47.6, 14.1], IT: [42.8, 12.6], ES: [40.2, -3.6], PT: [39.6, -8.1], DK: [56, 10], NO: [61.4, 9.1], SE: [62.2, 15.3], FI: [63.2, 26.3], IS: [64.9, -18.6], PL: [52.1, 19.4], CZ: [49.8, 15.5], SK: [48.7, 19.5], HU: [47.2, 19.4], RO: [45.9, 24.9], BG: [42.7, 25.2], GR: [39.1, 22.6], HR: [45.1, 15.6], SI: [46.1, 14.8], RS: [44, 20.9], UA: [49, 31.4], LT: [55.3, 23.9], LV: [56.9, 24.9], EE: [58.6, 25], TR: [39, 35.2], RU: [55.8, 37.6], CY: [35.1, 33.2], MT: [35.9, 14.4],
+    IL: [31.4, 35], AE: [24.3, 54.3], SA: [24, 45], QA: [25.3, 51.2], EG: [26.6, 30.8], MA: [31.8, -7.1], NG: [9.1, 8.7], KE: [0.2, 37.9], ZA: [-29, 25], GH: [7.9, -1.0], TZ: [-6.4, 34.9],
+    IN: [22.9, 79.6], PK: [30.4, 69.3], BD: [23.7, 90.4], LK: [7.9, 80.7], NP: [28.4, 84.1], CN: [35.9, 104.2], HK: [22.3, 114.2], TW: [23.7, 121], JP: [36.2, 138.3], KR: [36.5, 127.9], TH: [15.9, 101], VN: [16.1, 106.3], MY: [3.9, 102.2], SG: [1.35, 103.8], ID: [-2.5, 118], PH: [12.9, 121.8], KH: [12.6, 104.9],
+    AU: [-25.3, 133.8], NZ: [-41.8, 172.7]
+  };
   var MAP_PINS = [
     { city: 'Los Angeles', country: 'US', latitude: 34.05, longitude: -118.24, count: 1 },
     { city: 'St. Louis', country: 'US', latitude: 38.63, longitude: -90.2, count: 1 },
@@ -901,28 +910,35 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
       dot.title = loc.city ? loc.city + ', ' + loc.country : loc.country; // the public stats carry no city names
       dotsEl.appendChild(dot);
     });
-    // Hidden until the map shows real spread (sales audit 2026-11-12): a handful of dots reads
-    // thinner than no map, same reason reviews wait for 10.
-    section.hidden = locations.length < MIN_MAP_PLACES;
+    section.hidden = false;
   };
   drawMap([]);
-  fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/lead-locations')
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-    .then(function (data) { drawMap((data && data.locations) || []); })
-    .catch(function () {});
+  var API = 'https://stock-shredder-payments.stockshredder.workers.dev';
+  var getJson = function (path) {
+    return fetch(API + path).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); }).catch(function () { return null; });
+  };
+  Promise.all([getJson('/stats/lead-locations'), getJson('/stats/clip-countries')]).then(function (res) {
+    var signups = (res[0] && res[0].locations) || [];
+    var clipPlaces = ((res[1] && res[1].countries) || []).map(function (c) {
+      var p = COUNTRY_POINTS[c.country];
+      return p ? { country: c.country, latitude: p[0], longitude: p[1], count: c.clips ? Math.min(3, 1 + Math.floor(Math.log10(c.clips))) : 1 } : null;
+    }).filter(function (l) { return l && !signups.some(function (s) { return near(s, l); }); });
+    drawMap(signups.concat(clipPlaces));
+  });
   // Clips-shredded counter: reads the real shared counter on the payments server (+1 per finished
-  // export, sent by the Mac app). Shown on the live site only once data-counter-live="true" is set,
-  // i.e. once Daniel has confirmed the number is real; in local preview it shows whatever the server says.
+  // export, sent by the Mac app). Shows on its own once it reaches COUNTER_MIN; in local preview it
+  // shows whatever the server says. data-counter-live="off" on the element turns it off entirely.
   var countWrap = section.querySelector('[data-shred-count]');
-  var countLive = countWrap && countWrap.getAttribute('data-counter-live') === 'true';
-  if (countWrap && (countLive || preview)) {
+  var countOff = countWrap && countWrap.getAttribute('data-counter-live') === 'off';
+  if (countWrap && !countOff) {
     fetch('https://stock-shredder-payments.stockshredder.workers.dev/stats/clips-shredded')
       .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
       .then(function (d) {
         var total = Number(d && d.total) || 0;
         var el = countWrap.querySelector('[data-shred-num]');
         if (!el || !total) return;
-        if (countLive) { section.hidden = false; countWrap.classList.add('is-live'); }
+        if (total < COUNTER_MIN && !preview) return;
+        if (total >= COUNTER_MIN) countWrap.classList.add('is-live');
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, start = null, dur = 1200;
         function step(ts) { if (start === null) start = ts; var p = Math.min(1, (ts - start) / dur); el.textContent = Math.round(total * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1) requestAnimationFrame(step); }
         if (reduce) el.textContent = total.toLocaleString('en-US'); else requestAnimationFrame(step);
