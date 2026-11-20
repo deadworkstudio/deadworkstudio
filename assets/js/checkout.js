@@ -126,6 +126,7 @@
       var billEl = card.querySelector('[data-pricing-bill]');
       var clipsEl = card.querySelector('.pricing-clips');
       var perClipEl = card.querySelector('.pricing-per-clip');
+      var cpcEl = card.querySelector('[data-pricing-cpc]');
       if (!row || !priceEl) return;
       var cents = row[option];
       var perMonth = option === 'year' ? Math.round(cents / 12) : cents;
@@ -178,6 +179,9 @@
         clipsEl.textContent = T('{clips} clips / mo', { clips: monthlyClips.toLocaleString('en-US') });
       }
       if (perClipEl) perClipEl.textContent = perClipText(perMonth, monthlyClips);
+      // Daniel 2026-11-19: show cents per clip on every price again (US cents, two places, so
+      // Starter 11.60¢ and Creator 11.50¢ never round to the same number). Follows the term.
+      if (cpcEl) cpcEl.textContent = T('{cents}¢ per clip', { cents: (perMonth / monthlyClips).toFixed(2) });
     });
   }
 
