@@ -39,8 +39,8 @@
     '.dwc-launch{position:fixed;right:20px;bottom:' + bottom + 'px;z-index:2147483000;display:flex;align-items:center;gap:10px;height:46px;padding:0 18px 0 16px;background:var(--dwc-ink);color:var(--dwc-bone);border:1px solid var(--dwc-line2);font:600 11px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:border-color .16s,transform .16s}',
     '.dwc-launch:hover{border-color:var(--dwc-bone)}',
     '.dwc-launch:focus-visible,.dwc button:focus-visible,.dwc input:focus-visible,.dwc textarea:focus-visible{outline:2px solid var(--dwc-bone);outline-offset:2px}',
-    '.dwc-dot{width:8px;height:8px;border-radius:50%;background:var(--dwc-bone3);flex:none}',
-    '.dwc-dot.is-here{background:var(--dwc-green);box-shadow:0 0 0 3px rgba(143,214,135,.15)}',
+    '.dwc-dot{width:8px;height:8px;border-radius:0;background:#e3b23d;flex:none}',
+    '.dwc-dot.is-here{background:var(--dwc-green)}',
     '.dwc-badge{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--dwc-blood);color:#fff;font:600 10px/18px var(--dwc-mono);letter-spacing:0;text-align:center}',
     '.dwc-launch[hidden],.dwc-badge[hidden]{display:none}',
     '.dwc-panel{position:fixed;right:20px;bottom:' + (bottom + 58) + 'px;z-index:2147483001;width:380px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - ' + (bottom + 90) + 'px);display:flex;flex-direction:column;background:var(--dwc-ink);border:1px solid var(--dwc-line2);box-shadow:0 24px 70px rgba(0,0,0,.6);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .22s cubic-bezier(.22,.8,.2,1),transform .22s cubic-bezier(.22,.8,.2,1)}',
@@ -56,11 +56,12 @@
     '.dwc-x:hover{color:var(--dwc-bone)}',
     '.dwc-body{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}',
     '.dwc-form{padding:22px 20px;display:flex;flex-direction:column;gap:16px;overflow:auto}',
+    '.dwc-form>*{flex-shrink:0}',
     '.dwc-label{display:block;font:500 10.5px/1 var(--dwc-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dwc-bone2);margin-bottom:8px}',
     '.dwc-input{width:100%;height:44px;padding:0 12px;background:var(--dwc-raised);border:1px solid var(--dwc-line);color:var(--dwc-bone);font:400 16px/1 var(--dwc-body);border-radius:0}',
     '.dwc-input:focus{border-color:var(--dwc-bone2);outline:none}',
     '.dwc-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}',
-    '.dwc-btn{height:46px;border:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
+    '.dwc-btn{height:46px;min-height:46px;flex-shrink:0;border:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
     '.dwc-btn:hover{background:#fff}',
     '.dwc-btn[disabled]{opacity:.5;cursor:default}',
     '.dwc-away,.dwc-awayonly{display:none}',
@@ -141,7 +142,17 @@
     if (formBtn && !state) formBtn.textContent = here ? t.start : t.sendMail;
     if (root) root.classList.toggle('dwc-is-away', !here);
   }
-  setHere(false);
+  // Until the server answers, guess from the posted hours (Mon to Fri, 9 AM to 6 PM Central),
+  // so the box never says the team is out during the day just because the check is slow.
+  function inHours() {
+    try {
+      var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short', hour: 'numeric', hour12: false }).formatToParts(new Date());
+      var wd = '', hr = 0;
+      parts.forEach(function (p) { if (p.type === 'weekday') wd = p.value; if (p.type === 'hour') hr = Number(p.value) % 24; });
+      return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].indexOf(wd) !== -1 && hr >= 9 && hr < 18;
+    } catch (e) { return false; }
+  }
+  setHere(inHours());
 
   // ---- network ----
   function api(path, body) {
