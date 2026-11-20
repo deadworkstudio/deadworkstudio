@@ -82,7 +82,7 @@
     '.dwc-ta{flex:1;min-height:44px;max-height:120px;padding:12px;resize:none;background:var(--dwc-raised);border:1px solid var(--dwc-line);color:var(--dwc-bone);font:400 16px/1.3 var(--dwc-body);border-radius:0}',
     '.dwc-ta:focus{border-color:var(--dwc-bone2);outline:none}',
     '.dwc-send{width:46px;height:44px;flex:none;display:grid;place-items:center;padding:0}',
-    '.dwc-foot{display:flex;justify-content:space-between;align-items:center;padding:0 16px 10px;font:400 10px/1 var(--dwc-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dwc-bone3)}',
+    '.dwc-foot{display:flex;justify-content:flex-end;align-items:center;padding:0 16px 10px;font:400 10px/1 var(--dwc-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dwc-bone3)}',
     '.dwc-foot button{background:none;border:0;padding:4px 0;color:var(--dwc-bone3);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}',
     '.dwc-foot button:hover{color:var(--dwc-bone)}',
     '@media (max-width:520px){.dwc-launch{height:40px;padding:0 14px 0 12px;gap:8px;font-size:10px;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px))}.dwc-panel{right:0;bottom:0;width:100%;max-width:none;height:100%;max-height:none;height:100dvh;border:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}.dwc-launch{right:12px}.dwc-panel.is-open~.dwc-launch{display:none}}',
@@ -207,7 +207,7 @@
     again.addEventListener('click', function () { state = null; save(null); stopPoll(); badge.hidden = true; showForm(); nameIn.focus(); });
     body.appendChild(log);
     body.appendChild(h('div', { class: 'dwc-compose' }, [ta, sendBtn]));
-    body.appendChild(h('div', { class: 'dwc-foot' }, [h('span', { text: state.name }), again]));
+    body.appendChild(h('div', { class: 'dwc-foot' }, [again]));
     sentNoteShown = false;
     ta.addEventListener('input', function () { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, 120) + 'px'; });
     ta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
