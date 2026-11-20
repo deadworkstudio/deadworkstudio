@@ -238,7 +238,7 @@ a.spec-plat:hover, a.spec-plat:focus-visible { border-color: var(--ink); backgro
    Phone labels come from data-label on each td (same words as that page's th). */
 .spec .speed { width: 100%; max-width: none; table-layout: fixed; border-collapse: collapse; border-bottom: 1px solid var(--line-2); text-align: left; font-variant-numeric: tabular-nums; }
 .spec .speed tr { border-top: 0; }
-.spec .speed th { width: auto; padding: 14px 16px 12px 0; border-top: 1px solid var(--line-2); font: 500 13px/1.3 var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-3); vertical-align: bottom; white-space: normal; }
+.spec .speed th { width: auto; padding: 14px 16px 12px 0; border-top: 1px solid var(--line-2); font: 500 13px/1.3 var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-3); vertical-align: bottom; white-space: normal; overflow-wrap: break-word; hyphens: auto; }
 .spec .speed td { padding: 18px 16px 18px 0; border-top: 1px solid var(--line-2); font-size: 22px; line-height: 1.2; font-weight: 500; letter-spacing: -.01em; color: var(--ink-2); white-space: nowrap; max-width: none; }
 .spec .speed td:nth-child(3) { font-weight: 600; color: var(--ink); }
 .spec .speed th:nth-child(7), .spec .speed th:nth-child(8) { width: 17%; color: var(--ink); font-weight: 600; }
