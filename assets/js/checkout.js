@@ -248,6 +248,19 @@
   var trialResendForm = trialOffer ? trialOffer.querySelector('[data-trial-resend-form]') : null;
   var trialResendEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-resend-email]') : null;
   var trialResendSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-resend-submit]') : null;
+  // Chat "Send trial link" (Daniel 11-20): #trial&for=<base64 {n,e}> fills in their first name and
+  // email, then the address bar goes back to #trial so the email isn't left in history.
+  (function () {
+    var m = /[#&]for=([A-Za-z0-9_-]+)/.exec(location.hash);
+    if (!m) return;
+    try {
+      var raw = atob(m[1].replace(/-/g, '+').replace(/_/g, '/'));
+      var d = JSON.parse(decodeURIComponent(Array.prototype.map.call(raw, function (ch) { return '%' + ('0' + ch.charCodeAt(0).toString(16)).slice(-2); }).join('')));
+      if (trialNameInput && d.n) trialNameInput.value = String(d.n).slice(0, 80);
+      if (trialEmailInput && d.e) trialEmailInput.value = String(d.e).slice(0, 320);
+    } catch (e) {}
+    try { history.replaceState(null, '', location.pathname + location.search + '#trial'); } catch (e) {}
+  })();
   var trialResendStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-resend-status]') : null;
   var DEFAULT_OFFER_CODE = 'SHRED'; // launch offer, shown to everyone
   // Launch offer runs through Dec 31, 2026 (Daniel, 2026-11-04): the box stops showing after
