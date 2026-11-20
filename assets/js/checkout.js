@@ -10,6 +10,15 @@
   var T = function (k, v) { return window.DW_T ? window.DW_T(k, v) : String(k).replace(/\{(\w+)\}/g, function (m, n) { return v && n in v ? v[n] : m; }); };
 
   var WORKER_URL = 'https://stock-shredder-payments.stockshredder.workers.dev';
+  // Trial signups 2026-11-19: one page step on the cookie-free beacon (ss-funnel.js dwEvent).
+  // ss-funnel.js loads with defer and can arrive after an early step (landing on #trial), so steps
+  // wait in window.dwQueue until it is ready; it sends them then. Team/GPC/DNT browsers never send.
+  function step(name) {
+    try {
+      if (window.dwEvent) window.dwEvent(name);
+      else (window.dwQueue = window.dwQueue || []).push(name);
+    } catch (e) {}
+  }
   // The browser's remembered last outside visit (ss-funnel.js), sent only with a checkout so the
   // sale is credited to where this person first came from, even days later. Nothing for GPC/DNT.
   function lastTouch() {
@@ -117,6 +126,7 @@
       var billEl = card.querySelector('[data-pricing-bill]');
       var clipsEl = card.querySelector('.pricing-clips');
       var perClipEl = card.querySelector('.pricing-per-clip');
+      var cpcEl = card.querySelector('[data-pricing-cpc]');
       if (!row || !priceEl) return;
       var cents = row[option];
       var perMonth = option === 'year' ? Math.round(cents / 12) : cents;
@@ -169,6 +179,9 @@
         clipsEl.textContent = T('{clips} clips / mo', { clips: monthlyClips.toLocaleString('en-US') });
       }
       if (perClipEl) perClipEl.textContent = perClipText(perMonth, monthlyClips);
+      // Daniel 2026-11-19: show cents per clip on every price again (US cents, two places, so
+      // Starter 11.60¢ and Creator 11.50¢ never round to the same number). Follows the term.
+      if (cpcEl) cpcEl.textContent = T('{cents}¢ per clip', { cents: (perMonth / monthlyClips).toFixed(2) });
     });
   }
 
@@ -224,6 +237,9 @@
   var trialOffer = document.querySelector('[data-trial-offer]');
   var trialForm = trialOffer ? trialOffer.querySelector('[data-trial-offer-form]') : null;
   var trialEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-email]') : null;
+  // No-card trial (Daniel 2026-11-19): the box asks for a first name too, and the Worker starts the
+  // trial with no card when the request says noCard. A page without the name field keeps the card flow.
+  var trialNameInput = trialOffer ? trialOffer.querySelector('[data-trial-name]') : null;
   var trialErrorEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-error]') : null;
   var trialStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-status]') : null;
   var trialDateEls = trialOffer ? trialOffer.querySelectorAll('[data-trial-offer-date]') : [];
@@ -457,7 +473,19 @@
     }
   }
 
-  function showSuccess(activationKey, trial, firstName) {
+  // The Worker's endsOnText is English ("November 26, 2026 at 8:10 AM Pacific"). On a translated page
+  // show the same moment in the page's language, still in Pacific time (trial signups 2026-11-19).
+  function trialEndText(trial) {
+    var lang = (document.documentElement.lang || 'en').toLowerCase();
+    if (lang.indexOf('en') === 0 || typeof trial.endsAt !== 'number' || !window.Intl) return trial.endsOnText;
+    try {
+      return new Intl.DateTimeFormat(document.documentElement.lang, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles', timeZoneName: 'short' }).format(new Date(trial.endsAt));
+    } catch (e) {
+      return trial.endsOnText;
+    }
+  }
+
+  function showSuccess(activationKey, trial, firstName, sentTo) {
     var finishedSessionId = sessionId;
     teardownCheckout();
     showHeardQuestion(finishedSessionId);
@@ -468,7 +496,11 @@
     // trial — or any purchase — has actually completed; leaving it visible behind the success
     // panel let someone immediately try to start a second trial from the same page.
     if (trialOffer) trialOffer.hidden = true;
-    if (keyEl) keyEl.textContent = activationKey;
+    if (keyEl) keyEl.textContent = activationKey || '';
+    // Confirmed email (2026-11-19): a no-card trial's key only goes to the inbox, never this page.
+    var keyByEmail = !activationKey;
+    var keyBox = keyEl ? keyEl.closest('.activation-key-box') : null;
+    if (keyBox) keyBox.hidden = keyByEmail;
 
     // A short welcome: "You're in, Macy." when the Worker knows a first name, else "You're in."
     // endsOnText rides pre-formatted from the Worker (§3 — this file never computes its own end
@@ -476,16 +508,24 @@
     var name = (firstName || '').trim().split(/\s+/)[0];
     var onPhone = isPhoneVisitor();
     var isTrial = !!(trial && trial.endsOnText);
+    if (isTrial) step('trial-done');
     if (successTitle) successTitle.textContent = name ? T("You're in, {name}.", { name: name }) : T("You're in.");
     if (successNote) {
-      successNote.textContent = isTrial
-        ? 'Your free trial runs until ' + trial.endsOnText + ' or 100 clips. Nothing is charged unless you pick a plan.'
-        : "Thanks for the support. Here's your activation key.";
+      successNote.textContent = keyByEmail
+        ? T('We sent your activation key to {email}. Your free trial runs until {date} or 100 clips.', { email: sentTo || T('your email'), date: trialEndText(trial) })
+        : isTrial
+        ? T('Your free trial runs until {date} or 100 clips. Nothing is charged unless you pick a plan.', { date: trialEndText(trial) })
+        : T("Thanks for the support. Here's your activation key.");
     }
     if (successSteps) {
+      // Trial signups 2026-11-19: the app has no "Account > Activate with a key" for a new install
+      // (Account only shows a key you already have). The key goes in "Already have an activation
+      // key?", the same words as the welcome email (worker customerEmail.ts PASTE_KEY_TEXT).
+      var pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste your key.') + '</li>';
+      if (keyByEmail && !onPhone) pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.') + '</li>';
       successSteps.innerHTML = onPhone
-        ? '<li>Open the email we just sent you on your computer.</li><li>Download Stock Shredder from it.</li><li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li>'
-        : '<li>Install Stock Shredder.</li><li>Open it and paste your key under <strong>Account &rsaquo; Activate with a key</strong>.</li><li>Drop in a folder of raw footage and start shredding.</li>';
+        ? '<li>' + T('Open the email we just sent you on your computer.') + '</li><li>' + T('Download Stock Shredder from it.') + '</li>' + pasteStep
+        : '<li>' + T('Install Stock Shredder.') + '</li>' + pasteStep + '<li>' + T('Drop in a folder of raw footage and start shredding.') + '</li>';
     }
 
     // Show the visitor's own platform as the big button, the other platform as a small secondary
@@ -627,6 +667,7 @@
   }
 
   function startCheckout(planId) {
+    step('plan-checkout');
     var plan = PLANS[planId];
     if (!plan || !frame) return;
     // Teardown first, always — a stray double-click on a plan button, or starting a paid
@@ -987,8 +1028,10 @@
     trialErrorEl.textContent = '';
     trialErrorEl.appendChild(document.createTextNode((message || "This trial couldn't be started.") + ' '));
     var link = document.createElement('a');
-    link.href = '#pricing';
-    link.textContent = 'See plans';
+    // Translated pages carry <base href="/products/stock-shredder/">, so a bare '#pricing' opened
+    // the English page and lost this message. Stay on this page (trial signups 2026-11-19).
+    link.href = location.pathname + location.search + '#pricing';
+    link.textContent = T('See plans');
     trialErrorEl.appendChild(link);
     trialErrorEl.hidden = false;
     trialErrorEl.focus();
@@ -1006,14 +1049,31 @@
   // computes it, just displays it.
   // `quiet` = the default SHRED offer shown to every visitor (no ?code= in the URL): if it's
   // switched off in the Worker, the box just stays hidden, with no error and no scroll.
-  function checkOffer(code, quiet) {
+  function checkOffer(code, quiet, attempt) {
     if (!trialOffer || !code) return;
+    var isDefault = String(code).toUpperCase() === DEFAULT_OFFER_CODE;
     fetch(WORKER_URL + '/offer?code=' + encodeURIComponent(code))
       .then(function (res) {
         return res.json();
       })
       .then(function (data) {
         if (!data || !data.valid) {
+          // Trial signups 2026-11-19: a dead, typo'd or remembered-but-expired code used to hide
+          // the free trial box completely. Forget it and fall back to the default SHRED offer, so
+          // an old link still lands on the 100 free clips.
+          try {
+            sessionStorage.removeItem('ss-offer');
+          } catch (err) {}
+          if (!isDefault && Date.now() < DEFAULT_OFFER_ENDS) {
+            if (!quiet) showPricingError(T("That code isn't active, but you can still get 100 free clips below."));
+            checkOffer(DEFAULT_OFFER_CODE, true);
+            return;
+          }
+          if (isDefault) {
+            // The Worker itself says SHRED is off: only now hide the box shown up front.
+            currentOfferCode = null;
+            trialOffer.hidden = true;
+          }
           if (quiet) return;
           showPricingError((data && data.message) || "That code isn't active.");
           return;
@@ -1034,8 +1094,9 @@
         trialOffer.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
       })
       .catch(function () {
-        // A network hiccup checking the code — leave the ordinary pricing grid usable and say
-        // nothing alarming; the person can still just pick a plan.
+        // A network hiccup (or a non-JSON error page) checking the code: try once more. The
+        // default SHRED box stays up either way; /checkout itself reports a real problem.
+        if (!attempt) setTimeout(function () { checkOffer(code, quiet, 1); }, 1500);
       });
   }
 
@@ -1058,6 +1119,13 @@
         code = null;
       }
     }
+    // Trial signups 2026-11-19: the default SHRED box shows right away instead of waiting on
+    // the /offer call, so a slow or blocked request never hides the free trial (it used to leave
+    // "Start with 100 free clips" jumping to paid plans only). /offer still runs and can hide it.
+    if (Date.now() < DEFAULT_OFFER_ENDS) {
+      currentOfferCode = DEFAULT_OFFER_CODE;
+      trialOffer.hidden = false;
+    }
     if (code) checkOffer(code, !fromUrl);
     else if (Date.now() < DEFAULT_OFFER_ENDS) checkOffer(DEFAULT_OFFER_CODE, true);
   })();
@@ -1077,6 +1145,16 @@
     trialEmailInput.value = appEmail;
   }
 
+  function trialBody(email) {
+    var body = { offer: currentOfferCode, email: email, touch: lastTouch() };
+    if (appClaim) body.claim = appClaim;
+    if (trialNameInput) {
+      body.name = (trialNameInput.value || '').trim();
+      body.noCard = true;
+    }
+    return body;
+  }
+
   function startTrialCheckout(email) {
     if (!currentOfferCode || !frame || trialSubmitInFlight) return;
     trialSubmitInFlight = true;
@@ -1090,7 +1168,7 @@
     fetch(WORKER_URL + '/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(appClaim ? { offer: currentOfferCode, email: email, claim: appClaim, touch: lastTouch() } : { offer: currentOfferCode, email: email, touch: lastTouch() })
+      body: JSON.stringify(trialBody(email))
     })
       .then(function (res) {
         return res.json().then(function (data) {
@@ -1104,19 +1182,41 @@
           trialSubmitBtn.removeAttribute('aria-busy');
         }
         showTrialStatus('');
+        // No-card trial: the Worker started it already and sent back the key. (A Worker without
+        // the no-card code answers with a card Checkout below instead, so nothing breaks.)
+        if (result.ok && result.data && result.data.noCard && (result.data.activationKey || result.data.emailSent)) {
+          sessionId = result.data.sessionId || null;
+          currentCheckoutIsTrial = true;
+          showSuccess(result.data.activationKey || null, result.data.trial, result.data.firstName, trialEmailInput ? (trialEmailInput.value || '').trim() : '');
+          var reduceMotionNc = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (success && success.scrollIntoView) success.scrollIntoView({ block: 'start', behavior: reduceMotionNc ? 'auto' : 'smooth' });
+          return;
+        }
+        if (result.status === 400 && result.data && result.data.code === 'name' && trialNameInput) {
+          step('trial-invalid-name');
+          showTrialError(T('Enter your first name.'));
+          trialNameInput.focus();
+          return;
+        }
         if (!result.ok || !result.data || !result.data.clientSecret || !result.data.sessionId) {
           var data = result.data || {};
+          step(result.status === 409 && data.code === 'not_eligible' ? 'trial-not-eligible' : result.status === 429 ? 'trial-rate-limited' : 'trial-error');
           if (result.status === 409 && data.code === 'not_eligible') {
             // L4: the Worker's own not_eligible message already ends with "Pick a plan below
             // instead." (see trials.ts's TRIAL_NOT_ELIGIBLE_MESSAGE) — appending another, nearly
             // identical "See plans below instead." on top just repeated the same instruction
             // twice in one sentence. Link "See plans" to #pricing for real instead, matching the
             // spec's own error-mapping note (§5.4 step 5 / §7 item 3).
-            showTrialErrorWithPricingLink(data.error || "This email can't start a SHRED trial.");
+            showTrialErrorWithPricingLink(T(data.error || "This email can't start a SHRED trial."));
+          } else if (result.status === 502 && data.code === 'email_failed') {
+            // The trial exists but its key email didn't go out; trying again re-sends it.
+            showTrialError(T("Your trial is set up, but we couldn't send the email with your key. Try again in a minute and we'll resend it."));
           } else if (result.status === 409) {
             showTrialError(data.error || "This trial couldn't be started.");
           } else if (result.status === 429) {
-            showTrialError(data.error || 'Too many attempts. Try again in an hour.');
+            showTrialError(data.code === 'network_cap' ? T('Too many new trials from this network today. Try again tomorrow.') : data.error || 'Too many attempts. Try again in an hour.');
+          } else if (result.status === 400 && data.code === 'disposable') {
+            showTrialError(T("Use your everyday email. We send your activation key there, and throwaway inboxes can't start a trial."));
           } else if (result.status === 400 && data.error) {
             // A plain refusal of what was typed (e.g. not a real email address) reads fine as is.
             showTrialError(data.error);
@@ -1130,6 +1230,7 @@
         // Teardown first — a stray double-click (or a resend-link submit racing a fresh trial
         // start) must never leave two embedded Checkout instances mounted at once.
         teardownCheckout();
+        step('trial-card-step');
         sessionId = result.data.sessionId;
         currentCheckoutIsTrial = true;
         var clientSecret = result.data.clientSecret;
@@ -1180,6 +1281,7 @@
           trialSubmitBtn.removeAttribute('aria-busy');
         }
         showTrialStatus('');
+        step('trial-error');
         showTrialError("Couldn't reach us. Nothing was charged. Try again.");
       });
   }
@@ -1189,13 +1291,24 @@
       evt.preventDefault();
       if (trialSubmitInFlight) return;
       var email = (trialEmailInput.value || '').trim();
+      // On a phone the main button only emails the link to their computer, where they type the
+      // name, so the name is only needed when the trial really starts here.
+      var phoneSend = isPhoneVisitor() && !trialForm.hasAttribute('data-start-now');
+      if (trialNameInput && !phoneSend && !(trialNameInput.value || '').trim()) {
+        step('trial-invalid-name');
+        showTrialError(T('Enter your first name.'));
+        trialNameInput.focus();
+        return;
+      }
       if (!email) {
+        step('trial-invalid-email');
         showTrialError('Enter your email to start the trial.');
         trialEmailInput.focus();
         return;
       }
       // Catch an obvious typo here instead of a round trip (the server still checks properly).
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        step('trial-invalid-email');
         showTrialError('Check your email address. It should look like name@example.com.');
         trialEmailInput.focus();
         return;
@@ -1204,6 +1317,7 @@
       // app. On phones the main button sends the link to their computer instead, so the clock
       // starts where they'll use it. "Start now anyway" (data-trial-start-now) skips this. If the
       // send fails for any reason (older server, network), fall back to starting the trial.
+      step('trial-submit');
       if (isPhoneVisitor() && !trialForm.hasAttribute('data-start-now')) {
         sendTrialToComputer(email);
         return;
@@ -1225,10 +1339,28 @@
       .then(function (res) {
         trialSubmitInFlight = false;
         if (trialSubmitBtn) { trialSubmitBtn.disabled = false; trialSubmitBtn.removeAttribute('aria-busy'); }
-        if (!res.ok) throw new Error('send failed ' + res.status);
-        showTrialStatus('Sent. Open it on your computer to get your 100 free clips. Your 7 days start there.');
+        if (res.ok) {
+          step('phone-send');
+          showTrialStatus('Sent. Open it on your computer to get your 100 free clips. Your 7 days start there.');
+          return;
+        }
+        // Trial signups 2026-11-19: only a missing route (older server) falls back to starting the
+        // trial here. Anything else used to start the card step on the phone silently, which is
+        // exactly what this button exists to avoid. Say what happened instead.
+        if (res.status === 404) {
+          showTrialStatus('');
+          startTrialCheckout(email);
+          return;
+        }
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          showTrialStatus('');
+          step(res.status === 429 ? 'trial-rate-limited' : 'trial-error');
+          showTrialError(res.status === 429 ? T('Too many attempts. Try again in an hour.') : res.status === 400 ? T('Check your email address. It should look like name@example.com.') : T("Couldn't send it. Tap Start now anyway to start here."));
+        });
       })
       .catch(function () {
+        // Network failure: the email never went, so starting the trial right here is still better
+        // than a dead end (the person can still tap it on their computer later).
         trialSubmitInFlight = false;
         if (trialSubmitBtn) { trialSubmitBtn.disabled = false; trialSubmitBtn.removeAttribute('aria-busy'); }
         showTrialStatus('');
@@ -1240,14 +1372,18 @@
   (function phoneTrialMode() {
     if (!trialForm || !isPhoneVisitor()) return;
     if (trialSubmitBtn) trialSubmitBtn.textContent = 'Send it to my computer';
+    // Sending the link needs only the email; the name field comes back for "Start now anyway".
+    if (trialNameInput) trialNameInput.hidden = true;
     var nowLink = document.querySelector('[data-trial-start-now]');
     if (!nowLink) return;
     nowLink.hidden = false;
     nowLink.addEventListener('click', function () {
       trialForm.setAttribute('data-start-now', '');
+      if (trialNameInput) trialNameInput.hidden = false;
       if (trialSubmitBtn) trialSubmitBtn.textContent = 'Start free trial';
       nowLink.hidden = true;
-      if (trialEmailInput) trialEmailInput.focus();
+      if (trialNameInput && !trialNameInput.value) trialNameInput.focus();
+      else if (trialEmailInput) trialEmailInput.focus();
     });
   })();
 
@@ -1303,5 +1439,24 @@
           }
         });
     });
+  }
+
+  // Trial signups 2026-11-19: page steps for the funnel (ss-funnel.js dwEvent). Clicks are caught
+  // on the document so the hero, the sticky bar and every download button count, in all 7 languages.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a, button') : null;
+    if (!a) return;
+    if (a.matches('[data-trial-jump], .ss-sticky .pill')) step('cta-trial');
+    else if (a.matches('#download-mac, #download-success[href*=".dmg"], [data-download="mac"]') || /\.dmg(\?|$)/.test(a.getAttribute('href') || '')) step('download-mac');
+    else if (a.matches('#download-win, [data-download="windows"]') || /apps\.microsoft\.com/.test(a.getAttribute('href') || '')) step('download-win');
+  }, true);
+  if (trialOffer && 'IntersectionObserver' in window) {
+    var seenObs = new IntersectionObserver(function (entries) {
+      if (entries.some(function (en) { return en.isIntersecting; }) && !trialOffer.hidden) {
+        step('trial-box-seen');
+        seenObs.disconnect();
+      }
+    }, { threshold: 0.4 });
+    seenObs.observe(trialOffer);
   }
 })();

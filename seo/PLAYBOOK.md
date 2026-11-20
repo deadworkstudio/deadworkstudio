@@ -107,7 +107,7 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 |---|---|---|---|---|
 | L1 | Stock site | prepare video for adobe stock / adobe stock video contributor | adobe-stock-video-workflow | LIVE Nov 18 |
 | L2 | Camera | sell drone footage on stock sites / dji drone footage stock / fpv stock footage | drone-footage-for-stock | Draft (Dec 7 slot) |
-| L3 | Camera | sony fx3 stock footage workflow / s-log3 stock footage | sony-slog3-stock-footage | Draft (Dec 14 slot) |
+| L3 | Camera | sony fx3 stock footage workflow / s-log3 stock footage | sony-slog3-stock-footage | LIVE Nov 20 |
 | L4 | Competitor | xpiks alternative (video) | Merge with article #3 rather than a second page | Folded into article #3, no separate page |
 | L5 | Stock site | shutterstock video contributor upload | shutterstock-video-contributor (angle: 7-50 keywords, sentence descriptions, editorial) | Draft (Dec 28 slot) |
 | L6 | Stock site | pond5 video upload / sell footage on pond5 | pond5-video-upload (angle: file names, size caps, payout; video pricing is tiered) | Draft (Dec 21 slot) |
@@ -138,7 +138,7 @@ Daily: the next ready draft is offered to Daniel; one new row is drafted so abou
 | # | Target search | Page (slug) | Status |
 |---|---|---|---|
 | 1 | sell drone footage on stock sites | drone-footage-for-stock | LIVE Nov 19 |
-| 2 | sony fx3 stock footage workflow | sony-slog3-stock-footage | Draft ready |
+| 2 | sony fx3 stock footage workflow | sony-slog3-stock-footage | LIVE Nov 20 |
 | 3 | sell footage on pond5 | pond5-video-upload | Draft ready |
 | 4 | shutterstock video contributor upload | shutterstock-video-contributor | Draft ready |
 | 5 | premiere pro batch export clips for stock | premiere-pro-batch-export-stock | Draft ready |
