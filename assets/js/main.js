@@ -115,8 +115,7 @@
   }
 
   // ---- support chat: DEADWORK's own chat box (assets/js/dw-chat.js, replaced Tawk.to) ----
-  // Loads as soon as the page has finished loading (or on the first scroll, tap or key press if that
-  // comes first), so the button is there right away without slowing the page. Every page that loads this
+  // Loads right away (async, does not block the page), so the button is there right away without slowing the page. Every page that loads this
   // file and has a [data-chat-widget] marker opts in. Launcher sits 50px up, same spot Tawk used.
   if (document.querySelector('[data-chat-widget]') && location.protocol !== 'file:') {
     var chatLoaded = false;
@@ -127,12 +126,11 @@
       var me = document.querySelector('script[src*="assets/js/main.js"]');
       var s = document.createElement('script');
       s.async = true;
-      s.src = (me ? me.src.replace(/main\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261120d';
+      s.src = (me ? me.src.replace(/main\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261120e';
       document.body.appendChild(s);
     };
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
-    var chatSoon = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(loadChat, { timeout: 1200 }); };
-    if (document.readyState === 'complete') chatSoon(); else window.addEventListener('load', chatSoon, { once: true });
+    loadChat(); // right away (async, ~10 KB gzipped), so the button never blinks out between pages
   }
 
   // ---- footer live clock (time only, no date — same as the homepage's own clock): replaces the mailto address in the bottom-left corner on every page

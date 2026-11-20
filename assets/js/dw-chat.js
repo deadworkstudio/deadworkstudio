@@ -301,22 +301,25 @@
 
   // ---- open / close ----
   var built = false;
-  function openPanel() {
+  function openPanel(quiet) {
     if (open) return;
     open = true;
     if (!built) { built = true; if (state) showChat(false); else showForm(); }
     else if (state) { poll(); startPoll(); }
+    else if (!body.querySelector('.dwc-form')) showForm(); // chat was ended or removed while the box was closed
     checkStatus();
     panel.classList.add('is-open'); panel.setAttribute('aria-hidden', 'false');
+    try { sessionStorage.setItem('dwchat-open', '1'); } catch (e) {}
     launch.setAttribute('aria-expanded', 'true'); launch.setAttribute('aria-label', t.close);
     badge.hidden = true; badge.textContent = '';
     seenId = lastId;
-    setTimeout(function () { (state ? ta : nameIn).focus(); if (log) scrollDown(); }, 60);
+    setTimeout(function () { if (quiet !== true) (state ? ta : nameIn).focus(); if (log) scrollDown(); }, 60);
   }
   function closePanel() {
     if (!open) return;
     open = false;
     panel.classList.remove('is-open'); panel.setAttribute('aria-hidden', 'true');
+    try { sessionStorage.removeItem('dwchat-open'); } catch (e) {}
     launch.setAttribute('aria-expanded', 'false'); launch.setAttribute('aria-label', t.open);
     lastActivity = Math.max(lastActivity, Date.now() - 14 * 60 * 1000);
     startPoll();
@@ -335,5 +338,7 @@
   if (state) { lastActivity = Date.now(); poll(); startPoll(); }
 
   window.DWChat = { open: openPanel, close: closePanel };
+  // Box was open on the last page: keep it open on this one (same tab only).
+  try { if (sessionStorage.getItem('dwchat-open') === '1') openPanel(true); } catch (e) {}
   document.dispatchEvent(new CustomEvent('dwchat:ready'));
 })();
