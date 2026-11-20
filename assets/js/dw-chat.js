@@ -16,17 +16,16 @@
   var cfg = window.DWChatConfig || {};
   var API = cfg.api || 'https://deadwork-hq.stockshredder.workers.dev';
   var STORE_KEY = 'dwchat';
-  var TEAM_EMAIL = 'deadworkstudio@gmail.com';
 
   // ---- words, 7 languages ----
   var T = {
-    en: { launcher: 'Chat', title: 'Talk to us', here: 'Team is here', hereSub: 'Replies in a few minutes', away: 'Team is out', awaySub: "We'll email you back", hours: 'Mon to Fri, 9 AM to 6 PM CT', name: 'Name', email: 'Email', start: 'Start chat', privacy: 'We only use your email to answer you.', placeholder: 'Write a message', send: 'Send', sentHere: 'Sent. The team will answer here. If you leave, the answer goes to your email.', sentAway: "Got it. We'll email you at {email}.", errName: 'Add your name.', errEmail: 'Check your email.', errSend: "Didn't send. Try again.", errLimit: 'Too many messages. Wait a few minutes.', you: 'You', close: 'Close chat', open: 'Open chat', startOver: 'Start over', awayNote: 'We\'re out right now. Email us and we\'ll answer as soon as we\'re back.', emailUs: 'Email us', orChat: 'Or leave a message here and we\'ll email you back:' },
-    es: { launcher: 'Chat', title: 'Habla con nosotros', here: 'El equipo está aquí', hereSub: 'Respondemos en minutos', away: 'El equipo no está', awaySub: 'Te respondemos por email', hours: 'Lun a vie, 9 AM a 6 PM CT', name: 'Nombre', email: 'Email', start: 'Empezar chat', privacy: 'Solo usamos tu email para responderte.', placeholder: 'Escribe un mensaje', send: 'Enviar', sentHere: 'Enviado. El equipo responderá aquí. Si te vas, la respuesta llega a tu email.', sentAway: 'Recibido. Te escribimos a {email}.', errName: 'Escribe tu nombre.', errEmail: 'Revisa tu email.', errSend: 'No se envió. Inténtalo de nuevo.', errLimit: 'Demasiados mensajes. Espera unos minutos.', you: 'Tú', close: 'Cerrar chat', open: 'Abrir chat', startOver: 'Empezar de nuevo', awayNote: 'Ahora no estamos. Escríbenos por email y te respondemos en cuanto volvamos.', emailUs: 'Escríbenos', orChat: 'O deja un mensaje aquí y te respondemos por email:' },
-    fr: { launcher: 'Chat', title: 'Parlez-nous', here: "L'équipe est là", hereSub: 'Réponse en quelques minutes', away: "L'équipe est absente", awaySub: 'On vous répond par email', hours: 'Lun au ven, 9 h à 18 h CT', name: 'Nom', email: 'Email', start: 'Démarrer le chat', privacy: 'Votre email sert uniquement à vous répondre.', placeholder: 'Écrivez un message', send: 'Envoyer', sentHere: "Envoyé. L'équipe répond ici. Si vous partez, la réponse arrive par email.", sentAway: 'Bien reçu. On vous écrit à {email}.', errName: 'Ajoutez votre nom.', errEmail: 'Vérifiez votre email.', errSend: 'Pas envoyé. Réessayez.', errLimit: 'Trop de messages. Attendez quelques minutes.', you: 'Vous', close: 'Fermer le chat', open: 'Ouvrir le chat', startOver: 'Recommencer', awayNote: 'Nous sommes absents pour le moment. Écrivez-nous par email, on vous répond dès notre retour.', emailUs: 'Écrivez-nous', orChat: 'Ou laissez un message ici, on vous répond par email :' },
-    de: { launcher: 'Chat', title: 'Schreib uns', here: 'Das Team ist da', hereSub: 'Antwort in wenigen Minuten', away: 'Das Team ist nicht da', awaySub: 'Wir antworten per E-Mail', hours: 'Mo bis Fr, 9 bis 18 Uhr CT', name: 'Name', email: 'E-Mail', start: 'Chat starten', privacy: 'Wir nutzen deine E-Mail nur für die Antwort.', placeholder: 'Nachricht schreiben', send: 'Senden', sentHere: 'Gesendet. Das Team antwortet hier. Wenn du gehst, kommt die Antwort per E-Mail.', sentAway: 'Angekommen. Wir schreiben dir an {email}.', errName: 'Gib deinen Namen ein.', errEmail: 'Prüf deine E-Mail.', errSend: 'Nicht gesendet. Versuch es noch mal.', errLimit: 'Zu viele Nachrichten. Warte ein paar Minuten.', you: 'Du', close: 'Chat schließen', open: 'Chat öffnen', startOver: 'Neu anfangen', awayNote: 'Wir sind gerade nicht da. Schreib uns eine E-Mail, wir antworten, sobald wir zurück sind.', emailUs: 'E-Mail schreiben', orChat: 'Oder hinterlass hier eine Nachricht, wir antworten per E-Mail:' },
-    it: { launcher: 'Chat', title: 'Scrivici', here: 'Il team è qui', hereSub: 'Risposta in pochi minuti', away: "Il team non c'è", awaySub: 'Ti rispondiamo via email', hours: 'Da lun a ven, 9-18 CT', name: 'Nome', email: 'Email', start: 'Inizia la chat', privacy: 'Usiamo la tua email solo per risponderti.', placeholder: 'Scrivi un messaggio', send: 'Invia', sentHere: 'Inviato. Il team risponde qui. Se esci, la risposta arriva via email.', sentAway: 'Ricevuto. Ti scriviamo a {email}.', errName: 'Inserisci il tuo nome.', errEmail: 'Controlla la tua email.', errSend: 'Non inviato. Riprova.', errLimit: 'Troppi messaggi. Aspetta qualche minuto.', you: 'Tu', close: 'Chiudi la chat', open: 'Apri la chat', startOver: 'Ricomincia', awayNote: 'Ora non ci siamo. Scrivici un\'email e ti rispondiamo appena torniamo.', emailUs: 'Scrivici', orChat: 'Oppure lascia un messaggio qui e ti rispondiamo via email:' },
-    ja: { launcher: 'チャット', title: 'チャットで相談', here: 'チームが対応中', hereSub: '数分で返信します', away: '現在対応時間外', awaySub: 'メールで返信します', hours: '月〜金 9:00〜18:00（米国中部時間）', name: 'お名前', email: 'メールアドレス', start: 'チャットを始める', privacy: 'メールアドレスは返信にのみ使います。', placeholder: 'メッセージを入力', send: '送信', sentHere: '送信しました。チームがここで返信します。ページを離れた場合はメールでお届けします。', sentAway: '受け付けました。{email} 宛にメールで返信します。', errName: 'お名前を入力してください。', errEmail: 'メールアドレスを確認してください。', errSend: '送信できませんでした。もう一度お試しください。', errLimit: 'メッセージが多すぎます。数分お待ちください。', you: 'あなた', close: '閉じる', open: 'チャットを開く', startOver: '最初から', awayNote: '現在は対応時間外です。メールでご連絡いただければ、戻り次第お返事します。', emailUs: 'メールで連絡', orChat: 'またはここにメッセージを残してください。メールで返信します：' },
-    'zh-Hans': { launcher: '聊天', title: '和我们聊聊', here: '团队在线', hereSub: '几分钟内回复', away: '团队暂时离线', awaySub: '我们会通过邮件回复', hours: '周一至周五 9:00–18:00（美国中部时间）', name: '姓名', email: '邮箱', start: '开始聊天', privacy: '邮箱仅用于回复你。', placeholder: '输入消息', send: '发送', sentHere: '已发送。团队会在这里回复。如果你离开页面，回复会发到你的邮箱。', sentAway: '收到。我们会发邮件到 {email}。', errName: '请填写姓名。', errEmail: '请检查邮箱。', errSend: '发送失败，请重试。', errLimit: '消息太多，请稍等几分钟。', you: '你', close: '关闭聊天', open: '打开聊天', startOver: '重新开始', awayNote: '我们现在不在。请发邮件给我们，我们回来后会尽快回复。', emailUs: '发邮件给我们', orChat: '或者在这里留言，我们会通过邮件回复：' }
+    en: { launcher: 'Chat', title: 'Talk to us', here: 'Team is here', hereSub: 'Replies in a few minutes', away: 'Team is out', awaySub: "We'll email you back", hours: 'Mon to Fri, 9 AM to 6 PM CT', name: 'Name', email: 'Email', start: 'Start chat', privacy: 'We only use your email to answer you.', placeholder: 'Write a message', send: 'Send', sentHere: 'Sent. The team will answer here. If you leave, the answer goes to your email.', sentAway: "Got it. We'll email you at {email}.", errName: 'Add your name.', errEmail: 'Check your email.', errSend: "Didn't send. Try again.", errLimit: 'Too many messages. Wait a few minutes.', you: 'You', close: 'Close chat', open: 'Open chat', startOver: 'Start over', awayNote: 'We\'re out right now. Leave a message and we\'ll email you back.', message: 'Message', sendMail: 'Send', errMsg: 'Write your message.' },
+    es: { launcher: 'Chat', title: 'Habla con nosotros', here: 'El equipo está aquí', hereSub: 'Respondemos en minutos', away: 'El equipo no está', awaySub: 'Te respondemos por email', hours: 'Lun a vie, 9 AM a 6 PM CT', name: 'Nombre', email: 'Email', start: 'Empezar chat', privacy: 'Solo usamos tu email para responderte.', placeholder: 'Escribe un mensaje', send: 'Enviar', sentHere: 'Enviado. El equipo responderá aquí. Si te vas, la respuesta llega a tu email.', sentAway: 'Recibido. Te escribimos a {email}.', errName: 'Escribe tu nombre.', errEmail: 'Revisa tu email.', errSend: 'No se envió. Inténtalo de nuevo.', errLimit: 'Demasiados mensajes. Espera unos minutos.', you: 'Tú', close: 'Cerrar chat', open: 'Abrir chat', startOver: 'Empezar de nuevo', awayNote: 'Ahora no estamos. Déjanos un mensaje y te respondemos por email.', message: 'Mensaje', sendMail: 'Enviar', errMsg: 'Escribe tu mensaje.' },
+    fr: { launcher: 'Chat', title: 'Parlez-nous', here: "L'équipe est là", hereSub: 'Réponse en quelques minutes', away: "L'équipe est absente", awaySub: 'On vous répond par email', hours: 'Lun au ven, 9 h à 18 h CT', name: 'Nom', email: 'Email', start: 'Démarrer le chat', privacy: 'Votre email sert uniquement à vous répondre.', placeholder: 'Écrivez un message', send: 'Envoyer', sentHere: "Envoyé. L'équipe répond ici. Si vous partez, la réponse arrive par email.", sentAway: 'Bien reçu. On vous écrit à {email}.', errName: 'Ajoutez votre nom.', errEmail: 'Vérifiez votre email.', errSend: 'Pas envoyé. Réessayez.', errLimit: 'Trop de messages. Attendez quelques minutes.', you: 'Vous', close: 'Fermer le chat', open: 'Ouvrir le chat', startOver: 'Recommencer', awayNote: 'Nous sommes absents. Laissez un message, on vous répond par email.', message: 'Message', sendMail: 'Envoyer', errMsg: 'Écrivez votre message.' },
+    de: { launcher: 'Chat', title: 'Schreib uns', here: 'Das Team ist da', hereSub: 'Antwort in wenigen Minuten', away: 'Das Team ist nicht da', awaySub: 'Wir antworten per E-Mail', hours: 'Mo bis Fr, 9 bis 18 Uhr CT', name: 'Name', email: 'E-Mail', start: 'Chat starten', privacy: 'Wir nutzen deine E-Mail nur für die Antwort.', placeholder: 'Nachricht schreiben', send: 'Senden', sentHere: 'Gesendet. Das Team antwortet hier. Wenn du gehst, kommt die Antwort per E-Mail.', sentAway: 'Angekommen. Wir schreiben dir an {email}.', errName: 'Gib deinen Namen ein.', errEmail: 'Prüf deine E-Mail.', errSend: 'Nicht gesendet. Versuch es noch mal.', errLimit: 'Zu viele Nachrichten. Warte ein paar Minuten.', you: 'Du', close: 'Chat schließen', open: 'Chat öffnen', startOver: 'Neu anfangen', awayNote: 'Wir sind gerade nicht da. Schreib uns, wir antworten per E-Mail.', message: 'Nachricht', sendMail: 'Senden', errMsg: 'Schreib deine Nachricht.' },
+    it: { launcher: 'Chat', title: 'Scrivici', here: 'Il team è qui', hereSub: 'Risposta in pochi minuti', away: "Il team non c'è", awaySub: 'Ti rispondiamo via email', hours: 'Da lun a ven, 9-18 CT', name: 'Nome', email: 'Email', start: 'Inizia la chat', privacy: 'Usiamo la tua email solo per risponderti.', placeholder: 'Scrivi un messaggio', send: 'Invia', sentHere: 'Inviato. Il team risponde qui. Se esci, la risposta arriva via email.', sentAway: 'Ricevuto. Ti scriviamo a {email}.', errName: 'Inserisci il tuo nome.', errEmail: 'Controlla la tua email.', errSend: 'Non inviato. Riprova.', errLimit: 'Troppi messaggi. Aspetta qualche minuto.', you: 'Tu', close: 'Chiudi la chat', open: 'Apri la chat', startOver: 'Ricomincia', awayNote: 'Ora non ci siamo. Lasciaci un messaggio e ti rispondiamo via email.', message: 'Messaggio', sendMail: 'Invia', errMsg: 'Scrivi il tuo messaggio.' },
+    ja: { launcher: 'チャット', title: 'チャットで相談', here: 'チームが対応中', hereSub: '数分で返信します', away: '現在対応時間外', awaySub: 'メールで返信します', hours: '月〜金 9:00〜18:00（米国中部時間）', name: 'お名前', email: 'メールアドレス', start: 'チャットを始める', privacy: 'メールアドレスは返信にのみ使います。', placeholder: 'メッセージを入力', send: '送信', sentHere: '送信しました。チームがここで返信します。ページを離れた場合はメールでお届けします。', sentAway: '受け付けました。{email} 宛にメールで返信します。', errName: 'お名前を入力してください。', errEmail: 'メールアドレスを確認してください。', errSend: '送信できませんでした。もう一度お試しください。', errLimit: 'メッセージが多すぎます。数分お待ちください。', you: 'あなた', close: '閉じる', open: 'チャットを開く', startOver: '最初から', awayNote: '現在は対応時間外です。メッセージを残していただければ、メールでお返事します。', message: 'メッセージ', sendMail: '送信', errMsg: 'メッセージを入力してください。' },
+    'zh-Hans': { launcher: '聊天', title: '和我们聊聊', here: '团队在线', hereSub: '几分钟内回复', away: '团队暂时离线', awaySub: '我们会通过邮件回复', hours: '周一至周五 9:00–18:00（美国中部时间）', name: '姓名', email: '邮箱', start: '开始聊天', privacy: '邮箱仅用于回复你。', placeholder: '输入消息', send: '发送', sentHere: '已发送。团队会在这里回复。如果你离开页面，回复会发到你的邮箱。', sentAway: '收到。我们会发邮件到 {email}。', errName: '请填写姓名。', errEmail: '请检查邮箱。', errSend: '发送失败，请重试。', errLimit: '消息太多，请稍等几分钟。', you: '你', close: '关闭聊天', open: '打开聊天', startOver: '重新开始', awayNote: '我们现在不在。请留言，我们会通过邮件回复你。', message: '留言', sendMail: '发送', errMsg: '请写下你的留言。' }
   };
   var htmlLang = (document.documentElement.getAttribute('lang') || 'en');
   var lang = T[htmlLang] ? htmlLang : (/^zh/i.test(htmlLang) ? 'zh-Hans' : (T[htmlLang.slice(0, 2).toLowerCase()] ? htmlLang.slice(0, 2).toLowerCase() : 'en'));
@@ -64,10 +63,11 @@
     '.dwc-btn{height:46px;border:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--dwc-bone);color:var(--dwc-ink);font:600 11.5px/1 var(--dwc-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .16s}',
     '.dwc-btn:hover{background:#fff}',
     '.dwc-btn[disabled]{opacity:.5;cursor:default}',
-    '.dwc-away{display:none;flex-direction:column;gap:12px;padding-bottom:16px;border-bottom:1px solid rgba(230,224,211,.12)}',
-    '.dwc.dwc-is-away .dwc-away{display:flex}',
-    '.dwc-away p{margin:0;font:400 14px/1.45 var(--dwc-body);color:var(--dwc-bone)}',
-    'a.dwc-btn{text-decoration:none}',
+    '.dwc-away,.dwc-awayonly{display:none}',
+    '.dwc.dwc-is-away .dwc-away,.dwc.dwc-is-away .dwc-awayonly{display:block}',
+    '.dwc-away{margin:0;font:400 14px/1.45 var(--dwc-body);color:var(--dwc-bone)}',
+    '.dwc-msgin{height:auto;min-height:96px;padding:12px;line-height:1.35;resize:none}',
+    '.dwc-msg a{color:inherit;text-decoration:underline;text-underline-offset:2px;word-break:break-all}',
     '.dwc-note{margin:0;font:400 12.5px/1.45 var(--dwc-body);color:var(--dwc-bone3)}',
     '.dwc-err:empty{display:none}',
     '.dwc-err{margin:0;font:500 12px/1.4 var(--dwc-body);color:var(--dwc-signal)}',
@@ -136,7 +136,9 @@
     here = !!v;
     [dotL, dotH].forEach(function (d) { d.classList.toggle('is-here', here); });
     statusText.textContent = here ? t.here : t.away;
-    statusSub.textContent = here ? t.hereSub : t.awaySub;
+    statusSub.textContent = here ? t.hereSub : '';
+    statusSub.style.display = here ? '' : 'none';
+    if (formBtn && !state) formBtn.textContent = here ? t.start : t.sendMail;
     if (root) root.classList.toggle('dwc-is-away', !here);
   }
   setHere(false);
@@ -148,19 +150,20 @@
   }
 
   // ---- form view ----
-  var nameIn, emailIn, formErr;
+  var nameIn, emailIn, msgIn, formBtn, formErr;
   function showForm() {
     body.textContent = '';
     nameIn = h('input', { class: 'dwc-input', id: 'dwc-name', type: 'text', autocomplete: 'given-name', maxlength: '80' });
     emailIn = h('input', { class: 'dwc-input', id: 'dwc-email', type: 'email', autocomplete: 'email', maxlength: '320', inputmode: 'email' });
     var hp = h('input', { class: 'dwc-hp', type: 'text', name: 'dwc_x9', tabindex: '-1', autocomplete: 'off', 'aria-hidden': 'true' });
     formErr = h('p', { class: 'dwc-err', role: 'alert' });
-    var btn = h('button', { class: 'dwc-btn', type: 'submit', text: t.start });
-    var mail = h('a', { class: 'dwc-btn', href: 'mailto:' + TEAM_EMAIL + '?subject=' + encodeURIComponent('Question from deadworkstudio.com'), text: t.emailUs });
+    var btn = formBtn = h('button', { class: 'dwc-btn', type: 'submit', text: here ? t.start : t.sendMail });
+    msgIn = h('textarea', { class: 'dwc-input dwc-msgin', id: 'dwc-msg', rows: '4', maxlength: '2000' });
     var form = h('form', { class: 'dwc-form', novalidate: '' }, [
-      h('div', { class: 'dwc-away' }, [h('p', { text: t.awayNote }), mail, h('p', { class: 'dwc-note', text: t.orChat })]),
+      h('p', { class: 'dwc-away' , text: t.awayNote }),
       h('div', null, [h('label', { class: 'dwc-label', for: 'dwc-name', text: t.name }), nameIn]),
       h('div', null, [h('label', { class: 'dwc-label', for: 'dwc-email', text: t.email }), emailIn]),
+      h('div', { class: 'dwc-awayonly' }, [h('label', { class: 'dwc-label', for: 'dwc-msg', text: t.message }), msgIn]),
       hp, btn, formErr,
       h('p', { class: 'dwc-note', text: t.privacy })
     ]);
@@ -169,6 +172,8 @@
       var name = nameIn.value.trim(), email = emailIn.value.trim();
       if (!name) { formErr.textContent = t.errName; nameIn.focus(); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { formErr.textContent = t.errEmail; emailIn.focus(); return; }
+      var first = here ? '' : msgIn.value.trim();
+      if (!here && !first) { formErr.textContent = t.errMsg; msgIn.focus(); return; }
       formErr.textContent = ''; btn.disabled = true;
       api('/chat/start', { name: name, email: email, hp: hp.value, ms: Date.now() - formShownAt, page: location.pathname, lang: lang })
         .then(function (d) {
@@ -177,11 +182,25 @@
           state = { id: d.id, name: name, email: email }; save(state);
           setHere(d.here); lastId = 0; seenId = 0; shownIds = {};
           showChat(true);
+          if (first) { ta.value = first; send(); }
         })
         .catch(function () { btn.disabled = false; formErr.textContent = t.errSend; });
     });
     body.appendChild(form);
     formShownAt = Date.now();
+  }
+
+  // web links in messages become tappable links (text stays text)
+  function linkify(node, text) {
+    var re = /(https?:\/\/[^\s<]+|www\.[^\s<]+\.[^\s<]+)/gi, last = 0, m;
+    while ((m = re.exec(text))) {
+      var url = m[0].replace(/[.,!?;:)\]'"]+$/, '');
+      if (m.index > last) node.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var a = document.createElement('a'); a.href = /^https?:/i.test(url) ? url : 'https://' + url;
+      a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = url;
+      node.appendChild(a); last = m.index + url.length; re.lastIndex = last;
+    }
+    if (last < text.length) node.appendChild(document.createTextNode(text.slice(last)));
   }
 
   // ---- chat view ----
@@ -191,7 +210,7 @@
     shownIds[m.id] = 1;
     var mine = m.from === 'visitor';
     var el = h('div', { class: 'dwc-msg ' + (mine ? 'from-visitor' : 'from-team') }, [h('span', { class: 'dwc-who', text: mine ? t.you : 'DEADWORK' })]);
-    el.appendChild(document.createTextNode(m.text));
+    linkify(el, m.text);
     log.appendChild(el);
     if (m.id > lastId) lastId = m.id;
   }
