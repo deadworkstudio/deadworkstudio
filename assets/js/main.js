@@ -126,7 +126,7 @@
       var me = document.querySelector('script[src*="assets/js/main.js"]');
       var s = document.createElement('script');
       s.async = true;
-      s.src = (me ? me.src.replace(/main\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261120e';
+      s.src = (me ? me.src.replace(/main\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261120h';
       document.body.appendChild(s);
     };
     ['scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, loadChat, { passive: true, once: true }); });
