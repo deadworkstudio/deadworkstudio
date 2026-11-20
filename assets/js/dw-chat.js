@@ -147,7 +147,7 @@
     body.textContent = '';
     nameIn = h('input', { class: 'dwc-input', id: 'dwc-name', type: 'text', autocomplete: 'given-name', maxlength: '80' });
     emailIn = h('input', { class: 'dwc-input', id: 'dwc-email', type: 'email', autocomplete: 'email', maxlength: '320', inputmode: 'email' });
-    var hp = h('input', { class: 'dwc-hp', type: 'text', name: 'company', tabindex: '-1', autocomplete: 'off', 'aria-hidden': 'true' });
+    var hp = h('input', { class: 'dwc-hp', type: 'text', name: 'dwc_x9', tabindex: '-1', autocomplete: 'off', 'aria-hidden': 'true' });
     formErr = h('p', { class: 'dwc-err', role: 'alert' });
     var btn = h('button', { class: 'dwc-btn', type: 'submit', text: t.start });
     var form = h('form', { class: 'dwc-form', novalidate: '' }, [
@@ -162,7 +162,7 @@
       if (!name) { formErr.textContent = t.errName; nameIn.focus(); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { formErr.textContent = t.errEmail; emailIn.focus(); return; }
       formErr.textContent = ''; btn.disabled = true;
-      api('/chat/start', { name: name, email: email, company: hp.value, ms: Date.now() - formShownAt, page: location.pathname, lang: lang })
+      api('/chat/start', { name: name, email: email, hp: hp.value, ms: Date.now() - formShownAt, page: location.pathname, lang: lang })
         .then(function (d) {
           btn.disabled = false;
           if (!d.ok) { formErr.textContent = d.error === 'email' ? t.errEmail : d.error === 'name' ? t.errName : d.error === 'limit' ? t.errLimit : t.errSend; return; }
