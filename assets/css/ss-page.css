@@ -1102,3 +1102,11 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .remote-stage .phone-screen { transform: translateZ(0); -webkit-mask-image: -webkit-radial-gradient(white, black); isolation: isolate; }
 .remote-stage.is-locked .phone-screen { background: #0d0d0c; }
 .remote-stage .phone-body::after { content: ''; position: absolute; inset: 11px; border-radius: 38px; box-shadow: 0 0 0 1px #0d0d0c, inset 0 0 0 1.5px #0d0d0c; pointer-events: none; z-index: 4; }
+
+/* "How did you hear about us?" in the trial box (Daniel 2026-11-21): optional, before the trial starts. */
+.trial-heard { margin-top: 16px; }
+.trial-heard-q { margin: 0 0 10px; font-size: 13.5px; color: var(--ink-2); }
+.trial-heard-opt-label { margin-left: 4px; font-size: 12px; color: var(--ink-3); }
+.trial-heard .ws-heard-opt { min-height: 32px; padding: 0 12px; }
+.trial-heard-detail { display: block; width: 100%; max-width: 360px; margin: 10px auto 0; min-height: 38px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 999px; background: #FBF9F4; font: inherit; font-size: 14px; color: var(--ink); }
+.trial-heard-detail[hidden] { display: none; }
