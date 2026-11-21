@@ -6,14 +6,14 @@
 ## Stock Shredder
 
 - [Stock Shredder](https://deadworkstudio.com/products/stock-shredder/): turn raw footage into stock-ready clips. Download, pricing, FAQ.
-- What it does: point it at a folder of raw footage. It finds the usable moments and trims them, sets aside broken, empty and too-shaky clips, flags logos, HDR, wrong frame rates and footage under 2K, applies looks for ARRI, DJI, RED and Sony or your own LUT, stabilizes, removes grain, and exports ProRes up to 8K (graded, log, or both in one pass). Every clip gets a name, its own folder and copy-paste keywords for stock sites.
+- What it does: point it at a folder of raw footage. It finds the usable moments and trims them, sets aside broken, empty and too-shaky clips, flags logos, HDR, wrong frame rates and footage under 2K, applies looks for ARRI, DJI, RED and Sony or your own LUT, stabilizes, removes grain, and exports ProRes up to 8K (graded, log, or both in one pass). You set the clip length (Min and Max); each clip runs as long as Max allows. Shaky or too-short parts it leaves out are listed with the reason, and you can keep any of them. On Pro, Studio and the free trial, every clip gets a name, its own folder, a title, a description and copy-paste keywords, also saved inside the exported file, plus CSV upload sheets for Pond5, Adobe Stock and Shutterstock.
 - You review: approve, deny and trim each clip from the keyboard. Studio plan users can also approve from the iPhone or Android Remote app.
 - Measured speed: 1,000 graded 4K ProRes clips shredded and exported in 3 hours 1 minute on a MacBook Pro M3 Pro (review time not included). About 33 hours by hand at 2 minutes per clip.
 - Platforms: macOS (Intel and Apple Silicon) and Windows (Microsoft Store). Remote app for iPhone and Android.
 - Formats: MP4, MOV, MXF, MKV, AVI, M4V, MTS, M2TS and more. Blackmagic RAW natively. RED R3D with REDCINE-X Pro installed. ARRIRAW with ARRI's free ART CMD. CinemaDNG on macOS.
-- Not supported yet: Canon Cinema RAW Light, Nikon N-RAW. It does not upload to stock sites; you upload and paste the keywords yourself.
+- Not supported yet: Canon Cinema RAW Light, Nikon N-RAW. It does not upload to stock sites; you upload the clips yourself, using the sheets or pasting the text.
 - Privacy: videos stay on your computer. A few small still frames per shot go to an outside naming service so clips get names and keywords.
-- Pricing (USD, per month): Starter $29 (250 clips), Creator $69 (600 clips), Pro $129 (1,200 clips, keywords), Studio $199 (2,000 clips, keywords, approve from phone). 6 and 12 month terms save 10% and 15%.
+- Pricing (USD, per month): Starter $29 (250 clips), Creator $69 (600 clips), Pro $129 (1,200 clips, titles and keywords), Studio $199 (2,000 clips, titles and keywords, approve from phone). 6 and 12 month terms save 10% and 15%.
 - Free trial: 100 free clips to use within 7 days, keywords included, for trials started before December 31, 2026. Card saved to verify, never charged for the trial.
 - One computer per subscription.
 
