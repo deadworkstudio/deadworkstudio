@@ -460,8 +460,66 @@
       // optional question: nothing to do
     }
   }
+  // Daniel 2026-11-21: "Can we just add a button to click before the trial starts?" The same
+  // six choices now also sit in the trial box, under Start free trial. Optional: nothing waits on
+  // it and the trial starts exactly as before. A pick is kept here (and in sessionStorage, for the
+  // trip out to a payment site and back) and sent with the same POST /heard once the trial (or a
+  // plan) has finished, so the Worker needs no change. Picked here = no second question after.
+  var preHeardBox = trialOffer ? trialOffer.querySelector('[data-trial-heard]') : null;
+  var preHeardDetail = preHeardBox ? preHeardBox.querySelector('[data-trial-heard-detail]') : null;
+  var preHeardAnswer = null;
+  function savePreHeard() {
+    try {
+      if (preHeardAnswer) sessionStorage.setItem('dw-heard-pre', JSON.stringify({ a: preHeardAnswer, d: preHeardDetail ? preHeardDetail.value.trim().slice(0, 120) : '' }));
+      else sessionStorage.removeItem('dw-heard-pre');
+    } catch (e) {
+      // storage blocked: the pick still works on this page
+    }
+  }
+  function readPreHeard() {
+    var detail = preHeardDetail ? preHeardDetail.value.trim().slice(0, 120) : '';
+    if (preHeardAnswer) return { a: preHeardAnswer, d: detail };
+    try {
+      var stored = JSON.parse(sessionStorage.getItem('dw-heard-pre') || 'null');
+      if (stored && typeof stored.a === 'string') return { a: stored.a, d: detail || String(stored.d || '').slice(0, 120) };
+    } catch (e) {
+      // nothing stored
+    }
+    return null;
+  }
+  if (preHeardBox) {
+    var preOpts = preHeardBox.querySelectorAll('[data-trial-heard-opt]');
+    Array.prototype.forEach.call(preOpts, function (b) {
+      b.addEventListener('click', function () {
+        var answer = b.getAttribute('data-trial-heard-opt');
+        preHeardAnswer = preHeardAnswer === answer ? null : answer; // tap again to undo
+        Array.prototype.forEach.call(preOpts, function (x) {
+          x.setAttribute('aria-pressed', x.getAttribute('data-trial-heard-opt') === preHeardAnswer ? 'true' : 'false');
+        });
+        if (preHeardDetail) {
+          preHeardDetail.hidden = preHeardAnswer !== 'other';
+          if (preHeardAnswer === 'other') preHeardDetail.focus();
+        }
+        savePreHeard();
+      });
+    });
+    if (preHeardDetail) preHeardDetail.addEventListener('change', savePreHeard);
+  }
+
   function showHeardQuestion(heardSessionId) {
     if (!heardBox || !heardSessionId || heardSent) return;
+    var pre = readPreHeard();
+    if (pre && /^(youtube|instagram|tiktok|google|friend|other)$/.test(pre.a)) {
+      // Already answered in the trial box: send it, and don't ask again on "You're in".
+      sendHeard(heardSessionId, pre.a, pre.a === 'other' ? pre.d : '');
+      heardBox.hidden = true;
+      try {
+        sessionStorage.removeItem('dw-heard-pre');
+      } catch (e) {
+        // fine
+      }
+      return;
+    }
     heardBox.hidden = false;
     var other = heardBox.querySelector('[data-heard-other]');
     var detail = heardBox.querySelector('[data-heard-detail]');
