@@ -52,7 +52,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261121heard" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261121light" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -374,6 +374,7 @@
     <!-- SHRED trial box: on for everyone since 2026-11-04 (Daniel: "until I say remove"). To hide again, wrap it in <template data-trial-offer-hold>. -->
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
       <p class="trial-offer-dl" data-trial-dl-note hidden>下载的同时，领取你的 100 个免费片段。</p>
+      <p class="trial-rec" aria-hidden="true"><span class="trial-rec-dot"></span><span>REC</span><span class="trial-rec-tc" data-trial-tc>00:00:07:00</span></p>
       <p class="mono trial-offer-eyebrow">SHRED 上线优惠</p>
       <h3 class="trial-offer-title">100 个免费片段。7 天。</h3>
       <p class="trial-offer-sub"><strong>今天 $0，不会自动续订。</strong>银行卡仅用于防止重复试用。</p>
@@ -767,7 +768,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261121heard"></script>
+<script src="../../assets/js/checkout.js?v=20261121night"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="../../assets/js/ss-page.js?v=20261121a"></script>
 <script src="../../assets/js/ss-hero.js?v=20261115c" defer></script>

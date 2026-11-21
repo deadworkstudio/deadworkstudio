@@ -248,6 +248,24 @@
   var trialResendForm = trialOffer ? trialOffer.querySelector('[data-trial-resend-form]') : null;
   var trialResendEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-resend-email]') : null;
   var trialResendSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-resend-submit]') : null;
+  // Night Shoot look (Daniel 2026-11-21): the REC timecode in the trial box runs at 24 fps from 00:00:07:00,
+  // only while the box is on screen, and stays still for reduced motion. Decoration only.
+  (function () {
+    var tc = trialOffer ? trialOffer.querySelector('[data-trial-tc]') : null;
+    if (!tc || !window.requestAnimationFrame) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var t0 = 0, on = false, raf = 0;
+    function p2(n) { return (n < 10 ? '0' : '') + n; }
+    function step(now) {
+      if (!t0) t0 = now;
+      var f = Math.floor((now - t0) / (1000 / 24)) + 7 * 24;
+      tc.textContent = '00:' + p2(Math.floor(f / 1440) % 60) + ':' + p2(Math.floor(f / 24) % 60) + ':' + p2(f % 24);
+      if (on) raf = requestAnimationFrame(step);
+    }
+    function set(v) { if (v === on) return; on = v; if (on) raf = requestAnimationFrame(step); else cancelAnimationFrame(raf); }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { set(es[0].isIntersecting); }).observe(trialOffer);
+    else set(true);
+  })();
   // Chat "Send trial link" (Daniel 11-20): #trial&for=<base64 {n,e}> fills in their first name and
   // email, then the address bar goes back to #trial so the email isn't left in history.
   (function () {
