@@ -14,7 +14,7 @@
 - Not supported yet: Canon Cinema RAW Light, Nikon N-RAW. It does not upload to stock sites; you upload the clips yourself, using the sheets or pasting the text.
 - Privacy: videos stay on your computer. A few small still frames per shot go to an outside naming service so clips get names and keywords.
 - Pricing (USD, per month): Starter $29 (250 clips), Creator $69 (600 clips), Pro $129 (1,200 clips, titles and keywords), Studio $199 (2,000 clips, titles and keywords, approve from phone). 6 and 12 month terms save 10% and 15%.
-- Free trial: 100 free clips to use within 7 days, keywords included, for trials started before December 31, 2026. No card needed, just first name and email.
+- Free trial: 100 free clips to use within 7 days, keywords included, for trials started before December 31, 2026. Card saved to verify, never charged for the trial.
 - One computer per subscription.
 
 ## Guides
