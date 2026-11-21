@@ -1111,56 +1111,56 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 .trial-heard-detail { display: block; width: 100%; max-width: 360px; margin: 10px auto 0; min-height: 38px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 999px; background: #FBF9F4; font: inherit; font-size: 14px; color: var(--ink); }
 .trial-heard-detail[hidden] { display: none; }
 
-/* Trial box "Night Shoot" look (Daniel picked option 03 on 2026-11-21): black box with film grain, big Anton
-   headline, left-aligned, a blinking REC dot with a running timecode, brand green button. Look only:
+/* Trial box "Night Shoot" look (Daniel picked option 03 on 2026-11-21): big Anton headline, left-aligned, a blinking REC dot with a running timecode, brand green button. Look only:
    markup, words and checkout.js behaviour are unchanged. Scoped to #trial so nothing else moves. */
-#trial.trial-offer { --bg: #0B0B0A; --bg-2: #1B1B19; --ink: #ECE6D8; --ink-2: #A9A499; --ink-3: #8A867E; --line: rgba(236,230,216,.1); --line-2: rgba(236,230,216,.28); --green: #8FD687;
-  position: relative; overflow: hidden; isolation: isolate; padding: 26px 30px 22px; border: 0; border-radius: 0; background: var(--bg); color: var(--ink); text-align: left; }
-#trial.trial-offer::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+/* Daniel 2026-11-21: keep the layout but in the site's own light colors, green button, no black box. */
+#trial.trial-offer { --field: #FBF9F5; --chip: rgba(20,20,18,.06); --btn: #8FD687;
+  position: relative; overflow: hidden; isolation: isolate; padding: 26px 30px 22px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg-2); color: var(--ink); text-align: left; }
+#trial.trial-offer::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .35; mix-blend-mode: multiply; filter: invert(1);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 #trial .trial-rec { display: flex; align-items: center; gap: 14px; margin: 0 0 12px; font: 500 10.5px/1 var(--mono); letter-spacing: .2em; color: var(--ink-3); }
 #trial .trial-rec-dot { width: 8px; height: 8px; border-radius: 50%; background: #C8201A; animation: trial-rec-blink 1.2s steps(2, start) infinite; }
 #trial .trial-rec-tc { color: var(--ink); font-variant-numeric: tabular-nums; }
 @keyframes trial-rec-blink { to { visibility: hidden; } }
 #trial .trial-offer-dl { text-align: left; color: var(--ink); }
-#trial .trial-offer-eyebrow { color: var(--green); }
+#trial .trial-offer-eyebrow { color: #3D6E39; }
 #trial .trial-offer-title { margin-top: 10px; font: 400 76px/.9 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; text-transform: uppercase; letter-spacing: .005em; color: var(--ink); text-wrap: balance; }
 html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-title { font: 800 44px/1.1 var(--sans); letter-spacing: -.02em; text-transform: none; }
 #trial .trial-offer-sub { margin-top: 14px; max-width: 46ch; color: var(--ink-2); }
 #trial .trial-offer-sub strong { color: var(--ink); font-weight: 600; }
-#trial .trial-offer-form { flex-wrap: nowrap; justify-content: flex-start; gap: 6px; margin-top: 18px; padding: 6px; background: var(--bg-2); }
+#trial .trial-offer-form { flex-wrap: nowrap; justify-content: flex-start; gap: 6px; margin-top: 18px; padding: 6px; background: var(--field); border: 1px solid var(--line-2); }
 #trial .trial-offer-form input { flex: 1 1 auto; padding: 13px 14px; border: 0; border-radius: 0; background: transparent; color: var(--ink); }
-#trial .trial-offer-form input::placeholder { color: #77736B; opacity: 1; }
+#trial .trial-offer-form input::placeholder { color: #8A867E; opacity: 1; }
 #trial .trial-offer-form input:focus-visible { outline: 1px solid var(--line-2); outline-offset: 0; }
-#trial .trial-offer-form .pill { flex: 0 0 auto; min-height: 50px; padding: 0 22px; border: 0; border-radius: 0; background: var(--green); color: #0B0B0A; }
-#trial .trial-offer-form .pill:hover { background: var(--ink); color: #0B0B0A; }
+#trial .trial-offer-form .pill { flex: 0 0 auto; min-height: 50px; padding: 0 22px; border: 0; border-radius: 0; background: var(--btn); color: #141412; }
+#trial .trial-offer-form .pill:hover { background: var(--ink); color: #F4F1EA; }
 #trial .trial-offer-form .pill:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 #trial .trial-offer-form .pill:disabled { opacity: .6; }
 #trial .trial-heard { margin-top: 18px; }
 #trial .trial-heard-q { color: var(--ink-2); }
 #trial .trial-heard-opt-label { font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-left: 6px; }
 #trial .ws-heard-opts { justify-content: flex-start; }
-#trial .trial-heard .ws-heard-opt { min-height: 34px; padding: 0 13px; border: 0; border-radius: 2px; background: var(--bg-2); color: #C9C3B5; }
-#trial .trial-heard .ws-heard-opt:hover { background: #26261F; color: var(--ink); }
-#trial .trial-heard .ws-heard-opt:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
-#trial .trial-heard .ws-heard-opt[aria-pressed="true"] { background: var(--ink); color: #0B0B0A; }
-#trial .trial-heard-detail { margin: 10px 0 0; max-width: 100%; border: 0; border-radius: 0; background: var(--bg-2); color: var(--ink); }
-#trial .trial-heard-detail::placeholder { color: #77736B; opacity: 1; }
+#trial .trial-heard .ws-heard-opt { min-height: 34px; padding: 0 13px; border: 0; border-radius: 2px; background: var(--chip); color: var(--ink); }
+#trial .trial-heard .ws-heard-opt:hover { background: rgba(20,20,18,.12); color: var(--ink); }
+#trial .trial-heard .ws-heard-opt:focus-visible { outline: 2px solid #3D6E39; outline-offset: 2px; }
+#trial .trial-heard .ws-heard-opt[aria-pressed="true"] { background: var(--ink); color: #F4F1EA; }
+#trial .trial-heard-detail { margin: 10px 0 0; max-width: 100%; border: 1px solid var(--line-2); border-radius: 0; background: var(--field); color: var(--ink); }
+#trial .trial-heard-detail::placeholder { color: #8A867E; opacity: 1; }
 #trial .trial-offer-phone { text-align: left; color: var(--ink-2); }
 #trial .trial-offer-now { color: var(--ink); }
-#trial .trial-offer-disclosure { color: #8A867E; }
+#trial .trial-offer-disclosure { color: var(--ink-2); }
 #trial .trial-offer-fine { font-size: 12.5px; }
-#trial .trial-offer-disclosure.trial-offer-reminder { color: #77736B; opacity: 1; }
+#trial .trial-offer-disclosure.trial-offer-reminder { color: var(--ink-3); opacity: 1; }
 #trial .trial-offer-status { color: var(--ink-2); }
-#trial .trial-offer-error { color: #FF7A6E; }
+#trial .trial-offer-error { color: #A3241D; }
 #trial .trial-offer-resend { border-top-color: var(--line); }
-#trial .trial-offer-resend-toggle { color: #8A867E; text-align: left; }
+#trial .trial-offer-resend-toggle { color: var(--ink-3); text-align: left; }
 #trial .trial-offer-resend-link { color: var(--ink-2); }
 #trial .trial-offer-resend-form { justify-content: flex-start; }
-#trial .trial-offer-resend-form input { border: 0; border-radius: 0; background: var(--bg-2); color: var(--ink); }
-#trial .trial-offer-resend-form input::placeholder { color: #77736B; opacity: 1; }
+#trial .trial-offer-resend-form input { border: 1px solid var(--line-2); border-radius: 0; background: var(--field); color: var(--ink); }
+#trial .trial-offer-resend-form input::placeholder { color: #8A867E; opacity: 1; }
 #trial .trial-offer-resend-form .pill { border-radius: 0; border-color: var(--line-2); color: var(--ink); background: transparent; }
-#trial .trial-offer-resend-form .pill:hover { background: var(--ink); color: #0B0B0A; }
+#trial .trial-offer-resend-form .pill:hover { background: var(--ink); color: #F4F1EA; }
 @media (max-width: 520px) {
   #trial.trial-offer { padding: 22px 18px 20px; }
   #trial .trial-offer-title { font-size: 58px; }
