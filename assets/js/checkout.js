@@ -19,6 +19,10 @@
       else (window.dwQueue = window.dwQueue || []).push(name);
     } catch (e) {}
   }
+  // Meta ads pixel (assets/js/meta-pixel.js, 2026-11-22). Does nothing when the pixel is off.
+  function pixel(name, data, eventId) {
+    try { if (window.dwPixel) window.dwPixel(name, data, eventId); } catch (e) {}
+  }
   // The browser's remembered last outside visit (ss-funnel.js), sent only with a checkout so the
   // sale is credited to where this person first came from, even days later. Nothing for GPC/DNT.
   function lastTouch() {
@@ -599,6 +603,13 @@
     var onPhone = isPhoneVisitor();
     var isTrial = !!(trial && trial.endsOnText);
     if (isTrial) step('trial-done');
+    if (isTrial) {
+      pixel('StartTrial', { value: 0, currency: 'USD', content_name: 'Stock Shredder free trial' }, finishedSessionId ? 'trial-' + finishedSessionId : null);
+      pixel('Lead', { content_name: 'Stock Shredder free trial' }, finishedSessionId ? 'lead-' + finishedSessionId : null);
+    } else if (activationKey) {
+      var paidCents = currentPlanId && CENTS[currentPlanId] ? CENTS[currentPlanId][currentPlanInterval] : null;
+      pixel('Purchase', { value: typeof paidCents === 'number' ? paidCents / 100 : 0, currency: 'USD', content_name: 'Stock Shredder ' + (currentPlanId || 'plan'), content_ids: ['stock-shredder'], content_type: 'product' }, finishedSessionId ? 'buy-' + finishedSessionId : null);
+    }
     if (successTitle) successTitle.textContent = name ? T("You're in, {name}.", { name: name }) : T("You're in.");
     if (successNote) {
       successNote.textContent = keyByEmail
@@ -758,6 +769,7 @@
 
   function startCheckout(planId) {
     step('plan-checkout');
+    pixel('InitiateCheckout', { content_name: 'Stock Shredder ' + planId, currency: 'USD' });
     var plan = PLANS[planId];
     if (!plan || !frame) return;
     // Teardown first, always — a stray double-click on a plan button, or starting a paid
