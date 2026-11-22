@@ -1139,8 +1139,8 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 #trial .trial-heard { margin-top: 18px; }
 #trial .trial-heard-q { color: var(--ink-2); }
 #trial .trial-heard-opt-label { font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-left: 6px; }
-#trial .ws-heard-opts { justify-content: flex-start; }
-#trial .trial-heard .ws-heard-opt { min-height: 34px; padding: 0 13px; border: 0; border-radius: 2px; background: var(--chip); color: var(--ink); }
+#trial .ws-heard-opts { justify-content: flex-start; gap: 6px; } /* Daniel 2026-11-22: all six chips on one row, no orphan */
+#trial .trial-heard .ws-heard-opt { min-height: 34px; padding: 0 10px; letter-spacing: .08em; border: 0; border-radius: 2px; background: var(--chip); color: var(--ink); }
 #trial .trial-heard .ws-heard-opt:hover { background: rgba(20,20,18,.12); color: var(--ink); }
 #trial .trial-heard .ws-heard-opt:focus-visible { outline: 2px solid #3D6E39; outline-offset: 2px; }
 #trial .trial-heard .ws-heard-opt[aria-pressed="true"] { background: var(--ink); color: #F4F1EA; }
@@ -1167,6 +1167,8 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
   html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-title { font-size: 34px; }
   #trial .trial-offer-form { flex-direction: column; }
   #trial .trial-offer-form .pill { width: 100%; }
+  #trial .ws-heard-opts { display: grid; grid-template-columns: repeat(3, 1fr); }
+  #trial .trial-heard .ws-heard-opt { padding: 0 6px; }
 }
 /* Code box (Daniel 2026-11-22: the ad says "with Code SHRED"). Same field look as the email row, smaller. */
 #trial .trial-code { display: block; margin-top: 18px; }
@@ -1186,3 +1188,7 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 .hero .hero-code a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
 .hero .hero-code a:hover { color: var(--ink); }
 @media (prefers-reduced-motion: reduce) { #trial .trial-rec-dot { animation: none; } }
+/* Daniel 2026-11-22: PRICING heading sits above the plans, after the trial box and the footage slider. */
+#pricing .pricing-title-low { margin-top: 72px; }
+#pricing .pricing-title-low + .section-sub { margin-bottom: 28px; }
+@media (max-width: 520px) { #pricing .pricing-title-low { margin-top: 48px; } }

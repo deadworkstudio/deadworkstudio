@@ -52,7 +52,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122tidy" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122chips" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -369,8 +369,6 @@
   </section>
 
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
-    <h2 class="section-title section-head head-dw" id="pricing-title">Precios</h2>
-    <p class="section-sub">Todos los planes: nombres automáticos, revisión para sitios de stock, estabilización, eliminación de grano y todos los tamaños de exportación. Los clips sin usar se acumulan 2 meses.</p>
     <p class="pricing-error" data-pricing-error role="alert" tabindex="-1" hidden></p>
     <!-- SHRED trial box: on for everyone since 2026-11-04 (Daniel: "until I say remove"). To hide again, wrap it in <template data-trial-offer-hold>. -->
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
@@ -452,6 +450,9 @@
     </div>
     <!-- Billing selector sits right above the plan cards (Daniel 2026-11-15: people should see the 6/12-month
          lock-in next to the prices, not above the trial box). Monthly is pre-selected since 2026-11-18 (Daniel: "Monthly first"); 12 months stays one tap away as Best price. -->
+    <!-- Daniel 2026-11-22: trial box, then "what you shoot on", then PRICING + plans. -->
+    <h2 class="section-title section-head head-dw pricing-title-low" id="pricing-title">Precios</h2>
+    <p class="section-sub">Todos los planes: nombres automáticos, revisión para sitios de stock, estabilización, eliminación de grano y todos los tamaños de exportación. Los clips sin usar se acumulan 2 meses.</p>
     <p class="mono term-eyebrow">Comprométete y ahorra</p>
     <div class="term" role="radiogroup" aria-label="Facturación" data-term>
       <button type="button" class="term-opt is-active" role="radio" aria-checked="true" tabindex="0" data-term-opt="month" data-term-pct="0" data-term-months="0"><span class="term-name">Mensual</span></button>
