@@ -19,6 +19,10 @@
       else (window.dwQueue = window.dwQueue || []).push(name);
     } catch (e) {}
   }
+  // Meta ads pixel (assets/js/meta-pixel.js, 2026-11-22). Does nothing when the pixel is off.
+  function pixel(name, data, eventId) {
+    try { if (window.dwPixel) window.dwPixel(name, data, eventId); } catch (e) {}
+  }
   // The browser's remembered last outside visit (ss-funnel.js), sent only with a checkout so the
   // sale is credited to where this person first came from, even days later. Nothing for GPC/DNT.
   function lastTouch() {
@@ -243,11 +247,32 @@
   var trialErrorEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-error]') : null;
   var trialStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-status]') : null;
   var trialDateEls = trialOffer ? trialOffer.querySelectorAll('[data-trial-offer-date]') : [];
+  var trialCodeInput = trialOffer ? trialOffer.querySelector('[data-trial-code]') : null;
+  var trialCodeStatus = trialOffer ? trialOffer.querySelector('[data-trial-code-status]') : null;
+  var trialCodeJumpWrap = document.querySelector('[data-trial-code-jump-wrap]');
   var trialSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-submit]') : null;
   var trialResendToggle = trialOffer ? trialOffer.querySelector('[data-trial-resend-toggle]') : null;
   var trialResendForm = trialOffer ? trialOffer.querySelector('[data-trial-resend-form]') : null;
   var trialResendEmailInput = trialOffer ? trialOffer.querySelector('[data-trial-resend-email]') : null;
   var trialResendSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-resend-submit]') : null;
+  // Night Shoot look (Daniel 2026-11-21): the REC timecode in the trial box runs at 24 fps from 00:00:07:00,
+  // only while the box is on screen, and stays still for reduced motion. Decoration only.
+  (function () {
+    var tc = trialOffer ? trialOffer.querySelector('[data-trial-tc]') : null;
+    if (!tc || !window.requestAnimationFrame) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var t0 = 0, on = false, raf = 0;
+    function p2(n) { return (n < 10 ? '0' : '') + n; }
+    function step(now) {
+      if (!t0) t0 = now;
+      var f = Math.floor((now - t0) / (1000 / 24)) + 7 * 24;
+      tc.textContent = '00:' + p2(Math.floor(f / 1440) % 60) + ':' + p2(Math.floor(f / 24) % 60) + ':' + p2(f % 24);
+      if (on) raf = requestAnimationFrame(step);
+    }
+    function set(v) { if (v === on) return; on = v; if (on) raf = requestAnimationFrame(step); else cancelAnimationFrame(raf); }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { set(es[0].isIntersecting); }).observe(trialOffer);
+    else set(true);
+  })();
   // Chat "Send trial link" (Daniel 11-20): #trial&for=<base64 {n,e}> fills in their first name and
   // email, then the address bar goes back to #trial so the email isn't left in history.
   (function () {
@@ -460,8 +485,66 @@
       // optional question: nothing to do
     }
   }
+  // Daniel 2026-11-21: "Can we just add a button to click before the trial starts?" The same
+  // six choices now also sit in the trial box, under Start free trial. Optional: nothing waits on
+  // it and the trial starts exactly as before. A pick is kept here (and in sessionStorage, for the
+  // trip out to a payment site and back) and sent with the same POST /heard once the trial (or a
+  // plan) has finished, so the Worker needs no change. Picked here = no second question after.
+  var preHeardBox = trialOffer ? trialOffer.querySelector('[data-trial-heard]') : null;
+  var preHeardDetail = preHeardBox ? preHeardBox.querySelector('[data-trial-heard-detail]') : null;
+  var preHeardAnswer = null;
+  function savePreHeard() {
+    try {
+      if (preHeardAnswer) sessionStorage.setItem('dw-heard-pre', JSON.stringify({ a: preHeardAnswer, d: preHeardDetail ? preHeardDetail.value.trim().slice(0, 120) : '' }));
+      else sessionStorage.removeItem('dw-heard-pre');
+    } catch (e) {
+      // storage blocked: the pick still works on this page
+    }
+  }
+  function readPreHeard() {
+    var detail = preHeardDetail ? preHeardDetail.value.trim().slice(0, 120) : '';
+    if (preHeardAnswer) return { a: preHeardAnswer, d: detail };
+    try {
+      var stored = JSON.parse(sessionStorage.getItem('dw-heard-pre') || 'null');
+      if (stored && typeof stored.a === 'string') return { a: stored.a, d: detail || String(stored.d || '').slice(0, 120) };
+    } catch (e) {
+      // nothing stored
+    }
+    return null;
+  }
+  if (preHeardBox) {
+    var preOpts = preHeardBox.querySelectorAll('[data-trial-heard-opt]');
+    Array.prototype.forEach.call(preOpts, function (b) {
+      b.addEventListener('click', function () {
+        var answer = b.getAttribute('data-trial-heard-opt');
+        preHeardAnswer = preHeardAnswer === answer ? null : answer; // tap again to undo
+        Array.prototype.forEach.call(preOpts, function (x) {
+          x.setAttribute('aria-pressed', x.getAttribute('data-trial-heard-opt') === preHeardAnswer ? 'true' : 'false');
+        });
+        if (preHeardDetail) {
+          preHeardDetail.hidden = preHeardAnswer !== 'other';
+          if (preHeardAnswer === 'other') preHeardDetail.focus();
+        }
+        savePreHeard();
+      });
+    });
+    if (preHeardDetail) preHeardDetail.addEventListener('change', savePreHeard);
+  }
+
   function showHeardQuestion(heardSessionId) {
     if (!heardBox || !heardSessionId || heardSent) return;
+    var pre = readPreHeard();
+    if (pre && /^(youtube|instagram|tiktok|google|friend|other)$/.test(pre.a)) {
+      // Already answered in the trial box: send it, and don't ask again on "You're in".
+      sendHeard(heardSessionId, pre.a, pre.a === 'other' ? pre.d : '');
+      heardBox.hidden = true;
+      try {
+        sessionStorage.removeItem('dw-heard-pre');
+      } catch (e) {
+        // fine
+      }
+      return;
+    }
     heardBox.hidden = false;
     var other = heardBox.querySelector('[data-heard-other]');
     var detail = heardBox.querySelector('[data-heard-detail]');
@@ -523,6 +606,13 @@
     var onPhone = isPhoneVisitor();
     var isTrial = !!(trial && trial.endsOnText);
     if (isTrial) step('trial-done');
+    if (isTrial) {
+      pixel('StartTrial', { value: 0, currency: 'USD', content_name: 'Stock Shredder free trial' }, finishedSessionId ? 'trial-' + finishedSessionId : null);
+      pixel('Lead', { content_name: 'Stock Shredder free trial' }, finishedSessionId ? 'lead-' + finishedSessionId : null);
+    } else if (activationKey) {
+      var paidCents = currentPlanId && CENTS[currentPlanId] ? CENTS[currentPlanId][currentPlanInterval] : null;
+      pixel('Purchase', { value: typeof paidCents === 'number' ? paidCents / 100 : 0, currency: 'USD', content_name: 'Stock Shredder ' + (currentPlanId || 'plan'), content_ids: ['stock-shredder'], content_type: 'product' }, finishedSessionId ? 'buy-' + finishedSessionId : null);
+    }
     if (successTitle) successTitle.textContent = name ? T("You're in, {name}.", { name: name }) : T("You're in.");
     if (successNote) {
       successNote.textContent = keyByEmail
@@ -682,6 +772,7 @@
 
   function startCheckout(planId) {
     step('plan-checkout');
+    pixel('InitiateCheckout', { content_name: 'Stock Shredder ' + planId, currency: 'USD' });
     var plan = PLANS[planId];
     if (!plan || !frame) return;
     // Teardown first, always — a stray double-click on a plan button, or starting a paid
@@ -1087,6 +1178,11 @@
             // The Worker itself says SHRED is off: only now hide the box shown up front.
             currentOfferCode = null;
             trialOffer.hidden = true;
+            if (trialCodeJumpWrap) trialCodeJumpWrap.hidden = true;
+            if (trialCodeInput && trialCodeInput.value.toUpperCase() === DEFAULT_OFFER_CODE) {
+              trialCodeInput.value = '';
+              showCodeStatus('', false);
+            }
           }
           if (quiet) return;
           showPricingError((data && data.message) || "That code isn't active.");
@@ -1103,7 +1199,9 @@
           if (data.endsOnText) el.textContent = data.endsOnText;
         });
         trialOffer.hidden = false;
+        if (trialCodeJumpWrap) trialCodeJumpWrap.hidden = false;
         if (quiet) return;
+        codeApplied(data.code);
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         trialOffer.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
       })
@@ -1142,7 +1240,85 @@
     }
     if (code) checkOffer(code, !fromUrl);
     else if (Date.now() < DEFAULT_OFFER_ENDS) checkOffer(DEFAULT_OFFER_CODE, true);
+    if (fromUrl && trialCodeInput) trialCodeInput.value = String(code).trim().toUpperCase();
+    // Daniel 2026-11-22: "autofill the code SHRED". The default offer fills the box and shows it
+    // applied straight away (it already is); /offer can still take it back if SHRED is switched off.
+    else if (trialCodeInput && currentOfferCode === DEFAULT_OFFER_CODE) codeApplied(DEFAULT_OFFER_CODE);
+    if (trialCodeJumpWrap && !trialOffer.hidden) trialCodeJumpWrap.hidden = false;
   })();
+
+  // Daniel 2026-11-22: the Meta ad says "with Code SHRED", so there's a box to type it. SHRED
+  // already applies to every visitor; Apply asks the Worker's /offer (case-insensitive) and
+  // confirms it. A dead or typo'd code says so and leaves the SHRED trial below as it is.
+  var trialCodeForm = trialOffer ? trialOffer.querySelector('[data-trial-code-form]') : null;
+  function showCodeStatus(message, ok) {
+    if (!trialCodeStatus) return;
+    trialCodeStatus.textContent = message || '';
+    trialCodeStatus.hidden = !message;
+    trialCodeStatus.classList.toggle('is-ok', !!ok);
+  }
+  function codeApplied(code) {
+    if (trialCodeInput) trialCodeInput.value = code;
+    showCodeStatus('✓ ' + T('Code {code} applied. Enter your email below to get your 100 free clips.', { code: code }), true);
+  }
+  if (trialCodeForm && trialCodeInput) {
+    trialCodeForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var code = String(trialCodeInput.value || '').trim().toUpperCase();
+      if (!code) {
+        showCodeStatus(T('Type a code first.'), false);
+        trialCodeInput.focus();
+        return;
+      }
+      var applyBtn = trialCodeForm.querySelector('[data-trial-code-apply]');
+      if (applyBtn) applyBtn.disabled = true;
+      function done() {
+        if (applyBtn) applyBtn.disabled = false;
+      }
+      fetch(WORKER_URL + '/offer?code=' + encodeURIComponent(code))
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          done();
+          if (!data || !data.valid) {
+            showCodeStatus(T("That code isn't active, but you can still get 100 free clips below."), false);
+            return;
+          }
+          currentOfferCode = data.code;
+          try {
+            sessionStorage.setItem('ss-offer', data.code);
+          } catch (err) {}
+          Array.prototype.forEach.call(trialDateEls, function (el) {
+            if (data.endsOnText) el.textContent = data.endsOnText;
+          });
+          trialOffer.hidden = false;
+          codeApplied(data.code);
+          if (trialEmailInput) trialEmailInput.focus();
+        })
+        .catch(function () {
+          done();
+          // Couldn't reach the Worker: SHRED is the default offer already on the box, so say it's
+          // applied; /checkout itself still checks the code when the trial starts.
+          if (code === DEFAULT_OFFER_CODE && currentOfferCode === DEFAULT_OFFER_CODE) {
+            codeApplied(code);
+            if (trialEmailInput) trialEmailInput.focus();
+          } else {
+            showCodeStatus(T("That code isn't active, but you can still get 100 free clips below."), false);
+          }
+        });
+    });
+  }
+
+  // Hero "Have a code? Enter it here": jump to the trial box and put the cursor in the code box.
+  var trialCodeJump = document.querySelector('[data-trial-code-jump]');
+  if (trialCodeJump && trialCodeInput) {
+    trialCodeJump.addEventListener('click', function (e) {
+      if (!trialOffer || trialOffer.hidden) return; // plain link
+      e.preventDefault();
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      trialOffer.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      setTimeout(function () { trialCodeInput.focus({ preventScroll: true }); }, reduceMotion ? 0 : 450);
+    });
+  }
 
   // Starts a trial (setup-mode) Checkout Session for the entered email. Unlike startCheckout
   // above, this fetches the client secret ITSELF first (not via Stripe.js's own
