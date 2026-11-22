@@ -1192,3 +1192,11 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 #pricing .pricing-title-low { margin-top: 72px; }
 #pricing .pricing-title-low + .section-sub { margin-bottom: 28px; }
 @media (max-width: 520px) { #pricing .pricing-title-low { margin-top: 48px; } }
+/* Daniel 2026-11-22 "dial in the spacing": trial box opens the section now, so no extra top gap;
+   clear air between it and the footage box; empty status lines take no room. */
+#pricing > #trial.trial-offer { margin-top: 0; }
+#pricing > #trial.trial-offer + .fit { margin-top: 48px; }
+#trial .trial-offer-status:empty { display: none; }
+#trial .trial-offer-resend { margin-top: 22px; padding-top: 18px; }
+#pricing .pricing-title-low { margin-top: 80px; }
+@media (max-width: 520px) { #pricing > #trial.trial-offer + .fit { margin-top: 32px; } #pricing .pricing-title-low { margin-top: 56px; } }
