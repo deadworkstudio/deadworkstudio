@@ -247,6 +247,9 @@
   var trialErrorEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-error]') : null;
   var trialStatusEl = trialOffer ? trialOffer.querySelector('[data-trial-offer-status]') : null;
   var trialDateEls = trialOffer ? trialOffer.querySelectorAll('[data-trial-offer-date]') : [];
+  var trialCodeInput = trialOffer ? trialOffer.querySelector('[data-trial-code]') : null;
+  var trialCodeStatus = trialOffer ? trialOffer.querySelector('[data-trial-code-status]') : null;
+  var trialCodeJumpWrap = document.querySelector('[data-trial-code-jump-wrap]');
   var trialSubmitBtn = trialOffer ? trialOffer.querySelector('[data-trial-submit]') : null;
   var trialResendToggle = trialOffer ? trialOffer.querySelector('[data-trial-resend-toggle]') : null;
   var trialResendForm = trialOffer ? trialOffer.querySelector('[data-trial-resend-form]') : null;
@@ -1175,6 +1178,7 @@
             // The Worker itself says SHRED is off: only now hide the box shown up front.
             currentOfferCode = null;
             trialOffer.hidden = true;
+            if (trialCodeJumpWrap) trialCodeJumpWrap.hidden = true;
           }
           if (quiet) return;
           showPricingError((data && data.message) || "That code isn't active.");
@@ -1191,7 +1195,9 @@
           if (data.endsOnText) el.textContent = data.endsOnText;
         });
         trialOffer.hidden = false;
+        if (trialCodeJumpWrap) trialCodeJumpWrap.hidden = false;
         if (quiet) return;
+        codeApplied(data.code);
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         trialOffer.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
       })
@@ -1230,7 +1236,82 @@
     }
     if (code) checkOffer(code, !fromUrl);
     else if (Date.now() < DEFAULT_OFFER_ENDS) checkOffer(DEFAULT_OFFER_CODE, true);
+    if (fromUrl && trialCodeInput) trialCodeInput.value = String(code).trim().toUpperCase();
+    if (trialCodeJumpWrap && !trialOffer.hidden) trialCodeJumpWrap.hidden = false;
   })();
+
+  // Daniel 2026-11-22: the Meta ad says "with Code SHRED", so there's a box to type it. SHRED
+  // already applies to every visitor; Apply asks the Worker's /offer (case-insensitive) and
+  // confirms it. A dead or typo'd code says so and leaves the SHRED trial below as it is.
+  var trialCodeForm = trialOffer ? trialOffer.querySelector('[data-trial-code-form]') : null;
+  function showCodeStatus(message, ok) {
+    if (!trialCodeStatus) return;
+    trialCodeStatus.textContent = message || '';
+    trialCodeStatus.hidden = !message;
+    trialCodeStatus.classList.toggle('is-ok', !!ok);
+  }
+  function codeApplied(code) {
+    if (trialCodeInput) trialCodeInput.value = code;
+    showCodeStatus('✓ ' + T('Code {code} applied. Enter your email below to get your 100 free clips.', { code: code }), true);
+  }
+  if (trialCodeForm && trialCodeInput) {
+    trialCodeForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var code = String(trialCodeInput.value || '').trim().toUpperCase();
+      if (!code) {
+        showCodeStatus(T('Type a code first.'), false);
+        trialCodeInput.focus();
+        return;
+      }
+      var applyBtn = trialCodeForm.querySelector('[data-trial-code-apply]');
+      if (applyBtn) applyBtn.disabled = true;
+      function done() {
+        if (applyBtn) applyBtn.disabled = false;
+      }
+      fetch(WORKER_URL + '/offer?code=' + encodeURIComponent(code))
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          done();
+          if (!data || !data.valid) {
+            showCodeStatus(T("That code isn't active, but you can still get 100 free clips below."), false);
+            return;
+          }
+          currentOfferCode = data.code;
+          try {
+            sessionStorage.setItem('ss-offer', data.code);
+          } catch (err) {}
+          Array.prototype.forEach.call(trialDateEls, function (el) {
+            if (data.endsOnText) el.textContent = data.endsOnText;
+          });
+          trialOffer.hidden = false;
+          codeApplied(data.code);
+          if (trialEmailInput) trialEmailInput.focus();
+        })
+        .catch(function () {
+          done();
+          // Couldn't reach the Worker: SHRED is the default offer already on the box, so say it's
+          // applied; /checkout itself still checks the code when the trial starts.
+          if (code === DEFAULT_OFFER_CODE && currentOfferCode === DEFAULT_OFFER_CODE) {
+            codeApplied(code);
+            if (trialEmailInput) trialEmailInput.focus();
+          } else {
+            showCodeStatus(T("That code isn't active, but you can still get 100 free clips below."), false);
+          }
+        });
+    });
+  }
+
+  // Hero "Have a code? Enter it here": jump to the trial box and put the cursor in the code box.
+  var trialCodeJump = document.querySelector('[data-trial-code-jump]');
+  if (trialCodeJump && trialCodeInput) {
+    trialCodeJump.addEventListener('click', function (e) {
+      if (!trialOffer || trialOffer.hidden) return; // plain link
+      e.preventDefault();
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      trialOffer.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      setTimeout(function () { trialCodeInput.focus({ preventScroll: true }); }, reduceMotion ? 0 : 450);
+    });
+  }
 
   // Starts a trial (setup-mode) Checkout Session for the entered email. Unlike startCheckout
   // above, this fetches the client secret ITSELF first (not via Stripe.js's own
