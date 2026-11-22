@@ -78,7 +78,7 @@
       CENTS[plan][opt] = Math.round((PLANS[plan].baseCents * (100 - DISCOUNT_PERCENT[opt])) / 100);
     });
   });
-  // Cost per clip in cents, two places: 11.60¢, 8.46¢.
+  // Cost per clip in cents, two places: ¢11.60, ¢8.46 (Daniel 2026-11-22: cent sign first).
   // Sales audit 2026-11-12: cents per clip made Creator look no better than Starter (11.60 vs
   // 11.50). Show the time it saves instead, at 2 minutes per clip by hand (Daniel 2026-11-15,
   // back from 4; same figure as the plan finder's HAND_MINUTES_PER_CLIP).
@@ -185,7 +185,7 @@
       if (perClipEl) perClipEl.textContent = perClipText(perMonth, monthlyClips);
       // Daniel 2026-11-19: show cents per clip on every price again (US cents, two places, so
       // Starter 11.60¢ and Creator 11.50¢ never round to the same number). Follows the term.
-      if (cpcEl) cpcEl.textContent = T('{cents}¢ per clip', { cents: (perMonth / monthlyClips).toFixed(2) });
+      if (cpcEl) cpcEl.textContent = T('¢{cents} per clip', { cents: (perMonth / monthlyClips).toFixed(2) });
     });
   }
 
