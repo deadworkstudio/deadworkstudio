@@ -49,7 +49,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122tidy" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122space" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -378,8 +378,6 @@
   </section>
 
   <section class="pricing tone-alt" id="pricing" aria-labelledby="pricing-title">
-    <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
-    <p class="section-sub">Every plan: auto-naming, stock-site checks, stabilize, grain removal, all export sizes. Unused clips roll over 2 months.</p>
     <p class="pricing-error" data-pricing-error role="alert" tabindex="-1" hidden></p>
     <!-- SHRED trial box: on for everyone since 2026-11-04 (Daniel: "until I say remove"). To hide again, wrap it in <template data-trial-offer-hold>. -->
     <div class="trial-offer" id="trial" data-trial-offer hidden tabindex="-1">
@@ -465,6 +463,9 @@
     </div>
     <!-- Billing selector sits right above the plan cards (Daniel 2026-11-15: people should see the 6/12-month
          lock-in next to the prices, not above the trial box). Monthly is pre-selected since 2026-11-18 (Daniel: "Monthly first"); 12 months stays one tap away as Best price. -->
+    <!-- Daniel 2026-11-22: trial box, then "what you shoot on", then PRICING + plans. -->
+    <h2 class="section-title section-head head-dw pricing-title-low" id="pricing-title">Pricing</h2>
+    <p class="section-sub">Every plan: auto-naming, stock-site checks, stabilize, grain removal, all export sizes. Unused clips roll over 2 months.</p>
     <p class="mono term-eyebrow">Lock in and save</p>
     <div class="term" role="radiogroup" aria-label="Billing" data-term>
       <button type="button" class="term-opt is-active" role="radio" aria-checked="true" tabindex="0" data-term-opt="month" data-term-pct="0" data-term-months="0"><span class="term-name">Monthly</span></button>
@@ -477,7 +478,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Starter</span>
         <p class="pricing-price" data-monthly="29"><span class="num">$29</span>/mo</p>
-        <p class="pricing-cpc" data-pricing-cpc>11.60¢ per clip</p>
+        <p class="pricing-cpc" data-pricing-cpc>¢11.60 per clip</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="250">250 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
@@ -488,7 +489,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Creator</span>
         <p class="pricing-price" data-monthly="69"><span class="num">$69</span>/mo</p>
-        <p class="pricing-cpc" data-pricing-cpc>11.50¢ per clip</p>
+        <p class="pricing-cpc" data-pricing-cpc>¢11.50 per clip</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="600">600 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
@@ -499,7 +500,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Pro<span class="pricing-badge">Recommended</span></span>
         <p class="pricing-price" data-monthly="129"><span class="num">$129</span>/mo</p>
-        <p class="pricing-cpc" data-pricing-cpc>10.75¢ per clip</p>
+        <p class="pricing-cpc" data-pricing-cpc>¢10.75 per clip</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="1200">1,200 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
@@ -510,7 +511,7 @@
       <div class="pricing-card">
         <span class="pricing-name">Studio</span>
         <p class="pricing-price" data-monthly="199"><span class="num">$199</span>/mo</p>
-        <p class="pricing-cpc" data-pricing-cpc>9.95¢ per clip</p>
+        <p class="pricing-cpc" data-pricing-cpc>¢9.95 per clip</p>
         <p class="pricing-save" data-pricing-save aria-hidden="true"></p>
         <p class="pricing-clips" data-clips-monthly="2000">2,000 clips / mo</p>
         <p class="pricing-bill" data-pricing-bill>Billed monthly</p>
@@ -798,7 +799,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261122tidy"></script>
+<script src="../../assets/js/checkout.js?v=20261122cents"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 <script src="../../assets/js/ss-page.js?v=20261121a"></script>
