@@ -1179,6 +1179,10 @@
             currentOfferCode = null;
             trialOffer.hidden = true;
             if (trialCodeJumpWrap) trialCodeJumpWrap.hidden = true;
+            if (trialCodeInput && trialCodeInput.value.toUpperCase() === DEFAULT_OFFER_CODE) {
+              trialCodeInput.value = '';
+              showCodeStatus('', false);
+            }
           }
           if (quiet) return;
           showPricingError((data && data.message) || "That code isn't active.");
@@ -1237,6 +1241,9 @@
     if (code) checkOffer(code, !fromUrl);
     else if (Date.now() < DEFAULT_OFFER_ENDS) checkOffer(DEFAULT_OFFER_CODE, true);
     if (fromUrl && trialCodeInput) trialCodeInput.value = String(code).trim().toUpperCase();
+    // Daniel 2026-11-22: "autofill the code SHRED". The default offer fills the box and shows it
+    // applied straight away (it already is); /offer can still take it back if SHRED is switched off.
+    else if (trialCodeInput && currentOfferCode === DEFAULT_OFFER_CODE) codeApplied(DEFAULT_OFFER_CODE);
     if (trialCodeJumpWrap && !trialOffer.hidden) trialCodeJumpWrap.hidden = false;
   })();
 
