@@ -1126,7 +1126,7 @@ main > section.clock { min-height: 0 !important; padding: 0 !important; backgrou
 #trial .trial-offer-eyebrow { color: #3D6E39; }
 #trial .trial-offer-title { margin-top: 10px; font: 400 76px/.9 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; text-transform: uppercase; letter-spacing: .005em; color: var(--ink); text-wrap: balance; }
 html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-title { font: 800 44px/1.1 var(--sans); letter-spacing: -.02em; text-transform: none; }
-#trial .trial-offer-sub { margin-top: 14px; max-width: 46ch; color: var(--ink-2); }
+#trial .trial-offer-sub { margin-top: 14px; color: var(--ink-2); }
 #trial .trial-offer-sub strong { color: var(--ink); font-weight: 600; }
 #trial .trial-offer-form { flex-wrap: nowrap; justify-content: flex-start; gap: 6px; margin-top: 18px; padding: 6px; background: var(--field); border: 1px solid var(--line-2); }
 #trial .trial-offer-form input { flex: 1 1 auto; padding: 13px 14px; border: 0; border-radius: 0; background: transparent; color: var(--ink); }

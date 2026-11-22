@@ -49,7 +49,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122code" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122tidy" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -387,7 +387,7 @@
       <p class="trial-rec" aria-hidden="true"><span class="trial-rec-dot"></span><span>REC</span><span class="trial-rec-tc" data-trial-tc>00:00:07:00</span></p>
       <p class="mono trial-offer-eyebrow">SHRED launch offer</p>
       <h3 class="trial-offer-title">100 free clips. 7 days.</h3>
-      <p class="trial-offer-sub"><strong>$0 today. Nothing renews.</strong> Your card only blocks repeat trials.</p>
+      <p class="trial-offer-sub"><strong>$0 today. Nothing renews.</strong> Your card only blocks repeat&nbsp;trials.</p>
       <!-- Daniel 2026-11-22: the Meta ad says "with Code SHRED", so people need a place to type it.
            SHRED already applies to everyone; this box just confirms it (checkout.js checks /offer). -->
       <form class="trial-code" data-trial-code-form novalidate>
@@ -421,8 +421,7 @@
       <!-- §8.1's disclosure, full size next to the button — the site's own version adds the real
            end date, filled in from GET /offer's own endsOnText (never computed here). -->
       <p class="trial-offer-phone" data-trial-phone-note hidden>On your phone? We'll email the link so your 7 days start on your computer. <button type="button" class="trial-offer-now" data-trial-start-now hidden>Start now anyway</button></p>
-      <p class="trial-offer-disclosure trial-offer-fine">Use by <span data-trial-offer-date>7 days from today</span>. Keywords included. Offer ends Dec 31, 2026. One per person, card and computer.</p>
-      <p class="trial-offer-disclosure trial-offer-reminder">One reminder email if you don't finish. Unsubscribe anytime.</p>
+      <p class="trial-offer-disclosure trial-offer-fine">Use by <span data-trial-offer-date>7 days from today</span>. Keywords included.</p>
       <p class="trial-offer-status" data-trial-offer-status role="status" aria-live="polite"></p>
       <p class="trial-offer-error" data-trial-offer-error role="alert" aria-live="assertive" tabindex="-1" hidden></p>
       <div class="trial-offer-resend">
@@ -799,7 +798,7 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261122code"></script>
+<script src="../../assets/js/checkout.js?v=20261122tidy"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 <script src="../../assets/js/ss-page.js?v=20261121a"></script>
