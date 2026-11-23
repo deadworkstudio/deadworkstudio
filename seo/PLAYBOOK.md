@@ -146,7 +146,7 @@ Daily: the next ready draft is offered to Daniel; one new row is drafted so abou
 | 7 | red r3d stock footage | red-r3d-stock-footage | LIVE Nov 23 |
 | 8 | storyblocks video contributor | storyblocks-video-contributor | LIVE Nov 23 |
 | 9 | xpiks alternative | xpiks-alternative | Draft ready |
-| 10 | automatic stock footage clipping software | automatic-stock-footage-clipping | Draft ready |
+| 10 | automatic stock footage clipping software | automatic-stock-footage-clipping | LIVE Nov 23 |
 | 11 | batch process stock footage / hundreds of clips at once | batch-process-stock-footage | To draft |
 | 12 | how to keyword stock footage (and how many keywords) | keyword-stock-footage | To draft |
 | 13 | why stock footage gets rejected | stock-footage-rejection-reasons | To draft |
