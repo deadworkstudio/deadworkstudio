@@ -111,10 +111,10 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 | L4 | Competitor | xpiks alternative (video) | Merge with article #3 rather than a second page | Folded into article #3, no separate page |
 | L5 | Stock site | shutterstock video contributor upload | shutterstock-video-contributor (angle: 7-50 keywords, sentence descriptions, editorial) | LIVE Nov 22 |
 | L6 | Stock site | pond5 video upload / sell footage on pond5 | pond5-video-upload (angle: file names, size caps, payout; video pricing is tiered) | LIVE Nov 21 |
-| L7 | Camera | blackmagic raw stock footage / braw stock | blackmagic-raw-stock-footage | Draft (Jan 4 slot) |
-| L8 | Camera | red r3d stock footage | red-r3d-stock-footage (says REDCINE-X Pro needed) | Draft (Jan 11 slot) |
-| L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock, titled "Stock Shredder vs Manual Editing in Premiere Pro" (replaces article #4) | Draft (Jan 18 slot) |
-| L10 | Stock site | storyblocks / getty istock video contributor | storyblocks-video-contributor; Getty/iStock not drafted (spec page didn't load Nov 19) | Draft (Jan 25 slot) |
+| L7 | Camera | blackmagic raw stock footage / braw stock | blackmagic-raw-stock-footage | LIVE Nov 23 |
+| L8 | Camera | red r3d stock footage | red-r3d-stock-footage (says REDCINE-X Pro needed) | LIVE Nov 23 |
+| L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock, titled "Stock Shredder vs Manual Editing in Premiere Pro" (replaces article #4) | LIVE Nov 23 |
+| L10 | Stock site | storyblocks / getty istock video contributor | storyblocks-video-contributor; Getty/iStock not drafted (spec page didn't load Nov 19) | LIVE Nov 23 |
 
 ## Daily queue (Daniel, Nov 19: "post everyday")
 
@@ -141,10 +141,10 @@ Daily: the next ready draft is offered to Daniel; one new row is drafted so abou
 | 2 | sony fx3 stock footage workflow | sony-slog3-stock-footage | LIVE Nov 20 |
 | 3 | sell footage on pond5 | pond5-video-upload | LIVE Nov 21 |
 | 4 | shutterstock video contributor upload | shutterstock-video-contributor | LIVE Nov 22 |
-| 5 | premiere pro batch export clips for stock | premiere-pro-batch-export-stock | Draft ready |
-| 6 | blackmagic raw stock footage | blackmagic-raw-stock-footage | Draft ready |
-| 7 | red r3d stock footage | red-r3d-stock-footage | Draft ready |
-| 8 | storyblocks video contributor | storyblocks-video-contributor | Draft ready |
+| 5 | premiere pro batch export clips for stock | premiere-pro-batch-export-stock | LIVE Nov 23 |
+| 6 | blackmagic raw stock footage | blackmagic-raw-stock-footage | LIVE Nov 23 |
+| 7 | red r3d stock footage | red-r3d-stock-footage | LIVE Nov 23 |
+| 8 | storyblocks video contributor | storyblocks-video-contributor | LIVE Nov 23 |
 | 9 | xpiks alternative | xpiks-alternative | Draft ready |
 | 10 | automatic stock footage clipping software | automatic-stock-footage-clipping | To draft |
 | 11 | batch process stock footage / hundreds of clips at once | batch-process-stock-footage | To draft |

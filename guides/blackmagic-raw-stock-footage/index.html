@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#F4F1EA" />
-<meta name="robots" content="noindex" />
+
 <title>Blackmagic RAW (BRAW) Footage for Stock Sites: The Fast Workflow | DEADWORK</title>
 <meta name="description" content="How to get BRAW footage from Pocket, Pyxis and URSA cameras graded, trimmed and exported as stock clips, without a Resolve session for every card." />
 <link rel="canonical" href="https://deadworkstudio.com/guides/blackmagic-raw-stock-footage/" />
@@ -24,11 +24,11 @@
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
 <link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261109e" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/guide.css?v=20261112a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Blackmagic RAW to Stock Clips, Fast", "description": "How to get BRAW footage from Pocket, Pyxis and URSA cameras graded, trimmed and exported as stock clips, without a Resolve session for every card.", "datePublished": "2027-01-04", "dateModified": "2027-01-04", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/blackmagic-raw-stock-footage/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I upload Blackmagic RAW files to stock sites?", "acceptedAnswer": {"@type": "Answer", "text": "Not as .braw. Adobe Stock, Shutterstock and Pond5 want MOV or MP4. Grade the BRAW to Rec 709 and export ProRes or H.264."}}, {"@type": "Question", "name": "Do I have to grade Blackmagic Film footage for stock?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Adobe Stock won't take uncorrected log and Shutterstock prefers Rec 709. A light conversion from Blackmagic Film to Rec 709 is enough. Buyers grade it again."}}, {"@type": "Question", "name": "What resolution should I export BRAW at for stock?", "acceptedAnswer": {"@type": "Answer", "text": "The size you shot, or UHD or DCI 4K if you shot 6K or above and the site doesn't list your size. Don't upscale."}}, {"@type": "Question", "name": "Does Stock Shredder read BRAW?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Blackmagic RAW is read natively, and CinemaDNG from Blackmagic cameras works on macOS. Load your Blackmagic Film to Rec 709 LUT and it applies to every clip."}}, {"@type": "Question", "name": "How long does it take to prepare 1,000 stock clips?", "acceptedAnswer": {"@type": "Answer", "text": "By hand, about 33 hours at 2 minutes a clip. In our test, Stock Shredder shredded and exported 1,000 graded 4K ProRes clips in 3 hours 1 minute, not counting review."}}]}]</script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Blackmagic RAW to Stock Clips, Fast", "description": "How to get BRAW footage from Pocket, Pyxis and URSA cameras graded, trimmed and exported as stock clips, without a Resolve session for every card.", "datePublished": "2026-11-23", "dateModified": "2026-11-23", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/blackmagic-raw-stock-footage/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I upload Blackmagic RAW files to stock sites?", "acceptedAnswer": {"@type": "Answer", "text": "Not as .braw. Adobe Stock, Shutterstock and Pond5 want MOV or MP4. Grade the BRAW to Rec 709 and export ProRes or H.264."}}, {"@type": "Question", "name": "Do I have to grade Blackmagic Film footage for stock?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Adobe Stock won't take uncorrected log and Shutterstock prefers Rec 709. A light conversion from Blackmagic Film to Rec 709 is enough. Buyers grade it again."}}, {"@type": "Question", "name": "What resolution should I export BRAW at for stock?", "acceptedAnswer": {"@type": "Answer", "text": "The size you shot, or UHD or DCI 4K if you shot 6K or above and the site doesn't list your size. Don't upscale."}}, {"@type": "Question", "name": "Does Stock Shredder read BRAW?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Blackmagic RAW is read natively, and CinemaDNG from Blackmagic cameras works on macOS. Load your Blackmagic Film to Rec 709 LUT and it applies to every clip."}}, {"@type": "Question", "name": "How long does it take to prepare 1,000 stock clips?", "acceptedAnswer": {"@type": "Answer", "text": "By hand, about 33 hours at 2 minutes a clip. In our test, Stock Shredder shredded and exported 1,000 graded 4K ProRes clips in 3 hours 1 minute, not counting review."}}]}]</script>
 </head>
 <body class="ss guide">
 <a class="skip" href="#main">Skip to content</a>
@@ -87,7 +87,7 @@
       <p class="mono g-eyebrow">Stock Shredder · For Blackmagic shooters</p>
       <h1 class="g-title">Blackmagic RAW to Stock Clips, Fast</h1>
       <p class="g-dek">BRAW gives you a lot to work with. It also gives you big files and a flat image that no stock site will take as is. Here&#x27;s the fast way through.</p>
-      <p class="mono g-byline">DEADWORK STUDIO <span aria-hidden="true">&middot;</span> JAN 4, 2027 <span aria-hidden="true">&middot;</span> 5 MIN READ</p>
+      <p class="mono g-byline">DEADWORK STUDIO <span aria-hidden="true">&middot;</span> NOV 23, 2026 <span aria-hidden="true">&middot;</span> 5 MIN READ</p>
       <p class="g-head-cta"><a class="pill pill-solid" href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=blackmagic-raw-stock-footage#trial" data-cta="top">Start with 100 free clips</a></p>
     </header>
 
@@ -226,6 +226,6 @@
   </footer>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="/assets/js/ss-funnel.js?v=20261117a" defer></script>
+<script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 </body>
 </html>
