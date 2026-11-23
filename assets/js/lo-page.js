@@ -1,31 +1,12 @@
-// Loadout product page: the three pieces Loadout adds on top of ss-page.js.
+// Loadout product page: the pieces Loadout adds on top of ss-page.js.
 // Every block looks for its own data-lo-* hooks and quietly does nothing if they are missing.
 
-// ---- CLOCK: only ever shown with real, measured numbers ----
-// The section ships hidden. Even if someone removes `hidden`, it stays hidden until both
-// data-lo-app-seconds and data-lo-hand-minutes hold numbers (from the real-phone test).
+// ---- App Store link: one source of truth ----
+// <main data-appstore-url> holds the App Store address; every [data-appstore] link on the page takes it from there.
 (function () {
-  var sec = document.querySelector('[data-lo-clock]'); if (!sec) return;
-  var app = parseFloat(sec.getAttribute('data-lo-app-seconds'));
-  var hand = parseFloat(sec.getAttribute('data-lo-hand-minutes'));
-  var appEl = sec.querySelector('[data-lo-clock-app]'), handEl = sec.querySelector('[data-lo-clock-hand]');
-  if (!(app > 0) || !(hand > 0) || !appEl || !handEl) { sec.hidden = true; return; }
-  if (sec.hidden) return;   // numbers are in, but nobody has switched it on yet
-  appEl.textContent = '0'; handEl.textContent = '0';
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var run = function () {
-    if (reduce) { appEl.textContent = String(app); handEl.textContent = String(hand); return; }
-    var t0 = performance.now(), D = 1400;
-    var step = function (now) {
-      var p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 3);
-      appEl.textContent = String(Math.round(app * e)); handEl.textContent = String(Math.round(hand * e));
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-  if (!('IntersectionObserver' in window)) { run(); return; }
-  var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.4 });
-  io.observe(sec);
+  var main = document.querySelector('main[data-appstore-url]'); if (!main) return;
+  var url = main.getAttribute('data-appstore-url'); if (!/^https:\/\/apps\.apple\.com\//.test(url)) return;
+  [].forEach.call(document.querySelectorAll('a[data-appstore]'), function (a) { a.href = url; });
 })();
 
 // ---- APP TOUR: point at a name to light up that part of the real app screen ----
@@ -148,49 +129,6 @@
   }
 })();
 
-// ---- REVIEWS: same rule as Stock Shredder, hidden until 10+ approved reviews ----
-(function () {
-  // TODO: the Loadout reviews endpoint. Empty = never fetch, section stays hidden.
-  // Never use Stock Shredder's /reviews here: those reviews are about Stock Shredder.
-  var LO_REVIEWS_URL = '';
-  // Daniel 2026-11-06 (Stock Shredder rule, reused): no reviews on the page until there are at least
-  // 10 approved ones to show.
-  var MIN_REVIEWS_TO_SHOW = 10;
-  var section = document.querySelector('[data-lo-reviews-section]');
-  if (!section || !LO_REVIEWS_URL) return;
-
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, function (ch) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
-    });
-  }
-
-  fetch(LO_REVIEWS_URL)
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-    .then(function (reviews) {
-      var listEl = section.querySelector('[data-lo-reviews-list]');
-      var countEl = section.querySelector('[data-lo-reviews-count]');
-      if (!listEl || !Array.isArray(reviews) || reviews.length < MIN_REVIEWS_TO_SHOW) return;
-      if (countEl) {
-        var avg = reviews.reduce(function (sum, r) { return sum + r.rating; }, 0) / reviews.length;
-        countEl.textContent = avg.toFixed(1) + '★ average · ' + reviews.length + ' reviews';
-        countEl.hidden = false;
-      }
-      listEl.innerHTML = reviews.map(function (r) {
-        var n = Math.max(0, Math.min(5, Math.round(r.rating)));
-        return '<div class="review-card">' +
-          '<div class="review-card-stars" aria-label="' + n + ' out of 5 stars">' + '★'.repeat(n) + '☆'.repeat(5 - n) + '</div>' +
-          '<p class="review-card-body">' + escapeHtml(r.body) + '</p>' +
-          '<p class="review-card-name">' + escapeHtml(r.name) + '</p>' +
-          '</div>';
-      }).join('');
-      listEl.hidden = false;
-      section.hidden = false;
-    })
-    .catch(function () {});
-})();
-
-
 // ---- THE SCAN video: plays while on screen, never autoplays under reduced motion (the poster stays) ----
 (function () {
   var vid = document.querySelector('[data-lo-scan-video]'); if (!vid) return;
@@ -204,23 +142,12 @@
   }, { threshold: 0.35 }).observe(vid);
 })();
 
-// ---- mobile sticky call to action: shows once the top call to action has scrolled out of view ----
-(function () {
-  var bar = document.querySelector('[data-lo-sticky]'), top = document.getElementById('top-cta');
-  if (!bar || !top || !('IntersectionObserver' in window)) return;
-  bar.hidden = false;
-  new IntersectionObserver(function (entries) { bar.classList.toggle('is-on', !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0); }).observe(top);
-})();
-
 // ---- floating "14 days free" button (bottom left, Stock Shredder's .ss-sticky look) ----
-// Shows once the top signup has scrolled up out of view. Hidden again while any signup form (or, when live,
-// the pricing App Store button) is on screen, so it never sits over the thing it points to.
-// Waitlist state: the click scrolls to the top Get notified form and puts the cursor in the email box.
+// Shows once the hero App Store button has scrolled up out of view. Hidden again while the pricing App Store
+// button or the Android notify form is on screen, so it never sits over the thing it points to.
 (function () {
   var bar = document.querySelector('[data-lo-float]'), top = document.getElementById('top-cta');
   if (!bar || !top || !('IntersectionObserver' in window)) return;
-  var main = document.querySelector('main[data-cta]');
-  var live = function () { return main && main.getAttribute('data-cta') === 'live'; };
   var topGone = false, onScreen = 0;
   var sync = function () {
     var show = topGone && onScreen === 0;
@@ -231,7 +158,6 @@
   new IntersectionObserver(function (es) {
     topGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync();
   }).observe(top);
-  // the other signup spots: pricing (form or App Store button) and the FAQ notify form
   var spots = [document.querySelector('.lo-price-cta'), document.getElementById('notify')].filter(Boolean);
   var vis = new Map();
   var io = new IntersectionObserver(function (es) {
@@ -239,17 +165,6 @@
     onScreen = 0; vis.forEach(function (v) { if (v) onScreen++; }); sync();
   }, { rootMargin: '0px 0px -10% 0px' });
   spots.forEach(function (n) { io.observe(n); });
-
-  var jump = bar.querySelector('[data-lo-float-jump]');
-  if (jump) jump.addEventListener('click', function (e) {
-    if (live()) return;
-    var form = top.querySelector('[data-notify-form]'); if (!form) return;
-    e.preventDefault();
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-    var email = form.querySelector('[data-notify-email]');
-    if (email) setTimeout(function () { try { email.focus({ preventScroll: true }); } catch (x) { email.focus(); } }, reduce ? 0 : 450);
-  });
 })();
 
 // ---- ADDING GEAR rings: the capture ring fills each time the photos come into view, then shows its check ----
@@ -270,4 +185,16 @@
     }
   }, { threshold: [0, 0.45] });
   io.observe(strip);
+})();
+
+/* Hero scan loop: plays muted once the page is ready; with reduced motion it stays on the poster frame. */
+(function () {
+  var v = document.querySelector('[data-lo-hero-video]'); if (!v) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  v.muted = true;
+  var go = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) go(); else v.pause(); }); }, { threshold: 0.2 }).observe(v);
+  } else { go(); }
 })();

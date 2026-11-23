@@ -24,8 +24,6 @@
 .lo-feat-grid p { margin-top: 10px; max-width: 34ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
 
 /* why loadout: five differentiators in one row on desktop */
-.lo-why .lo-feat-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.lo-why .lo-feat-grid li:not(:first-child) { border-left: 1px solid var(--line-2); }
 .lo-hero-tag { margin-top: 12px; font: 500 clamp(19px, 1.7vw, 24px)/1.25 var(--sans); letter-spacing: -.015em; color: var(--ink-2); text-wrap: balance; }
 .lo-hero-sub { margin-top: 8px; }
 .lo-hero-for { margin-top: 10px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); text-wrap: balance; }
@@ -53,17 +51,6 @@
 .lo-notify .notify-status-bad { color: #B3261E; }
 .lo-notify .notify-status-good { color: #3D6E39; }
 
-/* ---- sections that ship hidden (clock, reviews, earn): hidden always wins ---- */
-.lo-clock[hidden], .lo-reviews[hidden], .lo-earn[hidden] { display: none !important; }
-
-/* ---- clock: 30 items, Loadout vs by hand (hidden until real numbers exist) ---- */
-.lo-clock-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 360px)); justify-content: center; margin: 40px auto 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
-.lo-clock-side { padding: 32px 24px 34px; }
-.lo-clock-side + .lo-clock-side { border-left: 1px solid var(--line-2); }
-.lo-clock-num { margin-top: 12px; font: 400 clamp(72px, 9vw, 132px)/.9 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.lo-clock-side.is-app .lo-clock-num { color: var(--green, #8FD687); }
-.lo-clock-unit { margin-left: .18em; font: 500 13px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
-.lo-clock-note { margin-top: 18px; color: var(--ink-3); }
 
 /* ---- app tour: Stock Shredder's ix-tour, holding a portrait phone ---- */
 .lo-tour-wrap { --ix-w: min(100%, 980px); }
@@ -90,11 +77,6 @@
 .lo-st.is-found { color: #8FD687; }
 .lo-moment-arrow { align-self: center; color: var(--ink-3); }
 
-/* ---- reviews / earn (hidden for now) ---- */
-.lo-earn .pill.is-disabled { pointer-events: none; }
-
-/* ---- CTA state: <main data-cta="wait|live"> picks which call to action shows (see the comment in the HTML) ---- */
-[data-cta="wait"] .lo-cta-live, [data-cta="live"] .lo-cta-wait { display: none !important; }
 .lo-cta .notify-form, .lo-price-cta .notify-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; max-width: 640px; margin: 0 auto; }
 .lo-cta .notify-input, .lo-price-cta .notify-input { flex: 1 1 190px; min-height: 48px; padding: 0 18px; border: 1px solid rgba(20, 20, 18, .5); background: transparent; color: var(--ink); font: 16px/1.4 var(--sans); border-radius: 999px; }
 .lo-cta .notify-input::placeholder, .lo-price-cta .notify-input::placeholder { color: var(--ink-3); }
@@ -111,6 +93,7 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
 .lo-real .phone-body img, .lo-real .phone-body video { display: block; width: 100%; height: auto; padding-top: 0; border-radius: 38px; background: #000; }
 .lo-scan-phone { position: relative; }
 .lo-scan-video { aspect-ratio: 588 / 1280; }
+.lo-hero-video { display: block; width: 100%; height: auto; aspect-ratio: 588 / 1278; object-fit: cover; }
 .lo-scan-note { margin-top: 16px; text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
 
 /* ---- the problem: without / with ---- */
@@ -128,11 +111,6 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
 .lo-add-steps { margin-top: 44px; }
 .lo-moment-steps { grid-template-columns: minmax(0, 260px) auto minmax(0, 260px) !important; }
 
-/* ---- mobile sticky call to action ---- */
-.lo-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: none; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(244, 241, 234, .94); border-top: 1px solid var(--line-2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-.lo-sticky .pill { width: 100%; justify-content: center; min-height: 46px; }
-.lo-sticky.is-on { display: block; }
-@media (min-width: 768px) { .lo-sticky.is-on { display: none; } }
 
 @media (max-width: 767px) {
   .lo-phones { gap: 10px; }
@@ -145,13 +123,9 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
   .lo-phone-main { width: min(240px, 62vw) !important; }
   .lo-feat-grid { grid-template-columns: 1fr; }
   .lo-feat-grid li:not(:nth-child(3n + 1)) { border-left: 0; }
-  .lo-why .lo-feat-grid { grid-template-columns: 1fr; }
-  .lo-why .lo-feat-grid li:not(:first-child) { border-left: 0; }
   .lo-plat { grid-template-columns: 1fr !important; }
   .lo-plans { grid-template-columns: 1fr; }
   .lo-plan + .lo-plan { border-left: 0; border-top: 1px solid var(--line-2); }
-  .lo-clock-grid { grid-template-columns: 1fr; }
-  .lo-clock-side + .lo-clock-side { border-left: 0; border-top: 1px solid var(--line-2); }
   .lo-tour-phone { width: min(270px, 72vw); }
   .lo-tour .ix-explain { min-height: 7.4em; }
   .lo-moment-steps { grid-template-columns: minmax(0, 340px); gap: 0; }
@@ -302,13 +276,38 @@ main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; p
   .lo-cta-band[data-band="green-button"] .pill-solid:hover { background: #A6E09F; color: #0E0E0D; }
 }
 
-/* ---- hero: the "Coming to iPhone / 14 days free" line sits under the phones (2026-11-14) ---- */
+/* ---- hero: the caption about which phone screens are real sits under the phones ---- */
 .hero .lo-phones-note { margin-top: clamp(14px, 2.2vh, 22px); }
 
 /* ---- floating "14 days free" button: the look and motion come from .ss-sticky (ss-page.css).
-   It replaces the old phone-only sticky bar, which stays in the markup but never shows. ---- */
-[data-lo-float] ~ [data-lo-sticky] { display: none !important; }
+   It is the only sticky call to action on the page (the old phone-only bar was removed 2026-11-23). ---- */
 .lo-float { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
 @media (max-width: 719px) { .lo-float { bottom: 12px; } }
 /* room under the footer so the float never sits on top of it at the end of the page */
 .lo .poster-foot { padding-bottom: calc(32px + 72px + env(safe-area-inset-bottom, 0px)); }
+
+/* ---- Seen vs Confirmed (under the real scan video, 2026-11-23) ---- */
+.lo-states { max-width: 720px; margin: clamp(28px, 4vh, 44px) auto 0; text-align: left; }
+.lo-states-title { text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+.lo-states-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 14px 0 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.lo-state { padding: 18px 20px 20px; }
+.lo-state + .lo-state { border-left: 1px solid var(--line-2); }
+.lo-state dt { font: 600 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+.lo-state.is-confirmed dt { color: var(--green, #8FD687); }
+.lo-state dd { margin: 10px 0 0; font-size: 16px; line-height: 1.45; color: var(--ink); }
+.lo-states-note { max-width: 60ch; margin: 14px auto 0; text-align: center; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+
+/* ---- small captions that say which screens are real ---- */
+.lo-tour-note, .lo-moment-note { margin-top: clamp(16px, 2.4vh, 28px); text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+
+/* ---- before you leave: three real frames (desktop: phone, arrow, phone, arrow, phone) ---- */
+@media (min-width: 768px) {
+  .lo-moment-steps.lo-moment-3 { grid-template-columns: minmax(0, 250px) auto minmax(0, 250px) auto minmax(0, 250px) !important; gap: 0 clamp(14px, 2.4vw, 40px); }
+  .lo .lo-moment-3 .phone { max-width: 100%; }
+}
+
+@media (max-width: 767px) {
+  .lo-states-grid { grid-template-columns: 1fr; }
+  .lo-state + .lo-state { border-left: 0; border-top: 1px solid var(--line-2); }
+  .lo-moment-3 .lo-moment-arrow { margin: 22px 0 18px; transform: rotate(90deg); justify-self: center; }
+}

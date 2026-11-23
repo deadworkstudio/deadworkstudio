@@ -22,3 +22,8 @@
 .tool-meta .tool-live .badge-icon { display: inline-block; width: 8px; height: 8px; flex-shrink: 0; background: #8FD687 !important; border: 0 !important; }
 /* tools grid cards: the status always gets its own line under the stage name, whatever its length */
 .tool-status .badge { flex-basis: 100%; }
+
+/* tools grid cards (Daniel 2026-11-23): the logo already says the name, so the written name is
+   hidden on screen. It stays in the page for screen readers and search, since the logo img has alt="". */
+.tools-grid .tool-name { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.tools-grid .tool-meta { min-height: 0 !important; justify-content: flex-start !important; }
