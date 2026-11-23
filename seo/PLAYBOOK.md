@@ -116,6 +116,27 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 | L9 | Competitor | premiere pro batch export clips for stock | premiere-pro-batch-export-stock, titled "Stock Shredder vs Manual Editing in Premiere Pro" (replaces article #4) | LIVE Nov 23 |
 | L10 | Stock site | storyblocks / getty istock video contributor | storyblocks-video-contributor; Getty/iStock not drafted (spec page didn't load Nov 19) | LIVE Nov 23 |
 
+## Priority queue (SEO plan, Nov 23) - take these BEFORE the Daily queue
+
+Plan doc: https://claude.ai/artifact/25xsp2RpBSrunD6bnLQy85 (100-article roadmap, briefs, architecture).
+Publish order matters: sell-stock-footage links to the archive and best-sites pages, so it goes live after both.
+
+| # | Search | Slug | Status |
+| --- | --- | --- | --- |
+| P1 | sell old footage | sell-old-footage-archive | Draft ready |
+| P2 | best sites to sell stock footage | best-sites-to-sell-stock-footage | Draft ready |
+| P3 | how to make money selling stock footage | sell-stock-footage | Draft ready (after P1+P2 live) |
+| P4 | guides hub + breadcrumbs + Keep reading (build change, needs Daniel OK) | guides/ | To build |
+| P5 | how to keyword stock footage | keyword-stock-footage | To draft |
+| P6 | stock footage rejected | stock-footage-rejection-reasons | To draft |
+| P7 | what stock footage sells best | what-stock-footage-sells | To draft |
+| P8 | stock footage workflow | stock-footage-workflow | To draft |
+| P9 | batch export video clips | batch-process-stock-footage | To draft |
+| P10 | stock footage csv upload | stock-footage-metadata-csv | To draft |
+| P11 | log footage stock | log-raw-footage-for-stock | To draft |
+| P12 | how much money stock footage (needs Daniel OK on money claims) | stock-footage-income | To draft |
+| P13 | stock footage software | best-stock-footage-software | To draft |
+
 ## Daily queue (Daniel, Nov 19: "post everyday")
 
 ONE list for every Stock Shredder page from now on. It replaces the P1-P4 list, the keyword list, the L1-L10 list
