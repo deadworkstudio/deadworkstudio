@@ -1,0 +1,135 @@
+<!--meta
+{
+  "slug": "automatic-stock-footage-clipping",
+  "status": "live",
+  "product": "stock-shredder",
+  "keyword": "automatic stock footage clipping software",
+  "secondary": ["automatically cut footage into clips", "split raw footage into clips automatically", "scene detection for stock footage", "auto clip footage for stock", "software to cut stock footage"],
+  "title": "Automatic Clipping Software for Stock Footage",
+  "seo_title": "Automatic Stock Footage Clipping: Scene Detection vs Finding Usable Moments",
+  "description": "Scene detection splits edited video at its cuts. Raw stock footage needs something else: usable moments found, trimmed to length, graded and exported. What each tool does, checked November 2026.",
+  "eyebrow": "Stock Shredder · Automatic clipping",
+  "dek": "Scene detection finds cuts. Raw footage has none. Here's what automatic clipping for stock actually needs to do.",
+  "published": "2026-11-23",
+  "updated": "2026-11-23",
+  "read_minutes": 5,
+  "faq": [
+    ["Can Premiere Pro cut raw footage into stock clips automatically?", "Premiere Pro's Scene Edit Detection finds the cuts in a video file and splits it into shots. Raw camera files usually have no cuts inside them, so it has little to find. Picking the usable moments and trimming them is still up to you."],
+    ["What about DaVinci Resolve's Scene Cut Detection?", "It finds shot changes in a finished, already-edited file and splits it into shot ranges. It doesn't pick usable moments, grade or export separate files. A render step is still needed."],
+    ["How does Stock Shredder decide where to cut?", "You set a Min and Max clip length. Each clip runs as long as Max allows and is cut where the camera is calm. Broken, empty and too-shaky parts are set aside, with Keep anyway if you disagree."],
+    ["Do I still review the clips?", "Yes. Stock Shredder finds and trims the moments, then you approve or deny each one from the keyboard before export. It remembers every clip you've reviewed, so you never review one twice."],
+    ["Does it name and keyword the clips too?", "Every shot gets a clear name and its own folder. On Pro, Studio and the free trial, it also writes titles and ready-to-paste keywords for every exported clip."]
+  ]
+}
+-->
+
+<div class="g-answer">
+  <p class="mono">The short version</p>
+  <ol>
+    <li>Scene detection splits edited video at its cuts.</li>
+    <li>Raw camera files have no cuts inside, so it has little to find.</li>
+    <li>Stock needs the usable moments found and trimmed to length.</li>
+    <li>Then each clip graded, exported, named and keyworded.</li>
+    <li>Stock Shredder does all of that in one pass. You review.</li>
+  </ol>
+  <p>1,000 clips took 3 hours 1 minute in our test.</p>
+</div>
+
+<h2 id="problem">Cutting is the slow part.</h2>
+<p>A card from a shoot day holds long takes. Somewhere in each one are a few seconds a buyer would pay for: the steady part of a pan, the moment before the drone turns, the wave before the camera bumps.</p>
+<p>Finding those seconds by hand means scrubbing every file, setting in and out, and exporting each clip on its own. At about 2 minutes a clip, 500 clips is 16+ hours.</p>
+<p>That's why people search for automatic clipping. The catch is that most "auto cut" tools solve a different problem.</p>
+
+<h2 id="scene-detection">What scene detection does, fairly.</h2>
+<ul class="g-list">
+  <li><strong>Premiere Pro, Scene Edit Detection.</strong> Finds the cuts within a video file and separates it into individual shots.</li>
+  <li><strong>DaVinci Resolve, Scene Cut Detection.</strong> Finds shot changes in a finished, flattened file and splits it into shot ranges. On the Media page it works in the free version. The timeline version needs Studio.</li>
+  <li><strong>Built for edited video.</strong> Both look for the point where one shot changes to the next. That's ideal for rebuilding an old edit or grading a finished film.</li>
+  <li><strong>Not an export.</strong> Neither picks usable moments, grades or renders separate files. That's still a job for you.</li>
+</ul>
+<p class="g-source">Sources: <a href="https://helpx.adobe.com/premiere/desktop/edit-projects/change-clip-sequence/detect-edit-points-using-scene-edit-detection.html" rel="noopener">Adobe Premiere Pro help</a>, <a href="https://davinciresolveclub.com/davinci-resolve-scene-cut-detection/" rel="noopener">DaVinci Resolve Scene Cut Detection guide</a>. Checked November 2026.</p>
+
+<h2 id="compare">Scene detection vs stock clipping.</h2>
+<div class="g-table-wrap">
+<table class="g-table">
+  <thead><tr><th>Step</th><th>Scene detection</th><th>Stock Shredder</th></tr></thead>
+  <tbody>
+    <tr><td>Split at existing cuts</td><td>Yes</td><td>Not needed for raw files</td></tr>
+    <tr><td>Find usable moments in long takes</td><td>No</td><td>Yes</td></tr>
+    <tr><td>Trim to stock length</td><td>No</td><td>Yes, inside the Min and Max you set</td></tr>
+    <tr><td>Set aside shaky or broken parts</td><td>No</td><td>Yes, with Keep anyway</td></tr>
+    <tr><td>Grade log footage</td><td>No</td><td>Looks for ARRI, DJI, RED, Sony, or your LUT</td></tr>
+    <tr><td>Export each clip as its own file</td><td>No, separate render</td><td>Yes, ProRes</td></tr>
+    <tr><td>Stock checks</td><td>No</td><td>Logos, HDR, frame rate, under 2K</td></tr>
+    <tr><td>Names and keywords</td><td>No</td><td>Clear names, a folder per clip, keywords to paste</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="by-hand">The by-hand way.</h2>
+<ol class="g-steps">
+  <li><strong>Scrub</strong> each file and find the usable seconds.</li>
+  <li><strong>Set in and out</strong> so the clip fits the site's length.</li>
+  <li><strong>Grade</strong> log to a clean Rec 709.</li>
+  <li><strong>Export</strong> each clip as its own file.</li>
+  <li><strong>Rename</strong> it so you can find it again.</li>
+  <li><strong>Write</strong> a title and keywords.</li>
+</ol>
+<p>Our average is about 2 minutes per clip.</p>
+
+<h2 id="stock-shredder">The Stock Shredder way.</h2>
+<p>Point Stock Shredder at a folder of raw footage on your Mac or Windows computer.</p>
+<figure class="g-figure">
+  <img src="../../assets/img/products/stock-shredder/screen-import.jpg" alt="Stock Shredder import screen, ready for a folder of raw footage" width="2000" height="1255" loading="lazy" decoding="async" />
+  <figcaption>Import a whole card or drive at once.</figcaption>
+</figure>
+<ul class="g-list">
+  <li><strong>It finds the moments.</strong> Usable shots come out of long takes as clips.</li>
+  <li><strong>It cuts where the camera is calm.</strong> Set Min and Max, and each clip runs as long as Max allows.</li>
+  <li><strong>It sets aside the bad parts.</strong> Broken, empty and too-shaky clips are filtered, and shaky or short parts show why.</li>
+  <li><strong>It checks.</strong> Logos, HDR, wrong frame rates and footage under 2K are flagged before you upload.</li>
+  <li><strong>It grades and exports.</strong> Built-in Looks for ARRI, DJI, RED and Sony, or your own LUT. Each clip its own ProRes file.</li>
+  <li><strong>It names and keywords.</strong> Every shot gets a clear name and its own folder. Keywords ready to paste on Pro, Studio and the free trial.</li>
+</ul>
+<figure class="g-figure">
+  <img src="../../assets/img/products/stock-shredder/review-light.jpg" alt="Stock Shredder review screen with trimmed clips ready to approve" width="2000" height="1278" loading="lazy" decoding="async" />
+  <figcaption>Review screen. Approve, deny and trim from the keyboard.</figcaption>
+</figure>
+
+<h2 id="time">The time difference, measured.</h2>
+<p>Real Sony FX6 and FX3 footage on a MacBook Pro M3 Pro, exported to an external SSD as graded ProRes 422 HQ 4K.</p>
+<figure class="g-figure">
+  <video controls muted playsinline preload="none" poster="../../assets/video/watch/1000-clips-poster.jpg" width="1280" height="720" style="display:block;width:100%;height:auto">
+    <source src="../../assets/video/watch/1000-clips-720.mp4" type="video/mp4" />
+  </video>
+  <figcaption>The real test, sped up: the same 1,000 clips with Stock Shredder and by hand.</figcaption>
+</figure>
+<div class="g-table-wrap">
+<table class="g-table g-table--num">
+  <thead><tr><th>4K clips</th><th>Stock Shredder</th><th>By hand</th></tr></thead>
+  <tbody>
+    <tr><td>100</td><td>16 min</td><td>3+ hours</td></tr>
+    <tr><td>500</td><td>1 hr 19 min</td><td>16+ hours</td></tr>
+    <tr><td>1,000</td><td>3 hr 1 min</td><td>33+ hours</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="g-source">Stock Shredder time is shred plus export. Review time not included. By hand: 2 minutes per clip average.</p>
+
+<h2 id="limits">What to know before you start.</h2>
+<p>Stock Shredder handles the repetitive parts. A few things stay with you.</p>
+<ul class="g-list">
+  <li><strong>You review.</strong> It finds the usable shots. Your eye picks the ones that sell.</li>
+  <li><strong>You set the length.</strong> Pick a Min and Max that fit the sites you upload to.</li>
+  <li><strong>Check your format.</strong> Canon Cinema RAW Light and Nikon N-RAW aren't supported yet. Sony, DJI, ARRI, RED and Blackmagic files are.</li>
+  <li><strong>It runs overnight.</strong> It keeps your computer awake while it exports and tells you when it's done, so a full drive is ready by morning.</li>
+</ul>
+
+<h2 id="when-other">When scene detection makes more sense.</h2>
+<ul class="g-list">
+  <li>You're splitting a finished edit back into its shots.</li>
+  <li>You're grading a flattened film and need each shot on its own.</li>
+  <li>You only have a handful of clips and want full control of every frame.</li>
+</ul>
+<p>For a card full of raw takes, there are no cuts to find. The work is finding the moments, and that's the part worth handing off.</p>
+<p>More on site rules: <a href="../stock-footage-requirements-adobe-pond5-shutterstock/">How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock</a>.</p>
