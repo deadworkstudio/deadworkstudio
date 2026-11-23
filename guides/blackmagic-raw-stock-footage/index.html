@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/guide.css?v=20261112a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261123a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Blackmagic RAW to Stock Clips, Fast", "description": "How to get BRAW footage from Pocket, Pyxis and URSA cameras graded, trimmed and exported as stock clips, without a Resolve session for every card.", "datePublished": "2026-11-23", "dateModified": "2026-11-23", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/blackmagic-raw-stock-footage/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I upload Blackmagic RAW files to stock sites?", "acceptedAnswer": {"@type": "Answer", "text": "Not as .braw. Adobe Stock, Shutterstock and Pond5 want MOV or MP4. Grade the BRAW to Rec 709 and export ProRes or H.264."}}, {"@type": "Question", "name": "Do I have to grade Blackmagic Film footage for stock?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Adobe Stock won't take uncorrected log and Shutterstock prefers Rec 709. A light conversion from Blackmagic Film to Rec 709 is enough. Buyers grade it again."}}, {"@type": "Question", "name": "What resolution should I export BRAW at for stock?", "acceptedAnswer": {"@type": "Answer", "text": "The size you shot, or UHD or DCI 4K if you shot 6K or above and the site doesn't list your size. Don't upscale."}}, {"@type": "Question", "name": "Does Stock Shredder read BRAW?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Blackmagic RAW is read natively, and CinemaDNG from Blackmagic cameras works on macOS. Load your Blackmagic Film to Rec 709 LUT and it applies to every clip."}}, {"@type": "Question", "name": "How long does it take to prepare 1,000 stock clips?", "acceptedAnswer": {"@type": "Answer", "text": "By hand, about 33 hours at 2 minutes a clip. In our test, Stock Shredder shredded and exported 1,000 graded 4K ProRes clips in 3 hours 1 minute, not counting review."}}]}]</script>
 </head>
@@ -194,6 +194,15 @@
       <p class="g-cta-note">Card saved to verify you, never charged. Start any time before December 31, 2026.</p>
     </aside>
 
+    <nav class="g-more" aria-labelledby="keep-reading">
+      <h2 id="keep-reading">Keep reading</h2>
+      <ul>
+        <li><a href="../red-r3d-stock-footage/" data-related="red-r3d-stock-footage"><span class="mono">Stock Shredder · For RED shooters</span><strong>RED R3D Footage to Stock Clips, Fast</strong><span class="g-more-dek">R3D is huge, flat and loved by buyers once it&#x27;s graded. Here&#x27;s how to get a full card of it ready for stock without a week in the edit.</span></a></li>
+        <li><a href="../automatic-stock-footage-clipping/" data-related="automatic-stock-footage-clipping"><span class="mono">Stock Shredder · Automatic clipping</span><strong>Automatic Clipping Software for Stock Footage</strong><span class="g-more-dek">Scene detection finds cuts. Raw footage has none. Here&#x27;s what automatic clipping for stock actually needs to do.</span></a></li>
+        <li><a href="../drone-footage-for-stock/" data-related="drone-footage-for-stock"><span class="mono">Stock Shredder · For drone footage</span><strong>How to Turn Drone Footage Into Stock Clips Faster</strong><span class="g-more-dek">A card full of flights is mostly takeoff, landing and repositioning. Here&#x27;s how to get the good seconds out fast.</span></a></li>
+      </ul>
+    </nav>
+
     <section class="g-faq" aria-labelledby="faq">
       <h2 id="faq">FAQ</h2>
       <details class="g-faq-item"><summary>Can I upload Blackmagic RAW files to stock sites?</summary><p>Not as .braw. Adobe Stock, Shutterstock and Pond5 want MOV or MP4. Grade the BRAW to Rec 709 and export ProRes or H.264.</p></details>
@@ -227,5 +236,6 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
+<script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 </body>
 </html>

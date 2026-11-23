@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261112a"
+CSS_V = "20261123a"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -129,8 +129,57 @@ def jsonld(meta, url):
     return json.dumps(out, ensure_ascii=False).replace("</", "<\\/")
 
 
-def build(meta, header, footer):
+STOP = set("a an and the to of for in on with how what is your you by vs or from at as it best".split())
+
+
+def words(m):
+    text = " ".join([m["keyword"], m["title"], *m.get("secondary", [])]).lower()
+    return {w for w in re.findall(r"[a-z0-9]+", text) if w not in STOP and len(w) > 2}
+
+
+def related(meta, metas, n=3):
+    """Up to n LIVE guides to show under "Keep reading". Drafts are never linked."""
+    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"]}
+    picks = [live[s] for s in meta.get("related", []) if s in live]
+    mine = words(meta)
+    rest = sorted(
+        (m for m in live.values() if m not in picks),
+        key=lambda m: (-len(mine & words(m)), m["slug"]),
+    )
+    return (picks + rest)[:n]
+
+
+def related_html(picks):
+    if not picks:
+        return ""
+    items = "\n".join(
+        f'        <li><a href="../{m["slug"]}/" data-related="{m["slug"]}">'
+        f'<span class="mono">{html.escape(m["eyebrow"])}</span>'
+        f'<strong>{html.escape(m["title"])}</strong>'
+        f'<span class="g-more-dek">{html.escape(m["dek"])}</span></a></li>'
+        for m in picks
+    )
+    return (
+        '    <nav class="g-more" aria-labelledby="keep-reading">\n'
+        '      <h2 id="keep-reading">Keep reading</h2>\n'
+        f'      <ul>\n{items}\n      </ul>\n'
+        '    </nav>\n'
+    )
+
+
+def check_links(meta, metas):
+    """A live guide must not link to a guide that isn't live yet."""
+    status = {m["slug"]: m["status"] for m in metas}
+    if meta["status"] != "live":
+        return
+    for s in re.findall(r'href="\.\./([a-z0-9-]+)/"', meta["body"]):
+        if status.get(s) != "live":
+            sys.exit(f"{meta['slug']}: links to {s}, which is not live ({status.get(s, 'missing')})")
+
+
+def build(meta, header, footer, metas):
     lint(meta)
+    check_links(meta, metas)
     slug = meta["slug"]
     url = f"{SITE}/guides/{slug}/"
     cta = {k: v.format(slug=slug) for k, v in CTAS[meta["product"]].items()}
@@ -163,6 +212,7 @@ def build(meta, header, footer):
         "cta_note": cta["note"],
         "body": meta["body"],
         "faq_html": faq_html,
+        "related_html": related_html(related(meta, metas)),
     }
     page = (ROOT / "seo/article-template.html").read_text()
     for k, v in vals.items():
@@ -196,7 +246,7 @@ def main():
     want = sys.argv[1:]
     for m in metas:
         if not want or m["slug"] in want:
-            build(m, header, footer)
+            build(m, header, footer, metas)
     sitemap([m for m in metas if m["status"] == "live"])
 
 
