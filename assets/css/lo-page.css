@@ -111,6 +111,7 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
 .lo-real .phone-body img, .lo-real .phone-body video { display: block; width: 100%; height: auto; padding-top: 0; border-radius: 38px; background: #000; }
 .lo-scan-phone { position: relative; }
 .lo-scan-video { aspect-ratio: 588 / 1280; }
+.lo-hero-video { display: block; width: 100%; height: auto; aspect-ratio: 588 / 1278; object-fit: cover; }
 .lo-scan-note { margin-top: 16px; text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
 
 /* ---- the problem: without / with ---- */

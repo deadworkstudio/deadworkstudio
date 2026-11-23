@@ -271,3 +271,15 @@
   }, { threshold: [0, 0.45] });
   io.observe(strip);
 })();
+
+/* Hero scan loop: plays muted once the page is ready; with reduced motion it stays on the poster frame. */
+(function () {
+  var v = document.querySelector('[data-lo-hero-video]'); if (!v) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  v.muted = true;
+  var go = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) go(); else v.pause(); }); }, { threshold: 0.2 }).observe(v);
+  } else { go(); }
+})();
