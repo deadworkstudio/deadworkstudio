@@ -71,3 +71,14 @@
   .g-table { font-size: 14px; }
   .g-head-cta .pill, .g-cta .pill { width: 100%; }
 }
+
+/* Keep reading: related live guides, inside guides only */
+.g-more { margin-top: clamp(56px, 8vw, 88px); }
+.g-more h2 { font: 750 clamp(24px, 3.4vw, 32px)/1.12 var(--sans); margin-bottom: 14px; }
+.g-more ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
+.g-more li { border-bottom: 1px solid var(--line-2); }
+.g-more a { display: block; padding: 18px 0; color: inherit; text-decoration: none; }
+.g-more .mono { display: block; color: var(--ink-3); }
+.g-more strong { display: block; margin-top: 6px; font: 750 clamp(19px, 2.4vw, 22px)/1.2 var(--sans); }
+.g-more a:hover strong, .g-more a:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.g-more-dek { display: block; margin-top: 6px; color: var(--ink-2); font-size: 15.5px; line-height: 1.45; }
