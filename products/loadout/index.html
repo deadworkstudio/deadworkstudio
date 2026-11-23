@@ -11,19 +11,19 @@
 <link rel="alternate" hreflang="zh-Hans" href="https://deadworkstudio.com/zh/products/loadout/" />
 <link rel="alternate" hreflang="ja" href="https://deadworkstudio.com/ja/products/loadout/" />
 <link rel="alternate" hreflang="x-default" href="https://deadworkstudio.com/products/loadout/" />
-<link rel="stylesheet" href="/assets/css/lang.css?v=20261115f" />
+<link rel="stylesheet" href="/assets/css/lang.css?v=20261119a" />
 <script src="/assets/js/lang.js?v=20261119a"></script>
 <!-- /i18n:head -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#F4F1EA" />
 <meta name="apple-itunes-app" content="app-id=6818694355" />
-<title>Loadout: Camera Gear Checklist for iPhone | DEADWORK</title>
-<meta name="description" content="Every piece of gear accounted for, before you leave. Pan your iPhone across a packed case and Loadout marks what it sees. Kits, rentals and wrap day. 14 days free." />
+<title>Loadout: Camera Gear Checklist App for iPhone | DEADWORK</title>
+<meta name="description" content="Camera gear checklist for iPhone. Scan your packed case, compare it with your saved kit and see what's missing before you leave set. Free download, 14 days free." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://deadworkstudio.com/products/loadout/" />
 <link rel="canonical" href="https://deadworkstudio.com/products/loadout/" />
-<meta property="og:title" content="Loadout - Every piece of gear accounted for" />
-<meta property="og:description" content="Every piece of gear accounted for, before you leave. Pan your iPhone across a packed case and Loadout marks what it sees. Kits, rentals and wrap day. 14 days free." />
+<meta property="og:title" content="Loadout: Camera Gear Checklist for iPhone" />
+<meta property="og:description" content="Scan your packed case. Loadout checks it against your saved kit and flags what's missing before you leave. Free on the App Store, 14 days free." />
 <!-- og:image slot: when the real photo exists, export photos/share-loadout-photo.jpg at 1200x630 and point og:image at it (twitter:card reuses og:image). -->
 <meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-loadout.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -33,12 +33,12 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261114k" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261123b" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../assets/css/badges.css?v=20261123a" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Loadout","applicationCategory":"BusinessApplication","operatingSystem":"iOS","description":"Pan your iPhone across a packed case and Loadout marks every item it sees, so every piece of gear is accounted for before you leave.","publisher":{"@type":"Organization","name":"DEADWORK STUDIO","url":"https://deadworkstudio.com/"},"url":"https://deadworkstudio.com/products/loadout/"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Loadout","alternateName":"Loadout: Camera Gear Checklist","applicationCategory":"BusinessApplication","operatingSystem":"iOS","description":"Camera gear checklist for iPhone. Scan a packed case, compare it with your saved kit and see what's missing before you leave set.","url":"https://deadworkstudio.com/products/loadout/","downloadUrl":"https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355","installUrl":"https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355","image":"https://deadworkstudio.com/assets/img/brand/share-loadout.jpg","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355"},"publisher":{"@type":"Organization","name":"DEADWORK STUDIO","url":"https://deadworkstudio.com/"}}</script>
 </head>
 <body class="ss lo">
 <a class="skip" href="#main">Skip to content</a>
@@ -91,45 +91,31 @@
     </div>
 </header>
 
-<!-- ===== TOP CTA STATE (one-word switch) =====
-     data-cta="wait"  = early access (current): email "Get notified" signup shows, no download is promised.
-     data-cta="live"  = App Store approved: App Store button + "Start your 14-day free trial".
-     To launch, change only the value on the next line from "wait" to "live", then put the real App Store URL
-     on the [data-appstore] links (see the TODO in the hero). Hero, mid-page, pricing and the mobile sticky bar all follow it. -->
-<main id="main" data-cta="live" data-event="loadout_page_view">
+<!-- ===== LAUNCH STATUS: one source of truth =====
+     iPhone is live on the App Store; Android is "coming soon" with one notify form (#notify, near the FAQ).
+     The App Store link lives in ONE place: data-appstore-url on <main>. lo-page.js copies it onto every
+     [data-appstore] link (hero, band, pricing, floating button), so changing it here changes them all.
+     The hrefs written on those links are the same URL, only there for visitors without JavaScript.
+     (The old data-cta="wait|live" switch and its waitlist copies were removed on 2026-11-23: the app is out.) -->
+<main id="main" data-event="loadout_page_view" data-appstore-url="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355">
   <section class="hero">
     <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/loadout.png" alt="Loadout" width="1366" height="466" /></div>
     <h1>Never leave gear behind.</h1>
-    <p class="lo-hero-tag">Every piece of gear accounted for. Before you leave.</p>
     <p class="mono lo-hero-for">For film teams, videographers and photographers</p>
-    <p class="section-sub lo-hero-sub">Pan your phone across the packed case. Loadout marks what it sees and lists what's missing.</p>
+    <p class="section-sub lo-hero-sub">Scan your gear case. Loadout checks it against your saved kit and flags what's missing. You confirm before you leave.</p>
     <div class="downloads lo-cta" id="top-cta" data-lo-cta>
-      <!-- TODO(Daniel): when Apple approves Loadout 1.0, replace href="#pricing" on BOTH [data-appstore] links
-           (here and in the Pricing section) with the real App Store URL. Until then they scroll to Pricing. -->
-      <a id="download-iphone" class="pill pill-solid lo-cta-live" href="https://apps.apple.com/app/id6818694355" data-appstore data-event="loadout_hero_cta_click"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Start your 14-day free trial</span></a>
-      <a class="pill pill-outline lo-cta-live" href="#notify">Android is coming</a>
-      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="hero" data-notify-success="You're on the list. One email when it's out." novalidate>
-        <label class="sr-only" for="notify-name-top">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-top" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
-        <label class="sr-only" for="notify-email-top">Email address</label>
-        <input class="notify-input" type="email" id="notify-email-top" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-        <fieldset class="notify-platform">
-          <legend>Which phone? (optional)</legend>
-          <label class="notify-platform-opt"><input type="radio" name="platform-top" value="iphone" data-notify-platform /><span>iPhone</span></label>
-          <label class="notify-platform-opt"><input type="radio" name="platform-top" value="android" data-notify-platform /><span>Android</span></label>
-        </fieldset>
-        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit data-event="loadout_hero_cta_click">Get notified</button>
-        <p class="notify-status" role="status" aria-live="polite" id="notify-status-top" data-notify-status hidden></p>
-      </form>
+      <a id="download-iphone" class="pill pill-solid" href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355" data-appstore data-event="loadout_hero_cta_click"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.015-.06-.045-.226-.045-.395 0-1.14.572-2.27 1.206-2.98.804-.914 2.19-1.59 3.14-1.62.015.1.163.24.163.39zm4.565 15.71c-.03.065-.467 1.588-1.544 3.15-.945 1.36-1.93 2.72-3.48 2.74-1.52.03-2.01-.9-3.75-.9-1.74 0-2.28.87-3.72.93-1.5.06-2.64-1.47-3.6-2.82-1.95-2.76-3.45-7.79-1.44-11.19.99-1.68 2.76-2.75 4.68-2.78 1.47-.03 2.85.99 3.75.99.9 0 2.58-1.22 4.35-1.04.74.03 2.82.3 4.16 2.25-.108.07-2.49 1.45-2.46 4.33.03 3.44 3.02 4.59 3.06 4.61z"/></svg><span>Start your 14-day free trial</span></a>
+      <a class="pill pill-outline" href="#notify">Android: coming soon</a>
     </div>
-    <!-- Hero screens: rendered in the iOS Simulator from the Loadout build with demo kits (A-Cam, Grip, Sound). -->
-    <figure class="lo-phones" aria-label="Loadout on iPhone: the A-Cam Package kit with 12 of 12 clear, the All accounted for screen, and the list of kits.">
+    <p class="mono downloads-note lo-hero-terms">Free download &nbsp;&middot;&nbsp; 14 days free, no card needed &nbsp;&middot;&nbsp; iPhone</p>
+    <!-- Hero screens: the middle phone is a real scan recorded on iPhone (lo-hero-scan.mp4). The two side phones are
+         rendered in the iOS Simulator from the Loadout build with a sample kit (A-Cam Package), so the caption says so. -->
+    <figure class="lo-phones" aria-label="Loadout on iPhone: a sample A-Cam Package kit, a real scan of a packed case where the count climbs as items are seen, and the All accounted for screen.">
       <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/kit-600.webp" srcset="../../assets/img/products/loadout/screens/v2/kit-600.webp 600w, ../../assets/img/products/loadout/screens/v2/kit-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
-      <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="(max-width: 767px) 62vw, 270px" alt="" width="900" height="1957" fetchpriority="high" /></div></div>
-      <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/kits-600.webp" srcset="../../assets/img/products/loadout/screens/v2/kits-600.webp 600w, ../../assets/img/products/loadout/screens/v2/kits-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
+      <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><video class="lo-hero-video" muted loop playsinline preload="metadata" poster="../../assets/img/products/loadout/lo-hero-scan-poster.webp" width="588" height="1278" aria-hidden="true" data-lo-hero-video><source src="../../assets/img/products/loadout/lo-hero-scan.mp4" type="video/mp4" /></video></div></div>
+      <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
     </figure>
-    <p class="mono downloads-note lo-phones-note"><span class="lo-cta-live">14 days free &nbsp;&middot;&nbsp; iPhone &nbsp;&middot;&nbsp; App Store</span><span class="lo-cta-wait">Coming to iPhone &nbsp;&middot;&nbsp; 14 days free</span></p>
+    <p class="mono lo-phones-note">Middle: a real scan on iPhone. Sides: app screens with a sample kit.</p>
     <!-- PHOTO SLOT (hero): over-the-shoulder, phone scanning a packed case. 3:2 desktop, 4:5 phone.
          Files: photos/hero-1600.jpg, hero-2400.jpg (3:2) and hero-m-720.jpg, hero-m-1080.jpg (4:5).
          To turn on: add the four files, then delete the `hidden` attribute below. Recipe: Loadout Launch Assets/loadout-page-images-report.md -->
@@ -169,11 +155,20 @@
   <section class="remote lo-scan" aria-labelledby="scan-title">
     <h2 class="section-title section-head head-dw" id="scan-title">The scan</h2>
     <p class="section-title">Pan the case. Watch it tick.</p>
-    <p class="section-sub">Everything the camera sees is marked Seen.<br class="br-desk" /> Tap All packed to confirm. Look-alikes and anything it misses, you check by hand.</p>
+    <p class="section-sub">Pan across the open case. Each item the camera spots is marked Seen.<br class="br-desk" /> Anything it hasn't seen stays on the missing list.</p>
     <figure class="phone lo-real lo-scan-phone">
       <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/v2/scan-poster-v3.jpg" width="588" height="1277" aria-label="Screen recording of Loadout on iPhone: the camera pans across a packed Pelican case and items are marked Seen one by one, look-alike drives wait for a tap, then a later moment of the same scan: the last item is Seen, All packed, and the green All accounted for screen." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v3.mp4" type="video/mp4" /></video></div>
       <figcaption class="mono lo-scan-note">Two moments from one real scan, recorded on iPhone. First part sped up 2x.</figcaption>
     </figure>
+    <!-- Seen vs Confirmed: the one rule the whole app is built on. Keep it short and keep it true. -->
+    <div class="lo-states" aria-labelledby="states-title">
+      <h3 class="mono lo-states-title" id="states-title">Seen vs Confirmed</h3>
+      <dl class="lo-states-grid">
+        <div class="lo-state"><dt>Seen</dt><dd>The camera matched it to your kit. A match is not a check.</dd></div>
+        <div class="lo-state is-confirmed"><dt>Confirmed</dt><dd>You tapped it, or tapped All packed. Only confirmed items count as packed.</dd></div>
+      </dl>
+      <p class="lo-states-note">Look-alikes, items hidden under other gear and dark cases need your tap. A guess or a false match never counts as packed.</p>
+    </div>
     <!-- PHOTO SLOT (the scan): phone held over an open case, screen showing ALL ACCOUNTED FOR. 4:5.
          Files: photos/scan-800.jpg, scan-1200.jpg. To turn on: add both files, delete `hidden`. -->
     <figure class="lo-photo lo-photo-side" data-lo-photo hidden><picture><img src="../../assets/img/products/loadout/photos/scan-800.jpg" srcset="../../assets/img/products/loadout/photos/scan-800.jpg 800w, ../../assets/img/products/loadout/photos/scan-1200.jpg 1200w" sizes="(max-width: 767px) calc(100vw - 32px), 480px" alt="An iPhone held over an open gear case shows Loadout's green All accounted for screen." width="1200" height="1500" loading="lazy" decoding="async" /></picture></figure>
@@ -184,42 +179,20 @@
        black button with bone text; echoes the app's All accounted for screen). Remove it for the old bone band. -->
   <section class="lo-cta-band" data-band="ink" aria-label="Get Loadout">
     <p class="lo-cta-band-line">Know it's all in the case.</p>
-    <a class="pill pill-solid lo-cta-live" href="https://apps.apple.com/app/id6818694355" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
-    <a class="pill pill-solid lo-cta-wait" href="#top-cta">Get notified</a>
+    <a class="pill pill-solid" href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
   </section>
 
-  <section class="lo-feats lo-why" aria-labelledby="why-title">
-    <h2 class="section-title section-head head-dw" id="why-title">Why Loadout</h2>
-    <p class="section-sub">Most gear apps keep a list of what you own.<br class="br-desk" /> Loadout checks what you actually packed.</p>
-    <ul class="lo-feat-grid">
-      <li><span class="mono lo-feat-n">01</span><h3 class="lo-feat-h">It looks</h3><p>Other apps trust the list. Loadout looks at what's really in the case.</p></li>
-      <li><span class="mono lo-feat-n">02</span><h3 class="lo-feat-h">Nothing to label</h3><p>Add gear by circling it with the camera. Nothing to stick on, nothing to print.</p></li>
-      <li><span class="mono lo-feat-n">03</span><h3 class="lo-feat-h">Runs on the phone</h3><p>Scanning and checking happen on the phone. Stage, truck, basement.</p></li>
-      <li><span class="mono lo-feat-n">04</span><h3 class="lo-feat-h">Never fakes it</h3><p>What the camera sees shows as Seen until you confirm it. Look-alikes need your tap. Missing stays missing.</p></li>
-      <li><span class="mono lo-feat-n">05</span><h3 class="lo-feat-h">Made for set life</h3><p>Kits, rentals, a Wrap Day check, and a reminder when you leave set.</p></li>
-    </ul>
+  <div class="pair tone-alt">
+  <section class="workflow" aria-labelledby="workflow-title">
+    <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
+    <ol class="steps">
+      <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Add</span><span class="step-d">Circle each item once</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Build</span><span class="step-d">Group gear into kits</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Scan</span><span class="step-d">Pan across the case</span></li>
+      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Wrap</span><span class="step-d">Tap All packed and go</span></li>
+    </ol>
   </section>
-
-  <!-- ===== CLOCK (HIDDEN ON PURPOSE) =====
-       Same idea as Stock Shredder's clock: one kit, Loadout vs by hand.
-       Stays hidden until the 10 Nov real-phone test gives measured numbers. Never invent them.
-       To turn it on: put the measured values in data-lo-app-seconds and data-lo-hand-minutes,
-       then delete the `hidden` attribute. lo-page.js keeps it hidden while either value is empty. -->
-  <section class="lo-clock tone-dark" aria-labelledby="clock-title" data-lo-clock data-lo-items="30" data-lo-app-seconds="" data-lo-hand-minutes="" hidden>
-    <h2 class="mono">Same 30 items</h2>
-    <p class="section-title" id="clock-title">Checked before the truck leaves.</p>
-    <div class="lo-clock-grid">
-      <div class="lo-clock-side is-app">
-        <span class="mono">With Loadout</span>
-        <p class="lo-clock-num"><span data-lo-clock-app></span><span class="lo-clock-unit">sec</span></p>
-      </div>
-      <div class="lo-clock-side">
-        <span class="mono">By hand</span>
-        <p class="lo-clock-num"><span data-lo-clock-hand></span><span class="lo-clock-unit">min</span></p>
-      </div>
-    </div>
-    <p class="mono lo-clock-note">Timed on iPhone. One kit, 30 items.</p>
-  </section>
+  </div>
 
   <!-- ===== APP TOUR =====
        Same pattern as Stock Shredder's interface tour (numbered names, spotlight, auto tour switch),
@@ -266,38 +239,11 @@
       </div>
       <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-lo-auto>Auto tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>On</span></button></div>
     </div>
+    <p class="mono lo-tour-note">02 to 05: a frame from a real scan. 01 and 06: app screens with a sample kit.</p>
     <!-- PHOTO SLOT (the app): a real scan with one item missing, the list showing it as Missing. 4:5.
          Files: photos/missing-800.jpg, missing-1200.jpg. To turn on: add both files, delete `hidden`. -->
     <figure class="lo-photo lo-photo-side" data-lo-photo hidden><picture><img src="../../assets/img/products/loadout/photos/missing-800.jpg" srcset="../../assets/img/products/loadout/photos/missing-800.jpg 800w, ../../assets/img/products/loadout/photos/missing-1200.jpg 1200w" sizes="(max-width: 767px) calc(100vw - 32px), 480px" alt="Loadout on iPhone over a camera case with one lens left out, the list showing it as Missing." width="1200" height="1500" loading="lazy" decoding="async" /></picture></figure>
   </section>
-
-  <!-- ===== UNDER THE HOOD: every line is checked against the app before it ships. ===== -->
-  <section class="lo-tech" aria-labelledby="tech-title">
-    <h2 class="section-title section-head head-dw" id="tech-title">Under the hood</h2>
-    <p class="section-title">The parts you never see.</p>
-    <ul class="lo-tech-grid">
-      <li><span class="mono lo-tech-k">On device</span><p>Runs on the iPhone. Works with no signal.</p></li>
-      <li><span class="mono lo-tech-k">Vision</span><p>Built on Apple's Vision framework.</p></li>
-      <li><span class="mono lo-tech-k">Look-alikes</span><p>Items that look the same wait for your tap.</p></li>
-      <li><span class="mono lo-tech-k">Seen</span><p>Only marks what the camera has seen.</p></li>
-      <li><span class="mono lo-tech-k">Low light</span><p>Turns on the light when the case is dark.</p></li>
-      <li><span class="mono lo-tech-k">Voice</span><p>Say an item's name to check it. Speech stays on the phone.</p></li>
-      <li><span class="mono lo-tech-k">Haptics</span><p>Custom haptics for all clear and for missing.</p></li>
-      <li><span class="mono lo-tech-k">iCloud</span><p>Saved on your phone and in your private iCloud.</p></li>
-    </ul>
-  </section>
-
-  <div class="pair tone-alt">
-  <section class="workflow" aria-labelledby="workflow-title">
-    <h2 class="section-title section-head head-dw" id="workflow-title">THE WORKFLOW</h2>
-    <ol class="steps">
-      <li><img src="../../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="step-t">Add</span><span class="step-d">Circle each item once</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="step-t">Build</span><span class="step-d">Group gear into kits</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="step-t">Scan</span><span class="step-d">Pan across the case</span></li>
-      <li><img src="../../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="step-t">Wrap</span><span class="step-d">Tap All packed and go</span></li>
-    </ol>
-  </section>
-  </div>
 
   <section class="lo-add tone-dark" aria-labelledby="add-title">
     <h2 class="section-title section-head head-dw">Adding gear</h2>
@@ -325,87 +271,63 @@
     </ol>
   </section>
 
-  <!-- ===== THE MOMENT: Simulator renders of the real build (demo A-Cam Package, 12 items). The viewfinder is black because the Simulator has no camera; replace step 01 with a still from the real shoot. ===== -->
+  <!-- ===== THE MOMENT: three frames from the same real scan as lo-scan-v3.mp4 (frames 340, 560 and 618 of the 14 Nov
+       Pelican case recording on iPhone), so every screen in this section is real. ===== -->
   <section class="lo-moment tone-dark" aria-labelledby="moment-title">
     <h2 class="section-title section-head head-dw">Before you leave</h2>
-    <p class="section-title" id="moment-title">One tap. Everything in the case.</p>
-    <p class="section-sub">When the camera has seen every item, you confirm.<br class="br-desk" /> Anything it hasn't seen stays on the list.</p>
-    <ol class="lo-moment-steps">
+    <p class="section-title" id="moment-title">You have the last word.</p>
+    <p class="section-sub">Tap the look-alikes. Check the rest, then tap All packed.<br class="br-desk" /> Anything it hasn't seen stays on the list.</p>
+    <ol class="lo-moment-steps lo-moment-3">
       <li class="lo-moment-step">
-        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/allpacked-600.webp" srcset="../../assets/img/products/loadout/screens/v2/allpacked-600.webp 600w, ../../assets/img/products/loadout/screens/v2/allpacked-900.webp 900w" sizes="250px" alt="Loadout on iPhone scanning the A-Cam Package: 12 seen, Camera Body and two V-Mount batteries waiting for a tap, and an All packed button." width="900" height="1957" loading="lazy" decoding="async" /></div></div>
-        <p class="mono lo-moment-label"><span>01</span>All seen</p>
-        <p class="lo-moment-cap">Tap the look-alikes. Then All packed.</p>
+        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/real/real-tap-600.webp" srcset="../../assets/img/products/loadout/screens/real/real-tap-600.webp 600w, ../../assets/img/products/loadout/screens/real/real-tap-900.webp 900w" sizes="250px" alt="Loadout on iPhone during a real scan of a Pelican case: 6 of 10, 2 confirmed, 4 seen, and two Square Drives waiting for a tap to confirm." width="900" height="1955" loading="lazy" decoding="async" /></div></div>
+        <p class="mono lo-moment-label"><span>01</span>Your tap</p>
+        <p class="lo-moment-cap">Two drives look the same. Tap the one you see.</p>
       </li>
       <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>
       <li class="lo-moment-step">
-        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="250px" alt="Loadout on iPhone: a green screen reading 12 of 12, All accounted for, A-Cam Package, saved on this phone." width="900" height="1957" loading="lazy" decoding="async" /></div></div>
-        <p class="mono lo-moment-label"><span>02</span>Accounted for</p>
-        <p class="lo-moment-cap">Twelve of twelve. Saved on your phone and your iCloud.</p>
+        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/real/real-allseen-600.webp" srcset="../../assets/img/products/loadout/screens/real/real-allseen-600.webp 600w, ../../assets/img/products/loadout/screens/real/real-allseen-900.webp 900w" sizes="250px" alt="Loadout on iPhone: 10 of 10 in the Pelican case, 4 confirmed and 6 seen, photos of the six seen items and an All packed button." width="900" height="1955" loading="lazy" decoding="async" /></div></div>
+        <p class="mono lo-moment-label"><span>02</span>All seen</p>
+        <p class="lo-moment-cap">Every item seen. Tap any that look wrong.</p>
+      </li>
+      <li class="lo-moment-arrow" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h37M31 2l6 6-6 6" /></svg></li>
+      <li class="lo-moment-step">
+        <div class="phone lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/real/real-accounted-600.webp" srcset="../../assets/img/products/loadout/screens/real/real-accounted-600.webp 600w, ../../assets/img/products/loadout/screens/real/real-accounted-900.webp 900w" sizes="250px" alt="Loadout on iPhone: a green screen reading 10 of 10, All accounted for, Pelican, 6 with All packed and 4 by hand, saved on this phone." width="900" height="1955" loading="lazy" decoding="async" /></div></div>
+        <p class="mono lo-moment-label"><span>03</span>Accounted for</p>
+        <p class="lo-moment-cap">10 of 10. Saved with the date and time.</p>
       </li>
     </ol>
+    <p class="mono lo-moment-note">Frames from one real scan, recorded on iPhone.</p>
   </section>
 
   <section class="lo-feats tone-alt" aria-labelledby="feats-title">
     <h2 class="section-title section-head head-dw" id="feats-title">On set</h2>
     <ul class="lo-feat-grid">
-      <li><span class="mono lo-feat-n">01</span><h3 class="lo-feat-h">Add gear</h3><p>Circle one item, or a whole bag. The ring fills and it saves.</p></li>
-      <li><span class="mono lo-feat-n">02</span><h3 class="lo-feat-h">Kits</h3><p>A camera package, a grip package, a sound bag. Scan one kit at a time.</p></li>
-      <li><span class="mono lo-feat-n">03</span><h3 class="lo-feat-h">Look-alikes</h3><p>Identical batteries or drives are never ticked on a guess. Each one needs your tap.</p></li>
-      <li><span class="mono lo-feat-n">04</span><h3 class="lo-feat-h">Rentals</h3><p>Mark gear as rented, add the rental house and a return-by date.</p></li>
-      <li><span class="mono lo-feat-n">05</span><h3 class="lo-feat-h">Wrap Day</h3><p>Every kit goes into one wrap check. Scan each one before you call wrap.</p></li>
-      <li><span class="mono lo-feat-n">06</span><h3 class="lo-feat-h">Leaving set</h3><p>A reminder when your phone leaves the location. You turn it on in Settings.</p></li>
-      <li><span class="mono lo-feat-n">07</span><h3 class="lo-feat-h">Gear lists</h3><p>Export a kit's gear list as a PDF or a spreadsheet, for your insurer or your producer.</p></li>
-      <li><span class="mono lo-feat-n">08</span><h3 class="lo-feat-h">Saved checks</h3><p>Every finished check is saved on the phone with the date and time.</p></li>
-      <li><span class="mono lo-feat-n">09</span><h3 class="lo-feat-h">Share</h3><p>Send a finished check from the phone when someone needs to see it.</p></li>
+      <li><span class="mono lo-feat-n">01</span><h3 class="lo-feat-h">Kits</h3><p>A camera package, a grip package, a sound bag. Scan one kit at a time.</p></li>
+      <li><span class="mono lo-feat-n">02</span><h3 class="lo-feat-h">Rentals</h3><p>Mark gear as rented, add the rental house and a return-by date.</p></li>
+      <li><span class="mono lo-feat-n">03</span><h3 class="lo-feat-h">Wrap Day</h3><p>Every kit goes into one wrap check. Scan each one before you call wrap.</p></li>
+      <li><span class="mono lo-feat-n">04</span><h3 class="lo-feat-h">Leaving set</h3><p>A reminder when your phone leaves the location. You turn it on in Settings.</p></li>
+      <li><span class="mono lo-feat-n">05</span><h3 class="lo-feat-h">Gear lists</h3><p>Export a kit's gear list as a PDF or a spreadsheet, for your insurer or your producer.</p></li>
+      <li><span class="mono lo-feat-n">06</span><h3 class="lo-feat-h">Saved checks</h3><p>Every finished check is saved with the date and time. Send it from your phone when someone needs to see it.</p></li>
     </ul>
   </section>
 
-  <section class="spec" aria-labelledby="spec-title">
-    <h2 class="section-title section-head head-dw" id="spec-title">Spec sheet</h2>
-    <div class="specs">
-      <div class="spec-row">
-        <p class="spec-k mono">Platform</p>
-        <div class="spec-v lo-plat">
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="26" height="30" viewBox="0 0 20 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="1.5" width="14" height="21" rx="3"/><line x1="8" y1="4.5" x2="12" y2="4.5" stroke-linecap="round"/></svg></span><span><strong>iPhone</strong><br />App Store<span class="lo-cta-wait"> (coming)</span></span></div>
-          <div class="spec-plat"><span class="spec-plat-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.5.5 0 10-.87-.5l-1.86 3.22a9.67 9.67 0 00-8.34 0L6.51 5.8a.5.5 0 10-.87.5l1.84 3.18A9.3 9.3 0 003 17h18a9.3 9.3 0 00-3.4-7.52zM9 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm6 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg></span><span><strong>Android</strong><br />Coming soon</span></div>
-        </div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Tracks</p>
-        <div class="spec-v"><ul class="tiles"><li>Cameras</li><li>Lenses</li><li>Batteries</li><li>Media</li><li>Audio</li><li>Monitors</li><li>Lighting</li><li>Grip</li><li>Cases</li><li class="tile-more">anything in a case</li></ul></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Checks by</p>
-        <div class="spec-v"><ul class="tiles tiles-mono"><li>Live scan</li><li>Circle capture</li><li>All packed tap</li><li>By hand</li></ul>
-          <p class="spec-note">Every finished check is saved with the date and time.</p></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Exports</p>
-        <div class="spec-v"><ul class="tiles tiles-raw"><li>Gear list PDF</li><li>Gear list CSV</li></ul>
-          <p class="spec-note">Share a finished check straight from the phone.</p></div>
-      </div>
-      <div class="spec-row">
-        <p class="spec-k mono">Storage</p>
-        <div class="spec-v"><ul class="tiles"><li>On your phone</li><li>Backed up with iCloud</li></ul></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== REVIEWS (HIDDEN ON PURPOSE) =====
-       Same markup and same rule as Stock Shredder: nothing shows until there are 10+ approved reviews
-       (MIN_REVIEWS_TO_SHOW in lo-page.js). Below that the whole section stays hidden.
-       TODO: set LO_REVIEWS_URL in lo-page.js once the worker serves Loadout reviews. Do not point it at
-       Stock Shredder's /reviews, those are Stock Shredder reviews. Add a disclosure line here once the
-       Earn reward exists (Stock Shredder's says reviewers earn clips whatever their rating). -->
-  <section class="reviews lo-reviews" id="reviews" data-lo-reviews-section hidden aria-labelledby="reviews-title">
-    <h2 class="section-title section-head head-dw" id="reviews-title">Reviews</h2>
-    <p class="reviews-count" data-lo-reviews-count hidden></p>
-    <div class="reviews-list" data-lo-reviews-list hidden></div>
+  <!-- ===== UNDER THE HOOD: short on purpose. Every line is checked against the app before it ships. ===== -->
+  <section class="lo-tech" aria-labelledby="tech-title">
+    <h2 class="section-title section-head head-dw" id="tech-title">Under the hood</h2>
+    <p class="section-title">The parts you never see.</p>
+    <ul class="lo-tech-grid lo-tech-6">
+      <li><span class="mono lo-tech-k">Offline</span><p>Scanning and checking run on the iPhone. No signal needed.</p></li>
+      <li><span class="mono lo-tech-k">Vision</span><p>Built on Apple's Vision framework.</p></li>
+      <li><span class="mono lo-tech-k">Privacy</span><p>App Store privacy label: Data Not Collected.</p></li>
+      <li><span class="mono lo-tech-k">iCloud</span><p>Kits are saved on your phone and in your private iCloud.</p></li>
+      <li><span class="mono lo-tech-k">Low light</span><p>Tells you when the case is too dark. One tap turns on the light.</p></li>
+      <li><span class="mono lo-tech-k">By hand</span><p>Any item can be checked by hand with one tap.</p></li>
+    </ul>
   </section>
 
   <section class="lo-pricing tone-alt" id="pricing" data-event="loadout_pricing_view" aria-labelledby="pricing-title">
     <h2 class="section-title section-head head-dw" id="pricing-title">Pricing</h2>
-    <p class="section-sub">14 days free. Every feature included.</p>
+    <p class="section-sub">Free download. 14 days free with every feature.</p>
     <div class="lo-plans">
       <div class="lo-plan" data-event="loadout_monthly_select">
         <span class="mono lo-plan-name">Monthly</span>
@@ -415,99 +337,77 @@
       <div class="lo-plan is-best" data-event="loadout_yearly_select">
         <span class="mono lo-plan-name">Yearly <span class="lo-plan-tag">Save 36%</span></span>
         <p class="lo-plan-price"><span class="num">$99.99</span>/yr</p>
-        <p class="mono lo-plan-note">$8.33 / mo</p>
+        <p class="mono lo-plan-note">$8.33 / mo, paid up front</p>
       </div>
     </div>
-    <p class="pricing-terms">14-day free trial in the app, no card needed to start it. After the trial, subscribe in the app. The subscription renews automatically and is billed through the App Store. Cancel anytime in iPhone Settings &gt; Apple ID &gt; Subscriptions. iPhone only for now.</p>
+    <p class="pricing-terms">The 14-day trial starts in the app. No card needed. After that it's $12.99 a month or $99.99 a year, billed by Apple. Your plan renews automatically. Cancel anytime in your Apple Account settings, at least 24 hours before it renews. The yearly plan is paid up front. iPhone only for now.</p>
     <div class="lo-price-cta">
-      <a class="pill pill-solid lo-cta-live" href="https://apps.apple.com/app/id6818694355" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
-      <form class="notify-form lo-cta-wait" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="pricing" data-notify-success="You're on the list. One email when it's out." novalidate>
-        <label class="sr-only" for="notify-name-price">First name</label>
-        <input class="notify-input notify-name" type="text" id="notify-name-price" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
-        <label class="sr-only" for="notify-email-price">Email address</label>
-        <input class="notify-input" type="email" id="notify-email-price" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-        <fieldset class="notify-platform">
-          <legend>Which phone? (optional)</legend>
-          <label class="notify-platform-opt"><input type="radio" name="platform-price" value="iphone" data-notify-platform /><span>iPhone</span></label>
-          <label class="notify-platform-opt"><input type="radio" name="platform-price" value="android" data-notify-platform /><span>Android</span></label>
-        </fieldset>
-        <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
-        <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Get notified</button>
-        <p class="notify-status" role="status" aria-live="polite" id="notify-status-price" data-notify-status hidden></p>
-      </form>
-      <p class="mono lo-price-note lo-cta-wait">Pricing starts when Loadout is on the App Store.</p>
+      <a class="pill pill-solid" href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
     </div>
-  </section>
-
-  <!-- ===== EARN (HIDDEN ON PURPOSE) =====
-       Copied from Stock Shredder's Earn layout. Stock Shredder pays in clips; Loadout has no clips.
-       TODO(Daniel): pick Loadout's own reward (for example free months), wire it to billing, then fill
-       the amounts below and turn the buttons into real actions. Until then nothing here charges, links
-       or submits, and the section stays hidden. Audience: film crews and photographers only. -->
-  <section class="earn lo-earn tone-dark" id="earn" hidden aria-labelledby="earn-title">
-    <h2 class="section-title section-head head-dw">Earn</h2>
-    <p class="section-title" id="earn-title">Help other film teams and photographers find Loadout.</p>
-    <ul class="earn-grid">
-      <li><span class="earn-amt" data-lo-reward="review">Reward TBD</span><span>Write an honest website review</span></li>
-      <li><span class="earn-amt" data-lo-reward="social">Reward TBD</span><span>Share about us on Instagram or TikTok</span></li>
-      <li><span class="earn-amt" data-lo-reward="referral">Reward TBD</span><span>Refer a friend</span></li>
-      <li><span class="earn-amt" data-lo-reward="youtube">Reward TBD</span><span>Record a YouTube review and walkthrough</span></li>
-    </ul>
-    <div class="earn-actions">
-      <button class="pill pill-solid is-disabled" type="button" disabled aria-disabled="true">Submit your link</button>
-      <button class="pill pill-outline is-disabled" type="button" disabled aria-disabled="true">Leave a review</button>
-    </div>
-    <p class="earn-note">Rules and reward details to come.</p>
   </section>
 
   <section class="faq" id="faq" aria-labelledby="faq-title">
     <h2 class="section-title section-head head-dw" id="faq-title">FAQ</h2>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>Does it need an internet connection?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>No. Scanning and checking happen on your phone, so it works on stages, in basements and on remote locations.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>Is there a free trial?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><div class="faq-a-inner"><p>Yes. Every feature is free for 14 days, and you don't need a card to start. After that it's $12.99 a month or $99.99 a year. If you don't subscribe, your gear list and kits stay saved.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>How does it tell two of the same item apart?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><div class="faq-a-inner"><p>It doesn't guess. Identical items like batteries or cards show as Seen, and each one needs your tap before it counts as packed.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>How do I cancel?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><div class="faq-a-inner"><p>In your Apple Account settings on your iPhone, under Subscriptions. Cancel at least 24 hours before your plan renews. The yearly plan is paid up front.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What if it misses something?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Tap the item to check it by hand. Anything you leave unchecked stays on the missing list.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>Does it need an internet connection?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>No. Scanning and checking happen on your phone, so it works on stages, in basements and on remote locations.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>Is there a free trial?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><div class="faq-a-inner"><p>Yes. Every feature is free for 14 days. After that it's $12.99 a month or $99.99 a year. If you don't subscribe, your gear list and kits stay saved.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>How does it tell two of the same item apart?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><div class="faq-a-inner"><p>It doesn't guess. Identical items like batteries or cards show as Seen, and each one needs your tap before it counts as packed.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Will it say a case is packed when it isn't?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>No. The camera marks what it sees as Seen. Only your tap on All packed confirms it. Anything it hasn't seen stays on the list.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>What if it misses something?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><div class="faq-a-inner"><p>Tap the item to check it by hand. Anything you leave unchecked stays on the missing list.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>Does it work in low light?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><div class="faq-a-inner"><p>Dark cases are harder to see. Loadout tells you when it's too dark and gives you a one-tap light. Anything it still can't see, you check by hand.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>Will it say a case is packed when it isn't?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>No. The camera marks what it sees as Seen. Only your tap confirms it. Anything it hasn't seen stays on the list.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Is it on Android?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><div class="faq-a-inner"><p>Android is coming soon. <a href="#notify">Leave your email</a> and we'll tell you the day it's out.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Does it work in low light?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Dark cases are harder to see. Loadout tells you when it's too dark and gives you a one-tap light. Anything it still can't see, you check by hand.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>Can I track rented gear?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><div class="faq-a-inner"><p>Yes. Add the return date to any rented item and Loadout reminds you before it's due back.</p></div></div>
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>What gear can it check?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8" hidden><div class="faq-a-inner"><p>Anything you pack in a case: cameras, lenses, batteries, media, audio, monitors, lighting and grip.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a9" id="faq-q9"><span>Can I track rented gear?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a9" role="region" aria-labelledby="faq-q9" hidden><div class="faq-a-inner"><p>Yes. Add the return date to any rented item and Loadout reminds you before it's due back.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a10" id="faq-q10"><span>Can my team share kits?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a10" role="region" aria-labelledby="faq-q10" hidden><div class="faq-a-inner"><p>Not yet. Sharing isn't in the app. For now, each iPhone keeps its own kits.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a11" id="faq-q11"><span>What data do you collect?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a11" role="region" aria-labelledby="faq-q11" hidden><div class="faq-a-inner"><p>None. The App Store privacy label for Loadout says Data Not Collected. Your kits stay on your phone and in your own iCloud.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a12" id="faq-q12"><span>Is it on Android?</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-a" id="faq-a12" role="region" aria-labelledby="faq-q12" hidden><div class="faq-a-inner"><p>Not yet. Android is coming soon. <a href="#notify">Leave your email</a> and we'll tell you the day it's out.</p></div></div>
       </div>
     </div>
+    <!-- The one Android notify form on the page. Android is the only thing anyone signs up for here, so the platform
+         is fixed to "android" by a pre-checked hidden radio (notify.js reads the checked [data-notify-platform]). -->
     <div class="lo-notify" id="notify" aria-labelledby="notify-title">
-    <p class="mono lo-notify-head" id="notify-title"><span class="lo-cta-wait">Be first to know when Loadout is on the App Store</span><span class="lo-cta-live">Android is coming. Get an email the day it is out</span></p>
-    <form class="notify-form" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="notify" data-notify-success="You're on the list. One email when it's out." novalidate>
+    <p class="mono lo-notify-head" id="notify-title">Android: coming soon. Get one email the day it's out.</p>
+    <form class="notify-form" data-notify-form data-notify-product="loadout" data-event="loadout_waitlist_submit" data-notify-form-source="notify" data-notify-success="You're on the list. One email when Android is out." novalidate>
       <label class="sr-only" for="notify-name-loadout">First name</label>
       <input class="notify-input notify-name" type="text" id="notify-name-loadout" name="first_name" placeholder="First name (optional)" autocomplete="given-name" maxlength="80" data-notify-name />
       <label class="sr-only" for="notify-email-loadout">Email address</label>
       <input class="notify-input" type="email" id="notify-email-loadout" name="email" placeholder="you@email.com" autocomplete="email" required data-notify-email />
-      <fieldset class="notify-platform">
-        <legend>Which phone? (optional)</legend>
-        <label class="notify-platform-opt"><input type="radio" name="platform-loadout" value="iphone" data-notify-platform /><span>iPhone</span></label>
-        <label class="notify-platform-opt"><input type="radio" name="platform-loadout" value="android" data-notify-platform /><span>Android</span></label>
-      </fieldset>
+      <input type="radio" name="platform-loadout" value="android" checked hidden tabindex="-1" aria-hidden="true" data-notify-platform />
       <input class="notify-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" data-notify-hp />
       <button class="pill pill-solid notify-submit" type="submit" data-notify-submit>Notify me</button>
       <p class="notify-status" role="status" aria-live="polite" id="notify-status-loadout" data-notify-status hidden></p>
@@ -546,17 +446,11 @@
       </a></li>
     </ul>
   </section>
-<!-- Floating button ("Get notified" while data-cta="wait", "14 days free" once live; Daniel 2026-11-18), bottom left: same look and behaviour as Stock Shredder's "100 free clips" one
-     (.ss-sticky in ss-page.css; lo-page.js shows it once the top signup has scrolled away, hides it while a signup
-     form is on screen). Follows <main data-cta>: "wait" scrolls to the top Get notified form,
-     "live" is an App Store link like the other [data-appstore] links. It replaces the old phone-only bar below. -->
+<!-- Floating "14 days free" button, bottom left: same look and behaviour as Stock Shredder's .ss-sticky (ss-page.css).
+     lo-page.js shows it once the hero button has scrolled away and hides it while the pricing button or the
+     Android form is on screen, so it never sits over them. -->
 <div class="ss-sticky lo-float" data-lo-float aria-hidden="true">
-  <a class="pill pill-solid lo-cta-live" href="https://apps.apple.com/app/id6818694355" data-appstore data-event="loadout_float_cta_click" tabindex="-1">14 days free</a>
-  <a class="pill pill-solid lo-cta-wait" href="#top-cta" data-event="loadout_float_cta_click" data-lo-float-jump tabindex="-1">Get notified</a>
-</div>
-<div class="lo-sticky" data-lo-sticky hidden>
-  <a class="pill pill-solid lo-cta-live" href="https://apps.apple.com/app/id6818694355" data-appstore data-event="loadout_app_download_click">Start your 14-day free trial</a>
-  <a class="pill pill-solid lo-cta-wait" href="#top-cta">Get notified</a>
+  <a class="pill pill-solid" href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355" data-appstore data-event="loadout_float_cta_click" tabindex="-1">14 days free</a>
 </div>
 </main>
 
@@ -583,7 +477,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261121a"></script>
-<script src="../../assets/js/lo-page.js?v=20261114d" defer></script>
+<script src="../../assets/js/lo-page.js?v=20261123b" defer></script>
 <script src="../../assets/js/notify.js?v=20261114b" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
