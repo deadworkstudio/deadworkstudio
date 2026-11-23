@@ -126,7 +126,7 @@ Publish order matters: sell-stock-footage links to the archive and best-sites pa
 | P1 | sell old footage | sell-old-footage-archive | Draft ready |
 | P2 | best sites to sell stock footage | best-sites-to-sell-stock-footage | Draft ready |
 | P3 | how to make money selling stock footage | sell-stock-footage | Draft ready (after P1+P2 live) |
-| P4 | guides hub + breadcrumbs + Keep reading (build change, needs Daniel OK) | guides/ | To build |
+| P4 | "Keep reading" links between guides only (Daniel 11-23: guides stay HIDDEN, no hub page, no footer link) | seo/build.py | To build |
 | P5 | how to keyword stock footage | keyword-stock-footage | To draft |
 | P6 | stock footage rejected | stock-footage-rejection-reasons | To draft |
 | P7 | what stock footage sells best | what-stock-footage-sells | To draft |
