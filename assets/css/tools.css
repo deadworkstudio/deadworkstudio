@@ -168,3 +168,6 @@
 .pc-use { font: 600 14.5px/1 var(--sans); font-variant-numeric: tabular-nums; padding: 7px 10px; background: #fff; border: 1px solid var(--ink); cursor: pointer; }
 .pc-use:hover, .pc-use:focus-visible { background: var(--ink); color: #EBE5D8; }
 @media (max-width: 640px) { .pc-ref { padding: 14px 16px; } }
+.pc-in--per input[type="text"] { padding-right: 172px; }
+.pc-in--per .pc-per { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); }
+@media (max-width: 380px) { .pc-in--per input[type="text"] { padding-right: 150px; } .pc-per span { padding: 7px 7px; } }
