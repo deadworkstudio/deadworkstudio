@@ -94,6 +94,10 @@ main > section.lo-cta-band { min-height: 0 !important; padding: 34px 24px !impor
 .lo-scan-phone { position: relative; }
 .lo-scan-video { aspect-ratio: 588 / 1280; }
 .lo-hero-video { display: block; width: 100%; height: auto; aspect-ratio: 588 / 1278; object-fit: cover; }
+/* LCP: the hero poster is a real <img> (fast, high priority). The video sits on top and fades in once it actually plays. */
+.lo-real .phone-body .lo-hero-poster { aspect-ratio: 588 / 1278; object-fit: cover; }
+.lo-real .phone-body .lo-hero-video { position: absolute; inset: 11px; width: calc(100% - 22px); height: calc(100% - 22px); opacity: 0; transition: opacity 240ms ease; }
+.lo-real .phone-body .lo-hero-video.is-playing { opacity: 1; }
 .lo-scan-note { margin-top: 16px; text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
 
 /* ---- the problem: without / with ---- */
