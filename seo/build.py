@@ -403,6 +403,17 @@ def main():
         if not want or m["slug"] in want:
             build(m, header, footer, metas)
     sitemap([m for m in metas if m["status"] == "live"])
+    orphans(metas)
+
+
+def orphans(metas):
+    """No orphan guides (Daniel 11-24): every live guide should get body links from 2+ live guides of its product."""
+    live = [m for m in metas if m["status"] == "live"]
+    for m in live:
+        n = sum(1 for o in live if o is not m and o["product"] == m["product"] and f'href="../{m['slug']}/"' in o["body"])
+        peers = sum(1 for o in live if o["product"] == m["product"]) - 1
+        if n < min(2, peers):
+            print(f"warning: {m['slug']} has {n} body links from other live guides (want 2+)")
 
 
 if __name__ == "__main__":
