@@ -171,3 +171,35 @@
 .pc-in--per input[type="text"] { padding-right: 172px; }
 .pc-in--per .pc-per { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); }
 @media (max-width: 380px) { .pc-in--per input[type="text"] { padding-right: 150px; } .pc-per span { padding: 7px 7px; } }
+
+/* Clip spec checker. */
+.cs-drop { position: relative; display: block; padding: clamp(28px, 5vw, 44px) 20px; text-align: center; background: #fff; border: 1.5px dashed var(--ink-3); cursor: pointer; }
+.cs-drop.cs-over { border-color: var(--ink); background: #FBFAF6; }
+.cs-drop input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.cs-drop strong { display: block; font: 800 clamp(20px, 3vw, 26px)/1.1 var(--sans); font-stretch: 85%; text-transform: uppercase; }
+.cs-drop span { display: block; margin-top: 8px; font-size: 15px; color: var(--ink-2); }
+.cs-drop .tc-btn { display: inline-block; margin-top: 16px; pointer-events: none; }
+.cs-status { margin-top: 12px; font-size: 15px; color: var(--ink-2); min-height: 1px; }
+.cs-file { margin-top: 12px; border: 1px solid var(--line-2); background: #F4F1EA; }
+.cs-file > summary { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 14px; padding: 14px 18px; cursor: pointer; list-style: none; }
+.cs-file > summary::-webkit-details-marker { display: none; }
+.cs-name { font-weight: 650; font-size: 16px; word-break: break-all; }
+.cs-name::before { content: '+'; display: inline-block; width: 18px; font-weight: 700; }
+.cs-file[open] .cs-name::before { content: '\2212'; }
+.cs-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cs-chips i { font: 500 10.5px/1 var(--mono); font-style: normal; letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; color: #fff; background: var(--ink-3); }
+.cs-chips i.tc-ok { background: #3D6E39; }
+.cs-chips i.tc-warn { background: #A86A00; }
+.cs-chips i.tc-fail { background: #C8201A; }
+.cs-body { padding: 0 18px 18px; }
+.cs-spec { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); margin: 0; }
+.cs-spec div { background: #fff; padding: 10px 12px; }
+.cs-spec dt { font: 500 10.5px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.cs-spec dd { margin: 4px 0 0; font-size: 15px; font-weight: 600; line-height: 1.3; }
+.cs-body .tc-sitelist { margin-top: 12px; }
+.cs-all { margin-top: 12px; }
+@media (max-width: 640px) {
+  .cs-spec { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-body { padding: 0 12px 14px; }
+  .cs-file > summary { padding: 12px 14px; }
+}

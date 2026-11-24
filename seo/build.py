@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124i"
+CSS_V = "20261124j"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -138,6 +138,7 @@ COVER_ALT = {
     "tool-gear-checklist": "The free camera gear checklist maker: shoot type, cameras and days, then the list by kit",
     "tool-title-keyword": "The free stock footage title and keyword checker with fields for title, description and keywords",
     "tool-profit-calc": "The free stock footage profit calculator with fields for clips, downloads and earnings per download",
+    "tool-clip-spec": "The free stock clip spec checker showing one clip checked against Adobe Stock, Pond5, Shutterstock and Storyblocks",
     "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
     "ss-review-forest": "Stock Shredder reviewing a forest clip, with grade and export settings",
     "ss-review-mac": "Stock Shredder on a Mac, reviewing a tape deck clip",
@@ -152,6 +153,7 @@ COVERS = {
     "camera-gear-checklist-maker": "tool-gear-checklist",
     "stock-footage-title-keyword-checker": "tool-title-keyword",
     "stock-footage-profit-calculator": "tool-profit-calc",
+    "stock-clip-spec-checker": "tool-clip-spec",
     "adobe-stock-video-workflow": "ss-share",
     "automatic-stock-footage-clipping": "ss-review-dark",
     "blackmagic-raw-stock-footage": "ss-review-forest",
