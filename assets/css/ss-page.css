@@ -1238,6 +1238,5 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 /* Daniel 2026-11-24: no single word left alone on the last line of the "Still have a question?" note. */
 .faq-chat { text-wrap: balance; }
 
-/* Daniel 2026-11-24: the small print under the earn buttons, one line per sentence. */
-.earn-note span { display: block; }
-.earn-note span + span { margin-top: 2px; }
+/* Daniel 2026-11-24: the small print under the earn buttons as one tidy paragraph: narrower, balanced lines. */
+.earn-note { max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.6; text-wrap: balance; }
