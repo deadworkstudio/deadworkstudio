@@ -311,3 +311,92 @@ main > section.lo-add:has(> .lo-add-steps[hidden]) { min-height: 0 !important; p
   .lo-state + .lo-state { border-left: 0; border-top: 1px solid var(--line-2); }
   .lo-moment-3 .lo-moment-arrow { margin: 22px 0 18px; transform: rotate(90deg); justify-self: center; }
 }
+
+/* ===== Conversion pass (2026-11-24, draft/loadout-conversion) ===== */
+/* hero: one App Store button, four short facts, Android as a quiet text line (no second button competing) */
+.lo-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; margin: 16px auto 0; padding: 0; list-style: none; color: var(--ink-2); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+.lo-facts li + li::before { content: '\00B7'; margin: 0 12px; color: var(--ink-3); }
+.lo-android-line { margin-top: 10px; font-size: 13px; color: var(--ink-3); }
+.lo-android-line a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+.lo-note-narrow { display: none; }
+@media (max-width: 767px) {
+  .lo-note-wide { display: none; }
+  .lo-note-narrow { display: inline; }
+  .lo-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; max-width: 360px; font-size: 10.5px; letter-spacing: .12em; }
+  .lo-facts li + li::before { content: none; }
+}
+
+/* the on-set film: still cinematic, but a shorter panel so it doesn't cost a whole screen of scrolling */
+main > section.film.lo-film-short { min-height: 62vh; min-height: 62svh; }
+@media (max-width: 767px) { main > section.film.lo-film-short { min-height: 52vh; min-height: 52svh; } }
+
+/* under the hood now lives inside ON SET, as one row under the features */
+.lo-tech-title { margin: clamp(28px, 4.4vh, 48px) 0 0; text-align: center; color: var(--ink-3); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+.lo-feats .lo-tech-grid { margin-top: 14px; }
+.lo-feats .lo-tech-grid p { font-size: clamp(15px, 1.1vw, 17px); }
+@media (min-width: 900px) and (min-height: 600px) {
+  .lo .lo-feat-grid li { padding-top: clamp(18px, 2.6vh, 30px); padding-bottom: clamp(18px, 2.8vh, 34px); }
+}
+@media (max-width: 767px) {
+  .lo-feat-grid { grid-template-columns: 1fr 1fr; }
+  .lo-feat-grid li { padding: 20px 14px 22px; }
+  .lo-feat-grid li:nth-child(2n) { border-left: 1px solid var(--line-2) !important; }
+  .lo-feat-grid p { font-size: 14px; }
+  .lo-feat-h { margin-top: 8px; font-size: 17px; }
+}
+
+/* value check in pricing: one line of arithmetic and the visitor's own number. Plain, no card. */
+.lo-value { max-width: 640px; margin: clamp(20px, 3vh, 32px) auto 0; }
+.lo-value-line { font-size: 17px; line-height: 1.45; color: var(--ink); text-wrap: balance; }
+.lo-value-calc { display: grid; grid-template-columns: auto 132px; align-items: center; justify-content: center; gap: 10px 14px; margin-top: 16px; }
+.lo-value-q { margin: 0; text-align: right; }
+.lo-value-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); text-align: right; }
+.lo-value-field { display: flex; align-items: center; gap: 4px; height: 44px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; font: 500 16px/1 var(--sans); color: var(--ink-3); }
+.lo-value-field:focus-within { border-color: var(--ink); }
+.lo-value-field input { width: 100%; min-width: 0; border: 0; background: none; font: 500 16px/1 var(--sans); color: var(--ink); outline: none; }
+.lo-value-out { grid-column: 1 / -1; min-height: 1.5em; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.lo-value-out strong { color: var(--ink); font-weight: 600; }
+@media (max-width: 767px) {
+  .lo-value-calc { grid-template-columns: 1fr; justify-items: center; }
+  .lo-value-q, .lo-value-label { text-align: center; }
+  .lo-value-field { width: 160px; }
+}
+.lo-price-cta .downloads-note { margin-top: 0; }
+.lo-price-cta .pill svg { flex: none; }
+
+/* floating App Store button: label + button. On phones it is one slim full-width bar. */
+.lo-float .lo-float-note { margin: 0; padding: 0 6px 0 12px; color: #E8E2D4; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
+.lo-float .pill { gap: 8px; }
+@media (max-width: 719px) {
+  .lo-float { justify-content: space-between; }
+  .lo-float .pill-solid { flex-grow: 0 !important; }
+}
+
+/* phones: the tools grid is six large tiles; on this page it becomes a compact two-column list */
+@media (max-width: 767px) {
+  .lo .tools-grid { grid-template-columns: 1fr 1fr; }
+  .lo .tools-grid li { border-right: 1px solid var(--line-2) !important; }
+  .lo .tools-grid li:nth-child(2n) { border-right: 0 !important; }
+  .lo .tools-grid .tool { aspect-ratio: auto; padding: 18px 14px; gap: 12px; }
+  .lo .tools-grid .tool-mark img { max-height: 44px; width: auto; max-width: 80%; }
+}
+@media (max-width: 767px) {
+  .lo .lo-plans { grid-template-columns: 1fr 1fr; }
+  .lo .lo-plan { padding: 18px 10px; }
+  .lo .lo-plan + .lo-plan { border-left: 1px solid var(--line-2); border-top: 0; }
+  .lo .lo-plan-price { font-size: 30px; }
+  .lo .lo-plan-note { font-size: 9.5px; letter-spacing: .08em; }
+}
+@media (max-width: 767px) {
+  .lo .lo-plan { min-width: 0; }
+  .lo .lo-plan-name { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; }
+}
+/* very narrow phones (320 px): long translated button labels wrap instead of running off the screen */
+@media (max-width: 400px) {
+  .lo .pill { max-width: 100%; white-space: normal; text-align: center; line-height: 1.35; }
+  .lo .lo-cta-band .pill, .lo .lo-price-cta .pill { height: auto; min-height: 44px; padding-top: 10px; padding-bottom: 10px; }
+}
+@media (max-width: 767px) {
+  .lo .tools-grid li, .lo .tools-grid .tool, .lo .tools-grid .tool-meta { min-width: 0; }
+  .lo .tools-grid .tool-status .badge { white-space: normal; letter-spacing: .1em; }
+}

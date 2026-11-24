@@ -3,10 +3,48 @@
 
 // ---- App Store link: one source of truth ----
 // <main data-appstore-url> holds the App Store address; every [data-appstore] link on the page takes it from there.
+// App Store campaign links: once <main data-appstore-pt> holds the provider token from App Store Connect
+// (App Analytics > Campaigns, "pt"), each link also carries pt, ct and mt=8, so App Store Connect can count the
+// installs, trials and subscriptions that came from this page. ct = where on the page + the visitor's tag, e.g.
+// "hero.guide.camera-gear-checklist" or "float.reddit" or "pricing.site" (Apple's limit is 40 characters).
+// Without the token the links stay plain. Nothing about the visitor is added: only the tag already in the address.
 (function () {
   var main = document.querySelector('main[data-appstore-url]'); if (!main) return;
   var url = main.getAttribute('data-appstore-url'); if (!/^https:\/\/apps\.apple\.com\//.test(url)) return;
-  [].forEach.call(document.querySelectorAll('a[data-appstore]'), function (a) { a.href = url; });
+  var pt = (main.getAttribute('data-appstore-pt') || '').replace(/[^0-9A-Za-z]/g, '');
+  var tag = '';
+  try {
+    var q = new URLSearchParams(location.search);
+    tag = [q.get('ref') || q.get('utm_source') || '', q.get('utm_campaign') || ''].filter(Boolean).join('.');
+  } catch (e) {}
+  var clean = function (v) { return String(v).toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, ''); };
+  [].forEach.call(document.querySelectorAll('a[data-appstore]'), function (a) {
+    if (!pt) { a.href = url; return; }
+    var ct = clean((a.getAttribute('data-cta-loc') || 'page') + '.' + (clean(tag) || 'site')).slice(0, 40);
+    a.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'pt=' + pt + '&ct=' + encodeURIComponent(ct) + '&mt=8';
+  });
+})();
+
+// ---- VALUE CHECK in pricing: the visitor's own number against the two real prices. Arithmetic only. ----
+(function () {
+  var box = document.querySelector('[data-lo-value]'); if (!box) return;
+  var input = box.querySelector('[data-lo-value-input]'), out = box.querySelector('[data-lo-value-out]');
+  if (!input || !out) return;
+  var T = window.DW_T || function (k, v) { return k.replace(/\{(\w+)\}/g, function (m, n) { return v && n in v ? v[n] : m; }); };
+  var idle = out.innerHTML;
+  var MONTH = 12.99, YEAR = 99.99;
+  var lang = document.documentElement.lang || 'en';
+  var fmt = function (n) {
+    var v = n >= 10 ? Math.floor(n) : Math.floor(n * 10) / 10;
+    try { return v.toLocaleString(lang, { maximumFractionDigits: 1 }); } catch (e) { return String(v); }
+  };
+  var run = function () {
+    var v = parseFloat(String(input.value).replace(/[^0-9.]/g, ''));
+    if (!(v > 0)) { out.innerHTML = idle; return; }
+    if (v < MONTH) { out.textContent = T('Less than a month of Loadout. Worth a look anyway: it checks every item, every time.'); return; }
+    out.innerHTML = T('That is <strong>{months} months</strong> of the monthly plan, or <strong>{years} years</strong> of the yearly plan.', { months: fmt(v / MONTH), years: fmt(v / YEAR) });
+  };
+  input.addEventListener('input', run);
 })();
 
 // ---- APP TOUR: point at a name to light up that part of the real app screen ----
@@ -142,9 +180,9 @@
   }, { threshold: 0.35 }).observe(vid);
 })();
 
-// ---- floating "14 days free" button (bottom left, Stock Shredder's .ss-sticky look) ----
-// Shows once the hero App Store button has scrolled up out of view. Hidden again while the pricing App Store
-// button or the Android notify form is on screen, so it never sits over the thing it points to.
+// ---- floating App Store button (bottom left on computers, one slim bar on phones; .ss-sticky look) ----
+// Shows once the hero App Store button has scrolled up out of view. Hidden again while any other App Store button,
+// the Android notify form or the footer is on screen, so it never sits over the thing it points to.
 (function () {
   var bar = document.querySelector('[data-lo-float]'), top = document.getElementById('top-cta');
   if (!bar || !top || !('IntersectionObserver' in window)) return;
@@ -158,7 +196,8 @@
   new IntersectionObserver(function (es) {
     topGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync();
   }).observe(top);
-  var spots = [document.querySelector('.lo-price-cta'), document.getElementById('notify')].filter(Boolean);
+  var spots = [].slice.call(document.querySelectorAll('a[data-appstore]')).filter(function (a) { return !bar.contains(a) && !top.contains(a); })
+    .concat([document.getElementById('notify'), document.querySelector('.poster-foot')]).filter(Boolean);
   var vis = new Map();
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) { vis.set(e.target, e.isIntersecting); });
