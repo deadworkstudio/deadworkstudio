@@ -129,38 +129,33 @@ def jsonld(meta, url):
     return json.dumps(out, ensure_ascii=False).replace("</", "<\\/")
 
 
-# Cover frames: real footage stills from the Stock Shredder page, cropped in assets/img/guides/.
+# Covers: real Stock Shredder app screens, framed in assets/img/guides/.
 COVER_ALT = {
-    "moto-01": "Rider on a mountain road, seen from behind",
-    "moto-02": "Motorcycle rounding a dry hillside bend",
-    "moto-03": "Mountain range at golden hour",
-    "moto-04": "Rider on a canyon road at dusk",
-    "moto-05": "Rider leaning into a curve by the guardrail",
-    "moto-06": "Rider on a winding mountain road",
-    "moto-07": "Man standing on a truck under a stormy sky",
-    "moto-08": "Truck on a dry lake bed at sunset",
-    "moto-09": "Man and truck in silhouette at dusk",
-    "moto-11": "Man on a truck on a dry lake bed",
-    "archive-wall": "A wall of frames from a footage archive",
+    "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
+    "ss-review-forest": "Stock Shredder reviewing a forest clip, with grade and export settings",
+    "ss-review-mac": "Stock Shredder on a Mac, reviewing a tape deck clip",
+    "ss-share": "Stock Shredder Share screen with 18 clips ready and their keywords",
+    "ss-import-light": "Stock Shredder import screen, ready for a folder of raw footage",
+    "ss-review-light": "Stock Shredder review screen in light mode, with Look and export settings",
 }
 COVERS = {
-    "adobe-stock-video-workflow": "moto-03",
-    "automatic-stock-footage-clipping": "moto-05",
-    "blackmagic-raw-stock-footage": "moto-07",
-    "drone-footage-for-stock": "moto-02",
-    "pond5-video-upload": "moto-08",
-    "premiere-pro-batch-export-stock": "moto-04",
-    "prepare-stock-footage-faster": "moto-01",
-    "raw-footage-to-stock-clips": "archive-wall",
-    "red-r3d-stock-footage": "moto-09",
-    "shutterstock-video-contributor": "moto-06",
-    "sony-slog3-stock-footage": "moto-11",
-    "stock-footage-requirements-adobe-pond5-shutterstock": "moto-06",
-    "storyblocks-video-contributor": "moto-04",
-    "sell-old-footage-archive": "archive-wall",
-    "best-sites-to-sell-stock-footage": "moto-09",
-    "sell-stock-footage": "moto-01",
-    "xpiks-alternative": "moto-05",
+    "adobe-stock-video-workflow": "ss-share",
+    "automatic-stock-footage-clipping": "ss-review-dark",
+    "blackmagic-raw-stock-footage": "ss-review-forest",
+    "drone-footage-for-stock": "ss-review-light",
+    "pond5-video-upload": "ss-import-light",
+    "premiere-pro-batch-export-stock": "ss-review-mac",
+    "prepare-stock-footage-faster": "ss-review-light",
+    "raw-footage-to-stock-clips": "ss-import-light",
+    "red-r3d-stock-footage": "ss-review-mac",
+    "shutterstock-video-contributor": "ss-review-forest",
+    "sony-slog3-stock-footage": "ss-review-dark",
+    "stock-footage-requirements-adobe-pond5-shutterstock": "ss-share",
+    "storyblocks-video-contributor": "ss-review-mac",
+    "sell-old-footage-archive": "ss-import-light",
+    "best-sites-to-sell-stock-footage": "ss-share",
+    "sell-stock-footage": "ss-review-dark",
+    "xpiks-alternative": "ss-share",
 }
 
 
@@ -179,7 +174,7 @@ def cover_html(m):
     return (
         '    <figure class="g-cover">\n'
         f'      <img src="../../assets/img/guides/{c}.webp" alt="{html.escape(COVER_ALT[c])}" '
-        'width="1440" height="602" fetchpriority="high" decoding="async" />\n'
+        'width="1440" height="720" fetchpriority="high" decoding="async" />\n'
         '    </figure>\n'
     )
 
