@@ -26,11 +26,12 @@
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/guide.css?v=20261123a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Sell Your Old Footage Archive", "description": "Drives full of footage you already shot can become stock clips. What you can sell, how to sort a drive, and how long the prep really takes, measured.", "datePublished": "2026-11-25", "dateModified": "2026-11-25", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/sell-old-footage-archive/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I sell footage I shot for a client?", "acceptedAnswer": {"@type": "Answer", "text": "Only if your contract lets you. Many contracts give the client the footage or limit how you can reuse it. Read yours first, and ask the client when it isn't clear."}}, {"@type": "Question", "name": "Do I need releases for old footage?", "acceptedAnswer": {"@type": "Answer", "text": "For commercial use, stock sites ask for a model release when people are recognizable and a property release for some private places. Footage without them can often still go in as editorial, with an editorial caption."}}, {"@type": "Question", "name": "How much of an old drive is usable?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on how you shot. Long takes on a tripod, gimbal or drone usually hold several stock-length moments each. Run-and-gun interviews hold fewer. Sort one drive first and you'll know your own number."}}, {"@type": "Question", "name": "Do I have to grade everything again?", "acceptedAnswer": {"@type": "Answer", "text": "Most sites take graded footage, and buyers usually want it ready to use. Log footage needs a grade before upload. Stock Shredder applies a built-in Look for ARRI, DJI, RED and Sony, or your own LUT, at export."}}, {"@type": "Question", "name": "How long does it take to turn an archive into clips?", "acceptedAnswer": {"@type": "Answer", "text": "By hand, about 2 minutes per finished clip in our tests, so 1,000 clips is 33+ hours. Stock Shredder did the same 1,000 clips in 3 hours 1 minute, review not included."}}]}]</script>
 </head>
 <body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="poster-head" data-sh>
@@ -87,9 +88,27 @@
       <p class="mono g-eyebrow">Stock Shredder · Your archive</p>
       <h1 class="g-title">How to Sell Your Old Footage Archive</h1>
       <p class="g-dek">The footage is already paid for. What stands between your drives and a stock portfolio is a rights check and a lot of clip prep.</p>
-      <p class="mono g-byline">DEADWORK STUDIO <span aria-hidden="true">&middot;</span> NOV 25, 2026 <span aria-hidden="true">&middot;</span> 6 MIN READ</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED NOV 25, 2026 <span aria-hidden="true">&middot;</span> 6 MIN READ</p>
       <p class="g-head-cta"><a class="pill pill-solid" href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=sell-old-footage-archive#trial" data-cta="top">Start with 100 free clips</a></p>
     </header>
+
+    <figure class="g-cover">
+      <img src="../../assets/img/guides/archive-wall.webp" alt="A wall of frames from a footage archive" width="1440" height="602" fetchpriority="high" decoding="async" />
+    </figure>
+    <nav class="g-toc" aria-labelledby="toc">
+      <p class="mono" id="toc">In this guide</p>
+      <ol>
+        <li><a href="#problem">The footage is paid for. The prep isn't</a></li>
+        <li><a href="#rights">Step 1: check what you're allowed to sell</a></li>
+        <li><a href="#triage">Step 2: sort one drive into three piles</a></li>
+        <li><a href="#by-hand">Step 3: turn long takes into clips, the slow part</a></li>
+        <li><a href="#stock-shredder">Step 3, the Stock Shredder way</a></li>
+        <li><a href="#time">The time difference, measured</a></li>
+        <li><a href="#cadence">Step 4: one drive a week</a></li>
+        <li><a href="#limits">What to know before you start</a></li>
+        <li><a href="#when-other">When by hand still makes sense</a></li>
+      </ol>
+    </nav>
 
     <div class="g-body">
 <div class="g-answer">
@@ -166,15 +185,22 @@
   </video>
   <figcaption>The real test, sped up: the same 1,000 clips with Stock Shredder and by hand.</figcaption>
 </figure>
-<div class="g-table-wrap">
-<table class="g-table g-table--num">
-  <thead><tr><th>4K clips</th><th>Stock Shredder</th><th>By hand</th></tr></thead>
-  <tbody>
-    <tr><td>100</td><td>16 min</td><td>3+ hours</td></tr>
-    <tr><td>500</td><td>1 hr 19 min</td><td>16+ hours</td></tr>
-    <tr><td>1,000</td><td>3 hr 1 min</td><td>33+ hours</td></tr>
-  </tbody>
-</table>
+<div class="g-race" role="group" aria-label="Time to prep 4K clips">
+  <div class="g-race-row">
+    <p class="g-race-n">100 clips</p>
+    <div class="g-race-bar g-race-bar--ss"><span style="width:8.9%"></span><b>Stock Shredder <em>16 min</em></b></div>
+    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>3+ hours</em></b></div>
+  </div>
+  <div class="g-race-row">
+    <p class="g-race-n">500 clips</p>
+    <div class="g-race-bar g-race-bar--ss"><span style="width:8.2%"></span><b>Stock Shredder <em>1 hr 19 min</em></b></div>
+    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>16+ hours</em></b></div>
+  </div>
+  <div class="g-race-row">
+    <p class="g-race-n">1,000 clips</p>
+    <div class="g-race-bar g-race-bar--ss"><span style="width:9.1%"></span><b>Stock Shredder <em>3 hr 1 min</em></b></div>
+    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>33+ hours</em></b></div>
+  </div>
 </div>
 <p class="g-source">Stock Shredder time is shred plus export. Review time not included. By hand: 2 minutes per clip average.</p>
 
@@ -205,6 +231,11 @@
 <p>For drives of your own footage, the prep is the only thing between you and a portfolio. That's the part worth handing off.</p>
     </div>
 
+    <aside class="g-note">
+      <p class="mono">From the team</p>
+      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, and site rules come from each site's own pages. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
+    </aside>
+
     <aside class="g-cta" aria-label="Start with 100 free clips">
       <p class="mono">Launch offer · Code SHRED</p>
       <h2>Try it on your own archive.</h2>
@@ -216,9 +247,9 @@
     <nav class="g-more" aria-labelledby="keep-reading">
       <h2 id="keep-reading">Keep reading</h2>
       <ul>
-        <li><a href="../raw-footage-to-stock-clips/" data-related="raw-footage-to-stock-clips"><span class="mono">Guide · Stock footage</span><strong>How to Turn Raw Footage Into Stock Clips</strong><span class="g-more-dek">Every step from card dump to upload-ready clip. What it takes by hand, what it takes with Stock Shredder, and where each one falls short.</span></a></li>
-        <li><a href="../stock-footage-requirements-adobe-pond5-shutterstock/" data-related="stock-footage-requirements-adobe-pond5-shutterstock"><span class="mono">Guide · Stock footage</span><strong>How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock</strong><span class="g-more-dek">One checklist for all three sites. Length, file size, frame rates, codecs, resolution, audio and color, checked against each site&#x27;s own rules.</span></a></li>
-        <li><a href="../prepare-stock-footage-faster/" data-related="prepare-stock-footage-faster"><span class="mono">Guide · Stock footage</span><strong>How to Prepare Stock Footage Faster (1,000 Clips in 3 Hours)</strong><span class="g-more-dek">Where the hours go, seven ways to win them back by hand, and how 1,000 4K clips went from raw files to export in 3 hours 1 minute.</span></a></li>
+        <li><a href="../raw-footage-to-stock-clips/" data-related="raw-footage-to-stock-clips"><img src="../../assets/img/guides/archive-wall-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>7 min</em></span><strong>How to Turn Raw Footage Into Stock Clips</strong><span class="g-more-dek">Every step from card dump to upload-ready clip. What it takes by hand, what it takes with Stock Shredder, and where each one falls short.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../stock-footage-requirements-adobe-pond5-shutterstock/" data-related="stock-footage-requirements-adobe-pond5-shutterstock"><img src="../../assets/img/guides/moto-06-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>6 min</em></span><strong>How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock</strong><span class="g-more-dek">One checklist for all three sites. Length, file size, frame rates, codecs, resolution, audio and color, checked against each site&#x27;s own rules.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../prepare-stock-footage-faster/" data-related="prepare-stock-footage-faster"><img src="../../assets/img/guides/moto-01-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>7 min</em></span><strong>How to Prepare Stock Footage Faster (1,000 Clips in 3 Hours)</strong><span class="g-more-dek">Where the hours go, seven ways to win them back by hand, and how 1,000 4K clips went from raw files to export in 3 hours 1 minute.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
       </ul>
     </nav>
 
@@ -254,6 +285,12 @@
   </footer>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 </body>
