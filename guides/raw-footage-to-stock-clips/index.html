@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Turn Raw Footage Into Stock Clips", "description": "Every step from card dump to upload-ready stock clip. What it takes by hand, what it takes with Stock Shredder, and where each one falls short.", "datePublished": "2026-11-16", "dateModified": "2026-11-16", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/raw-footage-to-stock-clips/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long should a stock footage clip be?", "acceptedAnswer": {"@type": "Answer", "text": "Most sites take clips between 5 and 60 seconds. Adobe Stock recommends 10 to 20 seconds, with 1 to 5 seconds of handle at each end."}}, {"@type": "Question", "name": "Do I need to color grade stock footage?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if you shot log. Adobe Stock asks contributors not to submit uncorrected log footage and suggests a basic Rec 709 LUT. Some sites also accept a log version next to the graded one."}}, {"@type": "Question", "name": "Should I upscale HD footage to 4K for stock?", "acceptedAnswer": {"@type": "Answer", "text": "No. Adobe Stock asks you not to up-res footage. Upload in the native frame size."}}, {"@type": "Question", "name": "How long does it take to prepare 1,000 stock clips?", "acceptedAnswer": {"@type": "Answer", "text": "By hand, at about 2 minutes per clip, around 33 hours. In our test, Stock Shredder shredded and exported 1,000 graded 4K ProRes clips in 3 hours 1 minute, not counting review."}}, {"@type": "Question", "name": "Does Stock Shredder upload clips to stock sites?", "acceptedAnswer": {"@type": "Answer", "text": "No. It prepares the clips, names and keywords. You upload to each site yourself."}}, {"@type": "Question", "name": "Does my footage leave my computer?", "acceptedAnswer": {"@type": "Answer", "text": "No. Your videos stay on your computer. A few small still frames from each shot go to an outside naming service so clips get names and keywords."}}]}]</script>
 </head>
@@ -93,7 +93,7 @@
     </header>
 
     <figure class="g-cover">
-      <img src="../../assets/img/guides/archive-wall.webp" alt="A wall of frames from a footage archive" width="1440" height="602" fetchpriority="high" decoding="async" />
+      <img src="../../assets/img/guides/ss-import-light.webp" alt="Stock Shredder import screen, ready for a folder of raw footage" width="1440" height="720" fetchpriority="high" decoding="async" />
     </figure>
     <nav class="g-toc" aria-labelledby="toc">
       <p class="mono" id="toc">In this guide</p>
@@ -235,6 +235,12 @@
 <p>For everything else, the hours add up fast. Your footage has value. It shouldn't sit on a drive.</p>
     </div>
 
+    <aside class="g-tools" aria-labelledby="free-tools">
+      <p class="mono" id="free-tools">Free tool</p>
+      <ul>
+        <li><a href="../stock-footage-title-keyword-checker/" data-tool="stock-footage-title-keyword-checker"><strong>Stock Clip Title and Keyword Checker</strong><span>Paste a title and keywords. See what Adobe Stock, Shutterstock, Pond5 and Storyblocks would flag before you upload.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+      </ul>
+    </aside>
     <aside class="g-note">
       <p class="mono">From the team</p>
       <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, and site rules come from each site's own pages. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
@@ -251,9 +257,9 @@
     <nav class="g-more" aria-labelledby="keep-reading">
       <h2 id="keep-reading">Keep reading</h2>
       <ul>
-        <li><a href="../prepare-stock-footage-faster/" data-related="prepare-stock-footage-faster"><img src="../../assets/img/guides/moto-01-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>7 min</em></span><strong>How to Prepare Stock Footage Faster (1,000 Clips in 3 Hours)</strong><span class="g-more-dek">Where the hours go, seven ways to win them back by hand, and how 1,000 4K clips went from raw files to export in 3 hours 1 minute.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
-        <li><a href="../drone-footage-for-stock/" data-related="drone-footage-for-stock"><img src="../../assets/img/guides/moto-02-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For drone footage <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>How to Turn Drone Footage Into Stock Clips Faster</strong><span class="g-more-dek">A card full of flights is mostly takeoff, landing and repositioning. Here&#x27;s how to get the good seconds out fast.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
-        <li><a href="../premiere-pro-batch-export-stock/" data-related="premiere-pro-batch-export-stock"><img src="../../assets/img/guides/moto-04-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Premiere Pro users <i aria-hidden="true">&middot;</i> <em>6 min</em></span><strong>Stock Shredder vs Manual Editing in Premiere Pro</strong><span class="g-more-dek">Premiere is a great editor. Exporting 300 selects as 300 separate graded files is not what it was built for. Here&#x27;s how to do it, and the faster way.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../prepare-stock-footage-faster/" data-related="prepare-stock-footage-faster"><img src="../../assets/img/guides/ss-review-light-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>7 min</em></span><strong>How to Prepare Stock Footage Faster (1,000 Clips in 3 Hours)</strong><span class="g-more-dek">Where the hours go, seven ways to win them back by hand, and how 1,000 4K clips went from raw files to export in 3 hours 1 minute.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../drone-footage-for-stock/" data-related="drone-footage-for-stock"><img src="../../assets/img/guides/ss-review-light-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For drone footage <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>How to Turn Drone Footage Into Stock Clips Faster</strong><span class="g-more-dek">A card full of flights is mostly takeoff, landing and repositioning. Here&#x27;s how to get the good seconds out fast.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../premiere-pro-batch-export-stock/" data-related="premiere-pro-batch-export-stock"><img src="../../assets/img/guides/ss-review-mac-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Premiere Pro users <i aria-hidden="true">&middot;</i> <em>6 min</em></span><strong>Stock Shredder vs Manual Editing in Premiere Pro</strong><span class="g-more-dek">Premiere is a great editor. Exporting 300 selects as 300 separate graded files is not what it was built for. Here&#x27;s how to do it, and the faster way.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
       </ul>
     </nav>
 

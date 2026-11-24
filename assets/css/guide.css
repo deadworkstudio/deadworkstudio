@@ -78,7 +78,7 @@
 
 /* Cover frame: wider than the reading column */
 .g-cover { margin: clamp(28px, 4vw, 44px) calc(50% - min(50vw - var(--gutter), 560px)) 0; }
-.g-cover img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 602; object-fit: cover; background: #1d1b18; }
+.g-cover img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; background: #1d1b18; }
 
 /* In this guide */
 .g-toc { margin-top: clamp(28px, 4vw, 40px); padding: 20px 0 6px; border-top: 1px solid var(--ink); }
@@ -151,3 +151,14 @@
   .g-race { padding: 18px 16px 4px; }
   .g-race-bar b { font-size: 13px; }
 }
+
+/* Free tools box (seo/build.py tools_html) */
+.g-tools { margin-top: clamp(48px, 7vw, 72px); padding: 22px 24px; border: 1px solid var(--ink); background: #F4F1EA; }
+.g-tools > .mono { color: #C8201A; margin-bottom: 6px; }
+.g-tools li + li { border-top: 1px solid var(--line); }
+.g-tools a { display: grid; grid-template-columns: 1fr auto; gap: 4px 18px; align-items: center; padding: 12px 0; text-decoration: none; }
+.g-tools strong { font: 750 clamp(19px, 2.4vw, 22px)/1.15 var(--sans); font-stretch: 90%; }
+.g-tools span { grid-column: 1; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+.g-tools em { grid-column: 2; grid-row: 1 / span 2; font-style: normal; padding: 11px 14px; background: var(--ink); color: #EBE5D8; white-space: nowrap; }
+.g-tools a:hover strong, .g-tools a:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 560px) { .g-tools { padding: 18px 16px; } .g-tools a { grid-template-columns: 1fr; } .g-tools em { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 8px; } }

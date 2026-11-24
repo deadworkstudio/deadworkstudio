@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124a"
+CSS_V = "20261124b"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -129,38 +129,33 @@ def jsonld(meta, url):
     return json.dumps(out, ensure_ascii=False).replace("</", "<\\/")
 
 
-# Cover frames: real footage stills from the Stock Shredder page, cropped in assets/img/guides/.
+# Covers: real Stock Shredder app screens, framed in assets/img/guides/.
 COVER_ALT = {
-    "moto-01": "Rider on a mountain road, seen from behind",
-    "moto-02": "Motorcycle rounding a dry hillside bend",
-    "moto-03": "Mountain range at golden hour",
-    "moto-04": "Rider on a canyon road at dusk",
-    "moto-05": "Rider leaning into a curve by the guardrail",
-    "moto-06": "Rider on a winding mountain road",
-    "moto-07": "Man standing on a truck under a stormy sky",
-    "moto-08": "Truck on a dry lake bed at sunset",
-    "moto-09": "Man and truck in silhouette at dusk",
-    "moto-11": "Man on a truck on a dry lake bed",
-    "archive-wall": "A wall of frames from a footage archive",
+    "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
+    "ss-review-forest": "Stock Shredder reviewing a forest clip, with grade and export settings",
+    "ss-review-mac": "Stock Shredder on a Mac, reviewing a tape deck clip",
+    "ss-share": "Stock Shredder Share screen with 18 clips ready and their keywords",
+    "ss-import-light": "Stock Shredder import screen, ready for a folder of raw footage",
+    "ss-review-light": "Stock Shredder review screen in light mode, with Look and export settings",
 }
 COVERS = {
-    "adobe-stock-video-workflow": "moto-03",
-    "automatic-stock-footage-clipping": "moto-05",
-    "blackmagic-raw-stock-footage": "moto-07",
-    "drone-footage-for-stock": "moto-02",
-    "pond5-video-upload": "moto-08",
-    "premiere-pro-batch-export-stock": "moto-04",
-    "prepare-stock-footage-faster": "moto-01",
-    "raw-footage-to-stock-clips": "archive-wall",
-    "red-r3d-stock-footage": "moto-09",
-    "shutterstock-video-contributor": "moto-06",
-    "sony-slog3-stock-footage": "moto-11",
-    "stock-footage-requirements-adobe-pond5-shutterstock": "moto-06",
-    "storyblocks-video-contributor": "moto-04",
-    "sell-old-footage-archive": "archive-wall",
-    "best-sites-to-sell-stock-footage": "moto-09",
-    "sell-stock-footage": "moto-01",
-    "xpiks-alternative": "moto-05",
+    "adobe-stock-video-workflow": "ss-share",
+    "automatic-stock-footage-clipping": "ss-review-dark",
+    "blackmagic-raw-stock-footage": "ss-review-forest",
+    "drone-footage-for-stock": "ss-review-light",
+    "pond5-video-upload": "ss-import-light",
+    "premiere-pro-batch-export-stock": "ss-review-mac",
+    "prepare-stock-footage-faster": "ss-review-light",
+    "raw-footage-to-stock-clips": "ss-import-light",
+    "red-r3d-stock-footage": "ss-review-mac",
+    "shutterstock-video-contributor": "ss-review-forest",
+    "sony-slog3-stock-footage": "ss-review-dark",
+    "stock-footage-requirements-adobe-pond5-shutterstock": "ss-share",
+    "storyblocks-video-contributor": "ss-review-mac",
+    "sell-old-footage-archive": "ss-import-light",
+    "best-sites-to-sell-stock-footage": "ss-share",
+    "sell-stock-footage": "ss-review-dark",
+    "xpiks-alternative": "ss-share",
 }
 
 
@@ -173,11 +168,13 @@ def cover(m):
 
 
 def cover_html(m):
+    if m.get("tool"):
+        return ""  # Free tools open on the tool itself, not a cover frame.
     c = cover(m)
     return (
         '    <figure class="g-cover">\n'
         f'      <img src="../../assets/img/guides/{c}.webp" alt="{html.escape(COVER_ALT[c])}" '
-        'width="1440" height="602" fetchpriority="high" decoding="async" />\n'
+        'width="1440" height="720" fetchpriority="high" decoding="async" />\n'
         '    </figure>\n'
     )
 
@@ -250,7 +247,7 @@ def words(m):
 
 def related(meta, metas, n=3):
     """Up to n LIVE guides to show under "Keep reading". Drafts are never linked."""
-    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"]}
+    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"] and not m.get("tool")}
     picks = [live[s] for s in meta.get("related", []) if s in live]
     mine = words(meta)
     rest = sorted(
@@ -277,6 +274,26 @@ def related_html(picks):
         '      <h2 id="keep-reading">Keep reading</h2>\n'
         f'      <ul>\n{items}\n      </ul>\n'
         '    </nav>\n'
+    )
+
+
+def tools_html(meta, metas):
+    """Free tools box on every guide: live tools only, never on the tool's own page."""
+    tools = [m for m in metas if m.get("tool") and m["status"] == "live" and m["slug"] != meta["slug"]]
+    if not tools:
+        return ""
+    mine = words(meta)
+    tools.sort(key=lambda m: (-len(mine & words(m)), m["published"], m["slug"]))
+    items = "\n".join(
+        f'        <li><a href="../{m["slug"]}/" data-tool="{m["slug"]}"><strong>{html.escape(m["title"])}</strong>'
+        f'<span>{html.escape(m.get("tool_line", m["dek"]))}</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>'
+        for m in tools[:2]
+    )
+    return (
+        '    <aside class="g-tools" aria-labelledby="free-tools">\n'
+        '      <p class="mono" id="free-tools">Free tool' + ("s" if len(tools[:2]) > 1 else "") + '</p>\n'
+        f'      <ul>\n{items}\n      </ul>\n'
+        '    </aside>\n'
     )
 
 
@@ -325,14 +342,21 @@ def build(meta, header, footer, metas):
         "cta_note": cta["note"],
         "body": race_bars(meta["body"]),
         "cover_html": cover_html(meta),
-        "toc_html": toc_html(meta["body"]),
+        "toc_html": "" if meta.get("tool") else toc_html(meta["body"]),
         "note_html": NOTE,
+        "tools_html": tools_html(meta, metas),
         "faq_html": faq_html,
         "related_html": related_html(related(meta, metas)),
+        "extra_head": "".join(
+            f'<link rel="stylesheet" href="../../assets/css/{c}?v={CSS_V}" />\n' for c in meta.get("css", [])
+        ),
     }
     page = (ROOT / "seo/article-template.html").read_text()
     for k, v in vals.items():
         page = page.replace("{{" + k + "}}", v)
+    if meta.get("tool"):
+        # The tool sits right under the headline. Stock Shredder shows up next to the results instead.
+        page = re.sub(r'\s*<p class="g-head-cta">.*?</p>', "", page)
     left = re.findall(r"\{\{\w+\}\}", page)
     if left:
         sys.exit(f"{slug}: unfilled placeholders {left}")
