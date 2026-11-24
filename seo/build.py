@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124e"
+CSS_V = "20261124h"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -132,6 +132,8 @@ def jsonld(meta, url):
 
 # Covers: real Stock Shredder app screens, framed in assets/img/guides/.
 COVER_ALT = {
+    "tool-gear-checklist": "The free camera gear checklist maker: shoot type, cameras and days, then the list by kit",
+    "tool-title-keyword": "The free stock footage title and keyword checker with fields for title, description and keywords",
     "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
     "ss-review-forest": "Stock Shredder reviewing a forest clip, with grade and export settings",
     "ss-review-mac": "Stock Shredder on a Mac, reviewing a tape deck clip",
@@ -143,6 +145,8 @@ COVER_ALT = {
     "lo-kit-wrap": "Loadout on iPhone: an A-cam kit list, the All packed step, and a saved check",
 }
 COVERS = {
+    "camera-gear-checklist-maker": "tool-gear-checklist",
+    "stock-footage-title-keyword-checker": "tool-title-keyword",
     "adobe-stock-video-workflow": "ss-share",
     "automatic-stock-footage-clipping": "ss-review-dark",
     "blackmagic-raw-stock-footage": "ss-review-forest",
@@ -385,6 +389,119 @@ def build(meta, header, footer, metas):
     print(f"built guides/{slug}/ ({meta['status']})")
 
 
+# ---- The Guides hub: /guides/. One DEADWORK library, a cluster per product, topics inside each. ----
+# Every live guide must have a topic here, or the build stops (so nothing new is ever left off the hub).
+HUB = [
+    {
+        "product": "loadout", "name": "Loadout", "href": "../products/loadout/",
+        "line": "Camera gear checklists and the habits that stop gear going missing. Loadout checks the open case with your iPhone.",
+        "topics": [
+            ("Checklists", ["camera-gear-checklist", "film-production-wrap-checklist", "check-gear-before-leaving-set"]),
+            ("Tracking your gear", ["keep-track-of-camera-equipment"]),
+        ],
+    },
+    {
+        "product": "stock-shredder", "name": "Stock Shredder", "href": "../products/stock-shredder/",
+        "line": "Turning raw footage into stock clips that sell, and getting them onto each site. Stock Shredder does the finding, trimming and naming.",
+        "topics": [
+            ("Getting started", ["prepare-stock-footage-faster", "raw-footage-to-stock-clips", "stock-footage-requirements-adobe-pond5-shutterstock", "automatic-stock-footage-clipping"]),
+            ("Selling on each site", ["adobe-stock-video-workflow", "shutterstock-video-contributor", "pond5-video-upload", "storyblocks-video-contributor"]),
+            ("Cameras and formats", ["blackmagic-raw-stock-footage", "red-r3d-stock-footage", "sony-slog3-stock-footage", "drone-footage-for-stock"]),
+            ("Editing", ["premiere-pro-batch-export-stock"]),
+        ],
+    },
+]
+# Where the two workflows meet: the shoot day ends, the footage starts. Shown as its own short row.
+HUB_BRIDGE = ["check-gear-before-leaving-set", "prepare-stock-footage-faster"]
+
+
+def hub_card(m, up=""):
+    kind = "Free tool" if m.get("tool") else f'{m["read_minutes"]} min'
+    return (
+        f'<li><a href="{up}{m["slug"]}/" data-hub="{m["slug"]}">'
+        f'<img src="../assets/img/guides/{cover(m)}-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" />'
+        f'<span class="mono">{html.escape(m["eyebrow"].split("·")[-1].strip())} <i aria-hidden="true">&middot;</i> <em>{kind}</em></span>'
+        f'<strong>{html.escape(m["title"])}</strong>'
+        f'<span class="g-more-dek">{html.escape(m["dek"])}</span>'
+        f'<span class="g-more-go mono">{"Open" if m.get("tool") else "Read"} <i aria-hidden="true">&rarr;</i></span></a></li>'
+    )
+
+
+def build_hub(header, footer, metas):
+    live = {m["slug"]: m for m in metas if m["status"] == "live"}
+    placed = {s for c in HUB for _, ss in c["topics"] for s in ss}
+    tools = [m for m in live.values() if m.get("tool")]
+    missing = sorted(s for s, m in live.items() if s not in placed and not m.get("tool"))
+    if missing:
+        sys.exit(f"hub: live guides with no topic in HUB: {missing}")
+    fix = lambda h: h.replace('href="../../', 'href="../').replace('src="../../', 'src="../')
+    sections, items, n = [], [], 0
+    for c in HUB:
+        blocks = []
+        for name, slugs in c["topics"]:
+            cards = [live[s] for s in slugs if s in live]
+            if not cards:
+                continue
+            items += cards
+            blocks.append(
+                f'      <section class="gh-topic"><h3 class="mono">{html.escape(name)} <span>{len(cards)}</span></h3>\n'
+                f'        <ul class="gh-cards">{"".join(hub_card(m) for m in cards)}</ul></section>'
+            )
+        ptools = [m for m in tools if m["product"] == c["product"]]
+        if ptools:
+            items += ptools
+            blocks.append(
+                f'      <section class="gh-topic"><h3 class="mono">Free tools <span>{len(ptools)}</span></h3>\n'
+                f'        <ul class="gh-cards">{"".join(hub_card(m) for m in ptools)}</ul></section>'
+            )
+        if not blocks:
+            continue
+        n += 1
+        sections.append(
+            f'    <section class="gh-product" id="{c["product"]}" aria-labelledby="h-{c["product"]}">\n'
+            f'      <header class="gh-product-head"><p class="mono">{n:02d}</p><h2 id="h-{c["product"]}">{html.escape(c["name"])}</h2>'
+            f'<p>{html.escape(c["line"])} <a href="{c["href"]}?ref=guide&amp;utm_campaign=guides-hub">About {html.escape(c["name"])} <i aria-hidden="true">&rarr;</i></a></p></header>\n'
+            + "\n".join(blocks) + "\n    </section>"
+        )
+    bridge = [live[s] for s in HUB_BRIDGE if s in live]
+    bridge_html = ""
+    if len(bridge) == 2:
+        bridge_html = (
+            '    <section class="gh-bridge" aria-labelledby="h-bridge">\n'
+            '      <p class="mono">Where they meet</p><h2 id="h-bridge">From the last case on the truck to the first clip on sale.</h2>\n'
+            f'      <ul class="gh-cards">{"".join(hub_card(m) for m in bridge)}</ul>\n    </section>'
+        )
+    chips = "".join(
+        f'<a class="mono" href="#{c["product"]}">{html.escape(c["name"])}</a>' for c in HUB
+    )
+    total = len([m for m in live.values()])
+    url = f"{SITE}/guides/"
+    ld = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {"@type": "CollectionPage", "@id": url, "url": url, "name": "DEADWORK Guides",
+             "description": "Practical guides and free tools for filmmakers, by DEADWORK.",
+             "isPartOf": {"@type": "WebSite", "name": "DEADWORK", "url": SITE + "/"},
+             "mainEntity": {"@type": "ItemList", "numberOfItems": len(items), "itemListElement": [
+                 {"@type": "ListItem", "position": i + 1, "url": f"{SITE}/guides/{m['slug']}/", "name": m["title"]}
+                 for i, m in enumerate(items)]}},
+            {"@type": "BreadcrumbList", "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "DEADWORK", "item": SITE + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Guides", "item": url}]},
+        ],
+    }
+    page = (ROOT / "seo/hub-template.html").read_text()
+    vals = {"css_v": CSS_V, "jsonld": json.dumps(ld, ensure_ascii=False), "header": fix(header), "footer": fix(footer),
+            "chips": chips, "sections": "\n\n".join(sections), "bridge": bridge_html, "count": str(total)}
+    for k, v in vals.items():
+        page = page.replace("{{" + k + "}}", v)
+    left = re.findall(r"\{\{\w+\}\}", page)
+    if left:
+        sys.exit(f"hub: unfilled placeholders {left}")
+    (ROOT / "guides/index.html").write_text(page)
+    print(f"built guides/ (hub, {len(items)} items)")
+
+
 def sitemap(live):
     p = ROOT / "sitemap.xml"
     s = p.read_text()
@@ -394,7 +511,8 @@ def sitemap(live):
         f"    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>"
         for m in live
     )
-    s = s.replace("\n</urlset>", entries + "\n</urlset>")
+    hub = f"\n  <url>\n    <loc>{SITE}/guides/</loc>\n    <lastmod>{max(m['updated'] for m in live)}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>"
+    s = s.replace("\n</urlset>", hub + entries + "\n</urlset>")
     p.write_text(s)
 
 
@@ -406,6 +524,7 @@ def main():
     for m in metas:
         if not want or m["slug"] in want:
             build(m, header, footer, metas)
+    build_hub(header, footer, metas)
     sitemap([m for m in metas if m["status"] == "live"])
 
 
