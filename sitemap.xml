@@ -344,8 +344,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://deadworkstudio.com/guides/check-gear-before-leaving-set/</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://deadworkstudio.com/guides/drone-footage-for-stock/</loc>
     <lastmod>2026-11-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/guides/film-production-wrap-checklist/</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/guides/keep-track-of-camera-equipment/</loc>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
