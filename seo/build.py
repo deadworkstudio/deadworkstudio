@@ -140,6 +140,7 @@ COVER_ALT = {
     "ss-review-light": "Stock Shredder review screen in light mode, with Look and export settings",
     "lo-kit-scan": "Loadout on iPhone: a list of kits, a scan of an open case, and All accounted for",
     "lo-scan-real": "Three frames from a real Loadout scan of a packed case on iPhone",
+    "lo-kit-wrap": "Loadout on iPhone: an A-cam kit list, the All packed step, and a saved check",
 }
 COVERS = {
     "adobe-stock-video-workflow": "ss-share",
@@ -160,6 +161,9 @@ COVERS = {
     "sell-stock-footage": "ss-review-dark",
     "xpiks-alternative": "ss-share",
     "camera-gear-checklist": "lo-kit-scan",
+    "film-production-wrap-checklist": "lo-kit-wrap",
+    "keep-track-of-camera-equipment": "lo-kit-scan",
+    "check-gear-before-leaving-set": "lo-scan-real",
 }
 
 

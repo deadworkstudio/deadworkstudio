@@ -10,7 +10,8 @@
 // purpose). Which button and which post stay in the site's own counts (lo-analytics.js).
 //   radar    ?ref=radar          replies and posts found through DEADWORK Radar
 //   reddit   ?ref=reddit         any other Reddit link (weekly value post, profile)
-//   seo      ?ref=guide, or arriving from a search engine with no tag
+//   seo.<slug>  ?ref=guide&utm_campaign=<slug>   one campaign per guide (Daniel 11-24); slug cut to 26 characters
+//   seo      ?ref=guide with no campaign, ?ref=seo, or arriving from a search engine with no tag
 //   ig tt yt fb x threads        organic social, from ?ref= or the referring site
 //   paid     ?utm_medium=paid|cpc|ads, or a click id (fbclid, gclid, ttclid)
 //   creator.<name>  ?ref=creator&utm_campaign=<name>   one campaign per creator
@@ -35,6 +36,7 @@
     if (/^(paid|cpc|ads?|paid-social)$/.test(med) || q.get('fbclid') && med || q.get('gclid') || q.get('ttclid')) channel = 'paid';
     else if (ref === 'radar') channel = 'radar';
     else if (ref === 'reddit') channel = 'reddit';
+    else if (ref === 'guide' && camp) channel = 'seo.' + camp.slice(0, 26).replace(/-+$/, '');
     else if (ref === 'guide' || ref === 'seo') channel = 'seo';
     else if (ref === 'creator') channel = ('creator.' + camp).replace(/\.$/, '');
     else if (ref === 'email' || ref === 'outreach') channel = 'email';
