@@ -121,12 +121,14 @@ can say that article 2 doesn't already say (avoid near-duplicate pages).
 Plan doc: https://claude.ai/artifact/25xsp2RpBSrunD6bnLQy85 (100-article roadmap, briefs, architecture).
 Publish order matters: sell-stock-footage links to the archive and best-sites pages, so it goes live after both.
 
+**Hub (11-24, Daniel approved via Loadout thread, #141):** /guides/ hub is live with a Guides footer link. When a Stock Shredder guide goes live, add its slug to a Stock Shredder topic in HUB in seo/build.py (the build stops otherwise). Suggested topics for the queue: archive / best sites / make money / income -> a new "Making money" topic; rejections, workflow, batch, CSV, log -> "Getting started" or "Editing".
+
 | # | Search | Slug | Status |
 | --- | --- | --- | --- |
 | P1 | sell old footage | sell-old-footage-archive | Draft ready, offered 11-24 |
 | P2 | best sites to sell stock footage | best-sites-to-sell-stock-footage | Draft ready |
 | P3 | how to make money selling stock footage | sell-stock-footage | Draft ready (after P1+P2 live) |
-| P4 | "Keep reading" block at the end of every guide: up to 3 related LIVE guides, set by the "related" meta field, then by shared keywords. Build refuses a live guide whose body links to a draft. No hub page, no footer or site link (Daniel 11-23) | seo/build.py | LIVE 11-23 (main 8ef5b92) |
+| P4 | "Keep reading" block at the end of every guide: up to 3 related LIVE guides, set by the "related" meta field, then by shared keywords. Build refuses a live guide whose body links to a draft. (Hub + footer link added later, 11-24, #141) | seo/build.py | LIVE 11-23 (main 8ef5b92) |
 | P5 | how to keyword stock footage | keyword-stock-footage | Merged 11-24: the live free title and keyword checker (stock-footage-title-keyword-checker) answers this search |
 | P6 | stock footage rejected | stock-footage-rejection-reasons | Draft ready (11-24) |
 | P7 | what stock footage sells best | what-stock-footage-sells | To draft |
