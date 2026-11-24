@@ -52,7 +52,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122space" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261124tiles" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -223,10 +223,10 @@
         <p class="ix-idle mono" data-ix-idle>Entdecke die Oberfläche.</p>
           <div class="ix-panel" data-ix-panel="0" hidden><h3 class="section-title ix-h">Shortcuts</h3><p class="ix-p">Freigeben, ablehnen, trimmen und abspielen, ohne die Tastatur zu verlassen.</p></div>
           <div class="ix-panel" data-ix-panel="1" hidden><h3 class="section-title ix-h">Trimmen</h3><p class="ix-p">Setze In- und Out-Punkte während der Wiedergabe oder zieh die Griffe.</p></div>
-          <div class="ix-panel" data-ix-panel="2" hidden><h3 class="section-title ix-h">Export</h3><p class="ix-p">ProRes in zusätzlichen Größen. Bis 8K gegradet, Log oder beides in einem Durchgang.</p></div>
+          <div class="ix-panel" data-ix-panel="2" hidden><h3 class="section-title ix-h">Export</h3><p class="ix-p">ProRes, H.264 oder H.265 in zusätzlichen Größen. Bis 8K gegradet, Log oder beides in einem Durchgang.</p></div>
           <div class="ix-panel" data-ix-panel="3" hidden><h3 class="section-title ix-h">Looks</h3><p class="ix-p">Integrierte Looks für ARRI, DJI, RED und Sony. Dazu deine eigenen LUTs.</p></div>
           <div class="ix-panel" data-ix-panel="4" hidden><h3 class="section-title ix-h">Feinschliff</h3><p class="ix-p">Belichtung, Kontrast, Farbtemperatur und Tönung. Für einen Clip oder alle.</p></div>
-          <div class="ix-panel" data-ix-panel="5" hidden><h3 class="section-title ix-h">Teilen</h3><p class="ix-p">Titel, Beschreibung und Keywords für jeden Clip. Kopiere sie oder speichere eine Upload-Tabelle.</p></div>
+          <div class="ix-panel" data-ix-panel="5" hidden><h3 class="section-title ix-h">Teilen</h3><p class="ix-p">Titel, Beschreibung und Keywords für jeden Clip. Kopiere sie, speichere Upload-Tabellen oder schick Clips direkt an Shutterstock und Pond5.</p></div>
           <div class="ix-panel" data-ix-panel="6" hidden><h3 class="section-title ix-h">Tag / Nacht</h3><p class="ix-p">Hell oder dunkel. Ein Tippen zum Wechseln.</p></div>
       </div>
       <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-ix-auto>Automatische Tour <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>An</span></button></div>
@@ -237,7 +237,7 @@
     <h2 class="section-title section-head head-dw" id="feats-title">Funktionen</h2>
     <ul class="pp-feat-grid">
       <li><span class="mono pp-feat-n">01</span><h3 class="pp-feat-h">Automatische Namen</h3><p>Jeder Shot bekommt einen klaren Namen und landet in einem eigenen Ordner.</p></li>
-      <li><span class="mono pp-feat-n">02</span><h3 class="pp-feat-h">Stock-Checks</h3><p>Erkennt Logos, HDR, falsche Bildraten und Material unter 2K, bevor du hochlädst.</p></li>
+      <li><span class="mono pp-feat-n">02</span><h3 class="pp-feat-h">Stock-Checks</h3><p>Erkennt Logos, HDR, falsche Bildraten und Material unter HD, bevor du hochlädst.</p></li>
       <li><span class="mono pp-feat-n">03</span><h3 class="pp-feat-h">Filter für schlechte Clips</h3><p>Kaputte, leere und zu verwackelte Clips werden für dich aussortiert. Wackelige oder kurze Abschnitte zeigen den Grund, mit „Trotzdem behalten“.</p></li>
       <li><span class="mono pp-feat-n">04</span><h3 class="pp-feat-h">Automatische Stabilisierung</h3><p>Glättet verwackelte Shots und lässt einen Shot in Ruhe, wenn Glätten ihn ruinieren würde.</p></li>
       <li><span class="mono pp-feat-n">05</span><h3 class="pp-feat-h">Kornentfernung</h3><p>Entfernt sichtbares Korn beim Export, nur in den Shots, die es brauchen.</p></li>
@@ -249,8 +249,8 @@
       <li><span class="mono pp-feat-n">11</span><h3 class="pp-feat-h">Läuft über Nacht</h3><p>Hält deinen Computer wach, während er exportiert, und sagt dir Bescheid, wenn er fertig ist.</p></li>
       <li><span class="mono pp-feat-n">12</span><h3 class="pp-feat-h">Automatische Updates</h3><p>Neue Versionen installieren sich von selbst.</p></li>
       <li><span class="mono pp-feat-n">13</span><h3 class="pp-feat-h">Deine Cliplänge</h3><p>Leg Min und Max fest. Jeder Clip läuft so lang, wie Max erlaubt, geschnitten an einer ruhigen Stelle.</p></li>
-      <li><span class="mono pp-feat-n">14</span><h3 class="pp-feat-h">Upload-Tabellen</h3><p>Eine CSV für Pond5 und die meisten Seiten, dazu Versionen für Adobe Stock und Shutterstock. Pro und Studio.</p></li>
-      <li><span class="mono pp-feat-n">15</span><h3 class="pp-feat-h">Text in der Datei</h3><p>Titel, Beschreibung und Keywords stehen in jedem exportierten Clip. Pro und Studio.</p></li>
+      <li><span class="mono pp-feat-n">14</span><h3 class="pp-feat-h">An Stockagenturen senden</h3><p>Upload-Tabellen für Adobe Stock, Shutterstock, Pond5 und die meisten anderen Seiten. Clips direkt an Shutterstock und Pond5 senden. Pro und Studio.</p></li>
+      <li><span class="mono pp-feat-n">15</span><h3 class="pp-feat-h">Text in der Datei</h3><p>Titel, Beschreibung und Keywords stehen in jedem exportierten Clip, mit einem Feld für einen Ort, etwa Los Angeles, CA. Dateien können nach ihrem Titel benannt werden. Pro und Studio.</p></li>
     </ul>
   </section>
 
@@ -326,7 +326,7 @@
               <tr><td data-label="Clips rein">588</td><td data-label="Gefundene Momente">1,479</td><td data-label="4K-Clips">1,000</td><td data-label="Verarbeitet in">87 Min.</td><td data-label="Exportiert">94 Min.</td><td data-label="Fehlgeschlagen">0</td><td data-label="Stock Shredder">3 Std. 1 Min.</td><td data-label="Von Hand">über 33 Std.</td></tr>
             </tbody>
           </table>
-          <p class="spec-note spec-note-mono">Echtes Sony-FX6- und FX3-Material auf einem MacBook Pro M3 Pro, exportiert auf eine externe SSD. Gegradetes ProRes 422 HQ 4K. Sichtungszeit nicht enthalten. Von Hand: im Schnitt 2 Minuten pro Clip.</p>
+          <p class="spec-note spec-note-mono">FX6- und FX3-Material auf einem M3 Pro, exportiert auf eine externe SSD. Gegradetes ProRes 422 HQ 4K. Sichtungszeit nicht enthalten. Von Hand: im Schnitt 2 Minuten pro Clip.</p>
         </div>
       </div>
       <div class="spec-row">
@@ -337,14 +337,14 @@
         <p class="spec-k mono">Importiert</p>
         <div class="spec-v"><ul class="tiles tiles-mono"><li>MP4</li><li>MOV</li><li>MXF</li><li>MKV</li><li>AVI</li><li>M4V</li><li>MTS</li><li>M2TS</li><li>MPG</li><li>MPEG</li><li>WebM</li><li>3GP</li><li>WMV</li></ul>
           <ul class="tiles tiles-raw"><li>Blackmagic RAW</li><li>RED R3D</li><li>CinemaDNG</li><li>ARRIRAW</li></ul>
-          <p class="spec-note">RAW-Formate brauchen die kostenlosen Tools des Kameraherstellers.</p></div>
+          <p class="spec-note">RED R3D und ARRIRAW brauchen die kostenlosen Tools des Kameraherstellers.</p></div>
       </div>
       <div class="spec-row">
         <p class="spec-k mono">Exportiert</p>
         <div class="spec-v">
           <ul class="tiles tiles-mono"><li>1080</li><li>2K</li><li>4K</li><li>5K</li><li>6K</li><li>8K</li><li>Wie die Quelle</li></ul>
           <ul class="tiles"><li>Gegradet + Log</li><li>Gegradet</li><li>Log</li></ul>
-          <ul class="tiles tiles-raw"><li>ProRes 422 HQ</li><li>ProRes 4444</li><li>ProRes 4444 XQ</li></ul>
+          <ul class="tiles tiles-raw"><li>ProRes 422 HQ</li><li>ProRes 4444</li><li>ProRes 4444 XQ</li><li>H.264</li><li>H.265</li></ul>
           <p class="spec-note">Exportiere mehrere Größen im selben Durchgang.</p>
         </div>
       </div>
@@ -375,8 +375,8 @@
       <p class="trial-offer-dl" data-trial-dl-note hidden>Hol dir deine 100 Gratis-Clips, während der Download läuft.</p>
       <p class="trial-rec" aria-hidden="true"><span class="trial-rec-dot"></span><span>REC</span><span class="trial-rec-tc" data-trial-tc>00:00:07:00</span></p>
       <p class="mono trial-offer-eyebrow">SHRED-Startangebot</p>
-      <h3 class="trial-offer-title">100 Gratis-Clips. 7 Tage.</h3>
-      <p class="trial-offer-sub"><strong>Heute $0. Nichts verlängert sich.</strong> Deine Karte verhindert nur wiederholte&nbsp;Tests.</p>
+      <h3 class="trial-offer-title"><span class="tl1">100 Gratis-Clips.</span><br>7 Tage.</h3>
+      <p class="trial-offer-sub"><strong>Heute $0. Keine Karte nötig.</strong> Nur dein Vorname und deine E-Mail.</p>
       <!-- Daniel 2026-11-22: the Meta ad says "with Code SHRED", so people need a place to type it.
            SHRED already applies to everyone; this box just confirms it (checkout.js checks /offer). -->
       <form class="trial-code" data-trial-code-form novalidate>
@@ -388,6 +388,8 @@
         <p class="trial-code-status" data-trial-code-status role="status" aria-live="polite" hidden></p>
       </form>
       <form class="trial-offer-form" data-trial-offer-form novalidate>
+        <label class="sr-only" for="trial-name">Dein Vorname</label>
+        <input type="text" id="trial-name" placeholder="Dein Vorname" autocomplete="given-name" maxlength="80" required data-trial-name />
         <label class="sr-only" for="trial-email">Deine E-Mail</label>
         <input type="email" id="trial-email" placeholder="Deine E-Mail" autocomplete="email" required data-trial-email />
         <button type="submit" class="pill pill-solid" data-trial-submit>Kostenlos testen</button>
@@ -659,7 +661,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>Was macht die automatische Verschlagwortung?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Mit Pro, Studio und in der Gratis-Testphase schreibt Stock Shredder für jeden exportierten Clip einen Titel, eine Beschreibung und Keywords zum Einfügen. Kopiere einen Clip oder alle auf einmal, oder speichere CSV-Tabellen für Pond5, Adobe Stock und Shutterstock. Derselbe Text steht auch in jeder exportierten Datei. Kein Tippen von Tags von Hand für jede Stockagentur.</p></div></div>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Mit Pro, Studio und in der Gratis-Testphase schreibt Stock Shredder für jeden exportierten Clip einen Titel, eine Beschreibung und Keywords zum Einfügen. Kopiere einen Clip oder alle auf einmal, oder speichere CSV-Tabellen für Pond5, Adobe Stock und Shutterstock. Derselbe Text steht auch in jeder exportierten Datei. Du kannst Clips auch direkt aus der App an Shutterstock und Pond5 senden. Kein Tippen von Tags von Hand für jede Stockagentur.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3b" id="faq-q3b"><span>Gibt es ein Limit für Namen und Keywords?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -691,7 +693,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Gibt es eine kostenlose Testphase?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Ja. Starte jederzeit vor dem 31. Dezember 2026 und erhalte 100 Gratis-Clips für 7 Tage, Keywords inklusive. Kein Code nötig. Kein Abo und keine automatische Belastung: Deine Karte wird nur zur Verifizierung gespeichert und für die Testphase nie belastet.</p></div></div>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Ja. Starte jederzeit vor dem 31. Dezember 2026 und erhalte 100 Gratis-Clips für 7 Tage, Keywords inklusive. Kein Code nötig. Keine Karte nötig, nur dein Vorname und deine E-Mail. Es wird nichts berechnet, solange du keinen Plan wählst.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>Wofür ist die iPhone-App?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -779,10 +781,10 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261122cents"></script>
+<script src="../../assets/js/checkout.js?v=20261124nc"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
-<script src="../../assets/js/ss-page.js?v=20261121a"></script>
+<script src="../../assets/js/ss-page.js?v=20261124nc"></script>
 <script src="../../assets/js/ss-hero.js?v=20261115c" defer></script>
 <script>
 // The hrefs above point at GitHub's stable "latest" link (releases/latest/download/
@@ -889,7 +891,8 @@ fetch('https://api.github.com/repos/deadworkstudio/stock-shredder-releases/relea
     var note = document.querySelector('.downloads-note');
     if (note) note.innerHTML = 'Mac + Windows app &nbsp;&middot;&nbsp; link sent by email';
     var phoneNote = document.querySelector('[data-trial-phone-note]');
-    if (phoneNote) phoneNote.hidden = false;
+    // No-card trial (name field present): phones start the trial here, so no "send it to my computer" note.
+    if (phoneNote && !document.querySelector('[data-trial-name]')) phoneNote.hidden = false;
   }
 })();
 

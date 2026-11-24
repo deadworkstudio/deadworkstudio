@@ -405,3 +405,14 @@ main > section.film.lo-film-short { min-height: 62vh; min-height: 62svh; }
   .lo .tools-grid li, .lo .tools-grid .tool, .lo .tools-grid .tool-meta { min-width: 0; }
   .lo .tools-grid .tool-status .badge { white-space: normal; letter-spacing: .1em; }
 }
+
+/* Free checklists and guides (product page -> guides, no orphan guides) */
+.lo-guides { padding-block: clamp(48px, 8vh, 88px) !important; min-height: 0 !important; display: block !important; border-top: 1px solid var(--line); }
+.lo-guides-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; }
+.lo-guides-list li { border-bottom: 1px solid var(--line); }
+.lo-guides-list li:first-child { border-top: 1px solid var(--line); }
+.lo-guides-list a { display: grid; gap: 4px; padding: 18px 0; color: inherit; text-decoration: none; }
+.lo-guides-name { font-weight: 600; font-size: 18px; }
+.lo-guides-note { color: var(--ink-2, #555); font-size: 15px; }
+.lo-guides-list a:hover .lo-guides-name { text-decoration: underline; text-underline-offset: 3px; }
+@media (min-width: 900px) { .lo-guides-list { grid-template-columns: repeat(3, 1fr); gap: 0 32px; } .lo-guides-list li, .lo-guides-list li:first-child { border-top: 1px solid var(--line); } }
