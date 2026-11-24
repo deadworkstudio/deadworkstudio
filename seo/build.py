@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124a"
+CSS_V = "20261124b"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -252,7 +252,7 @@ def words(m):
 
 def related(meta, metas, n=3):
     """Up to n LIVE guides to show under "Keep reading". Drafts are never linked."""
-    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"]}
+    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"] and not m.get("tool")}
     picks = [live[s] for s in meta.get("related", []) if s in live]
     mine = words(meta)
     rest = sorted(
@@ -279,6 +279,26 @@ def related_html(picks):
         '      <h2 id="keep-reading">Keep reading</h2>\n'
         f'      <ul>\n{items}\n      </ul>\n'
         '    </nav>\n'
+    )
+
+
+def tools_html(meta, metas):
+    """Free tools box on every guide: live tools only, never on the tool's own page."""
+    tools = [m for m in metas if m.get("tool") and m["status"] == "live" and m["slug"] != meta["slug"]]
+    if not tools:
+        return ""
+    mine = words(meta)
+    tools.sort(key=lambda m: (-len(mine & words(m)), m["published"], m["slug"]))
+    items = "\n".join(
+        f'        <li><a href="../{m["slug"]}/" data-tool="{m["slug"]}"><strong>{html.escape(m["title"])}</strong>'
+        f'<span>{html.escape(m.get("tool_line", m["dek"]))}</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>'
+        for m in tools[:2]
+    )
+    return (
+        '    <aside class="g-tools" aria-labelledby="free-tools">\n'
+        '      <p class="mono" id="free-tools">Free tool' + ("s" if len(tools[:2]) > 1 else "") + '</p>\n'
+        f'      <ul>\n{items}\n      </ul>\n'
+        '    </aside>\n'
     )
 
 
@@ -329,6 +349,7 @@ def build(meta, header, footer, metas):
         "cover_html": cover_html(meta),
         "toc_html": "" if meta.get("tool") else toc_html(meta["body"]),
         "note_html": NOTE,
+        "tools_html": tools_html(meta, metas),
         "faq_html": faq_html,
         "related_html": related_html(related(meta, metas)),
         "extra_head": "".join(
