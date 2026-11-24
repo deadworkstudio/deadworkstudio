@@ -145,3 +145,8 @@
 @media (max-width: 640px) {
   .pc-grid, .pc-next-row { grid-template-columns: 1fr; }
 }
+.pc-how { margin-top: 14px; font-size: 14.5px; }
+.pc-how summary { cursor: pointer; font: 500 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.pc-how ul { margin-top: 8px; }
+.pc-how li { padding: 6px 0 6px 0; border-top: 0; font-variant-numeric: tabular-nums; }
+.pc-how li::before { content: none; }

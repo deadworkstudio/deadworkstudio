@@ -20,6 +20,7 @@
     return h ? h + ' hr' + (m ? ' ' + m + ' min' : '') : m + ' min';
   };
 
+  var sent = false; // one 'completed a calculation' count per page load
   function calc() {
     var clips = num(f.clips), dl = num(f.dl), roy = num(f.roy), cost = num(f.cost) || 0, arch = num(f.arch), perf = (num(f.perf) || 100) / 100;
     $('pc-perf-v').textContent = Math.round(perf * 100) + '%';
@@ -48,6 +49,14 @@
       return '<tr' + (mine ? ' class="pc-mine"' : '') + '><td>+' + int(n) + (mine ? ' <em>your archive</em>' : '') + '</td>' +
         '<td>' + int(clips + n) + '</td><td>' + money(m - cost) + '</td><td>' + money((m - cost) * 12) + '</td><td>+' + money(extra) + '</td></tr>';
     }).join('');
+    // Every number above, worked out in words from what was typed.
+    $('pc-math').innerHTML =
+      '<li>' + int(dl) + ' downloads &times; ' + usd(roy, true) + ' = <b>' + money(month) + '</b> a month</li>' +
+      '<li>' + money(month) + ' &times; 12 = <b>' + money(month * 12) + '</b> a year</li>' +
+      '<li>' + money(month) + ' &divide; ' + int(clips) + ' clips = <b>' + usd(perClip, true) + '</b> per clip, per month</li>' +
+      '<li>Added clips &times; ' + usd(perClip, true) + (perf === 1 ? '' : ' &times; ' + Math.round(perf * 100) + '%') + ' = what they add each month</li>' +
+      (cost ? '<li>Each month total minus ' + usd(cost) + ' in costs</li>' : '');
+    if (!sent) { sent = true; window.dwEvent ? window.dwEvent('tool-calc-done') : (window.dwQueue = window.dwQueue || []).push('tool-calc-done'); }
     $('pc-perf-note').textContent = perf === 1
       ? 'Assumes new clips sell like your current clips do, on average.'
       : 'Assumes new clips sell at ' + Math.round(perf * 100) + '% of your current average per clip.';
@@ -61,9 +70,13 @@
 
   Object.keys(f).forEach(function (k) { if (f[k]) f[k].addEventListener('input', calc); });
 
+  Array.prototype.forEach.call(document.querySelectorAll('#calculator a[data-cta]'), function (a) {
+    a.addEventListener('click', function () { if (window.dwEvent) window.dwEvent('tool-calc-cta'); });
+  });
   $('pc-sample').addEventListener('click', function () {
+    var was = sent; sent = true; // example numbers don't count as a real calculation
     f.clips.value = '300'; f.dl.value = '20'; f.roy.value = '2.50'; f.cost.value = '0'; f.arch.value = '800'; f.perf.value = '100';
-    calc();
+    calc(); sent = was;
   });
   $('pc-clear').addEventListener('click', function () {
     ['clips', 'dl', 'roy', 'cost', 'arch'].forEach(function (k) { f[k].value = ''; });
