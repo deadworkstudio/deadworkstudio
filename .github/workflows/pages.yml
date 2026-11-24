@@ -47,6 +47,10 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ runner.temp }}/site
+      # GitHub sometimes lists a just-uploaded artifact as missing for a few seconds
+      # ("Found 0 artifact(s)"), which fails the deploy. Give it time to show up.
+      - name: Wait for the upload to register
+        run: sleep 30
       - id: deployment
         uses: actions/deploy-pages@v4
         with:

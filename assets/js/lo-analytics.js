@@ -11,7 +11,7 @@
 //   loadout_page_view        the page opened               (the <main data-event> attribute)
 //   loadout_hero_cta_click   top button clicked            (data-event on the hero button / link)
 //   loadout_float_cta_click  floating "14 days free" button clicked (bottom left)
-//   loadout_app_download_click  App Store link clicked     (data-event, ready for when the link exists)
+//   loadout_app_download_click  App Store link clicked (band or pricing), with l = data-cta-loc
 //   loadout_monthly_select / loadout_yearly_select  a price card clicked
 //   loadout_pricing_view     pricing section scrolled into view
 //   loadout_section_view     first time the top of page / scan / app / adding gear / FAQ comes into view
@@ -57,7 +57,9 @@
     document.addEventListener('click', function (ev) {
       var el = ev.target && ev.target.closest ? ev.target.closest('[data-event]') : null;
       var name = el && el.getAttribute('data-event');
-      if (name && CLICKS[name]) send(name);
+      // l = where on the page the button sits (hero, band, pricing, float), from data-cta-loc. Each location
+      // counts once per page load. The HQ Worker keeps it once its allowlist knows "l" (until then it is ignored).
+      if (name && CLICKS[name]) { var loc = el.getAttribute('data-cta-loc') || ''; send(name, loc ? { l: loc } : null, name + ':' + loc); }
     }, true);
 
     // 3. scrolled into view: pricing (named by the markup) and the main sections
