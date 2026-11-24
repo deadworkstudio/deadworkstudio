@@ -376,7 +376,7 @@
       <p class="trial-rec" aria-hidden="true"><span class="trial-rec-dot"></span><span>REC</span><span class="trial-rec-tc" data-trial-tc>00:00:07:00</span></p>
       <p class="mono trial-offer-eyebrow">Oferta de lanzamiento SHRED</p>
       <h3 class="trial-offer-title">100 clips gratis. 7 días.</h3>
-      <p class="trial-offer-sub"><strong>$0 hoy. Nada se renueva.</strong> Tu tarjeta solo evita pruebas&nbsp;repetidas.</p>
+      <p class="trial-offer-sub"><strong>$0 hoy. Sin tarjeta.</strong> Solo tu nombre y tu correo.</p>
       <!-- Daniel 2026-11-22: the Meta ad says "with Code SHRED", so people need a place to type it.
            SHRED already applies to everyone; this box just confirms it (checkout.js checks /offer). -->
       <form class="trial-code" data-trial-code-form novalidate>
@@ -388,6 +388,8 @@
         <p class="trial-code-status" data-trial-code-status role="status" aria-live="polite" hidden></p>
       </form>
       <form class="trial-offer-form" data-trial-offer-form novalidate>
+        <label class="sr-only" for="trial-name">Tu nombre</label>
+        <input type="text" id="trial-name" placeholder="Tu nombre" autocomplete="given-name" maxlength="80" required data-trial-name />
         <label class="sr-only" for="trial-email">Tu correo</label>
         <input type="email" id="trial-email" placeholder="Tu correo" autocomplete="email" required data-trial-email />
         <button type="submit" class="pill pill-solid" data-trial-submit>Empezar prueba gratis</button>
@@ -691,7 +693,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>¿Hay una prueba gratuita?</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Sí. Empieza cuando quieras antes del 31 de diciembre de 2026 y consigue 100 clips gratis para usar en 7 días, con palabras clave incluidas. No necesitas código. Sin suscripción ni cobros automáticos: tu tarjeta solo se guarda para verificarte y nunca se cobra por la prueba gratuita.</p></div></div>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>Sí. Empieza cuando quieras antes del 31 de diciembre de 2026 y consigue 100 clips gratis para usar en 7 días, con palabras clave incluidas. No necesitas código. No necesitas tarjeta, solo tu nombre y tu correo. No se cobra nada a menos que elijas un plan.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>¿Para qué sirve la app de iPhone?</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -779,10 +781,10 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261122cents"></script>
+<script src="../../assets/js/checkout.js?v=20261124nc"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
-<script src="../../assets/js/ss-page.js?v=20261121a"></script>
+<script src="../../assets/js/ss-page.js?v=20261124nc"></script>
 <script src="../../assets/js/ss-hero.js?v=20261115c" defer></script>
 <script>
 // The hrefs above point at GitHub's stable "latest" link (releases/latest/download/
@@ -889,7 +891,8 @@ fetch('https://api.github.com/repos/deadworkstudio/stock-shredder-releases/relea
     var note = document.querySelector('.downloads-note');
     if (note) note.innerHTML = 'Mac + Windows app &nbsp;&middot;&nbsp; link sent by email';
     var phoneNote = document.querySelector('[data-trial-phone-note]');
-    if (phoneNote) phoneNote.hidden = false;
+    // No-card trial (name field present): phones start the trial here, so no "send it to my computer" note.
+    if (phoneNote && !document.querySelector('[data-trial-name]')) phoneNote.hidden = false;
   }
 })();
 
