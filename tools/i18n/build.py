@@ -138,8 +138,44 @@ def rewrite_links(src, page, lang):
     return re.sub(r'(?<![\w-])(href)=(["\'])([^"\']*)\2', fix, src)
 
 
+LD_TEXT_KEYS = {'name', 'alternateName', 'description', 'featureList', 'applicationSubCategory', 'headline', 'text'}
+LD_LANG_TYPES = {'SoftwareApplication', 'VideoObject', 'WebPage', 'Article', 'FAQPage', 'HowTo'}
+
+
+def localize_jsonld(src, page, lang, hl, table):
+    """Structured data in translated pages: text values that have a translation in the page table are
+    swapped, this page's own URL points at the translated copy, and the main types get inLanguage.
+    Anything without a translation stays English (it is never reported as missing)."""
+    en_url, lang_url = f'{SITE}/{page}', f'{SITE}/{lang}/{page}'
+
+    def walk(v, key=None):
+        if isinstance(v, dict):
+            out = {k: walk(x, k) for k, x in v.items()}
+            if out.get('@type') in LD_LANG_TYPES and 'inLanguage' not in out:
+                out['inLanguage'] = hl
+            return out
+        if isinstance(v, list):
+            return [walk(x, key) for x in v]
+        if isinstance(v, str):
+            if v == en_url:
+                return lang_url
+            if key in LD_TEXT_KEYS and v in table:
+                return table[v]
+        return v
+
+    def fix(m):
+        try:
+            data = json.loads(m.group(2))
+        except ValueError:
+            return m.group(0)
+        return m.group(1) + json.dumps(walk(data), ensure_ascii=False, separators=(',', ':')) + m.group(3)
+
+    return re.sub(r'(<script type="application/ld\+json">)(.*?)(</script>)', fix, src, flags=re.S)
+
+
 def localize_page(src, page, lang, hl, table, missing):
     src = translate_segments(src, table, missing)
+    src = localize_jsonld(src, page, lang, hl, table)
     src = rewrite_links(src, page, lang)
     src = re.sub(r'<html lang="en"', f'<html lang="{hl}"', src, count=1)
     src = re.sub(r'(<link rel="canonical" href=")[^"]*(")', lambda m: f'{m.group(1)}{SITE}/{lang}/{page}{m.group(2)}', src)
