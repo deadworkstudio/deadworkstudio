@@ -1227,3 +1227,16 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 .spec .speed td:nth-child(8) { color: #C8201A; }
 .spec .speed th:nth-child(8), .spec .speed td:nth-child(8) { background: rgba(200, 32, 26, .08); }
 @media (max-width: 719px) { .spec .speed td:nth-child(8) { background: rgba(200, 32, 26, .1); } }
+
+/* Daniel 2026-11-24: the platform list left "and more" alone on its own row. Even rows instead:
+   2 rows of 6 on wide screens, 3 rows of 4 in between, 4 rows of 3 on phones (12 tiles). */
+.tiles:has(> .tile-more) { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.tiles:has(> .tile-more) li { display: flex; align-items: center; justify-content: center; text-align: center; }
+@media (max-width: 1099px) { .tiles:has(> .tile-more) { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 559px) { .tiles:has(> .tile-more) { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tiles:has(> .tile-more) li { padding: 8px 6px; font-size: 13px; } }
+
+/* Daniel 2026-11-24: no single word left alone on the last line of the "Still have a question?" note. */
+.faq-chat { text-wrap: balance; }
+
+/* Daniel 2026-11-24: the small print under the earn buttons as one tidy paragraph: narrower, balanced lines. */
+.earn-note { max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.6; text-wrap: balance; }
