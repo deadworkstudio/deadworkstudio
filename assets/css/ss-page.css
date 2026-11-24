@@ -1211,3 +1211,6 @@ html:lang(es) #trial .trial-offer-title { font-size: min(72px, calc((100vw - 78p
 html:lang(fr) #trial .trial-offer-title { font-size: min(64px, calc((100vw - 78px) * .1289)); }
 html:lang(it) #trial .trial-offer-title { font-size: min(76px, calc((100vw - 78px) * .1569)); }
 html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-title { font-size: min(44px, calc((100vw - 78px) * .1106)); }
+
+/* Daniel 2026-11-24: the "By hand" times in red, so the gap with Stock Shredder reads at a glance. */
+.spec .speed td:nth-child(8) { color: #C8201A; }
