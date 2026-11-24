@@ -31,6 +31,7 @@
 <script type="application/ld+json">{{jsonld}}</script>
 </head>
 <body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
 <a class="skip" href="#main">Skip to content</a>
 
 {{header}}
@@ -41,14 +42,16 @@
       <p class="mono g-eyebrow">{{eyebrow}}</p>
       <h1 class="g-title">{{title}}</h1>
       <p class="g-dek">{{dek}}</p>
-      <p class="mono g-byline">DEADWORK STUDIO <span aria-hidden="true">&middot;</span> {{updated_human}} <span aria-hidden="true">&middot;</span> {{read_minutes}} MIN READ</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED {{updated_human}} <span aria-hidden="true">&middot;</span> {{read_minutes}} MIN READ</p>
       <p class="g-head-cta"><a class="pill pill-solid" href="{{cta_href}}" data-cta="top">{{cta_label}}</a></p>
     </header>
 
+{{cover_html}}{{toc_html}}
     <div class="g-body">
 {{body}}
     </div>
 
+{{note_html}}
     <aside class="g-cta" aria-label="{{cta_label}}">
       <p class="mono">{{cta_eyebrow}}</p>
       <h2>{{cta_title}}</h2>
@@ -68,6 +71,12 @@
 {{footer}}
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 </body>

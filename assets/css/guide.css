@@ -71,13 +71,82 @@
   .g-head-cta .pill, .g-cta .pill { width: 100%; }
 }
 
+/* Reading progress */
+.g-progress { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 300; pointer-events: none; }
+.g-progress span { display: block; height: 100%; background: #C8201A; transform: scaleX(0); transform-origin: 0 50%; }
+
+/* Cover frame: wider than the reading column */
+.g-cover { margin: clamp(28px, 4vw, 44px) calc(50% - min(50vw - var(--gutter), 560px)) 0; }
+.g-cover img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 602; object-fit: cover; background: #1d1b18; }
+
+/* In this guide */
+.g-toc { margin-top: clamp(28px, 4vw, 40px); padding: 20px 0 6px; border-top: 1px solid var(--ink); }
+.g-toc .mono { margin-bottom: 12px; color: var(--ink-3); }
+.g-toc ol { counter-reset: toc; list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 32px; }
+.g-toc li { counter-increment: toc; break-inside: avoid; padding: 7px 0 7px 34px; position: relative; font-size: 15.5px; line-height: 1.35; }
+.g-toc li::before { content: counter(toc, decimal-leading-zero); position: absolute; left: 0; top: 10px; font: 500 11px/1.4 var(--mono); letter-spacing: .12em; color: #C8201A; }
+.g-toc a { color: inherit; text-decoration: none; }
+.g-toc a:hover, .g-toc a:focus-visible { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+/* Numbered sections, matching the list above */
+.g-body { counter-reset: sec; }
+.g-body h2[id] { counter-increment: sec; }
+.g-body h2[id]::before { content: counter(sec, decimal-leading-zero); display: block; margin-bottom: 10px; font: 500 11px/1.4 var(--mono); letter-spacing: .14em; color: #C8201A; }
+.g-body h2 { scroll-margin-top: calc(var(--sh-h) + 24px); }
+
+/* Measured time, as bars */
+.g-race { padding: 22px 22px 8px; background: var(--ink); color: #EBE5D8; }
+.g-race-row { padding-bottom: 16px; }
+.g-race-row + .g-race-row { padding-top: 16px; border-top: 1px solid rgba(235, 229, 216, .16); }
+.g-race-n { font: 500 11px/1.4 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: #CFC8B8; margin-bottom: 10px; }
+.g-race-bar { position: relative; display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.g-race-bar span { display: block; height: 14px; flex: none; transform-origin: 0 50%; }
+.g-race-bar--ss span { background: #8FD687; }
+.g-race-bar--hand span { position: absolute; left: 0; top: 50%; margin-top: -7px; background: rgba(200, 32, 26, .55); }
+.g-race-bar--hand { min-height: 22px; }
+.g-race-bar b { font-weight: 500; font-size: 14.5px; white-space: nowrap; }
+.g-race-bar--hand b { position: relative; padding: 0 8px; margin-left: auto; color: #fff; }
+.g-race-bar em { font-style: normal; font-weight: 750; font-variant-numeric: tabular-nums; }
+.g-race-bar--ss em { color: #8FD687; }
+@media (prefers-reduced-motion: no-preference) {
+  .g-race.is-in .g-race-bar span { animation: g-grow 1.1s cubic-bezier(.2, .7, .2, 1) both; }
+  .g-race.is-in .g-race-bar--hand span { animation-duration: 2.4s; }
+  @keyframes g-grow { from { transform: scaleX(0); } }
+}
+
+/* From the team */
+.g-note { margin-top: clamp(48px, 7vw, 72px); padding: 20px 0 0 20px; border-left: 3px solid #C8201A; }
+.g-note .mono { color: var(--ink-3); margin-bottom: 8px; }
+.g-note p:last-child { font-size: 16px; line-height: 1.6; color: var(--ink-2); padding-bottom: 4px; }
+.g-note a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
 /* Keep reading: related live guides, inside guides only */
 .g-more { margin-top: clamp(56px, 8vw, 88px); }
-.g-more h2 { font: 750 clamp(24px, 3.4vw, 32px)/1.12 var(--sans); margin-bottom: 14px; }
-.g-more ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
-.g-more li { border-bottom: 1px solid var(--line-2); }
-.g-more a { display: block; padding: 18px 0; color: inherit; text-decoration: none; }
-.g-more .mono { display: block; color: var(--ink-3); }
-.g-more strong { display: block; margin-top: 6px; font: 750 clamp(19px, 2.4vw, 22px)/1.2 var(--sans); }
-.g-more a:hover strong, .g-more a:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.g-more-dek { display: block; margin-top: 6px; color: var(--ink-2); font-size: 15.5px; line-height: 1.45; }
+.g-more h2 { font: 750 clamp(24px, 3.4vw, 32px)/1.12 var(--sans); margin-bottom: 18px; }
+.g-more ul { list-style: none; padding: 0; margin: 0 calc(50% - min(50vw - var(--gutter), 560px)); display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.g-more li { display: flex; }
+.g-more a { display: flex; flex-direction: column; width: 100%; padding: 0 0 18px; color: inherit; text-decoration: none; background: #F4F1EA; border: 1px solid var(--line-2); transition: transform .2s ease, box-shadow .2s ease; }
+.g-more a:hover, .g-more a:focus-visible { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(20, 20, 18, .12); }
+.g-more img { display: block; width: 100%; height: auto; aspect-ratio: 640 / 401; object-fit: cover; background: #1d1b18; }
+.g-more .mono { display: block; margin: 16px 18px 0; color: var(--ink-3); }
+.g-more .mono i, .g-more .mono em { font-style: normal; }
+.g-more .mono em { white-space: nowrap; }
+.g-more strong { display: block; margin: 8px 18px 0; font: 750 19px/1.22 var(--sans); }
+.g-more-dek { display: block; margin: 8px 18px 0; color: var(--ink-2); font-size: 15px; line-height: 1.45; }
+.g-more .g-more-go { margin-top: auto; padding-top: 14px; color: #C8201A; }
+.g-more .g-more-go i { font-style: normal; display: inline-block; transition: transform .2s ease; }
+.g-more a:hover .g-more-go i { transform: translateX(4px); }
+@media (max-width: 900px) {
+  .g-more ul { margin: 0; grid-template-columns: 1fr; }
+  .g-more a { display: grid; grid-template-columns: 38% 1fr; grid-template-rows: auto auto 1fr; padding: 0; }
+  .g-more img { grid-row: 1 / 4; height: 100%; aspect-ratio: auto; }
+  .g-more .mono { margin: 14px 14px 0; }
+  .g-more strong { margin: 6px 14px 14px; font-size: 17px; }
+  .g-more-dek, .g-more .g-more-go { display: none; }
+}
+@media (max-width: 640px) {
+  .g-toc ol { columns: 1; }
+  .g-cover { margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); }
+  .g-race { padding: 18px 16px 4px; }
+  .g-race-bar b { font-size: 13px; }
+}

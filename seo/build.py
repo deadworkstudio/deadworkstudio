@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261123a"
+CSS_V = "20261124a"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -129,6 +129,117 @@ def jsonld(meta, url):
     return json.dumps(out, ensure_ascii=False).replace("</", "<\\/")
 
 
+# Cover frames: real footage stills from the Stock Shredder page, cropped in assets/img/guides/.
+COVER_ALT = {
+    "moto-01": "Rider on a mountain road, seen from behind",
+    "moto-02": "Motorcycle rounding a dry hillside bend",
+    "moto-03": "Mountain range at golden hour",
+    "moto-04": "Rider on a canyon road at dusk",
+    "moto-05": "Rider leaning into a curve by the guardrail",
+    "moto-06": "Rider on a winding mountain road",
+    "moto-07": "Man standing on a truck under a stormy sky",
+    "moto-08": "Truck on a dry lake bed at sunset",
+    "moto-09": "Man and truck in silhouette at dusk",
+    "moto-11": "Man on a truck on a dry lake bed",
+    "archive-wall": "A wall of frames from a footage archive",
+}
+COVERS = {
+    "adobe-stock-video-workflow": "moto-03",
+    "automatic-stock-footage-clipping": "moto-05",
+    "blackmagic-raw-stock-footage": "moto-07",
+    "drone-footage-for-stock": "moto-02",
+    "pond5-video-upload": "moto-08",
+    "premiere-pro-batch-export-stock": "moto-04",
+    "prepare-stock-footage-faster": "moto-01",
+    "raw-footage-to-stock-clips": "archive-wall",
+    "red-r3d-stock-footage": "moto-09",
+    "shutterstock-video-contributor": "moto-06",
+    "sony-slog3-stock-footage": "moto-11",
+    "stock-footage-requirements-adobe-pond5-shutterstock": "moto-06",
+    "storyblocks-video-contributor": "moto-04",
+    "sell-old-footage-archive": "archive-wall",
+    "best-sites-to-sell-stock-footage": "moto-09",
+    "sell-stock-footage": "moto-01",
+    "xpiks-alternative": "moto-05",
+}
+
+
+def cover(m):
+    c = m.get("cover") or COVERS.get(m["slug"])
+    if c not in COVER_ALT:
+        keys = sorted(COVER_ALT)
+        c = keys[sum(map(ord, m["slug"])) % len(keys)]
+    return c
+
+
+def cover_html(m):
+    c = cover(m)
+    return (
+        '    <figure class="g-cover">\n'
+        f'      <img src="../../assets/img/guides/{c}.webp" alt="{html.escape(COVER_ALT[c])}" '
+        'width="1440" height="602" fetchpriority="high" decoding="async" />\n'
+        '    </figure>\n'
+    )
+
+
+def toc_html(body):
+    heads = re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body, re.S)
+    if len(heads) < 3:
+        return ""
+    items = "\n".join(
+        f'        <li><a href="#{i}">{re.sub(r"<[^>]+>", "", t).strip().rstrip(".")}</a></li>' for i, t in heads
+    )
+    return (
+        '    <nav class="g-toc" aria-labelledby="toc">\n'
+        '      <p class="mono" id="toc">In this guide</p>\n'
+        f'      <ol>\n{items}\n      </ol>\n'
+        '    </nav>\n'
+    )
+
+
+def minutes(t):
+    t = t.replace(",", "")
+    h = re.search(r"(\d+)\+?\s*(?:hr|hour)", t)
+    m = re.search(r"(\d+)\s*min", t)
+    return (int(h.group(1)) * 60 if h else 0) + (int(m.group(1)) if m else 0)
+
+
+def race_bars(body):
+    """Turn the measured time table into a bar chart. Same numbers, same words, easier to feel."""
+    def repl(mt):
+        rows = re.findall(r"<tr><td>([^<]+)</td><td>([^<]+)</td><td>([^<]+)</td>(?:<td>([^<]+)</td>)?</tr>", mt.group(0))
+        if not rows:
+            return mt.group(0)
+        out = []
+        for n, ss, hand, failed in rows:
+            a, b = minutes(ss), minutes(hand)
+            if not a or not b:
+                return mt.group(0)
+            pct = max(2.5, round(a / b * 100, 1))
+            out.append(
+                '  <div class="g-race-row">\n'
+                f'    <p class="g-race-n">{n} clips' + (f' <i aria-hidden="true">&middot;</i> {failed} failed' if failed else "") + '</p>\n'
+                f'    <div class="g-race-bar g-race-bar--ss"><span style="width:{pct}%"></span><b>Stock Shredder <em>{ss}</em></b></div>\n'
+                f'    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>{hand}</em></b></div>\n'
+                '  </div>'
+            )
+        return '<div class="g-race" role="group" aria-label="Time to prep 4K clips">\n' + "\n".join(out) + "\n</div>"
+    return re.sub(
+        r'<div class="g-table-wrap">\s*<table class="g-table g-table--num">\s*<thead><tr><th>4K clips</th>.*?</table>\s*</div>',
+        repl, body, flags=re.S,
+    )
+
+
+NOTE = (
+    '    <aside class="g-note">\n'
+    '      <p class="mono">From the team</p>\n'
+    "      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, "
+    "and site rules come from each site's own pages. See something out of date? Email "
+    '<a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we\'ll fix it.</p>\n'
+    '    </aside>\n'
+)
+
+
 STOP = set("a an and the to of for in on with how what is your you by vs or from at as it best".split())
 
 
@@ -154,9 +265,11 @@ def related_html(picks):
         return ""
     items = "\n".join(
         f'        <li><a href="../{m["slug"]}/" data-related="{m["slug"]}">'
-        f'<span class="mono">{html.escape(m["eyebrow"])}</span>'
+        f'<img src="../../assets/img/guides/{cover(m)}-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" />'
+        f'<span class="mono">{html.escape(m["eyebrow"].split("·")[-1].strip())} <i aria-hidden="true">&middot;</i> <em>{m["read_minutes"]} min</em></span>'
         f'<strong>{html.escape(m["title"])}</strong>'
-        f'<span class="g-more-dek">{html.escape(m["dek"])}</span></a></li>'
+        f'<span class="g-more-dek">{html.escape(m["dek"])}</span>'
+        f'<span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>'
         for m in picks
     )
     return (
@@ -210,7 +323,10 @@ def build(meta, header, footer, metas):
         "cta_title": cta["title"],
         "cta_text": cta["text"],
         "cta_note": cta["note"],
-        "body": meta["body"],
+        "body": race_bars(meta["body"]),
+        "cover_html": cover_html(meta),
+        "toc_html": toc_html(meta["body"]),
+        "note_html": NOTE,
         "faq_html": faq_html,
         "related_html": related_html(related(meta, metas)),
     }
