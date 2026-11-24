@@ -72,11 +72,6 @@
   Array.prototype.forEach.call(document.querySelectorAll('#calculator a[data-cta]'), function (a) {
     a.addEventListener('click', function () { if (window.dwEvent) window.dwEvent('tool-calc-cta'); });
   });
-  $('pc-sample').addEventListener('click', function () {
-    var was = sent; sent = true; // example numbers don't count as a real calculation
-    f.clips.value = '300'; f.dl.value = '20'; f.roy.value = '2.50'; f.cost.value = '0'; f.arch.value = '800'; f.perf.value = '100';
-    calc(); sent = was;
-  });
   $('pc-clear').addEventListener('click', function () {
     ['clips', 'dl', 'roy', 'cost', 'arch'].forEach(function (k) { f[k].value = ''; });
     f.perf.value = '100'; calc(); f.clips.focus();
