@@ -1,0 +1,111 @@
+<!--meta
+{
+  "slug": "stock-footage-profit-calculator",
+  "status": "draft",
+  "product": "stock-shredder",
+  "tool": true,
+  "tool_line": "Enter your clips, downloads and earnings per download. See what more clips could add, using only your own numbers.",
+  "css": ["tools.css"],
+  "keyword": "stock footage earnings calculator",
+  "secondary": ["stock footage profit calculator", "how much can you make selling stock footage", "stock footage income per clip", "stock video earnings per download", "sell stock footage money"],
+  "title": "Stock Footage Profit Calculator",
+  "seo_title": "Free Stock Footage Profit Calculator: Earnings per Clip From Your Own Numbers",
+  "description": "Enter your clip count, monthly downloads and earnings per download. See what you make per clip, and what adding more clips from your archive could add. Your numbers only, no sign-up.",
+  "eyebrow": "Free tool · Profit calculator",
+  "dek": "Put in your own numbers. See what each clip earns you now, and what getting more of your archive online could add.",
+  "published": "2026-11-24",
+  "updated": "2026-11-24",
+  "read_minutes": 3,
+  "faq": [
+    ["How much does one stock clip earn?", "It depends on the clip, the site and the season, so this calculator doesn't guess. Enter your own downloads and earnings and it works out what your clips earn on average."],
+    ["Where do I find my earnings per download?", "In your contributor dashboard. Take what you earned over the last 12 months and divide it by the number of downloads in the same period."],
+    ["What share do stock sites pay for video?", "Adobe Stock pays 35% for video. Pond5 pays 40% if exclusive and 30% if not. Shutterstock pays 15 to 40% depending on your level. Your earnings per download already include this."],
+    ["Do more clips mean more money?", "Usually more clips mean more chances to be found, but every clip sells differently. That's why the calculator lets you set how well new clips sell compared with your current ones."],
+    ["Does this calculator save my numbers?", "No. It runs in your browser and nothing you type is sent anywhere."]
+  ]
+}
+-->
+
+<div class="tc" id="calculator">
+  <form class="tc-form" onsubmit="return false" aria-label="Stock footage profit calculator">
+    <div class="pc-grid">
+      <div class="tc-field">
+        <div class="tc-label"><label for="pc-clips">Clips online now</label></div>
+        <div class="pc-in"><input type="text" inputmode="numeric" id="pc-clips" autocomplete="off" placeholder="300" /></div>
+        <p class="pc-hint">Across all the sites you sell on.</p>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="pc-dl">Downloads a month</label></div>
+        <div class="pc-in"><input type="text" inputmode="decimal" id="pc-dl" autocomplete="off" placeholder="20" /></div>
+        <p class="pc-hint">All clips together. A 12 month average is steadier than one month.</p>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="pc-roy">You earn per download</label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="pc-roy" autocomplete="off" placeholder="2.50" /></div>
+        <p class="pc-hint">What reaches you, in USD. Earnings divided by downloads.</p>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="pc-cost">Monthly costs <i>(optional)</i></label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="pc-cost" autocomplete="off" placeholder="0" /></div>
+        <p class="pc-hint">Storage, software, anything you pay to keep selling.</p>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="pc-arch">Clips still on your drives <i>(optional)</i></label></div>
+        <div class="pc-in"><input type="text" inputmode="numeric" id="pc-arch" autocomplete="off" placeholder="800" /></div>
+        <p class="pc-hint">Usable clips you shot but never uploaded.</p>
+      </div>
+    </div>
+    <div class="tc-field pc-range">
+      <div class="tc-label"><label for="pc-perf">New clips sell at</label><span class="tc-n"><span id="pc-perf-v">100%</span> OF YOUR AVERAGE</span></div>
+      <input type="range" id="pc-perf" min="25" max="150" step="5" value="100" />
+    </div>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn" id="pc-sample">Try example numbers</button>
+      <button type="button" class="tc-btn tc-btn--ghost" id="pc-clear">Clear</button>
+      <span class="tc-private">Example numbers are made up. Nothing you type is sent anywhere.</span>
+    </p>
+  </form>
+
+  <p class="pc-empty" id="pc-empty">Enter your clips, downloads and earnings per download to see your numbers.</p>
+
+  <div class="tc-out" id="pc-out" aria-live="polite" hidden>
+    <div class="pc-now" id="pc-now"></div>
+    <section class="tc-block">
+      <h3>If you add more clips</h3>
+      <div class="g-table-wrap">
+        <table class="g-table pc-table">
+          <thead><tr><th>Add</th><th>Clips</th><th>A month</th><th>A year</th><th>Change a month</th></tr></thead>
+          <tbody id="pc-rows"></tbody>
+        </table>
+      </div>
+      <p class="pc-note"><span id="pc-perf-note"></span> This is arithmetic on your numbers, not a forecast. Sales vary a lot by clip, site and season.</p>
+    </section>
+    <section class="pc-next">
+      <h3>Your next step: the archive</h3>
+      <div class="pc-next-row">
+        <div><b id="pc-next-n"></b><span>shot, but not online yet</span></div>
+        <div><b id="pc-next-hand"></b><span>to prep them by hand, at about 2 minutes a clip</span></div>
+        <div><b id="pc-next-add"></b><span>if they sell like the setting above</span></div>
+      </div>
+      <p>Most of that time is scrubbing, trimming, grading, exporting, naming and keywording, one clip at a time. Stock Shredder does all of it in one pass. In our test, 1,000 4K clips took 3 hours 1 minute, plus your review.</p>
+      <p class="tc-actions"><a class="tc-btn" href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=stock-footage-profit-calculator#trial" data-cta="tool">Start with 100 free clips</a></p>
+    </section>
+  </div>
+</div>
+<script src="../../assets/js/profit-calculator.js?v=20261124a" defer></script>
+
+<h2 id="numbers">Where to find your numbers.</h2>
+<p>Every contributor dashboard shows downloads and earnings. Use the last 12 months if you have them. One good or bad month can swing the result a lot.</p>
+<ul class="g-list">
+  <li><strong>Clips online.</strong> Count each clip once, even if it's on several sites.</li>
+  <li><strong>Downloads a month.</strong> Add up downloads across sites over 12 months, then divide by 12.</li>
+  <li><strong>Earnings per download.</strong> Your total earnings over the same 12 months divided by those downloads. That's what actually reaches you, after each site's share.</li>
+</ul>
+
+<h2 id="per-clip">Why per clip is the number to watch.</h2>
+<p>Total earnings grow when you add clips or when your clips sell better. Earnings per clip tell you which one is happening. If that number holds steady as your library grows, every batch of new clips adds roughly the same amount each month.</p>
+<p>The slider lets you be careful. If your best clips are already online, set new clips lower than 100% and see if the archive is still worth the time.</p>
+
+<h2 id="archive">Getting the archive online.</h2>
+<p>For most shooters the clips already exist. They're on drives, waiting to be trimmed, graded, exported, named and keyworded. At about 2 minutes a clip by hand, 1,000 clips is 33+ hours.</p>
+<p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=stock-footage-profit-calculator#trial">Stock Shredder</a> finds the usable shots, trims them, applies a look, exports them and writes a title, description and keywords for each clip. You review and upload. See how it works step by step in <a href="../prepare-stock-footage-faster/">how to prepare stock footage faster</a>, and check your titles and keywords with the <a href="../stock-footage-title-keyword-checker/">free title and keyword checker</a>.</p>
