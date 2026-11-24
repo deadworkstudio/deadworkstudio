@@ -404,6 +404,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://deadworkstudio.com/guides/sell-old-footage-archive/</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://deadworkstudio.com/guides/shutterstock-video-contributor/</loc>
     <lastmod>2026-11-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -412,6 +418,12 @@
   <url>
     <loc>https://deadworkstudio.com/guides/sony-slog3-stock-footage/</loc>
     <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/guides/stock-footage-profit-calculator/</loc>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

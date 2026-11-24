@@ -125,7 +125,7 @@ Publish order matters: sell-stock-footage links to the archive and best-sites pa
 
 | # | Search | Slug | Status |
 | --- | --- | --- | --- |
-| P1 | sell old footage | sell-old-footage-archive | Draft ready, offered 11-24 |
+| P1 | sell old footage | sell-old-footage-archive | LIVE 11-24 (main 179d605) |
 | P2 | best sites to sell stock footage | best-sites-to-sell-stock-footage | Draft ready |
 | P3 | how to make money selling stock footage | sell-stock-footage | Draft ready (after P1+P2 live) |
 | P4 | "Keep reading" block at the end of every guide: up to 3 related LIVE guides, set by the "related" meta field, then by shared keywords. Build refuses a live guide whose body links to a draft. (Hub + footer link added later, 11-24, #141) | seo/build.py | LIVE 11-23 (main 8ef5b92) |
