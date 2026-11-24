@@ -347,6 +347,7 @@ main > section.film.lo-film-short { min-height: 62vh; min-height: 62svh; }
 
 /* value check in pricing: one line of arithmetic and the visitor's own number. Plain, no card. */
 .lo-value { max-width: 640px; margin: clamp(20px, 3vh, 32px) auto 0; }
+.lo-value-sub { margin-top: 6px; font-size: 15px; line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
 .lo-value-line { font-size: 17px; line-height: 1.45; color: var(--ink); text-wrap: balance; }
 .lo-value-calc { display: grid; grid-template-columns: auto 132px; align-items: center; justify-content: center; gap: 10px 14px; margin-top: 16px; }
 .lo-value-q { margin: 0; text-align: right; }
