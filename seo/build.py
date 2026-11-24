@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124c"
+CSS_V = "20261124e"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
