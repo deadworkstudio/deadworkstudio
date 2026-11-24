@@ -205,3 +205,6 @@
 }
 main.gh-main > section { padding: clamp(44px, 6vw, 72px) 0 0; border-top: 0; text-align: left; min-height: 0; }
 main.gh-main > section.gh-bridge { margin-top: clamp(56px, 8vw, 96px); padding: clamp(26px, 4vw, 44px); }
+.g-cta-alt { margin-top: 10px; font-size: 14.5px; color: var(--ink-2); }
+.g-cta-alt a { color: var(--ink); }
+.gh-start .gh-cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
