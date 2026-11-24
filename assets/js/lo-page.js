@@ -4,24 +4,51 @@
 // ---- App Store link: one source of truth ----
 // <main data-appstore-url> holds the App Store address; every [data-appstore] link on the page takes it from there.
 // App Store campaign links: once <main data-appstore-pt> holds the provider token from App Store Connect
-// (App Analytics > Campaigns, "pt"), each link also carries pt, ct and mt=8, so App Store Connect can count the
-// installs, trials and subscriptions that came from this page. ct = where on the page + the visitor's tag, e.g.
-// "hero.guide.camera-gear-checklist" or "float.reddit" or "pricing.site" (Apple's limit is 40 characters).
-// Without the token the links stay plain. Nothing about the visitor is added: only the tag already in the address.
+// (Analytics > Campaigns, the pt= number), each link also carries pt, ct and mt=8, so App Store Connect can
+// count downloads, sessions, sales, subscriptions and proceeds per channel. Apple's rules: ct is at most 30
+// characters, and a campaign only shows once it has 5 or more of a metric, so ct is the CHANNEL (kept coarse on
+// purpose). Which button and which post stay in the site's own counts (lo-analytics.js).
+//   radar    ?ref=radar          replies and posts found through DEADWORK Radar
+//   reddit   ?ref=reddit         any other Reddit link (weekly value post, profile)
+//   seo      ?ref=guide, or arriving from a search engine with no tag
+//   ig tt yt fb x threads        organic social, from ?ref= or the referring site
+//   paid     ?utm_medium=paid|cpc|ads, or a click id (fbclid, gclid, ttclid)
+//   creator.<name>  ?ref=creator&utm_campaign=<name>   one campaign per creator
+//   email    ?ref=email|outreach
+//   web      another website, no tag
+//   direct   no tag, no referrer
+// Nothing about the visitor is added: only the tag already in the address or the referring site's name.
 (function () {
   var main = document.querySelector('main[data-appstore-url]'); if (!main) return;
   var url = main.getAttribute('data-appstore-url'); if (!/^https:\/\/apps\.apple\.com\//.test(url)) return;
   var pt = (main.getAttribute('data-appstore-pt') || '').replace(/[^0-9A-Za-z]/g, '');
-  var tag = '';
+  var channel = 'direct';
   try {
     var q = new URLSearchParams(location.search);
-    tag = [q.get('ref') || q.get('utm_source') || '', q.get('utm_campaign') || ''].filter(Boolean).join('.');
+    var ref = (q.get('ref') || q.get('utm_source') || '').toLowerCase();
+    var med = (q.get('utm_medium') || '').toLowerCase();
+    var camp = (q.get('utm_campaign') || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+    var host = ''; try { host = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : ''; } catch (e) {}
+    var SOCIAL = { instagram: 'ig', ig: 'ig', tiktok: 'tt', tt: 'tt', youtube: 'yt', yt: 'yt', facebook: 'fb', fb: 'fb', x: 'x', twitter: 'x', threads: 'threads' };
+    var HOSTS = [[/instagram\./, 'ig'], [/tiktok\./, 'tt'], [/youtube\.|youtu\.be/, 'yt'], [/facebook\.|fb\.com/, 'fb'], [/(^|\.)x\.com$|t\.co$|twitter\./, 'x'], [/threads\./, 'threads'],
+      [/reddit\./, 'reddit'], [/google\.|bing\.|duckduckgo\.|yahoo\.|ecosia\.|baidu\.|yandex\./, 'seo']];
+    if (/^(paid|cpc|ads?|paid-social)$/.test(med) || q.get('fbclid') && med || q.get('gclid') || q.get('ttclid')) channel = 'paid';
+    else if (ref === 'radar') channel = 'radar';
+    else if (ref === 'reddit') channel = 'reddit';
+    else if (ref === 'guide' || ref === 'seo') channel = 'seo';
+    else if (ref === 'creator') channel = ('creator.' + camp).replace(/\.$/, '');
+    else if (ref === 'email' || ref === 'outreach') channel = 'email';
+    else if (SOCIAL[ref]) channel = SOCIAL[ref];
+    else if (ref) channel = ref.replace(/[^a-z0-9-]+/g, '-');
+    else if (host && !/(^|\.)deadworkstudio\.com$/.test(host)) {
+      channel = 'web';
+      for (var i = 0; i < HOSTS.length; i++) if (HOSTS[i][0].test(host)) { channel = HOSTS[i][1]; break; }
+    }
   } catch (e) {}
-  var clean = function (v) { return String(v).toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, ''); };
+  var ct = channel.slice(0, 30);
+  main.setAttribute('data-channel', ct);
   [].forEach.call(document.querySelectorAll('a[data-appstore]'), function (a) {
-    if (!pt) { a.href = url; return; }
-    var ct = clean((a.getAttribute('data-cta-loc') || 'page') + '.' + (clean(tag) || 'site')).slice(0, 40);
-    a.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'pt=' + pt + '&ct=' + encodeURIComponent(ct) + '&mt=8';
+    a.href = pt ? url + (url.indexOf('?') < 0 ? '?' : '&') + 'pt=' + pt + '&ct=' + encodeURIComponent(ct) + '&mt=8' : url;
   });
 })();
 
