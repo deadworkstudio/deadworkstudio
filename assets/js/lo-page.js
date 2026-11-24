@@ -10,7 +10,8 @@
 // purpose). Which button and which post stay in the site's own counts (lo-analytics.js).
 //   radar    ?ref=radar          replies and posts found through DEADWORK Radar
 //   reddit   ?ref=reddit         any other Reddit link (weekly value post, profile)
-//   seo      ?ref=guide, or arriving from a search engine with no tag
+//   seo.<slug>  ?ref=guide&utm_campaign=<slug>   one campaign per guide (Daniel 11-24); slug cut to 26 characters
+//   seo      ?ref=guide with no campaign, ?ref=seo, or arriving from a search engine with no tag
 //   ig tt yt fb x threads        organic social, from ?ref= or the referring site
 //   paid     ?utm_medium=paid|cpc|ads, or a click id (fbclid, gclid, ttclid)
 //   creator.<name>  ?ref=creator&utm_campaign=<name>   one campaign per creator
@@ -35,6 +36,7 @@
     if (/^(paid|cpc|ads?|paid-social)$/.test(med) || q.get('fbclid') && med || q.get('gclid') || q.get('ttclid')) channel = 'paid';
     else if (ref === 'radar') channel = 'radar';
     else if (ref === 'reddit') channel = 'reddit';
+    else if (ref === 'guide' && camp) channel = 'seo.' + camp.slice(0, 26).replace(/-+$/, '');
     else if (ref === 'guide' || ref === 'seo') channel = 'seo';
     else if (ref === 'creator') channel = ('creator.' + camp).replace(/\.$/, '');
     else if (ref === 'email' || ref === 'outreach') channel = 'email';
@@ -259,8 +261,22 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
   v.muted = true;
-  var go = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+  v.addEventListener('playing', function () { v.classList.add('is-playing'); });
+  // Speed: the hero video waits until the page has loaded (and the poster image has painted), so its
+  // 0.5 MB never competes with the first screen. The poster <img> underneath is what people see first.
+  var ready = document.readyState === 'complete', want = false;
+  var go = function () { want = true; if (!ready) return; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+  if (!ready) window.addEventListener('load', function () { setTimeout(function () { ready = true; if (want) go(); }, 600); });
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) go(); else v.pause(); }); }, { threshold: 0.2 }).observe(v);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) go(); else { want = false; v.pause(); } }); }, { threshold: 0.2 }).observe(v);
   } else { go(); }
+})();
+
+// ---- Below-the-fold video posters load only when they come near the screen (data-poster), to keep the first screen light. ----
+(function () {
+  var vids = [].slice.call(document.querySelectorAll('video[data-poster]')); if (!vids.length) return;
+  var set = function (v) { if (v.getAttribute('data-poster')) { v.poster = v.getAttribute('data-poster'); v.removeAttribute('data-poster'); } };
+  if (!('IntersectionObserver' in window)) { vids.forEach(set); return; }
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { set(e.target); io.unobserve(e.target); } }); }, { rootMargin: '800px 0px' });
+  vids.forEach(function (v) { io.observe(v); });
 })();

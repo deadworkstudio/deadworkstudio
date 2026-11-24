@@ -42,7 +42,7 @@
 <link rel="preload" href="../../assets/fonts/jetbrains-mono-400.woff2?v=20261027a" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
-<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261124d" />
+<link rel="stylesheet" href="../../assets/css/lo-page.css?v=20261124p" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
@@ -108,7 +108,7 @@
      (The old data-cta="wait|live" switch and its waitlist copies were removed on 2026-11-23: the app is out.) -->
 <main id="main" data-event="loadout_page_view" data-appstore-url="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355" data-appstore-pt="129505191">
   <section class="hero">
-    <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/loadout.png" alt="Loadout" width="1366" height="466" /></div>
+    <div class="hero-brand"><img class="hero-logo lo-hero-logo" src="../../assets/img/brand/product-logos/black/loadout-240.webp" alt="Loadout" width="703" height="240" fetchpriority="high" /></div>
     <h1>Nie wieder Equipment vergessen.</h1>
     <p class="mono lo-hero-for">Die Checklisten-App für Kamera-Equipment, für Filmteams, Videografen und Fotografen</p>
     <p class="section-sub lo-hero-sub">Scanne dein Equipment mit dem iPhone. Loadout erkennt deine Ausrüstung am Aussehen, gleicht sie mit deinem Kit ab und zeigt, was fehlt, bevor du das Set verlässt.</p>
@@ -126,14 +126,14 @@
          rendered in the iOS Simulator from the Loadout build with a sample kit (A-Cam Package), so the caption says so. -->
     <figure class="lo-phones" aria-label="Loadout auf dem iPhone: ein Beispiel-Kit A-Cam Package, ein echter Scan eines offenen Koffers, bei dem der Zähler steigt, während Teile gesehen werden, und der Screen Alles vollständig.">
       <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/kit-600.webp" srcset="../../assets/img/products/loadout/screens/v2/kit-600.webp 600w, ../../assets/img/products/loadout/screens/v2/kit-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
-      <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><video class="lo-hero-video" muted loop playsinline preload="metadata" poster="../../assets/img/products/loadout/lo-hero-scan-poster.webp" width="588" height="1278" aria-hidden="true" data-lo-hero-video><source src="../../assets/img/products/loadout/lo-hero-scan.mp4" type="video/mp4" /></video></div></div>
+      <div class="phone lo-phone lo-phone-main lo-real"><div class="phone-body"><img class="lo-hero-poster" src="../../assets/img/products/loadout/lo-hero-scan-poster.webp" alt="" width="588" height="1278" fetchpriority="high" decoding="async" /><video class="lo-hero-video" muted loop playsinline preload="none" width="588" height="1278" aria-hidden="true" data-lo-hero-video><source src="../../assets/img/products/loadout/lo-hero-scan.mp4" type="video/mp4" /></video></div></div>
       <div class="phone lo-phone lo-phone-side lo-real"><div class="phone-body"><img src="../../assets/img/products/loadout/screens/v2/accounted-600.webp" srcset="../../assets/img/products/loadout/screens/v2/accounted-600.webp 600w, ../../assets/img/products/loadout/screens/v2/accounted-900.webp 900w" sizes="230px" alt="" width="900" height="1957" loading="lazy" decoding="async" /></div></div>
     </figure>
     <p class="mono lo-phones-note"><span class="lo-note-wide">Mitte: ein echter Scan auf dem iPhone. Seiten: App-Screens mit einem Beispiel-Kit.</span><span class="lo-note-narrow">Ein echter Scan, aufgenommen auf dem iPhone.</span></p>
   </section>
 
   <section class="film lo-film-short tone-dark" aria-label="Am Set">
-    <video class="film-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/lo-film-poster.jpg" data-film data-hd="../../assets/img/products/loadout/lo-film-hd.mp4" aria-hidden="true"><source src="../../assets/img/products/loadout/lo-film.mp4" type="video/mp4" /></video>
+    <video class="film-video" muted loop playsinline preload="none" data-poster="../../assets/img/products/loadout/lo-film-poster.jpg" data-film data-hd="../../assets/img/products/loadout/lo-film-hd.mp4" aria-hidden="true"><source src="../../assets/img/products/loadout/lo-film.mp4" type="video/mp4" /></video>
     <p class="film-line mono">By artists. For artists.</p>
   </section>
 
@@ -167,7 +167,7 @@
     <p class="section-title">Schwenk über das Case. Sieh zu, wie es abhakt.</p>
     <p class="section-sub">Schwenk über den offenen Koffer. Jedes Teil, das die Kamera erkennt, wird als Gesehen markiert.<br class="br-desk" /> Was sie nicht gesehen hat, bleibt auf der Fehlliste.</p>
     <figure class="phone lo-real lo-scan-phone">
-      <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" poster="../../assets/img/products/loadout/screens/v2/scan-poster-v3.jpg" width="588" height="1277" aria-label="Bildschirmaufnahme von Loadout auf dem iPhone: Die Kamera schwenkt über ein offenes Pelican-Case, die Teile werden nacheinander als Gesehen markiert, ähnliche Laufwerke warten auf ein Tippen, dann ein späterer Moment desselben Scans: Das letzte Teil ist Gesehen, Alles gepackt und der grüne Bildschirm Alles vollständig." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v3.mp4" type="video/mp4" /></video></div>
+      <div class="phone-body"><video class="lo-scan-video" muted loop playsinline preload="none" data-poster="../../assets/img/products/loadout/screens/v2/scan-poster-v3.webp" width="588" height="1277" aria-label="Bildschirmaufnahme von Loadout auf dem iPhone: Die Kamera schwenkt über ein offenes Pelican-Case, die Teile werden nacheinander als Gesehen markiert, ähnliche Laufwerke warten auf ein Tippen, dann ein späterer Moment desselben Scans: Das letzte Teil ist Gesehen, Alles gepackt und der grüne Bildschirm Alles vollständig." data-lo-scan-video><source src="../../assets/img/products/loadout/lo-scan-v3.mp4" type="video/mp4" /></video></div>
       <figcaption class="mono lo-scan-note">Zwei Momente aus einem echten Scan, aufgenommen auf dem iPhone. Erster Teil 2x beschleunigt.</figcaption>
     </figure>
     <!-- Seen vs Confirmed: the one rule the whole app is built on. Keep it short and keep it true. -->
@@ -432,7 +432,7 @@
     </div>
     <p class="foot-note">By artists. For artists.</p>
     <p class="foot-copy">2026 DEADWORK STUDIO</p>
-    <p class="foot-legal"><a href="/de/studio/#contact">Kontakt</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">AGB</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/privacy/">Datenschutz</a></p>
+    <p class="foot-legal"><a href="/guides/">Guides</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="/de/studio/#contact">Kontakt</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">AGB</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/privacy/">Datenschutz</a></p>
   
     <!-- i18n:picker --><div class="lang-tab lang-foot" data-lang-picker><button class="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language: Deutsch"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5c-2.6-2.7-3.9-5.9-3.9-9.5s1.3-6.8 3.9-9.5z"/></svg><span>Deutsch</span></button><ul class="lang-menu" hidden><li><a href="/products/loadout/" hreflang="en" lang="en" data-lang="en"><span>English</span><span class="lang-code">EN</span></a></li><li><a href="/es/products/loadout/" hreflang="es" lang="es" data-lang="es"><span>Español</span><span class="lang-code">ES</span></a></li><li><a href="/fr/products/loadout/" hreflang="fr" lang="fr" data-lang="fr"><span>Français</span><span class="lang-code">FR</span></a></li><li><a href="/de/products/loadout/" hreflang="de" lang="de" data-lang="de" aria-current="true"><span>Deutsch</span><span class="lang-code">DE</span></a></li><li><a href="/it/products/loadout/" hreflang="it" lang="it" data-lang="it"><span>Italiano</span><span class="lang-code">IT</span></a></li><li><a href="/zh/products/loadout/" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh"><span>简体中文</span><span class="lang-code">中文</span></a></li><li><a href="/ja/products/loadout/" hreflang="ja" lang="ja" data-lang="ja"><span>日本語</span><span class="lang-code">日本語</span></a></li></ul></div><!-- /i18n:picker -->
   </footer>
@@ -440,7 +440,7 @@
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261121a"></script>
-<script src="../../assets/js/lo-page.js?v=20261124d" defer></script>
+<script src="../../assets/js/lo-page.js?v=20261124p" defer></script>
 <script src="../../assets/js/notify.js?v=20261114b" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
