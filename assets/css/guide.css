@@ -161,3 +161,8 @@
 .g-tools em { grid-column: 2; grid-row: 1 / span 2; font-style: normal; padding: 11px 14px; background: var(--ink); color: #EBE5D8; white-space: nowrap; }
 .g-tools a:hover strong, .g-tools a:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 560px) { .g-tools { padding: 18px 16px; } .g-tools a { grid-template-columns: 1fr; } .g-tools em { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 8px; } }
+
+/* Phone screens side by side (Loadout guides). */
+.g-figure--phones .g-phones { display: flex; gap: 14px; justify-content: center; }
+.g-figure--phones img { width: calc((100% - 28px) / 3); max-width: 220px; height: auto; border-radius: 18px; border: 1px solid var(--line); }
+@media (max-width: 520px) { .g-figure--phones .g-phones { gap: 8px; } .g-figure--phones img { width: calc((100% - 16px) / 3); border-radius: 12px; } }

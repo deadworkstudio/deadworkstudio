@@ -1,0 +1,84 @@
+<!--meta
+{
+  "slug": "camera-gear-checklist-maker",
+  "status": "live",
+  "product": "loadout",
+  "tool": true,
+  "tool_line": "Pick your shoot type and cameras. Get a gear checklist you can edit, print or download.",
+  "css": ["tools.css"],
+  "keyword": "camera gear checklist template",
+  "secondary": ["printable camera gear checklist", "video shoot equipment checklist", "film equipment list template", "camera packing list", "gear checklist generator"],
+  "title": "Free Camera Gear Checklist Maker",
+  "seo_title": "Free Camera Gear Checklist Maker: Printable Packing List for Video Shoots",
+  "description": "Pick your shoot type, number of cameras and shoot days, and get a camera gear checklist with counts. Edit it, print it or download it as a spreadsheet. Free, runs in your browser.",
+  "eyebrow": "Free tool · Gear checklist maker",
+  "dek": "Pick your shoot type and how many cameras. Untick what you don't bring, add what's missing, then print it or download it.",
+  "published": "2026-11-24",
+  "updated": "2026-11-24",
+  "read_minutes": 3,
+  "faq": [
+    ["Is this checklist free to print?", "Yes. Make your list, press Print, and you get a clean page with a box for when you pack and a box for when you wrap. The download is a CSV file that opens in Excel, Numbers or Google Sheets."],
+    ["How many camera batteries should I bring?", "The maker starts at three per camera for a one-day shoot and four per camera for longer ones. Change the count to match how long your batteries last on your camera."],
+    ["Why does the list have two boxes per item?", "One for packing before the shoot and one for wrap. Wrap is when most gear gets left behind, so the second check matters most."],
+    ["Does this save my list?", "Only in your own browser, so it's there next time you open this page on the same device. Nothing you type is sent anywhere."],
+    ["Can I check the list with my phone instead of paper?", "Yes, with Loadout on iPhone. Save each kit once, then pan the camera across the open case. It lists what it hasn't seen, and look-alike items wait for your tap."]
+  ]
+}
+-->
+
+<div class="tc gl" id="gear-list-maker">
+  <form class="tc-form gl-setup" onsubmit="return false" aria-label="Checklist settings">
+    <div class="gl-row">
+      <div class="tc-field">
+        <div class="tc-label"><label for="gl-type">Shoot type</label></div>
+        <select id="gl-type">
+          <option value="n">Narrative or commercial</option>
+          <option value="d" selected>Documentary</option>
+          <option value="i">Interview</option>
+          <option value="w">Wedding or event</option>
+          <option value="r">Run and gun</option>
+        </select>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="gl-cams">Cameras</label></div>
+        <input type="number" id="gl-cams" min="1" max="6" value="1" inputmode="numeric" />
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="gl-days">Shoot days</label></div>
+        <input type="number" id="gl-days" min="1" max="30" value="1" inputmode="numeric" />
+      </div>
+    </div>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn" id="gl-print">Print checklist</button>
+      <button type="button" class="tc-btn tc-btn--ghost" id="gl-csv">Download CSV</button>
+      <button type="button" class="tc-btn tc-btn--ghost" id="gl-reset">Start over</button>
+      <span class="tc-private">Runs in your browser. Nothing you type is sent anywhere.</span>
+    </p>
+  </form>
+
+  <div class="tc-out gl-out">
+    <div class="tc-summary"><strong id="gl-total">0 items</strong><span>Untick what you don't bring. Change any count. Add your own items under each kit.</span></div>
+    <p class="gl-print-title" id="gl-print-title" aria-hidden="true"></p>
+    <div class="gl-list" id="gl-list" aria-live="polite"></div>
+    <aside class="tc-pitch">
+      <p><strong>Paper works when you pack. Wrap is harder.</strong></p>
+      <p><a href="../../products/loadout/?ref=guide&amp;utm_campaign=camera-gear-checklist-maker" data-cta="tool">Loadout</a> checks the open case with your iPhone camera. Save each kit once, pan across the case, and see what's missing before you leave set. Free download, 14 days free.</p>
+    </aside>
+  </div>
+</div>
+
+<h2 id="how">How to use it.</h2>
+<ol class="g-steps">
+  <li><strong>Pick the shoot.</strong> Each shoot type starts with the gear it usually needs. Cameras and shoot days set the counts for bodies, batteries and cards.</li>
+  <li><strong>Make it yours.</strong> Untick what you don't bring, change any count, and add your own items under each kit.</li>
+  <li><strong>Print or download.</strong> The printed page has a box for packing and a box for wrap. The CSV opens in any spreadsheet app.</li>
+</ol>
+
+<h2 id="tips">Three things that stop gear going missing.</h2>
+<ul class="g-list">
+  <li><strong>Number the look-alikes.</strong> Label batteries, cards and drives 1, 2, 3, and check each number, not just the total.</li>
+  <li><strong>One list per case.</strong> Short lists get checked. A three-page list gets skimmed at wrap.</li>
+  <li><strong>Check before the lid closes.</strong> Once a case is shut and in the truck, nobody opens it again.</li>
+</ul>
+
+<script src="../../assets/js/gear-checklist.js?v=20261124c" defer></script>

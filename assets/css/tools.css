@@ -70,3 +70,45 @@
   .tc-form, .tc-block, .tc-summary { padding-left: 16px; padding-right: 16px; }
   .tc-sites legend { float: none; width: 100%; margin-bottom: 4px; }
 }
+
+/* Camera gear checklist maker (Loadout tool). */
+.gl-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px; }
+.gl-row .tc-field + .tc-field { margin-top: 0; }
+.gl select, .gl input[type="number"] {
+  display: block; width: 100%; box-sizing: border-box; padding: 12px 14px; font: 400 16px/1.5 var(--sans); color: var(--ink);
+  background: #fff; border: 1px solid var(--line-2); border-radius: 0; -webkit-appearance: none; appearance: none;
+}
+.gl select { background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23141412' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center; padding-right: 36px; }
+.gl-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.gl-kit { padding: 16px 18px; background: #fff; border: 1px solid var(--line-2); }
+.gl-kit h3 { font: 500 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.gl-out .gl-kit ul { margin-top: 8px; }
+.gl-out li.gl-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; }
+.gl-out li.gl-item::before { content: none; }
+.gl-item label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 15px; line-height: 1.35; }
+.gl-item input[type="checkbox"] { accent-color: #141412; width: 17px; height: 17px; margin: 0; flex: none; }
+.gl-off label span { color: var(--ink-3); text-decoration: line-through; }
+.gl input.gl-n { width: 58px; flex: none; padding: 6px 8px; font-size: 15px; text-align: center; -moz-appearance: textfield; }
+.gl-add { display: flex; gap: 8px; margin-top: 10px; }
+.gl .gl-add input { flex: 1; min-width: 0; padding: 8px 10px; font: 400 15px/1.4 var(--sans); border: 1px solid var(--line-2); border-radius: 0; }
+.gl-add .tc-btn { padding: 10px 12px; }
+.gl-print-title { display: none; }
+.gl .tc-pitch { margin-top: 18px; }
+@media (max-width: 640px) {
+  .gl-row { grid-template-columns: 1fr 1fr; }
+  .gl-row .tc-field:first-child { grid-column: 1 / -1; }
+  .gl-list { grid-template-columns: 1fr; }
+}
+@media print {
+  body * { visibility: hidden; }
+  #gl-list, #gl-list *, #gl-print-title { visibility: visible; }
+  #gl-print-title { display: block; position: absolute; left: 0; top: 0; font: 700 16px/1.3 sans-serif; }
+  #gl-list { position: absolute; left: 0; top: 32px; width: 100%; display: block; columns: 2; column-gap: 24px; }
+  .gl-kit { break-inside: avoid; border: 0; padding: 0 0 12px; }
+  .gl-add, .gl-off, .gl-empty { display: none !important; }
+  .gl-item input[type="checkbox"] { display: none; }
+  .gl-item label::before { content: ''; width: 11px; height: 11px; border: 1px solid #000; flex: none; }
+  .gl-item label::after { content: ''; width: 11px; height: 11px; border: 1px solid #000; flex: none; order: -1; }
+  .gl input.gl-n { border: 0; width: 34px; padding: 0; }
+  .gl-out li.gl-item { border-top: 1px solid #ccc; padding: 4px 0; }
+}
