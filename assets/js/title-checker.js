@@ -214,6 +214,9 @@
     $('tc-general').innerHTML = general.map(function (g) { return '<li class="tc-' + g[0] + '">' + g[1] + '</li>'; }).join('');
     $('tc-sitelist').innerHTML = html;
 
+    // One 'completed a check' count per page load, only for a real title plus keywords (not the example).
+    if (!sentCheck && !sampleRun && t && n) { sentCheck = true; window.dwEvent ? window.dwEvent('tool-check-done') : (window.dwQueue = window.dwQueue || []).push('tool-check-done'); }
+
     // ---- Cleaned keyword list ----
     if (!n) { cleanBox.hidden = true; return; }
     var keep = [], used = {};
@@ -239,7 +242,7 @@
     cleanBox.dataset.copy = final.join(', ');
   }
 
-  var timer;
+  var timer, sentCheck = false, sampleRun = false;
   function soon() { clearTimeout(timer); timer = setTimeout(check, 120); }
   [title, desc, kw].forEach(function (el) { if (el) el.addEventListener('input', soon); });
   Array.prototype.forEach.call(document.querySelectorAll('.tc-sites input'), function (c) { c.addEventListener('change', check); });
@@ -247,6 +250,7 @@
   $('tc-sample').addEventListener('click', function () {
     title.value = 'Harley motorcycle 4K, rider, mountain road, sunset, cinematic';
     if (desc) desc.value = '';
+    sampleRun = true; setTimeout(function () { sampleRun = false; }, 0);
     kw.value = 'motorcycle, motorcycles, rider, biker, mountain road, sunset, golden hour, stock footage, 4K, slog3, Harley, travel, freedom, adventure, road trip, curve, highway, motorcycle, helmet, leather jacket, landscape, mountains, dusk, video';
     check();
     title.focus();
@@ -260,6 +264,9 @@
     var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy keywords'; }, 1600); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
     else { var a = document.createElement('textarea'); a.value = text; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); done(); } catch (e) {} a.remove(); }
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#checker a[data-cta]'), function (a) {
+    a.addEventListener('click', function () { if (window.dwEvent) window.dwEvent('tool-check-cta'); });
   });
   $('tc-use').addEventListener('click', function () {
     kw.value = cleanBox.dataset.copy || ''; check();

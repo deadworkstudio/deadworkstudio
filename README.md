@@ -39,8 +39,9 @@ transparency) was processed into transparent PNGs using a plain luminance-to-alp
 
 - `deadwork-wordmark-bone.png` / `deadwork-wordmark-black.png` — "DEADWORK" only, no subtitle.
   Used in the header and footer.
-- `deadwork-lockup-bone.png` / `deadwork-lockup-black.png` — full lockup including
-  "LOS ANGELES, CA". Available if a page wants the full mark instead of the cropped wordmark.
+- `deadwork-lockup-bone.png` / `deadwork-lockup-black.png` — high-res "DEADWORK" logo only
+  (transparent). The DEADWORK logo is always used WITHOUT a "LOS ANGELES" line and without ®,
+  everywhere: site, apps and emails.
 - `favicon.png` / `apple-touch-icon.png` / `favicon-512.png` — a simple ink-square "D" monogram
   set in Anton, generated directly (not cropped from the wordmark, which is far too wide for a
   square favicon).

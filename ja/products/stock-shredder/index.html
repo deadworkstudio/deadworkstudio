@@ -52,7 +52,7 @@
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="preconnect" href="https://stock-shredder-payments.stockshredder.workers.dev" />
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261122space" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261124tiles" /><link rel="stylesheet" href="../../assets/css/ss-hero.css?v=20261105a" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <!-- defer: checkout.js only calls Stripe(...) lazily, inside a click handler on "Get started" -->
@@ -223,10 +223,10 @@
         <p class="ix-idle mono" data-ix-idle>インターフェースを見てみる。</p>
           <div class="ix-panel" data-ix-panel="0" hidden><h3 class="section-title ix-h">ショートカット</h3><p class="ix-p">キーボードから手を離さずに、承認、却下、トリミング、再生。</p></div>
           <div class="ix-panel" data-ix-panel="1" hidden><h3 class="section-title ix-h">トリミング</h3><p class="ix-p">再生しながらイン点とアウト点を設定、またはハンドルをドラッグ。</p></div>
-          <div class="ix-panel" data-ix-panel="2" hidden><h3 class="section-title ix-h">書き出し</h3><p class="ix-p">追加サイズの ProRes。最大 8K のグレーディング済み、Log、または両方を一度に。</p></div>
+          <div class="ix-panel" data-ix-panel="2" hidden><h3 class="section-title ix-h">書き出し</h3><p class="ix-p">追加サイズの ProRes、H.264、H.265。最大 8K のグレーディング済み、Log、または両方を一度に。</p></div>
           <div class="ix-panel" data-ix-panel="3" hidden><h3 class="section-title ix-h">ルック</h3><p class="ix-p">ARRI、DJI、RED、Sony 向けの内蔵ルック。お手持ちの LUT も使えます。</p></div>
           <div class="ix-panel" data-ix-panel="4" hidden><h3 class="section-title ix-h">微調整</h3><p class="ix-p">露出、コントラスト、色温度、色かぶり補正。1クリップでも全クリップでも。</p></div>
-          <div class="ix-panel" data-ix-panel="5" hidden><h3 class="section-title ix-h">共有</h3><p class="ix-p">すべてのクリップにタイトル、説明、キーワード。コピーするか、アップロード用シートを保存。</p></div>
+          <div class="ix-panel" data-ix-panel="5" hidden><h3 class="section-title ix-h">共有</h3><p class="ix-p">すべてのクリップにタイトル、説明、キーワード。コピー、アップロード用シートの保存、Shutterstock と Pond5 への直接送信。</p></div>
           <div class="ix-panel" data-ix-panel="6" hidden><h3 class="section-title ix-h">ライト / ダーク</h3><p class="ix-p">ライトモードとダークモード。ワンタップで切り替え。</p></div>
       </div>
       <div class="ix-auto-row"><button type="button" class="ix-auto-btn" role="switch" aria-checked="true" data-ix-auto>自動ツアー <span class="ix-sw" aria-hidden="true"><i></i></span><span data-ix-auto-label>オン</span></button></div>
@@ -237,7 +237,7 @@
     <h2 class="section-title section-head head-dw" id="feats-title">機能</h2>
     <ul class="pp-feat-grid">
       <li><span class="mono pp-feat-n">01</span><h3 class="pp-feat-h">自動命名</h3><p>すべてのショットに分かりやすい名前が付き、それぞれのフォルダに入ります。</p></li>
-      <li><span class="mono pp-feat-n">02</span><h3 class="pp-feat-h">ストックサイト向けチェック</h3><p>アップロード前に、ロゴ、HDR、誤ったフレームレート、2K 未満の映像を検出します。</p></li>
+      <li><span class="mono pp-feat-n">02</span><h3 class="pp-feat-h">ストックサイト向けチェック</h3><p>アップロード前に、ロゴ、HDR、誤ったフレームレート、HD 未満の映像を検出します。</p></li>
       <li><span class="mono pp-feat-n">03</span><h3 class="pp-feat-h">不良クリップのフィルター</h3><p>壊れたクリップ、空のクリップ、ブレがひどいクリップを自動で除外します。揺れや短さで外した部分は理由付きで表示し、「このまま残す」も選べます。</p></li>
       <li><span class="mono pp-feat-n">04</span><h3 class="pp-feat-h">自動手ブレ補正</h3><p>ブレたショットを滑らかにし、補正で台無しになる場合はそのままにします。</p></li>
       <li><span class="mono pp-feat-n">05</span><h3 class="pp-feat-h">ノイズ除去</h3><p>書き出し時に目立つノイズを除去。必要なショットだけに適用します。</p></li>
@@ -249,8 +249,8 @@
       <li><span class="mono pp-feat-n">11</span><h3 class="pp-feat-h">夜通し処理</h3><p>書き出し中はコンピュータをスリープさせず、終わったらお知らせします。</p></li>
       <li><span class="mono pp-feat-n">12</span><h3 class="pp-feat-h">自動アップデート</h3><p>新しいバージョンが自動でインストールされます。</p></li>
       <li><span class="mono pp-feat-n">13</span><h3 class="pp-feat-h">クリップの長さを指定</h3><p>最小と最大を設定。各クリップは最大いっぱいまで使い、カメラが落ち着いた所でカットします。</p></li>
-      <li><span class="mono pp-feat-n">14</span><h3 class="pp-feat-h">アップロード用シート</h3><p>Pond5 などほとんどのサイト向けの CSV に加え、Adobe Stock 用と Shutterstock 用も。Pro と Studio。</p></li>
-      <li><span class="mono pp-feat-n">15</span><h3 class="pp-feat-h">ファイルに文字情報</h3><p>書き出したクリップのファイル内に、タイトル、説明、キーワードを保存。Pro と Studio。</p></li>
+      <li><span class="mono pp-feat-n">14</span><h3 class="pp-feat-h">ストックサイトへ送信</h3><p>Adobe Stock、Shutterstock、Pond5 などほとんどのサイト向けのアップロード用シート。Shutterstock と Pond5 へはクリップを直接送信。Pro と Studio。</p></li>
+      <li><span class="mono pp-feat-n">15</span><h3 class="pp-feat-h">ファイルに文字情報</h3><p>書き出したクリップのファイル内に、タイトル、説明、キーワードを保存。撮影地（例：Los Angeles, CA）を追加する欄もあり、ファイル名をタイトルにすることも可能。Pro と Studio。</p></li>
     </ul>
   </section>
 
@@ -326,7 +326,7 @@
               <tr><td data-label="入力クリップ">588</td><td data-label="見つかった瞬間">1,479</td><td data-label="4K クリップ">1,000</td><td data-label="処理時間">87分</td><td data-label="書き出し済み">94分</td><td data-label="失敗">0</td><td data-label="Stock Shredder">3時間1分</td><td data-label="手作業">33時間以上</td></tr>
             </tbody>
           </table>
-          <p class="spec-note spec-note-mono">MacBook Pro M3 Pro で実際の Sony FX6・FX3 の映像を処理し、外付け SSD に書き出し。グレーディング済み ProRes 422 HQ 4K。確認時間は含みません。手作業：1クリップあたり平均2分。</p>
+          <p class="spec-note spec-note-mono">M3 Pro で FX6・FX3 の映像を処理し、外付け SSD に書き出し。グレーディング済み ProRes 422 HQ 4K。確認時間は含みません。手作業：1クリップあたり平均2分。</p>
         </div>
       </div>
       <div class="spec-row">
@@ -337,14 +337,14 @@
         <p class="spec-k mono">読み込み</p>
         <div class="spec-v"><ul class="tiles tiles-mono"><li>MP4</li><li>MOV</li><li>MXF</li><li>MKV</li><li>AVI</li><li>M4V</li><li>MTS</li><li>M2TS</li><li>MPG</li><li>MPEG</li><li>WebM</li><li>3GP</li><li>WMV</li></ul>
           <ul class="tiles tiles-raw"><li>Blackmagic RAW</li><li>RED R3D</li><li>CinemaDNG</li><li>ARRIRAW</li></ul>
-          <p class="spec-note">RAW 形式には、カメラメーカーの無料ツールのインストールが必要です。</p></div>
+          <p class="spec-note">RED R3D と ARRIRAW には、カメラメーカーの無料ツールのインストールが必要です。</p></div>
       </div>
       <div class="spec-row">
         <p class="spec-k mono">書き出し</p>
         <div class="spec-v">
           <ul class="tiles tiles-mono"><li>1080</li><li>2K</li><li>4K</li><li>5K</li><li>6K</li><li>8K</li><li>ソースと同じ</li></ul>
           <ul class="tiles"><li>グレーディング済み + Log</li><li>グレーディング済み</li><li>Log</li></ul>
-          <ul class="tiles tiles-raw"><li>ProRes 422 HQ</li><li>ProRes 4444</li><li>ProRes 4444 XQ</li></ul>
+          <ul class="tiles tiles-raw"><li>ProRes 422 HQ</li><li>ProRes 4444</li><li>ProRes 4444 XQ</li><li>H.264</li><li>H.265</li></ul>
           <p class="spec-note">複数のサイズを一度に書き出し。</p>
         </div>
       </div>
@@ -375,8 +375,8 @@
       <p class="trial-offer-dl" data-trial-dl-note hidden>ダウンロード中に、100クリップを無料で手に入れましょう。</p>
       <p class="trial-rec" aria-hidden="true"><span class="trial-rec-dot"></span><span>REC</span><span class="trial-rec-tc" data-trial-tc>00:00:07:00</span></p>
       <p class="mono trial-offer-eyebrow">SHRED リリース記念オファー</p>
-      <h3 class="trial-offer-title">100クリップ無料。7日間。</h3>
-      <p class="trial-offer-sub"><strong>本日 $0。自動更新なし。</strong>カードはトライアルの重複防止のためだけに使います。</p>
+      <h3 class="trial-offer-title"><span class="tl1">100クリップ無料。</span><br>7日間。</h3>
+      <p class="trial-offer-sub"><strong>本日 $0。カード不要。</strong>お名前とメールアドレスだけで始められます。</p>
       <!-- Daniel 2026-11-22: the Meta ad says "with Code SHRED", so people need a place to type it.
            SHRED already applies to everyone; this box just confirms it (checkout.js checks /offer). -->
       <form class="trial-code" data-trial-code-form novalidate>
@@ -388,6 +388,8 @@
         <p class="trial-code-status" data-trial-code-status role="status" aria-live="polite" hidden></p>
       </form>
       <form class="trial-offer-form" data-trial-offer-form novalidate>
+        <label class="sr-only" for="trial-name">お名前</label>
+        <input type="text" id="trial-name" placeholder="お名前" autocomplete="given-name" maxlength="80" required data-trial-name />
         <label class="sr-only" for="trial-email">メールアドレス</label>
         <input type="email" id="trial-email" placeholder="メールアドレス" autocomplete="email" required data-trial-email />
         <button type="submit" class="pill pill-solid" data-trial-submit>無料トライアルを開始</button>
@@ -510,7 +512,7 @@
     <p class="pricing-existing">すでにご利用中ですか？ 二重請求を防ぐため、プラン変更はアプリ内で行ってください。</p>
     <div class="upgrade-row" aria-label="Pro と Studio で追加されるもの">
       <figure class="upgrade upgrade--kw">
-        <figcaption><p class="mono">Pro &middot; Studio</p><h3>コピー＆ペーストできるキーワード</h3><p>書き出したすべてのクリップに、タイトル、説明、ストック向けのキーワード。ファイル内にも保存されます。ワンクリックでコピーするか、アップロード用シートを保存。</p></figcaption>
+        <figcaption><p class="mono">Pro &middot; Studio</p><h3>コピー＆ペーストできるキーワード</h3><p>書き出したすべてのクリップに、タイトル、説明、ストック向けのキーワード。ファイル内にも保存されます。ワンクリックでコピー、アップロード用シートの保存、Shutterstock と Pond5 への直接送信。</p></figcaption>
         <div class="upgrade-shot upgrade-shot--kw"><video class="kw-film" muted loop playsinline preload="none" width="612" height="344" aria-hidden="true" data-film data-film-fast><source src="../../assets/img/products/stock-shredder/keywords-drone.mp4?v=2" type="video/mp4" /></video><img src="../../assets/img/products/stock-shredder/keywords-card.jpg?v=bh1" width="1360" height="1192" loading="lazy" alt="ビバリーヒルズのドローンショットに対する Stock Shredder のキーワードカード：palm trees, beverly hills, aerial, street, luxury, residential, mansion, afternoon, sunny, california とコピーボタン。" /></div>
       </figure>
       <figure class="upgrade upgrade--phone">
@@ -659,7 +661,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>自動キーワード付けとは？</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Pro、Studio、無料トライアルでは、書き出したすべてのクリップに、タイトル、説明、貼り付けるだけのキーワードを Stock Shredder が作成します。1クリップ分も全クリップ分もまとめてコピーでき、Pond5、Adobe Stock、Shutterstock 用の CSV シートも保存できます。同じ文字情報は、書き出した各ファイル内にも保存されます。ストックサイトごとに手でタグを入力する必要はありません。</p></div></div>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><div class="faq-a-inner"><p>Pro、Studio、無料トライアルでは、書き出したすべてのクリップに、タイトル、説明、貼り付けるだけのキーワードを Stock Shredder が作成します。1クリップ分も全クリップ分もまとめてコピーでき、Pond5、Adobe Stock、Shutterstock 用の CSV シートも保存できます。同じ文字情報は、書き出した各ファイル内にも保存されます。アプリから Shutterstock と Pond5 へクリップを直接送ることもできます。ストックサイトごとに手でタグを入力する必要はありません。</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3b" id="faq-q3b"><span>名前とキーワードに上限はありますか？</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -691,7 +693,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>無料トライアルはありますか？</span><span class="faq-plus" aria-hidden="true"></span></button>
-        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>あります。2026年12月31日までいつでも開始でき、7日以内に使える100クリップが無料で手に入ります。キーワードも含まれます。コードは不要。サブスクリプションや自動請求はありません。カードは本人確認のために保存されるだけで、無料トライアルで請求されることはありません。</p></div></div>
+        <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><div class="faq-a-inner"><p>あります。2026年12月31日までいつでも開始でき、7日以内に使える100クリップが無料で手に入ります。キーワードも含まれます。コードは不要。カードは不要で、お名前とメールアドレスだけで始められます。プランを選ばない限り請求はありません。</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>iPhone アプリは何のためのもの？</span><span class="faq-plus" aria-hidden="true"></span></button>
@@ -779,10 +781,10 @@
 </div>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
-<script src="../../assets/js/checkout.js?v=20261122cents"></script>
+<script src="../../assets/js/checkout.js?v=20261124nc"></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
-<script src="../../assets/js/ss-page.js?v=20261121a"></script>
+<script src="../../assets/js/ss-page.js?v=20261124nc"></script>
 <script src="../../assets/js/ss-hero.js?v=20261115c" defer></script>
 <script>
 // The hrefs above point at GitHub's stable "latest" link (releases/latest/download/
@@ -889,7 +891,8 @@ fetch('https://api.github.com/repos/deadworkstudio/stock-shredder-releases/relea
     var note = document.querySelector('.downloads-note');
     if (note) note.innerHTML = 'Mac + Windows app &nbsp;&middot;&nbsp; link sent by email';
     var phoneNote = document.querySelector('[data-trial-phone-note]');
-    if (phoneNote) phoneNote.hidden = false;
+    // No-card trial (name field present): phones start the trial here, so no "send it to my computer" note.
+    if (phoneNote && !document.querySelector('[data-trial-name]')) phoneNote.hidden = false;
   }
 })();
 

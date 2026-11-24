@@ -144,7 +144,7 @@
     var me = document.querySelector('script[src*="assets/js/ss-page.js"]');
     var s = document.createElement('script');
     s.async = true;
-    s.src = (me ? me.src.replace(/ss-page\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261121a';
+    s.src = (me ? me.src.replace(/ss-page\.js(\?.*)?$/, '') : '/assets/js/') + 'dw-chat.js?v=20261124nc';
     document.body.appendChild(s);
   }
   if (location.protocol !== 'file:') {
