@@ -167,3 +167,42 @@
 .g-figure--phones .g-phones { display: flex; gap: 14px; justify-content: center; }
 .g-figure--phones img { width: calc((100% - 28px) / 3); max-width: 220px; height: auto; border-radius: 18px; border: 1px solid var(--line); }
 @media (max-width: 520px) { .g-figure--phones .g-phones { gap: 8px; } .g-figure--phones img { width: calc((100% - 16px) / 3); border-radius: 12px; } }
+
+/* ---- Guides hub (/guides/): one library, a cluster per product, topics inside. Reuses the Keep reading cards. ---- */
+.gh-main { max-width: 1120px; margin: 0 auto; padding-bottom: clamp(64px, 9vw, 120px); }
+.gh-head { max-width: 760px; padding-bottom: clamp(28px, 4vw, 44px); border-bottom: 1px solid var(--ink); }
+.gh-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 26px; }
+.gh-chips a { padding: 9px 14px; border: 1px solid var(--ink); text-decoration: none; color: var(--ink); }
+.gh-chips a:hover, .gh-chips a:focus-visible { background: var(--ink); color: #F4F1EA; }
+.gh-chips span { color: var(--ink-3); }
+.gh-product { padding-top: clamp(44px, 6vw, 72px); scroll-margin-top: calc(var(--sh-h) + 12px); }
+.gh-product-head { display: grid; grid-template-columns: 56px 1fr; gap: 4px 0; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--line-2); }
+.gh-product-head .mono { color: #C8201A; }
+.gh-product-head h2 { font: 800 clamp(30px, 4.6vw, 48px)/1 var(--sans); font-stretch: 85%; letter-spacing: -.01em; text-transform: uppercase; }
+.gh-product-head > p:last-child { grid-column: 2; max-width: 44em; margin-top: 10px; color: var(--ink-2); }
+.gh-product-head a { color: var(--ink); white-space: nowrap; }
+.gh-topic { margin-top: clamp(26px, 3.6vw, 40px); }
+.gh-topic h3 { display: flex; gap: 10px; align-items: baseline; margin-bottom: 14px; color: var(--ink-2); }
+.gh-topic h3 span { color: var(--ink-3); }
+.gh-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px; }
+.gh-cards a { display: flex; flex-direction: column; gap: 8px; height: 100%; text-decoration: none; color: var(--ink); }
+.gh-cards img { width: 100%; height: auto; aspect-ratio: 640 / 401; object-fit: cover; border: 1px solid var(--line); background: #E7E0D0; }
+.gh-cards .mono { color: var(--ink-3); }
+.gh-cards .mono i { font-style: normal; }
+.gh-cards .mono em { font-style: normal; }
+.gh-cards strong { font: 750 19px/1.2 var(--sans); }
+.gh-cards .g-more-dek { display: block; margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.45; }
+.gh-cards .g-more-go { margin-top: auto; padding-top: 4px; color: var(--ink); }
+.gh-cards a:hover strong, .gh-cards a:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; }
+.gh-bridge { margin-top: clamp(56px, 8vw, 96px); padding: clamp(26px, 4vw, 44px); background: var(--ink); color: #EBE5D8; }
+.gh-bridge > .mono { color: #CFC8B8; }
+.gh-bridge h2 { margin: 10px 0 24px; max-width: 22em; font: 800 clamp(24px, 3.6vw, 36px)/1.05 var(--sans); font-stretch: 85%; text-transform: uppercase; }
+.gh-bridge .gh-cards a, .gh-bridge .gh-cards .g-more-go { color: #EBE5D8; }
+.gh-bridge .gh-cards .mono, .gh-bridge .gh-cards .g-more-dek { color: #CFC8B8; }
+.gh-bridge .gh-cards img { border-color: #2a2a27; }
+@media (max-width: 640px) {
+  .gh-product-head { grid-template-columns: 1fr; }
+  .gh-product-head > p:last-child { grid-column: 1; }
+}
+main.gh-main > section { padding: clamp(44px, 6vw, 72px) 0 0; border-top: 0; text-align: left; min-height: 0; }
+main.gh-main > section.gh-bridge { margin-top: clamp(56px, 8vw, 96px); padding: clamp(26px, 4vw, 44px); }
