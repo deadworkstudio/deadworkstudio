@@ -299,6 +299,14 @@
   // Windows visitors get the .exe as the primary button and the .dmg as the small secondary
   // link, and vice versa for everyone else — navigator.userAgentData is the modern replacement
   // for sniffing the UA string; platform/userAgent cover browsers that don't support it yet.
+  // Growth sprint 2026-11-24 (Daniel: no card): with the no-card trial (the trial box has a first-name
+  // field), phones start the trial right there. The key is emailed, so they open it on their computer.
+  // Phone visitors used to get "Send it to my computer" and 0 of 3 came back. The card trial (no name
+  // field) still sends phones the link, since a card step on a phone is what lost them.
+  function phoneSendsToComputer() {
+    return isPhoneVisitor() && !document.querySelector('[data-trial-name]');
+  }
+
   function isPhoneVisitor() {
     var ua = navigator.userAgent || '';
     if (/iPhone|iPad|iPod|Android|Mobile/i.test(ua)) return true;
@@ -1483,7 +1491,7 @@
       var email = (trialEmailInput.value || '').trim();
       // On a phone the main button only emails the link to their computer, where they type the
       // name, so the name is only needed when the trial really starts here.
-      var phoneSend = isPhoneVisitor() && !trialForm.hasAttribute('data-start-now');
+      var phoneSend = phoneSendsToComputer() && !trialForm.hasAttribute('data-start-now');
       if (trialNameInput && !phoneSend && !(trialNameInput.value || '').trim()) {
         step('trial-invalid-name');
         showTrialError(T('Enter your first name.'));
@@ -1508,7 +1516,7 @@
       // starts where they'll use it. "Start now anyway" (data-trial-start-now) skips this. If the
       // send fails for any reason (older server, network), fall back to starting the trial.
       step('trial-submit');
-      if (isPhoneVisitor() && !trialForm.hasAttribute('data-start-now')) {
+      if (phoneSendsToComputer() && !trialForm.hasAttribute('data-start-now')) {
         sendTrialToComputer(email);
         return;
       }
@@ -1560,7 +1568,7 @@
 
   // Phones: relabel the trial button and offer the plain trial as a small link.
   (function phoneTrialMode() {
-    if (!trialForm || !isPhoneVisitor()) return;
+    if (!trialForm || !phoneSendsToComputer()) return;
     if (trialSubmitBtn) trialSubmitBtn.textContent = 'Send it to my computer';
     // Sending the link needs only the email; the name field comes back for "Start now anyway".
     if (trialNameInput) trialNameInput.hidden = true;
