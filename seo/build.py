@@ -134,6 +134,7 @@ def jsonld(meta, url):
 COVER_ALT = {
     "tool-gear-checklist": "The free camera gear checklist maker: shoot type, cameras and days, then the list by kit",
     "tool-title-keyword": "The free stock footage title and keyword checker with fields for title, description and keywords",
+    "tool-profit-calc": "The free stock footage profit calculator with fields for clips, downloads and earnings per download",
     "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
     "ss-review-forest": "Stock Shredder reviewing a forest clip, with grade and export settings",
     "ss-review-mac": "Stock Shredder on a Mac, reviewing a tape deck clip",
@@ -147,6 +148,7 @@ COVER_ALT = {
 COVERS = {
     "camera-gear-checklist-maker": "tool-gear-checklist",
     "stock-footage-title-keyword-checker": "tool-title-keyword",
+    "stock-footage-profit-calculator": "tool-profit-calc",
     "adobe-stock-video-workflow": "ss-share",
     "automatic-stock-footage-clipping": "ss-review-dark",
     "blackmagic-raw-stock-footage": "ss-review-forest",
