@@ -1200,3 +1200,14 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 #trial .trial-offer-resend { margin-top: 22px; padding-top: 18px; }
 #pricing .pricing-title-low { margin-top: 80px; }
 @media (max-width: 520px) { #pricing > #trial.trial-offer + .fit { margin-top: 32px; } #pricing .pricing-title-low { margin-top: 56px; } }
+
+/* Daniel 2026-11-24: the trial headline is always two lines, "100 FREE CLIPS." / "7 DAYS.". The first
+   line never wraps; it shrinks to fit the box instead. Sizes measured per language at 76px: the box
+   is 498px wide on desktop and 78px narrower than the screen on phones. */
+#trial .trial-offer-title .tl1 { white-space: nowrap; }
+#trial .trial-offer-title { font-size: min(76px, calc((100vw - 78px) * .1668)); }
+html:lang(de) #trial .trial-offer-title { font-size: min(71px, calc((100vw - 78px) * .1443)); }
+html:lang(es) #trial .trial-offer-title { font-size: min(72px, calc((100vw - 78px) * .146)); }
+html:lang(fr) #trial .trial-offer-title { font-size: min(64px, calc((100vw - 78px) * .1289)); }
+html:lang(it) #trial .trial-offer-title { font-size: min(76px, calc((100vw - 78px) * .1569)); }
+html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-title { font-size: min(44px, calc((100vw - 78px) * .1106)); }
