@@ -79,6 +79,9 @@
   Array.prototype.forEach.call(document.querySelectorAll('#calculator a[data-cta]'), function (a) {
     a.addEventListener('click', function () { if (window.dwEvent) window.dwEvent('tool-calc-cta'); });
   });
+  Array.prototype.forEach.call(document.querySelectorAll('.pc-use'), function (b) {
+    b.addEventListener('click', function () { f.roy.value = b.getAttribute('data-roy'); calc(); f.roy.focus(); });
+  });
   $('pc-clear').addEventListener('click', function () {
     ['clips', 'dl', 'roy', 'cost', 'arch'].forEach(function (k) { f[k].value = ''; });
     f.perf.value = '100'; calc(); f.clips.focus();

@@ -158,3 +158,13 @@
 .pc-per input:checked + span { background: var(--ink); color: #EBE5D8; }
 .pc-per input:focus-visible + span { outline: 2px solid #C8201A; outline-offset: -2px; }
 @media (max-width: 640px) { .pc-now { grid-template-columns: repeat(3, minmax(0, 1fr)); } .pc-now div { padding: 12px 10px; } .pc-now b { font-size: 19px; } .pc-now-h { padding: 10px 10px 0; } }
+.pc-ref { margin-top: 18px; padding: 16px 22px; border: 1px solid var(--line-2); background: #F4F1EA; }
+.pc-ref summary { cursor: pointer; font-weight: 650; font-size: 16px; }
+.pc-ref > p { margin-top: 10px; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.pc-ref .g-table-wrap { margin-top: 12px; }
+.pc-ref-table td { font-size: 14.5px; }
+.pc-ref-table td:first-child { white-space: nowrap; }
+.pc-ref-table a, .pc-ref .pc-note a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.pc-use { font: 600 14.5px/1 var(--sans); font-variant-numeric: tabular-nums; padding: 7px 10px; background: #fff; border: 1px solid var(--ink); cursor: pointer; }
+.pc-use:hover, .pc-use:focus-visible { background: var(--ink); color: #EBE5D8; }
+@media (max-width: 640px) { .pc-ref { padding: 14px 16px; } }
