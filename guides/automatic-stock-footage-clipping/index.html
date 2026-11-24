@@ -26,11 +26,12 @@
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261120spd" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/guide.css?v=20261123a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Automatic Clipping Software for Stock Footage", "description": "Scene detection splits edited video at its cuts. Raw stock footage needs something else: usable moments found, trimmed to length, graded and exported. What each tool does, checked November 2026.", "datePublished": "2026-11-23", "dateModified": "2026-11-23", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/automatic-stock-footage-clipping/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can Premiere Pro cut raw footage into stock clips automatically?", "acceptedAnswer": {"@type": "Answer", "text": "Premiere Pro's Scene Edit Detection finds the cuts in a video file and splits it into shots. Raw camera files usually have no cuts inside them, so it has little to find. Picking the usable moments and trimming them is still up to you."}}, {"@type": "Question", "name": "What about DaVinci Resolve's Scene Cut Detection?", "acceptedAnswer": {"@type": "Answer", "text": "It finds shot changes in a finished, already-edited file and splits it into shot ranges. It doesn't pick usable moments, grade or export separate files. A render step is still needed."}}, {"@type": "Question", "name": "How does Stock Shredder decide where to cut?", "acceptedAnswer": {"@type": "Answer", "text": "You set a Min and Max clip length. Each clip runs as long as Max allows and is cut where the camera is calm. Broken, empty and too-shaky parts are set aside, with Keep anyway if you disagree."}}, {"@type": "Question", "name": "Do I still review the clips?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Stock Shredder finds and trims the moments, then you approve or deny each one from the keyboard before export. It remembers every clip you've reviewed, so you never review one twice."}}, {"@type": "Question", "name": "Does it name and keyword the clips too?", "acceptedAnswer": {"@type": "Answer", "text": "Every shot gets a clear name and its own folder. On Pro, Studio and the free trial, it also writes titles and ready-to-paste keywords for every exported clip."}}]}]</script>
 </head>
 <body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="poster-head" data-sh>
@@ -87,9 +88,26 @@
       <p class="mono g-eyebrow">Stock Shredder · Automatic clipping</p>
       <h1 class="g-title">Automatic Clipping Software for Stock Footage</h1>
       <p class="g-dek">Scene detection finds cuts. Raw footage has none. Here&#x27;s what automatic clipping for stock actually needs to do.</p>
-      <p class="mono g-byline">DEADWORK STUDIO <span aria-hidden="true">&middot;</span> NOV 23, 2026 <span aria-hidden="true">&middot;</span> 5 MIN READ</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED NOV 23, 2026 <span aria-hidden="true">&middot;</span> 5 MIN READ</p>
       <p class="g-head-cta"><a class="pill pill-solid" href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=automatic-stock-footage-clipping#trial" data-cta="top">Start with 100 free clips</a></p>
     </header>
+
+    <figure class="g-cover">
+      <img src="../../assets/img/guides/moto-05.webp" alt="Rider leaning into a curve by the guardrail" width="1440" height="602" fetchpriority="high" decoding="async" />
+    </figure>
+    <nav class="g-toc" aria-labelledby="toc">
+      <p class="mono" id="toc">In this guide</p>
+      <ol>
+        <li><a href="#problem">Cutting is the slow part</a></li>
+        <li><a href="#scene-detection">What scene detection does, fairly</a></li>
+        <li><a href="#compare">Scene detection vs stock clipping</a></li>
+        <li><a href="#by-hand">The by-hand way</a></li>
+        <li><a href="#stock-shredder">The Stock Shredder way</a></li>
+        <li><a href="#time">The time difference, measured</a></li>
+        <li><a href="#limits">What to know before you start</a></li>
+        <li><a href="#when-other">When scene detection makes more sense</a></li>
+      </ol>
+    </nav>
 
     <div class="g-body">
 <div class="g-answer">
@@ -173,15 +191,22 @@
   </video>
   <figcaption>The real test, sped up: the same 1,000 clips with Stock Shredder and by hand.</figcaption>
 </figure>
-<div class="g-table-wrap">
-<table class="g-table g-table--num">
-  <thead><tr><th>4K clips</th><th>Stock Shredder</th><th>By hand</th></tr></thead>
-  <tbody>
-    <tr><td>100</td><td>16 min</td><td>3+ hours</td></tr>
-    <tr><td>500</td><td>1 hr 19 min</td><td>16+ hours</td></tr>
-    <tr><td>1,000</td><td>3 hr 1 min</td><td>33+ hours</td></tr>
-  </tbody>
-</table>
+<div class="g-race" role="group" aria-label="Time to prep 4K clips">
+  <div class="g-race-row">
+    <p class="g-race-n">100 clips</p>
+    <div class="g-race-bar g-race-bar--ss"><span style="width:8.9%"></span><b>Stock Shredder <em>16 min</em></b></div>
+    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>3+ hours</em></b></div>
+  </div>
+  <div class="g-race-row">
+    <p class="g-race-n">500 clips</p>
+    <div class="g-race-bar g-race-bar--ss"><span style="width:8.2%"></span><b>Stock Shredder <em>1 hr 19 min</em></b></div>
+    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>16+ hours</em></b></div>
+  </div>
+  <div class="g-race-row">
+    <p class="g-race-n">1,000 clips</p>
+    <div class="g-race-bar g-race-bar--ss"><span style="width:9.1%"></span><b>Stock Shredder <em>3 hr 1 min</em></b></div>
+    <div class="g-race-bar g-race-bar--hand"><span style="width:100%"></span><b>By hand <em>33+ hours</em></b></div>
+  </div>
 </div>
 <p class="g-source">Stock Shredder time is shred plus export. Review time not included. By hand: 2 minutes per clip average.</p>
 
@@ -204,6 +229,11 @@
 <p>More on site rules: <a href="../stock-footage-requirements-adobe-pond5-shutterstock/">How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock</a>.</p>
     </div>
 
+    <aside class="g-note">
+      <p class="mono">From the team</p>
+      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, and site rules come from each site's own pages. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
+    </aside>
+
     <aside class="g-cta" aria-label="Start with 100 free clips">
       <p class="mono">Launch offer · Code SHRED</p>
       <h2>Try it on your own archive.</h2>
@@ -215,9 +245,9 @@
     <nav class="g-more" aria-labelledby="keep-reading">
       <h2 id="keep-reading">Keep reading</h2>
       <ul>
-        <li><a href="../raw-footage-to-stock-clips/" data-related="raw-footage-to-stock-clips"><span class="mono">Guide · Stock footage</span><strong>How to Turn Raw Footage Into Stock Clips</strong><span class="g-more-dek">Every step from card dump to upload-ready clip. What it takes by hand, what it takes with Stock Shredder, and where each one falls short.</span></a></li>
-        <li><a href="../blackmagic-raw-stock-footage/" data-related="blackmagic-raw-stock-footage"><span class="mono">Stock Shredder · For Blackmagic shooters</span><strong>Blackmagic RAW to Stock Clips, Fast</strong><span class="g-more-dek">BRAW gives you a lot to work with. It also gives you big files and a flat image that no stock site will take as is. Here&#x27;s the fast way through.</span></a></li>
-        <li><a href="../drone-footage-for-stock/" data-related="drone-footage-for-stock"><span class="mono">Stock Shredder · For drone footage</span><strong>How to Turn Drone Footage Into Stock Clips Faster</strong><span class="g-more-dek">A card full of flights is mostly takeoff, landing and repositioning. Here&#x27;s how to get the good seconds out fast.</span></a></li>
+        <li><a href="../raw-footage-to-stock-clips/" data-related="raw-footage-to-stock-clips"><img src="../../assets/img/guides/archive-wall-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>7 min</em></span><strong>How to Turn Raw Footage Into Stock Clips</strong><span class="g-more-dek">Every step from card dump to upload-ready clip. What it takes by hand, what it takes with Stock Shredder, and where each one falls short.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../blackmagic-raw-stock-footage/" data-related="blackmagic-raw-stock-footage"><img src="../../assets/img/guides/moto-07-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Blackmagic shooters <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>Blackmagic RAW to Stock Clips, Fast</strong><span class="g-more-dek">BRAW gives you a lot to work with. It also gives you big files and a flat image that no stock site will take as is. Here&#x27;s the fast way through.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../drone-footage-for-stock/" data-related="drone-footage-for-stock"><img src="../../assets/img/guides/moto-02-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For drone footage <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>How to Turn Drone Footage Into Stock Clips Faster</strong><span class="g-more-dek">A card full of flights is mostly takeoff, landing and repositioning. Here&#x27;s how to get the good seconds out fast.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
       </ul>
     </nav>
 
@@ -253,6 +283,12 @@
   </footer>
 
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 </body>
