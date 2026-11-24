@@ -65,7 +65,6 @@
     var n = arch || 500;
     $('pc-next-n').textContent = int(n) + (arch ? ' clips in your archive' : ' clips, for example');
     $('pc-next-hand').textContent = hours(n * 2);
-    $('pc-next-add').textContent = '+' + money(n * perClip * perf) + ' a month';
   }
 
   Object.keys(f).forEach(function (k) { if (f[k]) f[k].addEventListener('input', calc); });
