@@ -1211,3 +1211,14 @@ html:lang(es) #trial .trial-offer-title { font-size: min(72px, calc((100vw - 78p
 html:lang(fr) #trial .trial-offer-title { font-size: min(64px, calc((100vw - 78px) * .1289)); }
 html:lang(it) #trial .trial-offer-title { font-size: min(76px, calc((100vw - 78px) * .1569)); }
 html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-title { font-size: min(44px, calc((100vw - 78px) * .1106)); }
+
+/* Daniel 2026-11-24: the hero video should be fully on screen without scrolling. Desktop only: a
+   tighter text block, and the video's width follows the window height so its picture (16:9) ends
+   above the bottom of the screen. --strip-top = where the video starts; --strip-cap = its caption row. */
+@media (min-width: 720px) {
+  .hero .downloads { margin-top: clamp(16px, 2.2vh, 26px); }
+  .hero .downloads-note { margin-top: 10px; }
+  .hero .hero-code { margin-top: 4px; }
+  .hero .strip.iss { margin-top: clamp(14px, 2vh, 22px); width: min(100%, 1120px, calc((100svh - var(--strip-top) - 20px) * 1.7778)); }
+  .hero { --strip-top: calc(250px + 16vh); }
+}
