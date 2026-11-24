@@ -15,8 +15,8 @@ with "status": "live" are indexed and added to sitemap.xml.
 
 Every call-to-action link is tagged ?ref=guide&utm_campaign=<slug>, which
 ss-funnel.js already counts (page visit, source, campaign, checkout).
-In-development products (Loadout, Set Control, ...) get a waitlist CTA, never
-a buy button.
+Loadout (live on iPhone) links to its product page with the same tags. In-development
+products (Set Control, ...) get a waitlist CTA, never a buy button.
 
 seo/ is excluded from the site deploy (.github/workflows/pages.yml).
 """
@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124b"
+CSS_V = "20261124c"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -42,12 +42,12 @@ CTAS = {
         "note": "Card saved to verify you, never charged. Start any time before December 31, 2026.",
     },
     "loadout": {
-        "href": "../../products/loadout/?ref=guide&utm_campaign={slug}#notify",
-        "label": "Join the waitlist",
-        "eyebrow": "Loadout · In development",
-        "title": "Be first to know.",
-        "text": "Leave your email and we'll tell you the day it's out.",
-        "note": "Not available yet.",
+        "href": "../../products/loadout/?ref=guide&utm_campaign={slug}",
+        "label": "Start your 14-day free trial",
+        "eyebrow": "Loadout · iPhone",
+        "title": "Scan the case before you leave.",
+        "text": "Pan your iPhone across the open case. Loadout checks it against your saved kit and lists what's missing.",
+        "note": "Free download. 14 days free, no card needed. Android coming soon.",
     },
     "set-control": {
         "href": "../../products/set-control/?ref=guide&utm_campaign={slug}",
@@ -61,6 +61,7 @@ CTAS = {
 
 OG_IMAGES = {
     "stock-shredder": f"{SITE}/assets/img/brand/share-stock-shredder.jpg",
+    "loadout": f"{SITE}/assets/img/brand/share-loadout.jpg",
 }
 
 # Copy rules from the brand: no machine-written tells, no AI words.
@@ -137,6 +138,8 @@ COVER_ALT = {
     "ss-share": "Stock Shredder Share screen with 18 clips ready and their keywords",
     "ss-import-light": "Stock Shredder import screen, ready for a folder of raw footage",
     "ss-review-light": "Stock Shredder review screen in light mode, with Look and export settings",
+    "lo-kit-scan": "Loadout on iPhone: a list of kits, a scan of an open case, and All accounted for",
+    "lo-scan-real": "Three frames from a real Loadout scan of a packed case on iPhone",
 }
 COVERS = {
     "adobe-stock-video-workflow": "ss-share",
@@ -156,6 +159,7 @@ COVERS = {
     "best-sites-to-sell-stock-footage": "ss-share",
     "sell-stock-footage": "ss-review-dark",
     "xpiks-alternative": "ss-share",
+    "camera-gear-checklist": "lo-kit-scan",
 }
 
 
@@ -227,14 +231,22 @@ def race_bars(body):
     )
 
 
-NOTE = (
-    '    <aside class="g-note">\n'
-    '      <p class="mono">From the team</p>\n'
-    "      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, "
-    "and site rules come from each site's own pages. See something out of date? Email "
-    '<a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we\'ll fix it.</p>\n'
-    '    </aside>\n'
-)
+NOTE_TEXT = {
+    "stock-shredder": "We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, "
+    "and site rules come from each site's own pages.",
+    "loadout": "We're DEADWORK STUDIO, the team behind Loadout. We shoot too, and these lists come from packing our own cases.",
+}
+
+
+def note_html(meta):
+    text = NOTE_TEXT.get(meta["product"], NOTE_TEXT["stock-shredder"])
+    return (
+        '    <aside class="g-note">\n'
+        '      <p class="mono">From the team</p>\n'
+        f"      <p>{text} See something out of date? Email "
+        '<a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we\'ll fix it.</p>\n'
+        '    </aside>\n'
+    )
 
 
 STOP = set("a an and the to of for in on with how what is your you by vs or from at as it best".split())
@@ -247,7 +259,9 @@ def words(m):
 
 def related(meta, metas, n=3):
     """Up to n LIVE guides to show under "Keep reading". Drafts are never linked."""
-    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"] and not m.get("tool")}
+    # Same product only: a Loadout guide never sends readers to a Stock Shredder guide, and back.
+    live = {m["slug"]: m for m in metas if m["status"] == "live" and m["slug"] != meta["slug"] and not m.get("tool")
+            and m["product"] == meta["product"]}
     picks = [live[s] for s in meta.get("related", []) if s in live]
     mine = words(meta)
     rest = sorted(
@@ -279,7 +293,8 @@ def related_html(picks):
 
 def tools_html(meta, metas):
     """Free tools box on every guide: live tools only, never on the tool's own page."""
-    tools = [m for m in metas if m.get("tool") and m["status"] == "live" and m["slug"] != meta["slug"]]
+    tools = [m for m in metas if m.get("tool") and m["status"] == "live" and m["slug"] != meta["slug"]
+             and m["product"] == meta["product"]]
     if not tools:
         return ""
     mine = words(meta)
@@ -343,7 +358,7 @@ def build(meta, header, footer, metas):
         "body": race_bars(meta["body"]),
         "cover_html": cover_html(meta),
         "toc_html": "" if meta.get("tool") else toc_html(meta["body"]),
-        "note_html": NOTE,
+        "note_html": note_html(meta),
         "tools_html": tools_html(meta, metas),
         "faq_html": faq_html,
         "related_html": related_html(related(meta, metas)),
