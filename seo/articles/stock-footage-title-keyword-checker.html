@@ -1,0 +1,121 @@
+<!--meta
+{
+  "slug": "stock-footage-title-keyword-checker",
+  "status": "draft",
+  "product": "stock-shredder",
+  "tool": true,
+  "css": ["tools.css"],
+  "keyword": "stock footage keyword checker",
+  "secondary": ["stock footage title checker", "adobe stock keyword limit", "shutterstock keywords video", "pond5 keywords", "storyblocks title length", "stock footage metadata"],
+  "title": "Stock Clip Title and Keyword Checker",
+  "seo_title": "Free Stock Footage Title and Keyword Checker for Adobe Stock, Shutterstock, Pond5 and Storyblocks",
+  "description": "Paste a clip's title and keywords and see what Adobe Stock, Shutterstock, Pond5 and Storyblocks would flag: length, keyword count, repeats, brand names and camera details. Free, runs in your browser.",
+  "eyebrow": "Free tool · Title and keyword checker",
+  "dek": "Paste a title and keywords. See what each stock site would flag before you upload, and get a cleaned keyword list to paste back in.",
+  "published": "2026-11-24",
+  "updated": "2026-11-24",
+  "read_minutes": 3,
+  "related": ["stock-footage-requirements-adobe-pond5-shutterstock", "pond5-video-upload", "shutterstock-video-contributor"],
+  "faq": [
+    ["How many keywords can I use on Adobe Stock?", "Up to 49. Adobe gives the first 10 the most weight, so put the words that describe the shot best at the top."],
+    ["How many keywords does Shutterstock need?", "At least 7 and at most 50. Shutterstock also asks for no camera information and no trademarks in commercial clips."],
+    ["How long should a stock footage title be?", "Under 70 characters works on every site. Adobe suggests under 70, Storyblocks takes 16 to 140 and suggests about 65, and Shutterstock allows up to 2,048."],
+    ["Can I put 4K or my camera name in the keywords?", "It's best not to. Buyers search for what's in the shot, the site already shows resolution and frame rate, and Shutterstock asks for no camera information."],
+    ["Can I use brand names in stock footage keywords?", "Not for commercial clips. Use a plain word instead, like motorcycle for Harley or smartphone for iPhone. Brands are only allowed on clips marked editorial."],
+    ["Does this checker save what I type?", "No. It runs in your browser and nothing you type is sent anywhere."]
+  ]
+}
+-->
+
+<div class="tc" id="checker">
+  <form class="tc-form" onsubmit="return false" aria-label="Title and keyword checker">
+    <div class="tc-field">
+      <div class="tc-label"><label for="tc-title">Title</label><span class="tc-n"><span id="tc-title-n">0</span> CHARACTERS</span></div>
+      <input type="text" id="tc-title" autocomplete="off" spellcheck="true" placeholder="Rider on a motorcycle on a mountain road at sunset" />
+    </div>
+    <div class="tc-field">
+      <div class="tc-label"><label for="tc-desc">Description <i>(optional)</i></label><span class="tc-n"><span id="tc-desc-n">0</span> CHARACTERS</span></div>
+      <textarea id="tc-desc" rows="2" spellcheck="true" placeholder="Only if your site asks for one separately. Shutterstock uses a single description field."></textarea>
+    </div>
+    <div class="tc-field">
+      <div class="tc-label"><label for="tc-kw">Keywords</label><span class="tc-n"><span id="tc-kw-n">0</span> KEYWORDS</span></div>
+      <textarea id="tc-kw" rows="4" spellcheck="true" placeholder="motorcycle, rider, mountain road, sunset, golden hour, travel"></textarea>
+    </div>
+    <fieldset class="tc-sites">
+      <legend>Check for</legend>
+      <label><input type="checkbox" value="adobe" checked /> Adobe Stock</label>
+      <label><input type="checkbox" value="shutterstock" checked /> Shutterstock</label>
+      <label><input type="checkbox" value="pond5" checked /> Pond5</label>
+      <label><input type="checkbox" value="storyblocks" checked /> Storyblocks</label>
+    </fieldset>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn" id="tc-sample">Try an example</button>
+      <button type="button" class="tc-btn tc-btn--ghost" id="tc-clear">Clear</button>
+      <span class="tc-private">Runs in your browser. Nothing you type is sent anywhere.</span>
+    </p>
+  </form>
+
+  <div class="tc-out" id="tc-out" aria-live="polite" hidden>
+    <div class="tc-summary" id="tc-summary"></div>
+    <section class="tc-block">
+      <h3>All sites</h3>
+      <ul id="tc-general"></ul>
+    </section>
+    <div class="tc-sitelist" id="tc-sitelist"></div>
+    <section class="tc-block tc-clean" id="tc-clean" hidden>
+      <h3>Cleaned keywords</h3>
+      <ol id="tc-clean-list"></ol>
+      <p class="tc-clean-note" id="tc-clean-note"></p>
+      <p class="tc-actions">
+        <button type="button" class="tc-btn" id="tc-copy">Copy keywords</button>
+        <button type="button" class="tc-btn tc-btn--ghost" id="tc-use">Check this list</button>
+      </p>
+    </section>
+    <aside class="tc-pitch">
+      <p><strong>One clip takes a minute here. A whole drive is a different job.</strong></p>
+      <p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=stock-footage-title-keyword-checker#trial" data-cta="tool">Stock Shredder</a> writes a title, a description and keywords for every clip it exports, then saves upload sheets for Pond5, Adobe Stock and Shutterstock. Included on Pro, Studio and the free trial.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/title-checker.js?v=20261124a" defer></script>
+
+<h2 id="rules">The rules on each site, side by side.</h2>
+<p>Each site words its rules a little differently. Here is what each one says about titles and keywords, from its own contributor help pages, checked in November 2026.</p>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Site</th><th>Title</th><th>Keywords</th><th>Worth knowing</th></tr></thead>
+    <tbody>
+      <tr><td>Adobe Stock</td><td>Short, ideally under 70 characters</td><td>Up to 49</td><td>The first 10 keywords count the most. Use each keyword once. One language, matching your account.</td></tr>
+      <tr><td>Shutterstock</td><td>One description, up to 2,048 characters</td><td>7 to 50</td><td>English. No camera information, links, emoji or trademarks in commercial clips.</td></tr>
+      <tr><td>Pond5</td><td>Short and factual. Keep it under 80 characters</td><td>Up to 50, 10 to 20 good ones work best</td><td>English. Some symbols can trip up a CSV upload sheet.</td></tr>
+      <tr><td>Storyblocks</td><td>16 to 140 characters, about 65 suggested</td><td>6 to 100, 15 to 30 suggested</td><td>No two of your titles can match. Title and file name must differ.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Sources: <a href="https://helpx.adobe.com/stock/contributor/help/titles-and-keyword.html" rel="noopener" target="_blank">Adobe Stock</a>, <a href="https://submit.shutterstock.com/help/en/articles/10617427-content-publishing-standards-contextual-metadata" rel="noopener" target="_blank">Shutterstock</a>, <a href="https://contribute-faq.storyblocks.com/en/articles/4543732-what-are-the-metadata-submission-requirements" rel="noopener" target="_blank">Storyblocks</a>. Pond5 doesn't publish a title limit on a public help page; 80 characters is a safe length for its upload sheet.</p>
+
+<h2 id="rejected">What gets clips rejected or buried.</h2>
+<ul class="g-list">
+  <li><strong>Brand names.</strong> Harley, iPhone, GoPro, Jeep. Use the plain word a buyer would type: motorcycle, smartphone, action camera, off-road vehicle. Brands generally belong only on clips marked editorial.</li>
+  <li><strong>Camera details.</strong> 4K, 60fps, S-Log3, 24mm. The site already shows the specs. Shutterstock asks for none of it in the metadata.</li>
+  <li><strong>The same word twice.</strong> "Motorcycle" and "motorcycles" fill two slots with one idea. Search matches both.</li>
+  <li><strong>Filler.</strong> "Stock footage", "video", "royalty free". Every clip on the site is all of those.</li>
+  <li><strong>A keyword list as a title.</strong> Sites want a sentence. Commas in a title are usually a sign it should be rewritten.</li>
+</ul>
+
+<h2 id="title">How to write a title buyers find.</h2>
+<p>Say what a buyer sees, in the order they'd say it: who or what, doing what, where, and when.</p>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Harley motorcycle 4K, rider, mountain road, sunset, cinematic</td><td>Rider on a motorcycle on a winding mountain road at sunset</td></tr>
+      <tr><td>DJI drone aerial city 60fps</td><td>Aerial view of a city skyline at dusk with traffic below</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Then put the words from the title at the top of your keywords, and add the rest underneath: the setting, the mood, the season, the concept. The checker above does that reordering for you.</p>
+
+<h2 id="drive">Doing this for a whole drive.</h2>
+<p>The checker is built for one clip at a time. If you're sitting on a drive of hundreds, <a href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=stock-footage-title-keyword-checker#trial">Stock Shredder</a> does the whole job in one pass: it trims, grades and exports the clips, then writes a title, a description and keywords for each one. Copy them one clip at a time, or save an upload sheet for Pond5, Adobe Stock or Shutterstock.</p>
+<p>For the file side of things, like clip length, codecs and frame rates, see <a href="../stock-footage-requirements-adobe-pond5-shutterstock/">the requirements for all three sites side by side</a>.</p>

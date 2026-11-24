@@ -173,6 +173,8 @@ def cover(m):
 
 
 def cover_html(m):
+    if m.get("tool"):
+        return ""  # Free tools open on the tool itself, not a cover frame.
     c = cover(m)
     return (
         '    <figure class="g-cover">\n'
@@ -325,14 +327,20 @@ def build(meta, header, footer, metas):
         "cta_note": cta["note"],
         "body": race_bars(meta["body"]),
         "cover_html": cover_html(meta),
-        "toc_html": toc_html(meta["body"]),
+        "toc_html": "" if meta.get("tool") else toc_html(meta["body"]),
         "note_html": NOTE,
         "faq_html": faq_html,
         "related_html": related_html(related(meta, metas)),
+        "extra_head": "".join(
+            f'<link rel="stylesheet" href="../../assets/css/{c}?v={CSS_V}" />\n' for c in meta.get("css", [])
+        ),
     }
     page = (ROOT / "seo/article-template.html").read_text()
     for k, v in vals.items():
         page = page.replace("{{" + k + "}}", v)
+    if meta.get("tool"):
+        # The tool sits right under the headline. Stock Shredder shows up next to the results instead.
+        page = re.sub(r'\s*<p class="g-head-cta">.*?</p>', "", page)
     left = re.findall(r"\{\{\w+\}\}", page)
     if left:
         sys.exit(f"{slug}: unfilled placeholders {left}")
