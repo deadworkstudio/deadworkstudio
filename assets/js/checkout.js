@@ -307,6 +307,12 @@
     return isPhoneVisitor() && !document.querySelector('[data-trial-name]');
   }
 
+  // Board #15 (Daniel 2026-11-25): with the no-card trial, a phone starts it with just an email.
+  // The email is built for the computer: one link there shows the right download and the key.
+  function phoneNoCard() {
+    return isPhoneVisitor() && !!trialNameInput;
+  }
+
   function isPhoneVisitor() {
     var ua = navigator.userAgent || '';
     if (/iPhone|iPad|iPod|Android|Mobile/i.test(ua)) return true;
@@ -590,6 +596,56 @@
     }
   }
 
+  // Board #15 follow-up (Daniel 2026-11-25): phones can send the open-on-your-computer link to the
+  // address their computer uses. The Worker hands this browser a short-lived token for it.
+  var trialForwardToken = null;
+  function addSendElsewhere(afterEl) {
+    if (!trialForwardToken || !afterEl || document.querySelector('[data-send-elsewhere]')) return;
+    var box = document.createElement('div');
+    box.className = 'send-elsewhere';
+    box.setAttribute('data-send-elsewhere', '');
+    var open = document.createElement('button');
+    open.type = 'button';
+    open.className = 'send-elsewhere-open';
+    open.textContent = T('Computer uses another email? Send the link there.');
+    var form = document.createElement('form');
+    form.className = 'send-elsewhere-form';
+    form.hidden = true;
+    form.noValidate = true;
+    var input = document.createElement('input');
+    input.type = 'email'; input.autocomplete = 'email'; input.required = true;
+    input.placeholder = T('Email you use on your computer');
+    input.setAttribute('aria-label', T('Email you use on your computer'));
+    var send = document.createElement('button');
+    send.type = 'submit';
+    send.textContent = T('Send');
+    var msg = document.createElement('p');
+    msg.className = 'send-elsewhere-msg';
+    msg.setAttribute('role', 'status');
+    form.appendChild(input); form.appendChild(send);
+    box.appendChild(open); box.appendChild(form); box.appendChild(msg);
+    afterEl.parentNode.insertBefore(box, afterEl.nextSibling);
+    open.addEventListener('click', function () { open.hidden = true; form.hidden = false; input.focus(); });
+    var busy = false;
+    form.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      if (busy) return;
+      var email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = T('Check the email address.'); input.focus(); return; }
+      busy = true; send.disabled = true; msg.textContent = '';
+      fetch(WORKER_URL + '/trial/send-elsewhere', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: trialForwardToken, email: email })
+      }).then(function (res) {
+        if (res.ok) { form.hidden = true; msg.textContent = T('Sent. Open that inbox on your computer.'); step('trial-send-elsewhere'); return; }
+        msg.textContent = res.status === 400 ? T('Check the email address.') : T('Could not send. Use the link in your email instead.');
+      }).catch(function () {
+        msg.textContent = T('Could not send. Use the link in your email instead.');
+      }).then(function () { busy = false; send.disabled = false; });
+    });
+  }
+
   function showSuccess(activationKey, trial, firstName, sentTo) {
     var finishedSessionId = sessionId;
     teardownCheckout();
@@ -635,9 +691,29 @@
       // key?", the same words as the welcome email (worker customerEmail.ts PASTE_KEY_TEXT).
       var pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste your key.') + '</li>';
       if (keyByEmail && !onPhone) pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.') + '</li>';
-      successSteps.innerHTML = onPhone
+      successSteps.innerHTML = onPhone && keyByEmail && phoneNoCard()
+        ? '<li>' + T('Open our email on your computer.') + '</li><li>' + T('Tap <strong>Open Stock Shredder on my computer</strong>. It picks the right download and shows your key.') + '</li>'
+        : onPhone
         ? '<li>' + T('Open the email we just sent you on your computer.') + '</li><li>' + T('Download Stock Shredder from it.') + '</li>' + pasteStep
         : '<li>' + T('Install Stock Shredder.') + '</li>' + pasteStep + '<li>' + T('Drop in a folder of raw footage and start shredding.') + '</li>';
+      if (onPhone && keyByEmail) addSendElsewhere(successSteps);
+      // Board #15: a phone can't run the app yet, so show it working right here (20 seconds, muted).
+      if (onPhone && isTrial && !document.querySelector('[data-phone-demo]')) {
+        var demo = document.createElement('div');
+        demo.className = 'checkout-phone-demo';
+        demo.setAttribute('data-phone-demo', '');
+        var cap = document.createElement('p');
+        cap.className = 'checkout-phone-demo-cap';
+        cap.textContent = T("Here's what it does with one card dump:");
+        var vid = document.createElement('video');
+        vid.src = '/assets/video/watch/one-card-dump-720.mp4';
+        vid.poster = '/assets/video/watch/one-card-dump-poster.jpg';
+        vid.muted = true; vid.defaultMuted = true; vid.playsInline = true; vid.loop = true; vid.controls = true; vid.autoplay = true;
+        vid.setAttribute('playsinline', ''); vid.setAttribute('muted', ''); vid.setAttribute('preload', 'metadata');
+        demo.appendChild(cap); demo.appendChild(vid);
+        successSteps.parentNode.insertBefore(demo, successSteps.nextSibling);
+        try { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {}
+      }
     }
 
     // Show the visitor's own platform as the big button, the other platform as a small secondary
@@ -1349,6 +1425,7 @@
     if (trialNameInput) {
       body.name = (trialNameInput.value || '').trim();
       body.noCard = true;
+      if (phoneNoCard()) body.phone = true;
     }
     return body;
   }
@@ -1385,6 +1462,7 @@
         if (result.ok && result.data && result.data.noCard && (result.data.activationKey || result.data.emailSent)) {
           sessionId = result.data.sessionId || null;
           currentCheckoutIsTrial = true;
+          trialForwardToken = result.data.forwardToken || null;
           showSuccess(result.data.activationKey || null, result.data.trial, result.data.firstName, trialEmailInput ? (trialEmailInput.value || '').trim() : '');
           var reduceMotionNc = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (success && success.scrollIntoView) success.scrollIntoView({ block: 'start', behavior: reduceMotionNc ? 'auto' : 'smooth' });
@@ -1565,6 +1643,18 @@
         startTrialCheckout(email);
       });
   }
+
+  // Board #15: on a phone with the no-card trial, first name + email (Daniel 11-25: greet by name), and a line saying what happens next.
+  (function phoneNoCardMode() {
+    if (!trialForm || !phoneNoCard()) return;
+    var note = document.querySelector('[data-trial-phone-note]');
+    if (note) {
+      note.textContent = T("On your phone? Start here with your first name and email. We'll send you one link to open on your computer.");
+      note.hidden = false;
+      // Right under the button, where it's read before tapping.
+      trialForm.parentNode.insertBefore(note, trialForm.nextSibling);
+    }
+  })();
 
   // Phones: relabel the trial button and offer the plain trial as a small link.
   (function phoneTrialMode() {
