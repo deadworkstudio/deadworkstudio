@@ -307,6 +307,12 @@
     return isPhoneVisitor() && !document.querySelector('[data-trial-name]');
   }
 
+  // Board #15 (Daniel 2026-11-25): with the no-card trial, a phone starts it with just an email.
+  // The email is built for the computer: one link there shows the right download and the key.
+  function phoneNoCard() {
+    return isPhoneVisitor() && !!trialNameInput;
+  }
+
   function isPhoneVisitor() {
     var ua = navigator.userAgent || '';
     if (/iPhone|iPad|iPod|Android|Mobile/i.test(ua)) return true;
@@ -635,9 +641,28 @@
       // key?", the same words as the welcome email (worker customerEmail.ts PASTE_KEY_TEXT).
       var pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste your key.') + '</li>';
       if (keyByEmail && !onPhone) pasteStep = '<li>' + T('Open it, click <strong>Already have an activation key?</strong> and paste the key from our email.') + '</li>';
-      successSteps.innerHTML = onPhone
+      successSteps.innerHTML = onPhone && keyByEmail && phoneNoCard()
+        ? '<li>' + T('Open our email on your computer.') + '</li><li>' + T('Tap <strong>Open Stock Shredder on my computer</strong>. It picks the right download and shows your key.') + '</li>'
+        : onPhone
         ? '<li>' + T('Open the email we just sent you on your computer.') + '</li><li>' + T('Download Stock Shredder from it.') + '</li>' + pasteStep
         : '<li>' + T('Install Stock Shredder.') + '</li>' + pasteStep + '<li>' + T('Drop in a folder of raw footage and start shredding.') + '</li>';
+      // Board #15: a phone can't run the app yet, so show it working right here (20 seconds, muted).
+      if (onPhone && isTrial && !document.querySelector('[data-phone-demo]')) {
+        var demo = document.createElement('div');
+        demo.className = 'checkout-phone-demo';
+        demo.setAttribute('data-phone-demo', '');
+        var cap = document.createElement('p');
+        cap.className = 'checkout-phone-demo-cap';
+        cap.textContent = T("Here's what it does with one card dump:");
+        var vid = document.createElement('video');
+        vid.src = '/assets/video/watch/one-card-dump-720.mp4';
+        vid.poster = '/assets/video/watch/one-card-dump-poster.jpg';
+        vid.muted = true; vid.defaultMuted = true; vid.playsInline = true; vid.loop = true; vid.controls = true; vid.autoplay = true;
+        vid.setAttribute('playsinline', ''); vid.setAttribute('muted', ''); vid.setAttribute('preload', 'metadata');
+        demo.appendChild(cap); demo.appendChild(vid);
+        successSteps.parentNode.insertBefore(demo, successSteps.nextSibling);
+        try { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {}
+      }
     }
 
     // Show the visitor's own platform as the big button, the other platform as a small secondary
@@ -1349,6 +1374,7 @@
     if (trialNameInput) {
       body.name = (trialNameInput.value || '').trim();
       body.noCard = true;
+      if (phoneNoCard()) body.phone = true;
     }
     return body;
   }
@@ -1492,7 +1518,7 @@
       // On a phone the main button only emails the link to their computer, where they type the
       // name, so the name is only needed when the trial really starts here.
       var phoneSend = phoneSendsToComputer() && !trialForm.hasAttribute('data-start-now');
-      if (trialNameInput && !phoneSend && !(trialNameInput.value || '').trim()) {
+      if (trialNameInput && !phoneSend && !phoneNoCard() && !(trialNameInput.value || '').trim()) {
         step('trial-invalid-name');
         showTrialError(T('Enter your first name.'));
         trialNameInput.focus();
@@ -1565,6 +1591,19 @@
         startTrialCheckout(email);
       });
   }
+
+  // Board #15: on a phone with the no-card trial, just the email, and a line saying what happens next.
+  (function phoneNoCardMode() {
+    if (!trialForm || !phoneNoCard()) return;
+    trialNameInput.hidden = true;
+    var note = document.querySelector('[data-trial-phone-note]');
+    if (note) {
+      note.textContent = T("On your phone? Start here with just your email. We'll send you one link to open on your computer.");
+      note.hidden = false;
+      // Right under the button, where it's read before tapping.
+      trialForm.parentNode.insertBefore(note, trialForm.nextSibling);
+    }
+  })();
 
   // Phones: relabel the trial button and offer the plain trial as a small link.
   (function phoneTrialMode() {
