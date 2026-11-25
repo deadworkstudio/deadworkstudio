@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261124h"
+CSS_V = "20261124i"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -42,8 +42,11 @@ CTAS = {
         "note": "No card needed, just your name and email. Start any time before December 31, 2026.",
     },
     "loadout": {
-        "href": "../../products/loadout/?ref=guide&utm_campaign={slug}",
-        "label": "Start your 14-day free trial",
+        "href": "../../products/loadout/?ref=guide&utm_campaign={slug}&utm_content={cluster}",
+        "label": "See how Loadout works",
+        # Direct App Store link: one Apple campaign per topic cluster (seo.<cluster>), not per guide,
+        # so each campaign can reach Apple's 5-download reporting minimum sooner.
+        "alt": 'Or <a href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355?pt=129505191&amp;ct=seo.{cluster}&amp;mt=8" data-cta="appstore">download Loadout on the App Store</a>.',
         "eyebrow": "Loadout · iPhone",
         "title": "Scan the case before you leave.",
         "text": "Pan your iPhone across the open case. Loadout checks it against your saved kit and lists what's missing.",
@@ -337,7 +340,9 @@ def build(meta, header, footer, metas):
     check_links(meta, metas)
     slug = meta["slug"]
     url = f"{SITE}/guides/{slug}/"
-    cta = {k: v.format(slug=slug) for k, v in CTAS[meta["product"]].items()}
+    if meta["product"] == "loadout" and not meta.get("cluster"):
+        sys.exit(f"{slug}: Loadout guides need a \"cluster\" in meta (checklists, wrap, inventory, apps, rentals, insurance, jobkits)")
+    cta = {k: v.format(slug=slug, cluster=meta.get("cluster", "")) for k, v in CTAS[meta["product"]].items()}
     faq_html = "\n".join(
         f'      <details class="g-faq-item"><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>'
         for q, a in meta.get("faq", [])
@@ -365,6 +370,7 @@ def build(meta, header, footer, metas):
         "cta_title": cta["title"],
         "cta_text": cta["text"],
         "cta_note": cta["note"],
+        "cta_alt": f'      <p class="g-cta-alt">{cta["alt"]}</p>\n' if cta.get("alt") else "",
         "body": race_bars(meta["body"]),
         "cover_html": cover_html(meta),
         "toc_html": "" if meta.get("tool") else toc_html(meta["body"]),
@@ -397,6 +403,9 @@ HUB = [
     {
         "product": "loadout", "name": "Loadout", "href": "../products/loadout/",
         "line": "Camera gear checklists and the habits that stop gear going missing. Loadout checks the open case with your iPhone.",
+        # Start here: learn, choose an app, use a free tool. Slugs not live yet are skipped until they are.
+        "start": ["camera-gear-checklist", "camera-gear-inventory-apps", "camera-gear-checklist-maker"],
+        "tools_first": True,
         "topics": [
             ("Checklists", ["camera-gear-checklist", "film-production-wrap-checklist", "check-gear-before-leaving-set"]),
             ("Tracking your gear", ["keep-track-of-camera-equipment"]),
@@ -432,7 +441,7 @@ def hub_card(m, up=""):
 
 def build_hub(header, footer, metas):
     live = {m["slug"]: m for m in metas if m["status"] == "live"}
-    placed = {s for c in HUB for _, ss in c["topics"] for s in ss}
+    placed = {s for c in HUB for _, ss in c["topics"] for s in ss} | {s for c in HUB for s in c.get("start", [])}
     tools = [m for m in live.values() if m.get("tool")]
     missing = sorted(s for s, m in live.items() if s not in placed and not m.get("tool"))
     if missing:
@@ -441,8 +450,24 @@ def build_hub(header, footer, metas):
     sections, items, n = [], [], 0
     for c in HUB:
         blocks = []
+        start = [live[s] for s in c.get("start", []) if s in live]
+        shown = {m["slug"] for m in start}
+        if start:
+            items += start
+            blocks.append(
+                f'      <section class="gh-topic gh-start"><h3 class="mono">Start here <span>{len(start)}</span></h3>\n'
+                f'        <ul class="gh-cards">{"".join(hub_card(m) for m in start)}</ul></section>'
+            )
+        ptools = [m for m in tools if m["product"] == c["product"] and m["slug"] not in shown]
+        tools_block = (
+            f'      <section class="gh-topic"><h3 class="mono">Free tools <span>{len(ptools)}</span></h3>\n'
+            f'        <ul class="gh-cards">{"".join(hub_card(m) for m in ptools)}</ul></section>'
+        ) if ptools else ""
+        if tools_block and c.get("tools_first"):
+            items += ptools
+            blocks.append(tools_block)
         for name, slugs in c["topics"]:
-            cards = [live[s] for s in slugs if s in live]
+            cards = [live[s] for s in slugs if s in live and s not in shown]
             if not cards:
                 continue
             items += cards
@@ -450,13 +475,9 @@ def build_hub(header, footer, metas):
                 f'      <section class="gh-topic"><h3 class="mono">{html.escape(name)} <span>{len(cards)}</span></h3>\n'
                 f'        <ul class="gh-cards">{"".join(hub_card(m) for m in cards)}</ul></section>'
             )
-        ptools = [m for m in tools if m["product"] == c["product"]]
-        if ptools:
+        if tools_block and not c.get("tools_first"):
             items += ptools
-            blocks.append(
-                f'      <section class="gh-topic"><h3 class="mono">Free tools <span>{len(ptools)}</span></h3>\n'
-                f'        <ul class="gh-cards">{"".join(hub_card(m) for m in ptools)}</ul></section>'
-            )
+            blocks.append(tools_block)
         if not blocks:
             continue
         n += 1
