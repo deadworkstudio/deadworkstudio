@@ -1,0 +1,89 @@
+<!--meta
+{
+  "slug": "stock-clip-spec-checker",
+  "status": "live",
+  "product": "stock-shredder",
+  "tool": true,
+  "tool_line": "Drop in a clip. See its length, size, frame rate and codec, and whether Adobe Stock, Pond5, Shutterstock and Storyblocks would take it.",
+  "css": ["tools.css"],
+  "keyword": "stock footage requirements checker",
+  "secondary": ["check video specs for stock", "adobe stock video requirements checker", "shutterstock video requirements", "pond5 video requirements", "storyblocks video requirements", "stock footage frame rate"],
+  "title": "Stock Clip Spec Checker",
+  "seo_title": "Free Stock Clip Spec Checker: Will Adobe Stock, Pond5, Shutterstock and Storyblocks Take Your Clip?",
+  "description": "Drop a MOV or MP4 and see its length, resolution, frame rate, codec, bitrate, audio and file size checked against Adobe Stock, Pond5, Shutterstock and Storyblocks. Free, nothing is uploaded.",
+  "eyebrow": "Free tool · Clip spec checker",
+  "dek": "Drop in one clip or a whole folder's worth. See what each stock site would refuse before you spend an evening uploading.",
+  "published": "2026-11-24",
+  "updated": "2026-11-24",
+  "read_minutes": 3,
+  "faq": [
+    ["Does this checker upload my video?", "No. It reads the settings stored in the file's header, right in your browser. The video never leaves your computer, so even a 5 GB clip is checked in a second."],
+    ["Which files can it read?", "MOV and MP4, which is what all four sites want. Camera files like R3D, BRAW and MXF need to be exported first; the checker will tell you which sites take them as they are."],
+    ["What is the safest export for every stock site?", "ProRes 422 or 422 HQ in a MOV, at the camera's own size and frame rate, 10 to 20 seconds long, under 3.9 GB, with the audio off."],
+    ["Why does Adobe Stock flag my 48 fps clip?", "Adobe Stock's list of frame rates stops at 23.98, 24, 25, 29.97, 30, 50, 59.94 and 60. Pond5, Shutterstock and Storyblocks all list 48."],
+    ["Can the checker spot logos, shake or ungraded log?", "No. It reads the file's settings, not the picture. Those checks still need your eye, or a tool that looks at the footage."]
+  ]
+}
+-->
+
+<div class="tc" id="spec-checker">
+  <form class="tc-form" onsubmit="return false" aria-label="Stock clip spec checker">
+    <label class="cs-drop" id="cs-drop" for="cs-file">
+      <input type="file" id="cs-file" multiple accept="video/*,.mov,.mp4,.m4v,.mxf,.r3d,.braw,.mts,.m2ts" />
+      <strong>Drop clips here</strong>
+      <span>MOV or MP4. One clip or up to 50 at once.</span>
+      <b class="tc-btn">Choose files</b>
+    </label>
+    <p class="cs-status" id="cs-status" aria-live="polite"></p>
+    <fieldset class="tc-sites">
+      <legend>Check for</legend>
+      <label><input type="checkbox" value="adobe" checked /> Adobe Stock</label>
+      <label><input type="checkbox" value="pond5" checked /> Pond5</label>
+      <label><input type="checkbox" value="shutterstock" checked /> Shutterstock</label>
+      <label><input type="checkbox" value="storyblocks" checked /> Storyblocks</label>
+    </fieldset>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn tc-btn--ghost" id="cs-clear">Clear</button>
+      <span class="tc-private">Your clips stay on your computer. Only the file's settings are read, and nothing is uploaded.</span>
+    </p>
+  </form>
+
+  <div class="tc-out" id="cs-out" aria-live="polite" hidden>
+    <div class="tc-summary" id="cs-summary"></div>
+    <div id="cs-list"></div>
+    <aside class="tc-pitch">
+      <p><strong>Checking a clip takes a second. Fixing a drive of them takes evenings.</strong></p>
+      <p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=stock-clip-spec-checker#trial" data-cta="tool">Stock Shredder</a> finds the usable shots in your raw footage, trims each one inside the length you set, flags wrong frame rates, HDR and footage under 2K, and exports every clip as its own ProRes file. Try it on 100 clips free.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/clip-spec-checker.js?v=20261124a" defer></script>
+
+<h2 id="rules">The specs on each site, side by side.</h2>
+<p>From each site's own contributor pages, checked in November 2026. The checker above uses exactly these.</p>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Check</th><th>Adobe Stock</th><th>Pond5</th><th>Shutterstock</th><th>Storyblocks</th></tr></thead>
+    <tbody>
+      <tr><td>Length</td><td>5 to 60 s</td><td>5 to 60 s</td><td>5 to 60 s</td><td>Up to 3 min</td></tr>
+      <tr><td>Max file size</td><td>3.9 GB</td><td>3 GB HD and vertical, 5 GB 4K to 6K, 6 GB 8K</td><td>10 GB</td><td>4 GB HD, 6 GB 4K</td></tr>
+      <tr><td>File type</td><td>MOV, MPG, MP4</td><td>MOV, MP4</td><td>MOV, MP4</td><td>HD: MOV. 4K: MOV, MP4 or R3D. 8K: MP4</td></tr>
+      <tr><td>Codecs</td><td>ProRes or H.264 recommended</td><td>Camera native, ProRes, DNxHD/HR, H.264, H.265. No Motion JPEG</td><td>ProRes, H.264, Photo JPEG. H.265 not recommended</td><td>ProRes 422 and 4444, DNxHD, Photo JPEG, H.264 at 50 Mbps or more</td></tr>
+      <tr><td>Frame rates</td><td>23.98, 24, 25, 29.97, 30, 50, 59.94, 60</td><td>Adds 47.95 and 48</td><td>Adds 48</td><td>Adds 48</td></tr>
+      <tr><td>Audio</td><td>Not covered</td><td>Prefers it removed</td><td>None unless it adds to the clip</td><td>Usually not accepted</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Sources: <a href="https://helpx.adobe.com/stock/contributor/submit-your-content/submit-videos/technical-requirements-for-video-submissions.html" rel="noopener" target="_blank">Adobe Stock</a>, <a href="https://contributor.pond5.com/getting-started/preparing-your-files-2/footage/" rel="noopener" target="_blank">Pond5</a>, <a href="https://submit.shutterstock.com/help/en/articles/10594637-what-are-the-technical-requirements-for-video" rel="noopener" target="_blank">Shutterstock</a>, <a href="https://contribute-faq.storyblocks.com/en/articles/4543771-what-are-the-submission-requirements-for-video-and-animations" rel="noopener" target="_blank">Storyblocks</a>. Sites change these, so check before a big upload. The full walk-through is in <a href="../stock-footage-requirements-adobe-pond5-shutterstock/">the requirements for Adobe Stock, Pond5 and Shutterstock</a> and <a href="../storyblocks-video-contributor/">the Storyblocks guide</a>.</p>
+
+<h2 id="common">The four things that catch most clips.</h2>
+<ul class="g-list">
+  <li><strong>Length.</strong> A clip straight off the card is usually minutes long. Trim to 10 to 20 seconds and it fits every site.</li>
+  <li><strong>File size.</strong> 4K ProRes HQ gets big fast. A 60 second clip can pass 5 GB, which is over Adobe Stock's 3.9 GB and Pond5's 5 GB for 4K.</li>
+  <li><strong>Frame rate.</strong> 48 fps works on three sites but not Adobe Stock. Phone footage often changes frame rate inside the file, so export it at a steady rate.</li>
+  <li><strong>Audio.</strong> Camera audio rides along on most exports. Three of the four sites would rather it wasn't there.</li>
+</ul>
+
+<h2 id="drive">Doing this for a whole drive.</h2>
+<p>The checker tells you what's wrong with a file. Fixing it means going back to the edit: trim, grade, export, rename, one clip at a time. At about 2 minutes a clip, 500 clips is 16+ hours.</p>
+<p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=stock-clip-spec-checker#trial">Stock Shredder</a> does it in one pass. It finds the usable shots, keeps every clip inside the length you set, flags the ones a site would refuse, and exports each as its own ProRes file with a title and keywords ready. See the steps in <a href="../prepare-stock-footage-faster/">how to prepare stock footage faster</a>, and check your titles with the <a href="../stock-footage-title-keyword-checker/">free title and keyword checker</a>.</p>

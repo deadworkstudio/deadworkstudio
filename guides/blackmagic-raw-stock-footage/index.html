@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
 <link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261124tiles" />
 <link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
-<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124h" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124j" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Blackmagic RAW to Stock Clips, Fast", "description": "How to get BRAW footage from Pocket, Pyxis and URSA cameras graded, trimmed and exported as stock clips, without a Resolve session for every card.", "datePublished": "2026-11-23", "dateModified": "2026-11-23", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/blackmagic-raw-stock-footage/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I upload Blackmagic RAW files to stock sites?", "acceptedAnswer": {"@type": "Answer", "text": "Not as .braw. Adobe Stock, Shutterstock and Pond5 want MOV or MP4. Grade the BRAW to Rec 709 and export ProRes or H.264."}}, {"@type": "Question", "name": "Do I have to grade Blackmagic Film footage for stock?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Adobe Stock won't take uncorrected log and Shutterstock prefers Rec 709. A light conversion from Blackmagic Film to Rec 709 is enough. Buyers grade it again."}}, {"@type": "Question", "name": "What resolution should I export BRAW at for stock?", "acceptedAnswer": {"@type": "Answer", "text": "The size you shot, or UHD or DCI 4K if you shot 6K or above and the site doesn't list your size. Don't upscale."}}, {"@type": "Question", "name": "Does Stock Shredder read BRAW?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Blackmagic RAW is read natively, and CinemaDNG from Blackmagic cameras works on macOS. Load your Blackmagic Film to Rec 709 LUT and it applies to every clip."}}, {"@type": "Question", "name": "How long does it take to prepare 1,000 stock clips?", "acceptedAnswer": {"@type": "Answer", "text": "By hand, about 33 hours at 2 minutes a clip. In our test, Stock Shredder shredded and exported 1,000 graded 4K ProRes clips in 3 hours 1 minute, not counting review."}}]}]</script>
 </head>
@@ -135,6 +135,7 @@
   <li><strong>Audio off.</strong> Unless the sound is the point of the clip.</li>
 </ul>
 <p class="g-source">Sources: <a href="https://helpx.adobe.com/stock/contributor/submit-your-content/submit-videos/technical-requirements-for-video-submissions.html" rel="noopener">Adobe Stock technical requirements</a>, <a href="https://submit.shutterstock.com/help/en/articles/10594637-what-are-the-technical-requirements-for-video" rel="noopener">Shutterstock video requirements</a>, <a href="https://contributor.pond5.com/getting-started/preparing-your-files-2/footage/" rel="noopener">Pond5 footage guidelines</a>. Checked November 2026. Full comparison in <a href="../stock-footage-requirements-adobe-pond5-shutterstock/">How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock</a>.</p>
+<p>Shooting RED too? <a href="../red-r3d-stock-footage/">RED R3D to stock clips</a> covers the REDCINE-X Pro step. For Sony log footage, see <a href="../sony-slog3-stock-footage/">the FX3 and FX6 guide</a>.</p>
 
 <h2 id="by-hand">The by-hand way.</h2>
 <ol class="g-steps">
@@ -148,7 +149,7 @@
 <p>Our average is about 2 minutes per clip, every clip.</p>
 
 <h2 id="stock-shredder">The Stock Shredder way.</h2>
-<p>Point Stock Shredder at the card dump on your Mac or Windows computer.</p>
+<p>Point <a href="../../products/stock-shredder/?ref=guide&amp;utm_campaign=blackmagic-raw-stock-footage" data-cta="body">Stock Shredder</a> at the card dump on your Mac or Windows computer.</p>
 <figure class="g-figure">
   <img src="../../assets/img/products/stock-shredder/review-light.jpg" alt="Stock Shredder review screen with trimmed clips ready to approve" width="2000" height="1278" loading="lazy" decoding="async" />
   <figcaption>Review screen. Approve, deny and trim from the keyboard.</figcaption>
@@ -214,7 +215,7 @@
       <p class="mono" id="free-tools">Free tools</p>
       <ul>
         <li><a href="../stock-footage-profit-calculator/" data-tool="stock-footage-profit-calculator"><strong>Stock Footage Profit Calculator</strong><span>Enter your clips, downloads and earnings per download. See what more clips could add, using only your own numbers.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
-        <li><a href="../stock-footage-title-keyword-checker/" data-tool="stock-footage-title-keyword-checker"><strong>Stock Clip Title and Keyword Checker</strong><span>Paste a title and keywords. See what Adobe Stock, Shutterstock, Pond5 and Storyblocks would flag before you upload.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+        <li><a href="../stock-clip-spec-checker/" data-tool="stock-clip-spec-checker"><strong>Stock Clip Spec Checker</strong><span>Drop in a clip. See its length, size, frame rate and codec, and whether Adobe Stock, Pond5, Shutterstock and Storyblocks would take it.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
       </ul>
     </aside>
     <aside class="g-note">
