@@ -1518,7 +1518,7 @@
       // On a phone the main button only emails the link to their computer, where they type the
       // name, so the name is only needed when the trial really starts here.
       var phoneSend = phoneSendsToComputer() && !trialForm.hasAttribute('data-start-now');
-      if (trialNameInput && !phoneSend && !phoneNoCard() && !(trialNameInput.value || '').trim()) {
+      if (trialNameInput && !phoneSend && !(trialNameInput.value || '').trim()) {
         step('trial-invalid-name');
         showTrialError(T('Enter your first name.'));
         trialNameInput.focus();
@@ -1592,13 +1592,12 @@
       });
   }
 
-  // Board #15: on a phone with the no-card trial, just the email, and a line saying what happens next.
+  // Board #15: on a phone with the no-card trial, first name + email (Daniel 11-25: greet by name), and a line saying what happens next.
   (function phoneNoCardMode() {
     if (!trialForm || !phoneNoCard()) return;
-    trialNameInput.hidden = true;
     var note = document.querySelector('[data-trial-phone-note]');
     if (note) {
-      note.textContent = T("On your phone? Start here with just your email. We'll send you one link to open on your computer.");
+      note.textContent = T("On your phone? Start here with your first name and email. We'll send you one link to open on your computer.");
       note.hidden = false;
       // Right under the button, where it's read before tapping.
       trialForm.parentNode.insertBefore(note, trialForm.nextSibling);
