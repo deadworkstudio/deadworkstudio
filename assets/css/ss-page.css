@@ -1240,3 +1240,8 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 
 /* Daniel 2026-11-24: the small print under the earn buttons as one tidy paragraph: narrower, balanced lines. */
 .earn-note { max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.6; text-wrap: balance; }
+
+/* Board #15 (2026-11-25): on a phone, the "You're in" panel plays the 20-second demo under the steps. */
+.checkout-phone-demo { margin-top: 18px; }
+.checkout-phone-demo-cap { margin: 0 0 8px; font-size: 14px; }
+.checkout-phone-demo video { display: block; width: 100%; max-width: 560px; border-radius: 10px; background: #000; }
