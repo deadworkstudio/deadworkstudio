@@ -1,0 +1,92 @@
+<!--meta
+{
+  "slug": "stock-upload-sheet-converter",
+  "status": "draft",
+  "product": "stock-shredder",
+  "tool": true,
+  "tool_line": "Paste one metadata sheet. Save it in the exact CSV layout Adobe Stock, Shutterstock and Pond5 each ask for.",
+  "css": ["tools.css"],
+  "keyword": "stock footage csv metadata",
+  "secondary": ["adobe stock csv upload", "shutterstock csv upload", "pond5 csv template", "stock footage metadata spreadsheet", "convert csv for stock sites", "bulk keywords stock footage"],
+  "title": "Stock Upload Sheet Converter",
+  "seo_title": "Free Stock Upload Sheet Converter: One CSV to Adobe Stock, Shutterstock and Pond5",
+  "description": "Paste or drop one metadata sheet with file names, titles, descriptions and keywords. Save the exact CSV layout Adobe Stock, Shutterstock and Pond5 each want, with their limits applied. Free, runs in your browser.",
+  "eyebrow": "Free tool · Upload sheet converter",
+  "dek": "Write your titles and keywords once. Get the three CSV files each site wants, with their column names, limits and quirks handled.",
+  "published": "2026-11-25",
+  "updated": "2026-11-25",
+  "read_minutes": 3,
+  "faq": [
+    ["What columns does my sheet need?", "A file name column and a keywords column. Title and description are optional but worth having. The converter also reads sheets saved for Adobe Stock, Shutterstock or Pond5, so you can turn one site's sheet into the others."],
+    ["Why are the commas gone from my Adobe Stock titles?", "Adobe's CSV page asks for titles with no commas and no more than 70 characters, so the converter takes them out."],
+    ["Does Shutterstock's CSV have a title column?", "No. Shutterstock uses one description, so the converter puts your description there, or your title if a clip has no description."],
+    ["Where do I upload the CSV?", "Upload the clips first. Then use Upload CSV in the Adobe Stock contributor portal, the CSV button on Shutterstock's Submit page, or Apply CSV on Pond5."],
+    ["Is my sheet sent anywhere?", "No. It's read and converted in your browser, and the files are saved straight to your computer."]
+  ]
+}
+-->
+
+<div class="tc" id="sheet-converter">
+  <form class="tc-form" onsubmit="return false" aria-label="Upload sheet converter">
+    <div class="tc-field">
+      <div class="tc-label"><label for="sc-in">Your sheet</label><span class="tc-n">CSV, TAB OR SEMICOLON</span></div>
+      <textarea id="sc-in" rows="7" spellcheck="false" placeholder="Filename,Title,Description,Keywords&#10;clip_001.mov,Rider on a motorcycle at sunset,Slow tracking shot on a mountain road,&quot;motorcycle, rider, sunset, travel&quot;"></textarea>
+      <div class="sc-drop" id="sc-drop">
+        <label class="tc-btn tc-btn--ghost" for="sc-file">Open a CSV file</label>
+        <input type="file" id="sc-file" accept=".csv,.tsv,.txt,text/csv" />
+        <span>or drop it here. Paste straight from a spreadsheet works too.</span>
+      </div>
+    </div>
+    <div class="sc-opts">
+      <label><input type="checkbox" id="sc-ed" /> Mark every clip editorial</label>
+      <label>Pond5 price, USD <input type="text" inputmode="decimal" id="sc-price" autocomplete="off" placeholder="Optional" /></label>
+    </div>
+    <p class="sc-msg" id="sc-msg" aria-live="polite"></p>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn" id="sc-sample">Try an example</button>
+      <button type="button" class="tc-btn tc-btn--ghost" id="sc-clear">Clear</button>
+      <span class="tc-private">Runs in your browser. Your sheet isn't sent anywhere.</span>
+    </p>
+  </form>
+
+  <div class="tc-out" id="sc-out" aria-live="polite" hidden>
+    <div class="tc-summary" id="sc-summary"></div>
+    <section class="tc-block" hidden>
+      <h3>All sites</h3>
+      <ul id="sc-general"></ul>
+    </section>
+    <div class="tc-sitelist sc-sitelist" id="sc-sitelist"></div>
+    <aside class="tc-pitch">
+      <p><strong>No sheet yet? That's the slow part.</strong></p>
+      <p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=stock-upload-sheet-converter#trial" data-cta="tool">Stock Shredder</a> writes a title, a description and keywords for every clip it exports, then saves the upload sheets for Adobe Stock, Shutterstock and Pond5 for you. Included on Pro, Studio and the free trial.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/upload-sheet-converter.js?v=20261125a" defer></script>
+
+<h2 id="layouts">Each site's sheet, column by column.</h2>
+<p>From each site's own CSV help page, checked in November 2026. The converter writes exactly these.</p>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Site</th><th>Columns, in order</th><th>Limits worth knowing</th></tr></thead>
+    <tbody>
+      <tr><td>Adobe Stock</td><td>Filename, Title, Keywords, Category, Releases</td><td>Title up to 70 characters, no commas. File names up to 30 characters. Up to 5,000 rows and 1 MB per sheet, saved as UTF-8.</td></tr>
+      <tr><td>Shutterstock</td><td>Filename, Description, Keywords, Categories, Illustration, Mature Content, Editorial</td><td>No title column. One or two categories. Yes or No in the last three. Only rows for clips in this submission.</td></tr>
+      <tr><td>Pond5</td><td>originalfilename, title, description, keywords, city, region, country, specifysource, modelreleased, propertyreleased, release, copyright, price, editorial</td><td>File name, title and keywords required. Title up to 80 characters, description up to 500. Price in USD.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Sources: <a href="https://helpx.adobe.com/stock/contributor/manage-your-portfolio/csv-requirements-content.html" rel="noopener" target="_blank">Adobe Stock CSV requirements</a>, <a href="https://submit.shutterstock.com/help/en/articles/10617486-how-do-i-include-existing-metadata-with-my-content-submission" rel="noopener" target="_blank">Shutterstock existing metadata</a>, <a href="https://contributor.pond5.com/getting-started/preparing-your-files/" rel="noopener" target="_blank">Pond5 tagging and pricing</a>. Sites change these, so check before a big upload.</p>
+
+<h2 id="order">The order that works.</h2>
+<ul class="g-list">
+  <li><strong>Upload the clips first.</strong> Every site matches a row to a clip by its file name, so the files have to be there before the sheet.</li>
+  <li><strong>Keep file names identical.</strong> Same spelling, same extension. A renamed file won't pick up its row.</li>
+  <li><strong>Then add the sheet.</strong> Upload CSV on Adobe Stock, the CSV button on Shutterstock's Submit page, Apply CSV on Pond5.</li>
+  <li><strong>Check the categories.</strong> The converter picks them from your keywords. A quick look before you submit is worth it.</li>
+</ul>
+<p>To check titles and keywords one clip at a time first, use the <a href="../stock-footage-title-keyword-checker/">free title and keyword checker</a>. For the files themselves, the <a href="../stock-clip-spec-checker/">clip spec checker</a> shows what each site would refuse.</p>
+
+<h2 id="drive">Writing the sheet in the first place.</h2>
+<p>Converting a sheet takes seconds. Writing one, a title, a description and 20 to 40 keywords per clip, is where the evenings go. At about 2 minutes a clip for the prep alone, 500 clips is 16+ hours before any keywording.</p>
+<p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=stock-upload-sheet-converter#trial">Stock Shredder</a> trims, grades and exports each usable shot as its own clip, writes its title, description and keywords, and saves the sheet for each site in one go. See the steps in <a href="../prepare-stock-footage-faster/">how to prepare stock footage faster</a>.</p>
