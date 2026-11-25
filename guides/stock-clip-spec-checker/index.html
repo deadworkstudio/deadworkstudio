@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" data-product="stock-shredder">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#F4F1EA" />
+
+<title>Free Stock Clip Spec Checker: Will Adobe Stock, Pond5, Shutterstock and Storyblocks Take Your Clip? | DEADWORK</title>
+<meta name="description" content="Drop a MOV or MP4 and see its length, resolution, frame rate, codec, bitrate, audio and file size checked against Adobe Stock, Pond5, Shutterstock and Storyblocks. Free, nothing is uploaded." />
+<link rel="canonical" href="https://deadworkstudio.com/guides/stock-clip-spec-checker/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://deadworkstudio.com/guides/stock-clip-spec-checker/" />
+<meta property="og:title" content="Free Stock Clip Spec Checker: Will Adobe Stock, Pond5, Shutterstock and Storyblocks Take Your Clip?" />
+<meta property="og:description" content="Drop a MOV or MP4 and see its length, resolution, frame rate, codec, bitrate, audio and file size checked against Adobe Stock, Pond5, Shutterstock and Storyblocks. Free, nothing is uploaded." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="DEADWORK" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free Stock Clip Spec Checker: Will Adobe Stock, Pond5, Shutterstock and Storyblocks Take Your Clip?" />
+<meta name="twitter:description" content="Drop a MOV or MP4 and see its length, resolution, frame rate, codec, bitrate, audio and file size checked against Adobe Stock, Pond5, Shutterstock and Storyblocks. Free, nothing is uploaded." />
+<meta name="twitter:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
+<link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261124tiles" />
+<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261027a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261124j" />
+<link rel="stylesheet" href="../../assets/css/tools.css?v=20261124j" />
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Stock Clip Spec Checker", "description": "Drop a MOV or MP4 and see its length, resolution, frame rate, codec, bitrate, audio and file size checked against Adobe Stock, Pond5, Shutterstock and Storyblocks. Free, nothing is uploaded.", "datePublished": "2026-11-24", "dateModified": "2026-11-24", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/stock-clip-spec-checker/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does this checker upload my video?", "acceptedAnswer": {"@type": "Answer", "text": "No. It reads the settings stored in the file's header, right in your browser. The video never leaves your computer, so even a 5 GB clip is checked in a second."}}, {"@type": "Question", "name": "Which files can it read?", "acceptedAnswer": {"@type": "Answer", "text": "MOV and MP4, which is what all four sites want. Camera files like R3D, BRAW and MXF need to be exported first; the checker will tell you which sites take them as they are."}}, {"@type": "Question", "name": "What is the safest export for every stock site?", "acceptedAnswer": {"@type": "Answer", "text": "ProRes 422 or 422 HQ in a MOV, at the camera's own size and frame rate, 10 to 20 seconds long, under 3.9 GB, with the audio off."}}, {"@type": "Question", "name": "Why does Adobe Stock flag my 48 fps clip?", "acceptedAnswer": {"@type": "Answer", "text": "Adobe Stock's list of frame rates stops at 23.98, 24, 25, 29.97, 30, 50, 59.94 and 60. Pond5, Shutterstock and Storyblocks all list 48."}}, {"@type": "Question", "name": "Can the checker spot logos, shake or ungraded log?", "acceptedAnswer": {"@type": "Answer", "text": "No. It reads the file's settings, not the picture. Those checks still need your eye, or a tool that looks at the footage."}}]}]</script>
+</head>
+<body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="poster-head" data-sh>
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <p class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="1854" height="394"></a></p>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I — Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/scene-lock.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/set-control.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every team member. Every detail. In sync.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II — Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/loadout.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">iPhone &middot; Android coming soon</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/handoff.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>PROCESSING</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III — Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/sound-driver.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real artists. Real sounds.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/stock-shredder/" aria-current="true"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/stock-shredder.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+          </div>
+        </div>
+    </div>
+</header>
+
+<main id="main" class="g-main">
+  <article class="g-article">
+    <header class="g-head">
+      <p class="mono g-eyebrow">Free tool · Clip spec checker</p>
+      <h1 class="g-title">Stock Clip Spec Checker</h1>
+      <p class="g-dek">Drop in one clip or a whole folder&#x27;s worth. See what each stock site would refuse before you spend an evening uploading.</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED NOV 24, 2026 <span aria-hidden="true">&middot;</span> 3 MIN READ</p>
+    </header>
+
+
+    <div class="g-body">
+<div class="tc" id="spec-checker">
+  <form class="tc-form" onsubmit="return false" aria-label="Stock clip spec checker">
+    <label class="cs-drop" id="cs-drop" for="cs-file">
+      <input type="file" id="cs-file" multiple accept="video/*,.mov,.mp4,.m4v,.mxf,.r3d,.braw,.mts,.m2ts" />
+      <strong>Drop clips here</strong>
+      <span>MOV or MP4. One clip or up to 50 at once.</span>
+      <b class="tc-btn">Choose files</b>
+    </label>
+    <p class="cs-status" id="cs-status" aria-live="polite"></p>
+    <fieldset class="tc-sites">
+      <legend>Check for</legend>
+      <label><input type="checkbox" value="adobe" checked /> Adobe Stock</label>
+      <label><input type="checkbox" value="pond5" checked /> Pond5</label>
+      <label><input type="checkbox" value="shutterstock" checked /> Shutterstock</label>
+      <label><input type="checkbox" value="storyblocks" checked /> Storyblocks</label>
+    </fieldset>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn tc-btn--ghost" id="cs-clear">Clear</button>
+      <span class="tc-private">Your clips stay on your computer. Only the file's settings are read, and nothing is uploaded.</span>
+    </p>
+  </form>
+
+  <div class="tc-out" id="cs-out" aria-live="polite" hidden>
+    <div class="tc-summary" id="cs-summary"></div>
+    <div id="cs-list"></div>
+    <aside class="tc-pitch">
+      <p><strong>Checking a clip takes a second. Fixing a drive of them takes evenings.</strong></p>
+      <p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=stock-clip-spec-checker#trial" data-cta="tool">Stock Shredder</a> finds the usable shots in your raw footage, trims each one inside the length you set, flags wrong frame rates, HDR and footage under 2K, and exports every clip as its own ProRes file. Try it on 100 clips free.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/clip-spec-checker.js?v=20261124a" defer></script>
+
+<h2 id="rules">The specs on each site, side by side.</h2>
+<p>From each site's own contributor pages, checked in November 2026. The checker above uses exactly these.</p>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Check</th><th>Adobe Stock</th><th>Pond5</th><th>Shutterstock</th><th>Storyblocks</th></tr></thead>
+    <tbody>
+      <tr><td>Length</td><td>5 to 60 s</td><td>5 to 60 s</td><td>5 to 60 s</td><td>Up to 3 min</td></tr>
+      <tr><td>Max file size</td><td>3.9 GB</td><td>3 GB HD and vertical, 5 GB 4K to 6K, 6 GB 8K</td><td>10 GB</td><td>4 GB HD, 6 GB 4K</td></tr>
+      <tr><td>File type</td><td>MOV, MPG, MP4</td><td>MOV, MP4</td><td>MOV, MP4</td><td>HD: MOV. 4K: MOV, MP4 or R3D. 8K: MP4</td></tr>
+      <tr><td>Codecs</td><td>ProRes or H.264 recommended</td><td>Camera native, ProRes, DNxHD/HR, H.264, H.265. No Motion JPEG</td><td>ProRes, H.264, Photo JPEG. H.265 not recommended</td><td>ProRes 422 and 4444, DNxHD, Photo JPEG, H.264 at 50 Mbps or more</td></tr>
+      <tr><td>Frame rates</td><td>23.98, 24, 25, 29.97, 30, 50, 59.94, 60</td><td>Adds 47.95 and 48</td><td>Adds 48</td><td>Adds 48</td></tr>
+      <tr><td>Audio</td><td>Not covered</td><td>Prefers it removed</td><td>None unless it adds to the clip</td><td>Usually not accepted</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Sources: <a href="https://helpx.adobe.com/stock/contributor/submit-your-content/submit-videos/technical-requirements-for-video-submissions.html" rel="noopener" target="_blank">Adobe Stock</a>, <a href="https://contributor.pond5.com/getting-started/preparing-your-files-2/footage/" rel="noopener" target="_blank">Pond5</a>, <a href="https://submit.shutterstock.com/help/en/articles/10594637-what-are-the-technical-requirements-for-video" rel="noopener" target="_blank">Shutterstock</a>, <a href="https://contribute-faq.storyblocks.com/en/articles/4543771-what-are-the-submission-requirements-for-video-and-animations" rel="noopener" target="_blank">Storyblocks</a>. Sites change these, so check before a big upload. The full walk-through is in <a href="../stock-footage-requirements-adobe-pond5-shutterstock/">the requirements for Adobe Stock, Pond5 and Shutterstock</a> and <a href="../storyblocks-video-contributor/">the Storyblocks guide</a>.</p>
+
+<h2 id="common">The four things that catch most clips.</h2>
+<ul class="g-list">
+  <li><strong>Length.</strong> A clip straight off the card is usually minutes long. Trim to 10 to 20 seconds and it fits every site.</li>
+  <li><strong>File size.</strong> 4K ProRes HQ gets big fast. A 60 second clip can pass 5 GB, which is over Adobe Stock's 3.9 GB and Pond5's 5 GB for 4K.</li>
+  <li><strong>Frame rate.</strong> 48 fps works on three sites but not Adobe Stock. Phone footage often changes frame rate inside the file, so export it at a steady rate.</li>
+  <li><strong>Audio.</strong> Camera audio rides along on most exports. Three of the four sites would rather it wasn't there.</li>
+</ul>
+
+<h2 id="drive">Doing this for a whole drive.</h2>
+<p>The checker tells you what's wrong with a file. Fixing it means going back to the edit: trim, grade, export, rename, one clip at a time. At about 2 minutes a clip, 500 clips is 16+ hours.</p>
+<p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=stock-clip-spec-checker#trial">Stock Shredder</a> does it in one pass. It finds the usable shots, keeps every clip inside the length you set, flags the ones a site would refuse, and exports each as its own ProRes file with a title and keywords ready. See the steps in <a href="../prepare-stock-footage-faster/">how to prepare stock footage faster</a>, and check your titles with the <a href="../stock-footage-title-keyword-checker/">free title and keyword checker</a>.</p>
+    </div>
+
+    <aside class="g-tools" aria-labelledby="free-tools">
+      <p class="mono" id="free-tools">Free tools</p>
+      <ul>
+        <li><a href="../stock-footage-title-keyword-checker/" data-tool="stock-footage-title-keyword-checker"><strong>Stock Clip Title and Keyword Checker</strong><span>Paste a title and keywords. See what Adobe Stock, Shutterstock, Pond5 and Storyblocks would flag before you upload.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+        <li><a href="../stock-footage-profit-calculator/" data-tool="stock-footage-profit-calculator"><strong>Stock Footage Profit Calculator</strong><span>Enter your clips, downloads and earnings per download. See what more clips could add, using only your own numbers.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+      </ul>
+    </aside>
+    <aside class="g-note">
+      <p class="mono">From the team</p>
+      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, and site rules come from each site's own pages. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
+    </aside>
+
+    <aside class="g-cta" aria-label="Start with 100 free clips">
+      <p class="mono">Launch offer · Code SHRED</p>
+      <h2>Try it on your own archive.</h2>
+      <p>100 free clips. 7 days to use them. Keywords included. Mac and Windows.</p>
+      <p><a class="pill pill-solid" href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=stock-clip-spec-checker#trial" data-cta="end">Start with 100 free clips</a></p>
+      <p class="g-cta-note">No card needed, just your name and email. Start any time before December 31, 2026.</p>
+    </aside>
+
+    <nav class="g-more" aria-labelledby="keep-reading">
+      <h2 id="keep-reading">Keep reading</h2>
+      <ul>
+        <li><a href="../stock-footage-requirements-adobe-pond5-shutterstock/" data-related="stock-footage-requirements-adobe-pond5-shutterstock"><img src="../../assets/img/guides/ss-share-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Stock footage <i aria-hidden="true">&middot;</i> <em>6 min</em></span><strong>How to Prepare Footage for Adobe Stock, Pond5 and Shutterstock</strong><span class="g-more-dek">One checklist for all three sites. Length, file size, frame rates, codecs, resolution, audio and color, checked against each site&#x27;s own rules.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../adobe-stock-video-workflow/" data-related="adobe-stock-video-workflow"><img src="../../assets/img/guides/ss-share-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Adobe Stock <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>Prepare Video for Adobe Stock in Hours, Not Weekends</strong><span class="g-more-dek">Adobe Stock&#x27;s video rules in one place, and the fastest way to get a full drive of raw footage ready to upload.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../pond5-video-upload/" data-related="pond5-video-upload"><img src="../../assets/img/guides/ss-import-light-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Pond5 contributors <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>How to Get Footage Onto Pond5 Faster</strong><span class="g-more-dek">Pond5 takes more formats than most sites and is stricter about file names. Here&#x27;s what it wants, and how to get a full drive ready fast.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+      </ul>
+    </nav>
+
+    <section class="g-faq" aria-labelledby="faq">
+      <h2 id="faq">FAQ</h2>
+      <details class="g-faq-item"><summary>Does this checker upload my video?</summary><p>No. It reads the settings stored in the file&#x27;s header, right in your browser. The video never leaves your computer, so even a 5 GB clip is checked in a second.</p></details>
+      <details class="g-faq-item"><summary>Which files can it read?</summary><p>MOV and MP4, which is what all four sites want. Camera files like R3D, BRAW and MXF need to be exported first; the checker will tell you which sites take them as they are.</p></details>
+      <details class="g-faq-item"><summary>What is the safest export for every stock site?</summary><p>ProRes 422 or 422 HQ in a MOV, at the camera&#x27;s own size and frame rate, 10 to 20 seconds long, under 3.9 GB, with the audio off.</p></details>
+      <details class="g-faq-item"><summary>Why does Adobe Stock flag my 48 fps clip?</summary><p>Adobe Stock&#x27;s list of frame rates stops at 23.98, 24, 25, 29.97, 30, 50, 59.94 and 60. Pond5, Shutterstock and Storyblocks all list 48.</p></details>
+      <details class="g-faq-item"><summary>Can the checker spot logos, shake or ungraded log?</summary><p>No. It reads the file&#x27;s settings, not the picture. Those checks still need your eye, or a tool that looks at the footage.</p></details>
+    </section>
+  </article>
+</main>
+
+<footer class="poster-foot">
+    <p class="foot-email" data-live-clock></p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="foot-note">By artists. For artists.</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO</p>
+    <p class="foot-legal"><a href="/guides/">Guides</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="mailto:deadworkstudio@gmail.com?subject=Stock%20Shredder%20support">Support</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/#refunds">Refunds</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">Terms</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/privacy/">Privacy</a></p>
+  
+    
+  </footer>
+
+<script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
+<script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
+<script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
+</body>
+</html>
