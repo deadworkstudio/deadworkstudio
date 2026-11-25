@@ -596,6 +596,56 @@
     }
   }
 
+  // Board #15 follow-up (Daniel 2026-11-25): phones can send the open-on-your-computer link to the
+  // address their computer uses. The Worker hands this browser a short-lived token for it.
+  var trialForwardToken = null;
+  function addSendElsewhere(afterEl) {
+    if (!trialForwardToken || !afterEl || document.querySelector('[data-send-elsewhere]')) return;
+    var box = document.createElement('div');
+    box.className = 'send-elsewhere';
+    box.setAttribute('data-send-elsewhere', '');
+    var open = document.createElement('button');
+    open.type = 'button';
+    open.className = 'send-elsewhere-open';
+    open.textContent = T('Computer uses another email? Send the link there.');
+    var form = document.createElement('form');
+    form.className = 'send-elsewhere-form';
+    form.hidden = true;
+    form.noValidate = true;
+    var input = document.createElement('input');
+    input.type = 'email'; input.autocomplete = 'email'; input.required = true;
+    input.placeholder = T('Email you use on your computer');
+    input.setAttribute('aria-label', T('Email you use on your computer'));
+    var send = document.createElement('button');
+    send.type = 'submit';
+    send.textContent = T('Send');
+    var msg = document.createElement('p');
+    msg.className = 'send-elsewhere-msg';
+    msg.setAttribute('role', 'status');
+    form.appendChild(input); form.appendChild(send);
+    box.appendChild(open); box.appendChild(form); box.appendChild(msg);
+    afterEl.parentNode.insertBefore(box, afterEl.nextSibling);
+    open.addEventListener('click', function () { open.hidden = true; form.hidden = false; input.focus(); });
+    var busy = false;
+    form.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      if (busy) return;
+      var email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = T('Check the email address.'); input.focus(); return; }
+      busy = true; send.disabled = true; msg.textContent = '';
+      fetch(WORKER_URL + '/trial/send-elsewhere', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: trialForwardToken, email: email })
+      }).then(function (res) {
+        if (res.ok) { form.hidden = true; msg.textContent = T('Sent. Open that inbox on your computer.'); step('trial-send-elsewhere'); return; }
+        msg.textContent = res.status === 400 ? T('Check the email address.') : T('Could not send. Use the link in your email instead.');
+      }).catch(function () {
+        msg.textContent = T('Could not send. Use the link in your email instead.');
+      }).then(function () { busy = false; send.disabled = false; });
+    });
+  }
+
   function showSuccess(activationKey, trial, firstName, sentTo) {
     var finishedSessionId = sessionId;
     teardownCheckout();
@@ -646,6 +696,7 @@
         : onPhone
         ? '<li>' + T('Open the email we just sent you on your computer.') + '</li><li>' + T('Download Stock Shredder from it.') + '</li>' + pasteStep
         : '<li>' + T('Install Stock Shredder.') + '</li>' + pasteStep + '<li>' + T('Drop in a folder of raw footage and start shredding.') + '</li>';
+      if (onPhone && keyByEmail) addSendElsewhere(successSteps);
       // Board #15: a phone can't run the app yet, so show it working right here (20 seconds, muted).
       if (onPhone && isTrial && !document.querySelector('[data-phone-demo]')) {
         var demo = document.createElement('div');
@@ -1411,6 +1462,7 @@
         if (result.ok && result.data && result.data.noCard && (result.data.activationKey || result.data.emailSent)) {
           sessionId = result.data.sessionId || null;
           currentCheckoutIsTrial = true;
+          trialForwardToken = result.data.forwardToken || null;
           showSuccess(result.data.activationKey || null, result.data.trial, result.data.firstName, trialEmailInput ? (trialEmailInput.value || '').trim() : '');
           var reduceMotionNc = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (success && success.scrollIntoView) success.scrollIntoView({ block: 'start', behavior: reduceMotionNc ? 'auto' : 'smooth' });

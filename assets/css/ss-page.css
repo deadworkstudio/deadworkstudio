@@ -1243,5 +1243,12 @@ html:lang(ja) #trial .trial-offer-title, html:lang(zh-Hans) #trial .trial-offer-
 
 /* Board #15 (2026-11-25): on a phone, the "You're in" panel plays the 20-second demo under the steps. */
 .checkout-phone-demo { margin-top: 18px; }
+.send-elsewhere { margin-top: 14px; }
+.send-elsewhere-open { padding: 0; border: 0; background: none; font: inherit; font-size: 14px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.send-elsewhere-form { display: flex; gap: 6px; padding: 6px; background: var(--field); border: 1px solid var(--line-2); max-width: 560px; }
+.send-elsewhere-form input { flex: 1 1 auto; min-width: 0; padding: 12px; border: 0; background: transparent; font: 16px/1.4 var(--sans); color: var(--ink); }
+.send-elsewhere-form button { flex: 0 0 auto; min-height: 44px; padding: 0 18px; border: 1px solid var(--line-2); background: transparent; font: 600 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); cursor: pointer; }
+.send-elsewhere-msg { margin: 8px 0 0; font-size: 14px; }
+.send-elsewhere-msg:empty { display: none; }
 .checkout-phone-demo-cap { margin: 0 0 8px; font-size: 14px; }
 .checkout-phone-demo video { display: block; width: 100%; max-width: 560px; border-radius: 10px; background: #000; }
