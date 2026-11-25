@@ -315,7 +315,7 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/guides/</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -328,6 +328,12 @@
   <url>
     <loc>https://deadworkstudio.com/guides/automatic-stock-footage-clipping/</loc>
     <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/guides/best-sites-to-sell-stock-footage/</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
