@@ -1507,7 +1507,10 @@
   "Anything you pack in a case: cameras, lenses, batteries, media, audio, monitors, lighting and grip. To build your first kit, start from our <a href=\"/guides/camera-gear-checklist/\">camera gear checklist</a> or make a printable list with the free <a href=\"/guides/camera-gear-checklist-maker/\">checklist maker</a>.": "箱子里装的一切：摄影机、镜头、电池、存储卡、音频、监视器、灯光和 Grip 器材。创建第一个套装时，可以从我们的<a href=\"/guides/camera-gear-checklist/\">摄影器材清单</a>（英文）开始，或用免费的<a href=\"/guides/camera-gear-checklist-maker/\">清单生成器</a>做一份可打印的清单。",
   "<a href=\"/guides/camera-gear-checklist/\"><span class=\"lo-guides-name\">Camera gear checklist</span><span class=\"lo-guides-note\">The full packing list for film and video shoots.</span></a>": "<a href=\"/guides/camera-gear-checklist/\"><span class=\"lo-guides-name\">摄影器材清单</span><span class=\"lo-guides-note\">影视拍摄的完整打包清单。</span></a>",
   "<a href=\"/guides/camera-gear-checklist-maker/\"><span class=\"lo-guides-name\">Checklist maker</span><span class=\"lo-guides-note\">Build a printable checklist for your shoot in a minute.</span></a>": "<a href=\"/guides/camera-gear-checklist-maker/\"><span class=\"lo-guides-name\">清单生成器</span><span class=\"lo-guides-note\">一分钟为你的拍摄生成可打印的清单。</span></a>",
-  "<a href=\"/guides/film-production-wrap-checklist/\"><span class=\"lo-guides-name\">Wrap checklist</span><span class=\"lo-guides-note\">How to wrap camera gear step by step, with a free PDF.</span></a>": "<a href=\"/guides/film-production-wrap-checklist/\"><span class=\"lo-guides-name\">收工清单</span><span class=\"lo-guides-note\">一步步收好摄影器材，附免费 PDF。</span></a>"
+  "<a href=\"/guides/film-production-wrap-checklist/\"><span class=\"lo-guides-name\">Wrap checklist</span><span class=\"lo-guides-note\">How to wrap camera gear step by step, with a free PDF.</span></a>": "<a href=\"/guides/film-production-wrap-checklist/\"><span class=\"lo-guides-name\">收工清单</span><span class=\"lo-guides-note\">一步步收好摄影器材，附免费 PDF。</span></a>",
+  "VI Tools": "VI 款工具",
+  "<a class=\"hero-cue\" href=\"#tools\"><span>VI Tools</span><span class=\"hero-cue-line\" aria-hidden=\"true\"></span></a>": "<a class=\"hero-cue\" href=\"#tools\"><span>VI 款工具</span><span class=\"hero-cue-line\" aria-hidden=\"true\"></span></a>",
+  "<span class=\"poster-meta-left\">VI Tools</span>": "<span class=\"poster-meta-left\">VI 款工具</span>"
  },
  "script": {
   "/mo": "/月",
