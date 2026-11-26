@@ -7,3 +7,7 @@
 .dw-values .dw-step-t { max-width: 22ch; font-size: 12px; line-height: 1.45; text-wrap: balance; }
 .dw-values .dw-step-d { max-width: 26ch; text-wrap: pretty; }
 .screen--tools .dw-values { min-width: 0; border-top: 0; padding-top: clamp(40px, 6vh, 72px); }
+/* same shape in every box: titles take the same height, so the lines under them start level */
+.dw-values .dw-step-t { min-height: 2.9em; display: flex; align-items: center; justify-content: center; }
+.dw-values .dw-step-d { max-width: 24ch; }
+html[lang="ja"] .dw-values .dw-step-d, html[lang="zh-Hans"] .dw-values .dw-step-d { word-break: auto-phrase; }
