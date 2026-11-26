@@ -55,6 +55,9 @@
       }
       place();
       window.addEventListener('resize', place);
+      // layout can still settle after this (fonts, reveal animations): re-fit whenever a device box changes size
+      if ('ResizeObserver' in window) { var ro = new ResizeObserver(place); outs.forEach(function (o) { ro.observe(o.v); }); }
+      src.addEventListener('playing', place);
       if (src.requestVideoFrameCallback) {
         var onFrame = function () { draw(); src.requestVideoFrameCallback(onFrame); };
         src.requestVideoFrameCallback(onFrame);
@@ -110,6 +113,59 @@
       if (inView) { play(mac); followers.forEach(play); } else { pause(mac); followers.forEach(pause); }
     }, { threshold: 0.25 }).observe(duo);
   })();
+
+  // ---- team section (lock screen, app, Watch): one video holds all three screens on the hero's timeline,
+  // drawn into a canvas over each device every frame, so they always show the same moment. The file starts
+  // loading a screen before the section arrives and plays only while it is on screen. Reduced motion: the
+  // posters show the green result and nothing loads.
+  [].forEach.call(document.querySelectorAll('[data-hf-atlas]'), function (group) {
+    var items = [].slice.call(group.querySelectorAll('[data-hf-tile]'));
+    if (reduce) { items.forEach(function (v) { var st = v.getAttribute('data-poster-still'); if (st) v.setAttribute('poster', st); }); return; }
+    if (!hasIO) return;
+    var src = null, shown = false, outs = [];
+    function place() {
+      var d = Math.min(window.devicePixelRatio || 1, 3);
+      outs.forEach(function (o) {
+        var v = o.v, w = v.offsetWidth, h = v.offsetHeight;
+        o.c.style.cssText = 'position:absolute;left:' + v.offsetLeft + 'px;top:' + v.offsetTop + 'px;width:' + w + 'px;height:' + h + 'px;border-radius:' + getComputedStyle(v).borderRadius + ';pointer-events:none;opacity:' + (shown ? 1 : 0);
+        o.c.width = Math.max(1, Math.min(o.r[2], Math.round(w * d)));
+        o.c.height = Math.max(1, Math.round(o.c.width * h / Math.max(w, 1)));
+      });
+    }
+    function draw() {
+      outs.forEach(function (o) { try { o.ctx.drawImage(src, o.r[0], o.r[1], o.r[2], o.r[3], 0, 0, o.c.width, o.c.height); } catch (e) {} });
+      if (!shown) { shown = true; outs.forEach(function (o) { o.c.style.opacity = 1; }); }
+    }
+    function load() {
+      if (src) return;
+      src = document.createElement('video');
+      src.muted = true; src.defaultMuted = true; src.loop = true; src.playsInline = true;
+      src.setAttribute('muted', ''); src.setAttribute('playsinline', ''); src.setAttribute('aria-hidden', 'true');
+      src.preload = 'auto';
+      src.style.cssText = 'position:absolute;left:0;top:0;width:4px;height:4px;opacity:.01;pointer-events:none';
+      src.src = group.getAttribute('data-hf-atlas');
+      group.appendChild(src);
+      outs = items.map(function (v) {
+        var c = document.createElement('canvas'); c.setAttribute('aria-hidden', 'true');
+        v.insertAdjacentElement('afterend', c);
+        return { v: v, c: c, ctx: c.getContext('2d'), r: v.getAttribute('data-hf-tile').split(',').map(Number) };
+      }).filter(function (o) { return o.ctx && o.r.length === 4; });
+      place();
+      window.addEventListener('resize', place);
+      // layout can still settle after this (fonts, reveal animations): re-fit whenever a device box changes size
+      if ('ResizeObserver' in window) { var ro = new ResizeObserver(place); outs.forEach(function (o) { ro.observe(o.v); }); }
+      src.addEventListener('playing', place);
+      if (src.requestVideoFrameCallback) {
+        var onFrame = function () { draw(); src.requestVideoFrameCallback(onFrame); };
+        src.requestVideoFrameCallback(onFrame);
+      } else {
+        var loop = function () { if (src.paused || src.ended) return; if (src.readyState >= 2) draw(); requestAnimationFrame(loop); };
+        src.addEventListener('playing', function () { requestAnimationFrame(loop); });
+      }
+    }
+    new IntersectionObserver(function (es) { if (es[0].isIntersecting) load(); }, { rootMargin: '800px 0px' }).observe(group);
+    new IntersectionObserver(function (es) { if (es[0].isIntersecting) { load(); play(src); } else pause(src); }, { threshold: 0.2 }).observe(group);
+  });
 
   // ---- team section: real iPhone recordings. The file loads only when the phone comes into view, plays
   // while on screen and pauses off it; with reduced motion it never loads and the poster shows the result.
