@@ -1674,6 +1674,16 @@
       // Right under the button, where it's read before tapping.
       trialForm.parentNode.insertBefore(note, trialForm.nextSibling);
     }
+    // Daniel 2026-11-26 ("fastest easiest way to capture these trial leads"): on phones the box is
+    // just name, email and the button. The ad link already carries the code, so the code field
+    // only shows its "applied" line, and "How did you hear" waits for the "You're in" screen
+    // (showHeardQuestion asks there when it wasn't answered here).
+    if (preHeardBox) preHeardBox.hidden = true;
+    var codeFromLink = /[?&]code=[^&]+/i.test(location.search);
+    var codeForm = trialOffer ? trialOffer.querySelector('[data-trial-code-form]') : null;
+    if (codeForm && codeFromLink) {
+      Array.prototype.forEach.call(codeForm.querySelectorAll('.trial-code-label, .trial-code-row'), function (el) { el.hidden = true; });
+    }
   })();
 
   // Phones: relabel the trial button and offer the plain trial as a small link.
