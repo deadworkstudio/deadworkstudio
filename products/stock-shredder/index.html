@@ -1121,6 +1121,12 @@ var MAP_LAT_TOP = 78, MAP_LAT_BOT = -56; // must match world-dots.svg
   overlay.querySelector('[data-review-modal-close]').addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
+  // Review-ask email link (?review=1 or #leave-review): open the form straight away, on phones too.
+  if (/[?&]review=1(&|$)/.test(location.search) || location.hash === '#leave-review') {
+    var earn = document.querySelector('#earn') || open;
+    if (earn.scrollIntoView) earn.scrollIntoView({ block: 'center' });
+    setTimeout(function () { open.click(); }, 300);
+  }
 })();
 </script>
 <script>
