@@ -223,3 +223,12 @@
 .sc-sitelist { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .sc-sitelist .tc-actions { margin-top: 14px; }
 @media (max-width: 900px) { .sc-sitelist { grid-template-columns: minmax(0, 1fr); } }
+
+/* Gamma shift checker. */
+.gs-spec { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 12px; }
+.gs-bars { margin-top: 14px; }
+.gs-bars p { font: 500 10.5px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 10px 0 6px; }
+.gs-bars div { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); height: 38px; border: 1px solid var(--line-2); }
+.gs-bars i { display: block; }
+.gs-bars span { display: block; margin-top: 8px; font-size: 13.5px; color: var(--ink-3); }
+@media (max-width: 640px) { .gs-spec { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

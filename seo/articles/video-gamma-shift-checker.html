@@ -1,0 +1,78 @@
+<!--meta
+{
+  "slug": "video-gamma-shift-checker",
+  "status": "draft",
+  "product": "stock-shredder",
+  "tool": true,
+  "tool_line": "Drop in an export. See its color tags and why it looks washed out in QuickTime, plus the fix in Premiere, Resolve and Final Cut.",
+  "css": ["tools.css"],
+  "keyword": "export looks washed out",
+  "secondary": ["gamma shift quicktime", "premiere export washed out", "davinci resolve export washed out", "video looks different in quicktime", "rec 709 gamma 2.4 1.96", "color tags 1-1-1"],
+  "title": "Video Gamma Shift Checker",
+  "seo_title": "Why Does My Export Look Washed Out? Free Gamma Shift Checker",
+  "description": "Drop a MOV or MP4 and see its color tags (primaries, transfer, matrix, range) and how QuickTime, Safari and other players will show it. Plus the fix in Premiere Pro, DaVinci Resolve and Final Cut Pro. Nothing is uploaded.",
+  "eyebrow": "Free tool · Gamma shift checker",
+  "dek": "Your grade looked right in the editor and washed out in QuickTime. Drop the export in and see exactly what the file tells players, and what to change.",
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "read_minutes": 4,
+  "faq": [
+    ["Why does my export look washed out in QuickTime?", "Editors like Premiere Pro follow the TV standard, a 2.4 gamma. macOS shows Rec. 709 video with a 1.96 gamma, so QuickTime Player and Safari show the same file lighter and flatter. The file itself is usually fine."],
+    ["What does 1-1-1 mean?", "It's the color tag: Rec. 709 color, Rec. 709 curve and Rec. 709 matrix. It's the standard tag for HD video, and the one most people see shift on a Mac."],
+    ["Should I grade for 2.4 or for the Mac?", "Grade for where most people will watch. Adobe's own advice is to pick the viewer gamma that matches your audience: 2.4 for broadcast, 1.96 if it's mostly watched in QuickTime on a Mac."],
+    ["Does this checker upload my video?", "No. It reads the color tags in the file's header in your browser. The video never leaves your computer."],
+    ["Can it fix the file?", "No. It shows what the file says and how players read it. The fix is a setting in your editor, listed on this page."]
+  ]
+}
+-->
+
+<div class="tc" id="gamma-checker">
+  <form class="tc-form" onsubmit="return false" aria-label="Video gamma shift checker">
+    <label class="cs-drop" id="gs-drop" for="gs-file">
+      <input type="file" id="gs-file" accept="video/*,.mov,.mp4,.m4v" />
+      <strong>Drop your export here</strong>
+      <span>MOV or MP4. Only the color tags are read.</span>
+      <b class="tc-btn">Choose a file</b>
+    </label>
+    <p class="cs-status" id="gs-status" aria-live="polite"></p>
+    <p class="tc-actions"><span class="tc-private">Your video stays on your computer. Nothing is uploaded.</span></p>
+  </form>
+
+  <div class="tc-out" id="gs-out" aria-live="polite" hidden>
+    <div class="tc-summary" id="gs-summary"></div>
+    <div id="gs-body"></div>
+    <aside class="tc-pitch">
+      <p><strong>Shooting log for stock?</strong></p>
+      <p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=video-gamma-shift-checker#trial" data-cta="tool">Stock Shredder</a> grades log footage to Rec 709 with saved Looks for ARRI, DJI, RED and Sony, or your own LUT, and exports every clip as its own ProRes file. Try it on 100 clips free.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/gamma-shift-checker.js?v=20261126a" defer></script>
+
+<h2 id="why">Why the same file looks different.</h2>
+<p>A video file stores numbers, plus a small tag that tells players how to turn those numbers into brightness on screen. Editors and players don't all read that tag the same way.</p>
+<p>Adobe explains the most common case: Premiere Pro follows the TV standard, a 2.4 gamma, while macOS shows Rec. 709 video with a 1.96 gamma. So a file tagged Rec. 709 looks lighter and flatter in QuickTime Player and Safari on a Mac than it did in your editor. Nothing went wrong in the export. The two screens are following different rules.</p>
+<p>The fix is to decide where most people will watch, and set your editor so what you see while grading matches that screen.</p>
+
+<h2 id="fix">The fix in each editor.</h2>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Editor</th><th>Where to look</th><th>What to set</th></tr></thead>
+    <tbody>
+      <tr><td>Premiere Pro (version 24 and later)</td><td>Lumetri Color panel, Settings tab, Viewer Gamma. Also in Project Settings and in Media Encoder's Color preferences. Display Color Management needs to be on.</td><td>2.4 for broadcast and TV. 1.96 if most people will watch in QuickTime on a Mac. Adobe says to pick by audience.</td></tr>
+      <tr><td>DaVinci Resolve</td><td>Project Settings, Color Management: the output color space and gamma, and "Use Mac display color profiles for viewers". On the Deliver page, the color space and gamma tags.</td><td>Make the tags on export say what you graded in, for example Rec. 709 color and Rec. 709 gamma. Then check the result with this tool.</td></tr>
+      <tr><td>Final Cut Pro</td><td>The library and project color processing setting (Standard Rec. 709, wide gamut or HDR).</td><td>Standard Rec. 709 for normal video. For iPhone HDR projects that shift in QuickTime, Apple suggests exporting a master file with an HLG color space.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Sources: <a href="https://community.adobe.com/t5/premiere-pro-beta-discussions/released-now-in-beta-selectable-viewer-gamma/td-p/13967346" rel="noopener" target="_blank">Adobe on Viewer Gamma</a>, <a href="https://support.apple.com/en-us/101849" rel="noopener" target="_blank">Apple on Final Cut Pro and QuickTime color shifts</a>. Checked November 2026.</p>
+
+<h2 id="tags">Reading the tags.</h2>
+<ul class="g-list">
+  <li><strong>Color (primaries).</strong> Which set of reds, greens and blues the numbers mean. Rec. 709 for normal HD video, Rec. 2020 or P3 for wide color.</li>
+  <li><strong>Curve (transfer).</strong> How numbers turn into brightness. Rec. 709 for normal video, PQ or HLG for HDR. This is the one behind most washed-out exports.</li>
+  <li><strong>Matrix.</strong> How the color numbers were packed. It should match the color, Rec. 709 with Rec. 709.</li>
+  <li><strong>Range.</strong> Video range is normal for video files. A file marked full range can look crushed or grey in players that expect video range.</li>
+  <li><strong>No tag.</strong> Every player guesses, so the file looks different everywhere. Export with the color space set and the tag gets written.</li>
+</ul>
+<p>Checking a file for stock sites too? The <a href="../stock-clip-spec-checker/">clip spec checker</a> reads length, frame rate and codec and shows which sites would take it.</p>
