@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-product="stock-shredder">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#F4F1EA" />
+
+<title>Why Does My Export Look Washed Out? Free Gamma Shift Checker | DEADWORK</title>
+<meta name="description" content="Drop a MOV or MP4 and see its color tags (primaries, transfer, matrix, range) and how QuickTime, Safari and other players will show it. Plus the fix in Premiere Pro, DaVinci Resolve and Final Cut Pro. Nothing is uploaded." />
+<link rel="canonical" href="https://deadworkstudio.com/guides/video-gamma-shift-checker/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://deadworkstudio.com/guides/video-gamma-shift-checker/" />
+<meta property="og:title" content="Why Does My Export Look Washed Out? Free Gamma Shift Checker" />
+<meta property="og:description" content="Drop a MOV or MP4 and see its color tags (primaries, transfer, matrix, range) and how QuickTime, Safari and other players will show it. Plus the fix in Premiere Pro, DaVinci Resolve and Final Cut Pro. Nothing is uploaded." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="DEADWORK" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Why Does My Export Look Washed Out? Free Gamma Shift Checker" />
+<meta name="twitter:description" content="Drop a MOV or MP4 and see its color tags (primaries, transfer, matrix, range) and how QuickTime, Safari and other players will show it. Plus the fix in Premiere Pro, DaVinci Resolve and Final Cut Pro. Nothing is uploaded." />
+<meta name="twitter:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
+<link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261126pb" />
+<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261126a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261126a" />
+<link rel="stylesheet" href="../../assets/css/tools.css?v=20261126a" />
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Video Gamma Shift Checker", "description": "Drop a MOV or MP4 and see its color tags (primaries, transfer, matrix, range) and how QuickTime, Safari and other players will show it. Plus the fix in Premiere Pro, DaVinci Resolve and Final Cut Pro. Nothing is uploaded.", "datePublished": "2026-11-26", "dateModified": "2026-11-26", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/video-gamma-shift-checker/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does my export look washed out in QuickTime?", "acceptedAnswer": {"@type": "Answer", "text": "Editors like Premiere Pro follow the TV standard, a 2.4 gamma. macOS shows Rec. 709 video with a 1.96 gamma, so QuickTime Player and Safari show the same file lighter and flatter. The file itself is usually fine."}}, {"@type": "Question", "name": "What does 1-1-1 mean?", "acceptedAnswer": {"@type": "Answer", "text": "It's the color tag: Rec. 709 color, Rec. 709 curve and Rec. 709 matrix. It's the standard tag for HD video, and the one most people see shift on a Mac."}}, {"@type": "Question", "name": "Should I grade for 2.4 or for the Mac?", "acceptedAnswer": {"@type": "Answer", "text": "Grade for where most people will watch. Adobe's own advice is to pick the viewer gamma that matches your audience: 2.4 for broadcast, 1.96 if it's mostly watched in QuickTime on a Mac."}}, {"@type": "Question", "name": "Does this checker upload my video?", "acceptedAnswer": {"@type": "Answer", "text": "No. It reads the color tags in the file's header in your browser. The video never leaves your computer."}}, {"@type": "Question", "name": "Can it fix the file?", "acceptedAnswer": {"@type": "Answer", "text": "No. It shows what the file says and how players read it. The fix is a setting in your editor, listed on this page."}}]}]</script>
+</head>
+<body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="poster-head" data-sh>
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <p class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="1854" height="394"></a></p>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I · Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/scene-lock.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mega-menu-card-about">Storyboards, shot lists and the schedule in one place.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/set-control.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every team member. Every detail. In sync.</span><span class="mega-menu-card-about">Call sheets and every change, sent to the whole team.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II · Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/loadout.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mega-menu-card-about">Pan your phone across a packed case and see what's missing.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">iPhone &middot; Android coming soon</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/handoff.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mega-menu-card-about">Copies your cards and turns green when they're safe to format.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>PROCESSING</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III · Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/sound-driver.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real artists. Real sounds.</span><span class="mega-menu-card-about">Places sound on your edit from our own recorded library.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/stock-shredder/" aria-current="true"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/stock-shredder.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mega-menu-card-about">Finds the usable shots in footage and exports stock-ready clips.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+          </div>
+        </div>
+    </div>
+</header>
+
+<main id="main" class="g-main">
+  <article class="g-article">
+    <header class="g-head">
+      <p class="mono g-eyebrow">Free tool · Gamma shift checker</p>
+      <h1 class="g-title">Video Gamma Shift Checker</h1>
+      <p class="g-dek">Your grade looked right in the editor and washed out in QuickTime. Drop the export in and see exactly what the file tells players, and what to change.</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED NOV 26, 2026 <span aria-hidden="true">&middot;</span> 4 MIN READ</p>
+    </header>
+
+
+    <div class="g-body">
+<div class="tc" id="gamma-checker">
+  <form class="tc-form" onsubmit="return false" aria-label="Video gamma shift checker">
+    <label class="cs-drop" id="gs-drop" for="gs-file">
+      <input type="file" id="gs-file" accept="video/*,.mov,.mp4,.m4v" />
+      <strong>Drop your export here</strong>
+      <span>MOV or MP4. Only the color tags are read.</span>
+      <b class="tc-btn">Choose a file</b>
+    </label>
+    <p class="cs-status" id="gs-status" aria-live="polite"></p>
+    <p class="tc-actions"><span class="tc-private">Your video stays on your computer. Nothing is uploaded.</span></p>
+  </form>
+
+  <div class="tc-out" id="gs-out" aria-live="polite" hidden>
+    <div class="tc-summary" id="gs-summary"></div>
+    <div id="gs-body"></div>
+    <aside class="tc-pitch">
+      <p><strong>Shooting log for stock?</strong></p>
+      <p><a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=video-gamma-shift-checker#trial" data-cta="tool">Stock Shredder</a> grades log footage to Rec 709 with saved Looks for ARRI, DJI, RED and Sony, or your own LUT, and exports every clip as its own ProRes file. Try it on 100 clips free.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/gamma-shift-checker.js?v=20261126a" defer></script>
+
+<h2 id="why">Why the same file looks different.</h2>
+<p>A video file stores numbers, plus a small tag that tells players how to turn those numbers into brightness on screen. Editors and players don't all read that tag the same way.</p>
+<p>Adobe explains the most common case: Premiere Pro follows the TV standard, a 2.4 gamma, while macOS shows Rec. 709 video with a 1.96 gamma. So a file tagged Rec. 709 looks lighter and flatter in QuickTime Player and Safari on a Mac than it did in your editor. Nothing went wrong in the export. The two screens are following different rules.</p>
+<p>The fix is to decide where most people will watch, and set your editor so what you see while grading matches that screen.</p>
+
+<h2 id="fix">The fix in each editor.</h2>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Editor</th><th>Where to look</th><th>What to set</th></tr></thead>
+    <tbody>
+      <tr><td>Premiere Pro (version 24 and later)</td><td>Lumetri Color panel, Settings tab, Viewer Gamma. Also in Project Settings and in Media Encoder's Color preferences. Display Color Management needs to be on.</td><td>2.4 for broadcast and TV. 1.96 if most people will watch in QuickTime on a Mac. Adobe says to pick by audience.</td></tr>
+      <tr><td>DaVinci Resolve</td><td>Project Settings, Color Management: the output color space and gamma, and "Use Mac display color profiles for viewers". On the Deliver page, the color space and gamma tags.</td><td>Make the tags on export say what you graded in, for example Rec. 709 color and Rec. 709 gamma. Then check the result with this tool.</td></tr>
+      <tr><td>Final Cut Pro</td><td>The library and project color processing setting (Standard Rec. 709, wide gamut or HDR).</td><td>Standard Rec. 709 for normal video. For iPhone HDR projects that shift in QuickTime, Apple suggests exporting a master file with an HLG color space.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Sources: <a href="https://community.adobe.com/t5/premiere-pro-beta-discussions/released-now-in-beta-selectable-viewer-gamma/td-p/13967346" rel="noopener" target="_blank">Adobe on Viewer Gamma</a>, <a href="https://support.apple.com/en-us/101849" rel="noopener" target="_blank">Apple on Final Cut Pro and QuickTime color shifts</a>. Checked November 2026.</p>
+
+<h2 id="tags">Reading the tags.</h2>
+<ul class="g-list">
+  <li><strong>Color (primaries).</strong> Which set of reds, greens and blues the numbers mean. Rec. 709 for normal HD video, Rec. 2020 or P3 for wide color.</li>
+  <li><strong>Curve (transfer).</strong> How numbers turn into brightness. Rec. 709 for normal video, PQ or HLG for HDR. This is the one behind most washed-out exports.</li>
+  <li><strong>Matrix.</strong> How the color numbers were packed. It should match the color, Rec. 709 with Rec. 709.</li>
+  <li><strong>Range.</strong> Video range is normal for video files. A file marked full range can look crushed or grey in players that expect video range.</li>
+  <li><strong>No tag.</strong> Every player guesses, so the file looks different everywhere. Export with the color space set and the tag gets written.</li>
+</ul>
+<p>Checking a file for stock sites too? The <a href="../stock-clip-spec-checker/">clip spec checker</a> reads length, frame rate and codec and shows which sites would take it.</p>
+    </div>
+
+    <aside class="g-tools" aria-labelledby="free-tools">
+      <p class="mono" id="free-tools">Free tools</p>
+      <ul>
+        <li><a href="../stock-clip-spec-checker/" data-tool="stock-clip-spec-checker"><strong>Stock Clip Spec Checker</strong><span>Drop in a clip. See its length, size, frame rate and codec, and whether Adobe Stock, Pond5, Shutterstock and Storyblocks would take it.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+        <li><a href="../stock-footage-title-keyword-checker/" data-tool="stock-footage-title-keyword-checker"><strong>Stock Clip Title and Keyword Checker</strong><span>Paste a title and keywords. See what Adobe Stock, Shutterstock, Pond5 and Storyblocks would flag before you upload.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+      </ul>
+    </aside>
+    <aside class="g-note">
+      <p class="mono">From the team</p>
+      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, and site rules come from each site's own pages. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
+    </aside>
+
+    <aside class="g-cta" aria-label="Start with 100 free clips">
+      <p class="mono">Launch offer · Code SHRED</p>
+      <h2>Try it on your own archive.</h2>
+      <p>100 free clips. 7 days to use them. Keywords included. Mac and Windows.</p>
+      <p><a class="pill pill-solid" href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=video-gamma-shift-checker#trial" data-cta="end">Start with 100 free clips</a></p>
+      <p class="g-cta-note">No card needed, just your name and email. Start any time before December 31, 2026.</p>
+    </aside>
+
+    <nav class="g-more" aria-labelledby="keep-reading">
+      <h2 id="keep-reading">Keep reading</h2>
+      <ul>
+        <li><a href="../blackmagic-raw-stock-footage/" data-related="blackmagic-raw-stock-footage"><img src="../../assets/img/guides/ss-review-forest-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Blackmagic shooters <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>Blackmagic RAW to Stock Clips, Fast</strong><span class="g-more-dek">BRAW gives you a lot to work with. It also gives you big files and a flat image that no stock site will take as is. Here&#x27;s the fast way through.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../premiere-pro-batch-export-stock/" data-related="premiere-pro-batch-export-stock"><img src="../../assets/img/guides/ss-review-mac-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Premiere Pro users <i aria-hidden="true">&middot;</i> <em>6 min</em></span><strong>Stock Shredder vs Manual Editing in Premiere Pro</strong><span class="g-more-dek">Premiere is a great editor. Exporting 300 selects as 300 separate graded files is not what it was built for. Here&#x27;s how to do it, and the faster way.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../red-r3d-stock-footage/" data-related="red-r3d-stock-footage"><img src="../../assets/img/guides/ss-review-mac-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For RED shooters <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>RED R3D Footage to Stock Clips, Fast</strong><span class="g-more-dek">R3D is huge, flat and loved by buyers once it&#x27;s graded. Here&#x27;s how to get a full card of it ready for stock without a week in the edit.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+      </ul>
+    </nav>
+
+    <section class="g-faq" aria-labelledby="faq">
+      <h2 id="faq">FAQ</h2>
+      <details class="g-faq-item"><summary>Why does my export look washed out in QuickTime?</summary><p>Editors like Premiere Pro follow the TV standard, a 2.4 gamma. macOS shows Rec. 709 video with a 1.96 gamma, so QuickTime Player and Safari show the same file lighter and flatter. The file itself is usually fine.</p></details>
+      <details class="g-faq-item"><summary>What does 1-1-1 mean?</summary><p>It&#x27;s the color tag: Rec. 709 color, Rec. 709 curve and Rec. 709 matrix. It&#x27;s the standard tag for HD video, and the one most people see shift on a Mac.</p></details>
+      <details class="g-faq-item"><summary>Should I grade for 2.4 or for the Mac?</summary><p>Grade for where most people will watch. Adobe&#x27;s own advice is to pick the viewer gamma that matches your audience: 2.4 for broadcast, 1.96 if it&#x27;s mostly watched in QuickTime on a Mac.</p></details>
+      <details class="g-faq-item"><summary>Does this checker upload my video?</summary><p>No. It reads the color tags in the file&#x27;s header in your browser. The video never leaves your computer.</p></details>
+      <details class="g-faq-item"><summary>Can it fix the file?</summary><p>No. It shows what the file says and how players read it. The fix is a setting in your editor, listed on this page.</p></details>
+    </section>
+  </article>
+</main>
+
+<footer class="poster-foot">
+    <p class="foot-email" data-live-clock></p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="foot-note">By artists. For artists.</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO</p>
+    <p class="foot-legal"><a href="/guides/">Guides</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="mailto:deadworkstudio@gmail.com?subject=Stock%20Shredder%20support">Support</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/#refunds">Refunds</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">Terms</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/privacy/">Privacy</a></p>
+  
+    
+  </footer>
+
+<script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
+<script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
+<script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
+</body>
+</html>
