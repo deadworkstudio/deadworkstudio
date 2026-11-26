@@ -32,3 +32,6 @@ html[lang="ja"] .dw-values .dw-step-d, html[lang="zh-Hans"] .dw-values .dw-step-
   .dw-values .dw-step-t { font-size: 11px; letter-spacing: .1em; }
   .dw-values .dw-step-d { font-size: 14px; }
 }
+/* smaller numerals (Daniel 11-26) */
+.dw-values .dw-step img { height: 28px; }
+@media (max-width: 699px) { .dw-values .dw-step img { height: 24px; } .dw-values .dw-step { grid-template-columns: 40px minmax(0, 1fr); } }
