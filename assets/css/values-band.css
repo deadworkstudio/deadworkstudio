@@ -67,3 +67,13 @@ html[lang="de"] .dw-values .dw-step-d { text-transform: none; }
   .dw-values .dw-step img { grid-row: auto; margin: 0 0 8px; }
   .dw-values .dw-step-t, .dw-values .dw-step-d { justify-content: center; }
 }
+
+/* Own colour (Daniel 11-26): the values strip sits on DEADWORK ink with bone type, so it reads
+   as its own block against the bone/tan page. Numerals and wordmark are black art, inverted. */
+.dw-values {
+  --flow-bg: #0E0E0D; --flow-ink: #F1ECE2; --flow-ink-2: rgba(241, 236, 226, .72);
+  --flow-ink-3: rgba(241, 236, 226, .5); --flow-line: rgba(241, 236, 226, .14);
+  background: var(--flow-bg); color: var(--flow-ink); border-top: 0;
+}
+.dw-values .dw-step img, .dw-values-mark { filter: invert(1); }
+.screen--tools .dw-values { padding-bottom: clamp(24px, 4vh, 48px); }
