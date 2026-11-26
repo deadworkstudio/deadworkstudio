@@ -51,3 +51,19 @@ html[lang="de"] .dw-values .dw-step-d { text-transform: none; }
   .dw-values .dw-step-t { font-size: 22px; letter-spacing: .005em; }
   .dw-values .dw-step-d { font-size: 15px; }
 }
+
+/* Header lockup (Daniel 11-26, option A): DEADWORK sits right on top of VALUES as one block.
+   Each lowercase line sits right under its title. Phones: everything centred, stacked. */
+.dw-values-mark { margin: 0 auto 4px; }
+.dw-values .dw-flow-head { margin-bottom: 0; line-height: .9; }
+.dw-values .dw-step { gap: 0; }
+.dw-values .dw-step img { margin-bottom: 10px; }
+.dw-values .dw-step-d { margin-top: 4px; }
+@media (max-width: 699px) {
+  .dw-values .dw-step {
+    grid-template-columns: 1fr; grid-template-rows: none; justify-items: center; text-align: center;
+    row-gap: 0; padding: 22px 20px 24px;
+  }
+  .dw-values .dw-step img { grid-row: auto; margin: 0 0 8px; }
+  .dw-values .dw-step-t, .dw-values .dw-step-d { justify-content: center; }
+}
