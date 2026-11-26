@@ -88,6 +88,8 @@ def parse(path):
 
 def lint(meta):
     text = json.dumps(meta, ensure_ascii=False) + meta["body"]
+    # Source URLs are not our words (Adobe's own page path says "smart").
+    text = re.sub(r'href="[^"]*"', 'href=""', text)
     exact = {r"\bAI\b", r"\bGPT\b", r"\bLLC\b"}
     hits = [b for b in BANNED if re.search(b, text, 0 if b in exact else re.I)]
     if hits:
