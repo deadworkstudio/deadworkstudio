@@ -1,0 +1,9 @@
+/* Values band: all six Studio values (studio/#values) as the same strip as THE WORKFLOW
+   (dw-workflow.css): blackletter numerals, hairline columns. Sits at the bottom of home and of
+   every product page, so nobody reads DEADWORK as replacing the people who make the work. */
+.dw-values { border-top: 1px solid rgba(10, 10, 9, .14); }
+.dw-values .dw-steps { border-bottom: 0; }
+.dw-values-mark { display: block; width: auto; height: 20px; margin: 0 auto 18px; }
+.dw-values .dw-step-t { max-width: 22ch; font-size: 12px; line-height: 1.45; text-wrap: balance; }
+.dw-values .dw-step-d { max-width: 26ch; text-wrap: pretty; }
+.screen--tools .dw-values { min-width: 0; border-top: 0; padding-top: clamp(40px, 6vh, 72px); }
