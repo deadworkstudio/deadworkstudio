@@ -236,8 +236,7 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 .film-shade { background: linear-gradient(180deg, rgba(6,6,5,0.55), rgba(6,6,5,0.25) 40%, rgba(6,6,5,0.55) 80%, var(--ink)); }
 .hero { display: grid; align-content: center; justify-items: center; text-align: center; padding-bottom: 6vh; position: relative; }
 .hero-title { font: 400 clamp(64px, 11.4vw, 200px)/0.94 var(--font-display); letter-spacing: -0.005em; }
-.hero-lede { margin-top: 28px; font-size: clamp(16px, 1.35vw, 20px); color: var(--bone-body); text-wrap: balance; max-width: 62ch; margin-left: auto; margin-right: auto; }
-html[lang="ja"] .hero-lede, html[lang="zh-Hans"] .hero-lede { word-break: auto-phrase; }
+.hero-lede { margin-top: 28px; font-size: clamp(16px, 1.35vw, 20px); color: var(--bone-body); }
 .hero-cue { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); }
 /* keep the statement and buttons clear of the "06 Tools" cue, which sits at the bottom of the hero (it used to run under the buttons on short laptop windows and in longer languages) */
 @media (min-width: 900px) { .hero { padding-bottom: calc(6vh + 120px); } }
@@ -495,6 +494,7 @@ a[href$="loadout/"] .mega-menu-card-img::after {
 @media (hover: hover) and (pointer: fine) { .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); } }
 .mega-menu-card[aria-current] .mega-menu-card-name { color: var(--acc); }
 .mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--bone-2); }
+.mega-menu-card-about { display: block; max-width: 40ch; margin: 2px auto 0; font-size: 12.5px; line-height: 1.5; color: var(--bone-3); text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) {
   .mega-menu-card-photo { transition: none; }
 }
@@ -739,3 +739,5 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
 .screen--tools .foot-legal a:hover, .screen--tools .foot-legal a:focus-visible { color: var(--ink-text); }
 .foot-legal .sep { margin: 0 .6em; }
 @media (max-width: 767px) { .foot-legal a { display: inline-block; padding: 12px 2px; margin: -12px 0; } }
+/* Menu status label: badges.css clears the yellow fill, so the dark ink text vanished on the dark menu. */
+.mega-menu .mm-meta .badge.badge-dev { color: #e6e0d3 !important; }

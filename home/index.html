@@ -11,7 +11,7 @@
 <link rel="alternate" hreflang="zh-Hans" href="https://deadworkstudio.com/zh/home/" />
 <link rel="alternate" hreflang="ja" href="https://deadworkstudio.com/ja/home/" />
 <link rel="alternate" hreflang="x-default" href="https://deadworkstudio.com/home/" />
-<link rel="stylesheet" href="/assets/css/lang.css?v=20261115f" />
+<link rel="stylesheet" href="/assets/css/lang.css?v=20261119a" />
 <script src="/assets/js/lang.js?v=20261119a"></script>
 <!-- /i18n:head -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +33,7 @@
 <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="../assets/img/brand/apple-touch-icon.png" />
 <!-- H-22: Swamp Witch is only used by the Stock Shredder panel's title, which almost nobody
-     opens on a first visit — font-display:swap on its own @font-face (tokens.css) already shows
+     opens on a first visit, font-display:swap on its own @font-face (tokens.css) already shows
      Arial immediately and swaps in Swamp Witch once it's loaded, so nothing breaks by not
      force-downloading 47KB every single page load for a panel most visits never reach. -->
 <link rel="preload" as="image" href="../assets/img/hero/poster.jpg" />
@@ -49,15 +49,15 @@
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../assets/css/badges.css?v=20261123a" />
+<link rel="stylesheet" href="../assets/css/dw-workflow.css?v=20261119a" />
 <!-- Search data: who DEADWORK is. -->
 <script type="application/ld+json">[{"@type": "Organization", "@id": "https://deadworkstudio.com/#org", "name": "DEADWORK STUDIO", "alternateName": "DEADWORK", "url": "https://deadworkstudio.com/", "logo": "https://deadworkstudio.com/assets/img/brand/favicon-512.png", "email": "deadworkstudio@gmail.com", "sameAs": ["https://www.instagram.com/deadworkstudio/", "https://www.tiktok.com/@deadworkstudio", "https://www.youtube.com/@deadworkstudio"], "@context": "https://schema.org"}, {"@context": "https://schema.org", "@type": "WebSite", "@id": "https://deadworkstudio.com/#site", "name": "DEADWORK", "url": "https://deadworkstudio.com/home/", "publisher": {"@id": "https://deadworkstudio.com/#org"}}]</script>
-<link rel="stylesheet" href="../assets/css/values-band.css?v=20261126c" />
 </head>
 <body class="home home--refined" data-chat-widget>
 <a class="skip-link" href="#tools">Skip to the tools</a>
 <div class="grain" aria-hidden="true"></div>
 
-<!-- SCREEN 1 — masthead + the statement -->
+<!-- SCREEN 1, masthead + the statement -->
 <div class="screen screen--hero">
 <div class="film" aria-hidden="true">
   <img src="../assets/img/hero/poster.jpg?v=1104" alt="" width="1920" height="1080" fetchpriority="high" />
@@ -92,24 +92,24 @@
 
     <div class="mega-menu" id="mega-menu" data-mega-menu>
         <div class="mega-menu-group" data-mega-group="pre">
-          <p class="mega-menu-eyebrow">I — Pre-Production</p>
+          <p class="mega-menu-eyebrow">I · Pre-Production</p>
           <div class="mega-menu-cards">
-            <a class="mega-menu-card mm-plate" href="../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/scene-lock.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span></span></span></a>
-            <a class="mega-menu-card mm-plate" href="../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/set-control.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every team member. Every detail. In sync.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/scene-lock.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mega-menu-card-about">Storyboards, shot lists and the schedule in one place.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/set-control.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every team member. Every detail. In sync.</span><span class="mega-menu-card-about">Call sheets and every change, sent to the whole team.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span></span></span></a>
           </div>
         </div>
         <div class="mega-menu-group" data-mega-group="production">
-          <p class="mega-menu-eyebrow">II — Production</p>
+          <p class="mega-menu-eyebrow">II · Production</p>
           <div class="mega-menu-cards">
-            <a class="mega-menu-card mm-plate" href="../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/loadout.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span></span></span></a>
-            <a class="mega-menu-card mm-plate" href="../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/handoff.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>PROCESSING</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/loadout.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mega-menu-card-about">Pan your phone across a packed case and see what's missing.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/handoff.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mega-menu-card-about">Copies your cards and turns green when they're safe to format.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>PROCESSING</span></span></span></a>
           </div>
         </div>
         <div class="mega-menu-group" data-mega-group="post">
-          <p class="mega-menu-eyebrow">III — Post</p>
+          <p class="mega-menu-eyebrow">III · Post</p>
           <div class="mega-menu-cards">
-            <a class="mega-menu-card mm-plate" href="../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/sound-driver.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real artists. Real sounds.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span></span></span></a>
-            <a class="mega-menu-card mm-plate" href="../products/stock-shredder/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/stock-shredder.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/sound-driver.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real artists. Real sounds.</span><span class="mega-menu-card-about">Places sound on your edit from our own recorded library.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../products/stock-shredder/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../assets/img/brand/product-logos/stock-shredder.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mega-menu-card-about">Finds the usable shots in footage and exports stock-ready clips.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span></span></span></a>
           </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
 
 <main class="hero">
   <h1 class="hero-title"><span class="hero-line">CREATE MORE.</span><span class="hero-line">MANAGE LESS.</span></h1>
-  <p class="hero-lede">tools designed to eliminate busywork so filmmakers can stay creative.<br>Made to serve artists, never replace them.</p>
+  <p class="hero-lede">tools designed to eliminate busywork so filmmakers can stay creative.</p>
   <div class="hero-feature">
     <span class="hf-eyebrow">Live now &middot; Stock Shredder</span>
     <span class="hf-title">Your footage. Clips you can sell.</span>
@@ -128,14 +128,28 @@
 </main>
 </div>
 
-<!-- SCREEN 2 — the six tools -->
+<!-- THE WORKFLOW: one shoot, start to finish, with the tool for each step (same strip as the product pages) -->
+<section class="dw-flow" id="workflow" aria-labelledby="workflow-title">
+  <h2 class="dw-flow-head" id="workflow-title">The workflow</h2>
+  <p class="dw-flow-sub">One production, from the first board to the last clip.</p>
+  <ol class="dw-steps" style="--flow-n: 6">
+      <li><a class="dw-step" href="../products/scene-lock/"><img src="../assets/img/products/stock-shredder/step-I.png" alt="I" width="107" height="206" /><span class="dw-step-t">Plan</span><span class="dw-step-p">Scene Lock</span><span class="dw-step-d">Boards, shot lists and the day's plan</span></a></li>
+      <li><a class="dw-step" href="../products/set-control/"><img src="../assets/img/products/stock-shredder/step-II.png" alt="II" width="183" height="206" /><span class="dw-step-t">Sync the team</span><span class="dw-step-p">Set Control</span><span class="dw-step-d">One update reaches every phone</span></a></li>
+      <li><a class="dw-step" href="../products/loadout/"><img src="../assets/img/products/stock-shredder/step-III.png" alt="III" width="259" height="206" /><span class="dw-step-t">Pack</span><span class="dw-step-p">Loadout</span><span class="dw-step-d">Every case checked before it leaves</span></a></li>
+      <li><a class="dw-step" href="../products/handoff/"><img src="../assets/img/products/stock-shredder/step-IV.png" alt="IV" width="237" height="207" /><span class="dw-step-t">Offload</span><span class="dw-step-p">Handoff</span><span class="dw-step-d">Every card copied and checked</span></a></li>
+      <li><a class="dw-step" href="../products/sound-driver/"><img src="../assets/img/products/stock-shredder/step-V.png" alt="V" width="157" height="207" /><span class="dw-step-t">Sound</span><span class="dw-step-p">Sound Driver</span><span class="dw-step-d">Sound placed in your edit</span></a></li>
+      <li><a class="dw-step" href="../products/stock-shredder/"><img src="../assets/img/products/stock-shredder/step-VI.png" alt="VI" width="236" height="207" /><span class="dw-step-t">Stock</span><span class="dw-step-p">Stock Shredder</span><span class="dw-step-d">Raw footage into stock clips</span></a></li>
+  </ol>
+</section>
+
+<!-- SCREEN 2, the six tools -->
 <section class="screen screen--tools" id="tools" aria-labelledby="tools-title" tabindex="-1">
   <div class="tools-head"><h2 class="tools-title" id="tools-title">06 Tools</h2></div>
   <div class="constellation">
       <ul class="side side--left" role="list">
         <li class="tool" id="scene-lock">
           <a class="tool-link" href="../products/scene-lock/">
-            <p class="tool-meta"><span>01 — Pre-Production</span><span class="status">In Development</span></p>
+            <p class="tool-meta"><span>01 · Pre-Production</span><span class="status">In Development</span></p>
             <h3 class="tool-name">Scene Lock</h3>
             <span class="tool-logo"><img src="../assets/img/brand/product-logos/scene-lock.webp" alt="" loading="lazy" decoding="async" /></span>
             <p class="tool-tag">Plan smarter. Execute better.</p>
@@ -144,7 +158,7 @@
         </li>
         <li class="tool" id="loadout">
           <a class="tool-link" href="../products/loadout/">
-            <p class="tool-meta"><span>03 — Production</span><span class="status status--live">Live</span></p>
+            <p class="tool-meta"><span>03 · Production</span><span class="status status--live">Live</span></p>
             <h3 class="tool-name">Loadout</h3>
             <span class="tool-logo"><img src="../assets/img/brand/product-logos/loadout.webp" alt="" loading="lazy" decoding="async" /></span>
             <p class="tool-tag">Never leave gear behind.</p>
@@ -153,7 +167,7 @@
         </li>
         <li class="tool" id="sound-driver">
           <a class="tool-link" href="../products/sound-driver/">
-            <p class="tool-meta"><span>05 — Post-Production</span><span class="status">In Development</span></p>
+            <p class="tool-meta"><span>05 · Post-Production</span><span class="status">In Development</span></p>
             <h3 class="tool-name">Sound Driver</h3>
             <span class="tool-logo"><img src="../assets/img/brand/product-logos/sound-driver.webp" alt="" loading="lazy" decoding="async" /></span>
             <p class="tool-tag">Real artists. Real sounds.</p>
@@ -165,7 +179,7 @@
       <ul class="side side--right" role="list">
         <li class="tool" id="set-control">
           <a class="tool-link" href="../products/set-control/">
-            <p class="tool-meta"><span>02 — Pre-Production</span><span class="status">In Development</span></p>
+            <p class="tool-meta"><span>02 · Pre-Production</span><span class="status">In Development</span></p>
             <h3 class="tool-name">Set Control</h3>
             <span class="tool-logo"><img src="../assets/img/brand/product-logos/set-control.webp" alt="" loading="lazy" decoding="async" /></span>
             <p class="tool-tag">Every team member. Every detail. In sync.</p>
@@ -174,7 +188,7 @@
         </li>
         <li class="tool" id="handoff">
           <a class="tool-link" href="../products/handoff/">
-            <p class="tool-meta"><span>04 — Production</span><span class="status">Processing</span></p>
+            <p class="tool-meta"><span>04 · Production</span><span class="status">Processing</span></p>
             <h3 class="tool-name">Handoff</h3>
             <span class="tool-logo"><img src="../assets/img/brand/product-logos/handoff.webp" alt="" loading="lazy" decoding="async" /></span>
             <p class="tool-tag">Every file. Verified.</p>
@@ -183,7 +197,7 @@
         </li>
         <li class="tool tool--live" id="stock-shredder">
           <a class="tool-link" href="../products/stock-shredder/">
-            <p class="tool-meta"><span>06 — Post-Production</span><span class="status status--live">Live</span></p>
+            <p class="tool-meta"><span>06 · Post-Production</span><span class="status status--live">Live</span></p>
             <h3 class="tool-name">Stock Shredder</h3>
             <span class="tool-logo"><img src="../assets/img/brand/product-logos/stock-shredder.webp" alt="" loading="lazy" decoding="async" /></span>
             <p class="tool-tag">Raw footage into stock-ready clips.</p>
@@ -192,22 +206,7 @@
         </li>
       </ul>
     </div>
-                <!-- values-band (studio values 01-06; edit with studio/#values) -->
-                <section class="dw-values" aria-labelledby="dw-values-title">
-                  <div class="dw-values-head">
-                    <h2 class="dw-values-title" id="dw-values-title">Values</h2>
-                  </div>
-                  <ol class="dw-values-list">
-                    <li class="dw-value"><span class="dw-value-index">01</span><h3 class="dw-value-title">Kill the tedious work.</h3><p class="dw-value-text">Software that removes repetitive, unorganized and uncertain work so artists can spend their time creating.</p></li>
-                    <li class="dw-value"><span class="dw-value-index">02</span><h3 class="dw-value-title">Idea. Execution. Completion.</h3><p class="dw-value-text">The human owns all three. DEADWORK removes the friction between them.</p></li>
-                    <li class="dw-value"><span class="dw-value-index">03</span><h3 class="dw-value-title">We don't want AI making the art for us.</h3><p class="dw-value-text">We want it doing the tasks that waste time.</p></li>
-                    <li class="dw-value"><span class="dw-value-index">04</span><h3 class="dw-value-title">Honest about what's ready.</h3><p class="dw-value-text">We label what's shipping and what's still in progress. No polish over a product that isn't there yet.</p></li>
-                    <li class="dw-value"><span class="dw-value-index">05</span><h3 class="dw-value-title">We pay artists.</h3><p class="dw-value-text">We source real materials from real artists. Every artist gets paid for products you use.</p></li>
-                    <li class="dw-value"><span class="dw-value-index">06</span><h3 class="dw-value-title">Your footage stays yours.</h3><p class="dw-value-text">Footage and production data you run through our tools is yours. We don't sell it or train on it.</p></li>
-                  </ol>
-                </section>
-                <!-- /values-band -->
-                <footer class="foot">
+  <footer class="foot">
     <p class="foot-clock" data-home-clock aria-label="Los Angeles time"></p>
     <div class="foot-center">
     <div class="foot-social">
