@@ -88,6 +88,8 @@ def parse(path):
 
 def lint(meta):
     text = json.dumps(meta, ensure_ascii=False) + meta["body"]
+    # Source URLs are not our words (Adobe's own page path says "smart").
+    text = re.sub(r'href=\\?"[^"\\]*\\?"', 'href=""', text)
     exact = {r"\bAI\b", r"\bGPT\b", r"\bLLC\b"}
     hits = [b for b in BANNED if re.search(b, text, 0 if b in exact else re.I)]
     if hits:
@@ -423,7 +425,7 @@ HUB = [
             ("Selling on each site", ["adobe-stock-video-workflow", "shutterstock-video-contributor", "pond5-video-upload", "storyblocks-video-contributor"]),
             ("Cameras and formats", ["blackmagic-raw-stock-footage", "red-r3d-stock-footage", "sony-slog3-stock-footage", "drone-footage-for-stock"]),
             ("Editing", ["premiere-pro-batch-export-stock"]),
-            ("Making money", ["sell-old-footage-archive", "best-sites-to-sell-stock-footage"]),
+            ("Making money", ["sell-stock-footage", "sell-old-footage-archive", "best-sites-to-sell-stock-footage"]),
         ],
     },
 ]
