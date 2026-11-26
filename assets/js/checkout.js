@@ -1238,6 +1238,27 @@
   // computes it, just displays it.
   // `quiet` = the default SHRED offer shown to every visitor (no ?code= in the URL): if it's
   // switched off in the Worker, the box just stays hidden, with no error and no scroll.
+  // Board #24 (2026-11-25): an ad visitor (?code=) on a phone sometimes landed on the world map
+  // with the trial box 230px down or fully off screen: the smooth scroll ran 11,000px while
+  // images above were still loading and pushing the box down (iPhone Safari has no scroll
+  // anchoring). Jump straight there, then keep the box at the top for a few seconds while the
+  // page settles, unless the visitor starts scrolling themselves.
+  function landOnTrialBox() {
+    var stopped = false;
+    var until = Date.now() + 5000;
+    function stop() { stopped = true; }
+    ['touchstart', 'wheel', 'keydown', 'mousedown'].forEach(function (ev) {
+      window.addEventListener(ev, stop, { once: true, passive: true });
+    });
+    function pin() {
+      if (stopped || Date.now() > until || trialOffer.hidden) return;
+      var top = trialOffer.getBoundingClientRect().top;
+      if (Math.abs(top - 12) > 24) window.scrollTo({ top: window.pageYOffset + top - 12, behavior: 'instant' });
+      setTimeout(pin, 250);
+    }
+    pin();
+  }
+
   function checkOffer(code, quiet, attempt) {
     if (!trialOffer || !code) return;
     var isDefault = String(code).toUpperCase() === DEFAULT_OFFER_CODE;
@@ -1286,8 +1307,7 @@
         if (trialCodeJumpWrap) trialCodeJumpWrap.hidden = false;
         if (quiet) return;
         codeApplied(data.code);
-        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        trialOffer.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+        landOnTrialBox();
       })
       .catch(function () {
         // A network hiccup (or a non-JSON error page) checking the code: try once more. The
@@ -1653,6 +1673,16 @@
       note.hidden = false;
       // Right under the button, where it's read before tapping.
       trialForm.parentNode.insertBefore(note, trialForm.nextSibling);
+    }
+    // Daniel 2026-11-26 ("fastest easiest way to capture these trial leads"): on phones the box is
+    // just name, email and the button. The ad link already carries the code, so the code field
+    // only shows its "applied" line, and "How did you hear" waits for the "You're in" screen
+    // (showHeardQuestion asks there when it wasn't answered here).
+    if (preHeardBox) preHeardBox.hidden = true;
+    var codeFromLink = /[?&]code=[^&]+/i.test(location.search);
+    var codeForm = trialOffer ? trialOffer.querySelector('[data-trial-code-form]') : null;
+    if (codeForm && codeFromLink) {
+      Array.prototype.forEach.call(codeForm.querySelectorAll('.trial-code-label, .trial-code-row'), function (el) { el.hidden = true; });
     }
   })();
 

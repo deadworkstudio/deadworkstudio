@@ -1,0 +1,50 @@
+/* THE WORKFLOW strip for pages that don't load ss-page.css (home, studio).
+   Same look as the product pages' .workflow: Anton head, blackletter step numerals,
+   mono step name, one short line under it, hairlines between steps.
+   Colours come from the section itself so it reads the same on the dark home and the cream studio page. */
+.dw-flow {
+  --flow-bg: #ebe5d8; --flow-ink: #0a0a09; --flow-ink-2: #4a4843; --flow-ink-3: #6f6b63; --flow-line: rgba(10, 10, 9, .14);
+  background: var(--flow-bg); color: var(--flow-ink);
+  padding: clamp(64px, 10vh, 112px) var(--gutter, clamp(20px, 4vw, 56px)) 0;
+  text-align: center;
+}
+.dw-flow-head {
+  margin: 0 0 12px;
+  font: 400 clamp(40px, 4.2vw, 64px)/1 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  letter-spacing: .005em; text-transform: uppercase; color: var(--flow-ink);
+}
+.dw-flow-sub { margin: 0 auto; max-width: 46ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.45; color: var(--flow-ink-2); }
+.dw-steps {
+  display: grid; grid-template-columns: repeat(var(--flow-n, 4), minmax(0, 1fr));
+  margin: clamp(28px, 4vh, 44px) calc(-1 * var(--gutter, clamp(20px, 4vw, 56px))) 0; padding: 0; list-style: none;
+  border-top: 1px solid var(--flow-line); border-bottom: 1px solid var(--flow-line);
+}
+.dw-steps li { display: grid; }
+.dw-steps li + li { border-left: 1px solid var(--flow-line); }
+.dw-step { display: grid; justify-items: center; align-content: start; gap: 8px; padding: 28px 16px 40px; color: inherit; text-decoration: none; }
+a.dw-step { transition: background-color .2s ease; }
+@media (hover: hover) { a.dw-step:hover { background: rgba(10, 10, 9, .04); } a.dw-step:hover .dw-step-p { color: var(--flow-ink); } }
+a.dw-step:focus-visible { outline: 1px solid var(--flow-ink); outline-offset: -6px; }
+.dw-step img { height: 40px; width: auto; margin-bottom: 4px; }
+.dw-step-t { font: 600 11px/1 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .18em; text-transform: uppercase; }
+.dw-step-p { font: 500 10px/1.2 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--flow-ink-3); transition: color .2s ease; }
+.dw-step-d { max-width: 22ch; font-size: 14px; line-height: 1.4; color: var(--flow-ink-2); }
+
+/* six steps: three across on tablets, two on phones */
+@media (min-width: 700px) and (max-width: 1080px) {
+  .dw-steps[style*="--flow-n: 6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dw-steps[style*="--flow-n: 6"] li:nth-child(4) { border-left: 0; }
+  .dw-steps[style*="--flow-n: 6"] li:nth-child(n+4) { border-top: 1px solid var(--flow-line); }
+}
+@media (max-width: 699px) {
+  .dw-steps, .dw-steps[style*="--flow-n: 6"] { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-left: -20px; margin-right: -20px; }
+  .dw-steps li:nth-child(odd) { border-left: 0; }
+  .dw-steps li:nth-child(even) { border-left: 1px solid var(--flow-line); }
+  .dw-steps li:nth-child(n+3) { border-top: 1px solid var(--flow-line); }
+  .dw-step { padding: 24px 12px 32px; }
+  .dw-step img { height: 34px; }
+}
+
+/* studio: sits between Values (cream) and Join (black) on the page's second cream */
+.dw-flow-studio { --flow-bg: var(--bg-2, #ece7dc); --flow-ink: var(--ink, #141412); --flow-ink-2: var(--ink-2, #4a4741); --flow-ink-3: var(--ink-3, #6e6a62); --flow-line: var(--line, rgba(20, 20, 18, .12)); }
+.dw-flow-studio .dw-steps { border-bottom: 0; }

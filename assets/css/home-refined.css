@@ -494,6 +494,7 @@ a[href$="loadout/"] .mega-menu-card-img::after {
 @media (hover: hover) and (pointer: fine) { .mega-menu-card:hover .mega-menu-card-name { color: var(--acc); } }
 .mega-menu-card[aria-current] .mega-menu-card-name { color: var(--acc); }
 .mega-menu-card-desc { display: block; margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--bone-2); }
+.mega-menu-card-about { display: block; max-width: 40ch; margin: 2px auto 0; font-size: 12.5px; line-height: 1.5; color: var(--bone-3); text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) {
   .mega-menu-card-photo { transition: none; }
 }
@@ -738,3 +739,13 @@ a.mm-plate[href$="handoff/"] .mega-menu-card-logo { height: clamp(70px, 7vw, 120
 .screen--tools .foot-legal a:hover, .screen--tools .foot-legal a:focus-visible { color: var(--ink-text); }
 .foot-legal .sep { margin: 0 .6em; }
 @media (max-width: 767px) { .foot-legal a { display: inline-block; padding: 12px 2px; margin: -12px 0; } }
+/* Menu status label: badges.css clears the yellow fill, so the dark ink text vanished on the dark menu. */
+.mega-menu .mm-meta .badge.badge-dev { color: #e6e0d3 !important; }
+
+/* Phones: the four menu tabs as a clean 2 x 2 grid (two equal columns), so the rows line up
+   instead of each row centring on its own width (Daniel 11-26: "the tabs look bad on the phone"). */
+@media (max-width: 719px) {
+  .poster-head { row-gap: 4px; }
+  .nav-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 0; }
+  .nav-tab { display: flex; justify-content: center; }
+}

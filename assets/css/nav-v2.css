@@ -108,3 +108,11 @@
 .foot-email a, .contact-email a { color: inherit; text-decoration: none; }
 .foot-email a:hover, .foot-email a:focus-visible,
 .contact-email a:hover, .contact-email a:focus-visible { text-decoration: underline; text-underline-offset: .12em; }
+/* Menu: one plain line under each tagline saying what the product does. */
+.mega-menu-card-about { display: block; max-width: 40ch; margin: 2px auto 0; font-size: 12.5px; line-height: 1.5; color: #807d77 !important; text-wrap: balance; }
+
+/* Phones: menu tabs as a clean 2 x 2 grid so the rows line up (Daniel 11-26). */
+@media (max-width: 719px) {
+  .nav-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 0; }
+  .nav-tab { display: flex; justify-content: center; }
+}
