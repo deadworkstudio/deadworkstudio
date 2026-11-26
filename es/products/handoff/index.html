@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="../../assets/css/motion.css?v=20261103b" />
 <link rel="preload" href="../../assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../assets/css/handoff-v2.css?v=20261115a" />
-<link rel="stylesheet" href="../../assets/css/hf-page.css?v=20261117a" />
+<link rel="stylesheet" href="../../assets/css/hf-page.css?v=20261125a" />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
 <link rel="stylesheet" href="../../assets/css/badges.css?v=20261123a" />
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Handoff","applicationCategory":"BusinessApplication","operatingSystem":"macOS, iOS","description":"Handoff copies camera cards and hard drives, reads every file back to verify it with xxHash64, and shows one result: green when the card is safe to format. The team follows along on a free iPhone app, and a read-only link shares the result.","publisher":{"@type":"Organization","name":"DEADWORK STUDIO","url":"https://deadworkstudio.com/"},"url":"https://deadworkstudio.com/products/handoff/"}</script>
@@ -127,21 +127,26 @@
       </form>
       <p class="hf-cta-note"><span class="badge badge-dev"><span class="badge-icon"></span>En proceso</span><span class="mono">Aún no ha salido &middot; 14 días gratis al lanzarse, sin tarjeta</span></p>
     </div>
-    <!-- Real recordings, played together and kept in sync by hf-page.js: the Mac app (offload build, Night) copying
-         sample card A004 to two hard drives, and the iPhone app (simulator, demo data set to the same card) showing
-         the same copy. The phone's frames are real app screens stepped at the moments the Mac's number changes. -->
+    <!-- Real app screens, played together and kept in sync by hf-page.js: the Mac app (offload build, Night) copying
+         sample card A004 (100 clips) to two hard drives, the iPhone app (simulator, demo data set to the same card)
+         and the Watch screens (rendered from the Watch app's SwiftUI views) showing the same copy. One 60 fps timeline:
+         each value of the verified percentage holds 16 frames while the progress edge and the thin bars glide a little
+         every frame, and the clip behind the number crossfades in shot order (mixed in linear light, so it never dips). -->
     <figure class="hf-duo" data-hf-duo>
       <div class="hf-duo-box">
       <div class="hf-duo-mac">
-        <!-- Real Mac app, captured at 3840 x 2400 one frame per value of the verified percentage, 0 to 100, then the
-             green result. hf-page.js picks the file for the screen: 3840 (large retina), 1920, or 1080 (phones). -->
-        <video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/hero/mac-poster-1920.jpg?v=9" data-poster-still="../../assets/img/products/handoff/hero/mac-safe-1920.jpg?v=9" width="1440" height="900" data-hf-sync="mac" data-src-4k="../../assets/img/products/handoff/hero/mac-3840.mp4?v=9" data-src-2k="../../assets/img/products/handoff/hero/mac-1920.mp4?v=9" data-src-1k="../../assets/img/products/handoff/hero/mac-1080.mp4?v=9" aria-label="La app de Handoff para Mac copiando la tarjeta A004 a dos discos duros. Un número enorme cuenta el porcentaje verificado de 0 a 100, paso a paso, y luego toda la ventana se pone verde: A004 IS SAFE. Cada clip verificado en 2 discos duros."></video>
+        <!-- Real Mac app, captured at 3840 x 2400 at every value of the verified percentage, 0 to 100, then the green
+             result. hf-page.js picks the file for the screen: 3840 (large retina), 1920, or 1080 (phones). -->
+        <video class="hf-video" muted loop playsinline preload="none" poster="../../assets/img/products/handoff/hero/mac-poster-1920.jpg?v=10" data-poster-still="../../assets/img/products/handoff/hero/mac-safe-1920.jpg?v=10" width="1440" height="900" data-hf-sync="mac" data-src-4k="../../assets/img/products/handoff/hero/mac-3840.mp4?v=11" data-src-2k="../../assets/img/products/handoff/hero/mac-1920.mp4?v=11" data-src-1k="../../assets/img/products/handoff/hero/mac-1080.mp4?v=11" aria-label="La app de Handoff para Mac copiando la tarjeta A004 a dos discos duros. Un número enorme cuenta el porcentaje verificado de 0 a 100 mientras los clips de la tarjeta pasan detrás, una imagen por clip en orden de rodaje. Luego toda la ventana se pone verde: A004 IS SAFE. Cada clip verificado en 2 discos duros."></video>
       </div>
       <div class="hf-duo-phone hf-ph">
-        <video muted loop playsinline preload="none" poster="../../assets/img/products/handoff/hero/phone-poster.jpg?v=9" data-poster-still="../../assets/img/products/handoff/hero/phone-safe.jpg?v=9" width="900" height="1956" data-hf-sync="phone" data-src-2k="../../assets/img/products/handoff/hero/phone-900.mp4?v=9" data-src-1k="../../assets/img/products/handoff/hero/phone-600.mp4?v=9" aria-label="La app gratuita de Handoff para iPhone siguiendo la misma copia: el porcentaje verificado cuenta de 0 a 100 y luego la pantalla se pone verde: A004 IS SAFE, 2 de 2 copias verificadas."></video>
+        <video muted loop playsinline preload="none" poster="../../assets/img/products/handoff/hero/phone-poster.jpg?v=10" data-poster-still="../../assets/img/products/handoff/hero/phone-safe.jpg?v=10" width="900" height="1956" data-hf-sync="phone" data-src-2k="../../assets/img/products/handoff/hero/phone-900.mp4?v=11" data-src-1k="../../assets/img/products/handoff/hero/phone-600.mp4?v=11" aria-label="La app gratuita de Handoff para iPhone siguiendo la misma copia: el mismo número y el mismo clip detrás, de 0 a 100, y luego la pantalla se pone verde: A004 IS SAFE, 2 de 2 copias verificadas."></video>
+      </div>
+      <div class="hf-duo-watch hf-wa">
+        <video muted loop playsinline preload="none" poster="../../assets/img/products/handoff/hero/watch-poster.jpg?v=10" data-poster-still="../../assets/img/products/handoff/hero/watch-safe.jpg?v=10" width="396" height="484" data-hf-sync="watch" data-src-1k="../../assets/img/products/handoff/hero/watch-396.mp4?v=11" aria-label="La app de Handoff para Apple Watch con la misma copia: el número verificado cuenta de 0 a 100 y luego la pantalla se pone verde: SAFE, A004, 2 discos duros."></video>
       </div>
       </div>
-      <figcaption class="mono hf-cap">Grabado en las apps de Mac y iPhone &middot; tarjeta de ejemplo &middot; copia acelerada</figcaption>
+      <figcaption class="mono hf-cap">Mac y iPhone grabados en las apps &middot; pantallas del Watch sacadas de la app del Watch &middot; tarjeta de ejemplo &middot; copia acelerada</figcaption>
     </figure>
   </section>
 
@@ -560,7 +565,7 @@
 <script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
 <script src="../../assets/js/ss-page.js?v=20261124nc"></script>
 <script src="../../assets/js/notify.js?v=20261115a" defer></script>
-<script src="../../assets/js/hf-page.js?v=20261117a" defer></script>
+<script src="../../assets/js/hf-page.js?v=20261125a" defer></script>
 <script src="../../assets/js/hf-analytics.js?v=20261115a" defer></script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
