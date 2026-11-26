@@ -425,7 +425,7 @@ HUB = [
             ("Selling on each site", ["adobe-stock-video-workflow", "shutterstock-video-contributor", "pond5-video-upload", "storyblocks-video-contributor"]),
             ("Cameras and formats", ["blackmagic-raw-stock-footage", "red-r3d-stock-footage", "sony-slog3-stock-footage", "drone-footage-for-stock"]),
             ("Editing", ["premiere-pro-batch-export-stock"]),
-            ("Making money", ["sell-old-footage-archive", "best-sites-to-sell-stock-footage"]),
+            ("Making money", ["sell-stock-footage", "sell-old-footage-archive", "best-sites-to-sell-stock-footage"]),
         ],
     },
 ]
