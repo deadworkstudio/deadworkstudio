@@ -234,3 +234,34 @@ main > section.hf-final { padding-top: clamp(72px, 12vh, 128px); padding-bottom:
   .hf .hf-tour-nav.is-auto .ix-feat[aria-selected="true"]::after { animation: none; }
 }
 .hf .ix-auto-btn { min-height: 44px; }
+
+/* team section: two phones and a Watch side by side */
+.hf .hf-media-phones.has-watch { gap: clamp(14px, 2.4vw, 32px); }
+.hf .hf-media-phones.has-watch .hf-ph { width: min(34%, 200px); }
+.hf .hf-media-phones.has-watch .hf-wa { width: min(19%, 112px); margin-right: 8px; }
+@media (max-width: 699px) {
+  .hf .hf-media-phones.has-watch .hf-ph { width: 33%; }
+  .hf .hf-media-phones.has-watch .hf-wa { width: 20%; margin-right: 4px; }
+}
+
+/* copied isn't checked: the cart facts as a strip of short tags under the table */
+.hf .hf-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: min(100%, 1000px); margin: 24px auto 0; padding: 0; list-style: none; }
+.hf .hf-tags li { padding: 7px 12px 6px; border: 1px solid var(--line-2); font: 500 11px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+@media (max-width: 699px) { .hf .hf-tags { justify-content: flex-start; } .hf .hf-tags li { font-size: 10px; } }
+
+/* the moment before you format: one line right after the hero */
+main > section.hf-dread { padding-top: clamp(24px, 4vh, 48px); padding-bottom: clamp(40px, 7vh, 72px); }
+.hf .hf-dread-line { margin: 0 auto; max-width: 24ch; font-size: clamp(30px, 4.4vw, 60px); text-align: center; }
+.hf .hf-dread-line span { display: block; }
+.hf .hf-dread-line span:nth-child(2) { color: var(--ink-3); }
+
+/* before you format: real app screens, one per doubt */
+.hf .hf-before-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 48px); width: min(100%, 1160px); margin: clamp(28px, 4vh, 44px) auto 0; text-align: left; }
+.hf .hf-before-item { margin: 0; }
+.hf .hf-before-item img { display: block; width: 100%; height: auto; aspect-ratio: 2000 / 672; border-radius: 6px; outline: 1px solid var(--line); outline-offset: -1px; background: #141412; }
+.hf .hf-before-item figcaption { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px 32px; margin-top: 14px; }
+@media (max-width: 699px) { .hf .hf-before-item figcaption { grid-template-columns: minmax(0, 1fr); } }
+.hf .hf-before-h { margin: 0; font: 600 18px/1.3 var(--sans); color: var(--ink); }
+.hf .hf-before-item p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+
+.hf .hf-wa figcaption { position: absolute; left: -20px; right: -20px; top: 100%; margin-top: 14px; text-align: center; }
