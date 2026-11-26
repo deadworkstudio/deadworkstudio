@@ -559,6 +559,16 @@ def main():
     build_hub(header, footer, metas)
     sitemap([m for m in metas if m["status"] == "live"])
     orphans(metas)
+    header_hides()
+
+
+def header_hides():
+    """Header rule (Daniel 11-26): like the product pages, the top header hides on scroll down.
+    Every page under guides/ must load assets/js/hide-header.js, or the build stops."""
+    bad = [str(p.relative_to(ROOT)) for p in sorted((ROOT / "guides").glob("**/index.html"))
+           if "data-sh" in p.read_text() and "hide-header.js" not in p.read_text()]
+    if bad:
+        sys.exit("header must hide on scroll (load assets/js/hide-header.js): " + ", ".join(bad))
 
 
 def orphans(metas):
