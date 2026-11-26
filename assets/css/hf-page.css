@@ -241,10 +241,12 @@ main > section.hf-final { padding-top: clamp(72px, 12vh, 128px); padding-bottom:
 /* team section: two phones and a Watch side by side */
 .hf .hf-media-phones.has-watch { gap: clamp(14px, 2.4vw, 32px); }
 .hf .hf-media-phones.has-watch .hf-ph { width: min(34%, 200px); }
-.hf .hf-media-phones.has-watch .hf-wa { width: min(19%, 112px); margin-right: 8px; }
+.hf .hf-media-phones.has-watch .hf-wa { width: min(24%, 140px); margin-right: 8px; }
 @media (max-width: 699px) {
-  .hf .hf-media-phones.has-watch .hf-ph { width: 33%; }
-  .hf .hf-media-phones.has-watch .hf-wa { width: 20%; margin-right: 4px; }
+  .hf .hf-media-phones.has-watch .hf-ph { width: 31%; }
+  .hf .hf-media-phones.has-watch .hf-wa { width: 25%; margin-right: 4px; }
+  /* tour step 05: the box grows with the phones instead of cropping them */
+  .hf .hf-media.hf-media-phones { aspect-ratio: auto; }
 }
 
 /* copied isn't checked: the cart facts as a strip of short tags under the table */
