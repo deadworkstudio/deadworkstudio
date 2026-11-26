@@ -11,3 +11,24 @@
 .dw-values .dw-step-t { min-height: 2.9em; display: flex; align-items: center; justify-content: center; }
 .dw-values .dw-step-d { max-width: 24ch; }
 html[lang="ja"] .dw-values .dw-step-d, html[lang="zh-Hans"] .dw-values .dw-step-d { word-break: auto-phrase; }
+
+/* One line per point (Daniel 11-26): three across on desktop and tablets, one per row on phones,
+   with no width caps so each title and each line sits on a single line. */
+.dw-values .dw-steps[style*="--flow-n: 6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dw-values .dw-steps li:nth-child(4) { border-left: 0; }
+.dw-values .dw-steps li:nth-child(n+4) { border-top: 1px solid var(--flow-line); }
+.dw-values .dw-step-t, .dw-values .dw-step-d { max-width: none; min-height: 0; white-space: nowrap; }
+.dw-values .dw-step { padding: 28px 16px 32px; }
+@media (max-width: 699px) {
+  .dw-values .dw-steps, .dw-values .dw-steps[style*="--flow-n: 6"] { grid-template-columns: 1fr; }
+  .dw-values .dw-steps li { border-left: 0 !important; }
+  .dw-values .dw-steps li + li { border-top: 1px solid var(--flow-line); }
+  .dw-values .dw-step {
+    grid-template-columns: 52px minmax(0, 1fr); grid-template-rows: auto auto; justify-items: start;
+    column-gap: 14px; row-gap: 6px; padding: 18px 20px; text-align: left; align-items: center;
+  }
+  .dw-values .dw-step img { grid-row: 1 / 3; justify-self: center; height: 32px; margin: 0; }
+  .dw-values .dw-step-t, .dw-values .dw-step-d { white-space: normal; text-wrap: balance; justify-content: flex-start; }
+  .dw-values .dw-step-t { font-size: 11px; letter-spacing: .1em; }
+  .dw-values .dw-step-d { font-size: 14px; }
+}
