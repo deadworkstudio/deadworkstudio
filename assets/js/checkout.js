@@ -706,7 +706,7 @@
         cap.className = 'checkout-phone-demo-cap';
         cap.textContent = T("Here's what it does with one card dump:");
         var vid = document.createElement('video');
-        vid.src = '/assets/video/watch/one-card-dump-720.mp4';
+        vid.src = '/assets/video/watch/one-card-dump-v2-720.mp4';
         vid.poster = '/assets/video/watch/one-card-dump-poster.jpg';
         vid.muted = true; vid.defaultMuted = true; vid.playsInline = true; vid.loop = true; vid.controls = true; vid.autoplay = true;
         vid.setAttribute('playsinline', ''); vid.setAttribute('muted', ''); vid.setAttribute('preload', 'metadata');
