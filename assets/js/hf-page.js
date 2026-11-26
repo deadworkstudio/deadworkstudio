@@ -1,4 +1,4 @@
-// Handoff product page: the hero's Mac + iPhone recordings in sync, and the six-step tour.
+// Handoff product page: the hero's Mac, iPhone and Watch loops in sync, and the six-step tour.
 // No dependencies. Everything degrades to posters/stills: with reduced motion nothing plays by itself
 // and the tour doesn't advance on its own; without JS the first step shows and the rest stay hidden.
 (function () {
@@ -9,14 +9,15 @@
   // tell hf-analytics.js (if present) about a moment, without it knowing about the markup
   function emit(name, detail) { try { document.dispatchEvent(new CustomEvent('hf:' + name, { detail: detail || {} })); } catch (e) {} }
 
-  // ---- hero: two real recordings of the same sample card; the phone follows the Mac's clock ----
+  // ---- hero: the Mac, iPhone and Watch loops of the same sample card; the phone and Watch follow the Mac's clock ----
   (function () {
     var duo = document.querySelector('[data-hf-duo]'); if (!duo) return;
-    var mac = duo.querySelector('[data-hf-sync="mac"]'), phone = duo.querySelector('[data-hf-sync="phone"]');
-    if (!mac || !phone) return;
+    var mac = duo.querySelector('[data-hf-sync="mac"]');
+    var followers = [].slice.call(duo.querySelectorAll('[data-hf-sync]')).filter(function (v) { return v !== mac; });
+    if (!mac) return;
     // pick the recording for this screen: device pixels the hero will actually fill
     var dpr = window.devicePixelRatio || 1;
-    [mac, phone].forEach(function (v) {
+    [mac].concat(followers).forEach(function (v) {
       var px = (v.getBoundingClientRect().width || 300) * dpr;
       var big = v === mac ? 1700 : 99999, mid = v === mac ? 1100 : 400;
       var src = (px > big && v.getAttribute('data-src-4k')) || (px > mid && v.getAttribute('data-src-2k')) || v.getAttribute('data-src-1k') || v.getAttribute('data-src-2k');
@@ -26,18 +27,20 @@
       if (reduce && v.getAttribute('data-poster-still')) v.setAttribute('poster', v.getAttribute('data-poster-still'));
     });
     var inView = false;
-    // Both files share one timeline (frame N of each shows the same number), so the phone is held to
-    // the Mac's time: a big gap is a seek, a small one is closed by nudging the phone's playback speed.
-    // Checked every frame while playing, so the two stay within a frame or two of each other.
-    function sync() {
-      if (!(phone.readyState >= 1) || !(mac.readyState >= 1)) return;
-      var dur = mac.duration || phone.duration || 0;
-      var d = phone.currentTime - mac.currentTime;
+    // All files share one timeline (frame N of each shows the same number) and the same length, so they loop
+    // together. Each follower is held to the Mac's time: a big gap is a seek, a small one is closed by nudging
+    // its playback speed. Checked every frame while playing, so they stay within a frame or two of each other.
+    // The loops end on the frame they start on, so the restart shows no jump.
+    function syncOne(f) {
+      if (!(f.readyState >= 1) || !(mac.readyState >= 1)) return;
+      var dur = mac.duration || f.duration || 0;
+      var d = f.currentTime - mac.currentTime;
       if (dur && Math.abs(d) > dur / 2) d -= d > 0 ? dur : -dur; // one of them has just looped
-      if (Math.abs(d) > 0.25) { try { phone.currentTime = mac.currentTime; } catch (e) {} phone.playbackRate = 1; }
-      else if (Math.abs(d) > 0.015) phone.playbackRate = Math.max(0.85, Math.min(1.15, 1 - d * 3));
-      else if (phone.playbackRate !== 1) phone.playbackRate = 1;
+      if (Math.abs(d) > 0.25) { try { f.currentTime = mac.currentTime; } catch (e) {} f.playbackRate = 1; }
+      else if (Math.abs(d) > 0.015) f.playbackRate = Math.max(0.85, Math.min(1.15, 1 - d * 3));
+      else if (f.playbackRate !== 1) f.playbackRate = 1;
     }
+    function sync() { followers.forEach(syncOne); }
     var ticking = false;
     function tick() {
       if (mac.paused || mac.ended) { ticking = false; return; }
@@ -46,13 +49,13 @@
     }
     function startTick() { if (!ticking) { ticking = true; tick(); } }
     mac.addEventListener('seeked', sync);
-    mac.addEventListener('playing', function () { if (inView) play(phone); sync(); startTick(); });
-    phone.addEventListener('playing', sync);
-    mac.addEventListener('pause', function () { pause(phone); });
+    mac.addEventListener('playing', function () { if (inView) followers.forEach(play); sync(); startTick(); });
+    followers.forEach(function (f) { f.addEventListener('playing', function () { syncOne(f); }); });
+    mac.addEventListener('pause', function () { followers.forEach(pause); });
     if (reduce || !hasIO) return;
     new IntersectionObserver(function (es) {
       inView = es[0].isIntersecting;
-      if (inView) { play(mac); play(phone); } else { pause(mac); pause(phone); }
+      if (inView) { play(mac); followers.forEach(play); } else { pause(mac); followers.forEach(pause); }
     }, { threshold: 0.25 }).observe(duo);
   })();
 
