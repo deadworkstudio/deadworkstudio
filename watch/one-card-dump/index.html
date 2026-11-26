@@ -33,9 +33,12 @@ a:focus-visible{outline:2px solid #E3B23D;outline-offset:3px}
 <body>
 <main>
   <div class="top"><a class="mark" href="/products/stock-shredder/">DEADWORK</a><span class="eyebrow">Stock Shredder · 0:20</span></div>
-  <video id="v" muted playsinline autoplay controls preload="metadata" poster="/assets/video/watch/one-card-dump-poster.jpg">
-    <source src="/assets/video/watch/one-card-dump-720.mp4" type="video/mp4" />
-  </video>
+  <video id="v" muted playsinline autoplay controls preload="metadata" poster="/assets/video/watch/one-card-dump-poster.jpg"></video>
+  <script>
+  // Pick the file before the video starts loading (it used to load 720p, then swap to 1080p mid-play).
+  // Bigger screens get 1080p; phones keep the lighter 720p one. v2 = blank-thumbnail frames repaired (Daniel 11-26).
+  (function(){var v=document.getElementById('v');var big=Math.max(screen.width,screen.height)*(window.devicePixelRatio||1)>=1600&&window.innerWidth>=900;v.src='/assets/video/watch/one-card-dump-v2-'+(big?'1080':'720')+'.mp4';})();
+  </script>
   <h1>One card dump. Named, graded, tagged.</h1>
   <p>Camera files in. Real names, folders, both copies and keywords out.</p>
   <div class="ctas">
@@ -44,10 +47,6 @@ a:focus-visible{outline:2px solid #E3B23D;outline-offset:3px}
   </div>
   <p class="small">Already installed? Open Stock Shredder and drop in a folder. New here? <a href="/products/stock-shredder/?code=SHRED#trial">Try 100 clips free</a>.</p>
 </main>
-<script>
-// Bigger screens get the 1080p file; phones keep the lighter 720p one.
-(function(){var v=document.getElementById('v');if(Math.max(screen.width,screen.height)*(window.devicePixelRatio||1)>=1600&&window.innerWidth>=900){v.querySelector('source').src='/assets/video/watch/one-card-dump-1080.mp4';v.load();}})();
-</script>
 <script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
 <script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
 </body>
