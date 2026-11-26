@@ -3,7 +3,7 @@
    every product page, so nobody reads DEADWORK as replacing the people who make the work. */
 .dw-values { border-top: 1px solid rgba(10, 10, 9, .14); }
 .dw-values .dw-steps { border-bottom: 0; }
-.dw-values-mark { display: block; width: auto; height: 20px; margin: 0 auto 18px; }
+.dw-values-mark { display: block; width: auto; height: calc(clamp(40px, 4.2vw, 64px) * .5465); margin: 0 auto 14px; } /* same width as the VALUES head (Daniel 11-26) */
 .dw-values .dw-step-t { max-width: 22ch; font-size: 12px; line-height: 1.45; text-wrap: balance; }
 .dw-values .dw-step-d { max-width: 26ch; text-wrap: pretty; }
 .screen--tools .dw-values { min-width: 0; border-top: 0; padding-top: clamp(40px, 6vh, 72px); }
