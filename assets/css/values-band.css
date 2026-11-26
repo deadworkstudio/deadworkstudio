@@ -35,3 +35,19 @@ html[lang="ja"] .dw-values .dw-step-d, html[lang="zh-Hans"] .dw-values .dw-step-
 /* smaller numerals (Daniel 11-26) */
 .dw-values .dw-step img { height: 28px; }
 @media (max-width: 699px) { .dw-values .dw-step img { height: 24px; } .dw-values .dw-step { grid-template-columns: 40px minmax(0, 1fr); } }
+/* Same voice as the home hero (Daniel 11-26): titles in the CREATE MORE. MANAGE LESS. face
+   (Anton, caps), the line under each one lowercase in the hero's body face. German keeps its
+   capitals, as the hero line does. */
+.dw-values .dw-step-t {
+  font: 400 clamp(22px, 1.9vw, 30px)/1.05 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  letter-spacing: .005em; text-transform: uppercase;
+}
+.dw-values .dw-step-d {
+  font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  font-size: clamp(15px, 1.15vw, 18px); text-transform: lowercase;
+}
+html[lang="de"] .dw-values .dw-step-d { text-transform: none; }
+@media (max-width: 699px) {
+  .dw-values .dw-step-t { font-size: 22px; letter-spacing: .005em; }
+  .dw-values .dw-step-d { font-size: 15px; }
+}
