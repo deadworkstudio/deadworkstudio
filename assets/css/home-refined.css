@@ -237,6 +237,7 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 .hero { display: grid; align-content: center; justify-items: center; text-align: center; padding-bottom: 6vh; position: relative; }
 .hero-title { font: 400 clamp(64px, 11.4vw, 200px)/0.94 var(--font-display); letter-spacing: -0.005em; }
 .hero-lede { margin-top: 28px; font-size: clamp(16px, 1.35vw, 20px); color: var(--bone-body); }
+.hero-lede--more { margin-top: 10px; max-width: 46ch; margin-left: auto; margin-right: auto; font-size: clamp(14px, 1.05vw, 16px); color: var(--bone-2); text-wrap: balance; }
 .hero-cue { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); }
 /* keep the statement and buttons clear of the "06 Tools" cue, which sits at the bottom of the hero (it used to run under the buttons on short laptop windows and in longer languages) */
 @media (min-width: 900px) { .hero { padding-bottom: calc(6vh + 120px); } }
