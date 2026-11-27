@@ -130,7 +130,7 @@ Publish order matters: sell-stock-footage links to the archive and best-sites pa
 | P3 | how to make money selling stock footage | sell-stock-footage | LIVE 11-26 (indexing NOT yet requested: Chrome offline 11-26 and 11-27, retry next run) |
 | P4 | "Keep reading" block at the end of every guide: up to 3 related LIVE guides, set by the "related" meta field, then by shared keywords. Build refuses a live guide whose body links to a draft. (Hub + footer link added later, 11-24, #141) | seo/build.py | LIVE 11-23 (main 8ef5b92) |
 | P5 | how to keyword stock footage | keyword-stock-footage | Merged 11-24: the live free title and keyword checker (stock-footage-title-keyword-checker) answers this search |
-| P6 | stock footage rejected | stock-footage-rejection-reasons | Draft ready, offered 11-27 |
+| P6 | stock footage rejected | stock-footage-rejection-reasons | LIVE 11-27 (main a1d3fbc; indexing NOT yet requested, Chrome offline) |
 | P7 | what stock footage sells best | what-stock-footage-sells | Draft ready (11-26) |
 | P8 | stock footage workflow | stock-footage-workflow | Draft ready (11-27) |
 | P9 | batch export video clips | batch-process-stock-footage | To draft |
