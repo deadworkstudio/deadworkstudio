@@ -7,7 +7,7 @@
 
 /* Scoreboard over the wall: one 5-10 s run. Takes and minutes land, then the 42 clips appear one by one
    left to right while the Clips counter counts up with them. */
-.nyc-run { max-width: 1040px; margin: 0 auto; display: grid; gap: clamp(10px, 2vw, 16px); }
+.nyc-run { max-width: 720px; margin: 0 auto; display: grid; gap: clamp(10px, 2vw, 16px); }
 .nyc-score { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
 .nyc-score > div { display: grid; gap: 6px; padding: clamp(12px, 2vw, 18px) clamp(10px, 2vw, 18px); }
 .nyc-score > div + div { border-left: 1px solid var(--line-2, rgba(20,20,18,.28)); }
@@ -22,8 +22,23 @@
 .nyc-run.is-armed .nyc-grid img { opacity: 0; transform: scale(1.06); transition: opacity 260ms ease, transform 420ms var(--ease); }
 .nyc-run.is-armed .nyc-grid li.is-on img { opacity: 1; transform: none; }
 .nyc-run.is-armed .nyc-grid li.is-flash::after { opacity: 1; transition: none; }
-.nyc-replay { justify-self: center; border: 1px solid var(--line-2, rgba(20,20,18,.28)); background: none; color: var(--ink); padding: 8px 12px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
-.nyc-replay:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* Wall and moments share one cell; the run swaps between them. */
+.nyc-stage { display: grid; }
+.nyc-stage > * { grid-area: 1 / 1; }
+.nyc-grid { transition: opacity 400ms ease; }
+.nyc-moments { display: grid; align-content: start; gap: 2px; opacity: 0; transition: opacity 400ms ease; pointer-events: none; }
+.nyc-take { position: relative; height: clamp(7px, 1.6vw, 12px); }
+.nyc-take b { position: absolute; left: 0; top: 50%; height: 1px; background: var(--line-2, rgba(20,20,18,.28)); }
+.nyc-take i { position: absolute; top: 0; bottom: 0; background: #E4DED1 center / cover no-repeat; box-shadow: inset -1px 0 0 rgba(244,241,234,.9); transform: scaleX(0); transform-origin: left; transition: transform 520ms var(--ease); }
+.nyc-run.is-moments .nyc-grid { opacity: 0; }
+.nyc-run.is-moments .nyc-moments { opacity: 1; }
+.nyc-run.is-moments .nyc-take i { transform: none; }
+.nyc-run.is-fade .nyc-stage, .nyc-run.is-fade .nyc-score .nyc-num { opacity: 0; transition: opacity 400ms ease; }
+.nyc-cap { position: relative; display: grid; justify-items: center; margin: 0; color: var(--ink-3); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; text-align: center; }
+.nyc-cap span { grid-area: 1 / 1; transition: opacity 300ms ease; }
+.nyc-cap span + span, .nyc-run.is-moments .nyc-cap span:first-child { opacity: 0; }
+.nyc-run.is-moments .nyc-cap span + span { opacity: 1; }
+.nyc-run:not(.is-armed) .nyc-cap span + span { display: none; }
 
 .nyc-compare-wrap { display: grid; gap: 10px; max-width: 880px; margin: clamp(40px, 7vw, 72px) auto 0; }
 .nyc-step-label { margin: 0; text-align: center; color: var(--ink-3); }
