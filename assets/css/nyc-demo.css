@@ -1,36 +1,26 @@
-/* "Real footage" (Daniel 11-27, "Do NYC"; cleaned up the same day): 6 raw New York drone takes in,
-   the app's real cuts and 40% grade, 9 clips out. Phone first, one column, same width panels. */
+/* "Real footage" (Daniel 11-27): one NYC drone card through the real cutter (32 takes, 42 clips at 5-30 s, 40% grade).
+   Apple-style: one headline, the real output as a wall of 42 graded frames that fills in left to right, then raw vs graded. */
 .nyc { padding: clamp(56px, 9vw, 112px) var(--gutter); border-top: 1px solid var(--line); }
-.nyc-head { max-width: 640px; margin: 0 auto clamp(32px, 5vw, 56px); text-align: center; }
-.nyc-head h2 { margin: 10px 0 12px; font: 700 clamp(32px, 7vw, 60px)/1 var(--sans); letter-spacing: -.02em; }
-.nyc-head p:last-child { margin: 0; color: var(--ink-2); font-size: clamp(16px, 2.2vw, 18px); }
-.nyc-steps { display: grid; gap: clamp(28px, 4.5vw, 48px); max-width: 880px; margin: 0 auto; padding: 0; list-style: none; }
-.nyc-step { display: grid; gap: 10px; }
-.nyc-step-label { margin: 0; color: var(--ink-3); }
-.nyc-frame, .nyc-panel { position: relative; overflow: hidden; border-radius: 8px; }
-.nyc-frame { background: #1b1b19; aspect-ratio: 16 / 9; }
-.nyc-frame video, .nyc-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.nyc-panel { display: grid; gap: 14px; padding: clamp(14px, 3vw, 22px); border: 1px solid var(--line); background: #FBF9F5; }
+.nyc-head { max-width: 640px; margin: 0 auto clamp(28px, 5vw, 48px); text-align: center; }
+.nyc-head h2 { margin: 10px 0 12px; font: 700 clamp(34px, 7.5vw, 64px)/1 var(--sans); letter-spacing: -.02em; text-wrap: balance; }
+.nyc-head p:last-child { margin: 0 auto; max-width: 44ch; color: var(--ink-2); font-size: clamp(16px, 2.2vw, 18px); }
+
+.nyc-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .5vw, 4px); max-width: 1040px; margin: 0 auto; padding: 0; list-style: none; }
+.nyc-grid li { aspect-ratio: 16 / 9; background: #1b1b19; overflow: hidden; }
+.nyc-grid img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: no-preference) {
+  .nyc-grid.is-armed img { opacity: 0; transform: scale(1.04); transition: opacity 500ms var(--ease), transform 700ms var(--ease); transition-delay: calc(var(--i) * 28ms); }
+  .nyc-grid.is-seen img { opacity: 1; transform: none; }
+}
+
+.nyc-compare-wrap { display: grid; gap: 10px; max-width: 880px; margin: clamp(40px, 7vw, 72px) auto 0; }
+.nyc-step-label { margin: 0; text-align: center; color: var(--ink-3); }
+.nyc-frame { position: relative; overflow: hidden; border-radius: 8px; background: #1b1b19; aspect-ratio: 16 / 9; }
+.nyc-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .nyc-tag { position: absolute; top: 10px; left: 10px; padding: 5px 8px; border-radius: 3px; background: rgba(20, 20, 18, .72); color: #F4F1EA; font: 500 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; pointer-events: none; }
 .nyc-tag-right { left: auto; right: 10px; }
 
-/* Cut: one thin row per take, its length to scale, kept parts green. */
-.nyc-takes { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
-.nyc-take { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: center; }
-.nyc-take-n { font: 500 9px/1 var(--mono); letter-spacing: .06em; color: var(--ink-3); }
-.nyc-take-meta { display: flex; justify-content: space-between; gap: 8px; font: 500 10px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-.nyc-take-meta b { color: #3D6E39; font-weight: 600; }
-.nyc-track { position: relative; height: 7px; border-radius: 2px; background: var(--line); }
-.nyc-keep { position: absolute; top: 0; bottom: 0; border-radius: 2px; background: #8FD687; transform-origin: left; }
-.nyc-legend { display: flex; gap: 18px; font: 500 10px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-.nyc-legend span::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 2px; vertical-align: -1px; background: var(--line); }
-.nyc-legend .is-kept::before { background: #8FD687; }
-@media (prefers-reduced-motion: no-preference) {
-  .nyc-takes .nyc-keep { transform: scaleX(0); transition: transform 900ms var(--ease); }
-  .nyc-takes.is-seen .nyc-keep { transform: scaleX(1); }
-}
-
-/* Graded: drag (or arrow keys) to compare raw and graded. */
+/* Raw vs graded: drag (or arrow keys) to compare. */
 .nyc-compare { --pos: 50%; touch-action: pan-y; cursor: ew-resize; user-select: none; -webkit-user-select: none; }
 .nyc-compare .nyc-after { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); }
 .nyc-compare .nyc-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: #F4F1EA; box-shadow: 0 0 0 1px rgba(0, 0, 0, .25); pointer-events: none; }
