@@ -5,13 +5,25 @@
 .nyc-head h2 { margin: 10px 0 12px; font: 700 clamp(34px, 7.5vw, 64px)/1 var(--sans); letter-spacing: -.02em; text-wrap: balance; }
 .nyc-head p:last-child { margin: 0 auto; max-width: 44ch; color: var(--ink-2); font-size: clamp(16px, 2.2vw, 18px); }
 
-.nyc-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .5vw, 4px); max-width: 1040px; margin: 0 auto; padding: 0; list-style: none; }
-.nyc-grid li { aspect-ratio: 16 / 9; background: #1b1b19; overflow: hidden; }
+/* Scoreboard over the wall: one 5-10 s run. Takes and minutes land, then the 42 clips appear one by one
+   left to right while the Clips counter counts up with them. */
+.nyc-run { max-width: 1040px; margin: 0 auto; display: grid; gap: clamp(10px, 2vw, 16px); }
+.nyc-score { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.nyc-score > div { display: grid; gap: 6px; padding: clamp(12px, 2vw, 18px) clamp(10px, 2vw, 18px); }
+.nyc-score > div + div { border-left: 1px solid var(--line-2, rgba(20,20,18,.28)); }
+.nyc-score .mono { color: var(--ink-3); }
+.nyc-num { font: 400 clamp(48px, 11vw, 104px)/.9 'Anton', Impact, 'Arial Narrow Bold', sans-serif; font-variant-numeric: tabular-nums; }
+.nyc-score .is-clips .nyc-num { color: #3D6E39; }
+.nyc-run.is-running .is-clips .nyc-num { color: var(--ink); }
+.nyc-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .5vw, 4px); margin: 0; padding: 0; list-style: none; }
+.nyc-grid li { position: relative; aspect-ratio: 16 / 9; background: #E4DED1; overflow: hidden; }
 .nyc-grid img { display: block; width: 100%; height: 100%; object-fit: cover; }
-@media (prefers-reduced-motion: no-preference) {
-  .nyc-grid.is-armed img { opacity: 0; transform: scale(1.04); transition: opacity 500ms var(--ease), transform 700ms var(--ease); transition-delay: calc(var(--i) * 28ms); }
-  .nyc-grid.is-seen img { opacity: 1; transform: none; }
-}
+.nyc-grid li::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 2px #8FD687; opacity: 0; transition: opacity 600ms ease; pointer-events: none; }
+.nyc-run.is-armed .nyc-grid img { opacity: 0; transform: scale(1.06); transition: opacity 260ms ease, transform 420ms var(--ease); }
+.nyc-run.is-armed .nyc-grid li.is-on img { opacity: 1; transform: none; }
+.nyc-run.is-armed .nyc-grid li.is-flash::after { opacity: 1; transition: none; }
+.nyc-replay { justify-self: center; border: 1px solid var(--line-2, rgba(20,20,18,.28)); background: none; color: var(--ink); padding: 8px 12px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+.nyc-replay:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 .nyc-compare-wrap { display: grid; gap: 10px; max-width: 880px; margin: clamp(40px, 7vw, 72px) auto 0; }
 .nyc-step-label { margin: 0; text-align: center; color: var(--ink-3); }
