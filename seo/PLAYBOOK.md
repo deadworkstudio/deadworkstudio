@@ -127,14 +127,14 @@ Publish order matters: sell-stock-footage links to the archive and best-sites pa
 | --- | --- | --- | --- |
 | P1 | sell old footage | sell-old-footage-archive | LIVE 11-24 (main 179d605) |
 | P2 | best sites to sell stock footage | best-sites-to-sell-stock-footage | LIVE 11-25 (main 97ce326) |
-| P3 | how to make money selling stock footage | sell-stock-footage | LIVE 11-26 (indexing NOT yet requested, do it next run) |
+| P3 | how to make money selling stock footage | sell-stock-footage | LIVE 11-26 (indexing NOT yet requested: Chrome offline 11-26 and 11-27, retry next run) |
 | P4 | "Keep reading" block at the end of every guide: up to 3 related LIVE guides, set by the "related" meta field, then by shared keywords. Build refuses a live guide whose body links to a draft. (Hub + footer link added later, 11-24, #141) | seo/build.py | LIVE 11-23 (main 8ef5b92) |
 | P5 | how to keyword stock footage | keyword-stock-footage | Merged 11-24: the live free title and keyword checker (stock-footage-title-keyword-checker) answers this search |
-| P6 | stock footage rejected | stock-footage-rejection-reasons | Draft ready (11-24) |
+| P6 | stock footage rejected | stock-footage-rejection-reasons | Draft ready, offered 11-27 |
 | P7 | what stock footage sells best | what-stock-footage-sells | Draft ready (11-26) |
-| P8 | stock footage workflow | stock-footage-workflow | To draft |
+| P8 | stock footage workflow | stock-footage-workflow | Draft ready (11-27) |
 | P9 | batch export video clips | batch-process-stock-footage | To draft |
-| P10 | stock footage csv upload | stock-footage-metadata-csv | To draft |
+| P10 | stock footage csv upload | stock-footage-metadata-csv | Merged 11-27: the live free upload sheet converter (stock-upload-sheet-converter, keyword "stock footage csv metadata") answers this search |
 | P11 | log footage stock | log-raw-footage-for-stock | To draft |
 | P12 | how much money stock footage (needs Daniel OK on money claims) | stock-footage-income | To draft |
 | P13 | stock footage software | best-stock-footage-software | To draft |
