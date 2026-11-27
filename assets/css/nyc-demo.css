@@ -1,57 +1,42 @@
-/* "Watch it shred" on real footage (Daniel 11-27, "Do NYC"): 6 raw New York drone takes go in,
-   the app's real cuts, its 40% grade, and its title + keywords come out. Phone first. */
-.nyc { padding: clamp(56px, 9vw, 120px) var(--gutter); border-top: 1px solid var(--line); }
-.nyc-head { max-width: 760px; margin: 0 auto clamp(28px, 4vw, 48px); text-align: center; }
-.nyc-head h2 { margin: 10px 0 10px; font: 700 clamp(30px, 6.4vw, 56px)/1.02 var(--sans); letter-spacing: -.02em; }
-.nyc-head p { margin: 0; color: var(--ink-2); font-size: clamp(16px, 2.2vw, 18px); }
-.nyc-steps { display: grid; gap: clamp(36px, 6vw, 72px); max-width: 1080px; margin: 0 auto; padding: 0; list-style: none; counter-reset: nyc; }
-.nyc-step { display: grid; gap: 14px; }
-.nyc-step-label { display: flex; align-items: baseline; gap: 10px; }
-.nyc-step-label::before { counter-increment: nyc; content: '0' counter(nyc); font: 500 11px/1 var(--mono); letter-spacing: .2em; color: var(--ink-3); }
-.nyc-step h3 { margin: 0; font: 700 clamp(20px, 3.4vw, 28px)/1.15 var(--sans); letter-spacing: -.01em; }
-.nyc-step p { margin: 0; color: var(--ink-2); }
-.nyc-frame { position: relative; overflow: hidden; border-radius: 6px; background: #1b1b19; aspect-ratio: 16 / 9; }
+/* "Real footage" (Daniel 11-27, "Do NYC"; cleaned up the same day): 6 raw New York drone takes in,
+   the app's real cuts and 40% grade, 9 clips out. Phone first, one column, same width panels. */
+.nyc { padding: clamp(56px, 9vw, 112px) var(--gutter); border-top: 1px solid var(--line); }
+.nyc-head { max-width: 640px; margin: 0 auto clamp(32px, 5vw, 56px); text-align: center; }
+.nyc-head h2 { margin: 10px 0 12px; font: 700 clamp(32px, 7vw, 60px)/1 var(--sans); letter-spacing: -.02em; }
+.nyc-head p:last-child { margin: 0; color: var(--ink-2); font-size: clamp(16px, 2.2vw, 18px); }
+.nyc-steps { display: grid; gap: clamp(28px, 4.5vw, 48px); max-width: 880px; margin: 0 auto; padding: 0; list-style: none; }
+.nyc-step { display: grid; gap: 10px; }
+.nyc-step-label { margin: 0; color: var(--ink-3); }
+.nyc-frame, .nyc-panel { position: relative; overflow: hidden; border-radius: 8px; }
+.nyc-frame { background: #1b1b19; aspect-ratio: 16 / 9; }
 .nyc-frame video, .nyc-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.nyc-panel { display: grid; gap: 14px; padding: clamp(14px, 3vw, 22px); border: 1px solid var(--line); background: #FBF9F5; }
 .nyc-tag { position: absolute; top: 10px; left: 10px; padding: 5px 8px; border-radius: 3px; background: rgba(20, 20, 18, .72); color: #F4F1EA; font: 500 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; pointer-events: none; }
 .nyc-tag-right { left: auto; right: 10px; }
 
-/* 02: the cut. One row per take, its length to scale, kept parts green. */
-.nyc-takes { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.nyc-take { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; }
-.nyc-take img { width: 64px; height: 36px; border-radius: 3px; object-fit: cover; background: #1b1b19; }
-.nyc-take-meta { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; font: 500 10.5px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+/* Cut: one row per take, its length to scale, kept parts green. */
+.nyc-takes { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.nyc-take { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; align-items: center; }
+.nyc-take img { width: 56px; height: 32px; border-radius: 3px; object-fit: cover; background: #1b1b19; }
+.nyc-take-meta { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; font: 500 10px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
 .nyc-take-meta b { color: #3D6E39; font-weight: 600; }
-.nyc-track { position: relative; height: 12px; border-radius: 2px; background: var(--line); }
-.nyc-keep { position: absolute; top: 0; bottom: 0; border-radius: 2px; background: #8FD687; box-shadow: inset 0 0 0 1px rgba(61, 110, 57, .35); transform-origin: left; }
-.nyc-keep + .nyc-keep { margin-left: 2px; }
-.nyc-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 10.5px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-.nyc-legend span::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 2px; vertical-align: -1px; background: var(--line); }
+.nyc-track { position: relative; height: 10px; border-radius: 2px; background: var(--line); }
+.nyc-keep { position: absolute; top: 0; bottom: 0; border-radius: 2px; background: #8FD687; transform-origin: left; }
+.nyc-legend { display: flex; gap: 18px; font: 500 10px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.nyc-legend span::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 2px; vertical-align: -1px; background: var(--line); }
 .nyc-legend .is-kept::before { background: #8FD687; }
 @media (prefers-reduced-motion: no-preference) {
   .nyc-takes .nyc-keep { transform: scaleX(0); transition: transform 900ms var(--ease); }
   .nyc-takes.is-seen .nyc-keep { transform: scaleX(1); }
 }
 
-/* 03: the grade. Drag (or use the arrow keys) to compare raw and graded. */
+/* Graded: drag (or arrow keys) to compare raw and graded. */
 .nyc-compare { --pos: 50%; touch-action: pan-y; cursor: ew-resize; user-select: none; -webkit-user-select: none; }
 .nyc-compare .nyc-after { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); }
 .nyc-compare .nyc-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: #F4F1EA; box-shadow: 0 0 0 1px rgba(0, 0, 0, .25); pointer-events: none; }
 .nyc-compare .nyc-handle::after { content: ''; position: absolute; top: 50%; left: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; background: #F4F1EA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23141412' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E") center / 20px no-repeat; box-shadow: 0 2px 10px rgba(0, 0, 0, .3); }
 .nyc-compare input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
 .nyc-compare:focus-within .nyc-handle::after { outline: 2px solid #8FD687; outline-offset: 2px; }
-.nyc-pair { display: grid; gap: 14px; }
-@media (min-width: 900px) { .nyc-pair { grid-template-columns: 1fr 1fr; } }
 
-/* 04: named. The app's own title and keywords for one clip. */
-.nyc-card { display: grid; gap: 12px; padding: clamp(16px, 3vw, 24px); border: 1px solid var(--line-2); border-radius: 6px; background: #FBF9F5; }
-.nyc-card-title { margin: 0; font: 600 clamp(17px, 2.6vw, 20px)/1.3 var(--sans); }
-.nyc-card-desc { margin: 0; color: var(--ink-2); }
-.nyc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.nyc-chips li { padding: 5px 9px; border-radius: 999px; background: var(--bg-2); font: 400 13px/1.2 var(--sans); }
-.nyc-chips .nyc-more { background: transparent; color: var(--ink-3); }
-
-/* Done line and the way into the trial box. */
-.nyc-done { max-width: 760px; margin: clamp(40px, 6vw, 72px) auto 0; text-align: center; }
-.nyc-done > p:first-child { margin: 0 0 22px; font: 600 clamp(20px, 3.6vw, 30px)/1.25 var(--sans); letter-spacing: -.01em; }
-.nyc-done > p:first-child span { display: block; margin-top: 6px; color: var(--ink-3); font-weight: 400; font-size: .7em; }
-.nyc-done .nyc-note { margin: 14px 0 0; font: 400 12px/1.5 var(--mono); letter-spacing: .06em; color: var(--ink-3); }
+.nyc-done { margin: clamp(32px, 5vw, 56px) auto 0; text-align: center; }
+.nyc-done .nyc-note { margin: 12px 0 0; font: 400 12px/1.5 var(--mono); letter-spacing: .06em; color: var(--ink-3); }
