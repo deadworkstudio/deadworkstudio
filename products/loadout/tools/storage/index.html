@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#EBE5D8" />
+<title>Card storage calculator | Loadout free tools | DEADWORK</title>
+<meta name="description" content="Work out how much card and drive space a shoot needs: GB per day, total TB with backups, and how many cards to bring." />
+<link rel="canonical" href="https://deadworkstudio.com/products/loadout/tools/storage/" />
+<meta property="og:title" content="Card storage calculator | DEADWORK" />
+<meta property="og:description" content="Work out how much card and drive space a shoot needs: GB per day, total TB with backups, and how many cards to bring." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-loadout.jpg" />
+<link rel="icon" href="/assets/img/brand/favicon.png" type="image/png" />
+<link rel="stylesheet" href="/products/loadout/tools/tools.css?v=20261126a" />
+</head>
+<body data-lo-tool="storage">
+<header class="bar"><a href="/home/" aria-label="DEADWORK home"><img src="/assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="1854" height="394"></a><a class="back" href="/products/loadout/tools/">Free tools</a></header>
+<main id="main">
+<p class="mono">Free tool</p>
+<h1>Card storage calculator</h1>
+<p class="lede">Pick a rough bitrate, or type your camera's own. See how much you will record and how many cards to bring.</p>
+<form class="card" id="f" novalidate>
+<div class="grid">
+<div><label for="p">Bitrate preset</label><select id="p">
+<option value="50">Light compression, approx. 50 Mbps</option>
+<option value="150" selected>Standard 4K, approx. 150 Mbps</option>
+<option value="400">High quality 4K, approx. 400 Mbps</option>
+<option value="1500">Heavy or raw, approx. 1500 Mbps</option>
+<option value="">Custom</option></select>
+<p class="hint">Presets are rough guides only. Use the bitrate in your camera's spec sheet for the mode you shoot.</p></div>
+<div><label for="b">Bitrate (Mbps)</label><input id="b" inputmode="decimal" value="150" /></div>
+<div><label for="min">Recording per day (minutes, per camera)</label><input id="min" inputmode="decimal" value="90" /></div>
+<div><label for="c">Number of cameras</label><input id="c" inputmode="numeric" value="1" /></div>
+<div><label for="d">Shoot days</label><input id="d" inputmode="numeric" value="3" /></div>
+<div><label for="k">Copies of everything (card plus backups)</label><input id="k" inputmode="numeric" value="3" /><p class="hint">3 = the card plus two backup drives.</p></div>
+<div><label for="s">Card size (GB)</label><input id="s" inputmode="numeric" value="256" /></div>
+</div>
+</form>
+<p class="err" id="err" role="alert"></p>
+<section class="result" aria-live="polite">
+<div class="result-row"><span class="mono">Per day, all cameras</span><b id="r1">-</b></div>
+<div class="result-row"><span class="mono">Whole shoot, one copy</span><b id="r2">-</b></div>
+<div class="result-row"><span class="mono">Whole shoot, with backups</span><b id="r3">-</b></div>
+<div class="result-row"><span class="mono">Cards per camera per day</span><b id="r4">-</b></div>
+<div class="result-row ok"><span class="mono">Cards if you never offload</span><b id="r5">-</b></div>
+</section>
+<section class="card assume"><h2>Assumptions</h2><ul>
+<li>GB = Mbps x 60 x minutes / 8 / 1000, with 1 TB = 1000 GB.</li>
+<li>Bitrate is treated as constant. Many cameras vary it with the scene, and audio and metadata add a little.</li>
+<li>Cards count 93% of the stated size as usable, since formatting takes some. Leave extra room.</li>
+<li>These are estimates. Presets are approximate. Check your camera's spec for the real figure.</li>
+</ul></section>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function num(i){var v=parseFloat($(i).value);return isFinite(v)?v:NaN}
+  function size(gb){return gb>=1000?(gb/1000).toFixed(2)+'<small>TB</small>':gb.toFixed(gb<10?2:1)+'<small>GB</small>'}
+  $('p').addEventListener('change',function(){if($('p').value)$('b').value=$('p').value;run()});
+  $('b').addEventListener('input',function(){var v=$('b').value,o=$('p'),match=false;for(var i=0;i<o.options.length;i++)if(o.options[i].value===v)match=true;o.value=match?v:''});
+  function run(){
+    var b=num('b'),mn=num('min'),c=num('c'),d=num('d'),k=num('k'),s=num('s'),e=$('err');
+    var ids=['r1','r2','r3','r4','r5'];
+    if(!(b>0)||!(mn>0)||!(c>=1)||!(d>=1)||!(k>=1)||!(s>0)){e.textContent='Enter a number above zero in each box.';ids.forEach(function(i){$(i).textContent='-'});return}
+    e.textContent='';c=Math.floor(c);d=Math.floor(d);k=Math.floor(k);
+    var camDay=b*60*mn/8/1000, day=camDay*c, total=day*d, usable=s*0.93;
+    $('r1').innerHTML=size(day);
+    $('r2').innerHTML=size(total);
+    $('r3').innerHTML=size(total*k);
+    $('r4').textContent=Math.ceil(camDay/usable);
+    $('r5').textContent=Math.ceil(camDay*d/usable)*c;
+  }
+  document.getElementById('f').addEventListener('input',run);
+  document.getElementById('f').addEventListener('submit',function(ev){ev.preventDefault()});
+  run();
+})();
+</script>
+
+<section class="cta" aria-label="About Loadout"><p>Loadout is the iPhone app that checks a packed case with the camera. <a href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355">Get it on the App Store</a> or <a href="/products/loadout/?ref=tool-storage">see how it works</a>.</p></section>
+</main>
+<script src="/assets/js/lo-analytics.js?v=20261126a" defer></script>
+</body>
+</html>

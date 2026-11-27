@@ -6,44 +6,52 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://deadworkstudio.com/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/products/stock-shredder/</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/studio/</loc>
+    <loc>https://deadworkstudio.com/mission/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://deadworkstudio.com/products/handoff/</loc>
+    <loc>https://deadworkstudio.com/values/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/products/loadout/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://deadworkstudio.com/products/scene-lock/</loc>
+    <loc>https://deadworkstudio.com/products/loadout/tools/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deadworkstudio.com/products/set-control/</loc>
+    <loc>https://deadworkstudio.com/products/loadout/tools/battery/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deadworkstudio.com/products/sound-driver/</loc>
+    <loc>https://deadworkstudio.com/products/loadout/tools/storage/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deadworkstudio.com/products/handoff/support/</loc>
+    <loc>https://deadworkstudio.com/products/loadout/tools/checklists/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/products/stock-shredder/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/join/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deadworkstudio.com/contact/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
@@ -54,11 +62,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/legal/scene-lock-privacy/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/legal/handoff-privacy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -89,7 +92,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/es/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -130,7 +132,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/fr/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -171,7 +172,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/de/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -212,7 +212,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/it/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -253,7 +252,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/zh/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -294,7 +292,6 @@
   </url>
   <url>
     <loc>https://deadworkstudio.com/ja/products/loadout/</loc>
-    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -312,167 +309,5 @@
     <loc>https://deadworkstudio.com/ja/products/sound-driver/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/</loc>
-    <lastmod>2026-11-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/adobe-stock-video-workflow/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/automatic-stock-footage-clipping/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/best-sites-to-sell-stock-footage/</loc>
-    <lastmod>2026-11-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/blackmagic-raw-stock-footage/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/camera-gear-checklist-maker/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/camera-gear-checklist/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/check-gear-before-leaving-set/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/drone-footage-for-stock/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/film-production-wrap-checklist/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/keep-track-of-camera-equipment/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/pond5-video-upload/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/premiere-pro-batch-export-stock/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/prepare-stock-footage-faster/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/raw-footage-to-stock-clips/</loc>
-    <lastmod>2026-11-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/red-r3d-stock-footage/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/sell-old-footage-archive/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/sell-stock-footage/</loc>
-    <lastmod>2026-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/shutterstock-video-contributor/</loc>
-    <lastmod>2026-11-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/sony-slog3-stock-footage/</loc>
-    <lastmod>2026-11-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/stock-clip-spec-checker/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/stock-footage-profit-calculator/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/stock-footage-requirements-adobe-pond5-shutterstock/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/stock-footage-title-keyword-checker/</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/stock-upload-sheet-converter/</loc>
-    <lastmod>2026-11-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/storyblocks-video-contributor/</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deadworkstudio.com/guides/video-gamma-shift-checker/</loc>
-    <lastmod>2026-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
 </urlset>

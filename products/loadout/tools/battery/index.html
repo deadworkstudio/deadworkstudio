@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#EBE5D8" />
+<title>Battery runtime calculator | Loadout free tools | DEADWORK</title>
+<meta name="description" content="Estimate how long your camera batteries will last and how many you need for a shoot day. Free, no sign-up." />
+<link rel="canonical" href="https://deadworkstudio.com/products/loadout/tools/battery/" />
+<meta property="og:title" content="Battery runtime calculator | DEADWORK" />
+<meta property="og:description" content="Estimate how long your camera batteries will last and how many you need for a shoot day. Free, no sign-up." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-loadout.jpg" />
+<link rel="icon" href="/assets/img/brand/favicon.png" type="image/png" />
+<link rel="stylesheet" href="/products/loadout/tools/tools.css?v=20261126a" />
+</head>
+<body data-lo-tool="battery">
+<header class="bar"><a href="/home/" aria-label="DEADWORK home"><img src="/assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="1854" height="394"></a><a class="back" href="/products/loadout/tools/">Free tools</a></header>
+<main id="main">
+<p class="mono">Free tool</p>
+<h1>Battery runtime calculator</h1>
+<p class="lede">Enter the battery capacity and how much power your gear draws. Get runtime per battery and how many to bring.</p>
+<form class="card" id="f" novalidate>
+<div class="grid">
+<div><label for="wh">Battery capacity (Wh)</label><input id="wh" inputmode="decimal" value="98" /><p class="hint">Printed on the battery. If it shows mAh and V, multiply them and divide by 1000.</p></div>
+<div><label for="w">Device draw (W)</label><input id="w" inputmode="decimal" value="25" /><p class="hint">Add up everything on that battery: camera, monitor, wireless video, light.</p></div>
+<div><label for="n">Number of batteries</label><input id="n" inputmode="numeric" value="3" /></div>
+<div><label for="m">Safety margin (%)</label><input id="m" inputmode="decimal" value="20" /><p class="hint">Held back for cold, age and surprises.</p></div>
+<div><label for="h">Shoot length (hours)</label><input id="h" inputmode="decimal" value="10" /></div>
+</div>
+</form>
+<p class="err" id="err" role="alert"></p>
+<section class="result" aria-live="polite">
+<div class="result-row"><span class="mono">Runtime per battery</span><b id="r1">-</b></div>
+<div class="result-row"><span class="mono">Total runtime, all batteries</span><b id="r2">-</b></div>
+<div class="result-row ok"><span class="mono">Batteries needed for the shoot</span><b id="r3">-</b></div>
+<div class="result-row"><span class="mono">You have</span><b id="r4">-</b></div>
+</section>
+<section class="card assume"><h2>Assumptions</h2><ul>
+<li>Runtime = capacity x (1 - margin) / draw. The draw is treated as constant.</li>
+<li>These are estimates. Real runtime varies with temperature, battery age and settings.</li>
+<li>Check the draw on your own gear spec sheets, or measure it with a power meter.</li>
+</ul></section>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function num(i){var v=parseFloat($(i).value);return isFinite(v)?v:NaN}
+  function fmtH(h){var m=Math.round(h*60);return Math.floor(m/60)+' h '+('0'+m%60).slice(-2)+' min'}
+  function run(){
+    var wh=num('wh'),w=num('w'),n=num('n'),m=num('m'),h=num('h'),e=$('err');
+    var bad=!(wh>0)||!(w>0)||!(n>=1)||!(m>=0&&m<100)||!(h>0);
+    if(bad){e.textContent='Enter a number above zero in each box. Margin can be 0 to 99.';['r1','r2','r3','r4'].forEach(function(i){$(i).textContent='-'});return}
+    e.textContent='';
+    var usable=wh*(1-m/100),per=usable/w;
+    $('r1').textContent=fmtH(per);
+    $('r2').textContent=fmtH(per*Math.floor(n));
+    var need=Math.ceil(h/per);
+    $('r3').textContent=need;
+    var have=Math.floor(n);
+    $('r4').innerHTML=have>=need?have+'<small>enough</small>':have+'<small>short by '+(need-have)+'</small>';
+  }
+  document.getElementById('f').addEventListener('input',run);
+  document.getElementById('f').addEventListener('submit',function(ev){ev.preventDefault()});
+  run();
+})();
+</script>
+
+<section class="cta" aria-label="About Loadout"><p>Loadout is the iPhone app that checks a packed case with the camera. <a href="https://apps.apple.com/us/app/loadout-camera-gear-checklist/id6818694355">Get it on the App Store</a> or <a href="/products/loadout/?ref=tool-battery">see how it works</a>.</p></section>
+</main>
+<script src="/assets/js/lo-analytics.js?v=20261126a" defer></script>
+</body>
+</html>
