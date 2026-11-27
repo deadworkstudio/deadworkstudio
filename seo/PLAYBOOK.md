@@ -225,7 +225,7 @@ Handoff is not out yet (site status PROCESSING). Guides use the "Notify me at la
 
 | # | Target search | Slug | Status |
 |---|---|---|---|
-| H1 | how to offload camera cards / when to format | offload-camera-cards | Draft ready (11-27) |
+| H1 | how to offload camera cards / when to format | offload-camera-cards | LIVE 11-27 (main bcded2e, indexing requested) |
 | H2 | checksum verification footage / verify footage copy | verify-footage-checksum | To draft |
 | H3 | what is an MHL file / ASC MHL | mhl-file-explained | To draft |
 | H4 | DIT checklist / data wrangler checklist | dit-checklist | To draft |
