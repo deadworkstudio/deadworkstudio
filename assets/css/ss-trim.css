@@ -1,0 +1,17 @@
+/* Page trim (Daniel 11-27, "don't let it drag on"): details behind taps, plans swipe on phones, tools in one row. */
+.trim-more { margin-top: 20px; text-align: center; }
+.trim-more > summary { display: inline-flex; list-style: none; cursor: pointer; }
+.trim-more > summary::-webkit-details-marker { display: none; }
+.trim-more[open] > summary { margin-bottom: 20px; }
+.trim-more > :not(summary) { text-align: left; }
+.trim-fit { margin: 0 0 28px; }
+.earn .trim-more { margin-top: 18px; }
+@media (max-width: 720px) {
+  .pricing-grid { display: flex !important; grid-template-columns: none !important; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 12px; scrollbar-width: none; }
+  .pricing-grid::-webkit-scrollbar { display: none; }
+  .pricing-grid > .pricing-card { flex: 0 0 78%; scroll-snap-align: center; }
+  .upgrade-row { display: flex !important; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) 8px; scrollbar-width: none; }
+  .upgrade-row > .upgrade { flex: 0 0 85%; scroll-snap-align: center; }
+  .tools-grid { display: flex !important; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) 8px; scrollbar-width: none; }
+  .tools-grid > li { flex: 0 0 62%; scroll-snap-align: start; }
+}
