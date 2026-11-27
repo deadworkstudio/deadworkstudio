@@ -424,7 +424,7 @@ HUB = [
         "line": "Turning raw footage into stock clips that sell, and getting them onto each site. Stock Shredder does the finding, trimming and naming.",
         "topics": [
             ("Getting started", ["prepare-stock-footage-faster", "raw-footage-to-stock-clips", "stock-footage-requirements-adobe-pond5-shutterstock", "automatic-stock-footage-clipping"]),
-            ("Selling on each site", ["adobe-stock-video-workflow", "shutterstock-video-contributor", "pond5-video-upload", "storyblocks-video-contributor"]),
+            ("Selling on each site", ["stock-footage-rejection-reasons", "adobe-stock-video-workflow", "shutterstock-video-contributor", "pond5-video-upload", "storyblocks-video-contributor"]),
             ("Cameras and formats", ["blackmagic-raw-stock-footage", "red-r3d-stock-footage", "sony-slog3-stock-footage", "drone-footage-for-stock"]),
             ("Editing", ["premiere-pro-batch-export-stock"]),
             ("Making money", ["sell-stock-footage", "sell-old-footage-archive", "best-sites-to-sell-stock-footage"]),
