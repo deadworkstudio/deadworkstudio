@@ -14,13 +14,13 @@
 .nyc-tag { position: absolute; top: 10px; left: 10px; padding: 5px 8px; border-radius: 3px; background: rgba(20, 20, 18, .72); color: #F4F1EA; font: 500 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; pointer-events: none; }
 .nyc-tag-right { left: auto; right: 10px; }
 
-/* Cut: one row per take, its length to scale, kept parts green. */
-.nyc-takes { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.nyc-take { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; align-items: center; }
-.nyc-take img { width: 56px; height: 32px; border-radius: 3px; object-fit: cover; background: #1b1b19; }
-.nyc-take-meta { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; font: 500 10px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+/* Cut: one thin row per take, its length to scale, kept parts green. */
+.nyc-takes { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.nyc-take { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: center; }
+.nyc-take-n { font: 500 9px/1 var(--mono); letter-spacing: .06em; color: var(--ink-3); }
+.nyc-take-meta { display: flex; justify-content: space-between; gap: 8px; font: 500 10px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
 .nyc-take-meta b { color: #3D6E39; font-weight: 600; }
-.nyc-track { position: relative; height: 10px; border-radius: 2px; background: var(--line); }
+.nyc-track { position: relative; height: 7px; border-radius: 2px; background: var(--line); }
 .nyc-keep { position: absolute; top: 0; bottom: 0; border-radius: 2px; background: #8FD687; transform-origin: left; }
 .nyc-legend { display: flex; gap: 18px; font: 500 10px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
 .nyc-legend span::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 2px; vertical-align: -1px; background: var(--line); }
