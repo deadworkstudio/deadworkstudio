@@ -1616,7 +1616,25 @@
   "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">Raw footage into stock-ready clips.</span><span class=\"mega-menu-card-about\">Finds the usable shots in footage and exports stock-ready clips.</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>LIVE</span></span></span></a>": "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">撮って出しの映像を、そのまま販売できるクリップへ。</span><span class=\"mega-menu-card-about\">素材から使えるショットを見つけ、ストック用クリップとして書き出します。</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>公開中</span></span></span></a>",
   "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">Raw footage into stock-ready clips.</span><span class=\"mega-menu-card-about\">Finds the usable shots in footage and exports stock-ready clips.</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>LIVE</span><span class=\"mm-dot\">·</span><span class=\"mm-platform\">Mac &amp; Windows</span></span></span></a>": "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">撮って出しの映像を、そのまま販売できるクリップへ。</span><span class=\"mega-menu-card-about\">素材から使えるショットを見つけ、ストック用クリップとして書き出します。</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>公開中</span><span class=\"mm-dot\">·</span><span class=\"mm-platform\">Mac、Windows</span></span></span></a>",
   "<a href=\"/guides/\">Guides</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"support/\">Support</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/terms/\">Terms</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/handoff-privacy/\">Privacy</a>": "<a href=\"/guides/\">Guides</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"support/\">サポート</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/terms/\">利用規約</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/handoff-privacy/\">プライバシー</a>",
-  "<a href=\"../../../studio/#contact\">Contact</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">Terms</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">Privacy</a>": "<a href=\"../../../studio/#contact\">お問い合わせ</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">利用規約</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">プライバシー</a>"
+  "<a href=\"../../../studio/#contact\">Contact</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">Terms</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">Privacy</a>": "<a href=\"../../../studio/#contact\">お問い合わせ</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">利用規約</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">プライバシー</a>",
+  "Hours of footage in. Thousands of finished clips out.": "何時間もの素材を入れて、何千本もの完成クリップに。",
+  "Hours of footage sit unused. Reviewing, trimming, grading and tagging by hand takes too long.": "何時間もの素材が眠ったまま。確認、トリミング、グレーディング、タグ付けを手作業でやると時間がかかりすぎます。",
+  "Stock Shredder finds the usable moments. You pick what stays, set the look, and export.": "Stock Shredderが使える瞬間を見つけます。残すものを選び、ルックを決めて書き出すだけ。",
+  "Smooths shaky shots. Leaves alone what it can't fix.": "揺れたショットを安定化。直せないショットはそのまま。",
+  "Your LUT, strength and fine-tune, applied in one click.": "LUT、強さ、微調整をワンクリックで適用。",
+  "You never review the same clip twice.": "同じクリップを二度確認することはありません。",
+  "Checks disk space, waits for unplugged drives. Failed clips cost nothing.": "空き容量を確認し、ドライブが外れたら待機。失敗したクリップは無料。",
+  "Keeps your computer awake, then tells you when it's done.": "書き出し中はスリープさせず、終わったらお知らせ。",
+  "Set Min and Max. Cuts land where the camera is calm.": "最小と最大を設定。カメラが落ち着いた所でカット。",
+  "Upload sheets for every major site. Sends straight to Shutterstock and Pond5. Pro and Studio.": "主要サイト向けのアップロードシート。ShutterstockとPond5へ直接送信。ProとStudio。",
+  "Title, description and keywords saved inside every clip. Pro and Studio.": "タイトル、説明、キーワードを各クリップ内に保存。ProとStudio。",
+  "Your Mac or PC keeps working while you're away. Included with Studio.": "離れている間もMacやPCが作業を続けます。Studioに含まれます。",
+  "Your computer keeps shredding while you're away.": "離れている間もコンピュータが処理を続けます。",
+  "Approved posts get a code for your clips (trials too). Any rating counts. Once per person. Posts must be public and marked #ad. Referral clips arrive when your friend renews. Clips last 90 days.": "承認された投稿にはクリップ用のコードをお送りします（体験中も可）。評価は問いません。1人1回まで。投稿は公開し、#adの表示が必要です。紹介クリップはお友達のプラン更新時に届きます。クリップの有効期限は90日です。",
+  "Saves about 8 hours a month": "月に約8時間を節約",
+  "Saves about 20 hours a month": "月に約20時間を節約",
+  "Saves about 40 hours a month": "月に約40時間を節約",
+  "Saves about 67 hours a month": "月に約67時間を節約"
  },
  "script": {
   "/mo": "/月",
@@ -1721,6 +1739,7 @@
   "{size} a month": "月{size}",
   "You're on the list. One email when Android is out.": "登録が完了しました。Android 版の公開時にメールを1通だけお送りします。",
   "Less than a month of Loadout. Worth a look anyway: it checks every item, every time.": "Loadout 1か月分にも満たない金額です。それでも試す価値あり：毎回、すべての機材を確認します。",
-  "That is <strong>{months} months</strong> of the monthly plan, or <strong>{years} years</strong> of the yearly plan.": "月額プランなら<strong>{months}か月分</strong>、年額プランなら<strong>{years}年分</strong>です。"
+  "That is <strong>{months} months</strong> of the monthly plan, or <strong>{years} years</strong> of the yearly plan.": "月額プランなら<strong>{months}か月分</strong>、年額プランなら<strong>{years}年分</strong>です。",
+  "Saves about {hours} hours a month": "月に約{hours}時間を節約"
  }
 }

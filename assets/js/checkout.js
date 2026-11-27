@@ -83,7 +83,7 @@
   // 11.50). Show the time it saves instead, at 2 minutes per clip by hand (Daniel 2026-11-15,
   // back from 4; same figure as the plan finder's HAND_MINUTES_PER_CLIP).
   function perClipText(cents, clips) {
-    return T('About {hours} hours of hand work saved a month', { hours: Math.round(clips * 2 / 60) });
+    return T('Saves about {hours} hours a month', { hours: Math.round(clips * 2 / 60) });
   }
   var TERM_MONTHS = { month: 0, m6: 6, m12: 12, year: 12 };
   // The line under the selector: what's paid when, for how long, and how it ends. Same policy as
