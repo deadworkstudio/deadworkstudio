@@ -7,11 +7,17 @@
 // Not Track, Daniel's own devices (open any page with ?internal=1, see ss-funnel.js) and local test
 // servers. Uses sendBeacon so it never slows the page down; if anything fails the page doesn't notice.
 //
+// Free tool pages (products/loadout/tools/*, <body data-lo-tool="index|battery|storage|checklists">)
+// use this same file in a small "tool mode" so they share the transport and every privacy rule above,
+// but are counted on their own and never as loadout_page_view:
+//   loadout_tool_view        a tool page opened            (dims: tool, src/device as usual)
+//   loadout_tool_cta_click   the App Store or Loadout link in the bottom box clicked (dims: tool, target = appstore | page)
+//
 // Events (each fires at most once per page load):
 //   loadout_page_view        the page opened               (the <main data-event> attribute)
 //   loadout_hero_cta_click   top button clicked            (data-event on the hero button / link)
 //   loadout_float_cta_click  floating "14 days free" button clicked (bottom left)
-//   loadout_app_download_click  App Store link clicked (band or pricing), with l = data-cta-loc
+//   loadout_app_download_click  App Store link clicked     (data-event, ready for when the link exists)
 //   loadout_monthly_select / loadout_yearly_select  a price card clicked
 //   loadout_pricing_view     pricing section scrolled into view
 //   loadout_section_view     first time the top of page / scan / app / adding gear / FAQ comes into view
@@ -48,6 +54,22 @@
       } catch (e) {}
     }
 
+    window.dwLoSend = send;
+
+    // Tool pages: their own two events, then stop (none of the Loadout page's events apply there).
+    var toolName = document.body && document.body.getAttribute('data-lo-tool');
+    if (toolName) {
+      send('loadout_tool_view', { tool: toolName });
+      document.addEventListener('click', function (ev) {
+        var a = ev.target && ev.target.closest ? ev.target.closest('.cta a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        var target = /^https:\/\/apps\.apple\.com\//.test(href) ? 'appstore' : (/^\/products\/loadout\/?(\?|$)/.test(href) ? 'page' : '');
+        if (target) send('loadout_tool_cta_click', { tool: toolName, target: target }, 'cta:' + target);
+      }, true);
+      return;
+    }
+
     // 1. page view, named by the markup
     var main = document.querySelector('main[data-event]');
     send(main ? main.getAttribute('data-event') : 'loadout_page_view');
@@ -57,9 +79,7 @@
     document.addEventListener('click', function (ev) {
       var el = ev.target && ev.target.closest ? ev.target.closest('[data-event]') : null;
       var name = el && el.getAttribute('data-event');
-      // l = where on the page the button sits (hero, band, pricing, float), from data-cta-loc. Each location
-      // counts once per page load. The HQ Worker keeps it once its allowlist knows "l" (until then it is ignored).
-      if (name && CLICKS[name]) { var loc = el.getAttribute('data-cta-loc') || ''; send(name, loc ? { l: loc } : null, name + ':' + loc); }
+      if (name && CLICKS[name]) send(name);
     }, true);
 
     // 3. scrolled into view: pricing (named by the markup) and the main sections
