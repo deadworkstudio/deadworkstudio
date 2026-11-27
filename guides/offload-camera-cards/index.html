@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" data-product="handoff">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#F4F1EA" />
+<meta name="robots" content="noindex" />
+<title>How to Offload Camera Cards Safely (and When It&#x27;s OK to Format) | DEADWORK</title>
+<meta name="description" content="A plain guide to offloading camera cards on set: how many copies, why a finished copy isn&#x27;t a checked copy, what checksums and MHL files do, and the one rule for when a card is safe to format." />
+<link rel="canonical" href="https://deadworkstudio.com/guides/offload-camera-cards/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://deadworkstudio.com/guides/offload-camera-cards/" />
+<meta property="og:title" content="How to Offload Camera Cards Safely (and When It&#x27;s OK to Format)" />
+<meta property="og:description" content="A plain guide to offloading camera cards on set: how many copies, why a finished copy isn&#x27;t a checked copy, what checksums and MHL files do, and the one rule for when a card is safe to format." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-handoff.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="DEADWORK" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="How to Offload Camera Cards Safely (and When It&#x27;s OK to Format)" />
+<meta name="twitter:description" content="A plain guide to offloading camera cards on set: how many copies, why a finished copy isn&#x27;t a checked copy, what checksums and MHL files do, and the one rule for when a card is safe to format." />
+<meta name="twitter:image" content="https://deadworkstudio.com/assets/img/brand/share-handoff.jpg" />
+<link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
+<link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261126pb" />
+<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261126a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261126a" />
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Offload Camera Cards Safely, and Know When to Format", "description": "A plain guide to offloading camera cards on set: how many copies, why a finished copy isn't a checked copy, what checksums and MHL files do, and the one rule for when a card is safe to format.", "datePublished": "2026-11-27", "dateModified": "2026-11-27", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/offload-camera-cards/", "image": "https://deadworkstudio.com/assets/img/brand/share-handoff.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many copies should I make of camera footage?", "acceptedAnswer": {"@type": "Answer", "text": "At least two, on two separate physical drives, before you format the card. Two folders on the same drive are one copy: if that drive dies, both go with it. Many productions add a third copy that leaves the location."}}, {"@type": "Question", "name": "Is drag and drop safe for copying camera cards?", "acceptedAnswer": {"@type": "Answer", "text": "Drag and drop tells you the copy finished. It doesn't read the files back and compare them to the card, so a file that arrived damaged can look exactly like a good one. Check every file before you format."}}, {"@type": "Question", "name": "What is checksum verification?", "acceptedAnswer": {"@type": "Answer", "text": "A checksum is a short fingerprint calculated from a file's contents. Calculate it on the card and again on each copy. If they match, the copy is identical. If one byte changed, the fingerprints differ."}}, {"@type": "Question", "name": "What is an MHL file?", "acceptedAnswer": {"@type": "Answer", "text": "A Media Hash List: a file saved next to the footage that lists each file and its checksum. Post can use it to check that what arrived is what left set. ASC MHL is the current open standard from the American Society of Cinematographers."}}, {"@type": "Question", "name": "When is it safe to format a camera card?", "acceptedAnswer": {"@type": "Answer", "text": "When every file on the card has been read back and matched on the number of separate drives your production asks for, two unless told otherwise. If a copy failed, stopped halfway or hasn't been checked, keep the card."}}, {"@type": "Question", "name": "Should I format in camera or on the computer?", "acceptedAnswer": {"@type": "Answer", "text": "Format in the camera that will shoot on the card next. Do it only after the copies are verified, and never in the middle of a busy moment on set."}}]}]</script>
+</head>
+<body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="poster-head" data-sh>
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <p class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="1854" height="394"></a></p>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I · Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/scene-lock.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mega-menu-card-about">Storyboards, shot lists and the schedule in one place.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/set-control.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every team member. Every detail. In sync.</span><span class="mega-menu-card-about">Call sheets and every change, sent to the whole team.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II · Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/loadout.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mega-menu-card-about">Pan your phone across a packed case and see what's missing.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">iPhone &middot; Android coming soon</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/handoff.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mega-menu-card-about">Copies your cards and turns green when they're safe to format.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>PROCESSING</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III · Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/sound-driver.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real artists. Real sounds.</span><span class="mega-menu-card-about">Places sound on your edit from our own recorded library.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/stock-shredder/" aria-current="true"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/stock-shredder.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mega-menu-card-about">Finds the usable shots in footage and exports stock-ready clips.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+          </div>
+        </div>
+    </div>
+</header>
+
+<main id="main" class="g-main">
+  <article class="g-article">
+    <header class="g-head">
+      <p class="mono g-eyebrow">Handoff · Offload and verify</p>
+      <h1 class="g-title">How to Offload Camera Cards Safely, and Know When to Format</h1>
+      <p class="g-dek">Copying a card takes a minute. Being sure the copy is good enough to wipe the card is the part that keeps people up at night.</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED NOV 27, 2026 <span aria-hidden="true">&middot;</span> 8 MIN READ</p>
+      <p class="g-head-cta"><a class="pill pill-solid" href="../../products/handoff/?ref=guide&amp;utm_campaign=offload-camera-cards#top-cta" data-cta="top">Notify me at launch</a></p>
+    </header>
+
+    <figure class="g-cover">
+      <img src="../../assets/img/guides/hf-safe.webp" alt="Handoff on a Mac: card A004 is safe, every clip verified on 2 hard drives" width="1440" height="720" fetchpriority="high" decoding="async" />
+    </figure>
+    <nav class="g-toc" aria-labelledby="toc">
+      <p class="mono" id="toc">In this guide</p>
+      <ol>
+        <li><a href="#problem">A finished copy isn't a checked copy</a></li>
+        <li><a href="#copies">Step 1: decide how many copies</a></li>
+        <li><a href="#by-hand">Step 2: copy and check, by hand</a></li>
+        <li><a href="#checksums">What checksums and MHL files do</a></li>
+        <li><a href="#format">Step 3: the one rule for formatting</a></li>
+        <li><a href="#handoff">The Handoff way</a></li>
+        <li><a href="#wrap">Make it part of wrap</a></li>
+        <li><a href="#limits">What to know before you start</a></li>
+        <li><a href="#when-other">When by hand still makes sense</a></li>
+      </ol>
+    </nav>
+
+    <div class="g-body">
+<div class="g-answer">
+  <p class="mono">The short version</p>
+  <ol>
+    <li>Lock the card or mount it read-only, so nothing can write to it.</li>
+    <li>Copy it to at least two separate physical drives.</li>
+    <li>Read every file back from every drive and compare it to the card.</li>
+    <li>Keep a record: what was copied, where, when, and whether it matched.</li>
+    <li>Format only when every file matched on every copy you need.</li>
+  </ol>
+  <p>Handoff does steps 2 to 5 for you on a Mac and turns green only when the card is safe to format.</p>
+</div>
+
+<h2 id="problem">A finished copy isn't a checked copy.</h2>
+<p>Most lost footage isn't lost on the card. It's lost after someone formats the card, trusting a copy that never fully arrived. A cable came loose, a drive filled up, the laptop slept, or one file came across damaged. The copy bar still said it finished.</p>
+<p>The fix isn't a faster copy. It's checking the copy before the card goes back in the camera, every time, even at the end of a long day.</p>
+
+<h2 id="copies">Step 1: decide how many copies.</h2>
+<p>Agree on the rule before the shoot, so nobody decides at wrap when they're tired.</p>
+<ul class="g-list">
+  <li><strong>Two copies is the floor.</strong> Two separate physical drives, not two folders on one drive.</li>
+  <li><strong>Three is common on paid work.</strong> The third copy leaves the location, so one bad night can't take everything.</li>
+  <li><strong>Label the drives.</strong> Shuttle, master, backup. Everyone should know which drive is which without asking.</li>
+</ul>
+
+<h2 id="by-hand">Step 2: copy and check, by hand.</h2>
+<ol class="g-steps">
+  <li><strong>Protect the card.</strong> Flip the lock tab if it has one, or mount it read-only.</li>
+  <li><strong>Copy the whole card.</strong> Keep the full folder structure. Cameras and editing software expect it.</li>
+  <li><strong>Copy to each drive.</strong> Then compare file counts and total size against the card.</li>
+  <li><strong>Check each file.</strong> Calculate a checksum on the card and on each copy, and compare them.</li>
+  <li><strong>Write it down.</strong> Card name, drives, time, and whether every file matched.</li>
+</ol>
+<p>Comparing file counts and sizes catches a missing file. It won't catch a damaged one. Only reading each file back and comparing checksums does that.</p>
+
+<h2 id="checksums">What checksums and MHL files do.</h2>
+<p>A checksum is a fingerprint of a file's contents. Change one byte and the fingerprint changes. Offload tools calculate it on the card, then again on each copy, and compare. xxHash is a common choice on set because it's built for speed.</p>
+<p>An MHL (Media Hash List) is a file saved with the footage that lists every file and its checksum. Post can run it to check that what arrived is exactly what left set. ASC MHL is the current open standard, developed by the American Society of Cinematographers' Motion Imaging Technology Council.</p>
+<p class="g-source">Sources: <a href="https://github.com/ascmitc/mhl-specification" rel="noopener">ASC MHL specification</a>, <a href="https://xxhash.com/" rel="noopener">xxHash</a>. Checked November 2026.</p>
+
+<h2 id="format">Step 3: the one rule for formatting.</h2>
+<p>Format a card only when every file on it has been read back and matched on every copy your rule asks for. Anything less means keep the card:</p>
+<ul class="g-list">
+  <li><strong>One copy is verified, the second isn't.</strong> Not safe yet. Finish the second copy.</li>
+  <li><strong>A copy failed.</strong> Find which drive and which files, and copy those again.</li>
+  <li><strong>The copy stopped halfway.</strong> Power, sleep or a pulled cable. Resume and check again.</li>
+  <li><strong>Nobody's sure.</strong> Then it isn't verified. Keep the card until someone is.</li>
+</ul>
+
+<h2 id="handoff">The Handoff way.</h2>
+<p><a href="../../products/handoff/?ref=guide&amp;utm_campaign=offload-camera-cards" data-cta="body">Handoff</a> is our Mac app for exactly this job. Put in a card, pick the drives, start.</p>
+<figure class="g-figure">
+  <img src="../../assets/img/products/handoff/hero/mac-safe-1920.jpg" alt="Handoff on a Mac: card A004 is safe, every clip verified on 2 hard drives" width="1920" height="1200" loading="lazy" decoding="async" />
+  <figcaption>Green: every clip read back and matched on 2 hard drives. Sample card.</figcaption>
+</figure>
+<ul class="g-list">
+  <li><strong>It copies to every drive.</strong> Card to drives, drive to drive, or a transfer to an editor or post house.</li>
+  <li><strong>It checks every file.</strong> Each file is read back from each drive and matched to the card with xxHash64.</li>
+  <li><strong>It gives one answer.</strong> Green means safe to format. Amber means a copy short. Red names the drive and the clips that failed. Grey means the copy was interrupted and can resume.</li>
+  <li><strong>It counts real copies.</strong> Two folders on the same physical disk count once. Your rule can be 1 to 5 copies.</li>
+  <li><strong>It keeps the record.</strong> A PDF custody report, MHL files (legacy and ASC MHL) and a CSV on every drive, plus a searchable History.</li>
+</ul>
+<figure class="g-figure">
+  <img src="../../assets/img/products/handoff/before/missing-clip.jpg" alt="Handoff warning that a clip number is missing between two others, before the copy starts" width="2000" height="672" loading="lazy" decoding="async" />
+  <figcaption>A gap in the clip numbers is flagged before the copy starts.</figcaption>
+</figure>
+<p>The team's phones can follow along too. The free iPhone app shows live progress and alerts each person when a card turns green or red. Phones only watch, so nobody can change a copy from one.</p>
+<p>Handoff isn't out yet. It launches with 14 days free and no card needed.</p>
+
+<h2 id="wrap">Make it part of wrap.</h2>
+<p>Cards are gear too. Before anyone leaves, every card should be in one of two places: verified and formatted, or set aside and labelled not safe. Add it to the <a href="../film-production-wrap-checklist/">film production wrap checklist</a> and the <a href="../check-gear-before-leaving-set/">two-minute gear check before you leave set</a>.</p>
+<p>Shooting for stock? Once the cards are safe, the next step is <a href="../raw-footage-to-stock-clips/">turning raw footage into stock clips</a>.</p>
+
+<h2 id="limits">What to know before you start.</h2>
+<p>Handoff handles the copying and checking. A few things stay with you.</p>
+<ul class="g-list">
+  <li><strong>You choose the drives.</strong> Separate physical drives, with room for the card.</li>
+  <li><strong>You set the rule.</strong> Two copies unless your production asks for more.</li>
+  <li><strong>You format the card.</strong> Handoff tells you when it's safe. It never formats for you.</li>
+  <li><strong>The guesswork goes.</strong> Green means checked, so nobody has to open folders at wrap to be sure.</li>
+</ul>
+
+<h2 id="when-other">When by hand still makes sense.</h2>
+<ul class="g-list">
+  <li>You shoot one card a week and have time to check it yourself.</li>
+  <li>You already use a checksum tool you trust and keep your own records.</li>
+</ul>
+<p>Once it's several cards a day, a tired team and a producer asking if it's safe, checking by hand is where mistakes get in. That's the part worth handing to software.</p>
+    </div>
+
+    <aside class="g-note">
+      <p class="mono">From the team</p>
+      <p>We're DEADWORK STUDIO, the team behind Handoff. We shoot too, and these steps are how we copy and check cards on our own shoots. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
+    </aside>
+
+    <aside class="g-cta" aria-label="Notify me at launch">
+      <p class="mono">Handoff · Mac</p>
+      <h2>Know the card is safe before you format.</h2>
+      <p>Handoff copies your cards to every drive, reads each file back, and turns green only when the card is safe to wipe.</p>
+      <p><a class="pill pill-solid" href="../../products/handoff/?ref=guide&amp;utm_campaign=offload-camera-cards#top-cta" data-cta="end">Notify me at launch</a></p>
+      <p class="g-cta-note">Not out yet. Leave your email and we'll tell you the day it launches, with 14 days free and no card.</p>
+    </aside>
+
+
+    <section class="g-faq" aria-labelledby="faq">
+      <h2 id="faq">FAQ</h2>
+      <details class="g-faq-item"><summary>How many copies should I make of camera footage?</summary><p>At least two, on two separate physical drives, before you format the card. Two folders on the same drive are one copy: if that drive dies, both go with it. Many productions add a third copy that leaves the location.</p></details>
+      <details class="g-faq-item"><summary>Is drag and drop safe for copying camera cards?</summary><p>Drag and drop tells you the copy finished. It doesn&#x27;t read the files back and compare them to the card, so a file that arrived damaged can look exactly like a good one. Check every file before you format.</p></details>
+      <details class="g-faq-item"><summary>What is checksum verification?</summary><p>A checksum is a short fingerprint calculated from a file&#x27;s contents. Calculate it on the card and again on each copy. If they match, the copy is identical. If one byte changed, the fingerprints differ.</p></details>
+      <details class="g-faq-item"><summary>What is an MHL file?</summary><p>A Media Hash List: a file saved next to the footage that lists each file and its checksum. Post can use it to check that what arrived is what left set. ASC MHL is the current open standard from the American Society of Cinematographers.</p></details>
+      <details class="g-faq-item"><summary>When is it safe to format a camera card?</summary><p>When every file on the card has been read back and matched on the number of separate drives your production asks for, two unless told otherwise. If a copy failed, stopped halfway or hasn&#x27;t been checked, keep the card.</p></details>
+      <details class="g-faq-item"><summary>Should I format in camera or on the computer?</summary><p>Format in the camera that will shoot on the card next. Do it only after the copies are verified, and never in the middle of a busy moment on set.</p></details>
+    </section>
+  </article>
+</main>
+
+<footer class="poster-foot">
+    <p class="foot-email" data-live-clock></p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="foot-note">By artists. For artists.</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO</p>
+    <p class="foot-legal"><a href="/guides/">Guides</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="mailto:deadworkstudio@gmail.com?subject=Stock%20Shredder%20support">Support</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/#refunds">Refunds</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">Terms</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/privacy/">Privacy</a></p>
+  
+    
+  </footer>
+
+<script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script src="../../assets/js/hide-header.js?v=20261126a"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
+<script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
+<script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
+</body>
+</html>

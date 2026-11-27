@@ -218,3 +218,26 @@ Artgrid/Filmsupply (curated, check they take open submissions first).
 
 ChatGPT and Claude app directories (one DEADWORK connector for all products, starting with account
 info and export status). Post-launch, Dec 1-12 prototype.
+
+## Handoff queue (Daniel 11-27: one Handoff page a day)
+
+Handoff is not out yet (site status PROCESSING). Guides use the "Notify me at launch" CTA only: never a download, checkout or price in the body. Claims only from the live products/handoff page. Say "Handoff" only for the product, never as a generic word. Covers: hf-safe, hf-copying (real app screens). HUB topic "Offload and verify" (add more topics as the queue grows). Link to Loadout wrap/gear-check guides and Stock Shredder guides where the workflow overlaps (cards are gear at wrap; footage goes to clip prep after offload).
+
+| # | Target search | Slug | Status |
+|---|---|---|---|
+| H1 | how to offload camera cards / when to format | offload-camera-cards | Draft ready (11-27) |
+| H2 | checksum verification footage / verify footage copy | verify-footage-checksum | To draft |
+| H3 | what is an MHL file / ASC MHL | mhl-file-explained | To draft |
+| H4 | DIT checklist / data wrangler checklist | dit-checklist | To draft |
+| H5 | how many backups of footage on set / 3-2-1 footage backup | footage-backup-rule | To draft |
+| H6 | ShotPut Pro alternative | shotput-pro-alternative | To draft (competitor facts from their own site that day) |
+| H7 | OffShoot alternative | offshoot-alternative | To draft (same) |
+| H8 | drag and drop footage safe? / copy vs verify | drag-and-drop-footage | To draft |
+| H9 | camera card got corrupted / recover footage before formatting | corrupted-camera-card | To draft (no recovery promises) |
+| H10 | chain of custody footage / footage delivery report for insurers | footage-custody-report | To draft |
+| H11 | camera card naming and reel numbers | camera-card-naming | To draft |
+| H12 | Silverstack alternative | silverstack-alternative | To draft (same) |
+
+## Freelance articles (Daniel 11-27: one a week)
+
+Built from Daniel's own topics, words or voice memo. Never invent his stories. Waiting on his list.
