@@ -52,6 +52,15 @@ CTAS = {
         "text": "Pan your iPhone across the open case. Loadout checks it against your saved kit and lists what's missing.",
         "note": "Free download. 14 days free, no card needed. Android coming soon.",
     },
+    # Handoff is not out yet (site status PROCESSING): email signup only, never a download or checkout link.
+    "handoff": {
+        "href": "../../products/handoff/?ref=guide&utm_campaign={slug}#top-cta",
+        "label": "Notify me at launch",
+        "eyebrow": "Handoff · Mac",
+        "title": "Know the card is safe before you format.",
+        "text": "Handoff copies your cards to every drive, reads each file back, and turns green only when the card is safe to wipe.",
+        "note": "Not out yet. Leave your email and we'll tell you the day it launches, with 14 days free and no card.",
+    },
     "set-control": {
         "href": "../../products/set-control/?ref=guide&utm_campaign={slug}",
         "label": "Join the waitlist",
@@ -65,6 +74,7 @@ CTAS = {
 OG_IMAGES = {
     "stock-shredder": f"{SITE}/assets/img/brand/share-stock-shredder.jpg",
     "loadout": f"{SITE}/assets/img/brand/share-loadout.jpg",
+    "handoff": f"{SITE}/assets/img/brand/share-handoff.jpg",
 }
 
 # Copy rules from the brand: no machine-written tells, no AI words.
@@ -143,6 +153,8 @@ COVER_ALT = {
     "tool-clip-spec": "The free stock clip spec checker showing one clip checked against Adobe Stock, Pond5, Shutterstock and Storyblocks",
     "tool-upload-sheet": "The free stock upload sheet converter turning one metadata sheet into Adobe Stock, Shutterstock and Pond5 CSV files",
     "tool-gamma-shift": "The free video gamma shift checker reading a clip's color tags and showing why it looks washed out on a Mac",
+    "hf-safe": "Handoff on a Mac: card A004 is safe, every clip verified on 2 hard drives",
+    "hf-copying": "Handoff on a Mac copying card A004 to 2 hard drives, with clips verified so far",
     "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
     "ss-review-forest": "Stock Shredder reviewing a forest clip, with grade and export settings",
     "ss-review-mac": "Stock Shredder on a Mac, reviewing a tape deck clip",
@@ -256,6 +268,7 @@ NOTE_TEXT = {
     "stock-shredder": "We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, "
     "and site rules come from each site's own pages.",
     "loadout": "We're DEADWORK STUDIO, the team behind Loadout. We shoot too, and these lists come from packing our own cases.",
+    "handoff": "We're DEADWORK STUDIO, the team behind Handoff. We shoot too, and these steps are how we copy and check cards on our own shoots.",
 }
 
 
@@ -420,6 +433,14 @@ HUB = [
         ],
     },
     {
+        # Handoff (11-27): not out yet, so its guides lead to the launch email list. Hidden on the hub until one is live.
+        "product": "handoff", "name": "Handoff", "href": "../products/handoff/",
+        "line": "Copying camera cards, checking every file, and knowing when a card is safe to format. Handoff turns green when it is.",
+        "topics": [
+            ("Offload and verify", ["offload-camera-cards"]),
+        ],
+    },
+    {
         "product": "stock-shredder", "name": "Stock Shredder", "href": "../products/stock-shredder/",
         "line": "Turning raw footage into stock clips that sell, and getting them onto each site. Stock Shredder does the finding, trimming and naming.",
         "topics": [
@@ -455,7 +476,7 @@ def build_hub(header, footer, metas):
     if missing:
         sys.exit(f"hub: live guides with no topic in HUB: {missing}")
     fix = lambda h: h.replace('href="../../', 'href="../').replace('src="../../', 'src="../')
-    sections, items, n = [], [], 0
+    sections, items, n, shown_products = [], [], 0, []
     for c in HUB:
         blocks = []
         start = [live[s] for s in c.get("start", []) if s in live]
@@ -488,6 +509,7 @@ def build_hub(header, footer, metas):
             blocks.append(tools_block)
         if not blocks:
             continue
+        shown_products.append(c["product"])
         n += 1
         sections.append(
             f'    <section class="gh-product" id="{c["product"]}" aria-labelledby="h-{c["product"]}">\n'
@@ -504,7 +526,7 @@ def build_hub(header, footer, metas):
             f'      <ul class="gh-cards">{"".join(hub_card(m) for m in bridge)}</ul>\n    </section>'
         )
     chips = "".join(
-        f'<a class="mono" href="#{c["product"]}">{html.escape(c["name"])}</a>' for c in HUB
+        f'<a class="mono" href="#{c["product"]}">{html.escape(c["name"])}</a>' for c in HUB if c["product"] in shown_products
     )
     total = len([m for m in live.values()])
     url = f"{SITE}/guides/"
