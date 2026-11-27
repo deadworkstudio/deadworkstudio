@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en" data-product="stock-shredder">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#F4F1EA" />
+<meta name="robots" content="noindex" />
+<title>Footage Archive Cost Calculator: Hard Drives vs LTO Tape vs Cloud | DEADWORK</title>
+<meta name="description" content="Enter how many TB of footage you keep and how fast it grows. Compare hard drives, LTO tape, Backblaze B2 and Wasabi over the years you choose, including replacing drives and moving to new tape. Free, runs in your browser." />
+<link rel="canonical" href="https://deadworkstudio.com/guides/footage-archive-cost-calculator/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://deadworkstudio.com/guides/footage-archive-cost-calculator/" />
+<meta property="og:title" content="Footage Archive Cost Calculator: Hard Drives vs LTO Tape vs Cloud" />
+<meta property="og:description" content="Enter how many TB of footage you keep and how fast it grows. Compare hard drives, LTO tape, Backblaze B2 and Wasabi over the years you choose, including replacing drives and moving to new tape. Free, runs in your browser." />
+<meta property="og:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="DEADWORK" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Footage Archive Cost Calculator: Hard Drives vs LTO Tape vs Cloud" />
+<meta name="twitter:description" content="Enter how many TB of footage you keep and how fast it grows. Compare hard drives, LTO tape, Backblaze B2 and Wasabi over the years you choose, including replacing drives and moving to new tape. Free, runs in your browser." />
+<meta name="twitter:image" content="https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg" />
+<link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png" />
+<link rel="preload" href="../../assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../../assets/css/buttons.css?v=20261027a" />
+<link rel="stylesheet" href="../../assets/css/ss-page.css?v=20261126pb" />
+<link rel="stylesheet" href="../../assets/css/nav-v2.css?v=20261126a" />
+<link rel="stylesheet" href="../../assets/css/guide.css?v=20261127a" />
+<link rel="stylesheet" href="../../assets/css/tools.css?v=20261127a" />
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d02ee5ff4dd84531b48aa1da2c7b63a9"}'></script><!-- End Cloudflare Web Analytics -->
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Footage Archive Cost Calculator", "description": "Enter how many TB of footage you keep and how fast it grows. Compare hard drives, LTO tape, Backblaze B2 and Wasabi over the years you choose, including replacing drives and moving to new tape. Free, runs in your browser.", "datePublished": "2026-11-27", "dateModified": "2026-11-27", "author": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "publisher": {"@type": "Organization", "name": "DEADWORK STUDIO", "url": "https://deadworkstudio.com"}, "mainEntityOfPage": "https://deadworkstudio.com/guides/footage-archive-cost-calculator/", "image": "https://deadworkstudio.com/assets/img/brand/share-stock-shredder.jpg"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is LTO cheaper than hard drives?", "acceptedAnswer": {"@type": "Answer", "text": "Usually over enough years and enough terabytes. The tape drive is a big first cost, but each cartridge holds a lot for little money. Put in your own prices: the break-even point depends on how much footage you keep."}}, {"@type": "Question", "name": "How much does cloud storage cost for footage?", "acceptedAnswer": {"@type": "Answer", "text": "Backblaze B2 lists $6.95 per TB a month and Wasabi lists $7.99 per TB a month (November 2026). Ten TB for ten years is around $8,000 to $10,000 at those prices, before any growth."}}, {"@type": "Question", "name": "Can an LTO-10 drive read my LTO-9 tapes?", "acceptedAnswer": {"@type": "Answer", "text": "No. The LTO Program says LTO-10 drives don't read or write older generations, so moving to LTO-10 means copying your tapes across while you still have an LTO-9 drive."}}, {"@type": "Question", "name": "How many copies should I keep?", "acceptedAnswer": {"@type": "Answer", "text": "Many studios keep at least two, in different places. The calculator multiplies drives and tape by the copies you enter. Cloud is counted as one copy."}}, {"@type": "Question", "name": "Does this include my time?", "acceptedAnswer": {"@type": "Answer", "text": "No. Copying to new drives or tapes takes days for a large archive. The calculator counts what you pay, not the hours."}}]}]</script>
+</head>
+<body class="ss guide">
+<div class="g-progress" aria-hidden="true"><span></span></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="poster-head" data-sh>
+    <span class="poster-meta-left">06 Tools</span>
+    <nav class="nav-tabs nav-tabs--pre" aria-label="Pre-production and production tools">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="pre">Pre-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="production">Production</button>
+      </div>
+    </nav>
+
+    <p class="poster-brand"><a href="../../home/"><img src="../../assets/img/brand/deadwork-wordmark-black-nr.webp" alt="DEADWORK" width="1854" height="394"></a></p>
+
+    <nav class="nav-tabs nav-tabs--post" aria-label="Post-production and studio">
+      <div class="nav-tab" data-nav-tab>
+        <button class="nav-tab-trigger" type="button" aria-expanded="false" aria-controls="mega-menu" data-nav-trigger data-mega-group="post">Post-Production</button>
+      </div>
+      <div class="nav-tab" data-nav-tab>
+        <a class="nav-tab-trigger" href="../../studio/">Studio</a>
+      </div>
+    </nav>
+    <span class="poster-meta-right">Est. Los Angeles</span>
+
+    <div class="mega-menu" id="mega-menu" data-mega-menu>
+        <div class="mega-menu-group" data-mega-group="pre">
+          <p class="mega-menu-eyebrow">I · Pre-Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/scene-lock/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/scene-lock.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Scene Lock</span><span class="mega-menu-card-desc">Plan smarter. Execute better.</span><span class="mega-menu-card-about">Storyboards, shot lists and the schedule in one place.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/set-control/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/set-control.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Set Control</span><span class="mega-menu-card-desc">Every team member. Every detail. In sync.</span><span class="mega-menu-card-about">Call sheets and every change, sent to the whole team.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="production">
+          <p class="mega-menu-eyebrow">II · Production</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/loadout/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/loadout.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Loadout</span><span class="mega-menu-card-desc">Never leave gear behind.</span><span class="mega-menu-card-about">Pan your phone across a packed case and see what's missing.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">iPhone &middot; Android coming soon</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/handoff/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/handoff.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Handoff</span><span class="mega-menu-card-desc">Every file. Verified.</span><span class="mega-menu-card-about">Copies your cards and turns green when they're safe to format.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>PROCESSING</span><span class="mm-dot">·</span><span class="mm-platform">Mac, iPhone &amp; Android</span></span></span></a>
+          </div>
+        </div>
+        <div class="mega-menu-group" data-mega-group="post">
+          <p class="mega-menu-eyebrow">III · Post</p>
+          <div class="mega-menu-cards">
+            <a class="mega-menu-card mm-plate" href="../../products/sound-driver/"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/sound-driver.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Sound Driver</span><span class="mega-menu-card-desc">Real artists. Real sounds.</span><span class="mega-menu-card-about">Places sound on your edit from our own recorded library.</span><span class="mm-meta"><span class="badge badge-dev"><span class="badge-icon"></span>IN DEVELOPMENT</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+            <a class="mega-menu-card mm-plate" href="../../products/stock-shredder/" aria-current="true"><span class="mega-menu-card-img mm-plate-box"><img class="mega-menu-card-logo" src="../../assets/img/brand/product-logos/stock-shredder.webp" alt="" decoding="async" fetchpriority="low" loading="lazy" /></span><span class="mega-menu-card-caption"><span class="mega-menu-card-name">Stock Shredder</span><span class="mega-menu-card-desc">Raw footage into stock-ready clips.</span><span class="mega-menu-card-about">Finds the usable shots in footage and exports stock-ready clips.</span><span class="mm-meta"><span class="badge badge-live"><span class="badge-icon badge-icon--filled"></span>LIVE</span><span class="mm-dot">·</span><span class="mm-platform">Mac &amp; Windows</span></span></span></a>
+          </div>
+        </div>
+    </div>
+</header>
+
+<main id="main" class="g-main">
+  <article class="g-article">
+    <header class="g-head">
+      <p class="mono g-eyebrow">Free tool · Archive cost calculator</p>
+      <h1 class="g-title">Footage Archive Cost Calculator</h1>
+      <p class="g-dek">Drives look cheap until you replace them. Tape looks expensive until year five. Put in your own numbers and see the whole bill.</p>
+      <p class="mono g-byline">BY THE DEADWORK TEAM <span aria-hidden="true">&middot;</span> UPDATED NOV 27, 2026 <span aria-hidden="true">&middot;</span> 4 MIN READ</p>
+    </header>
+
+
+    <div class="g-body">
+<div class="tc" id="archive-calc">
+  <form class="tc-form" onsubmit="return false" aria-label="Footage archive cost calculator">
+    <div class="pc-grid">
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-tb">Footage to keep now</label></div>
+        <div class="pc-in"><input type="text" inputmode="decimal" id="ac-tb" autocomplete="off" placeholder="TB" /></div>
+        <p class="pc-hint">In terabytes, one copy.</p>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-grow">Added each year</label></div>
+        <div class="pc-in"><input type="text" inputmode="decimal" id="ac-grow" autocomplete="off" placeholder="TB" /></div>
+        <p class="pc-hint">New footage you'll keep, in TB.</p>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-copies">Copies on drives or tape</label></div>
+        <div class="pc-in"><input type="text" inputmode="numeric" id="ac-copies" autocomplete="off" value="2" /></div>
+        <p class="pc-hint">Cloud is counted as one copy.</p>
+      </div>
+      <div class="tc-field pc-range ac-years">
+        <div class="tc-label"><label for="ac-years">Compare over</label><span class="tc-n" id="ac-years-v">10 YEARS</span></div>
+        <input type="range" id="ac-years" min="1" max="20" step="1" value="10" />
+      </div>
+    </div>
+
+    <h3 class="ac-h">Hard drives <i>(your prices)</i></h3>
+    <div class="pc-grid ac-grid3">
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-hd-price">Price per drive</label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="ac-hd-price" autocomplete="off" placeholder="0" /></div>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-hd-size">Drive size</label></div>
+        <div class="pc-in"><input type="text" inputmode="decimal" id="ac-hd-size" autocomplete="off" placeholder="TB" /></div>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-hd-life">Replace every</label></div>
+        <div class="pc-in"><input type="text" inputmode="numeric" id="ac-hd-life" autocomplete="off" value="5" /></div>
+        <p class="pc-hint">Years. 0 if you never replace them.</p>
+      </div>
+    </div>
+
+    <h3 class="ac-h">LTO tape <i>(your prices)</i></h3>
+    <div class="pc-grid ac-grid4">
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-lto-gen">Generation</label></div>
+        <select id="ac-lto-gen" class="ac-select">
+          <option value="18">LTO-9 (18 TB)</option>
+          <option value="30">LTO-10 (30 TB)</option>
+          <option value="40">LTO-10 (40 TB)</option>
+        </select>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-lto-drive">Tape drive</label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="ac-lto-drive" autocomplete="off" placeholder="0" /></div>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-lto-tape">Per cartridge</label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="ac-lto-tape" autocomplete="off" placeholder="0" /></div>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-lto-move">Move to new tape every</label></div>
+        <div class="pc-in"><input type="text" inputmode="numeric" id="ac-lto-move" autocomplete="off" value="0" /></div>
+        <p class="pc-hint">Years. 0 for never.</p>
+      </div>
+    </div>
+
+    <h3 class="ac-h">Cloud <i>(list prices, November 2026, per TB a month)</i></h3>
+    <div class="pc-grid ac-grid3">
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-b2">Backblaze B2</label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="ac-b2" autocomplete="off" value="6.95" /></div>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-wasabi">Wasabi</label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="ac-wasabi" autocomplete="off" value="7.99" /></div>
+      </div>
+      <div class="tc-field">
+        <div class="tc-label"><label for="ac-own">Other cloud <i>(optional)</i></label></div>
+        <div class="pc-in pc-dollar"><input type="text" inputmode="decimal" id="ac-own" autocomplete="off" placeholder="0" /></div>
+      </div>
+    </div>
+    <p class="tc-actions">
+      <button type="button" class="tc-btn tc-btn--ghost" id="ac-clear">Clear</button>
+      <span class="tc-private">Your numbers stay in your browser. Nothing you type is sent anywhere.</span>
+    </p>
+  </form>
+  <p class="pc-empty" id="ac-empty">Enter how much footage you keep to compare the options.</p>
+
+  <div class="tc-out" id="ac-out" aria-live="polite" hidden>
+    <div class="pc-now" id="ac-head"></div>
+    <section class="tc-block">
+      <h3>Total cost</h3>
+      <ul class="ac-rows" id="ac-rows"></ul>
+      <details class="pc-how"><summary>How this is worked out</summary><ul id="ac-math"></ul></details>
+    </section>
+    <aside class="tc-pitch">
+      <p><strong>Paying to store footage you never use?</strong></p>
+      <p>Some of an archive is good stock footage. <a href="../../products/stock-shredder/?code=SHRED&amp;ref=tool&amp;utm_campaign=footage-archive-cost-calculator#trial" data-cta="tool">Stock Shredder</a> finds the usable shots in raw footage, trims and grades them, and exports each one as its own clip with a title and keywords. Try it on 100 clips free.</p>
+    </aside>
+  </div>
+</div>
+<script src="../../assets/js/archive-cost-calculator.js?v=20261127a" defer></script>
+
+<h2 id="options">The three options, honestly.</h2>
+<ul class="g-list">
+  <li><strong>Hard drives.</strong> Cheapest to start and easy to plug in. They wear out, so the real cost includes buying them again and copying everything across.</li>
+  <li><strong>LTO tape.</strong> A big first cost for the drive, then cheap cartridges that hold a lot. The catch is generations: the LTO Program says LTO-10 drives don't read older tapes, so moving up means copying across.</li>
+  <li><strong>Cloud.</strong> Nothing to buy and it's off site. You pay every month for as long as the footage is there, and the bill grows with the archive.</li>
+</ul>
+
+<h2 id="prices">Where the numbers come from.</h2>
+<div class="g-table-wrap">
+  <table class="g-table">
+    <thead><tr><th>Option</th><th>Figure used</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Backblaze B2</td><td>$6.95 per TB a month. Free downloads up to 3 times what you store, then $0.01 per GB. No minimum storage time.</td><td><a href="https://www.backblaze.com/cloud-storage/pricing" rel="noopener" target="_blank">Backblaze pricing</a></td></tr>
+      <tr><td>Wasabi</td><td>$7.99 per TB a month, pay as you go. No download fees. Billed for at least 1 TB, and files are billed for at least 90 days.</td><td><a href="https://wasabi.com/pricing" rel="noopener" target="_blank">Wasabi pricing</a></td></tr>
+      <tr><td>LTO-10</td><td>30 TB and 40 TB cartridges (native). No reading or writing older generations.</td><td><a href="https://www.lto.org/lto-10/" rel="noopener" target="_blank">LTO Program</a></td></tr>
+      <tr><td>Hard drives and tape prices</td><td>Yours. Prices change too often and differ too much by shop to guess.</td><td>Your own quote</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Cloud prices checked November 2026. Sites change them, so check before you commit.</p>
+
+<h2 id="archive">Before you pay to keep it all.</h2>
+<p>Most archives are mostly footage nobody will look at again. Some of it is worth more as stock clips than as files on a shelf. <a href="../sell-old-footage-archive/">How to sell an old footage archive</a> walks through what sells, and the <a href="../stock-clip-spec-checker/">clip spec checker</a> shows which stock sites would take a clip as it is.</p>
+    </div>
+
+    <aside class="g-tools" aria-labelledby="free-tools">
+      <p class="mono" id="free-tools">Free tools</p>
+      <ul>
+        <li><a href="../stock-footage-profit-calculator/" data-tool="stock-footage-profit-calculator"><strong>Stock Footage Profit Calculator</strong><span>Enter your clips, downloads and earnings per download. See what more clips could add, using only your own numbers.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+        <li><a href="../stock-clip-spec-checker/" data-tool="stock-clip-spec-checker"><strong>Stock Clip Spec Checker</strong><span>Drop in a clip. See its length, size, frame rate and codec, and whether Adobe Stock, Pond5, Shutterstock and Storyblocks would take it.</span><em class="mono">Open <i aria-hidden="true">&rarr;</i></em></a></li>
+      </ul>
+    </aside>
+    <aside class="g-note">
+      <p class="mono">From the team</p>
+      <p>We're DEADWORK STUDIO, the team behind Stock Shredder. Our timings come from our own tests on real footage, and site rules come from each site's own pages. See something out of date? Email <a href="mailto:deadworkstudio@gmail.com">deadworkstudio@gmail.com</a> and we'll fix it.</p>
+    </aside>
+
+    <aside class="g-cta" aria-label="Start with 100 free clips">
+      <p class="mono">Launch offer · Code SHRED</p>
+      <h2>Try it on your own archive.</h2>
+      <p>100 free clips. 7 days to use them. Keywords included. Mac and Windows.</p>
+      <p><a class="pill pill-solid" href="../../products/stock-shredder/?code=SHRED&amp;ref=guide&amp;utm_campaign=footage-archive-cost-calculator#trial" data-cta="end">Start with 100 free clips</a></p>
+      <p class="g-cta-note">No card needed, just your name and email. Start any time before December 31, 2026.</p>
+    </aside>
+
+    <nav class="g-more" aria-labelledby="keep-reading">
+      <h2 id="keep-reading">Keep reading</h2>
+      <ul>
+        <li><a href="../adobe-stock-video-workflow/" data-related="adobe-stock-video-workflow"><img src="../../assets/img/guides/ss-share-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Adobe Stock <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>Prepare Video for Adobe Stock in Hours, Not Weekends</strong><span class="g-more-dek">Adobe Stock&#x27;s video rules in one place, and the fastest way to get a full drive of raw footage ready to upload.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../best-sites-to-sell-stock-footage/" data-related="best-sites-to-sell-stock-footage"><img src="../../assets/img/guides/ss-share-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">Where to sell <i aria-hidden="true">&middot;</i> <em>7 min</em></span><strong>Best Websites to Sell Stock Footage</strong><span class="g-more-dek">Every site pays differently for video. Here&#x27;s what each one pays, what it asks of you, and how to sell on several at once.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+        <li><a href="../pond5-video-upload/" data-related="pond5-video-upload"><img src="../../assets/img/guides/ss-import-light-card.webp" alt="" width="640" height="401" loading="lazy" decoding="async" /><span class="mono">For Pond5 contributors <i aria-hidden="true">&middot;</i> <em>5 min</em></span><strong>How to Get Footage Onto Pond5 Faster</strong><span class="g-more-dek">Pond5 takes more formats than most sites and is stricter about file names. Here&#x27;s what it wants, and how to get a full drive ready fast.</span><span class="g-more-go mono">Read <i aria-hidden="true">&rarr;</i></span></a></li>
+      </ul>
+    </nav>
+
+    <section class="g-faq" aria-labelledby="faq">
+      <h2 id="faq">FAQ</h2>
+      <details class="g-faq-item"><summary>Is LTO cheaper than hard drives?</summary><p>Usually over enough years and enough terabytes. The tape drive is a big first cost, but each cartridge holds a lot for little money. Put in your own prices: the break-even point depends on how much footage you keep.</p></details>
+      <details class="g-faq-item"><summary>How much does cloud storage cost for footage?</summary><p>Backblaze B2 lists $6.95 per TB a month and Wasabi lists $7.99 per TB a month (November 2026). Ten TB for ten years is around $8,000 to $10,000 at those prices, before any growth.</p></details>
+      <details class="g-faq-item"><summary>Can an LTO-10 drive read my LTO-9 tapes?</summary><p>No. The LTO Program says LTO-10 drives don&#x27;t read or write older generations, so moving to LTO-10 means copying your tapes across while you still have an LTO-9 drive.</p></details>
+      <details class="g-faq-item"><summary>How many copies should I keep?</summary><p>Many studios keep at least two, in different places. The calculator multiplies drives and tape by the copies you enter. Cloud is counted as one copy.</p></details>
+      <details class="g-faq-item"><summary>Does this include my time?</summary><p>No. Copying to new drives or tapes takes days for a large archive. The calculator counts what you pay, not the hours.</p></details>
+    </section>
+  </article>
+</main>
+
+<footer class="poster-foot">
+    <p class="foot-email" data-live-clock></p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/deadworkstudio/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="TikTok (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2h-3v13.5a3 3 0 1 1-3-3c.2 0 .4 0 .6.05v-3.1a6 6 0 1 0 5.4 6V9.3a7.9 7.9 0 0 0 4.5 1.4V7.6a4.8 4.8 0 0 1-4.5-4.7V2z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@deadworkstudio" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+      </a>
+    </div>
+    <p class="foot-note">By artists. For artists.</p>
+    <p class="foot-copy">2026 DEADWORK STUDIO</p>
+    <p class="foot-legal"><a href="/guides/">Guides</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="mailto:deadworkstudio@gmail.com?subject=Stock%20Shredder%20support">Support</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/#refunds">Refunds</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/terms/">Terms</a> <span class="sep" aria-hidden="true">&middot;</span> <a href="../../legal/privacy/">Privacy</a></p>
+  
+    
+  </footer>
+
+<script src="../../assets/js/nav-dropdown.js?v=20261025b"></script>
+<script src="../../assets/js/hide-header.js?v=20261126a"></script>
+<script>
+(function(){var b=document.querySelector('.g-progress span');if(!b)return;var t=0;
+function u(){t=0;var d=document.documentElement,h=d.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';}
+addEventListener('scroll',function(){if(!t){t=1;requestAnimationFrame(u);}},{passive:true});u();
+var r=document.querySelectorAll('.g-race');if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');o.unobserve(e.target);}});},{threshold:.35});r.forEach(function(el){o.observe(el);});}})();
+</script>
+<script src="/assets/js/ss-funnel.js?v=20261119a" defer></script>
+<script src="/assets/js/meta-pixel.js?v=20261122a" defer></script>
+</body>
+</html>
