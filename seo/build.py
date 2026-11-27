@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261126a"
+CSS_V = "20261127a"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -153,6 +153,7 @@ COVER_ALT = {
     "tool-clip-spec": "The free stock clip spec checker showing one clip checked against Adobe Stock, Pond5, Shutterstock and Storyblocks",
     "tool-upload-sheet": "The free stock upload sheet converter turning one metadata sheet into Adobe Stock, Shutterstock and Pond5 CSV files",
     "tool-gamma-shift": "The free video gamma shift checker reading a clip's color tags and showing why it looks washed out on a Mac",
+    "tool-archive-cost": "The free footage archive cost calculator comparing hard drives, LTO tape and cloud storage over the years",
     "hf-safe": "Handoff on a Mac: card A004 is safe, every clip verified on 2 hard drives",
     "hf-copying": "Handoff on a Mac copying card A004 to 2 hard drives, with clips verified so far",
     "ss-review-dark": "Stock Shredder review screen in dark mode, with a list of trimmed clips",
@@ -172,6 +173,7 @@ COVERS = {
     "stock-clip-spec-checker": "tool-clip-spec",
     "stock-upload-sheet-converter": "tool-upload-sheet",
     "video-gamma-shift-checker": "tool-gamma-shift",
+    "footage-archive-cost-calculator": "tool-archive-cost",
     "adobe-stock-video-workflow": "ss-share",
     "automatic-stock-footage-clipping": "ss-review-dark",
     "blackmagic-raw-stock-footage": "ss-review-forest",

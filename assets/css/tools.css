@@ -232,3 +232,27 @@
 .gs-bars i { display: block; }
 .gs-bars span { display: block; margin-top: 8px; font-size: 13.5px; color: var(--ink-3); }
 @media (max-width: 640px) { .gs-spec { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Archive cost calculator. */
+.ac-h { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line-2); margin-bottom: 12px; font: 500 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.ac-h i { font-style: normal; color: var(--ink-3); }
+.pc-grid.ac-grid3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pc-grid.ac-grid4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ac-years { margin-top: 0; }
+.ac-select { display: block; width: 100%; box-sizing: border-box; padding: 12px 14px; font: 400 16px/1.5 var(--sans); color: var(--ink); background: #fff; border: 1px solid var(--line-2); border-radius: 0; }
+.ac-rows { margin-top: 12px; }
+.tc-out .ac-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+.tc-out .ac-row:first-child { border-top: 0; }
+.tc-out .ac-row::before { content: none; }
+.ac-name b, .ac-num b { display: block; font-weight: 650; font-size: 16px; font-variant-numeric: tabular-nums; }
+.ac-name span, .ac-num span { display: block; margin-top: 2px; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+.ac-num { text-align: right; }
+.ac-bar { height: 12px; background: #E6E0D2; }
+.ac-bar i { display: block; height: 100%; background: var(--ink); }
+.ac-row.ac-off { grid-template-columns: 1fr; opacity: .7; }
+@media (max-width: 900px) { .pc-grid.ac-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .pc-grid.ac-grid3, .pc-grid.ac-grid4 { grid-template-columns: 1fr; }
+  .tc-out .ac-row { grid-template-columns: 1fr; gap: 6px; }
+  .ac-num { text-align: left; }
+}
