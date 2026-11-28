@@ -265,14 +265,15 @@
   if (reduce) return;
   v.muted = true;
   v.addEventListener('playing', function () { v.classList.add('is-playing'); });
-  // Speed: the hero video waits until the page has loaded (and the poster image has painted), so its
-  // 0.5 MB never competes with the first screen. The poster <img> underneath is what people see first.
-  var ready = document.readyState === 'complete', want = false;
-  var go = function () { want = true; if (!ready) return; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
-  if (!ready) window.addEventListener('load', function () { setTimeout(function () { ready = true; if (want) go(); }, 600); });
+  // Speed: start loading and playing at once (0.5 MB, the poster <img> underneath shows until the first frame),
+  // and pause only while it is off screen.
+  v.preload = 'auto';
+  try { v.load(); } catch (e) {}
+  var go = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+  go();
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) go(); else { want = false; v.pause(); } }); }, { threshold: 0.2 }).observe(v);
-  } else { go(); }
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) go(); else v.pause(); }); }, { threshold: 0 }).observe(v);
+  }
 })();
 
 // ---- Below-the-fold video posters load only when they come near the screen (data-poster), to keep the first screen light. ----
