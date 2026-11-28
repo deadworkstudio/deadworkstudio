@@ -429,7 +429,7 @@ HUB = [
         "tools_first": True,
         "topics": [
             ("Checklists", ["camera-gear-checklist", "film-production-wrap-checklist", "check-gear-before-leaving-set"]),
-            ("Tracking your gear", ["keep-track-of-camera-equipment"]),
+            ("Tracking your gear", ["keep-track-of-camera-equipment", "check-camera-gear-with-iphone"]),
         ],
     },
     {
