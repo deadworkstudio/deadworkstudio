@@ -16,6 +16,23 @@
     var followers = [].slice.call(duo.querySelectorAll('[data-hf-sync]')).filter(function (v) { return v !== mac; });
     if (!mac) return;
 
+    // The iPhone and Watch come out once the copy is playing and go back in just before the loop restarts,
+    // the same rise-and-fade the sections lower on the page use. Off with reduced motion (CSS), and the class
+    // is only added once JS runs, so without JS everything simply shows.
+    function choreograph(clock) {
+      if (reduce) return;
+      duo.classList.add('is-choreo'); window.__hfChoreo = true;
+      var since = Date.now(), ever = false;
+      return setInterval(function () {
+        var now = clock.currentTime, dur = clock.duration || 0, out;
+        if (!clock.paused && now > 0.05) ever = true;
+        if (!ever) out = Date.now() - since > 2500;       // never started (autoplay blocked, low power): just show them
+        else if (clock.paused || !dur) out = true;        // paused off screen: leave them out
+        else out = now > 0.15 && now < dur - 1.3;         // out while it copies, back in just before the loop restarts
+        duo.classList.toggle('is-out', out);
+      }, 80);
+    }
+
     // Phones: one video holds all three screens (Mac, iPhone, Watch tiled), drawn into a canvas over each
     // device every frame. One file to download and one clock, so the three can never drift apart; WebKit on
     // iPhone could not keep three separate videos in step. Desktop keeps the three sharper files below.
@@ -25,54 +42,70 @@
       if (reduce) { screens.forEach(function (v) { if (v.getAttribute('data-poster-still')) v.setAttribute('poster', v.getAttribute('data-poster-still')); }); return; }
       // where each screen sits in the combined video (pixels)
       var MAP = { mac: [0, 0, 960, 600], phone: [0, 600, 480, 1044], watch: [480, 600, 396, 484] };
-      var src = document.createElement('video');
-      src.muted = true; src.defaultMuted = true; src.loop = true; src.playsInline = true;
-      src.setAttribute('muted', ''); src.setAttribute('playsinline', ''); src.setAttribute('aria-hidden', 'true');
-      src.preload = 'auto';
-      src.style.cssText = 'position:absolute;left:0;top:0;width:4px;height:4px;opacity:.01;pointer-events:none';
-      src.src = atlasSrc;
-      duo.appendChild(src);
-      var outs = screens.map(function (v) {
-        var c = document.createElement('canvas');
-        c.setAttribute('aria-hidden', 'true');
-        v.insertAdjacentElement('afterend', c);
-        return { v: v, c: c, ctx: c.getContext('2d'), r: MAP[v.getAttribute('data-hf-sync')] };
-      }).filter(function (o) { return o.r && o.ctx; });
-      var shown = false;
-      // lay each canvas exactly over its video (same box, same rounded corners); again on resize
-      function place() {
-        var d = Math.min(window.devicePixelRatio || 1, 3);
-        outs.forEach(function (o) {
-          var v = o.v, w = v.offsetWidth, h = v.offsetHeight;
-          o.c.style.cssText = 'position:absolute;left:' + v.offsetLeft + 'px;top:' + v.offsetTop + 'px;width:' + w + 'px;height:' + h + 'px;border-radius:' + getComputedStyle(v).borderRadius + ';pointer-events:none;opacity:' + (shown ? 1 : 0);
-          o.c.width = Math.max(1, Math.min(o.r[2], Math.round(w * d)));
-          o.c.height = Math.max(1, Math.round(o.c.width * h / Math.max(w, 1)));
-        });
-      }
-      function draw() {
-        outs.forEach(function (o) { try { o.ctx.drawImage(src, o.r[0], o.r[1], o.r[2], o.r[3], 0, 0, o.c.width, o.c.height); } catch (e) {} });
-        if (!shown) { shown = true; outs.forEach(function (o) { o.c.style.opacity = 1; }); }
-      }
-      place();
-      window.addEventListener('resize', place);
-      // layout can still settle after this (fonts, reveal animations): re-fit whenever a device box changes size
-      if ('ResizeObserver' in window) { var ro = new ResizeObserver(place); outs.forEach(function (o) { ro.observe(o.v); }); }
-      src.addEventListener('playing', place);
-      if (src.requestVideoFrameCallback) {
-        var onFrame = function () { draw(); src.requestVideoFrameCallback(onFrame); };
-        src.requestVideoFrameCallback(onFrame);
+      // the inline script in the page normally starts this already (window.__hfAtlasRun); otherwise do it here
+      var run = window.__hfAtlasRun, src;
+      if (run) {
+        src = run.src;
+        window.addEventListener('resize', run.place);
+        if ('ResizeObserver' in window) { var ro0 = new ResizeObserver(run.place); screens.forEach(function (v) { ro0.observe(v); }); }
       } else {
-        var loop = function () { if (src.paused || src.ended) return; if (src.readyState >= 2) draw(); requestAnimationFrame(loop); };
-        src.addEventListener('playing', function () { requestAnimationFrame(loop); });
+        var src0 = null;
+        if (!src0) {
+          src = document.createElement('video');
+          src.muted = true; src.defaultMuted = true; src.loop = true; src.playsInline = true;
+          src.setAttribute('muted', ''); src.setAttribute('playsinline', ''); src.setAttribute('aria-hidden', 'true');
+          src.preload = 'auto';
+          src.style.cssText = 'position:absolute;left:0;top:0;width:4px;height:4px;opacity:.01;pointer-events:none';
+          src.src = atlasSrc;
+          duo.appendChild(src);
+        }
+        var outs = screens.map(function (v) {
+          var c = document.createElement('canvas');
+          c.setAttribute('aria-hidden', 'true');
+          v.insertAdjacentElement('afterend', c);
+          return { v: v, c: c, ctx: c.getContext('2d'), r: MAP[v.getAttribute('data-hf-sync')] };
+        }).filter(function (o) { return o.r && o.ctx; });
+        var shown = false;
+        // lay each canvas exactly over its video (same box, same rounded corners); again on resize
+        function place() {
+          var d = Math.min(window.devicePixelRatio || 1, 3);
+          outs.forEach(function (o) {
+            var v = o.v, w = v.offsetWidth, h = v.offsetHeight;
+            o.c.style.cssText = 'position:absolute;left:' + v.offsetLeft + 'px;top:' + v.offsetTop + 'px;width:' + w + 'px;height:' + h + 'px;border-radius:' + getComputedStyle(v).borderRadius + ';pointer-events:none;opacity:' + (shown ? 1 : 0);
+            o.c.width = Math.max(1, Math.min(o.r[2], Math.round(w * d)));
+            o.c.height = Math.max(1, Math.round(o.c.width * h / Math.max(w, 1)));
+          });
+        }
+        function draw() {
+          outs.forEach(function (o) { try { o.ctx.drawImage(src, o.r[0], o.r[1], o.r[2], o.r[3], 0, 0, o.c.width, o.c.height); } catch (e) {} });
+          if (!shown) { shown = true; outs.forEach(function (o) { o.c.style.opacity = 1; }); }
+        }
+        place();
+        window.addEventListener('resize', place);
+        // layout can still settle after this (fonts, reveal animations): re-fit whenever a device box changes size
+        if ('ResizeObserver' in window) { var ro = new ResizeObserver(place); outs.forEach(function (o) { ro.observe(o.v); }); }
+        src.addEventListener('playing', place);
+        if (src.requestVideoFrameCallback) {
+          var onFrame = function () { draw(); src.requestVideoFrameCallback(onFrame); };
+          src.requestVideoFrameCallback(onFrame);
+        } else {
+          var loop = function () { if (src.paused || src.ended) return; if (src.readyState >= 2) draw(); requestAnimationFrame(loop); };
+          src.addEventListener('playing', function () { requestAnimationFrame(loop); });
+          if (!src.paused) requestAnimationFrame(loop);
+        }
+
       }
-      if (!hasIO) { play(src); return; }
-      new IntersectionObserver(function (es) { if (es[0].isIntersecting) play(src); else pause(src); }, { threshold: 0.15 }).observe(duo);
+      choreograph(src);
+      play(src);
+      if (!hasIO) return;
+      new IntersectionObserver(function (es) { if (es[0].isIntersecting) play(src); else pause(src); }, { threshold: 0 }).observe(duo);
       return;
     }
 
     // pick the recording for this screen: device pixels the hero will actually fill
     var dpr = window.devicePixelRatio || 1;
     [mac].concat(followers).forEach(function (v) {
+      if (v.querySelector('source')) return; // already started by the inline script in the page
       var px = (v.getBoundingClientRect().width || 300) * dpr;
       var big = v === mac ? 1700 : 99999, mid = v === mac ? 1100 : 400;
       var src = (px > big && v.getAttribute('data-src-4k')) || (px > mid && v.getAttribute('data-src-2k')) || v.getAttribute('data-src-1k') || v.getAttribute('data-src-2k');
@@ -107,11 +140,27 @@
     mac.addEventListener('playing', function () { if (inView) followers.forEach(play); sync(); startTick(); });
     followers.forEach(function (f) { f.addEventListener('playing', function () { syncOne(f); }); });
     mac.addEventListener('pause', function () { followers.forEach(pause); });
-    if (reduce || !hasIO) return;
+    if (reduce) return;
+    // Start at once: the hero is the first thing on screen, so its files load with the page (no waiting to be
+    // scrolled to), and all three start on the same frame as soon as each can play.
+    var all = [mac].concat(followers), started = !!window.__hfStarted; // the inline script may have started them
+    if (started && !mac.paused) startTick();
+    inView = true;
+    all.forEach(function (v) { v.preload = 'auto'; try { v.load(); } catch (e) {} });
+    function startAll() {
+      if (started || !all.every(function (v) { return v.readyState >= 3; })) return;
+      started = true;
+      if (inView) { play(mac); followers.forEach(play); }
+    }
+    all.forEach(function (v) { v.addEventListener('canplay', startAll); v.addEventListener('loadeddata', startAll); });
+    startAll();
+    choreograph(mac);
+    if (!hasIO) return;
     new IntersectionObserver(function (es) {
       inView = es[0].isIntersecting;
+      if (!started) return;
       if (inView) { play(mac); followers.forEach(play); } else { pause(mac); followers.forEach(pause); }
-    }, { threshold: 0.25 }).observe(duo);
+    }, { threshold: 0 }).observe(duo);
   })();
 
   // ---- team section (lock screen, app, Watch): one video holds all three screens on the hero's timeline,
@@ -163,8 +212,10 @@
         src.addEventListener('playing', function () { requestAnimationFrame(loop); });
       }
     }
-    new IntersectionObserver(function (es) { if (es[0].isIntersecting) load(); }, { rootMargin: '800px 0px' }).observe(group);
-    new IntersectionObserver(function (es) { if (es[0].isIntersecting) { load(); play(src); } else pause(src); }, { threshold: 0.2 }).observe(group);
+    // fetch it once the page itself has loaded, so it is ready by the time anyone scrolls down to it
+    if (document.readyState === 'complete') setTimeout(load, 300); else window.addEventListener('load', function () { setTimeout(load, 300); });
+    new IntersectionObserver(function (es) { if (es[0].isIntersecting) load(); }, { rootMargin: '1200px 0px' }).observe(group);
+    new IntersectionObserver(function (es) { if (es[0].isIntersecting) { load(); play(src); } else pause(src); }, { threshold: 0 }).observe(group);
   });
 
   // ---- team section: real iPhone recordings. The file loads only when the phone comes into view, plays
@@ -317,4 +368,14 @@
       if (input) setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }, reduce ? 0 : 450);
     });
   });
+
+  // ---- below-the-fold video posters load only when they come near the screen (data-poster), so the top
+  // video does not share the connection with pictures nobody can see yet
+  (function () {
+    var vids = [].slice.call(document.querySelectorAll('video[data-poster]')); if (!vids.length) return;
+    var set = function (v) { var p = v.getAttribute('data-poster'); if (p && !v.getAttribute('poster')) v.setAttribute('poster', p); v.removeAttribute('data-poster'); };
+    if (!hasIO) { vids.forEach(set); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { set(e.target); io.unobserve(e.target); } }); }, { rootMargin: '900px 0px' });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
 })();

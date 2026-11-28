@@ -270,3 +270,11 @@ main > section.hf-dread { padding-top: clamp(24px, 4vh, 48px); padding-bottom: c
 .hf .hf-before-item p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
 
 .hf .hf-wa figcaption { position: absolute; left: -20px; right: -20px; top: 100%; margin-top: 14px; text-align: center; }
+
+/* hero: the iPhone and Watch come out once the copy plays and go back in before it loops (hf-page.js adds
+   .is-choreo, then toggles .is-out). Same rise-and-fade as the sections lower down; off with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .hf .hf-duo.is-choreo .hf-duo-phone, .hf .hf-duo.is-choreo .hf-duo-watch { opacity: 0; transform: translateY(28px) scale(.96); transition: opacity 500ms cubic-bezier(.2, .8, .2, 1), transform 800ms cubic-bezier(.2, .8, .2, 1); }
+  .hf .hf-duo.is-choreo.is-out .hf-duo-phone, .hf .hf-duo.is-choreo.is-out .hf-duo-watch { opacity: 1; transform: none; }
+  .hf .hf-duo.is-choreo.is-out .hf-duo-watch { transition-delay: 100ms; }
+}
