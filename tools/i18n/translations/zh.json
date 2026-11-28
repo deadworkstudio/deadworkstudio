@@ -1616,7 +1616,25 @@
   "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">Raw footage into stock-ready clips.</span><span class=\"mega-menu-card-about\">Finds the usable shots in footage and exports stock-ready clips.</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>LIVE</span></span></span></a>": "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">把原始素材变成可直接上架的片段。</span><span class=\"mega-menu-card-about\">从素材中找出可用镜头，导出可直接上架的素材片段。</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>已上线</span></span></span></a>",
   "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">Raw footage into stock-ready clips.</span><span class=\"mega-menu-card-about\">Finds the usable shots in footage and exports stock-ready clips.</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>LIVE</span><span class=\"mm-dot\">·</span><span class=\"mm-platform\">Mac &amp; Windows</span></span></span></a>": "<span class=\"mega-menu-card-caption\"><span class=\"mega-menu-card-name\">Stock Shredder</span><span class=\"mega-menu-card-desc\">把原始素材变成可直接上架的片段。</span><span class=\"mega-menu-card-about\">从素材中找出可用镜头，导出可直接上架的素材片段。</span><span class=\"mm-meta\"><span class=\"badge badge-live\"><span class=\"badge-icon badge-icon--filled\"></span>已上线</span><span class=\"mm-dot\">·</span><span class=\"mm-platform\">Mac 和 Windows</span></span></span></a>",
   "<a href=\"/guides/\">Guides</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"support/\">Support</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/terms/\">Terms</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/handoff-privacy/\">Privacy</a>": "<a href=\"/guides/\">Guides</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"support/\">支持</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/terms/\">条款</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../legal/handoff-privacy/\">隐私</a>",
-  "<a href=\"../../../studio/#contact\">Contact</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">Terms</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">Privacy</a>": "<a href=\"../../../studio/#contact\">联系我们</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">条款</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">隐私</a>"
+  "<a href=\"../../../studio/#contact\">Contact</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">Terms</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">Privacy</a>": "<a href=\"../../../studio/#contact\">联系我们</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/terms/\">条款</a> <span class=\"sep\" aria-hidden=\"true\">&middot;</span> <a href=\"../../../legal/handoff-privacy/\">隐私</a>",
+  "Hours of footage in. Thousands of finished clips out.": "数小时素材进去，数千条成品片段出来。",
+  "Hours of footage sit unused. Reviewing, trimming, grading and tagging by hand takes too long.": "数小时素材闲置未用。手动审看、剪切、调色和打标签太费时间。",
+  "Stock Shredder finds the usable moments. You pick what stays, set the look, and export.": "Stock Shredder 找出可用的瞬间。你决定保留哪些，设定风格，然后导出。",
+  "Smooths shaky shots. Leaves alone what it can't fix.": "稳定抖动的镜头。修不好的就保持原样。",
+  "Your LUT, strength and fine-tune, applied in one click.": "你的 LUT、强度和微调，一键应用。",
+  "You never review the same clip twice.": "同一个片段永远不用看第二遍。",
+  "Checks disk space, waits for unplugged drives. Failed clips cost nothing.": "先检查磁盘空间，硬盘断开时自动等待。失败的片段不扣额度。",
+  "Keeps your computer awake, then tells you when it's done.": "导出时保持电脑唤醒，完成后通知你。",
+  "Set Min and Max. Cuts land where the camera is calm.": "设定最短和最长。在镜头平稳处剪切。",
+  "Upload sheets for every major site. Sends straight to Shutterstock and Pond5. Pro and Studio.": "适用于各大网站的上传表格。直接发送到 Shutterstock 和 Pond5。Pro 和 Studio。",
+  "Title, description and keywords saved inside every clip. Pro and Studio.": "标题、描述和关键词保存在每个片段里。Pro 和 Studio。",
+  "Your Mac or PC keeps working while you're away. Included with Studio.": "你不在时，Mac 或 PC 会继续工作。Studio 已包含。",
+  "Your computer keeps shredding while you're away.": "你不在时，电脑会继续处理。",
+  "Approved posts get a code for your clips (trials too). Any rating counts. Once per person. Posts must be public and marked #ad. Referral clips arrive when your friend renews. Clips last 90 days.": "审核通过的帖子会获得片段兑换码（试用期也可以）。任何评分都算。每人一次。帖子须公开并标注 #ad。推荐片段在朋友续费时到账。片段有效期 90 天。",
+  "Saves about 8 hours a month": "每月节省约 8 小时",
+  "Saves about 20 hours a month": "每月节省约 20 小时",
+  "Saves about 40 hours a month": "每月节省约 40 小时",
+  "Saves about 67 hours a month": "每月节省约 67 小时"
  },
  "script": {
   "/mo": "/月",
@@ -1721,6 +1739,7 @@
   "{size} a month": "每月 {size}",
   "You're on the list. One email when Android is out.": "你已加入名单。Android 版上线时只发一封邮件。",
   "Less than a month of Loadout. Worth a look anyway: it checks every item, every time.": "不到 Loadout 一个月的费用。不过还是值得一试：每次都检查每一件。",
-  "That is <strong>{months} months</strong> of the monthly plan, or <strong>{years} years</strong> of the yearly plan.": "相当于月付方案 <strong>{months} 个月</strong>，或年付方案 <strong>{years} 年</strong>。"
+  "That is <strong>{months} months</strong> of the monthly plan, or <strong>{years} years</strong> of the yearly plan.": "相当于月付方案 <strong>{months} 个月</strong>，或年付方案 <strong>{years} 年</strong>。",
+  "Saves about {hours} hours a month": "每月节省约 {hours} 小时"
  }
 }
