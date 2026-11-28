@@ -39,9 +39,15 @@
   window.fbq('init', PIXEL_ID);
   window.fbq('track', 'PageView');
 
-  // Stock Shredder product page in any language: /products/stock-shredder/ or /es/products/stock-shredder/ ...
+  // Product pages in any language: /products/<name>/ or /es/products/<name>/ ...
   if (/^\/(?:[a-z]{2}\/)?products\/stock-shredder\/?$/.test(location.pathname)) {
     window.fbq('track', 'ViewContent', { content_name: 'Stock Shredder', content_category: 'Software', content_ids: ['stock-shredder'], content_type: 'product' });
+  }
+  if (/^\/(?:[a-z]{2}\/)?products\/loadout\/?$/.test(location.pathname)) {
+    window.fbq('track', 'ViewContent', { content_name: 'Loadout', content_category: 'iPhone app', content_ids: ['loadout'], content_type: 'product' });
+  }
+  if (/^\/(?:[a-z]{2}\/)?products\/handoff\/?$/.test(location.pathname)) {
+    window.fbq('track', 'ViewContent', { content_name: 'Handoff', content_category: 'Software', content_ids: ['handoff'], content_type: 'product' });
   }
 
   // One event name at most once per page load (a retried confirmation must not count twice).
@@ -54,4 +60,17 @@
       else window.fbq('track', name, data || {});
     } catch (e) {}
   };
+
+  // Loadout: someone taps an App Store button (any [data-appstore] link, in any language). Counted as a Lead
+  // with content_name Loadout, so a Loadout ad can be set to find people who go on to the App Store.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[data-appstore]');
+    if (a) window.dwPixel('Lead', { content_name: 'Loadout', content_category: 'App Store tap', content_ids: ['loadout'] });
+  }, true);
+  // A notify list sign-up succeeds (Handoff and the other in-development products; notify.js sends this
+  // only after the server has accepted the email). Counted as a Lead with the product's name.
+  document.addEventListener('dw:notify-success', function (e) {
+    var p = (e.detail && e.detail.product) || 'notify';
+    window.dwPixel('Lead', { content_name: p.charAt(0).toUpperCase() + p.slice(1), content_category: 'Notify list' });
+  });
 })();
