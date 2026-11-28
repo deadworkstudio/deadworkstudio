@@ -124,7 +124,8 @@
       var dur = mac.duration || f.duration || 0;
       var d = f.currentTime - mac.currentTime;
       if (dur && Math.abs(d) > dur / 2) d -= d > 0 ? dur : -dur; // one of them has just looped
-      if (Math.abs(d) > 0.25) { try { f.currentTime = mac.currentTime; } catch (e) {} f.playbackRate = 1; }
+      if (f.seeking) return;
+      if (Math.abs(d) > 0.1) { try { f.currentTime = mac.currentTime + 0.03; } catch (e) {} f.playbackRate = 1; } // a tenth of a second is already a number step apart
       else if (Math.abs(d) > 0.015) f.playbackRate = Math.max(0.85, Math.min(1.15, 1 - d * 3));
       else if (f.playbackRate !== 1) f.playbackRate = 1;
     }
