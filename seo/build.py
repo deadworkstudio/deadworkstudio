@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deadworkstudio.com"
-CSS_V = "20261126a"
+CSS_V = "20261127l"
 
 # One CTA per product. Waitlist products must never link to a checkout.
 CTAS = {
@@ -429,7 +429,7 @@ HUB = [
         "tools_first": True,
         "topics": [
             ("Checklists", ["camera-gear-checklist", "film-production-wrap-checklist", "check-gear-before-leaving-set"]),
-            ("Tracking your gear", ["keep-track-of-camera-equipment"]),
+            ("Tracking your gear", ["keep-track-of-camera-equipment", "check-camera-gear-with-iphone"]),
         ],
     },
     {
